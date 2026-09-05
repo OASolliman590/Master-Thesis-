@@ -1,5 +1,7 @@
 # Paper B readiness: specimen multiplicity, clinical fields and real table formats
 
+**Correction, 6 September 2026:** the portal field previously interpreted below as WGS tumour purity is an SNP-call agreement measure. It is quarantined from purity adjustment. The original-table audit provides a stronger 73-patient study-protocol bridge and separate Qpure cellularity candidates; individual specimen linkage and final eligibility remain unresolved. [Correction](B_PURITY_FIELD_CORRECTION.md), [source audit](B_SPECIMEN_RESOLUTION.md). Historical source counts below retain their original route-specific scope.
+
 Audit: 5 September 2026. This is an outcome-independent data-readiness check, not production analysis or approval of the previously proposed eight-gene endpoint. Read with [the paired-cohort/mechanism audit](B_paired_prostate.md).
 
 **Update:** the dated full-expression addendum at the end supersedes the historical partial-scan limit for the eight proposed genes. Earlier bounded-audit statements below are preserved as the original audit record; E1 is only partially resolved. The factual results below supersede any earlier assumption that metadata intersections alone establish an analysis-ready external cohort.
@@ -54,10 +56,10 @@ The130 CPC entries use `CPCG####-F1` as both patient/sample IDs. Removing only t
 |---|---:|---|
 | AGE |73|137 lack coverage through this inspected source |
 | GLEASON_SCORE |73|Original string patterns, e.g. `3+4`; do not equate total7 with one Grade Group |
-| WGS_BASED_PURITY_ESTIMATION |73|Computational WGS purity, not RNA ESTIMATE and not automatically interchangeable with TCGA purity |
+| WGS_BASED_PURITY_ESTIMATION |73|**Incorrect prior biological interpretation:** original WGSvsOS SNP-call agreement; quarantined from purity use. |
 | CELLULARITY |70|Histologic tumour-content field, expressed in percent in inspected examples; three of73 lack it |
 | PLOIDY |18|Ploidy is not locus-specific copy number |
-| Candidate joint grade + cellularity + WGS purity |70|Before focus verification and molecular QC, not final validation N |
+| Candidate joint grade + pathologic cellularity |70|Before focus verification and molecular QC; the mislabeled WGS field adds no purity evidence. |
 
 The public molecular-profile endpoint lists the study’s mutation profile; its study metadata reports zero CNA-profile samples. Therefore no gene-level CNA adjustment source is established by this cBioPortal route. This is not a claim that public CPC-GENE CNA data do not exist elsewhere. The original publication’s supplementary tables and PRAD-CA derived-data migration are possible next source checks, not verified missing-field replacements. [cBioPortal study API](https://www.cbioportal.org/api/studies/prad_cpcg_2017), [clinical sample API](https://www.cbioportal.org/api/studies/prad_cpcg_2017/clinical-data?clinicalDataType=SAMPLE&projection=DETAILED&pageSize=100000), [molecular profiles](https://www.cbioportal.org/api/studies/prad_cpcg_2017/molecular-profiles).
 

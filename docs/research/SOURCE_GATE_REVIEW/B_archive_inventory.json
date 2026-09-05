@@ -1,0 +1,110 @@
+[
+  {
+    "member": "Supplementary Table 01 - Clinical Data.xlsx",
+    "uncompressed_bytes": 38116,
+    "compressed_bytes": 35620,
+    "extracted_and_inspected": true
+  },
+  {
+    "member": "Supplementary Table 02 - Per-gene CNA analyses.xlsx",
+    "uncompressed_bytes": 17908011,
+    "compressed_bytes": 3888543,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 03 - Gleason score and CNA associations.xlsx",
+    "uncompressed_bytes": 1138717,
+    "compressed_bytes": 993489,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 04 - Focal CNA peaks.xlsx",
+    "uncompressed_bytes": 34896,
+    "compressed_bytes": 20272,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 05 - T category and CNA associations.xlsx",
+    "uncompressed_bytes": 1430816,
+    "compressed_bytes": 1259983,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 06 - PSA and CNA assocations.xlsx",
+    "uncompressed_bytes": 982581,
+    "compressed_bytes": 877893,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 07 - Sequencing and variant statistics.xlsx",
+    "uncompressed_bytes": 66784,
+    "compressed_bytes": 64759,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 08 - Tumour sequences from public studies.xlsx",
+    "uncompressed_bytes": 27046,
+    "compressed_bytes": 22597,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 09 - Mutation burden by clinical summary results.xlsx",
+    "uncompressed_bytes": 10130,
+    "compressed_bytes": 9451,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 10 - DeepSEA and ChIP-seq ncSNV analyses.xlsx",
+    "uncompressed_bytes": 60507,
+    "compressed_bytes": 57200,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 11 - Trinucleotide mutational signatures.xlsx",
+    "uncompressed_bytes": 9907,
+    "compressed_bytes": 9188,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 12 - Trinucleotide signature associations with clinical variables.xlsx",
+    "uncompressed_bytes": 7663,
+    "compressed_bytes": 6985,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 13 - Trinucleotide signatures by patient.xlsx",
+    "uncompressed_bytes": 15347,
+    "compressed_bytes": 14708,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 14 - Trinucleotide signature associations with CNAs.xlsx",
+    "uncompressed_bytes": 30581,
+    "compressed_bytes": 29191,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 15 - GR events in 1Mbp bins.xlsx",
+    "uncompressed_bytes": 231551,
+    "compressed_bytes": 220369,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 16 - Pathway analysis for differentially correlated genes.xlsx",
+    "uncompressed_bytes": 9630,
+    "compressed_bytes": 8870,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 17 - Chromothripsis-mRNA associations.xlsx",
+    "uncompressed_bytes": 866175,
+    "compressed_bytes": 808134,
+    "extracted_and_inspected": false
+  },
+  {
+    "member": "Supplementary Table 18 - Transcription factor binding sites association with clinical variables.xlsx",
+    "uncompressed_bytes": 27814,
+    "compressed_bytes": 26279,
+    "extracted_and_inspected": false
+  }
+]

@@ -1,5 +1,11 @@
 # Execution progress
 
+## Current checkpoint: source corrections and proposed B alternatives, 6 September 2026
+
+The original CPC supplement disproves the earlier portal WGS-purity interpretation; that field is now prohibited as purity in active B contracts. Source-backed technical provenance is available for300 assays; original clinical linkage is114 code candidates with73 stronger study-protocol bridges and Qpure present72/73. These are not final eligible patients. The revised B-R proposal withdraws ordinary HC3 inference for empirical ranks and retains a documented, unexecuted rank-aware candidate. Both B primaries remain unselected. The2026 final prostate-methylation atlas strengthens the novelty comparison and leaves final-method overlap verification open.
+
+LUAD's retained comparison now has a real candidate metadata manifest (455 shared primary cases), independently recomputed. GSE199800 full identifier streams verify all12 candidate rows but contradict a naive row-order plate join; matched-control validation remains gated. No biological scores, effects or models were calculated. See SOURCE_GATE_ASTRA_DISPOSITION.md and the source reports under docs/research/. This turn made substantive evidence/specification progress despite continuing AIU timeouts and the outstanding quota-limited Opus recheck.
+
 ## Current checkpoint: B-F1 reviewed WIP, 6 September 2026
 
 Published code checkpoint `fed56e6029afb43cc83a043ec4b5d7afbcf0fed9` is verified on GitHub. Issue#5 remains OPEN; the Notion milestone, project and plan are synchronized. [B_F1_PUBLICATION.json](B_F1_PUBLICATION.json) records the release and remaining gates.

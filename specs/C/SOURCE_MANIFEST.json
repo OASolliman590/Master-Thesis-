@@ -522,5 +522,12 @@
     "Evidence artifact hashes identify the inspected audit, not an undownloaded source matrix.",
     "Null means unknown/not selected, never a zero or assumed absence.",
     "Each source must be revalidated at acquisition time; date-of-audit access is not guaranteed future access."
-  ]
+  ],
+  "source_update_date": "2026-09-06",
+  "source_updates": {
+    "LUAD_candidate_metadata": "docs/research/TCGA_secondary_manifest/EVIDENCE_MANIFEST.json",
+    "GSE199800_complete_identifier_audit": "docs/research/C_row_identity/transfer_manifest.json",
+    "control_join": "unresolved; no unique row-to-GSM/plate assignment",
+    "primary_endpoint_changed": false
+  }
 }

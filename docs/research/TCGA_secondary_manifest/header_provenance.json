@@ -1,0 +1,21 @@
+{
+  "retrieved_utc": "2026-09-05T22:19:07.817887+00:00",
+  "records": [
+    {
+      "file": "gdc_status.json",
+      "url": "https://api.gdc.cancer.gov/status",
+      "status": 200,
+      "bytes": 221,
+      "sha256": "a8b1c69f9cfc678486e1c897aee6d878f47fab9cb4c60eb6818598bbe30a7139",
+      "partial": false
+    },
+    {
+      "file": "luad_star_header.prefix",
+      "url": "https://api.gdc.cancer.gov/data/0052ae83-7ae5-470a-a125-5cd94a9fa9e9",
+      "status": 200,
+      "bytes": 2048,
+      "sha256": "dae5899b4014412d880dc526f7e539c0eeeb85e083bfd4b6af71d1e934fd72c6",
+      "partial": true
+    }
+  ]
+}

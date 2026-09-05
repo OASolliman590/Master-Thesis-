@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-06",
+  "scope": "Audits and proposed statistical correction; no primary selected or biological analysis",
+  "reports": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\REPORT.md",
+      "bytes": 13929,
+      "sha256": "e015acb9160feea840c98e3d23a33692e1b40028c1f63a8191e92e414aadb016"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_association_review\\REPORT.md",
+      "bytes": 10563,
+      "sha256": "b14f71a63eab9cd689658307b650f67c84b637b54e64d26339dc73a5dfb91fc4"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_novelty_update\\REPORT.md",
+      "bytes": 8481,
+      "sha256": "e6c48044d1dacad3a6e3990dd36930f138480d6e88875d6b04536a23891bf544"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_row_identity\\REPORT.md",
+      "bytes": 11166,
+      "sha256": "da745bd3201e49e9a1d912b6587b7ed1e0b809b98b209304a3e4829cdef42c83"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\TCGA_secondary_manifest\\REPORT.md",
+      "bytes": 4917,
+      "sha256": "611e8197c7d06fb8438c0daab56ab340aa2a2a241131c6ad3fd00d6d1c7981cc"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\TCGA_secondary_manifest\\REVIEW.md",
+      "bytes": 2927,
+      "sha256": "9209c6ac4e576135cb195a5f2fefa5ebcf6d3c1e9b3179626864925a0335759a"
+    }
+  ]
+}

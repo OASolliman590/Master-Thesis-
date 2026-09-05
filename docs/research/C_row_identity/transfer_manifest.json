@@ -1,0 +1,44 @@
+[
+  {
+    "model": "DU145",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199800/suppl/GSE199800_oncoloop_du145_counts.csv.gz",
+    "expected_bytes_from_previous_official_headers": 14737002,
+    "started_utc": "2026-09-05T22:17:51.437130+00:00",
+    "bytes_read": 14737002,
+    "complete": true,
+    "response_headers": {
+      "Last-Modified": "Wed, 30 Mar 2022 18:39:23 GMT",
+      "Content-Length": "14737002",
+      "Content-Type": "application/x-gzip"
+    },
+    "sha256": "463b556665bad0fc3cc16b33c389dcb6f624a31e9f36fcaeb55acb76b59f4e7b",
+    "gzip_eof": true,
+    "data_rows": 767,
+    "header_fields": 25041,
+    "row_field_counts": {
+      "25041": 767
+    },
+    "runtime_seconds": 6.047
+  },
+  {
+    "model": "LNCaP",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199800/suppl/GSE199800_oncoloop_lncap_counts.csv.gz",
+    "expected_bytes_from_previous_official_headers": 16714169,
+    "started_utc": "2026-09-05T22:17:57.497132+00:00",
+    "bytes_read": 16714169,
+    "complete": true,
+    "response_headers": {
+      "Last-Modified": "Wed, 30 Mar 2022 18:39:31 GMT",
+      "Content-Length": "16714169",
+      "Content-Type": "application/x-gzip"
+    },
+    "sha256": "d0de065d1817433081553195297a1491151cd60f9905f40aa8e9df37edeb1082",
+    "gzip_eof": true,
+    "data_rows": 960,
+    "header_fields": 25041,
+    "row_field_counts": {
+      "25041": 960
+    },
+    "runtime_seconds": 8.218
+  }
+]

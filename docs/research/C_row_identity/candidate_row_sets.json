@@ -1,0 +1,284 @@
+[
+  {
+    "model": "DU145",
+    "count_row_id": "Decitabine_0.5_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 86,
+        "sample_id": "Decitabine_0.5_24"
+      },
+      {
+        "data_row_ordinal": 182,
+        "sample_id": "Decitabine_0.5_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5985079",
+        "model": "DU145",
+        "source_treatment": "Decitabine",
+        "candidate_alias": "decitabine",
+        "plate_label": "DU145PS1A",
+        "well_label": "H2",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS1A_H2_Decitabine_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Decitabine_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5985175",
+        "model": "DU145",
+        "source_treatment": "Decitabine",
+        "candidate_alias": "decitabine",
+        "plate_label": "DU145PS1B",
+        "well_label": "H2",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS1B_H2_Decitabine_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Decitabine_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  },
+  {
+    "model": "DU145",
+    "count_row_id": "Entinostat_0.12_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 261,
+        "sample_id": "Entinostat_0.12_24"
+      },
+      {
+        "data_row_ordinal": 357,
+        "sample_id": "Entinostat_0.12_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5985255",
+        "model": "DU145",
+        "source_treatment": "Entinostat",
+        "candidate_alias": "entinostat",
+        "plate_label": "DU145PS2A",
+        "well_label": "F10",
+        "deposited_dose_number": "0.12",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS2A_F10_Entinostat_0.12_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Entinostat_0.12_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5985351",
+        "model": "DU145",
+        "source_treatment": "Entinostat",
+        "candidate_alias": "entinostat",
+        "plate_label": "DU145PS2B",
+        "well_label": "F10",
+        "deposited_dose_number": "0.12",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS2B_F10_Entinostat_0.12_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Entinostat_0.12_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  },
+  {
+    "model": "DU145",
+    "count_row_id": "EPZ-6438_2_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 628,
+        "sample_id": "EPZ-6438_2_24"
+      },
+      {
+        "data_row_ordinal": 724,
+        "sample_id": "EPZ-6438_2_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5985622",
+        "model": "DU145",
+        "source_treatment": "EPZ-6438",
+        "candidate_alias": "tazemetostat",
+        "plate_label": "DU145PS4A",
+        "well_label": "E05",
+        "deposited_dose_number": "2",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS4A_E05_EPZ-6438_2_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "EPZ-6438_2_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5985718",
+        "model": "DU145",
+        "source_treatment": "EPZ-6438",
+        "candidate_alias": "tazemetostat",
+        "plate_label": "DU145PS4B",
+        "well_label": "E05",
+        "deposited_dose_number": "2",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "du145_DU145PS4B_E05_EPZ-6438_2_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "EPZ-6438_2_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  },
+  {
+    "model": "LNCaP",
+    "count_row_id": "Decitabine_0.5_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 86,
+        "sample_id": "Decitabine_0.5_24"
+      },
+      {
+        "data_row_ordinal": 566,
+        "sample_id": "Decitabine_0.5_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5985777",
+        "model": "LNCaP",
+        "source_treatment": "Decitabine",
+        "candidate_alias": "decitabine",
+        "plate_label": "LNCAPPS1A",
+        "well_label": "H2",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS1A_H2_Decitabine_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Decitabine_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5985873",
+        "model": "LNCaP",
+        "source_treatment": "Decitabine",
+        "candidate_alias": "decitabine",
+        "plate_label": "LNCAPPS1B",
+        "well_label": "H2",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS1B_H2_Decitabine_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Decitabine_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  },
+  {
+    "model": "LNCaP",
+    "count_row_id": "Entinostat_0.5_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 178,
+        "sample_id": "Entinostat_0.5_24"
+      },
+      {
+        "data_row_ordinal": 658,
+        "sample_id": "Entinostat_0.5_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5986032",
+        "model": "LNCaP",
+        "source_treatment": "Entinostat",
+        "candidate_alias": "entinostat",
+        "plate_label": "LNCAPPS2A",
+        "well_label": "G10",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS2A_G10_Entinostat_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Entinostat_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5986128",
+        "model": "LNCaP",
+        "source_treatment": "Entinostat",
+        "candidate_alias": "entinostat",
+        "plate_label": "LNCAPPS2B",
+        "well_label": "G10",
+        "deposited_dose_number": "0.5",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS2B_G10_Entinostat_0.5_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "Entinostat_0.5_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  },
+  {
+    "model": "LNCaP",
+    "count_row_id": "EPZ-6438_0.02_24",
+    "actual_rows": [
+      {
+        "data_row_ordinal": 332,
+        "sample_id": "EPZ-6438_0.02_24"
+      },
+      {
+        "data_row_ordinal": 812,
+        "sample_id": "EPZ-6438_0.02_24"
+      }
+    ],
+    "candidate_gsms": [
+      {
+        "gsm": "GSM5986397",
+        "model": "LNCaP",
+        "source_treatment": "EPZ-6438",
+        "candidate_alias": "tazemetostat",
+        "plate_label": "LNCAPPS4A",
+        "well_label": "D8",
+        "deposited_dose_number": "0.02",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS4A_D8_EPZ-6438_0.02_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "EPZ-6438_0.02_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      },
+      {
+        "gsm": "GSM5986493",
+        "model": "LNCaP",
+        "source_treatment": "EPZ-6438",
+        "candidate_alias": "tazemetostat",
+        "plate_label": "LNCAPPS4B",
+        "well_label": "D8",
+        "deposited_dose_number": "0.02",
+        "dose_unit": "unverified",
+        "collection_hours_source_reported": "24",
+        "source_title": "lncap_LNCAPPS4B_D8_EPZ-6438_0.02_24",
+        "independent_biological_replicate_status": "unresolved; distinct deposited assay and plate label only",
+        "expected_count_key": "EPZ-6438_0.02_24",
+        "mapping_status": "expected suffix only; no exact candidate count row/plate mapping verified"
+      }
+    ],
+    "join_status": "unresolved many-to-many; no ordinal-to-GSM assignment"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation\\OncoLoop_sample_manifest.json",
+    "bytes": 873193,
+    "sha256": "d70cd9c74748f546a73647de116df748bbffaf3b81e6cb012b09fd935d53c229"
+  },
+  {
+    "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation_followup\\candidate_mapping_pending.json",
+    "bytes": 8287,
+    "sha256": "52ec273a9e39bb1e07dba5ef4ecef688d3c6ff73616b12841034154c794ff913"
+  },
+  {
+    "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation_followup\\publisher_methods.docx",
+    "bytes": 187695,
+    "sha256": "7d8b4be659f4e295cf697e8e6ae8caea521a8ffc2beb33a67c4f98fbf920ef53"
+  },
+  {
+    "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation_followup\\publisher_TableS5.xlsx",
+    "bytes": 12416419,
+    "sha256": "e3b3f383109c039d53bd3982c9c4991b93763b932803afddd794ef8a0e8ce6da"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "retrieved_utc": "2026-09-05T22:17:48.085708+00:00",
+  "url": "https://api.gdc.cancer.gov/files?filters=%7B%22op%22%3A+%22and%22%2C+%22content%22%3A+%5B%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22cases.project.project_id%22%2C+%22value%22%3A+%5B%22TCGA-LUAD%22%5D%7D%7D%2C+%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22data_type%22%2C+%22value%22%3A+%5B%22Gene+Expression+Quantification%22%2C+%22Methylation+Beta+Value%22%5D%7D%7D%2C+%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22access%22%2C+%22value%22%3A+%5B%22open%22%5D%7D%7D%5D%7D&fields=file_id%2Cfile_name%2Cfile_size%2Cmd5sum%2Cdata_type%2Cplatform%2Caccess%2Canalysis.workflow_type%2Ccreated_datetime%2Cupdated_datetime%2Ccases.case_id%2Ccases.submitter_id%2Ccases.samples.sample_id%2Ccases.samples.submitter_id%2Ccases.samples.sample_type&size=5000&format=JSON&sort=file_id%3Aasc",
+  "final_url": "https://api.gdc.cancer.gov/files?filters=%7B%22op%22%3A+%22and%22%2C+%22content%22%3A+%5B%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22cases.project.project_id%22%2C+%22value%22%3A+%5B%22TCGA-LUAD%22%5D%7D%7D%2C+%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22data_type%22%2C+%22value%22%3A+%5B%22Gene+Expression+Quantification%22%2C+%22Methylation+Beta+Value%22%5D%7D%7D%2C+%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22access%22%2C+%22value%22%3A+%5B%22open%22%5D%7D%7D%5D%7D&fields=file_id%2Cfile_name%2Cfile_size%2Cmd5sum%2Cdata_type%2Cplatform%2Caccess%2Canalysis.workflow_type%2Ccreated_datetime%2Cupdated_datetime%2Ccases.case_id%2Ccases.submitter_id%2Ccases.samples.sample_id%2Ccases.samples.submitter_id%2Ccases.samples.sample_type&size=5000&format=JSON&sort=file_id%3Aasc",
+  "status": 200,
+  "bytes": 997384,
+  "sha256": "3230295913d19f2345cc1b224434080a52f09b537a5023d2384c02b036d20336",
+  "complete_metadata_response": true,
+  "matrices_downloaded": 0,
+  "code_sha256": "6b499d4b26f88a071599e0374686d86199aa30e967731d20dfabb1788395f8c5"
+}

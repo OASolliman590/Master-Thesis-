@@ -1,5 +1,7 @@
 # B proposed software and environment contract
 
+**Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).
+
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** Interfaces below are requirements for future implementation. No module/CLI listed here is claimed to exist or to have passed a scientific test.
 
 ## Pipeline boundaries

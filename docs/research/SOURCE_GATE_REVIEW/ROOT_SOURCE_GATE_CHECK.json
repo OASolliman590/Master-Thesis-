@@ -1,0 +1,23 @@
+{
+  "scope": "Independent metadata/numeric-identity cross-check; no clinical effect or biological test",
+  "portal_accuracy_column_matches": 130,
+  "maximum_absolute_difference": 4.996451030692128e-10,
+  "C_count_identifiers": {
+    "du145": {
+      "rows": 767,
+      "unique_ids": 341
+    },
+    "lncap": {
+      "rows": 960,
+      "unique_ids": 422
+    }
+  },
+  "C_verified_candidate_pairs": 6,
+  "interpretation": "The original source definition still determines biological meaning; numeric equality alone is not a purity definition.",
+  "input_sha256": {
+    "B_specimen_resolution\\Fraser2017_Table01.xlsx": "9e1921e2667e5bf78e040557d7a2e68ab4770fdd42ea6679ba489bcd65a2b7a6",
+    "C_row_identity\\du145_row_ids.json": "961fdeae7ffa756b1971a4f47438e878818b4ee3600a7c5afa55ef92b20d3974",
+    "C_row_identity\\lncap_row_ids.json": "3e689cf3dc6b4845ff15c0ba3573affc59aecbf347ec5793a129336fde4d6cc4",
+    "C_row_identity\\candidate_row_sets.json": "d92a50fad9d8249082452896c0f1f48533f333090115ad6279b105432a621450"
+  }
+}

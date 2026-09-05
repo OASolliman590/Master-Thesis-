@@ -1,0 +1,140 @@
+{
+  "new_download_logged_body_bytes": 13381621,
+  "cap_bytes": 20000000,
+  "counting_caveat": "Successful response bodies and logged retained error bodies; HTTP headers, unreturned timeout bytes, and browser-tool transport are unavailable and excluded.",
+  "local_artifacts": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\archive_inventory.json",
+      "bytes": 3601,
+      "sha256": "3e7f5ca3ab3cfcafbe062c6e7cf4930b6999177cf9501ebf03269af4fb368b57"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\fetch.py",
+      "bytes": 1864,
+      "sha256": "30157747d20b021e0d0c3633468ae4ac7af4de7af8bd169f46a9a1d982f057e3"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\finish_metadata_audit.py",
+      "bytes": 4033,
+      "sha256": "d09dd053653b299eb79039bace20e32c8dd5890037bcabbae81f73d4289cb568"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Fraser2017.pdf",
+      "bytes": 10189,
+      "sha256": "ac573c1a04dc4042c476d71592e85f75ed33d10ee64dc34015b84ec90777aeef"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Fraser2017_supplement.pdf",
+      "bytes": 4470341,
+      "sha256": "db2e84e39f6869065501eeda656ff0afcc5fbbbf10357d6c95c62e7bc6f8adbe"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Fraser2017_Table01.xlsx",
+      "bytes": 38116,
+      "sha256": "9e1921e2667e5bf78e040557d7a2e68ab4770fdd42ea6679ba489bcd65a2b7a6"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Fraser2017_tables.zip",
+      "bytes": 8357921,
+      "sha256": "89aa7aacd68fd5f5105afd7b8a2fb6fd457c2cce01f75a16a54d5fec77a277ee"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\inspect_links.py",
+      "bytes": 5159,
+      "sha256": "4dba9ca109adc66ce85046b53099a2992482d899b47ad776174bd3b36c6743a2"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\legacy_clinical_summary.json",
+      "bytes": 387,
+      "sha256": "f32036d0ec9c857ed8488b2b76bdb75a35345be4d95fbe7baaad117216ef87be"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\linkage_summary.json",
+      "bytes": 2252,
+      "sha256": "6143f3fa0593ed9e6f42e97db03bcecb677d0bab0d46a36c89078487a4bcdeac"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\methylation_replicate_source_links.tsv",
+      "bytes": 33982,
+      "sha256": "9dc8b2be6850c17bb1d3d49c8419ac62dd7d6941cf5056704e0acd7026fe6c2a"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\methylome_pubmed.json",
+      "bytes": 1258,
+      "sha256": "010103655f8a14c4de8134e04e73938da0ef8fc7aadd8b1ccc88fc4206733609"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\patient_specimen_evidence.tsv",
+      "bytes": 20222,
+      "sha256": "5908f999a1ac26b016b06b2ff542570586993ddd367f103eed69405458559a5c"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\provenance.json",
+      "bytes": 5934,
+      "sha256": "14d2fe17d80a418cf7e09ea105f151f66e972e213cfe69c6ce32bfad4085ce6c"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\purity_label_audit.json",
+      "bytes": 593,
+      "sha256": "ac719e79750b7509b6a7f543e785cb9309bd08b3687dc2f986ae796fd6a052fe"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Shiah2017.html",
+      "bytes": 183879,
+      "sha256": "df057ba3d1afa090f0e5691e915e5105b83b50631ec812a9ddedebd59ec7c9db"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Shiah2017_S1.xls",
+      "bytes": 55808,
+      "sha256": "2be12838bf6514137dc404164c97ac9cb0b8f72d660cba119100ffb784c25a39"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\Sinha2019.pdf",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\xlrd-2.0.2-py2.py3-none-any.whl",
+      "bytes": 96555,
+      "sha256": "ea762c3d29f4cca48d82df517b6d89fbce4db3107f9d78713e48cd321d5c9aa9"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\xlrd_metadata.json",
+      "bytes": 5725,
+      "sha256": "320fd24af58bea9b9ef35aa0763f79c81a0b464ad8078d1558b96c39ce38bd65"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_specimen_resolution\\ZNRF2021.xml",
+      "bytes": 199945,
+      "sha256": "6fb281f22557b16ae2da67d673a3eb852bf737aeca5b8fb0cd85c2707d5334e6"
+    }
+  ],
+  "reused_input_artifacts_no_new_download": [
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\GSE107298_sample_metadata.soft",
+      "bytes": 923841,
+      "sha256": "f0bcd821280165549983669c1eaab23bd47139d0f7d018a9492e342559afbb25"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\GSE84042_sample_metadata.soft",
+      "bytes": 197194,
+      "sha256": "c0feb6b950c608f9eb7714f33fc83c95f2340d12997a7a6a7648cb8980b7b6a0"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\CPCG_patient_pairs.tsv",
+      "bytes": 10759,
+      "sha256": "b43b74645bb1ce4d66b84c5074de271ac3cf7819c356b11d50b6a8b9eb449e6b"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\cbio_clinical_sample.json",
+      "bytes": 3557939,
+      "sha256": "36581c3a90cbb17e0b017b4df72f119180e34c0766dd68c6dca0bd2245d5a096"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\GSE107299_series.soft",
+      "bytes": 9934,
+      "sha256": "2b83c4c0b475165d8e949214d3d2ce180668ad39bc57edc414f64cb3dfa1bd93"
+    }
+  ],
+  "extracted_clinical_member_parent": "Fraser2017_tables.zip:Supplementary Table 01 - Clinical Data.xlsx"
+}

@@ -1,0 +1,13 @@
+{
+  "legacy_patients": 73,
+  "all_current_methylation_assays_have_Shiahtable_provenance": true,
+  "field_presence": {
+    "Age at Treatment_present": 73,
+    "Gleason Score_present": 73,
+    "Pathologic Cellularity_present": 70,
+    "Qpure Cellularity_present": 72,
+    "ASCAT Cellularity_present": 18,
+    "ASCAT Ploidy_present": 18,
+    "LUMP Cellularity_present": 73
+  }
+}

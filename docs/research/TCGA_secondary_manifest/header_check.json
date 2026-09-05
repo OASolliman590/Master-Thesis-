@@ -1,0 +1,57 @@
+{
+  "selected_file_metadata": {
+    "id": "0052ae83-7ae5-470a-a125-5cd94a9fa9e9",
+    "cases": [
+      {
+        "case_id": "5d2a9a4f-678d-4089-a8c5-81a5cb696629",
+        "submitter_id": "TCGA-35-5375",
+        "samples": [
+          {
+            "sample_id": "78b3d4a5-8563-433d-b271-6e37385e0584",
+            "submitter_id": "TCGA-35-5375-01A",
+            "sample_type": "Primary Tumor"
+          }
+        ]
+      }
+    ],
+    "access": "open",
+    "file_name": "a6a6b9c6-9db7-42b3-a09f-770b7e126fbb.rna_seq.augmented_star_gene_counts.tsv",
+    "md5sum": "3965545354a18beca3a6159f16b254fe",
+    "updated_datetime": "2024-07-30T08:55:59.479807-05:00",
+    "file_id": "0052ae83-7ae5-470a-a125-5cd94a9fa9e9",
+    "data_type": "Gene Expression Quantification",
+    "analysis": {
+      "workflow_type": "STAR - Counts"
+    },
+    "platform": "Illumina",
+    "file_size": 4208285,
+    "created_datetime": "2021-12-13T19:33:36.682918-06:00"
+  },
+  "header": {
+    "comment": "# gene-model: GENCODE v36",
+    "columns": [
+      "gene_id",
+      "gene_name",
+      "gene_type",
+      "unstranded",
+      "stranded_first",
+      "stranded_second",
+      "tpm_unstranded",
+      "fpkm_unstranded",
+      "fpkm_uq_unstranded"
+    ],
+    "selection_rule": "first file-ID-sorted RNA record in metadata-paired primary samples; header-only audit, not analysis eligibility"
+  },
+  "release_status": {
+    "commit": "8f7c2a51ab0084b216ad1b62a3fae8b945439c53",
+    "data_release": "Data Release 46.0 - August 10, 2026",
+    "data_release_version": {
+      "major": 46,
+      "minor": 0,
+      "release_date": "2026-08-10"
+    },
+    "status": "OK",
+    "tag": "8.5.0",
+    "version": 1
+  }
+}

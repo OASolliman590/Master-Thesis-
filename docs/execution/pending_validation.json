@@ -5,6 +5,7 @@
     {
       "ticket": "B-F1",
       "base_commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
+      "code_commit": "fed56e6029afb43cc83a043ec4b5d7afbcf0fed9",
       "state": "Reviewed WIP: local 19-test run passed, final changed fixture test passed; AIU unrun",
       "host": "AIU omics",
       "environment": "/home/omics/miniforge3/envs/omics-py/bin/python, 3.11.16",

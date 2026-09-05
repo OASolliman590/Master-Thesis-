@@ -1,0 +1,122 @@
+[
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 86,
+      "sample_id": "Decitabine_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985079",
+    "geo_same_ordinal_title": "du145_DU145PS1A_H2_Decitabine_0.5_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 182,
+      "sample_id": "Decitabine_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985175",
+    "geo_same_ordinal_title": "du145_DU145PS1B_H2_Decitabine_0.5_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 261,
+      "sample_id": "Entinostat_0.12_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985254",
+    "geo_same_ordinal_title": "du145_DU145PS2A_F9_Epigallocatechin_0.5_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 357,
+      "sample_id": "Entinostat_0.12_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985350",
+    "geo_same_ordinal_title": "du145_DU145PS2B_F09_Epigallocatechin_0.5_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 628,
+      "sample_id": "EPZ-6438_2_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985621",
+    "geo_same_ordinal_title": "du145_DU145PS4A_E04_UCN01_0.02_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "DU145",
+    "actual_row": {
+      "data_row_ordinal": 724,
+      "sample_id": "EPZ-6438_2_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985717",
+    "geo_same_ordinal_title": "du145_DU145PS4B_E04_UCN01_0.02_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 86,
+      "sample_id": "Decitabine_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985847",
+    "geo_same_ordinal_title": "lncap_LNCAPPS1A_F11_DMSO_0_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 566,
+      "sample_id": "Decitabine_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5986327",
+    "geo_same_ordinal_title": "lncap_LNCAPPS3B_F11_DMSO_0_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 178,
+      "sample_id": "Entinostat_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5985939",
+    "geo_same_ordinal_title": "lncap_LNCAPPS1B_B11_Pralatrexate_10_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 658,
+      "sample_id": "Entinostat_0.5_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5986419",
+    "geo_same_ordinal_title": "lncap_LNCAPPS4A_B11_PI 3-Kalpha Inhibitor IV_0.23_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 332,
+      "sample_id": "EPZ-6438_0.02_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5986093",
+    "geo_same_ordinal_title": "lncap_LNCAPPS2B_D6_DMSO_0_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  },
+  {
+    "model": "LNCaP",
+    "actual_row": {
+      "data_row_ordinal": 812,
+      "sample_id": "EPZ-6438_0.02_24"
+    },
+    "geo_same_ordinal_gsm": "GSM5986573",
+    "geo_same_ordinal_title": "lncap_LNCAPPS5A_D8_Benserazide hydrochloride_4.5_24",
+    "diagnostic_only": "Does not establish an alternative ordering or join"
+  }
+]

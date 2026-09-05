@@ -1,0 +1,13 @@
+{
+  "scope": "Public metadata references only; no full molecular objects or final eligible-patient manifest",
+  "candidate_file_edges": 1013,
+  "sha256": {
+    "summary.json": "5b67a1bc9b87e820b820ac2960f6cc10b9161a51c2102e7895eed79a4b843ced",
+    "candidate_files.tsv": "1810dd8693549b37c02a9d65513e77351362e69ee39efb0ea1d55f1f99fd34a4",
+    "header_check.json": "0912847f0523433a54208a1375f9664dea8679d3fcc2602113e6970af29ef44a",
+    "provenance.json": "789248fe7c62b9b38c1f41e1b1705c58fce148e07009380bbd8391abddced0f9",
+    "header_provenance.json": "cfc64a459c89b561dcbb39ae953a30ad641d5552b37ed1f53dbed317f48f0d52"
+  },
+  "raw_response_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\TCGA_secondary_manifest\\luad_files.json",
+  "prefix_scope": "2048 bytes ending mid-record; header only, not a B-F1 TSV fixture"
+}

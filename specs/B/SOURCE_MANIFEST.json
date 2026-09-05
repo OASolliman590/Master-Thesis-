@@ -50,7 +50,15 @@
         "TAP2"
       ],
       "superseded_for_program_gene_presence_by": "docs/research/B_readiness/GSE107299_full_expression_audit.json"
-    }
+    },
+    "portal_WGS_purity_attribute_quarantined": true,
+    "original_table_clinical_code_candidates": 114,
+    "original_study_protocol_bridge_candidates": 73,
+    "original_study_Qpure_present_candidates": 72,
+    "LUAD_shared_primary_case_UUIDs_before_QC": 455,
+    "LUAD_shared_primary_sample_UUIDs_before_QC": 466,
+    "CPC_clinical_candidate_codes_route": "legacy cBioPortal-only route,73; superseded for total candidate coverage by original Table1 route,114",
+    "CPC_clinical_uncovered_via_inspected_route_scope": "legacy portal route137; original Table1 has96 unmatched codes,41 code-only bridges,73 study-protocol-supported candidates"
   },
   "retrieved_objects": [
     {
@@ -303,5 +311,11 @@
       "scope": "Full compressed object and all feature rows checked; no scores, patient associations or expression matrix retained.",
       "verification": "Full byte/hash/feature audit reported by the AIU audit; this documentation update inspected the saved JSON only and did not re-download the source."
     }
+  ],
+  "source_update_date": "2026-09-06",
+  "source_updates": [
+    "docs/research/B_PURITY_FIELD_CORRECTION.md",
+    "docs/research/B_SPECIMEN_RESOLUTION.md",
+    "docs/research/TCGA_LUAD_SECONDARY.md"
   ]
 }

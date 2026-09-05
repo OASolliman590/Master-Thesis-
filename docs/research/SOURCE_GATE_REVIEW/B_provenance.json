@@ -1,0 +1,127 @@
+[
+  {
+    "artifact": "methylome_pubmed.json",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:34824250%20AND%20SRC:MED&format=json",
+    "retrieved_utc": "2026-09-05T22:16:44.502646+00:00",
+    "bytes_read": 1258,
+    "bytes": 1258,
+    "sha256": "010103655f8a14c4de8134e04e73938da0ef8fc7aadd8b1ccc88fc4206733609",
+    "content_type": "application/json;charset=UTF-8"
+  },
+  {
+    "artifact": "Sinha2019.xml",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6511374/fullTextXML",
+    "retrieved_utc": "2026-09-05T22:16:44.947555+00:00",
+    "bytes_read": 0,
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "artifact": "ZNRF2021.xml",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8556363/fullTextXML",
+    "retrieved_utc": "2026-09-05T22:16:45.752517+00:00",
+    "bytes_read": 199945,
+    "bytes": 199945,
+    "sha256": "6fb281f22557b16ae2da67d673a3eb852bf737aeca5b8fb0cd85c2707d5334e6",
+    "content_type": "application/xml"
+  },
+  {
+    "artifact": "Landscape2025.xml",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11844408/fullTextXML",
+    "retrieved_utc": "2026-09-05T22:17:42.386766+00:00",
+    "bytes_read": 0,
+    "error": "The read operation timed out"
+  },
+  {
+    "artifact": "Fraser2017.pdf",
+    "url": "https://ebms.nci.nih.gov/sites/ebms.nci.nih.gov/files/Fraser%20Nature%202017%2028068672.pdf",
+    "retrieved_utc": "2026-09-05T22:18:22.817313+00:00",
+    "bytes_read": 10189,
+    "bytes": 10189,
+    "sha256": "ac573c1a04dc4042c476d71592e85f75ed33d10ee64dc34015b84ec90777aeef",
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "artifact": "Sinha2019.pdf",
+    "url": "https://escholarship.org/content/qt35z033sq/qt35z033sq_noSplash_6db6c3dbe8a8b225bbbc6570ab29b678.pdf",
+    "retrieved_utc": "2026-09-05T22:18:26.120821+00:00",
+    "bytes_read": 0,
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "artifact": "Shiah2017.html",
+    "url": "https://oup.silverchair-cdn.com/article-minimal/3866477",
+    "retrieved_utc": "2026-09-05T22:18:58.317591+00:00",
+    "bytes_read": 183879,
+    "bytes": 183879,
+    "sha256": "df057ba3d1afa090f0e5691e915e5105b83b50631ec812a9ddedebd59ec7c9db",
+    "content_type": "text/html"
+  },
+  {
+    "artifact": "Shiah2017_S1.xls",
+    "url": "https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/bioinformatics/33/20/10.1093_bioinformatics_btx372/4/bioinformatics_33_20_3151_s2.xls",
+    "retrieved_utc": "2026-09-05T22:18:59.175833+00:00",
+    "bytes_read": 0,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "artifact": "Landscape2025.xml",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11844408/fullTextXML",
+    "retrieved_utc": "2026-09-05T22:18:59.236114+00:00",
+    "bytes_read": 0,
+    "error": "HTTP Error 503: Service Temporarily Unavailable"
+  },
+  {
+    "artifact": "Shiah2017_S1.xls",
+    "url": "https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/bioinformatics/33/20/10.1093_bioinformatics_btx372/4/bioinformatics_33_20_3151_s2.xls?Expires=2147483647&Signature=iiu8d~RtZDLzr9tz4gZuAYOYD5yboMgsPYcorp7w-utsXy5L0McVpHiuvIjlXMwOWsrkvaziHig4sCdBgiPlE8Bro77FTDt~tgEtGl6eV4hwgYUeihphKF9crIOM5KrPCH-uHzbMD79po5fW96xLVbJpgBTjqKm-4RMKcf3LjSf0A2eFV~wArJW~J078m80gSbmkU8vgwIhnhyAJqtKt3pEA5QJMj6-4Rv4I3CV~7oWsVNl0XYg~UaTBeeFngaIkgw9vhrGSutCDEtGb3T98tcTdo5cRH7rqR12001yOTwziOcVuJ905CAx6wD1TVvuJsGUcILQ42GWHY1ck1XPYzg__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA",
+    "retrieved_utc": "2026-09-05T22:20:06.162676+00:00",
+    "bytes_read": 55808,
+    "bytes": 55808,
+    "sha256": "2be12838bf6514137dc404164c97ac9cb0b8f72d660cba119100ffb784c25a39",
+    "content_type": "application/vnd.ms-excel"
+  },
+  {
+    "artifact": "Sinha2019_UCLA.pdf",
+    "url": "https://qcb.ucla.edu/wp-content/uploads/sites/14/2020/04/PMID-30889379.pdf",
+    "retrieved_utc": "2026-09-05T22:20:06.812146+00:00",
+    "bytes_read": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+  },
+  {
+    "artifact": "Fraser2017_tables.zip",
+    "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fnature20788/MediaObjects/41586_2017_BFnature20788_MOESM324_ESM.zip",
+    "retrieved_utc": "2026-09-05T22:20:37.610479+00:00",
+    "bytes_read": 8357921,
+    "bytes": 8357921,
+    "sha256": "89aa7aacd68fd5f5105afd7b8a2fb6fd457c2cce01f75a16a54d5fec77a277ee",
+    "content_type": "application/octet-stream"
+  },
+  {
+    "artifact": "Fraser2017_supplement.pdf",
+    "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fnature20788/MediaObjects/41586_2017_BFnature20788_MOESM323_ESM.pdf",
+    "retrieved_utc": "2026-09-05T22:20:41.837219+00:00",
+    "bytes_read": 4470341,
+    "bytes": 4470341,
+    "sha256": "db2e84e39f6869065501eeda656ff0afcc5fbbbf10357d6c95c62e7bc6f8adbe",
+    "content_type": "application/pdf"
+  },
+  {
+    "artifact": "xlrd_metadata.json",
+    "url": "https://pypi.org/pypi/xlrd/2.0.2/json",
+    "retrieved_utc": "2026-09-05T22:22:20.487154+00:00",
+    "bytes_read": 5725,
+    "bytes": 5725,
+    "sha256": "320fd24af58bea9b9ef35aa0763f79c81a0b464ad8078d1558b96c39ce38bd65",
+    "content_type": "application/json"
+  },
+  {
+    "artifact": "xlrd-2.0.2-py2.py3-none-any.whl",
+    "url": "https://files.pythonhosted.org/packages/1a/62/c8d562e7766786ba6587d09c5a8ba9f718ed3fa8af7f4553e8f91c36f302/xlrd-2.0.2-py2.py3-none-any.whl",
+    "retrieved_utc": "2026-09-05T22:23:03.571729+00:00",
+    "bytes_read": 96555,
+    "bytes": 96555,
+    "sha256": "ea762c3d29f4cca48d82df517b6d89fbce4db3107f9d78713e48cd321d5c9aa9",
+    "content_type": "binary/octet-stream"
+  }
+]

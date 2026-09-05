@@ -1,5 +1,7 @@
 # Paper C — Source contracts and coverage
 
+**6 September source update:** [LUAD metadata](../../docs/research/TCGA_LUAD_SECONDARY.md) establishes455 primary case intersections for the retained comparison. [Complete GSE199800 identifier inspection](../../docs/research/C_GSE199800_IDENTITY.md) confirms all12 candidate rows but no unique plate/GSM/control join. These close only metadata/row-presence subgates. No disease query, treatment effect or independent validation was generated.
+
 Status: source-specific evidence audit plus proposed analysis contracts. Checked 5 September 2026. Catalogue counts are not eligible biological N. Exact inspected URLs, timestamps, hashes and errors are in the linked audit manifests; large caches stay outside Git. Files not yet retrieved must have a null checksum and an unresolved status, never an invented digest.
 
 ## Source-by-question matrix
@@ -16,7 +18,7 @@ Status: source-specific evidence audit plus proposed analysis contracts. Checked
 | Genetic immune-context evidence: Perturb-CITE-seq | SCP1064 reports 218,331 cells, 23,712 genes; download sign-in. Public scPerturb Zenodo10044268 lists RNA1.459GB and protein24.7MB. | Perturbation/guide, patient model, experiment, condition, RNA/protein, control; aggregate by biological experiment. | Actual eligible experiments and targeted gene coverage unresolved. Genetic knockout is not identical to drug inhibition. Original and harmonised data are one originating study. |
 | In-vivo /cytokine context: TISMO | Publication reports 605 in-vitro and 1,518 in-vivo samples; current website redirected to pku-genomics. | Original study, animal, model, species, treatment/control, timing and endpoint. | Current manifest and relevant epigenetic-drug/model overlap unresolved. Publication totals must not be used as current eligible N. No prostate or three-drug coverage assumed. |
 | IFNG reference: proposed LJP4 /L1000CDS2 | Live ligand list has 22 entries including IFNG55d38ec50bdc501eb68f1472. Source paper describes six breast lines. | Actual payload, landmark space, constituent profiles, controls and overlap with queried releases. | Payload/exposure coverage unverified. A ligand label is not a prostate reference. Consensus overlap may prevent independence. |
-| Additional measured prostate corroboration: GSE199800 /GSE216053 | Named candidates retained from planning; no new accession-level matrix/replicate contract established in this kit. | Drug or genetic target, prostate model, controls, dose/time, biological replicate and measured gene space. | Verify exact treatment and assay before assigning any validation role. No promised result or drug coverage. |
+| Additional measured prostate corroboration: GSE199800 /GSE216053 | GSE199800 complete files contain all12 candidate rows (DU145767 total, LNCaP960), with duplicate unassigned row IDs; plate/control mapping remains unavailable. PM154 GSE216053 drug/genotype annotations conflict, as documented in POST_M1_EVIDENCE. | Drug or genetic target, prostate model, controls, dose/time, biological replicate and measured gene space. | Verify exact treatment and assay before assigning any validation role. No promised result or drug coverage. |
 
 ## Versioned evidence and acquisition record
 

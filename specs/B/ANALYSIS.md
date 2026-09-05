@@ -1,5 +1,7 @@
 # B exact proposed analysis
 
+**Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).
+
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** The primary program, rank scale, covariates and modelling choices below are proposals, not user-approved facts. All eight candidate external genes are now verified in the complete expression object; the common annotation universe, probe coverage, comparable purity, specimen linkage and external precision remain open.
 
 ## Fixed molecular endpoint
@@ -32,7 +34,7 @@ Positive values favour adding promoter methylation. Each patient receives equal 
 
 ## Missingness, inference and precision
 
-Primary complete-data eligibility requires all fixed score genes/universe, promoter aggregates, age, grade and comparable purity. The current 73-code clinical candidate subset is a maximum for that mapping route before focus checks, not accepted final E; 137 currently uncovered codes cannot acquire covariates by zero-filling or prefix matching alone. Report characteristics and measured data availability of included/excluded records without changing thresholds after outcomes. A reduced-baseline all-pair analysis is secondary only after an explicit amended definition and transparent claim limits.
+Primary complete-data eligibility requires all fixed score genes/universe, promoter aggregates, age, grade and comparable purity. The portal route has73 code matches; the original clinical table has114, of which73 have the stronger original-study assay bridge. Qpure is present for72 of those73, before specimen policy, method comparability and molecular QC. These route-specific counts are not final E. Missing covariates or specimen links cannot be filled by zero or code similarity. Report characteristics and measured data availability of included/excluded records without changing thresholds after outcomes. A reduced-baseline all-pair analysis is secondary only after an explicit amended definition and transparent claim limits.
 
 Proposed uncertainty: 2,000 paired patient bootstrap resamples of E (seed 42), keeping the two frozen predictions and Y together, recomputing the ratio each time. Report a percentile 95% interval and the fraction of undefined bootstrap SSTs. This interval is conditional on the frozen fitted models; uncertainty from retraining is assessed separately using TCGA resampling plus corresponding external evaluations only if preregistered. Repeated specimens never become separate resampled patients.
 

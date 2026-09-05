@@ -1,0 +1,33 @@
+{
+  "scope": "Complete public metadata response only; not final eligibility or same-portion pairing",
+  "total_file_records": 1311,
+  "platform_workflow_counts": {
+    "('Methylation Beta Value', 'Illumina Human Methylation 27', 'SeSAMe Methylation Beta Estimation')": 150,
+    "('Gene Expression Quantification', 'Illumina', 'STAR - Counts')": 600,
+    "('Methylation Beta Value', 'Illumina Human Methylation 450', 'SeSAMe Methylation Beta Estimation')": 507,
+    "('Methylation Beta Value', 'Illumina Methylation Epic v2', 'SeSAMe Methylation Beta Estimation')": 53,
+    "('Gene Expression Quantification', None, 'STAR - Counts')": 1
+  },
+  "groups": {
+    "rna": {
+      "all_sample_type_files": 601,
+      "primary_cases": 517,
+      "primary_samples": 529,
+      "primary_files": 540,
+      "cases_with_multiple_primary_samples": 12,
+      "samples_with_multiple_files": 11
+    },
+    "methylation450k": {
+      "all_sample_type_files": 507,
+      "primary_cases": 458,
+      "primary_samples": 469,
+      "primary_files": 473,
+      "cases_with_multiple_primary_samples": 11,
+      "samples_with_multiple_files": 4
+    }
+  },
+  "shared_primary_cases": 455,
+  "shared_primary_samples": 466,
+  "rna_only_primary_cases": 62,
+  "methylation_only_primary_cases": 3
+}

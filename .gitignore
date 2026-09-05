@@ -58,3 +58,7 @@ docs/research/C_lincs2020_readiness/cmapM_SigToolDemo.md
 docs/research/C_lincs2020_readiness/cmapM_tree.json
 docs/research/C_lincs2020_readiness/cmapPy_README.rst
 docs/research/C_lincs2020_readiness/field_definitions.xlsx
+
+# LUAD secondary source cache: preserve only reviewed manifests/aggregate evidence.
+docs/research/TCGA_secondary_manifest/luad_files.json
+docs/research/TCGA_secondary_manifest/*.prefix

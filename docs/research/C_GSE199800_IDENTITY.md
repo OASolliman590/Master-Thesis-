@@ -1,0 +1,18 @@
+# GSE199800 candidate coverage and the unresolved control join
+
+6 September 2026. **Source verification, not a perturbation result.** A complete identifier audit now establishes that both deposited count files contain two rows for each protocol compound. The same audit shows that the processed row identifiers cannot yet identify the individual plate/GSM, so the proposed plate-matched validation remains gated.
+
+| Model | Complete compressed object | Actual rows / distinct IDs | Candidate count-row ordinals |
+|---|---|---|---|
+| DU145 | 14,737,002 bytes; SHA256 `463b556665bad0fc3cc16b33c389dcb6f624a31e9f36fcaeb55acb76b59f4e7b` | 767 / 341 | Decitabine 86,182; entinostat 261,357; EPZ-6438 628,724 |
+| LNCaP | 16,714,169 bytes; SHA256 `d0de065d1817433081553195297a1491151cd60f9905f40aa8e9df37edeb1082` | 960 / 422 | Decitabine 86,566; entinostat 178,658; EPZ-6438 332,812 |
+
+These are one-based data-row ordinals, excluding the header. The two occurrences of each drug/line/dose/time key are identical strings without replicate suffixes. Both complete streams reached gzip EOF and contain 25,040 gene columns; every data row has the expected field count. Expression values were discarded after extracting IDs and widths, so this check does not establish finite-value coverage or treatment effects. [DU145 source](https://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199800/suppl/GSE199800_oncoloop_du145_counts.csv.gz), [LNCaP source](https://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199800/suppl/GSE199800_oncoloop_lncap_counts.csv.gz).
+
+GEO lists 768 DU145 records, one more than the complete count object; the missing/renamed record cannot be uniquely assigned or labelled failed QC. LNCaP count order directly differs from GEO order: its repeated decitabine key is at 86/566, while corresponding GEO records are at 86/182 in the line-specific listing. Equal ordinal is therefore not a valid global join. Literal drug and control names also differ across the sources; apparent aliases are not automatic identity mappings. [GEO metadata](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE199800&targ=gsm&view=brief&form=text).
+
+The original analysis uses six plate-matched DMSO controls. Current count IDs do not assign the DMSO rows to their original plate/well, and MOCK/UNTREATED naming remains unresolved. Combining all DMSO controls changes that comparator and cannot silently count as reproducing the published validation design. The bounded search of original-author repository inventories found no study-specific export map; a PlateSeq example from a different accession cannot repair this one. [OncoLoop study](https://doi.org/10.1158/2159-8290.CD-22-0342), [detailed methods, Data analysis paragraph37](https://doi.org/10.1158/2159-8290.22541974.v1).
+
+Required next evidence is an authoritative mapping from count-file hash plus row ordinal/raw ID to GSM, plate and well, including dropped/renamed records and intended controls. Assay dose units and independent culture/day replication also remain unresolved. No author contact was sent. This limitation does not remove GSE199800 or any original source from Paper C, change its primary endpoint, or substitute virtual predictions for measured evidence.
+
+The full outside report is hash-registered in [REPORT_REGISTER.json](SOURCE_GATE_REVIEW/REPORT_REGISTER.json). Small identifier/provenance artifacts are retained under `C_row_identity/`; raw expression matrices are not retained or redistributed. The audit transferred 31,876,825 bytes in total, including bounded code-resource metadata, with no count-file retries. All twelve candidate rows are now observed rather than expected; **zero row-to-GSM assignments** and **zero biological validation claims** were made.

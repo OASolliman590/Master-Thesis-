@@ -1,0 +1,17 @@
+{
+  "portal_CPCG_field_count": 130,
+  "original_comparable_count": 130,
+  "matching_count_tolerance_1e_8": 130,
+  "mismatches": [],
+  "portal_attribute_definition": {
+    "displayName": "WGS Based Purity Estimation",
+    "description": "WGS based purity estimation",
+    "datatype": "NUMBER",
+    "patientAttribute": false,
+    "priority": "1",
+    "clinicalAttributeId": "WGS_BASED_PURITY_ESTIMATION",
+    "studyId": "prad_cpcg_2017"
+  },
+  "original_field": "WGSvsOS accuracy",
+  "source_definition_location": "Fraser supplementary PDF page 3, Supplementary Table 1 legend"
+}

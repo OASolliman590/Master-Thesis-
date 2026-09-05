@@ -1,0 +1,53 @@
+[
+  {
+    "file": "github_oncoloop_search.json",
+    "url": "https://api.github.com/search/repositories?q=OncoLoop",
+    "checked_utc": "2026-09-05T22:21:00.715849+00:00",
+    "bytes": 5088,
+    "sha256": "0ed67a3caa3a41f3f50bf50f0c594ffffe4bd598e0882949b38985369c2d2fa0"
+  },
+  {
+    "file": "califano_repos.json",
+    "url": "https://api.github.com/orgs/califano-lab/repos?per_page=100",
+    "checked_utc": "2026-09-05T22:21:01.239967+00:00",
+    "bytes": 201722,
+    "sha256": "efb72208dfa0d26ba1e540214885c319ff52410f7a312dcaabbf90a1038c73c7"
+  },
+  {
+    "file": "vasciaveo_repos.json",
+    "url": "https://api.github.com/users/VasciaveoLab/repos?per_page=100",
+    "checked_utc": "2026-09-05T22:21:02.203730+00:00",
+    "bytes": 44945,
+    "sha256": "70737e5537bb5fb1e33ea8c8c609ea61363aae0e5039991d2af5f6538b68ef93"
+  },
+  {
+    "file": "alevax_repos.json",
+    "url": "https://api.github.com/users/alevax/repos?per_page=100",
+    "checked_utc": "2026-09-05T22:21:29.737168+00:00",
+    "bytes": 167882,
+    "sha256": "99201a01e2fc3fd34dde816f662b554563cd125c4224f165c16856da172eeb5f"
+  },
+  {
+    "file": "mapk_tree.json",
+    "url": "https://api.github.com/repos/califano-lab/MAPK_Experimental_Signature/git/trees/main?recursive=1",
+    "checked_utc": "2026-09-05T22:21:31.008849+00:00",
+    "bytes": 2257,
+    "sha256": "061bf76c99bec123640e6d460d7beb3197e94db5520c30748fffa70121602ccd"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/califano-lab/MAPK_Experimental_Signature/6afe22ba4db1da1a3fb95f8ecc185b18ad6eb504/README.md",
+    "file": "mapk_README.md",
+    "commit_or_tree_sha": "6afe22ba4db1da1a3fb95f8ecc185b18ad6eb504",
+    "checked_utc": "2026-09-05T22:22:41.121447+00:00",
+    "bytes": 793,
+    "sha256": "afd7a421472354eb216020f852c9f550712bc83215e956bbee4a8c1234a43138"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/califano-lab/MAPK_Experimental_Signature/6afe22ba4db1da1a3fb95f8ecc185b18ad6eb504/MAPK_Exp_Signature_Generation.R",
+    "file": "mapk_MAPK_Exp_Signature_Generation.R",
+    "commit_or_tree_sha": "6afe22ba4db1da1a3fb95f8ecc185b18ad6eb504",
+    "checked_utc": "2026-09-05T22:22:41.604775+00:00",
+    "bytes": 2967,
+    "sha256": "2afa4d6287b62cb7476fe25c308a22f6100c961f51e3c5a310953177f97a0831"
+  }
+]
