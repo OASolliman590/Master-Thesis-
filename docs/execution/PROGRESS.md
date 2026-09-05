@@ -2,6 +2,8 @@
 
 ## Current checkpoint: B-F1 reviewed WIP, 6 September 2026
 
+Published code checkpoint `fed56e6029afb43cc83a043ec4b5d7afbcf0fed9` is verified on GitHub. Issue#5 remains OPEN; the Notion milestone, project and plan are synchronized. [B_F1_PUBLICATION.json](B_F1_PUBLICATION.json) records the release and remaining gates.
+
 The four M1 design drafts are published; no primary is frozen and no paper is implemented. Spark produced B-F1 format tooling. Astra fixed reproduced provenance/output integrity defects and format edge cases. The local Python3.12 suite passed 19 tests; the last one-line negative-fixture correction passed its affected test separately. Four actual real-format runs have hash-attested summaries. Independent Standards/Spec rechecks are recorded in docs/reviews/; all reported code defects are resolved.
 
 Opus delivered the initial substantive code review, but its final recheck stopped at provider quota exhaustion despite exit0. AIU SSH still times out; no remote B-F1 job started. Final Opus recheck and AIU/Python3.11 validation remain queued, so issue#5 stays open. See B_F1_ASTRA_DISPOSITION.md and pending_validation.json. This checkpoint is authorized WIP backup, not full validation.
