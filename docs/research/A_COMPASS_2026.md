@@ -1,0 +1,9 @@
+# Paper A: current closest-study addition
+
+Verified 6 September 2026 from the original published article, not a preprint. Shen et al., “Generalizable AI predicts immunotherapy outcomes across cancers and treatments,” *Nature Medicine*, published 3 July 2026, DOI [10.1038/s41591-026-04502-7](https://www.nature.com/articles/s41591-026-04502-7).
+
+The paper describes COMPASS, a transcriptomic model pretrained on TCGA and evaluated across 16 clinical cohorts using cohort/cancer/treatment transfer settings. Its clinical benchmark defines responders as CR/PR and nonresponders as SD/PD. Exact locators: Main, “COMPASS achieves state-of-the-art performance across 16 immunotherapy cohorts,” and Methods. These are publication-level facts; this check has not reproduced the code, results or per-patient split provenance.
+
+Design implication (inference): generic cross-cancer prediction, biological interpretation, or held-out-cohort testing alone cannot establish A-P2 novelty. A must demonstrate a specific additional clinical-label/transferability question beyond this precedent. The currently proposed matched-patient endpoint-sensitivity and original-label audit may provide a distinction, but their novelty is not proved by this inspection. Both A-P1 and A-P2 remain proposals; this source neither selects a primary nor mandates implementing a foundation-model comparator. Audit exact training overlap before treating any published COMPASS checkpoint as an independent comparator on the same cohorts.
+
+Scope of verification: original article text opened with web tool; publication status/date, high-level cohort framework and response-category rule inspected. No model weights, patient-level predictions, expression matrices or benchmark code were acquired. Reading the article exposed aggregate published performance claims; no thesis performance was calculated. Further detailed comparison is queued, not represented as completed.

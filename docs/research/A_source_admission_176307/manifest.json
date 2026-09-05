@@ -1,0 +1,62 @@
+{
+  "source": "PROVENANCE.json outside repository",
+  "source_sha256": "1b2cef7d7f57e5ad84433f5ec5c67a515a854687de8d724482952e92733852f8",
+  "retained_response_bytes": 329568,
+  "downloads": [
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/",
+      "bytes": 1166,
+      "sha256": "e9885507d087cb865402af9c028ba793715e68a71e44f1201b56c78d43a6e9b5",
+      "retrieval_utc": "2026-09-06",
+      "receipt": "directory_receipt.json"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8548561/?report=xml",
+      "bytes": 208113,
+      "sha256": "96db8163c1a8e6d69dbe4fcc8e8f5831d958e952f2d6e8cf2ce822578ce54777",
+      "receipt": "article_receipt.json"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/instance/8548561/bin/41416_2021_1488_MOESM2_ESM.pdf",
+      "bytes": 21455,
+      "sha256": "64de209e533eee4295debb80b5bbe0fc26921c562527d677fe987c8561766ac7",
+      "retrieval_utc": "2026-09-06",
+      "receipt": "supplement_receipt.json"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_BACI_Omniseq_Sample_Name_Key_submitted_GEO_v2.csv.gz",
+      "bytes": 530,
+      "sha256": "cfe452ec72c99f2c84216bb25fe291b4c78028e53b8a8189acbd5c9ed7db919b",
+      "partial": false,
+      "retrieval_utc": "2026-09-06"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_salmon_tpm_gene.matrix.tsv.gz",
+      "bytes": 32768,
+      "sha256": "58d40f8fcd2c4484112aa6663afec55147877d674a9b9d84c03b7c62cb919655",
+      "partial": true,
+      "retrieval_utc": "2026-09-06"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_BACI_log_trans_normalized_RNAseq.csv.gz",
+      "bytes": 32768,
+      "sha256": "faf30311bd3c0faed892e0749550f86274347936a2ab4eb1f83016fb36998738",
+      "partial": true,
+      "retrieval_utc": "2026-09-06"
+    },
+    {
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_baci_rsem_RS_BACI_headers_tab.txt.gz",
+      "bytes": 32768,
+      "sha256": "1051759deb32991398ab7a7aa02c0aa6d0b1fa66e861a65edba0174107f0672a",
+      "partial": true,
+      "retrieval_utc": "2026-09-06"
+    }
+  ],
+  "copied_files": {
+    "REPORT.md": "9292addf27417ff5c2cc633dd1ab3e901c9278981cc44812cae5356a97ac56a5",
+    "EVIDENCE_LEDGER.md": "f224bf677878d676da65efbb0d4c96e05a714ea0dd9e745644dbd0600b0158b7",
+    "metadata_audit.json": "ceebc92ff4233540703f0bc76e96caf77674ebee00c41f3b6f6b20d372efd20c",
+    "audit_metadata.py": "d1e0b38ed31d193850cf527da5fbdf4f33d81911e3888cad91a3bc56bd73026a"
+  },
+  "reproduction": "Audit script must run from the original outer planning/next_evidence/A_source_admission_176307 layout with its retained ignored source inputs; this copy is provenance, not a standalone production workflow."
+}

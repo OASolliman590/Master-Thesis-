@@ -1,0 +1,26 @@
+{
+  "E:\\Master_Thesis\\planning\\next_evidence\\A_COMBAT_admission\\REPORT.md": {
+    "bytes": 7461,
+    "sha256": "e4a53659025b09761fe0695d147d0abe819c708bf0308c01688a88d17148025c"
+  },
+  "E:\\Master_Thesis\\planning\\next_evidence\\A_COMBAT_admission\\REVIEW.md": {
+    "bytes": 6829,
+    "sha256": "f7308ca045a9fb5d1eb529e765a2297a0cc3f28c0ffd3b9b80e5a8839f592c97"
+  },
+  "E:\\Master_Thesis\\planning\\next_evidence\\A_COMPASS_2026_NOTE.md": {
+    "bytes": 1943,
+    "sha256": "8ff9ad0208632b6d6d4e428c5593eb63d074ad00edd9d4581022958521617bef"
+  },
+  "E:\\Master_Thesis\\planning\\verify_combat_join.py": {
+    "bytes": 4273,
+    "sha256": "873217033c228b9a01303d532d7ff5cdbccffc1896d89490d01ae24b8a14c7d6"
+  },
+  "E:\\Master_Thesis\\planning\\inspect_combat_workbook.py": {
+    "bytes": 1250,
+    "sha256": "64925d5d8175df2b4a3959697bb8803c59608b336e6cd2c51d5b5d16ba3290e2"
+  },
+  "E:\\Master_Thesis\\planning\\audit_combat_admission.py": {
+    "bytes": 1408,
+    "sha256": "25da9e6c1e4b8038811c345e3a43580f3ded6cb39e5f71acaf7f6e85391ab02e"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "original_sample_table_rows": 108,
+  "original_sample_table_headers": [
+    "",
+    "Sample",
+    "IDX",
+    "BamName",
+    "PatientID",
+    "PatientID.replicate",
+    "PreOn",
+    "PatientIDrep",
+    "PopCateg",
+    "BOR",
+    "Response",
+    "Response",
+    "USUBJID",
+    "Cohort"
+  ],
+  "Riaz": {
+    "GEO_profiles": 109,
+    "GEO_patient_codes": 65,
+    "visit_counts": {
+      "Pre": 51,
+      "On": 58
+    },
+    "baseline_profiles": 51,
+    "baseline_patients": 51,
+    "baseline_GEO_response": {
+      "PD": 23,
+      "SD": 16,
+      "UNK": 2,
+      "PRCR": 10
+    },
+    "baseline_source_BOR": {
+      "PD": 23,
+      "SD": 16,
+      "NE": 2,
+      "PR": 7,
+      "CR": 3
+    },
+    "baseline_source_cohort": {
+      "NIV3-PROG": 26,
+      "NIV3-NAIVE": 25
+    },
+    "baseline_source_bam_exact_matches": 43,
+    "baseline_source_bam_matches_after_explicit_terminal_dot_digit_to_hyphen_digit_rule": 51,
+    "source_clinical_GEO_category_disagreements": [],
+    "stratum_BOR_counts": {
+      "NIV3-NAIVE": {
+        "NE": 2,
+        "SD": 5,
+        "PD": 12,
+        "CR": 2,
+        "PR": 4
+      },
+      "NIV3-PROG": {
+        "PD": 11,
+        "SD": 11,
+        "PR": 3,
+        "CR": 1
+      }
+    }
+  },
+  "FPKM_prefix": {
+    "compressed_bytes_inspected": 64000,
+    "complete_rows_inspected": 127,
+    "sample_columns": 109,
+    "first_column_header": "",
+    "sample_titles_equal_GEO_titles": true,
+    "duplicate_header_columns": 0,
+    "missing_GEO_titles": [],
+    "unexpected_header_titles": [],
+    "all_complete_row_widths": [
+      110
+    ],
+    "example_gene_identifiers": [
+      "1",
+      "10",
+      "100",
+      "1000",
+      "10000"
+    ],
+    "full_object_downloaded": false,
+    "gene_coverage_or_nonnegative_full_matrix_certified": false
+  },
+  "Hugo": {
+    "GEO_profiles": 28,
+    "GEO_patients": 27,
+    "baseline_profiles": 27,
+    "baseline_patients": 26,
+    "baseline_unique_patient_response": {
+      "Progressive Disease": 12,
+      "Partial Response": 10,
+      "Complete Response": 4
+    },
+    "all_treatments": {
+      "Pembrolizumab": 28
+    },
+    "all_study_sites": {
+      "UCLA": 23,
+      "VIC": 5
+    },
+    "multiple_baseline_specimens": {
+      "Pt27": [
+        "Pt27A",
+        "Pt27B"
+      ]
+    },
+    "duplicate_patient_response_disagreement": [],
+    "nonbaseline_profiles": [
+      {
+        "title": "Pt16",
+        "GSM": "GSM2069836",
+        "visit": "on-treatment"
+      }
+    ]
+  },
+  "cross_accession_overlap": {
+    "GSM": [],
+    "BioSample": [],
+    "SRA_experiment": [],
+    "biological_patient_independence_proven": false,
+    "patient_code_numeric_intersection_not_identity_evidence": [
+      "Pt1",
+      "Pt10",
+      "Pt13",
+      "Pt16",
+      "Pt2",
+      "Pt23",
+      "Pt27",
+      "Pt28",
+      "Pt29",
+      "Pt31",
+      "Pt32",
+      "Pt35",
+      "Pt37",
+      "Pt38",
+      "Pt4",
+      "Pt5",
+      "Pt8",
+      "Pt9"
+    ]
+  }
+}

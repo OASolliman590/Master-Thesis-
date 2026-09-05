@@ -1,0 +1,97 @@
+{
+  "scope": "Identifiers, metadata labels and complete headers only. No expression scores, models or effects.",
+  "gsm_count": 90,
+  "soft_gsm_count": 90,
+  "patient_codes": 89,
+  "record_label_counts": {
+    "CR": 7,
+    "SD": 4,
+    "PD": 69,
+    "PR": 9,
+    "NA": 1
+  },
+  "patient_label_counts": {
+    "CR": 7,
+    "SD": 4,
+    "PD": 68,
+    "PR": 9,
+    "NA": 1
+  },
+  "duplicate_patients": {
+    "BACI165": [
+      {
+        "gsm": "GSM5362510",
+        "title": "Patient sample BACI165_1",
+        "response": "PD",
+        "therapy": "Atezolizumab"
+      },
+      {
+        "gsm": "GSM5362511",
+        "title": "Patient sample BACI165_2",
+        "response": "PD",
+        "therapy": "Atezolizumab"
+      }
+    ]
+  },
+  "unknown_response_patients": [
+    "BACI217"
+  ],
+  "key_rows": 89,
+  "key_unique_rs_ids": 90,
+  "key_patient_missing_in_gsm": [],
+  "gsm_patient_missing_in_key": [],
+  "therapy_patient_counts": {
+    "Atezolizumab": 34,
+    "Pembrolizumab": 47,
+    "Nivolumab": 5,
+    "Durvalumab": 2,
+    "Avelumab": 1
+  },
+  "headers": {
+    "GSE176307_salmon_tpm_gene.matrix.tsv.gz": {
+      "complete_header": true,
+      "identifier_header": "",
+      "data_columns": 92,
+      "unique_data_columns": 92,
+      "header_sha256": "cff2733723699b1a9aa575017bc0bd39124ab3981ffceef44f1240551bcbd9a9",
+      "unmapped_rs": [
+        "RS-03238998",
+        "RS-03239044"
+      ],
+      "key_rs_missing": []
+    },
+    "GSE176307_baci_rsem_RS_BACI_headers_tab.txt.gz": {
+      "complete_header": true,
+      "identifier_header": "",
+      "data_columns": 90,
+      "unique_data_columns": 90,
+      "header_sha256": "99e6adb28168c70fb3827a042d8128afe21777070e49b52b3c0d25b751ca1a78",
+      "unmapped_rs": [],
+      "key_rs_missing": []
+    },
+    "GSE176307_BACI_log_trans_normalized_RNAseq.csv.gz": {
+      "complete_header": false,
+      "identifier_header": "",
+      "data_columns": 9749,
+      "unique_data_columns": 9749,
+      "header_sha256": "2ee65e9f36303d197b8cb271ac1f97b4af0bc2fedb4e909612676f5d86262943",
+      "orientation": "gene columns; sample rows (row identities not audited)",
+      "cyt_gene_header_presence": {
+        "GZMA": true,
+        "PRF1": true
+      }
+    }
+  },
+  "cached_sources": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\feasibility\\GSE176307_metadata.json",
+      "bytes": 211533,
+      "sha256": "15fce2df8abff572d408b0f0239e709f31503366569e5c086018efaaad86ed2c"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\feasibility\\source_metadata\\GSE176307_family.soft.gz",
+      "bytes": 13609,
+      "sha256": "ea242fbb98aa104c384a97a3d1f0baaa938031e91a5a3872b065982d73b1bf72"
+    }
+  ]
+}

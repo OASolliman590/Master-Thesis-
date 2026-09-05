@@ -1,0 +1,141 @@
+{
+  "new_recorded_response_body_bytes": 945779,
+  "self_imposed_total_cap_bytes": 15000000,
+  "count_excludes": "HTTP headers, unreturned timeout/error bodies and browser-tool transport sizes",
+  "artifacts": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\audit_metadata.py",
+      "bytes": 6366,
+      "sha256": "c0983bb77789a9e16432e57794ed33f9a547f23552968e1af058bfccb0ccc6d0"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\fetch_evidence.py",
+      "bytes": 1661,
+      "sha256": "1375fc9bf326231548956dd995efeb28199c24f12322106cf0305c8a362af0a9"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Hugo2016.xml",
+      "bytes": 123305,
+      "sha256": "0ef35516c21e4187561f61d00bf91b390bd47c7eb4308cd8a2cc21b2cd150a2d"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\metadata_summary.json",
+      "bytes": 3070,
+      "sha256": "ccca0411ebfffa2f6ab696c41b6d265986a52b82121c2f15079b3e8fb03c9899"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\NCT01621490.json",
+      "bytes": 417638,
+      "sha256": "82f388a221d1f70f8a534328a8d18d7d5f97d9cdbd44a9e92e877acd5dc0c188"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\requests.json",
+      "bytes": 24492,
+      "sha256": "8b8e0b8093400f13c4da06507ad80cee58d654a0ba7a3c6de9fed5a30887d068"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz2017.xml",
+      "bytes": 195786,
+      "sha256": "41387308e2f8c1d1a428006c4ec81923a42e6c14036263cfa1d443be4ded9745"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_baseline_source.R",
+      "bytes": 4969,
+      "sha256": "9d1348fdf737230ea432b89c79c0858c6bf8f88d0bae8a3eac6ff86c5c3357fc"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz_baseline_source_crosswalk.tsv",
+      "bytes": 8808,
+      "sha256": "6c302c729064d88cd9e583a8309958882e20b2ce0ae3adfa0bbc2f89eddbc895"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_clinical.csv",
+      "bytes": 8112,
+      "sha256": "a70ae5a0b1156b6d85ec89f0d58f3f67538bfb969d53ec5d98232411d19869ab"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_data_README.md",
+      "bytes": 1800,
+      "sha256": "1ef2fea1f46f0708b0d7f9f19f3ef5506d53404b7d48f94d7cef0856a2177090"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz_FPKM.gzpart",
+      "bytes": 64000,
+      "sha256": "c64ffa5e5464995b5c5ad025ffa28787a0f0c78eb68390df8278402a8682715c"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz_FPKM_header.csv",
+      "bytes": 2342,
+      "sha256": "7c66d75f63c684ef9d7ea3fe73ccc8238b31dacc46c5c0469f7c39ebaddce1e3"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_genomic_availability.csv",
+      "bytes": 1493,
+      "sha256": "5f5359618e8c37faf617aeb6c09999f122b7a5c2f94e671421b21339dab56881"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_repo_commit.json",
+      "bytes": 21386,
+      "sha256": "f96dc5d27b8153f6fa423de62885986cfad0ca616ff83b33ff570780f1e24e6d"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_repo_tree.json",
+      "bytes": 50335,
+      "sha256": "a7ec79c8ac3f1240942306bb7f913f1568cc9cb403458054c282eee7b3857169"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_RNA_README.md",
+      "bytes": 1265,
+      "sha256": "6d35a542e52137c611a7ead68452f7521c2ed19d7166476c3a1c6cd1255f573d"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_root_README.md",
+      "bytes": 1122,
+      "sha256": "557faaf782588a645c3c7472ae81921d377b4eec32b5a1da684971ede258f115"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\riaz_sample_table.csv",
+      "bytes": 11689,
+      "sha256": "775106fc1d43684bbd22414d179c4af08036de32cc2edacb1f50ed38768a4496"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz_TableS2.xlsx",
+      "bytes": 21440,
+      "sha256": "ee71854fc07275b1dc6044bbabb66e776330b8d41ed2a710f6c4799b52c63f9e"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_source_admission_91061\\Riaz_TableS4.xlsx",
+      "bytes": 21439,
+      "sha256": "e4faf4679eab00f468200b7095bcbaed4e11b3e8a6c6485088ddb42e2dc58287"
+    }
+  ],
+  "reused_sources_no_new_download": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\feasibility\\source_metadata\\GSE91061_family.soft.gz",
+      "bytes": 7357,
+      "sha256": "2ecd5f064b076fdce58fd651b0a3404cc01ef889c5cfb8d760dc5c7a01adeaf9"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\feasibility\\source_metadata\\GSE78220_family.soft.gz",
+      "bytes": 4753,
+      "sha256": "ed47c48810839ede910542b73002bff1506e70d5adeea5bd16367ecc9fe64c6d"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_discovery_feasibility\\PMC5685550_bioc.json",
+      "bytes": 136186,
+      "sha256": "c1a2336346cdb043a35281dfa47799d6c34950cfa1e29972441edf02b0c6a967"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_discovery_feasibility\\PMC4808437_bioc.json",
+      "bytes": 84090,
+      "sha256": "d4c6671648ff464d18b2c418f036c3ae0ef984326a4b2dd3a30ffeef73a100f1"
+    }
+  ],
+  "invalid_scientific_artifacts": [
+    "Riaz_TableS2.xlsx",
+    "Riaz_TableS4.xlsx"
+  ],
+  "downloaded_analysis_code_executed": false,
+  "metadata_only_audit_executed": "audit_metadata.py",
+  "matrix_prefix_status": "64KB compressed prefix; no complete matrix hash or feature coverage claimed"
+}

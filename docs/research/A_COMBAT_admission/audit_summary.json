@@ -1,0 +1,54 @@
+{
+  "expression": {
+    "bytes": 4202331,
+    "sha256": "8c60d0b0e9c9be30bd04d5e54a3cad9d129f4373aad9ea46348429a6baf7627f",
+    "rows": 26467,
+    "unique_gene_labels": 26467,
+    "sample_columns": 30,
+    "invalid_cells": 0,
+    "negative_cells": 0,
+    "noninteger_cells": 64612,
+    "column_sum_min": 1306624.9099999978,
+    "column_sum_max": 40876909.09000005,
+    "columns_over_one_million": 30,
+    "target_coverage": {
+      "GZMA": {
+        "occurrences": 1,
+        "finite_nonnegative_samples": 30
+      },
+      "PRF1": {
+        "occurrences": 1,
+        "finite_nonnegative_samples": 30
+      }
+    }
+  },
+  "join": {
+    "geo_records": 30,
+    "unique_titles": 30,
+    "title_set_equals_matrix": true,
+    "matrix_title_duplicates": 0,
+    "unique_subjects": 15,
+    "complete_visit_pairs": 15,
+    "baseline_psa50": {
+      "YES": 7,
+      "NO": 8
+    },
+    "baseline_radiographic": {
+      "NO": 11,
+      "YES": 4
+    }
+  },
+  "candidate_clinical_join": {
+    "field": "GEO subjectid versus Supplemental Figure 1 Pt #",
+    "candidate_matches": 15,
+    "unmatched": 0,
+    "C4D1_change_disagreements_over_0_01": 15,
+    "C4D1_change_disagreements_fraction_times100_tolerance0_51_percentage_points": 1,
+    "status": "candidate numeric comparison, not authoritative ID map; both direct and percent/fraction interpretations checked"
+  },
+  "input_hashes": {
+    "A_clinical_transfer\\GSE229555_gsm.soft": "6ffe453038d0e8e4faf6749f736c429b0f91fbdc03cd70c1ef1182aa3daea81e",
+    "A_clinical_transfer\\COMBAT_source.xlsx": "c8f0521cfb2c4ff8d70c873da4bdb75c129e99b63e89660a7b40fb21b46245a8"
+  },
+  "scope": "Complete format/identifier/scale sanity check only; no immune scores, expression-response association, or models."
+}

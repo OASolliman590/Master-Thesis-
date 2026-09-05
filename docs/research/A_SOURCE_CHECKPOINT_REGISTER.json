@@ -1,0 +1,22 @@
+{
+  "A_source_admission_91061/REPORT.md": {
+    "bytes": 14804,
+    "sha256": "79df46668e2e07bc4ba0b3d0ef495044acbc6ccb0ff3e89fbc73507e4980dd58"
+  },
+  "A_source_admission_176307/REPORT.md": {
+    "bytes": 8541,
+    "sha256": "9292addf27417ff5c2cc633dd1ab3e901c9278981cc44812cae5356a97ac56a5"
+  },
+  "A_source_admission_176307/EVIDENCE_LEDGER.md": {
+    "bytes": 2985,
+    "sha256": "f224bf677878d676da65efbb0d4c96e05a714ea0dd9e745644dbd0600b0158b7"
+  },
+  "A_ROOT_SOURCE_COUNTS.json": {
+    "bytes": 1217,
+    "sha256": "9e1432873428922e0fa440997850df8ebdec57ee3d81b1539cddb1eae5bbecbf"
+  },
+  "A_COMBAT_admission/INTEGRATION_REVIEW.md": {
+    "bytes": 3515,
+    "sha256": "976a1260b05a682fdb0bc7b54f402ba13611025bfb48b1d1ec1c8af34cd32a47"
+  }
+}

@@ -1,5 +1,12 @@
 # Execution progress
 
+## Current checkpoint: Paper A original-source admission, 6 September 2026
+
+Reviewed source checks recover Riaz original BOR/prior-ipilimumab linkage for51 baseline patients and correct Rose to88 labelled patient codes and Hugo to26 baseline candidate patients. These remain ceilings, not admitted analysis populations. Required exclusions, specimen rules, assay/response systems and independent source membership remain explicit. COMBAT actual matrix/header mapping passes, but the pmeTPM description conflicts with measured file totals; public15/published12 selection and final-regimen labels remain unresolved. The July2026 COMPASS final publication is added to A's novelty comparison without selecting a primary or mandating a new comparator.
+
+Independent source/integration reviews and Astra raw-source recounts are in A_SOURCE_CHECKPOINT_ASTRA.md and docs/research/. Neither A primary is selected, no source is automatically admitted and no scientific analysis is released. B-F1 code is unchanged. AIU again timed out; no remote job started. Final Opus recheck remains pending after quota exhaustion. GitHub/Notion publication receipts follow this reviewed source checkpoint; do not infer synchronization until recorded.
+
+
 ## Current checkpoint: source corrections and proposed B alternatives, 6 September 2026
 
 Publication receipt: source/spec checkpoint 1999d7ec8e0a873cea2fd879ffb90262447cc2b4 is pushed and verified. Notion milestone, project, plan and B/C pages are synchronized and refetched. GitHub issues 2 and 3 match their updated local mirrors and remain OPEN. See SOURCE_GATE_PUBLICATION.json. B-F1 code and its pending validation status are unchanged.

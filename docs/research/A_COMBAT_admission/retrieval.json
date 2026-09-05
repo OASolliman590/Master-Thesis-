@@ -1,0 +1,19 @@
+{
+  "utc": "2026-09-05T22:57:14.085634+00:00",
+  "records": [
+    {
+      "file": "series.soft",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE229555&targ=self&view=full&form=text",
+      "resolved_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE229555&targ=self&view=full&form=text",
+      "bytes": 4740,
+      "sha256": "62a4c1a61d0ad6d4510223a5709e6fb25aa01dae97918808a52eab1ab07a2210"
+    },
+    {
+      "file": "JCI162396.html",
+      "url": "https://www.jci.org/articles/view/162396",
+      "resolved_url": "https://www.jci.org/articles/view/162396",
+      "bytes": 185332,
+      "sha256": "152e8cd268eb064b89a2f120bf7a83553c2392be444691015746deb400050ee3"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "rose": {
+    "patients": 89,
+    "labelled_patients": 88,
+    "categories": {
+      "CR": 7,
+      "SD": 4,
+      "PD": 68,
+      "PR": 9,
+      "NA": 1
+    },
+    "duplicate_codes": {
+      "BACI165": 2
+    },
+    "mapped_assays": 90,
+    "unmapped_matrix_assays": [
+      "RS-03238998",
+      "RS-03239044"
+    ],
+    "source_patient_sets_equal": true
+  },
+  "riaz": {
+    "author_table_rows": 108,
+    "baseline_rows": 51,
+    "baseline_BOR": {
+      "PR": 7,
+      "PD": 23,
+      "SD": 16,
+      "NE": 2,
+      "CR": 3
+    },
+    "baseline_cohort": {
+      "NIV3-PROG": 26,
+      "NIV3-NAIVE": 25
+    },
+    "duplicate_header_names": [
+      "Response"
+    ],
+    "duplicate_Response_not_used": true
+  },
+  "hugo": {
+    "all_profiles": 28,
+    "nonbaseline_profiles": 1,
+    "baseline_profiles": 27,
+    "baseline_patient_codes": 26,
+    "response_categories": {
+      "Progressive Disease": 12,
+      "Partial Response": 10,
+      "Complete Response": 4
+    },
+    "multiple_baseline_specimens": {
+      "Pt27": 2
+    }
+  },
+  "scope": "Independent raw SOFT/name-key and positional author-CSV category recount; not matrix or biological validation."
+}
