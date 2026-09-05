@@ -1,0 +1,43 @@
+{
+  "date_cairo": "2026-09-06",
+  "milestone": "A_original_source_admission",
+  "status": "reviewed_wip_no_cohort_admitted",
+  "source_spec_commit": "205d845c3d3f6d47a99898ee5271dbaef0629086",
+  "repository": "OASolliman590/Master-Thesis-",
+  "push_verified_by_ls_remote": true,
+  "issue": "https://github.com/OASolliman590/Master-Thesis-/issues/1",
+  "issue_body_verified_against_local_mirror": true,
+  "issue_state_verified": "OPEN",
+  "notion_milestone": "https://app.notion.com/p/3d24763e55d281009fe9cc6dea897265",
+  "notion_milestone_project_plan_a_refetched": true,
+  "source_findings": [
+    "Riaz: 51 original-BOR/prior-ipilimumab baseline links; 49 category-labelled ceiling before unresolved exclusions/full matrix QC.",
+    "Hugo: 26 distinct baseline patient codes after on-treatment and duplicate-site accounting; response-system and independence gates remain.",
+    "Rose: 89 patient codes, 88 labelled; current TPM has two unmatched assay columns; timing and clinical-nonresponse exceptions remain.",
+    "COMBAT: exact 30-column/15-patient join and CYT gene presence; direct pmeTPM contradicted; public15/published12 and final-regimen labels remain unverified.",
+    "July2026 final COMPASS paper added as a current prediction/transfer precedent; bounded publication-level check, not model reproduction."
+  ],
+  "review_evidence": "docs/reviews/A_SOURCE_CHECKPOINT_ASTRA.md and source-specific independent/integration reviews; raw-source recount in docs/research/A_ROOT_SOURCE_COUNTS.json",
+  "source_stage_audit": {
+    "files": 31,
+    "bytes": 155592,
+    "findings": [],
+    "scope": "Staged/working equality, allowed source/spec paths and formats, JSON parsing, Python3.11 AST for audit helpers, copied-source equality. Not runtime or biological validation."
+  },
+  "full_expression_or_clinical_crosswalk_redistributed": false,
+  "primary_selected": false,
+  "cohort_admitted": false,
+  "scientific_analysis_released": false,
+  "paper_implemented": false,
+  "bf1_code_unchanged": true,
+  "bf1_code_commit": "fed56e6029afb43cc83a043ec4b5d7afbcf0fed9",
+  "aiu_probe": "SSH timed out, exit1; no new remote job started",
+  "last_verified_aiu_commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
+  "pending_bf1": "AIU validation and final Opus recheck after provider quota exhaustion",
+  "next_actions": [
+    "Resolve scientific primary choices through recorded decisions while continuing factual source gates.",
+    "Before Paper A scoring, freeze exact specimen/response rules, assay units/features, source overlap/exposure and independent study roles, then assess precision.",
+    "Keep B/C/A/D and wet-lab scope intact; only release reviewed, unblocked tickets in the approved sequence.",
+    "Resume pending AIU tests and final Opus review when those external conditions permit."
+  ]
+}
