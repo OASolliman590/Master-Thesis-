@@ -1,0 +1,19 @@
+{
+  "version": "delegate-fleet.v1",
+  "lanes": {
+    "research": {
+      "implementer": "codex",
+      "model": "gpt-6-astra",
+      "readOnly": true
+    },
+    "heavy": {
+      "implementer": "codex",
+      "model": "gpt-5.3-codex-spark"
+    },
+    "final-review": {
+      "implementer": "codex",
+      "model": "gpt-6-astra",
+      "readOnly": true
+    }
+  }
+}

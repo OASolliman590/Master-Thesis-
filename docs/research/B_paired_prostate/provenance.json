@@ -1,0 +1,35 @@
+{
+  "retrieved_utc": "2026-09-05T19:52:25.834425+00:00",
+  "sources": [
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE83917&targ=gsm&view=brief&form=text",
+      "file": "GSE83917_sample_metadata.soft",
+      "bytes": 361760,
+      "sha256": "cde6af5442dac747e93884c88d79d93209ab52a454abbd2e29d811f663f78212"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84042&targ=gsm&view=brief&form=text",
+      "file": "GSE84042_sample_metadata.soft",
+      "bytes": 197194,
+      "sha256": "c0feb6b950c608f9eb7714f33fc83c95f2340d12997a7a6a7648cb8980b7b6a0"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107299&targ=gsm&view=brief&form=text",
+      "file": "GSE107299_sample_metadata.soft",
+      "bytes": 517532,
+      "sha256": "ced1cf70da2317c863c85f1ed6a5c2746474b43d5b9b2cefa6e3e2885547c78c"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107298&targ=gsm&view=brief&form=text",
+      "file": "GSE107298_sample_metadata.soft",
+      "bytes": 923841,
+      "sha256": "f0bcd821280165549983669c1eaab23bd47139d0f7d018a9492e342559afbb25"
+    },
+    {
+      "url": "https://api.gdc.cancer.gov/files?filters=%7B%22op%22%3A+%22and%22%2C+%22content%22%3A+%5B%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22cases.project.project_id%22%2C+%22value%22%3A+%5B%22TCGA-PRAD%22%5D%7D%7D%2C+%7B%22op%22%3A+%22in%22%2C+%22content%22%3A+%7B%22field%22%3A+%22data_type%22%2C+%22value%22%3A+%5B%22Gene+Expression+Quantification%22%2C+%22Methylation+Beta+Value%22%5D%7D%7D%5D%7D&fields=file_id%2Cfile_name%2Cdata_type%2Cplatform%2Caccess%2Canalysis.workflow_type%2Ccases.case_id%2Ccases.submitter_id%2Ccases.samples.sample_id%2Ccases.samples.submitter_id%2Ccases.samples.sample_type&size=5000&format=JSON",
+      "file": "gdc_files.json",
+      "bytes": 641129,
+      "sha256": "bf8dab788bfb496024b94605cfc65f72e0e412c9026832374e8c1e7edd03b51a"
+    }
+  ]
+}

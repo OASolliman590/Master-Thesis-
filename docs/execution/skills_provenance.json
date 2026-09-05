@@ -1,0 +1,159 @@
+[
+  {
+    "name": "setup-matt-pocock-skills",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\setup-matt-pocock-skills\\SKILL.md",
+    "sha256": "2bcd89e97777cdb705914424e39c97d5db524c8eb4eafac8120778a07774f0ec",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "grill-with-docs",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\grill-with-docs\\SKILL.md",
+    "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "domain-modeling",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\domain-modeling\\SKILL.md",
+    "sha256": "327a2b50620e2fd70abc6893cd6965e76b20f8d0adb0dc2c8d5eb3845efb643e",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "research",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\research\\SKILL.md",
+    "sha256": "985569f15739c713d6784887c3d186d4ef9ac85bec5ad9c068d25bf0739928e4",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "to-spec",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\to-spec\\SKILL.md",
+    "sha256": "43ad9cf318e5e7d3d1fa360253a37021796dc87a0c2e595ad262661a10f85088",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "to-tickets",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\to-tickets\\SKILL.md",
+    "sha256": "5c9fba69845c2519b9b35b9af42ae5142c21f8ca15ac2123dc2722002c8058ae",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "implement",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\implement\\SKILL.md",
+    "sha256": "6d3fd9e83b8f36e5213854779db49b256a457a7ebb4a503e53fa7dcff696adc3",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "code-review",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\code-review\\SKILL.md",
+    "sha256": "47f4e52c21694def9c7c11cbfbf891ca35eac7a93e395797515be3c8a409ae50",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "diagnosing-bugs",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\diagnosing-bugs\\SKILL.md",
+    "sha256": "77f3cf31bc99b2f49af943222526531fcc9fc41d047626d3640e875e85af3e84",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "codebase-design",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\codebase-design\\SKILL.md",
+    "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "tdd",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\tdd\\SKILL.md",
+    "sha256": "cb01f66bebfaa25fa1f88e6b7e769cd9fd9f35b1120b8563749820738814c927",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "wayfinder",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\wayfinder\\SKILL.md",
+    "sha256": "fee6e1d0c50f0e736b4ef8a599060c959afae904c9a97d82c97f049fcc3aa0f1",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "grilling",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\grilling\\SKILL.md",
+    "sha256": "10ff989e7498b23b5acb49d5048f11dcd906757d2f79c5cdf8a00001381296f2",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "handoff",
+    "source": "https://github.com/mattpocock/skills",
+    "upstream_commit": "3cca18b368ae95cdbdebbff572ccafa662551015",
+    "path": "C:\\Users\\salma\\.codex\\skills\\handoff\\SKILL.md",
+    "sha256": "7c62de979fdc7ac32fb5ddb2146156c917f80ee070d30fadc9d40343c4b6ed25",
+    "modifications": "none by this task"
+  },
+  {
+    "name": "delegate-setup",
+    "source": "https://github.com/amElnagdy/delegate-skills",
+    "upstream_commit": null,
+    "installed_version": "0.5.0",
+    "path": "C:\\Users\\salma\\.agents\\skills\\delegate-setup\\SKILL.md",
+    "sha256": "d3c0d6acd46ed16a425d4e524d348acab6ed150907dd455ae68768c9409a881e",
+    "modifications": "pre-existing installation; unchanged by this task; upstream commit not established"
+  },
+  {
+    "name": "codex-delegate",
+    "source": "https://github.com/amElnagdy/delegate-skills",
+    "upstream_commit": null,
+    "installed_version": "0.5.0",
+    "path": "C:\\Users\\salma\\.agents\\skills\\codex-delegate\\SKILL.md",
+    "sha256": "8e4bd1f093ce6a8747bd4ca0861e655d51ad2d3491487f95cfc9f9545c706ccd",
+    "modifications": "pre-existing installation; unchanged by this task; upstream commit not established"
+  },
+  {
+    "name": "claude-delegate",
+    "source": "https://github.com/amElnagdy/delegate-skills",
+    "upstream_commit": null,
+    "installed_version": "0.5.0",
+    "path": "C:\\Users\\salma\\.agents\\skills\\claude-delegate\\SKILL.md",
+    "sha256": "ffc638c5db02edf0f53633e32642accf602b553d0ab61575beeb5948b5978dc8",
+    "modifications": "pre-existing installation; unchanged by this task; upstream commit not established"
+  },
+  {
+    "name": "agy-delegate",
+    "source": "https://github.com/amElnagdy/delegate-skills",
+    "upstream_commit": null,
+    "installed_version": "0.5.0",
+    "path": "C:\\Users\\salma\\.agents\\skills\\agy-delegate\\SKILL.md",
+    "sha256": "13cddd3fd5194fe602540b7cc6fac18beeec3dae7f98136c78fdd9bc8ca8f45f",
+    "modifications": "pre-existing installation; unchanged by this task; upstream commit not established"
+  },
+  {
+    "name": "grok-delegate",
+    "source": "https://github.com/amElnagdy/delegate-skills",
+    "upstream_commit": null,
+    "installed_version": "0.5.0",
+    "path": "C:\\Users\\salma\\.agents\\skills\\grok-delegate\\SKILL.md",
+    "sha256": "8092799d433e29493d84429196612b30f6413e4a7703186038726e7b601afcba",
+    "modifications": "pre-existing installation; unchanged by this task; upstream commit not established"
+  }
+]

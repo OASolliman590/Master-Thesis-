@@ -1,0 +1,38 @@
+# Data are retrieved through manifests. Commit only reviewed small public evidence.
+data/
+results/
+.scratch/runtime/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+.DS_Store
+
+# Private connection material and machine-local configuration do not belong here.
+*_servers.md
+ssh_config
+*.gctx
+*.h5ad
+*.fastq*
+*.bam
+*.cram
+
+# Source caches remain local; publish retrieval manifests and derived audit evidence.
+docs/research/B_paired_prostate/*.soft
+docs/research/B_paired_prostate/Guo_2023.xml
+docs/research/B_paired_prostate/gdc_files.json
+docs/research/B_paired_prostate/geo_samples.json
+docs/research/C_pharmacology_contracts/*.txt
+docs/research/C_pharmacology_contracts/*.gz
+docs/research/C_pharmacology_contracts/*.csv
+docs/research/C_pharmacology_contracts/*.html
+docs/research/C_immune_context/*.html
+docs/research/C_immune_context/*.js
+docs/research/C_immune_context/frangieh_bioc.json

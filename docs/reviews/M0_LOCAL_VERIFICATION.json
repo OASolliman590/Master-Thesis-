@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "scope": "independent cached-metadata recount and recorded-source hashes only; not biological or matrix validation",
+  "CPCG_pre_QC_patient_codes": 210,
+  "TCGA_pre_QC_cases": 497,
+  "TCGA_sample_ids": 501,
+  "LINCS_PhaseII_signatures": 118050,
+  "prostate_chemical_signatures": {
+    "PC3": 12031,
+    "LNCAP": 707
+  },
+  "PC3_drug_signature_counts": {
+    "decitabine": 15,
+    "entinostat": 15,
+    "tazemetostat": 0
+  },
+  "source_files_hash_verified": 20
+}

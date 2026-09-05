@@ -1,0 +1,14 @@
+[
+  {
+    "file": "GSE70138_Broad_LINCS_sig_info_2017-03-06.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE70nnn/GSE70138/suppl/GSE70138_Broad_LINCS_sig_info_2017-03-06.txt.gz",
+    "bytes": 1943865,
+    "sha256": "b78284478d62029f600d4397334c538d363123110affd2454bf0055bd0678e01"
+  },
+  {
+    "file": "GSE70138_Broad_LINCS_pert_info_2017-03-06.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE70nnn/GSE70138/suppl/GSE70138_Broad_LINCS_pert_info_2017-03-06.txt.gz",
+    "bytes": 82376,
+    "sha256": "000171e8ce17cb00a3e80a907d97f0bc4218077eb4cb2ac03f4e0f9f4f2e5493"
+  }
+]

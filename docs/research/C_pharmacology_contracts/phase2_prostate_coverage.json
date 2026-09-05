@@ -1,0 +1,117 @@
+{
+  "decitabine": {
+    "pert_id": "BRD-K79254416",
+    "all_line_signatures": 171,
+    "prostate_signatures": 15,
+    "conditions": [
+      {
+        "line": "PC3",
+        "dose": "10.0 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "3.33 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "1.11 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.37 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.12 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.04 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "10.0 um",
+        "time": "6 h",
+        "signatures": 3
+      }
+    ],
+    "profile_counts": {
+      "3": 5,
+      "2": 7,
+      "1": 3
+    }
+  },
+  "entinostat": {
+    "pert_id": "BRD-K77908580",
+    "all_line_signatures": 171,
+    "prostate_signatures": 15,
+    "conditions": [
+      {
+        "line": "PC3",
+        "dose": "10.0 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "3.33 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "1.11 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.37 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.12 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "0.04 um",
+        "time": "24 h",
+        "signatures": 2
+      },
+      {
+        "line": "PC3",
+        "dose": "2.0 um",
+        "time": "6 h",
+        "signatures": 3
+      }
+    ],
+    "profile_counts": {
+      "3": 6,
+      "1": 3,
+      "2": 6
+    }
+  },
+  "tazemetostat": {
+    "pert_id": "BRD-K11215326",
+    "all_line_signatures": 0,
+    "prostate_signatures": 0,
+    "conditions": [],
+    "profile_counts": {}
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Epigenetic Priming for Enhanced Immunotherapy A Multi-Omics Strategy to Sensitise Prostate Cancer to I.pdf",
+    "local_path": "E:\\Master_Thesis\\Epigenetic Priming for Enhanced Immunotherapy A Multi-Omics Strategy to Sensitise Prostate Cancer to I.pdf",
+    "bytes": 486110,
+    "sha256": "ca5fa0a57e8da78328bfc6e1f860ad5465da5ea9b5fb66005ed14ea69f054162",
+    "role": "supplied or approved planning source; not experimental results"
+  },
+  {
+    "name": "Epigenetic_Priming_WetLab_Protocol_v2.pdf",
+    "local_path": "E:\\Master_Thesis\\Epigenetic_Priming_WetLab_Protocol_v2.pdf",
+    "bytes": 1488577,
+    "sha256": "61cb9be19ace47c25ab28df6387ebe7a374f9a4151f0d9aeb9be022d59c11fd1",
+    "role": "supplied or approved planning source; not experimental results"
+  },
+  {
+    "name": "HANDOVER_wetlab_protocol.pdf",
+    "local_path": "E:\\Master_Thesis\\HANDOVER_wetlab_protocol.pdf",
+    "bytes": 170998,
+    "sha256": "b72317773b3c85acc6acc30a4fdfdb255d16f986399321e2262590f53cdfebab",
+    "role": "supplied or approved planning source; not experimental results"
+  },
+  {
+    "name": "MASTER_THESIS_GOAL_PROMPT.md",
+    "local_path": "E:\\Master_Thesis\\planning\\MASTER_THESIS_GOAL_PROMPT.md",
+    "bytes": 17254,
+    "sha256": "5f2433ffefbe23e849dd785cf1964e95c87890286314a6e2ab0093fb2f20bac6",
+    "role": "supplied or approved planning source; not experimental results"
+  },
+  {
+    "name": "C_SOURCE_SCOPE_RESTORED.md",
+    "local_path": "E:\\Master_Thesis\\planning\\feasibility\\C_SOURCE_SCOPE_RESTORED.md",
+    "bytes": 5599,
+    "sha256": "0cbd27508cce86a49d9fd0d0ba43cc924848c3a9ac104a48dcba6af53a447026",
+    "role": "supplied or approved planning source; not experimental results"
+  },
+  {
+    "name": "pasted-text.txt",
+    "local_path": "C:\\Users\\salma\\.codex\\attachments\\2a76baf9-6f73-4b09-a0ad-02aee5f5257a\\pasted-text.txt",
+    "bytes": 5083,
+    "sha256": "fc798c2b476bde9aafcb06b2150df8a1fa7fb0689f6f9a4572ab2f2824225c9a",
+    "role": "supplied or approved planning source; not experimental results"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "schema": "delegate-relay.result.v1",
+  "tool": "agy",
+  "model": "claude-opus-4-6-thinking",
+  "agyVersion": "1.1.27",
+  "readOnly": true,
+  "readOnlyViolation": false,
+  "status": "completed",
+  "exitCode": 0,
+  "startedAt": "2026-09-05T20:05:19.987Z",
+  "finishedAt": "2026-09-05T20:10:11.74Z",
+  "conversationId": "41aed3ac-21f1-4101-b27c-c16f378abdad",
+  "finalMessage": "The review artifact is ready for your inspection. Key points that require your attention:\n\n- **Papers A and D** have no evidence reports — the two largest gaps in M0\n- **LINCS prostate coverage** is narrower than the three-drug programme assumes (0 tazemetostat signatures, PC3 only for the other two, 9/10 sentinel genes inferred not measured)\n- **M0 can be committed as work-in-progress** — the epistemic hygiene across the existing documents is strong, but the commit must explicitly disclaim frozen endpoints and complete specifications\n- **20 unresolved items** are classified as fact vs. design choice in the table, with recommended sequencing through four gates\n\nNo files were edited, no commands were run, no tests were reported, and no specifications were approved."
+}

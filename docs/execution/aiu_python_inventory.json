@@ -1,0 +1,1882 @@
+[
+  {
+    "name": "_openmp_mutex",
+    "version": "4.5",
+    "build_string": "20_gnu"
+  },
+  {
+    "name": "adjusttext",
+    "version": "1.4.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "alsa-lib",
+    "version": "1.2.16.1",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "anndata",
+    "version": "0.12.19",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "anyio",
+    "version": "4.14.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "argon2-cffi",
+    "version": "25.1.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "argon2-cffi-bindings",
+    "version": "26.1.0",
+    "build_string": "py311h0d48ccd_1"
+  },
+  {
+    "name": "armadillo",
+    "version": "15.4.2",
+    "build_string": "h7dbe251_0"
+  },
+  {
+    "name": "arpack",
+    "version": "3.9.1",
+    "build_string": "nompi_hf03ea27_102"
+  },
+  {
+    "name": "array-api-compat",
+    "version": "1.15.0",
+    "build_string": "pyhc364b38_0"
+  },
+  {
+    "name": "arrow",
+    "version": "1.4.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "asttokens",
+    "version": "3.0.2",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "async-lru",
+    "version": "2.3.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "aws-c-auth",
+    "version": "0.10.4",
+    "build_string": "hb7a77c6_1"
+  },
+  {
+    "name": "aws-c-cal",
+    "version": "0.9.14",
+    "build_string": "h2aa3ae6_4"
+  },
+  {
+    "name": "aws-c-common",
+    "version": "0.14.2",
+    "build_string": "hb03c661_0"
+  },
+  {
+    "name": "aws-c-compression",
+    "version": "0.3.2",
+    "build_string": "h720e601_4"
+  },
+  {
+    "name": "aws-c-event-stream",
+    "version": "0.7.1",
+    "build_string": "h6ffeea8_4"
+  },
+  {
+    "name": "aws-c-http",
+    "version": "0.11.0",
+    "build_string": "h38ae05a_4"
+  },
+  {
+    "name": "aws-c-io",
+    "version": "0.27.3",
+    "build_string": "h6f4d18d_1"
+  },
+  {
+    "name": "aws-c-mqtt",
+    "version": "0.16.0",
+    "build_string": "h21f4ec5_2"
+  },
+  {
+    "name": "aws-c-s3",
+    "version": "0.12.8",
+    "build_string": "h46fcd08_1"
+  },
+  {
+    "name": "aws-c-sdkutils",
+    "version": "0.2.7",
+    "build_string": "h720e601_2"
+  },
+  {
+    "name": "aws-checksums",
+    "version": "0.2.10",
+    "build_string": "h720e601_4"
+  },
+  {
+    "name": "aws-crt-cpp",
+    "version": "0.40.1",
+    "build_string": "h102d43b_3"
+  },
+  {
+    "name": "aws-sdk-cpp",
+    "version": "1.11.833",
+    "build_string": "hc7390e0_9"
+  },
+  {
+    "name": "azure-core-cpp",
+    "version": "1.16.3",
+    "build_string": "h206d751_0"
+  },
+  {
+    "name": "azure-identity-cpp",
+    "version": "1.13.3",
+    "build_string": "h71f81a8_2"
+  },
+  {
+    "name": "azure-storage-blobs-cpp",
+    "version": "12.18.0",
+    "build_string": "h74b55db_1"
+  },
+  {
+    "name": "azure-storage-common-cpp",
+    "version": "12.14.0",
+    "build_string": "hf596fc9_1"
+  },
+  {
+    "name": "azure-storage-files-datalake-cpp",
+    "version": "12.16.0",
+    "build_string": "h1f05bef_1"
+  },
+  {
+    "name": "babel",
+    "version": "2.18.0",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "backports.zstd",
+    "version": "1.7.0",
+    "build_string": "py311h6f959d0_0"
+  },
+  {
+    "name": "beautifulsoup4",
+    "version": "4.15.0",
+    "build_string": "pyha770c72_0"
+  },
+  {
+    "name": "biopython",
+    "version": "1.88",
+    "build_string": "py311h49ec1c0_0"
+  },
+  {
+    "name": "bleach",
+    "version": "6.4.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "bleach-with-css",
+    "version": "6.4.0",
+    "build_string": "hac0b51c_0"
+  },
+  {
+    "name": "brotli",
+    "version": "1.2.0",
+    "build_string": "h505cf86_3"
+  },
+  {
+    "name": "brotli-bin",
+    "version": "1.2.0",
+    "build_string": "h9908984_3"
+  },
+  {
+    "name": "brotli-python",
+    "version": "1.2.0",
+    "build_string": "py311heb3be6f_3"
+  },
+  {
+    "name": "bzip2",
+    "version": "1.0.8",
+    "build_string": "hda65f42_10"
+  },
+  {
+    "name": "c-ares",
+    "version": "1.34.8",
+    "build_string": "hebe6cf0_2"
+  },
+  {
+    "name": "ca-certificates",
+    "version": "2026.7.22",
+    "build_string": "hbd8a1cb_0"
+  },
+  {
+    "name": "cached-property",
+    "version": "2.0.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "cached_property",
+    "version": "2.0.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "cairo",
+    "version": "1.18.4",
+    "build_string": "h3c89d7e_3"
+  },
+  {
+    "name": "certifi",
+    "version": "2026.7.22",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "build_string": "py311h904a5e5_2"
+  },
+  {
+    "name": "charset-normalizer",
+    "version": "3.5.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "cloudpickle",
+    "version": "3.1.2",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "comm",
+    "version": "0.2.3",
+    "build_string": "pyhe01879c_0"
+  },
+  {
+    "name": "contourpy",
+    "version": "1.3.3",
+    "build_string": "py311h724c32c_4"
+  },
+  {
+    "name": "cycler",
+    "version": "0.12.1",
+    "build_string": "pyhcf101f3_2"
+  },
+  {
+    "name": "cyrus-sasl",
+    "version": "2.1.28",
+    "build_string": "hac629b4_1"
+  },
+  {
+    "name": "dbus",
+    "version": "1.16.2",
+    "build_string": "he8c428d_2"
+  },
+  {
+    "name": "debugpy",
+    "version": "1.8.21",
+    "build_string": "py311hc665b79_0"
+  },
+  {
+    "name": "defusedxml",
+    "version": "0.7.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "deprecated",
+    "version": "1.3.1",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "donfig",
+    "version": "0.8.1.post1",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "double-conversion",
+    "version": "3.4.0",
+    "build_string": "hecca717_0"
+  },
+  {
+    "name": "et_xmlfile",
+    "version": "2.0.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "exceptiongroup",
+    "version": "1.3.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "executing",
+    "version": "2.2.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "font-ttf-dejavu-sans-mono",
+    "version": "2.37",
+    "build_string": "hab24e00_0"
+  },
+  {
+    "name": "font-ttf-inconsolata",
+    "version": "3.000",
+    "build_string": "h77eed37_0"
+  },
+  {
+    "name": "font-ttf-source-code-pro",
+    "version": "2.038",
+    "build_string": "h77eed37_0"
+  },
+  {
+    "name": "font-ttf-ubuntu",
+    "version": "0.83",
+    "build_string": "h77eed37_3"
+  },
+  {
+    "name": "fontconfig",
+    "version": "2.18.3",
+    "build_string": "h4db4eae_1"
+  },
+  {
+    "name": "fonts-conda-ecosystem",
+    "version": "1",
+    "build_string": "0"
+  },
+  {
+    "name": "fonts-conda-forge",
+    "version": "1",
+    "build_string": "hc364b38_1"
+  },
+  {
+    "name": "fonttools",
+    "version": "4.63.0",
+    "build_string": "py311h3778330_0"
+  },
+  {
+    "name": "formulaic",
+    "version": "1.2.2",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "formulaic-contrasts",
+    "version": "1.0.0",
+    "build_string": "pyhdfd78af_0"
+  },
+  {
+    "name": "fqdn",
+    "version": "1.5.1",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "freetype",
+    "version": "2.14.3",
+    "build_string": "ha770c72_2"
+  },
+  {
+    "name": "fribidi",
+    "version": "1.0.16",
+    "build_string": "hb03c661_1"
+  },
+  {
+    "name": "gflags",
+    "version": "2.3.1",
+    "build_string": "h54a6638_0"
+  },
+  {
+    "name": "glog",
+    "version": "0.7.1",
+    "build_string": "hb7133d2_1"
+  },
+  {
+    "name": "glpk",
+    "version": "5.0",
+    "build_string": "h445213a_0"
+  },
+  {
+    "name": "gmp",
+    "version": "6.3.0",
+    "build_string": "hfd2156b_3"
+  },
+  {
+    "name": "google-crc32c",
+    "version": "1.8.0",
+    "build_string": "py311h2702b87_1"
+  },
+  {
+    "name": "graphite2",
+    "version": "1.3.15",
+    "build_string": "h54a6638_1"
+  },
+  {
+    "name": "gseapy",
+    "version": "1.3.1",
+    "build_string": "py311heb3b1e3_0"
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "h2",
+    "version": "4.4.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "h5py",
+    "version": "3.16.0",
+    "build_string": "nompi_py311h89df61e_104"
+  },
+  {
+    "name": "harmonypy",
+    "version": "2.0.0",
+    "build_string": "py311h3cb736e_2"
+  },
+  {
+    "name": "hdf5",
+    "version": "1.14.6",
+    "build_string": "nompi_h19486de_110"
+  },
+  {
+    "name": "hpack",
+    "version": "4.2.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "build_string": "pyh29332c3_0"
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "hyperframe",
+    "version": "6.1.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "icu",
+    "version": "78.3",
+    "build_string": "py310h44b86e0_2"
+  },
+  {
+    "name": "idna",
+    "version": "3.19",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "igraph",
+    "version": "1.0.1",
+    "build_string": "hfe3e89f_0"
+  },
+  {
+    "name": "importlib-metadata",
+    "version": "9.0.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "interface_meta",
+    "version": "1.3.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "ipykernel",
+    "version": "7.3.0",
+    "build_string": "pyha191276_0"
+  },
+  {
+    "name": "ipython",
+    "version": "9.17.1",
+    "build_string": "pyh53cf698_0"
+  },
+  {
+    "name": "ipython_pygments_lexers",
+    "version": "1.1.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "ipywidgets",
+    "version": "8.1.9",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "isoduration",
+    "version": "20.11.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "jedi",
+    "version": "0.20.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jinja2",
+    "version": "3.1.6",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "joblib",
+    "version": "1.6.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "json5",
+    "version": "0.15.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "jsonpointer",
+    "version": "3.1.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jsonschema-with-format-nongpl",
+    "version": "4.26.0",
+    "build_string": "hcf101f3_1"
+  },
+  {
+    "name": "jupyter",
+    "version": "1.1.1",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "jupyter-builder",
+    "version": "1.2.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyter-lsp",
+    "version": "2.3.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyter_client",
+    "version": "8.10.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyter_console",
+    "version": "6.6.3",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "jupyter_core",
+    "version": "5.9.1",
+    "build_string": "pyhc90fa1f_0"
+  },
+  {
+    "name": "jupyter_events",
+    "version": "0.12.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyter_server",
+    "version": "2.21.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyter_server_terminals",
+    "version": "0.5.4",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyterlab",
+    "version": "4.6.3",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "jupyterlab_pygments",
+    "version": "0.3.0",
+    "build_string": "pyhd8ed1ab_2"
+  },
+  {
+    "name": "jupyterlab_server",
+    "version": "2.28.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "jupyterlab_widgets",
+    "version": "3.0.17",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "keyutils",
+    "version": "1.6.3",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "kiwisolver",
+    "version": "1.5.1",
+    "build_string": "py311h4c6fd42_0"
+  },
+  {
+    "name": "krb5",
+    "version": "1.22.2",
+    "build_string": "hbc21106_2"
+  },
+  {
+    "name": "lark",
+    "version": "1.3.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "lcms2",
+    "version": "2.19.1",
+    "build_string": "h9073bf1_2"
+  },
+  {
+    "name": "ld_impl_linux-64",
+    "version": "2.46.1",
+    "build_string": "default_hbd61a6d_102"
+  },
+  {
+    "name": "legacy-api-wrap",
+    "version": "1.5",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "leidenalg",
+    "version": "0.12.0",
+    "build_string": "py311h1ddb823_0"
+  },
+  {
+    "name": "lerc",
+    "version": "4.2.0",
+    "build_string": "hdb68285_0"
+  },
+  {
+    "name": "libabseil",
+    "version": "20260526.0",
+    "build_string": "cxx17_h0dc7533_2"
+  },
+  {
+    "name": "libaec",
+    "version": "1.1.5",
+    "build_string": "h088129d_0"
+  },
+  {
+    "name": "libarrow",
+    "version": "25.0.0",
+    "build_string": "hcc2f0d9_4_cpu"
+  },
+  {
+    "name": "libarrow-acero",
+    "version": "25.0.0",
+    "build_string": "h635bf11_4_cpu"
+  },
+  {
+    "name": "libarrow-compute",
+    "version": "25.0.0",
+    "build_string": "h53684a4_4_cpu"
+  },
+  {
+    "name": "libarrow-dataset",
+    "version": "25.0.0",
+    "build_string": "h635bf11_4_cpu"
+  },
+  {
+    "name": "libarrow-substrait",
+    "version": "25.0.0",
+    "build_string": "h66fbfdd_4_cpu"
+  },
+  {
+    "name": "libblas",
+    "version": "3.11.0",
+    "build_string": "10_h4a7cf45_openblas"
+  },
+  {
+    "name": "libbrotlicommon",
+    "version": "1.2.0",
+    "build_string": "h39a168f_3"
+  },
+  {
+    "name": "libbrotlidec",
+    "version": "1.2.0",
+    "build_string": "ha411449_3"
+  },
+  {
+    "name": "libbrotlienc",
+    "version": "1.2.0",
+    "build_string": "h018ffa1_3"
+  },
+  {
+    "name": "libcblas",
+    "version": "3.11.0",
+    "build_string": "10_h0358290_openblas"
+  },
+  {
+    "name": "libclang-cpp23.1",
+    "version": "23.1.0",
+    "build_string": "default_h0acdd01_1"
+  },
+  {
+    "name": "libclang13",
+    "version": "23.1.0",
+    "build_string": "default_h7855034_1"
+  },
+  {
+    "name": "libcrc32c",
+    "version": "1.1.2",
+    "build_string": "h9c3ff4c_0"
+  },
+  {
+    "name": "libcups",
+    "version": "2.3.3",
+    "build_string": "h7a8fb5f_6"
+  },
+  {
+    "name": "libcurl",
+    "version": "8.21.0",
+    "build_string": "ha042cf0_5"
+  },
+  {
+    "name": "libdeflate",
+    "version": "1.25",
+    "build_string": "hd45a770_1"
+  },
+  {
+    "name": "libdrm",
+    "version": "2.4.129",
+    "build_string": "h7cc23a3_0"
+  },
+  {
+    "name": "libedit",
+    "version": "3.1.20250104",
+    "build_string": "pl5321h373387f_1"
+  },
+  {
+    "name": "libegl",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libegl-devel",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libev",
+    "version": "4.33",
+    "build_string": "h280c20c_3"
+  },
+  {
+    "name": "libevent",
+    "version": "2.1.12",
+    "build_string": "hf998b51_1"
+  },
+  {
+    "name": "libexpat",
+    "version": "2.8.1",
+    "build_string": "hecca717_1"
+  },
+  {
+    "name": "libffi",
+    "version": "3.7.0",
+    "build_string": "h81df57d_1"
+  },
+  {
+    "name": "libfreetype",
+    "version": "2.14.3",
+    "build_string": "ha770c72_2"
+  },
+  {
+    "name": "libfreetype6",
+    "version": "2.14.3",
+    "build_string": "h5e6c136_2"
+  },
+  {
+    "name": "libgcc",
+    "version": "16.2.0",
+    "build_string": "ha9f2e26_4"
+  },
+  {
+    "name": "libgcc-ng",
+    "version": "16.2.0",
+    "build_string": "h69a702a_4"
+  },
+  {
+    "name": "libgfortran",
+    "version": "16.2.0",
+    "build_string": "h69a702a_4"
+  },
+  {
+    "name": "libgfortran5",
+    "version": "16.2.0",
+    "build_string": "h6b99dfc_4"
+  },
+  {
+    "name": "libgl",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libgl-devel",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libglib",
+    "version": "2.88.3",
+    "build_string": "he503a2a_2"
+  },
+  {
+    "name": "libglvnd",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libglx",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libglx-devel",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libgomp",
+    "version": "16.2.0",
+    "build_string": "he0feb66_4"
+  },
+  {
+    "name": "libgoogle-cloud",
+    "version": "3.8.0",
+    "build_string": "hbc29df5_0"
+  },
+  {
+    "name": "libgoogle-cloud-storage",
+    "version": "3.8.0",
+    "build_string": "hdbdcf42_0"
+  },
+  {
+    "name": "libgrpc",
+    "version": "1.82.1",
+    "build_string": "h792040b_0"
+  },
+  {
+    "name": "libharfbuzz",
+    "version": "14.4.0",
+    "build_string": "h23af247_0"
+  },
+  {
+    "name": "libhwloc",
+    "version": "2.13.0",
+    "build_string": "default_he001693_1000"
+  },
+  {
+    "name": "libiconv",
+    "version": "1.18",
+    "build_string": "h0cb94f2_3"
+  },
+  {
+    "name": "libjpeg-turbo",
+    "version": "3.2.0",
+    "build_string": "hb03c661_1"
+  },
+  {
+    "name": "liblapack",
+    "version": "3.11.0",
+    "build_string": "10_h47877c9_openblas"
+  },
+  {
+    "name": "libleidenalg",
+    "version": "0.13.0",
+    "build_string": "hb700be7_0"
+  },
+  {
+    "name": "libllvm23",
+    "version": "23.1.0",
+    "build_string": "h474f4eb_0"
+  },
+  {
+    "name": "liblzma",
+    "version": "5.8.3",
+    "build_string": "hb03c661_1"
+  },
+  {
+    "name": "libnghttp2",
+    "version": "1.68.1",
+    "build_string": "h74cf4be_1"
+  },
+  {
+    "name": "libnsl",
+    "version": "2.0.1",
+    "build_string": "hb9d3cd8_1"
+  },
+  {
+    "name": "libntlm",
+    "version": "1.8",
+    "build_string": "hb9d3cd8_0"
+  },
+  {
+    "name": "libopenblas",
+    "version": "0.3.34",
+    "build_string": "pthreads_hcf972fe_1"
+  },
+  {
+    "name": "libopengl",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libopengl-devel",
+    "version": "1.7.0",
+    "build_string": "ha4b6fd6_5"
+  },
+  {
+    "name": "libopentelemetry-cpp",
+    "version": "1.27.0",
+    "build_string": "h3133023_1"
+  },
+  {
+    "name": "libopentelemetry-cpp-headers",
+    "version": "1.27.0",
+    "build_string": "ha770c72_1"
+  },
+  {
+    "name": "libparquet",
+    "version": "25.0.0",
+    "build_string": "h7376487_4_cpu"
+  },
+  {
+    "name": "libpciaccess",
+    "version": "0.19",
+    "build_string": "hb03c661_1"
+  },
+  {
+    "name": "libpng",
+    "version": "1.6.58",
+    "build_string": "h922cc85_1"
+  },
+  {
+    "name": "libpq",
+    "version": "18.6",
+    "build_string": "h9d76c99_0"
+  },
+  {
+    "name": "libprotobuf",
+    "version": "7.35.1",
+    "build_string": "h622638d_3"
+  },
+  {
+    "name": "libpsl",
+    "version": "0.23.1",
+    "build_string": "hd9e3e90_1"
+  },
+  {
+    "name": "libraqm",
+    "version": "0.11.0",
+    "build_string": "h6406941_0"
+  },
+  {
+    "name": "libre2-11",
+    "version": "2025.11.05",
+    "build_string": "h60473fc_2"
+  },
+  {
+    "name": "libsodium",
+    "version": "1.0.22",
+    "build_string": "hebe6cf0_2"
+  },
+  {
+    "name": "libsqlite",
+    "version": "3.53.4",
+    "build_string": "h13e7031_1"
+  },
+  {
+    "name": "libssh2",
+    "version": "1.11.1",
+    "build_string": "h6154650_1"
+  },
+  {
+    "name": "libstdcxx",
+    "version": "16.2.0",
+    "build_string": "h934c35e_4"
+  },
+  {
+    "name": "libstdcxx-ng",
+    "version": "16.2.0",
+    "build_string": "hdf11a46_4"
+  },
+  {
+    "name": "libthrift",
+    "version": "0.22.0",
+    "build_string": "h7d032f7_2"
+  },
+  {
+    "name": "libtiff",
+    "version": "4.7.2",
+    "build_string": "hcc2c06a_1"
+  },
+  {
+    "name": "libutf8proc",
+    "version": "2.11.3",
+    "build_string": "hfe17d71_0"
+  },
+  {
+    "name": "libuuid",
+    "version": "2.42.2",
+    "build_string": "h5347b49_0"
+  },
+  {
+    "name": "libvulkan-loader",
+    "version": "1.4.357.0",
+    "build_string": "h0e34353_2"
+  },
+  {
+    "name": "libwebp-base",
+    "version": "1.6.0",
+    "build_string": "hd42ef1d_1"
+  },
+  {
+    "name": "libxcb",
+    "version": "1.17.0",
+    "build_string": "hb83e432_2"
+  },
+  {
+    "name": "libxcrypt",
+    "version": "4.4.38",
+    "build_string": "h280c20c_0"
+  },
+  {
+    "name": "libxkbcommon",
+    "version": "1.13.2",
+    "build_string": "h51789e4_1"
+  },
+  {
+    "name": "libxml2",
+    "version": "2.15.3",
+    "build_string": "h49c6c72_1"
+  },
+  {
+    "name": "libxml2-16",
+    "version": "2.15.3",
+    "build_string": "hca6bf5a_1"
+  },
+  {
+    "name": "libxml2-devel",
+    "version": "2.15.3",
+    "build_string": "h49c6c72_1"
+  },
+  {
+    "name": "libxslt",
+    "version": "1.1.43",
+    "build_string": "h711ed8c_1"
+  },
+  {
+    "name": "libzlib",
+    "version": "1.3.2",
+    "build_string": "h25fd6f3_3"
+  },
+  {
+    "name": "llvmlite",
+    "version": "0.49.0",
+    "build_string": "py311h1369f55_2"
+  },
+  {
+    "name": "lz4-c",
+    "version": "1.10.0",
+    "build_string": "hee9eb32_2"
+  },
+  {
+    "name": "markupsafe",
+    "version": "3.0.3",
+    "build_string": "py311h3778330_1"
+  },
+  {
+    "name": "matplotlib",
+    "version": "3.11.1",
+    "build_string": "py311h968eb38_2"
+  },
+  {
+    "name": "matplotlib-base",
+    "version": "3.11.1",
+    "build_string": "py311he401cf6_2"
+  },
+  {
+    "name": "matplotlib-inline",
+    "version": "0.2.2",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "mistune",
+    "version": "3.3.4",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "msgpack-python",
+    "version": "1.2.2",
+    "build_string": "py311h4c6fd42_1"
+  },
+  {
+    "name": "mudata",
+    "version": "0.3.10",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "munkres",
+    "version": "1.1.4",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "muon",
+    "version": "0.1.9",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "narwhals",
+    "version": "2.25.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "natsort",
+    "version": "8.4.0",
+    "build_string": "pyhcf101f3_2"
+  },
+  {
+    "name": "nbclient",
+    "version": "0.11.0",
+    "build_string": "pyhcf101f3_1"
+  },
+  {
+    "name": "nbconvert-core",
+    "version": "7.17.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "nbformat",
+    "version": "5.11.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "ncurses",
+    "version": "6.6",
+    "build_string": "hdb14827_1"
+  },
+  {
+    "name": "nest-asyncio2",
+    "version": "1.7.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "networkx",
+    "version": "3.6.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "nlohmann_json",
+    "version": "3.12.0",
+    "build_string": "h54a6638_2"
+  },
+  {
+    "name": "notebook",
+    "version": "7.6.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "notebook-shim",
+    "version": "0.2.4",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "numba",
+    "version": "0.67.0",
+    "build_string": "py311hdfc3925_1"
+  },
+  {
+    "name": "numcodecs",
+    "version": "0.16.5",
+    "build_string": "py311hed34c8f_0"
+  },
+  {
+    "name": "numpy",
+    "version": "2.4.6",
+    "build_string": "py311h2e04523_0"
+  },
+  {
+    "name": "openjpeg",
+    "version": "2.5.4",
+    "build_string": "h55e1f5c_1"
+  },
+  {
+    "name": "openldap",
+    "version": "2.6.13",
+    "build_string": "hbde042b_0"
+  },
+  {
+    "name": "openpyxl",
+    "version": "3.1.5",
+    "build_string": "py311h534898f_3"
+  },
+  {
+    "name": "openssl",
+    "version": "3.6.4",
+    "build_string": "h781a0a9_0"
+  },
+  {
+    "name": "orc",
+    "version": "2.3.1",
+    "build_string": "h443056b_0"
+  },
+  {
+    "name": "overrides",
+    "version": "7.7.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "build_string": "pyhc364b38_0"
+  },
+  {
+    "name": "pandas",
+    "version": "2.3.3",
+    "build_string": "py311hed34c8f_2"
+  },
+  {
+    "name": "pandocfilters",
+    "version": "1.5.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "parso",
+    "version": "0.8.7",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "patsy",
+    "version": "1.0.3",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "pcre2",
+    "version": "10.47",
+    "build_string": "h8b3dc9c_1"
+  },
+  {
+    "name": "pexpect",
+    "version": "4.9.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "pillow",
+    "version": "12.3.0",
+    "build_string": "py311hf303fd3_1"
+  },
+  {
+    "name": "pip",
+    "version": "26.2.1",
+    "build_string": "pyh8b19718_0"
+  },
+  {
+    "name": "pixman",
+    "version": "0.46.4",
+    "build_string": "h54a6638_3"
+  },
+  {
+    "name": "platformdirs",
+    "version": "4.11.6",
+    "build_string": "pyh5ded981_0"
+  },
+  {
+    "name": "plotly",
+    "version": "6.9.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "prometheus-cpp",
+    "version": "1.3.0",
+    "build_string": "ha5d0236_0"
+  },
+  {
+    "name": "prometheus_client",
+    "version": "0.26.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "prompt-toolkit",
+    "version": "3.0.53",
+    "build_string": "pyha770c72_0"
+  },
+  {
+    "name": "prompt_toolkit",
+    "version": "3.0.53",
+    "build_string": "hd8ed1ab_0"
+  },
+  {
+    "name": "protobuf",
+    "version": "7.35.1",
+    "build_string": "py311h65e7202_1"
+  },
+  {
+    "name": "psutil",
+    "version": "7.2.2",
+    "build_string": "py311h194be0f_2"
+  },
+  {
+    "name": "pthread-stubs",
+    "version": "0.4",
+    "build_string": "hb03c661_1003"
+  },
+  {
+    "name": "ptyprocess",
+    "version": "0.7.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "pure_eval",
+    "version": "0.2.3",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "pyarrow",
+    "version": "25.0.0",
+    "build_string": "py311h38be061_0"
+  },
+  {
+    "name": "pyarrow-core",
+    "version": "25.0.0",
+    "build_string": "py311h66caee6_0_cpu"
+  },
+  {
+    "name": "pycparser",
+    "version": "3.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "pydeseq2",
+    "version": "0.5.4",
+    "build_string": "pyhdfd78af_0"
+  },
+  {
+    "name": "pygments",
+    "version": "2.21.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "pynndescent",
+    "version": "0.6.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "pyopengl",
+    "version": "3.1.10",
+    "build_string": "pyha804496_2"
+  },
+  {
+    "name": "pyparsing",
+    "version": "3.3.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "pysam",
+    "version": "0.24.0",
+    "build_string": "py311h5f69268_1"
+  },
+  {
+    "name": "pyside6",
+    "version": "6.11.2",
+    "build_string": "py311hbcd594d_0"
+  },
+  {
+    "name": "pysocks",
+    "version": "1.7.1",
+    "build_string": "pyha55dd90_7"
+  },
+  {
+    "name": "python",
+    "version": "3.11.16",
+    "build_string": "h8ab3286_0_cpython"
+  },
+  {
+    "name": "python-dateutil",
+    "version": "2.9.0.post0",
+    "build_string": "pyhe01879c_2"
+  },
+  {
+    "name": "python-fastjsonschema",
+    "version": "2.22.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "python-igraph",
+    "version": "1.0.0",
+    "build_string": "py311h1ddb823_0"
+  },
+  {
+    "name": "python-json-logger",
+    "version": "4.2.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "python-tzdata",
+    "version": "2026.3",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "python_abi",
+    "version": "3.11",
+    "build_string": "8_cp311"
+  },
+  {
+    "name": "pytz",
+    "version": "2026.3.post1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "pyyaml",
+    "version": "6.0.3",
+    "build_string": "py311h3778330_1"
+  },
+  {
+    "name": "pyzmq",
+    "version": "27.2.0",
+    "build_string": "py311hcbe55da_0"
+  },
+  {
+    "name": "qhull",
+    "version": "2020.2",
+    "build_string": "h434a139_5"
+  },
+  {
+    "name": "qt6-main",
+    "version": "6.11.2",
+    "build_string": "pl5321h9df5c37_0"
+  },
+  {
+    "name": "re2",
+    "version": "2025.11.05",
+    "build_string": "h94463f1_2"
+  },
+  {
+    "name": "readline",
+    "version": "8.3",
+    "build_string": "hd6e31c0_1"
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "requests",
+    "version": "2.34.2",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "rfc3339-validator",
+    "version": "0.1.4",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "rfc3986-validator",
+    "version": "0.1.1",
+    "build_string": "pyh9f0ad1d_0"
+  },
+  {
+    "name": "rfc3987-syntax",
+    "version": "1.1.0",
+    "build_string": "pyhe01879c_1"
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.6.3",
+    "build_string": "py311ha6e1976_1"
+  },
+  {
+    "name": "s2n",
+    "version": "1.7.5",
+    "build_string": "h7e3ee7f_1"
+  },
+  {
+    "name": "scanpy",
+    "version": "1.11.5",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "scikit-learn",
+    "version": "1.9.0",
+    "build_string": "np2py311ha15b03d_0"
+  },
+  {
+    "name": "scipy",
+    "version": "1.17.1",
+    "build_string": "py311hbe70eeb_1"
+  },
+  {
+    "name": "scverse-misc",
+    "version": "0.0.3",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "seaborn",
+    "version": "0.13.2",
+    "build_string": "hd8ed1ab_3"
+  },
+  {
+    "name": "seaborn-base",
+    "version": "0.13.2",
+    "build_string": "pyhd8ed1ab_3"
+  },
+  {
+    "name": "send2trash",
+    "version": "2.1.0",
+    "build_string": "pyha191276_1"
+  },
+  {
+    "name": "session-info",
+    "version": "1.0.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "session-info2",
+    "version": "0.4.1",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "setuptools",
+    "version": "84.0.0",
+    "build_string": "pyh332efcf_0"
+  },
+  {
+    "name": "six",
+    "version": "1.17.0",
+    "build_string": "pyhe01879c_1"
+  },
+  {
+    "name": "snappy",
+    "version": "1.2.2",
+    "build_string": "h03e3b7b_1"
+  },
+  {
+    "name": "sniffio",
+    "version": "1.3.1",
+    "build_string": "pyhd8ed1ab_2"
+  },
+  {
+    "name": "soupsieve",
+    "version": "2.9.2",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "stack_data",
+    "version": "0.6.3",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "statsmodels",
+    "version": "0.15.0",
+    "build_string": "np2py311h98b8029_1"
+  },
+  {
+    "name": "stdlib-list",
+    "version": "0.12.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "superlu",
+    "version": "7.0.1",
+    "build_string": "h8f6e6c4_0"
+  },
+  {
+    "name": "tbb",
+    "version": "2023.0.0",
+    "build_string": "hab88423_2"
+  },
+  {
+    "name": "terminado",
+    "version": "0.18.1",
+    "build_string": "pyhc90fa1f_1"
+  },
+  {
+    "name": "texttable",
+    "version": "1.7.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "threadpoolctl",
+    "version": "3.6.0",
+    "build_string": "pyhecae5ae_0"
+  },
+  {
+    "name": "tinycss2",
+    "version": "1.4.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "tk",
+    "version": "8.6.13",
+    "build_string": "noxft_h1df4ec4_4"
+  },
+  {
+    "name": "tomli",
+    "version": "2.4.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "tornado",
+    "version": "6.5.8",
+    "build_string": "py311h49ec1c0_0"
+  },
+  {
+    "name": "tqdm",
+    "version": "4.70.0",
+    "build_string": "pyh8f84b5b_0"
+  },
+  {
+    "name": "traitlets",
+    "version": "5.16.1",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "typing-extensions",
+    "version": "4.16.0",
+    "build_string": "h69aa097_0"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "typing_utils",
+    "version": "0.1.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "tzdata",
+    "version": "2026c",
+    "build_string": "h151e31d_0"
+  },
+  {
+    "name": "umap-learn",
+    "version": "0.5.12",
+    "build_string": "py311h38be061_0"
+  },
+  {
+    "name": "unicodedata2",
+    "version": "17.0.1",
+    "build_string": "py311h49ec1c0_0"
+  },
+  {
+    "name": "uri-template",
+    "version": "1.3.0",
+    "build_string": "pyhd8ed1ab_1"
+  },
+  {
+    "name": "urllib3",
+    "version": "2.7.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "wayland",
+    "version": "1.26.0",
+    "build_string": "hc1c935e_2"
+  },
+  {
+    "name": "wcwidth",
+    "version": "0.8.3",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "webcolors",
+    "version": "25.10.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "webencodings",
+    "version": "0.5.1",
+    "build_string": "pyhd8ed1ab_3"
+  },
+  {
+    "name": "websocket-client",
+    "version": "1.9.2",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "wheel",
+    "version": "0.48.0",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "widgetsnbextension",
+    "version": "4.0.16",
+    "build_string": "pyhd8ed1ab_0"
+  },
+  {
+    "name": "wrapt",
+    "version": "2.4.0",
+    "build_string": "py311h194be0f_0"
+  },
+  {
+    "name": "xcb-util",
+    "version": "0.4.1",
+    "build_string": "h4f16b4b_2"
+  },
+  {
+    "name": "xcb-util-cursor",
+    "version": "0.1.6",
+    "build_string": "hb03c661_0"
+  },
+  {
+    "name": "xcb-util-image",
+    "version": "0.4.0",
+    "build_string": "hb711507_2"
+  },
+  {
+    "name": "xcb-util-keysyms",
+    "version": "0.4.1",
+    "build_string": "hb711507_0"
+  },
+  {
+    "name": "xcb-util-renderutil",
+    "version": "0.3.10",
+    "build_string": "hb711507_0"
+  },
+  {
+    "name": "xcb-util-wm",
+    "version": "0.4.2",
+    "build_string": "hb711507_0"
+  },
+  {
+    "name": "xkeyboard-config",
+    "version": "2.48",
+    "build_string": "h280c20c_0"
+  },
+  {
+    "name": "xorg-libice",
+    "version": "1.1.2",
+    "build_string": "h280c20c_0"
+  },
+  {
+    "name": "xorg-libsm",
+    "version": "1.2.6",
+    "build_string": "h0d788c3_1"
+  },
+  {
+    "name": "xorg-libx11",
+    "version": "1.8.13",
+    "build_string": "he1eb515_1"
+  },
+  {
+    "name": "xorg-libxau",
+    "version": "1.0.12",
+    "build_string": "hb03c661_2"
+  },
+  {
+    "name": "xorg-libxcomposite",
+    "version": "0.4.7",
+    "build_string": "hb03c661_0"
+  },
+  {
+    "name": "xorg-libxcursor",
+    "version": "1.2.3",
+    "build_string": "hb9d3cd8_0"
+  },
+  {
+    "name": "xorg-libxdamage",
+    "version": "1.1.6",
+    "build_string": "hb9d3cd8_0"
+  },
+  {
+    "name": "xorg-libxdmcp",
+    "version": "1.1.5",
+    "build_string": "hb03c661_2"
+  },
+  {
+    "name": "xorg-libxext",
+    "version": "1.3.7",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "xorg-libxfixes",
+    "version": "6.0.2",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "xorg-libxi",
+    "version": "1.8.3",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "xorg-libxrandr",
+    "version": "1.5.5",
+    "build_string": "h7cc23a3_1"
+  },
+  {
+    "name": "xorg-libxrender",
+    "version": "0.9.12",
+    "build_string": "hb03c661_1"
+  },
+  {
+    "name": "xorg-libxtst",
+    "version": "1.2.5",
+    "build_string": "h7cc23a3_4"
+  },
+  {
+    "name": "xorg-libxxf86vm",
+    "version": "1.1.7",
+    "build_string": "hb03c661_0"
+  },
+  {
+    "name": "xorg-xorgproto",
+    "version": "2025.1",
+    "build_string": "h280c20c_1"
+  },
+  {
+    "name": "yaml",
+    "version": "0.2.5",
+    "build_string": "hebe6cf0_3"
+  },
+  {
+    "name": "zarr",
+    "version": "3.1.6",
+    "build_string": "pyhc364b38_0"
+  },
+  {
+    "name": "zeromq",
+    "version": "4.3.5",
+    "build_string": "h09e67af_11"
+  },
+  {
+    "name": "zipp",
+    "version": "4.1.0",
+    "build_string": "pyhcf101f3_0"
+  },
+  {
+    "name": "zlib",
+    "version": "1.3.2",
+    "build_string": "h25fd6f3_3"
+  },
+  {
+    "name": "zlib-ng",
+    "version": "2.3.3",
+    "build_string": "hce19668_1"
+  },
+  {
+    "name": "zstd",
+    "version": "1.5.7",
+    "build_string": "hb78ec9c_7"
+  }
+]

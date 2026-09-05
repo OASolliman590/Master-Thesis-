@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "210 unique exported pairs match original sample metadata join",
+    "497 primary-tumour case intersection verified in saved API response-derived summary",
+    "metadata audit script syntax valid"
+  ],
+  "guo_xml_sha256": "7608492c0a7de1ba1772c5395e716637071079f105d485c1bc294d46432ef6dc",
+  "guo_xml_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10436379/fullTextXML",
+  "limitations": "No matrices, covariates or scientific models validated."
+}

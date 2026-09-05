@@ -1,0 +1,483 @@
+{
+  "scope": "LINCS2020 annotations plus GSE70138 2017-03-06 signatures; no matrix QC",
+  "gene_feature_counts": {
+    "inferred": 2154,
+    "landmark": 978,
+    "best inferred": 9196
+  },
+  "sentinel_features": [
+    {
+      "gene": "PSMB8",
+      "feature_space": "landmark"
+    },
+    {
+      "gene": "B2M",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "HLA-A",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "HLA-B",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "HLA-C",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "CXCL10",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "CXCL9",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "PSMB9",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "TAP1",
+      "feature_space": "best inferred"
+    },
+    {
+      "gene": "TAP2",
+      "feature_space": "best inferred"
+    }
+  ],
+  "prostate_lookup_rows": [
+    {
+      "cell_iname": "22RV1",
+      "cellosaurus_id": "CVCL_1045",
+      "donor_age": "",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "60",
+      "growth_medium": "RPMI-164 ATCC catalog # 3-21",
+      "provider_catalog_id": "",
+      "feature_id": "c-63",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Unknown",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Unknown",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "carcinoma",
+      "provider_name": "",
+      "growth_pattern": "adherent",
+      "ccle_name": "22RV1_PROSTATE",
+      "cell_alias": "22Rv-1|22Rv1"
+    },
+    {
+      "cell_iname": "DU145",
+      "cellosaurus_id": "CVCL_0105",
+      "donor_age": "69",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "48",
+      "growth_medium": "EMEM ATCC catalog # 3-23",
+      "provider_catalog_id": "HTB-81",
+      "feature_id": "c-289",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Caucasian",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Metastatic",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "carcinoma",
+      "provider_name": "ATCC",
+      "growth_pattern": "adherent",
+      "ccle_name": "DU145_PROSTATE",
+      "cell_alias": "DU 145"
+    },
+    {
+      "cell_iname": "PC3",
+      "cellosaurus_id": "CVCL_0035",
+      "donor_age": "62",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "72",
+      "growth_medium": "F-12K ATCC catalog # 3-24",
+      "provider_catalog_id": "CRL-1435",
+      "feature_id": "c-214",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Caucasian",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Metastatic",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "adenocarcinoma",
+      "provider_name": "ATCC",
+      "growth_pattern": "mix",
+      "ccle_name": "PC3_PROSTATE",
+      "cell_alias": "PC.3|PC-3"
+    },
+    {
+      "cell_iname": "RWPE1",
+      "cellosaurus_id": "CVCL_3791",
+      "donor_age": "54",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "22",
+      "growth_medium": "Invitrogen (GIBCO) as part of a kit: Keratinocyte Serum Free Medium (K-SFM), Kit Catalog Number 17005-042",
+      "provider_catalog_id": "CRL-11609",
+      "feature_id": "",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Caucasian",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Unknown",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "carcinoma",
+      "provider_name": "ATCC",
+      "growth_pattern": "adherent",
+      "ccle_name": "",
+      "cell_alias": "RWPE-1"
+    },
+    {
+      "cell_iname": "VCAP",
+      "cellosaurus_id": "CVCL_2235",
+      "donor_age": "",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "220",
+      "growth_medium": "DMEM ATCC catalog # 3-22",
+      "provider_catalog_id": "",
+      "feature_id": "",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Caucasian",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Metastatic",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "adenocarcinoma",
+      "provider_name": "ATCC",
+      "growth_pattern": "adherent",
+      "ccle_name": "VCAP_PROSTATE",
+      "cell_alias": "Vcap"
+    },
+    {
+      "cell_iname": "LNCAP",
+      "cellosaurus_id": "CVCL_0395",
+      "donor_age": "50",
+      "donor_age_death": "",
+      "donor_disease_age_onset": "",
+      "doubling_time": "48-60",
+      "growth_medium": "ATCC-formulated RPMI-1640 Medium, ATCC 30-2001",
+      "provider_catalog_id": "",
+      "feature_id": "",
+      "cell_type": "tumor",
+      "donor_ethnicity": "Caucasian",
+      "donor_sex": "M",
+      "donor_tumor_phase": "Metastatic",
+      "cell_lineage": "prostate",
+      "primary_disease": "prostate cancer",
+      "subtype": "carcinoma",
+      "provider_name": "DSMZ",
+      "growth_pattern": "adherent",
+      "ccle_name": "",
+      "cell_alias": "LNCap"
+    }
+  ],
+  "phase2_signature_count": 118050,
+  "phase2_prostate_chemical_counts": {
+    "PC3": 12031,
+    "LNCAP": 707
+  },
+  "three_drugs": [
+    {
+      "name": "ENTINOSTAT",
+      "chembl_id": "CHEMBL27759",
+      "inchi_key": "INVTYAOGFAGBOE-UHFFFAOYSA-N",
+      "lincs_compound_rows": [
+        {
+          "pert_id": "BRD-K77908580",
+          "cmap_name": "entinostat",
+          "target": "HDAC1",
+          "moa": "HDAC inhibitor",
+          "canonical_smiles": "Nc1ccccc1NC(=O)c1ccc(CNC(=O)OCc2cccnc2)cc1",
+          "inchi_key": "INVTYAOGFAGBOE-UHFFFAOYSA-N",
+          "compound_aliases": ""
+        }
+      ],
+      "phase2_all_signatures": 171,
+      "phase2_prostate_signatures": 15,
+      "conditions": [
+        {
+          "cell": "PC3",
+          "dose": "10.0 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "3.33 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "1.11 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.37 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.12 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.04 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "2.0 um",
+          "time": "6 h",
+          "signatures": 3
+        }
+      ],
+      "distil_id_count_distribution": {
+        "3": 6,
+        "1": 3,
+        "2": 6
+      }
+    },
+    {
+      "name": "DECITABINE",
+      "chembl_id": "CHEMBL1201129",
+      "inchi_key": "XAUDJQYHKZQPEU-KVQBGUIXSA-N",
+      "lincs_compound_rows": [
+        {
+          "pert_id": "BRD-K79254416",
+          "cmap_name": "decitabine",
+          "target": "DNMT1",
+          "moa": "DNA methyltransferase inhibitor",
+          "canonical_smiles": "Nc1ncn([C@H]2C[C@H](O)[C@@H](CO)O2)c(=O)n1",
+          "inchi_key": "XAUDJQYHKZQPEU-KVQBGUIXSA-N",
+          "compound_aliases": ""
+        }
+      ],
+      "phase2_all_signatures": 171,
+      "phase2_prostate_signatures": 15,
+      "conditions": [
+        {
+          "cell": "PC3",
+          "dose": "10.0 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "3.33 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "1.11 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.37 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.12 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "0.04 um",
+          "time": "24 h",
+          "signatures": 2
+        },
+        {
+          "cell": "PC3",
+          "dose": "10.0 um",
+          "time": "6 h",
+          "signatures": 3
+        }
+      ],
+      "distil_id_count_distribution": {
+        "3": 5,
+        "2": 7,
+        "1": 3
+      }
+    },
+    {
+      "name": "TAZEMETOSTAT",
+      "chembl_id": "CHEMBL3414621",
+      "inchi_key": "NSQSAUGJQHDYNO-UHFFFAOYSA-N",
+      "lincs_compound_rows": [
+        {
+          "pert_id": "BRD-K11215326",
+          "cmap_name": "E-7438",
+          "target": "",
+          "moa": "",
+          "canonical_smiles": "CCN(C1CCOCC1)c1cc(cc(C(=O)NCc2c(C)cc(C)[nH]c2=O)c1C)-c1ccc(CN2CCOCC2)cc1",
+          "inchi_key": "NSQSAUGJQHDYNO-UHFFFAOYSA-N",
+          "compound_aliases": "tazemetostat"
+        }
+      ],
+      "phase2_all_signatures": 0,
+      "phase2_prostate_signatures": 0,
+      "conditions": [],
+      "distil_id_count_distribution": {}
+    }
+  ],
+  "prism": {
+    "primary-screen-cell-line-info.csv": {
+      "lookup_rows": 588,
+      "prostate_rows": [
+        {
+          "row_name": "ACH-000090",
+          "depmap_id": "ACH-000090",
+          "ccle_name": "PC3_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE",
+          "str_profiling_notes": "NA",
+          "originally_assigned_depmap_id": "NA",
+          "originally_assigned_ccle_name": "NA"
+        },
+        {
+          "row_name": "ACH-000979",
+          "depmap_id": "ACH-000979",
+          "ccle_name": "DU145_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE",
+          "str_profiling_notes": "NA",
+          "originally_assigned_depmap_id": "NA",
+          "originally_assigned_ccle_name": "NA"
+        },
+        {
+          "row_name": "ACH-000977",
+          "depmap_id": "ACH-000977",
+          "ccle_name": "LNCAPCLONEFGC_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE",
+          "str_profiling_notes": "NA",
+          "originally_assigned_depmap_id": "NA",
+          "originally_assigned_ccle_name": "NA"
+        },
+        {
+          "row_name": "ACH-000956",
+          "depmap_id": "ACH-000956",
+          "ccle_name": "22RV1_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE",
+          "str_profiling_notes": "NA",
+          "originally_assigned_depmap_id": "NA",
+          "originally_assigned_ccle_name": "NA"
+        }
+      ]
+    },
+    "secondary-screen-cell-line-info.csv": {
+      "lookup_rows": 588,
+      "prostate_rows": [
+        {
+          "row_name": "ACH-000090",
+          "depmap_id": "ACH-000090",
+          "ccle_name": "PC3_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE"
+        },
+        {
+          "row_name": "ACH-000979",
+          "depmap_id": "ACH-000979",
+          "ccle_name": "DU145_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE"
+        },
+        {
+          "row_name": "ACH-000977",
+          "depmap_id": "ACH-000977",
+          "ccle_name": "LNCAPCLONEFGC_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE"
+        },
+        {
+          "row_name": "ACH-000956",
+          "depmap_id": "ACH-000956",
+          "ccle_name": "22RV1_PROSTATE",
+          "primary_tissue": "prostate",
+          "secondary_tissue": "",
+          "tertiary_tissue": "",
+          "passed_str_profiling": "TRUE"
+        }
+      ]
+    },
+    "primary_treatment_rows": 4686,
+    "three_drugs": [
+      {
+        "column_name": "BRD-K11215326-001-03-7::2.31::HTS",
+        "broad_id": "BRD-K11215326-001-03-7",
+        "name": "tazemetostat",
+        "dose": "2.31",
+        "screen_id": "HTS",
+        "moa": "histone lysine methyltransferase inhibitor",
+        "target": "EZH2",
+        "disease.area": "NA",
+        "indication": "NA",
+        "smiles": "CCN(C1CCOCC1)c1cc(cc(C(=O)NCc2c(C)cc(C)[nH]c2=O)c1C)-c1ccc(CN2CCOCC2)cc1, CCN(C1CCOCC1)c1cc(cc(C(=O)NCc2c(C)cc(C)[nH]c2=O)c1C)-c1ccc(CN2CCOCC2)cc1",
+        "phase": "Phase 2"
+      },
+      {
+        "column_name": "BRD-K77908580-001-09-6::2.5::HTS",
+        "broad_id": "BRD-K77908580-001-09-6",
+        "name": "entinostat",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "moa": "HDAC inhibitor",
+        "target": "HDAC1, HDAC2, HDAC3, HDAC9",
+        "disease.area": "NA",
+        "indication": "NA",
+        "smiles": "Nc1ccccc1NC(=O)c1ccc(CNC(=O)OCc2cccnc2)cc1, Nc1ccccc1NC(=O)c1ccc(CNC(=O)OCc2cccnc2)cc1",
+        "phase": "Phase 3"
+      },
+      {
+        "column_name": "BRD-K79254416-001-22-6::2.5::HTS",
+        "broad_id": "BRD-K79254416-001-22-6",
+        "name": "decitabine",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "moa": "DNA methyltransferase inhibitor",
+        "target": "DNMT1, DNMT3A",
+        "disease.area": "hematologic malignancy, hematology",
+        "indication": "myelodysplastic diseases (MDS), anemia, chronic myeloid leukemia (CML)",
+        "smiles": "Nc1ncn([C@H]2C[C@H](O)[C@@H](CO)O2)c(=O)n1, Nc1ncn([C@H]2C[C@H](O)[C@@H](CO)O2)c(=O)n1, Nc1ncn([C@H]2C[C@H](O)[C@@H](CO)O2)c(=O)n1",
+        "phase": "Launched"
+      }
+    ]
+  }
+}

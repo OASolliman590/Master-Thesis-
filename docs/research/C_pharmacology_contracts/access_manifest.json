@@ -1,0 +1,64 @@
+[
+  {
+    "file": "geo70138_listing.html",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE70nnn/GSE70138/suppl/",
+    "bytes": 4398,
+    "sha256": "a5ae6a9c4356c8eab59ffce6fe5747691252cd113721c84a0c6d511293b76fed",
+    "status": "success"
+  },
+  {
+    "file": "lincs2020_README.txt",
+    "url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/README.txt",
+    "bytes": 2200,
+    "sha256": "d6e9bbb485950550999f0c882bf9a5640ccb3028896219a4c8bd1849649b41d1",
+    "status": "success"
+  },
+  {
+    "file": "lincs2020_cellinfo.txt",
+    "url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/cellinfo_beta.txt",
+    "bytes": 37979,
+    "sha256": "d26a08f7f290f6a94bff593cdea4dcfc3fe17177e05593cd381cb65aebc63fc2",
+    "status": "success"
+  },
+  {
+    "file": "lincs2020_geneinfo.txt",
+    "url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/geneinfo_beta.txt",
+    "bytes": 1141389,
+    "sha256": "e739d06bad42ff9285c00b778e65d8999425062a3375cc7e7cdab0e7154490b5",
+    "status": "success"
+  },
+  {
+    "file": "lincs2020_compoundinfo.txt",
+    "url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/compoundinfo_beta.txt",
+    "bytes": 4631014,
+    "sha256": "a71fca6de41dcc46a5063858be7e04155f3c09832c8b3fb35814f03db8d9fdff",
+    "status": "success"
+  },
+  {
+    "file": "prism19q4_manifest.json",
+    "url": "https://api.figshare.com/v2/articles/9393293",
+    "bytes": 9748,
+    "sha256": "98ad138567857fb5ad355e3fda68df4987e5e5f6cc2559c2214cd4b01300e135",
+    "status": "success"
+  },
+  {
+    "file": "chembl_status.json",
+    "url": "https://www.ebi.ac.uk/chembl/api/data/status.json",
+    "bytes": 212,
+    "sha256": "29dc1fb09487a8d2962253a4d0d92c4ded0aa0d831effab42445d0c3483d4740",
+    "status": "success"
+  },
+  {
+    "file": "chembl_three_molecules.json",
+    "url": "https://www.ebi.ac.uk/chembl/api/data/molecule.json?pref_name__in=DECITABINE,ENTINOSTAT,TAZEMETOSTAT&limit=20",
+    "bytes": 16747,
+    "sha256": "0e81db8a10314650c90004982067599279df23ae8e2faa8b1f9fdf47146f17e1",
+    "status": "success"
+  },
+  {
+    "file": "gdsc_directory.html",
+    "url": "https://ftp.sanger.ac.uk/pub/project/cancerrxgene/releases/current_release/",
+    "status": "failed",
+    "error": "HTTP Error 403: Forbidden"
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "file": "tismo.html",
+    "url": "https://tismo.pku-genomics.org/",
+    "bytes": 1598,
+    "sha256": "c2afc20440a2ba79a00e89d8307cfefcd797ccb5737ba1bc1c882e4c06f37395"
+  },
+  {
+    "file": "l1000cds2.html",
+    "url": "https://maayanlab.cloud/L1000CDS2/",
+    "bytes": 4065,
+    "sha256": "95b16ace25a2faf751cd8e4692d695821a09fb390120bf8d03892e7c36f9f352"
+  },
+  {
+    "file": "scp1064.html",
+    "url": "https://singlecell.broadinstitute.org/single_cell/study/SCP1064/multi-modal-pooled-perturb-cite-seq-screens-in-patient-models-define-novel-mechanisms-of-cancer-immune-evasion",
+    "bytes": 23546,
+    "sha256": "0c4d1385fe1e1e133c33a35721eba3b5dbaa43bec42b62de0319ead5d134f5f9",
+    "retained": false,
+    "replacement": "scp1064_public_summary.json"
+  },
+  {
+    "file": "scperturb_zenodo.json",
+    "url": "https://zenodo.org/api/records/10044268",
+    "bytes": 18926,
+    "sha256": "58a4bd7b1d4f9e61a58f124189b490e6fd3e15ce3a49f2414f053f46f423fe8e"
+  },
+  {
+    "file": "tismo_config.js",
+    "url": "https://tismo.pku-genomics.org/static/config.js",
+    "bytes": 72,
+    "sha256": "bf80722ab16e38bd8b2bde41671af6112afe2dad3d34fba7c74f1986807877b8"
+  },
+  {
+    "file": "tismo_app.js",
+    "url": "https://tismo.pku-genomics.org/static/js/app.dc0c8ce201bc04b21979.js",
+    "bytes": 96954,
+    "sha256": "bcc182c7e7c3bfd620d37954382d9c6dcf06b4f44e6ea581f522afa8ef5d7041"
+  },
+  {
+    "file": "l1000cds2_main.js",
+    "url": "https://maayanlab.cloud/L1000CDS2/dist/main.min.js",
+    "bytes": 22397,
+    "sha256": "3e00d5e24e9c99b29d0c1001d675b5c4166c40276391e476bcd398e27129797d"
+  },
+  {
+    "file": "frangieh_bioc.json",
+    "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/PMC8376399/unicode",
+    "bytes": 100405,
+    "sha256": "c5b6f56d7b34a9150e927446b1ce0aea40697c38f1e01b7fe55706084e3c4293"
+  },
+  {
+    "file": "l1000cds2_ligands.json",
+    "url": "https://maayanlab.cloud/L1000CDS2/ligands",
+    "bytes": 1070,
+    "sha256": "06c750da4c1b5b92cda7d1732227065a2309a9c76d5c51af4d91fd9a548095eb"
+  },
+  {
+    "file": "tismo_manifest.js",
+    "url": "https://tismo.pku-genomics.org/static/js/manifest.2ca10b903b71bbb1de01.js",
+    "bytes": 2051,
+    "sha256": "b10790d5e5e250ad7b4545570a95f50291f50e537d4c94dec7575de6ea2ca5bf"
+  },
+  {
+    "file": "frangieh_repo_tree.json",
+    "url": "https://api.github.com/repos/klarman-cell-observatory/Perturb-CITE-seq/git/trees/master?recursive=1",
+    "error": "HTTP Error 404: Not Found"
+  }
+]

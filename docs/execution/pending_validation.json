@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-05",
+  "pending_tests": [],
+  "note": "No production tests have been scheduled. An empty queue is not evidence that any paper is validated.",
+  "capability_gaps": [
+    {"role": "Direct Claude Code", "state": "Installed version 2.1.260; direct auth status false. Opus available separately through Antigravity; actual review pending."},
+    {"role": "Grok consultation/coding", "state": "Windows CLI installed; authentication false"},
+    {"role": "Antigravity/Gemini coding", "state": "CLI 1.1.22 installed; live models list verifies gemini-3.8-flash-high/medium/low. Headless execution and write permissions not tested."}
+  ]
+}

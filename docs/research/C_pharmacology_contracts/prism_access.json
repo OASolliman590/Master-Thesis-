@@ -1,0 +1,32 @@
+[
+  {
+    "file": "primary-screen-readme.txt",
+    "url": "https://ndownloader.figshare.com/files/20237700",
+    "bytes": 5919,
+    "sha256": "309310719fd96580d8f211ca12d501f6624c245b268aa29d8a5286b411f0c63f"
+  },
+  {
+    "file": "primary-screen-replicate-collapsed-treatment-info.csv",
+    "url": "https://ndownloader.figshare.com/files/20237715",
+    "bytes": 1185606,
+    "sha256": "d649f207a437c9e9910572c5023d02f68a77c946f6e972c998b057160a3505e6"
+  },
+  {
+    "file": "primary-screen-cell-line-info.csv",
+    "url": "https://ndownloader.figshare.com/files/20237718",
+    "bytes": 46849,
+    "sha256": "c17174f48264fea0adb3eb4b2b1f2daf61b83999b0db6e4965338e3bd6a9fde2"
+  },
+  {
+    "file": "secondary-screen-cell-line-info.csv",
+    "url": "https://ndownloader.figshare.com/files/20237769",
+    "bytes": 40979,
+    "sha256": "b93436b5f4bcf5fd14589697be4ca8f99ffd99d639223080380bc514c3718d27"
+  },
+  {
+    "file": "secondary-screen-readme.txt",
+    "url": "https://ndownloader.figshare.com/files/20238123",
+    "bytes": 7647,
+    "sha256": "ed453e2bbaecff26cf923d8a69290f2c18fd7488d5a7d6903821980e6d49c99d"
+  }
+]
