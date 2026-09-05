@@ -1,0 +1,162 @@
+[
+  {
+    "file": "audit_siginfo.py",
+    "bytes": 5608,
+    "sha256": "0c353419207c7053b2bdd867bd9b206d921b402a4579b32f987f764ee347bdb4"
+  },
+  {
+    "file": "audit_summary.json",
+    "bytes": 6133,
+    "sha256": "74fb18b8ad7772b515b8eeaaacfde4c58fd38e37e2f7544efbaf0cffa1a4ad80"
+  },
+  {
+    "file": "chemical_prostate_overlap.json",
+    "bytes": 114,
+    "sha256": "c458c69d5c29fbbe408cade7751f1163b525787b57382fa8434f8e7887909eb2"
+  },
+  {
+    "file": "cmapM_cmapScoreCore.m",
+    "bytes": 5261,
+    "sha256": "188d1a703fab8514b21df638331883989d0dc608d20eb9ffb3e8b67cc14f384b"
+  },
+  {
+    "file": "cmapM_computeCmapScore.m",
+    "bytes": 5736,
+    "sha256": "120bc4d34b5680a13231505caa474c5bc716cc3b8b3b08f3cf6a65a0d8ec8357"
+  },
+  {
+    "file": "cmapM_fastESCore.m",
+    "bytes": 2022,
+    "sha256": "7575a1297b13c24cdb99e1354bbfa7d506817ea1ed676a9ea360071b1696221d"
+  },
+  {
+    "file": "cmapM_fastWTCSCore.m",
+    "bytes": 1950,
+    "sha256": "7ed49283698e5e194e11051af4badf6383d1573e54427e0a3278736825634e60"
+  },
+  {
+    "file": "cmapM_getCombinedES.m",
+    "bytes": 1968,
+    "sha256": "98c0624d65852d44b221ea0cfe21f24e61ccbe533c7125ab7365f8d4076b630a"
+  },
+  {
+    "file": "cmapM_LICENSE.txt",
+    "bytes": 1546,
+    "sha256": "aebe10c95262c72f95a314d253fd0bd75f4d0749bff300fb2ecf08cd3326f9b7"
+  },
+  {
+    "file": "cmapM_mortar.sigtools.SigQueryl1k.arg",
+    "bytes": 4671,
+    "sha256": "a983d84835fb552ebce7c0c1b1395ec044da303303ba22a9e8735a9d75728ab2"
+  },
+  {
+    "file": "cmapM_README.md",
+    "bytes": 2015,
+    "sha256": "e508b5afab140101cd9a16b9796ab00d36795cfaf8c8f7141f767647652c4b1c"
+  },
+  {
+    "file": "cmapM_runAnalysis_.m",
+    "bytes": 3315,
+    "sha256": "5b298d74f29ca06bf05263c5cbd6faa43717f726b7ccb46946cc8cc9a37283d6"
+  },
+  {
+    "file": "cmapM_runCmapQuery.m",
+    "bytes": 11098,
+    "sha256": "6373235f21c76e8eebd9af269add58a4670761e8b33b77012c7f308c88782c75"
+  },
+  {
+    "file": "cmapM_SigToolDemo.md",
+    "bytes": 6367,
+    "sha256": "e6b7e35798c4ed4438851d11b35f6a4b26be94d5c7035f4c4c5038ba4f703694"
+  },
+  {
+    "file": "cmapM_tree.json",
+    "bytes": 1580429,
+    "sha256": "2e63aaa7a76ba5fbff768347d0626c5315ec0ac59e513379d0c4695b5f04da2c"
+  },
+  {
+    "file": "cmapPy_README.rst",
+    "bytes": 1232,
+    "sha256": "8c9f2c459db28460306118b0a82b0400676dfcdb425cd649c7f6525db2212fc9"
+  },
+  {
+    "file": "core_methods_manifest.json",
+    "bytes": 587,
+    "sha256": "3cf320680adf670bad382e412c111c45045cdd78de94241de90bc38d3e29a6e9"
+  },
+  {
+    "file": "EI1_rows.json",
+    "bytes": 3787,
+    "sha256": "18de46fe745ce96790455585f4d12fa522e248db508b45fd0ce383c11d71b937"
+  },
+  {
+    "file": "epi_panel.json",
+    "bytes": 3729,
+    "sha256": "ebd45942e31cbc77b9b398a8e63690dac407e9e6f1682284ca9d915beff7517f"
+  },
+  {
+    "file": "epi_panel_condition_coverage.json",
+    "bytes": 2994,
+    "sha256": "7ce2db4dfaa06b11ec55bae4bf7e437ebb513f852bd0487b3503d86a2778e7c8"
+  },
+  {
+    "file": "epi_panel_supplemented.json",
+    "bytes": 4478,
+    "sha256": "5560fddc559ba6e3b9fd80499ae21fe16723614191f0a1c615b9ea06b5ff7c9c"
+  },
+  {
+    "file": "epi_prostate_dose_time_qc.tsv",
+    "bytes": 42704,
+    "sha256": "75dac006470083d8709b2050e835f2414f593d47d6f5d6e42d00c668a3433f2b"
+  },
+  {
+    "file": "fetch_methods.py",
+    "bytes": 1702,
+    "sha256": "768fe9c7ba198ca84348e5cd837bc48b40e8b25d3632a1ea734dac86dffb3471"
+  },
+  {
+    "file": "field_definitions.json",
+    "bytes": 20874,
+    "sha256": "118c459e3ca19f6383c9b46a8d2295103b1d83a9a0fe11bae51fe0fa8c924e29"
+  },
+  {
+    "file": "field_definitions.xlsx",
+    "bytes": 40461,
+    "sha256": "15ab6e651de14334e632d90e140ba3060f157d94681e4e8b8c0f7db353e7115e"
+  },
+  {
+    "file": "methods_manifest.json",
+    "bytes": 14923,
+    "sha256": "f5a0c37829e48450da66459003b329f6c105a1fef5f4afbe0ac5c301c31c992a"
+  },
+  {
+    "file": "panel_supplement.py",
+    "bytes": 2227,
+    "sha256": "4a0d25df1dcdfeb747f92ee32c221cfa857defd9033ddfba091f6c50b7ba5d1e"
+  },
+  {
+    "file": "PC3_reference_flags.json",
+    "bytes": 2877,
+    "sha256": "30450f55f32c465d953122ff9e39e677ab50e9c08d7acaa9fe5aa74269acc791"
+  },
+  {
+    "file": "prostate_or_thesis_signatures.tsv.gz",
+    "bytes": 14027667,
+    "sha256": "b8c91940000f6ef3d8ed1f8a71bf72bfb7d96bc6c5a2fbd028a3510c87f30773"
+  },
+  {
+    "file": "run.log",
+    "bytes": 5406,
+    "sha256": "d044172ae0b638e9906b63a6b7648ba5743f1dedd6db78525e4c5f33e5180b81"
+  },
+  {
+    "file": "summarize_retained.py",
+    "bytes": 2037,
+    "sha256": "5f53ee1cf2dbd39471fa171f3df61c892db91b9d07d22166adc39463ebded750"
+  },
+  {
+    "file": "thesis_anchor_summary.json",
+    "bytes": 15390,
+    "sha256": "6e8ec168ae26431a91d6a63c6aec3131c5e1f9b1725afc731ec3f4eaf71a7c66"
+  }
+]

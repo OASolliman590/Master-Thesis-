@@ -1,0 +1,148 @@
+{
+  "schema_version": "D-audit-manifest-0.1",
+  "status": "PROPOSED / NOT IMPLEMENTATION-READY",
+  "verified_at": "2026-09-05",
+  "manifest_scope": "Bounded source audit artifacts, NOT a complete analysis data manifest",
+  "source_report_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark.md",
+  "records": [
+    {
+      "file": "ST-HVG-Tahoe_manifest.json",
+      "url": "https://huggingface.co/api/models/arcinstitute/ST-HVG-Tahoe",
+      "bytes": 7613,
+      "sha256": "91c7233647b3431cb05fcf8b578f7d415e80d0eb2d97abbff56385be9704a28b",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\ST-HVG-Tahoe_manifest.json",
+      "locally_reverified_sha256": "91c7233647b3431cb05fcf8b578f7d415e80d0eb2d97abbff56385be9704a28b",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "src_state__cli__tx__infer.py",
+      "url": "https://raw.githubusercontent.com/ArcInstitute/state/9bbfe78a434a55205e4de834e1ea99f85f7a3add/src/state/_cli/_tx/_infer.py",
+      "bytes": 41900,
+      "sha256": "dffe0684e93dbacbb1b6ad1c29325da215ba78a46eeb424e87b916990cd2262a",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\src_state__cli__tx__infer.py",
+      "locally_reverified_sha256": "dffe0684e93dbacbb1b6ad1c29325da215ba78a46eeb424e87b916990cd2262a",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "pyproject.toml",
+      "url": "https://raw.githubusercontent.com/ArcInstitute/state/9bbfe78a434a55205e4de834e1ea99f85f7a3add/pyproject.toml",
+      "bytes": 1397,
+      "sha256": "cc295230d32c167d1da4de99d42ad707e5def90b9a29a58e27237d607293b585",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\pyproject.toml",
+      "locally_reverified_sha256": "cc295230d32c167d1da4de99d42ad707e5def90b9a29a58e27237d607293b585",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "ST-HVG-Tahoe_zeroshot_generalization.toml",
+      "url": "https://huggingface.co/arcinstitute/ST-HVG-Tahoe/resolve/ca6b751972493f8448e3256d1340ae70ad43e1e7/zeroshot/generalization.toml",
+      "bytes": 590,
+      "sha256": "83ee774e7e3709d3fa123e279685905dd055c4b900df8155c4c4b1047ef6f37c",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\ST-HVG-Tahoe_zeroshot_generalization.toml",
+      "locally_reverified_sha256": "83ee774e7e3709d3fa123e279685905dd055c4b900df8155c4c4b1047ef6f37c",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "ST-HVG-Tahoe_zeroshot_state_generalization_zeroshot_X_hvg_config.yaml",
+      "url": "https://huggingface.co/arcinstitute/ST-HVG-Tahoe/resolve/ca6b751972493f8448e3256d1340ae70ad43e1e7/zeroshot/state_generalization_zeroshot_X_hvg/config.yaml",
+      "bytes": 2726,
+      "sha256": "5b87025a73a932f20ba42bb693b728042c4049892659bf9182b90e3664f91541",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\ST-HVG-Tahoe_zeroshot_state_generalization_zeroshot_X_hvg_config.yaml",
+      "locally_reverified_sha256": "5b87025a73a932f20ba42bb693b728042c4049892659bf9182b90e3664f91541",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "cell_line_metadata.parquet",
+      "url": "https://huggingface.co/datasets/tahoebio/Tahoe-100M/resolve/main/metadata/cell_line_metadata.parquet",
+      "bytes": 19040,
+      "sha256": "67641f5bdd3fb077978ff1fec4d0d617490674bcd42850515ae3997194c29d4d",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\cell_line_metadata.parquet",
+      "locally_reverified_sha256": "67641f5bdd3fb077978ff1fec4d0d617490674bcd42850515ae3997194c29d4d",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "drug_metadata.parquet",
+      "url": "https://huggingface.co/datasets/tahoebio/Tahoe-100M/resolve/main/metadata/drug_metadata.parquet",
+      "bytes": 40475,
+      "sha256": "7a04c7a6611e74c92253163b994ff0a47191928ee7511f1c2ca508cee0e79f28",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\drug_metadata.parquet",
+      "locally_reverified_sha256": "7a04c7a6611e74c92253163b994ff0a47191928ee7511f1c2ca508cee0e79f28",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "pert_onehot_map.pt",
+      "url": "https://huggingface.co/arcinstitute/ST-HVG-Tahoe/resolve/ca6b751972493f8448e3256d1340ae70ad43e1e7/zeroshot/state_generalization_zeroshot_X_hvg/pert_onehot_map.pt",
+      "bytes": 5504737,
+      "sha256": "3eeb67ceefea8677ee6f0d48d0fd7a5022742847cbfefe461e453e715106181d",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\pert_onehot_map.pt",
+      "locally_reverified_sha256": "3eeb67ceefea8677ee6f0d48d0fd7a5022742847cbfefe461e453e715106181d",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    },
+    {
+      "file": "var_dims.pkl",
+      "url": "https://huggingface.co/arcinstitute/ST-HVG-Tahoe/resolve/ca6b751972493f8448e3256d1340ae70ad43e1e7/zeroshot/state_generalization_zeroshot_X_hvg/var_dims.pkl",
+      "bytes": 977655,
+      "sha256": "349568c871815e55d0be63ce67162dcfec01a7282adc5a3be9ace6d4bd5ad025",
+      "original_local_path": "E:\\Master_Thesis\\planning\\next_evidence\\D_virtual_benchmark\\var_dims.pkl",
+      "locally_reverified_sha256": "349568c871815e55d0be63ce67162dcfec01a7282adc5a3be9ace6d4bd5ad025",
+      "inspection": "source/config or static metadata only; no model execution",
+      "analysis_coverage_complete": false
+    }
+  ],
+  "verified_summary": {
+    "checkpoint_repository": "arcinstitute/ST-HVG-Tahoe",
+    "revision": "ca6b751972493f8448e3256d1340ae70ad43e1e7",
+    "run": "zeroshot/state_generalization_zeroshot_X_hvg",
+    "label_count": 1138,
+    "drug_or_vehicle_name_count": 380,
+    "queried_aliases": [
+      "decitabine",
+      "entinostat",
+      "ms-275",
+      "ms275",
+      "tazemetostat",
+      "e-7438",
+      "epz-6438"
+    ],
+    "matching_labels": [
+      "[('Decitabine', 0.05, 'uM')]",
+      "[('Decitabine', 0.5, 'uM')]",
+      "[('Decitabine', 5.0, 'uM')]"
+    ],
+    "limitations": "Literal label audit; absence of a name does not substitute for structural alias matching. No pickle object executed."
+  },
+  "prostate_eligible_condition_count": null,
+  "count_status": "Not established; null is not zero",
+  "representative_config_fields": {
+    "embed_key": "X_hvg",
+    "output_space": "gene",
+    "pert_rep": "onehot",
+    "pert_col": "drugname_drugconc",
+    "cell_type_key": "cell_name",
+    "batch_col": "plate",
+    "int_counts": false,
+    "control_config": "DMSO_TF"
+  },
+  "released_zeroshot_test_contexts": [
+    "C32",
+    "HOP62",
+    "HepG2/C3A",
+    "Hs 766T",
+    "PANC-1"
+  ],
+  "metadata_limitations": [
+    "Model manifest verifies asset names, not selected binary training provenance.",
+    "Vocabulary was decoded statically using pickletools; no unpickling executed.",
+    "Dimensions do not resolve ordered output gene identifiers.",
+    "Parquet metadata files were cached by the earlier audit but not parsed; do not infer measured line coverage.",
+    "No weights, matrices or predictions are included in this kit."
+  ],
+  "verification_method": "Python hashlib.sha256 over each cached original file; assertions against prior source retrieval manifests passed at kit drafting."
+}

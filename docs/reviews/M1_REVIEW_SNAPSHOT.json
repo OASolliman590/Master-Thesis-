@@ -1,0 +1,321 @@
+{
+  "scope": "Inline exact-file review snapshot; uncommitted M1 draft",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1133,
+      "sha256": "8219fc951dbce88f36e1bb8af2da6bec6b12f9ba77aa73a7ae40d7fa53a0df46"
+    },
+    {
+      "path": "CONTEXT.md",
+      "bytes": 4654,
+      "sha256": "742c86ebea26fba3bfadbbe3b2aa72136f7151697957af7789d9702c0c8d91cd"
+    },
+    {
+      "path": "docs/execution/GOAL.md",
+      "bytes": 17254,
+      "sha256": "5f2433ffefbe23e849dd785cf1964e95c87890286314a6e2ab0093fb2f20bac6"
+    },
+    {
+      "path": "docs/execution/PROGRESS.md",
+      "bytes": 5126,
+      "sha256": "c86fb6007537ac6bb8ebc30969bb087af74ffa5ecffa45ea82332efd5896629d"
+    },
+    {
+      "path": "specs/A/ANALYSIS.md",
+      "bytes": 9463,
+      "sha256": "eee4409ef850ea227d2e1238f66395be2b9b91f3be802f2df33e9732b38f77db"
+    },
+    {
+      "path": "specs/A/DATA.md",
+      "bytes": 7304,
+      "sha256": "fb96bf6f70caa44374dbcd0411f0b2c4e6c8e82197f0cc144a15e3393cdf2aef"
+    },
+    {
+      "path": "specs/A/DISCOVERY.md",
+      "bytes": 10204,
+      "sha256": "eab5b45c6bf11b4a0f037143efa9ce53231934ba4b27d58dc1d6a8a102b7376b"
+    },
+    {
+      "path": "specs/A/ENGINEERING.md",
+      "bytes": 11802,
+      "sha256": "1f3c9064eff7bf72234549e3bb2e881d80aa5d75aba50405d3942a9dad128fa0"
+    },
+    {
+      "path": "specs/A/FIGURES.md",
+      "bytes": 4209,
+      "sha256": "8b056886032615086de1e5607778b8bd56c912a0ab4109a99730027e3ca23a3c"
+    },
+    {
+      "path": "specs/A/PREREGISTRATION.md",
+      "bytes": 6968,
+      "sha256": "88089ae0e92d15334fcd36060eeb2be85ce90b7c16c5f312b4337f471a622f4c"
+    },
+    {
+      "path": "specs/A/README.md",
+      "bytes": 4753,
+      "sha256": "fd1616d38e71743b852293aa0fa9be99c6d36d4807bbd325f8ba56a91625f5c3"
+    },
+    {
+      "path": "specs/A/REVIEW_RESPONSE.md",
+      "bytes": 2998,
+      "sha256": "9a3320542890b9a95a1d72335f5b131c180bf6f7fe768e78d1292fb88587861a"
+    },
+    {
+      "path": "specs/A/tickets/A01-cohort-tracer.md",
+      "bytes": 1258,
+      "sha256": "8e59e4dce2102312a00bcab8c7155c98735a63c2a8ddcf23cfb3906321a4aff8"
+    },
+    {
+      "path": "specs/A/tickets/A02-independent-cohort-summary.md",
+      "bytes": 1154,
+      "sha256": "d3cca48d27b188bcbe031fefc91f066c3b0d9dd411dd874b015353005b73c198"
+    },
+    {
+      "path": "specs/A/tickets/A03-secondary-and-prostate.md",
+      "bytes": 1448,
+      "sha256": "e109871575fbfba71a40f09b5b3a42462e1bf9f99ed2ef760682dcbd86bc9a5c"
+    },
+    {
+      "path": "specs/A/tickets/A04-manuscript-reproduction.md",
+      "bytes": 1121,
+      "sha256": "26d8f5a8b9636010ec502c82e34f9a84d24f45c506dbee1b7e3efccbd62bc256"
+    },
+    {
+      "path": "specs/A/tickets/A05-cohort-held-out-discovery.md",
+      "bytes": 2243,
+      "sha256": "0c787c149c739de4983d46b7a69ff6f06fccd1cdce655b41955fdf25aea70dea"
+    },
+    {
+      "path": "specs/A/tickets/A06-prostate-transport-contract.md",
+      "bytes": 2092,
+      "sha256": "16065ca7eb0ef0bd052dfd018a414a69f0dbe1ef4f7c43bbe7675e545f7b1a67"
+    },
+    {
+      "path": "specs/A/TRANSPORT.md",
+      "bytes": 8191,
+      "sha256": "1cbab8ba3bafb436c2407ee06717ae0473dc9a332243be2b403508500b90adbf"
+    },
+    {
+      "path": "specs/B/ANALYSIS.md",
+      "bytes": 8983,
+      "sha256": "6720804be3f6cd3b3f3d90e2adce200004e777b88fe891f499d9b1096ccbb0f0"
+    },
+    {
+      "path": "specs/B/DATA_AND_SOURCES.md",
+      "bytes": 7397,
+      "sha256": "61e33b66866295f2b3a5cec00a789c9ddb411dce7b8c935014e382668d5814fb"
+    },
+    {
+      "path": "specs/B/PREREGISTRATION_AND_LEDGER.md",
+      "bytes": 6508,
+      "sha256": "e7b43b987f98dac5526cfb6ff5e65e947ec058b53469198f4130287ecfc5c022"
+    },
+    {
+      "path": "specs/B/README.md",
+      "bytes": 5152,
+      "sha256": "9be4bee2f5ef160e2fb28a841f6ad2015259e8105fc20ef6c2d164be555ac9b1"
+    },
+    {
+      "path": "specs/B/REPRODUCE_AND_READINESS.md",
+      "bytes": 6988,
+      "sha256": "5e2c827369620631c95b01152da3a392faaf0e4aedb8e829b9428d408b2a4107"
+    },
+    {
+      "path": "specs/B/SOFTWARE_CONTRACT.md",
+      "bytes": 7147,
+      "sha256": "d1674b1db59d6a7327e83141abdcd5e4798ca6c928923dc451d9552c98e3b46d"
+    },
+    {
+      "path": "specs/B/TICKETS_AND_TESTS.md",
+      "bytes": 13715,
+      "sha256": "cc7183fa116d3b099c38d1f13143155390ca688c2c4a6153086a34141b91f97a"
+    },
+    {
+      "path": "specs/B/VALIDATION_AND_FIGURES.md",
+      "bytes": 6259,
+      "sha256": "c53f2cb52cbbcfada1d90db776434da49da847a322714945bb0af098cbb64ade"
+    },
+    {
+      "path": "specs/C/ANALYSIS.md",
+      "bytes": 9629,
+      "sha256": "e1e5b6d6f3aafce721526eb80caf34f621cdf062efbf9c20567054781176fead"
+    },
+    {
+      "path": "specs/C/DATA.md",
+      "bytes": 8469,
+      "sha256": "efb469f65885456500ecc6667c9762b2776039620153922690516b3a49981ecd"
+    },
+    {
+      "path": "specs/C/ENGINEERING.md",
+      "bytes": 14235,
+      "sha256": "641d23da98087bdd39adfe3c04177c53e7c1a48ae1357dc98f3c6b2caab9820f"
+    },
+    {
+      "path": "specs/C/PREREGISTRATION.md",
+      "bytes": 13092,
+      "sha256": "6d82ed8b113b175b256b643700b9358cb72097ecaac83bee8503b6463e1dc84f"
+    },
+    {
+      "path": "specs/C/README.md",
+      "bytes": 4070,
+      "sha256": "30696594699eec6e0936206556b4a890f526f8ffd245065914cc7448f046d8ce"
+    },
+    {
+      "path": "specs/C/tickets/C00.md",
+      "bytes": 1905,
+      "sha256": "3ed497337136ff55ceea4108351314a922b5e34b5a8b9c17d57dda8568944779"
+    },
+    {
+      "path": "specs/C/tickets/C01.md",
+      "bytes": 1782,
+      "sha256": "afc4c0ce757ba1be5d4a3833bc79150ce84078e90df3fc864e4f032ba6a11429"
+    },
+    {
+      "path": "specs/C/tickets/C02.md",
+      "bytes": 1906,
+      "sha256": "67596df2f5067067b7a0b531a18cac48b771b1fdb69b2dc60a2a64163af41be9"
+    },
+    {
+      "path": "specs/C/tickets/C03.md",
+      "bytes": 1878,
+      "sha256": "6044ae0e8074305b3c1c1ed8593080ff07f37afd0848d6d5ee55c71245e307e0"
+    },
+    {
+      "path": "specs/C/tickets/C04.md",
+      "bytes": 1959,
+      "sha256": "a0a5f96416450e0f0a2748e8dfc674efcd8fb779fdd1dff50ca24cc782e6769f"
+    },
+    {
+      "path": "specs/C/tickets/C05.md",
+      "bytes": 1808,
+      "sha256": "116c0ca78e8c36671730a1783aecaffeaac33259752ebab622cf5ef0691f568c"
+    },
+    {
+      "path": "specs/C/tickets/C06.md",
+      "bytes": 1979,
+      "sha256": "8f282783ce2b1d0a0683253fc756aa116069d86558779c12fc060faca22f9fbd"
+    },
+    {
+      "path": "specs/C/tickets/C07.md",
+      "bytes": 1935,
+      "sha256": "f085e024e7e18157e19e6cbabe33b75be0cd9dad5a4ebaa4b04dc4b9cc327fa5"
+    },
+    {
+      "path": "specs/C/tickets/C08.md",
+      "bytes": 1907,
+      "sha256": "b046dc1d1485b9491a34b9f91254d89046089ca9ada642e5078074c3ed63d2cd"
+    },
+    {
+      "path": "specs/C/tickets/C09.md",
+      "bytes": 1951,
+      "sha256": "4bfa8b0e47b56d62ca826e3a8e34dff7a8e9391106ac68c0f1a632aee2a0949a"
+    },
+    {
+      "path": "specs/C/tickets/C10.md",
+      "bytes": 1976,
+      "sha256": "bf5c0b52949e980589d857aaa11ecaa13b7daa2a70bb83a4cde05e341a2cfac5"
+    },
+    {
+      "path": "specs/C/tickets/C11.md",
+      "bytes": 1917,
+      "sha256": "3a3a91e77306d3a9a79636f9f47c966bde63ff89255c99344b4fe494a0ddd834"
+    },
+    {
+      "path": "specs/C/tickets/C12.md",
+      "bytes": 1997,
+      "sha256": "cf2370ff342f110b3b9e9dc141e382f6c3e2206f204e6e2a625ee5db6f6f8d22"
+    },
+    {
+      "path": "specs/C/VALIDATION_AND_FIGURES.md",
+      "bytes": 4908,
+      "sha256": "d4147ef8f5b8e61b9424a5d29d83d19a3a54dfeead176a52b516498579ee1f2a"
+    },
+    {
+      "path": "specs/D/ANALYSIS.md",
+      "bytes": 7699,
+      "sha256": "128ba45807a5105782e28c8be25be191976cf918e1eead2f4e9fafb4fc6c410d"
+    },
+    {
+      "path": "specs/D/DATA_AND_SOURCES.md",
+      "bytes": 6381,
+      "sha256": "a261e6c6313bbc35f23594160318e8c17c1a237c14cbfc5f6edfd839636e2f9e"
+    },
+    {
+      "path": "specs/D/PREREGISTRATION_AND_LEDGER.md",
+      "bytes": 6704,
+      "sha256": "80a90ae94bf4a43c35c7d603424d50f4b18b2cb58556c753d82d37ae026c22f5"
+    },
+    {
+      "path": "specs/D/README.md",
+      "bytes": 5918,
+      "sha256": "49a47925bddb47632b810ea6c773c45bb9e8474f5e42db0877165f7f7ba112bd"
+    },
+    {
+      "path": "specs/D/REPRODUCE_AND_READINESS.md",
+      "bytes": 7081,
+      "sha256": "151834401e17d9dd64292221b86ad0523d24f284e0744990e8c3a44268bce9f8"
+    },
+    {
+      "path": "specs/D/REVIEW_RESPONSE.md",
+      "bytes": 1080,
+      "sha256": "ac7d1818ca3e18d7c962af0394ba894b8dc0c307680db073c6f6a3d8c726b790"
+    },
+    {
+      "path": "specs/D/SOFTWARE_CONTRACT.md",
+      "bytes": 7884,
+      "sha256": "11e78667e1fb105095efd20b080ac83388ebab70fa565a3db0f2d95f8840476c"
+    },
+    {
+      "path": "specs/D/TICKETS_AND_TESTS.md",
+      "bytes": 8943,
+      "sha256": "91b2b37a9088ef47084c7eaa92f969408fbafba063faac74ba79c714d344ec51"
+    },
+    {
+      "path": "specs/D/VALIDATION_AND_FIGURES.md",
+      "bytes": 6942,
+      "sha256": "c9f74da1523f0337e105ff3d1d4d1d0d6cd5b167c7a060c24c3b2bac303b342f"
+    },
+    {
+      "path": "specs/README.md",
+      "bytes": 4049,
+      "sha256": "8f26d6bcfb47c83a066b8fc0968d56ead685cf73d5e6b3dff15b7c9fb2a0fa9e"
+    },
+    {
+      "path": "docs/research/A_clinical_transfer.md",
+      "bytes": 15558,
+      "sha256": "f458cf9c408a4997c69fbf851a981aad4790f2a24992f3f9a664426e2878a5d0"
+    },
+    {
+      "path": "docs/research/B_paired_prostate.md",
+      "bytes": 12603,
+      "sha256": "636aba22ab6b472e607ecd2041bed83e244b9157b7b7e134c3777cadcc5093ad"
+    },
+    {
+      "path": "docs/research/B_readiness.md",
+      "bytes": 16694,
+      "sha256": "d8dfd55851a8d3b9f9f529756a69d09b2198c908cf459a5f09210e139a225282"
+    },
+    {
+      "path": "docs/research/C_novelty_comparison.md",
+      "bytes": 12933,
+      "sha256": "2ea1764662c7418b92ccc67632ca4ac4a23a3699a8cf9547e2f8f90691ea0af7"
+    },
+    {
+      "path": "docs/research/C_lincs2020_readiness.md",
+      "bytes": 17507,
+      "sha256": "636e99ce44b1bdbbd70efd537fd2f8dc191a31edeca4be14b2120586dc4c5dfe"
+    },
+    {
+      "path": "docs/research/C_immune_context.md",
+      "bytes": 9944,
+      "sha256": "59ba2fcf878c7a5b1d1c466cffc3cfce36dd636247aedd3d43cf3a7de4867912"
+    },
+    {
+      "path": "docs/research/D_virtual_benchmark.md",
+      "bytes": 20542,
+      "sha256": "5443ed2e647b849ac51c1b74be36b8d89820215a044b69b9580dbfa61201a8bf"
+    }
+  ],
+  "brief_sha256": "b0b27a1442c9eb26783df5038617fa6e45c61ebc2ba4da0ba1ba629a5a299a0b"
+}

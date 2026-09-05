@@ -1,0 +1,12 @@
+[
+  {
+    "file": "cmapM_cmapScoreCore.m",
+    "url": "https://raw.githubusercontent.com/cmap/cmapM/8f0e7bc4c38efbdf3f96f5ac72ee26792907a99c/sig_tools/%2Bmortar/%2Bcompute/%40Connectivity/cmapScoreCore.m",
+    "sha256": "188d1a703fab8514b21df638331883989d0dc608d20eb9ffb3e8b67cc14f384b"
+  },
+  {
+    "file": "cmapM_fastESCore.m",
+    "url": "https://raw.githubusercontent.com/cmap/cmapM/8f0e7bc4c38efbdf3f96f5ac72ee26792907a99c/sig_tools/%2Bmortar/%2Bcompute/%40Connectivity/fastESCore.m",
+    "sha256": "7575a1297b13c24cdb99e1354bbfa7d506817ea1ed676a9ea360071b1696221d"
+  }
+]

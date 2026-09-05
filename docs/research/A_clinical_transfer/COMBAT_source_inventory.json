@@ -1,0 +1,132 @@
+{
+  "sheets": [
+    {
+      "sheet": "Supplemental Figure 1",
+      "xml_rows": 46,
+      "header_cells": {
+        "A1": "Pt #",
+        "B1": "Best PSA @ C4D1",
+        "C1": "Best PSA on Nivolumab"
+      }
+    },
+    {
+      "sheet": "Supplementary Table 2",
+      "xml_rows": 46,
+      "header_cells": {
+        "A1": "Patient Nmber",
+        "B1": "Type",
+        "C1": "APC",
+        "D1": "AR",
+        "E1": "ARID1A",
+        "F1": "ATM",
+        "G1": "BRCA2",
+        "H1": "CHD1",
+        "I1": "CTNNB1",
+        "J1": "FOXA1",
+        "K1": "KMT2C",
+        "L1": "MLH1",
+        "M1": "PIK3CA",
+        "N1": "EGFR",
+        "O1": "PTEN",
+        "P1": "RB1",
+        "Q1": "SPOP",
+        "R1": "TP53",
+        "S1": "CDKN1B",
+        "T1": "ZFHX3",
+        "U1": "CDK12",
+        "V1": "EZH2",
+        "W1": "MYC",
+        "X1": "AKT1",
+        "Y1": "BRAF",
+        "Z1": "CHD3",
+        "AA1": "CHD6",
+        "AB1": "CHD7",
+        "AC1": "COL5A1",
+        "AD1": "ERF",
+        "AE1": "FOXO3",
+        "AF1": "HRAS",
+        "AG1": "IDH1",
+        "AH1": "JAK1",
+        "AI1": "KDM6A",
+        "AJ1": "KMT2B",
+        "AK1": "MED12",
+        "AL1": "MGA",
+        "AM1": "PIK3CB",
+        "AN1": "PIK3R1",
+        "AO1": "RNF43",
+        "AP1": "SF3B1",
+        "AQ1": "SMARCA1",
+        "AR1": "SMARCAD1",
+        "AS1": "USP28",
+        "AT1": "WASF3",
+        "AU1": "ZMYM3",
+        "AV1": "ZNF292",
+        "AW1": "KMT2D",
+        "AX1": "SETD2",
+        "AY1": "TMPRSS2",
+        "AZ1": "TMB"
+      }
+    },
+    {
+      "sheet": "Supplemental Figure 5",
+      "xml_rows": 39,
+      "header_cells": {
+        "A1": "time",
+        "B1": "subjectID",
+        "C1": "clinical response",
+        "D1": "cd8",
+        "E1": "cd8pd1pos",
+        "F1": "cd8pd1neg",
+        "G1": "treg",
+        "H1": "cd8tregratio",
+        "I1": "cd3",
+        "J1": "cd4",
+        "K1": "cd4pd1pos",
+        "L1": "cd4pd1neg",
+        "M1": "pd1pos"
+      }
+    },
+    {
+      "sheet": "Fiugre 1 and Suppl. Figure 2 ",
+      "xml_rows": 46,
+      "header_cells": {
+        "A1": "PT ID",
+        "B1": "Objective RESPONSE",
+        "C1": "PT ID",
+        "D1": "PSA RESPONSE"
+      }
+    },
+    {
+      "sheet": "Figure 2",
+      "xml_rows": 46,
+      "header_cells": {
+        "A1": "Confirmed PSA50 Response",
+        "B1": "Time to PSA response (d)",
+        "C1": "Time to objective response (d)",
+        "D1": "Radiographic Progression?",
+        "E1": "rPFS",
+        "F1": "duration of treatment",
+        "G1": "rPFS if not in DOT",
+        "H1": "Time to PSA response (m)",
+        "I1": "Time to Objective response(m)",
+        "J1": "Time to off because of Tox",
+        "K1": "",
+        "L1": "Time off because of PSA",
+        "M1": "ID for Y axis"
+      }
+    },
+    {
+      "sheet": "Figure 5",
+      "xml_rows": 14,
+      "header_cells": {
+        "A1": "CD8+ T Cells",
+        "D1": "PD-1+CD8+ T Cells",
+        "G1": "CD4+ T Cells",
+        "J1": "PD1+CD4+ T Cells",
+        "M1": "PD-1+CD4+ and PD1+ and CD8+ T Cells"
+      }
+    }
+  ],
+  "sha256": "c8f0521cfb2c4ff8d70c873da4bdb75c129e99b63e89660a7b40fb21b46245a8",
+  "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-023-44514-2/MediaObjects/41467_2023_44514_MOESM4_ESM.xlsx"
+}

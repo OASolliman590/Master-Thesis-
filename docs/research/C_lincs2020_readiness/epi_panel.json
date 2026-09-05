@@ -1,0 +1,254 @@
+{
+  "BRD-A01145011": {
+    "name": "zebularine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-A11263757": {
+    "name": "azacitidine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-A63989068": {
+    "name": "apicidin",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K00627859": {
+    "name": "tubastatin-a",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K02130563": {
+    "name": "panobinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K03406345": {
+    "name": "azacitidine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K04466929": {
+    "name": "Merck60",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K05878375": {
+    "name": "sodium-butyrate",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K11215326": {
+    "name": "E-7438",
+    "classes": [
+      "EZH2i_manual_ChEMBL3414621"
+    ]
+  },
+  "BRD-K11558771": {
+    "name": "droxinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K12867552": {
+    "name": "PCI-24781",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K13169950": {
+    "name": "NSC-3852",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K13810148": {
+    "name": "givinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K16485616": {
+    "name": "mocetinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K17743125": {
+    "name": "belinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K22503835": {
+    "name": "scriptaid",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K26818574": {
+    "name": "BIX-01294",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K28822270": {
+    "name": "resminostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K29313308": {
+    "name": "HDAC3-selective",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K32744045": {
+    "name": "disulfiram",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K41260949": {
+    "name": "valproic-acid",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K52522949": {
+    "name": "NCH-51",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K55026842": {
+    "name": "azacitidine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K56957086": {
+    "name": "dacinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K61228301": {
+    "name": "SGI-1027",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K61397605": {
+    "name": "romidepsin",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K61688984": {
+    "name": "RGFP-966",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K64606589": {
+    "name": "apicidin",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K69840642": {
+    "name": "ISOX",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K74761218": {
+    "name": "WT-171",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K76698671": {
+    "name": "HNHA",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K77908580": {
+    "name": "entinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K79254416": {
+    "name": "decitabine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K81418486": {
+    "name": "vorinostat",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K82928847": {
+    "name": "ACY-1215",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K83837640": {
+    "name": "JNJ-26481585",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K86797399": {
+    "name": "SB-939",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K87714311": {
+    "name": "zebularine",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K88742110": {
+    "name": "PCI-34051",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K89391146": {
+    "name": "RG-108",
+    "classes": [
+      "DNMTi"
+    ]
+  },
+  "BRD-K94335714": {
+    "name": "MC1568",
+    "classes": [
+      "HDACi"
+    ]
+  },
+  "BRD-K98426715": {
+    "name": "tubacin",
+    "classes": [
+      "HDACi"
+    ]
+  }
+}

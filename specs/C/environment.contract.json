@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1-proposed",
+  "paper": "C",
+  "status": "design_proposal_not_executable_lock",
+  "checked_date": "2026-09-05",
+  "lock_status": "pending",
+  "lock_file": null,
+  "lock_sha256": null,
+  "recreation_test": {"status": "not_run", "log": null},
+  "main_execution_host": "AIU",
+  "main_checkout": "/home/omics/projects/ici_thesis_pipeline/master-thesis",
+  "observed_metadata_runtime": {
+    "python": "3.11.16",
+    "executable": "/home/omics/miniforge3/envs/omics-py/bin/python",
+    "evidence": "../../docs/research/C_lincs2020_readiness/audit_summary.json",
+    "scope": "completed metadata stream only; not a validated scoring runtime"
+  },
+  "reference_scorer": {
+    "repository": "https://github.com/cmap/cmapM",
+    "commit": "8f0e7bc4c38efbdf3f96f5ac72ee26792907a99c",
+    "readme_version": "2.0.0",
+    "entrypoint": "sig_queryl1k_tool",
+    "metric": "wtcs",
+    "es_tail": "both",
+    "combine_rescale": false,
+    "source_inspection": "complete",
+    "runtime_test": "not_run",
+    "numerical_parity": "not_run",
+    "primary_output": "raw_cs (WTCS), explicitly negated for reversal",
+    "tau_implementation": null
+  },
+  "conditional_runtime_routes": [
+    {"route": "MATLAB source", "documented_minimum": "R2014b", "required_toolbox": "Statistics Toolbox", "observed_on_AIUPATH": false, "selected": false, "exact_version": null},
+    {"route": "official compiled Docker workflow", "documented_image": "cmap/sigtool-runtime", "docker_on_AIUPATH": true, "daemon_access_verified": false, "image_digest": null, "compiled_tool_digest": null, "selected": false},
+    {"route": "Python numerical port", "selected": false, "implementation": null, "gate": "pinned-reference parity including zero/tie/rank/null cases; no silent replacement"}
+  ],
+  "packages_requiring_selection_and_lock": ["matrix I/O", "schema validation", "numerical array library if ported", "test runner", "plotting", "workflow/resume"],
+  "forbidden_assumptions": ["cmapPy provides a validated WTCS or tau engine", "mutable Docker tag is a lock", "existing Python environment proves scorer correctness", "metadata counts validate matrix columns", "VPN-delayed tests passed"],
+  "proposed_initial_resource_limits": {"workers": 1, "threads_per_worker": 1, "gpu_required": false, "measured_memory_GB": null, "production_matrix_bytes": null, "status": "measure on an approved small matrix smoke before scaling"},
+  "credentials": {"store_in_repo": false, "print_or_copy": false},
+  "environment_changes": "no shared-environment modification; choose isolated route after review"
+}

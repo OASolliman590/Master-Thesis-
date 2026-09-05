@@ -1,0 +1,562 @@
+{
+  "prostate_thesis_groups": [
+    {
+      "drug": "decitabine",
+      "cell": "22RV1",
+      "time_h": "24",
+      "n_sig": 3,
+      "n_qc_pass": 3,
+      "n_hiq": 0,
+      "doses": [
+        "1.11111",
+        "3.33333",
+        "10"
+      ],
+      "nsamples": [
+        1
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "cell": "PC3",
+      "time_h": "24",
+      "n_sig": 25,
+      "n_qc_pass": 24,
+      "n_hiq": 19,
+      "doses": [
+        "0.00949668",
+        "0.02849",
+        "0.04",
+        "0.0411523",
+        "0.0854701",
+        "0.12",
+        "0.123457",
+        "0.25641",
+        "0.37",
+        "0.37037",
+        "0.769231",
+        "1.11",
+        "1.11111",
+        "2.30769",
+        "3.33",
+        "3.33333",
+        "10"
+      ],
+      "nsamples": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "cell": "PC3",
+      "time_h": "6",
+      "n_sig": 2,
+      "n_qc_pass": 2,
+      "n_hiq": 0,
+      "doses": [
+        "10"
+      ],
+      "nsamples": [
+        3,
+        5
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "cell": "VCAP",
+      "time_h": "24",
+      "n_sig": 1,
+      "n_qc_pass": 0,
+      "n_hiq": 0,
+      "doses": [
+        "10"
+      ],
+      "nsamples": [
+        4
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "cell": "VCAP",
+      "time_h": "6",
+      "n_sig": 1,
+      "n_qc_pass": 0,
+      "n_hiq": 0,
+      "doses": [
+        "10"
+      ],
+      "nsamples": [
+        5
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "22RV1",
+      "time_h": "24",
+      "n_sig": 2,
+      "n_qc_pass": 2,
+      "n_hiq": 0,
+      "doses": [
+        "0.1",
+        "1"
+      ],
+      "nsamples": [
+        1
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "LNCAP",
+      "time_h": "24",
+      "n_sig": 3,
+      "n_qc_pass": 3,
+      "n_hiq": 0,
+      "doses": [
+        "0.1",
+        "1",
+        "10"
+      ],
+      "nsamples": [
+        1
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "PC3",
+      "time_h": "24",
+      "n_sig": 37,
+      "n_qc_pass": 32,
+      "n_hiq": 26,
+      "doses": [
+        "0.00949668",
+        "0.02849",
+        "0.04",
+        "0.0411523",
+        "0.078125",
+        "0.0854701",
+        "0.1",
+        "0.12",
+        "0.123457",
+        "0.15625",
+        "0.25641",
+        "0.3125",
+        "0.37",
+        "0.37037",
+        "0.625",
+        "0.769231",
+        "1",
+        "1.11",
+        "1.11111",
+        "1.25",
+        "2.30769",
+        "2.5",
+        "3.33",
+        "3.33333",
+        "5",
+        "10"
+      ],
+      "nsamples": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "PC3",
+      "time_h": "6",
+      "n_sig": 11,
+      "n_qc_pass": 11,
+      "n_hiq": 7,
+      "doses": [
+        "0.078125",
+        "0.15625",
+        "0.3125",
+        "0.625",
+        "1.25",
+        "2",
+        "2.5",
+        "5",
+        "10"
+      ],
+      "nsamples": [
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "VCAP",
+      "time_h": "24",
+      "n_sig": 2,
+      "n_qc_pass": 0,
+      "n_hiq": 0,
+      "doses": [
+        "10"
+      ],
+      "nsamples": [
+        4,
+        5
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "cell": "VCAP",
+      "time_h": "6",
+      "n_sig": 2,
+      "n_qc_pass": 1,
+      "n_hiq": 1,
+      "doses": [
+        "10"
+      ],
+      "nsamples": [
+        5
+      ]
+    },
+    {
+      "drug": "tazemetostat",
+      "cell": "PC3",
+      "time_h": "24",
+      "n_sig": 3,
+      "n_qc_pass": 3,
+      "n_hiq": 1,
+      "doses": [
+        "1.11111",
+        "3.33333",
+        "10"
+      ],
+      "nsamples": [
+        3
+      ]
+    }
+  ],
+  "common_exact_qc_pass_PC3_24h_doses_uM": [
+    "1.11111",
+    "3.33333",
+    "10"
+  ],
+  "anchor": [
+    {
+      "drug": "decitabine",
+      "dose_uM": "1.11111",
+      "n_qc_pass": 2,
+      "n_hiq": 2,
+      "distinct_instances": 5,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "REP.A022_PC3_24H:B21",
+          "pert_dose": "1.11111",
+          "pert_idose": "1.11 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.37524",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:B21|REP.A022_PC3_24H_X3_B23:B21"
+        },
+        {
+          "sig_id": "PBIOA022_PC3_24H:O09",
+          "pert_dose": "1.11111",
+          "pert_idose": "1.11 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.412385",
+          "project_code": "PBIOA",
+          "det_plates": "PBIOA022_PC3_24H_X1_B21|PBIOA022_PC3_24H_X2_B21|PBIOA022_PC3_24H_X3_B21",
+          "distil_ids": "PBIOA022_PC3_24H_X1_B21:O09|PBIOA022_PC3_24H_X2_B21:O09|PBIOA022_PC3_24H_X3_B21:O09"
+        }
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "dose_uM": "1.11111",
+      "n_qc_pass": 1,
+      "n_hiq": 1,
+      "distinct_instances": 2,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "REP.A022_PC3_24H:A21",
+          "pert_dose": "1.11111",
+          "pert_idose": "1.11 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.661941",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:A21|REP.A022_PC3_24H_X3_B23:A21"
+        }
+      ]
+    },
+    {
+      "drug": "tazemetostat",
+      "dose_uM": "1.11111",
+      "n_qc_pass": 1,
+      "n_hiq": 0,
+      "distinct_instances": 3,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "MOAR005_PC3_24H:E15",
+          "pert_dose": "1.11111",
+          "pert_idose": "1.11 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "0",
+          "tas": "0.0994874",
+          "project_code": "MOAR",
+          "det_plates": "MOAR005_PC3_24H_X1_B34|MOAR005_PC3_24H_X2_B34|MOAR005_PC3_24H_X3_B34",
+          "distil_ids": "MOAR005_PC3_24H_X1_B34:E15|MOAR005_PC3_24H_X2_B34:E15|MOAR005_PC3_24H_X3_B34:E15"
+        }
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "dose_uM": "3.33333",
+      "n_qc_pass": 2,
+      "n_hiq": 2,
+      "distinct_instances": 5,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "REP.A022_PC3_24H:B20",
+          "pert_dose": "3.33333",
+          "pert_idose": "3.33 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.334245",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:B20|REP.A022_PC3_24H_X3_B23:B20"
+        },
+        {
+          "sig_id": "PBIOA022_PC3_24H:O08",
+          "pert_dose": "3.33333",
+          "pert_idose": "3.33 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.365372",
+          "project_code": "PBIOA",
+          "det_plates": "PBIOA022_PC3_24H_X1_B21|PBIOA022_PC3_24H_X2_B21|PBIOA022_PC3_24H_X3_B21",
+          "distil_ids": "PBIOA022_PC3_24H_X1_B21:O08|PBIOA022_PC3_24H_X2_B21:O08|PBIOA022_PC3_24H_X3_B21:O08"
+        }
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "dose_uM": "3.33333",
+      "n_qc_pass": 1,
+      "n_hiq": 1,
+      "distinct_instances": 2,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "REP.A022_PC3_24H:A20",
+          "pert_dose": "3.33333",
+          "pert_idose": "3.33 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.687223",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:A20|REP.A022_PC3_24H_X3_B23:A20"
+        }
+      ]
+    },
+    {
+      "drug": "tazemetostat",
+      "dose_uM": "3.33333",
+      "n_qc_pass": 1,
+      "n_hiq": 0,
+      "distinct_instances": 3,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "MOAR005_PC3_24H:E14",
+          "pert_dose": "3.33333",
+          "pert_idose": "3.33 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "0",
+          "tas": "0.174088",
+          "project_code": "MOAR",
+          "det_plates": "MOAR005_PC3_24H_X1_B34|MOAR005_PC3_24H_X2_B34|MOAR005_PC3_24H_X3_B34",
+          "distil_ids": "MOAR005_PC3_24H_X1_B34:E14|MOAR005_PC3_24H_X2_B34:E14|MOAR005_PC3_24H_X3_B34:E14"
+        }
+      ]
+    },
+    {
+      "drug": "decitabine",
+      "dose_uM": "10",
+      "n_qc_pass": 4,
+      "n_hiq": 2,
+      "distinct_instances": 11,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "CPC013_PC3_24H:BRD-K79254416-001-08-5:10",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "4",
+          "qc_pass": "1",
+          "is_hiq": "0",
+          "tas": "0.361617",
+          "project_code": "CPC",
+          "det_plates": "CPC013_PC3_24H_X1_B5_DUO52HI53LO|CPC013_PC3_24H_X2_B5_DUO52HI53LO|CPC013_PC3_24H_X3_B5_DUO52HI53LO|CPC013_PC3_24H_X4_B5_DUO52HI53LO",
+          "distil_ids": "CPC013_PC3_24H_X1_B5_DUO52HI53LO:I21|CPC013_PC3_24H_X2_B5_DUO52HI53LO:I21|CPC013_PC3_24H_X3_B5_DUO52HI53LO:I21|CPC013_PC3_24H_X4_B5_DUO52HI53LO:I21"
+        },
+        {
+          "sig_id": "LJP008_PC3_24H:M13",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "0",
+          "tas": "0.326567",
+          "project_code": "LJP",
+          "det_plates": "LJP008_PC3_24H_X1_B20|LJP008_PC3_24H_X2_B20",
+          "distil_ids": "LJP008_PC3_24H_X1_B20:M13|LJP008_PC3_24H_X2_B20:M13"
+        },
+        {
+          "sig_id": "REP.A022_PC3_24H:B19",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.387144",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:B19|REP.A022_PC3_24H_X3_B23:B19"
+        },
+        {
+          "sig_id": "PBIOA022_PC3_24H:O07",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.367173",
+          "project_code": "PBIOA",
+          "det_plates": "PBIOA022_PC3_24H_X1_B21|PBIOA022_PC3_24H_X2_B21|PBIOA022_PC3_24H_X3_B21",
+          "distil_ids": "PBIOA022_PC3_24H_X1_B21:O07|PBIOA022_PC3_24H_X2_B21:O07|PBIOA022_PC3_24H_X3_B21:O07"
+        }
+      ]
+    },
+    {
+      "drug": "entinostat",
+      "dose_uM": "10",
+      "n_qc_pass": 6,
+      "n_hiq": 5,
+      "distinct_instances": 18,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "HDAC002_PC3_24H:BRD-K77908580-001-04-7:10",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.316228",
+          "project_code": "HDAC",
+          "det_plates": "HDAC002_PC3_24H_X5_B7_DUO52HI53LO",
+          "distil_ids": "HDAC002_PC3_24H_X5_B7_DUO52HI53LO:H14|HDAC002_PC3_24H_X5_B7_DUO52HI53LO:I14"
+        },
+        {
+          "sig_id": "ASG002_PC3_24H:G22",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.750051",
+          "project_code": "ASG",
+          "det_plates": "ASG002_PC3_24H_X2_B34|ASG002_PC3_24H_X6_B38",
+          "distil_ids": "ASG002_PC3_24H_X2_B34:G22|ASG002_PC3_24H_X6_B38:G22"
+        },
+        {
+          "sig_id": "CPC013_PC3_24H:BRD-K77908580-001-04-7:10",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "4",
+          "qc_pass": "1",
+          "is_hiq": "0",
+          "tas": "0.570697",
+          "project_code": "CPC",
+          "det_plates": "CPC013_PC3_24H_X1_B5_DUO52HI53LO|CPC013_PC3_24H_X2_B5_DUO52HI53LO|CPC013_PC3_24H_X3_B5_DUO52HI53LO|CPC013_PC3_24H_X4_B5_DUO52HI53LO",
+          "distil_ids": "CPC013_PC3_24H_X1_B5_DUO52HI53LO:G09|CPC013_PC3_24H_X2_B5_DUO52HI53LO:G09|CPC013_PC3_24H_X3_B5_DUO52HI53LO:G09|CPC013_PC3_24H_X4_B5_DUO52HI53LO:G09"
+        },
+        {
+          "sig_id": "CPC014_PC3_24H:BRD-K77908580-001-05-4:10",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "5",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.554126",
+          "project_code": "CPC",
+          "det_plates": "CPC014_PC3_24H_X1_B5_DUO52HI53LO|CPC014_PC3_24H_X2_B5_DUO52HI53LO|CPC014_PC3_24H_X3_F2B4_DUO52HI53LO|CPC014_PC3_24H_X4_B5_DUO52HI53LO|CPC014_PC3_24H_X5.L2_F2B5_DUO52HI53LO",
+          "distil_ids": "CPC014_PC3_24H_X1_B5_DUO52HI53LO:D16|CPC014_PC3_24H_X2_B5_DUO52HI53LO:D16|CPC014_PC3_24H_X3_F2B4_DUO52HI53LO:D16|CPC014_PC3_24H_X4_B5_DUO52HI53LO:D16|CPC014_PC3_24H_X5.L2_F2B5_DUO52HI53LO:D16"
+        },
+        {
+          "sig_id": "REP.A022_PC3_24H:A19",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "2",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.733283",
+          "project_code": "REP",
+          "det_plates": "REP.A022_PC3_24H_X2_B23|REP.A022_PC3_24H_X3_B23",
+          "distil_ids": "REP.A022_PC3_24H_X2_B23:A19|REP.A022_PC3_24H_X3_B23:A19"
+        },
+        {
+          "sig_id": "PCLB003_PC3_24H:BRD-K77908580-001-04-7:10",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.674673",
+          "project_code": "PCLB",
+          "det_plates": "PCLB003_PC3_24H_X1_B13|PCLB003_PC3_24H_X2_B13|PCLB003_PC3_24H_X3_B13",
+          "distil_ids": "PCLB003_PC3_24H_X1_B13:C13|PCLB003_PC3_24H_X2_B13:C13|PCLB003_PC3_24H_X3_B13:C13"
+        }
+      ]
+    },
+    {
+      "drug": "tazemetostat",
+      "dose_uM": "10",
+      "n_qc_pass": 1,
+      "n_hiq": 1,
+      "distinct_instances": 3,
+      "instances_in_multiple_sigs": 0,
+      "rows": [
+        {
+          "sig_id": "MOAR005_PC3_24H:E13",
+          "pert_dose": "10",
+          "pert_idose": "10 uM",
+          "nsample": "3",
+          "qc_pass": "1",
+          "is_hiq": "1",
+          "tas": "0.162294",
+          "project_code": "MOAR",
+          "det_plates": "MOAR005_PC3_24H_X1_B34|MOAR005_PC3_24H_X2_B34|MOAR005_PC3_24H_X3_B34",
+          "distil_ids": "MOAR005_PC3_24H_X1_B34:E13|MOAR005_PC3_24H_X2_B34:E13|MOAR005_PC3_24H_X3_B34:E13"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "a4980c9c-6c37-46da-8db3-c60a1c29081f",
+    "cases": [
+      {
+        "case_id": "4045f40b-d42a-4598-9ee2-0d371a776d3f",
+        "submitter_id": "TCGA-HC-A6AO",
+        "samples": [
+          {
+            "sample_id": "c0a067b3-0bd0-4d11-a283-d25799b3090b",
+            "submitter_id": "TCGA-HC-A6AO-01A",
+            "sample_type": "Primary Tumor"
+          }
+        ]
+      }
+    ],
+    "access": "open",
+    "file_name": "fc034f39-40c6-4e1c-bd2a-f4d6a97d2ed7.rna_seq.augmented_star_gene_counts.tsv",
+    "file_id": "a4980c9c-6c37-46da-8db3-c60a1c29081f",
+    "data_type": "Gene Expression Quantification",
+    "analysis": {
+      "workflow_type": "STAR - Counts"
+    },
+    "platform": "Illumina"
+  },
+  {
+    "id": "9cebe5e9-f133-479a-b0f6-e91d8b06ab38",
+    "cases": [
+      {
+        "case_id": "4045f40b-d42a-4598-9ee2-0d371a776d3f",
+        "submitter_id": "TCGA-HC-A6AO",
+        "samples": [
+          {
+            "sample_id": "c0a067b3-0bd0-4d11-a283-d25799b3090b",
+            "submitter_id": "TCGA-HC-A6AO-01A",
+            "sample_type": "Primary Tumor"
+          }
+        ]
+      }
+    ],
+    "access": "open",
+    "file_name": "c648b359-c683-4f87-a88c-6289e1ea5b27.methylation_array.sesame.level3betas.txt",
+    "file_id": "9cebe5e9-f133-479a-b0f6-e91d8b06ab38",
+    "data_type": "Methylation Beta Value",
+    "analysis": {
+      "workflow_type": "SeSAMe Methylation Beta Estimation"
+    },
+    "platform": "Illumina Human Methylation 450"
+  }
+]

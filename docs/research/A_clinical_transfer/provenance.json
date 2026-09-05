@@ -1,0 +1,25 @@
+{
+  "utc": "2026-09-05T20:05:43.843352+00:00",
+  "sources": [
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE229555&targ=all&view=brief&form=text",
+      "error": "5MB bound exceeded"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10294141/fullTextXML",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "file": "COMBAT2024.xml",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10762051/fullTextXML",
+      "bytes": 110067,
+      "sha256": "62b4f4cb67866a2cc2153782cd930a83098d6a7a40e0289c3cb6d6fe40afa1e6"
+    },
+    {
+      "file": "Kang2023.xml",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10452274/fullTextXML",
+      "bytes": 212210,
+      "sha256": "e996d0ef843481e6a744ab1696dd7ffa385ba76d6b80323ce18f15217e647710"
+    }
+  ]
+}

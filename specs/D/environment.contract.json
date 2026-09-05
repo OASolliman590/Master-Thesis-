@@ -1,0 +1,67 @@
+{
+  "schema_version": "D-environment-contract-0.1",
+  "status": "PROPOSED / NOT IMPLEMENTATION-READY",
+  "contract_type": "Documented constraints; not a resolved lock or tested container",
+  "execution_host": "AIU",
+  "source_repository": "https://github.com/ArcInstitute/state",
+  "source_commit": "9bbfe78a434a55205e4de834e1ea99f85f7a3add",
+  "package_name": "arc-state",
+  "package_version": "0.11.3",
+  "requires_python": ">=3.11,<3.13",
+  "upstream_dependency_constraints": [
+    "anndata>=0.11.4",
+    "cell-load>=0.10.4",
+    "numpy>=2.2.6",
+    "pandas>=2.2.3",
+    "pyyaml>=6.0.2",
+    "scanpy>=1.11.2",
+    "scikit-learn>=1.6.1",
+    "seaborn>=0.13.2",
+    "torch>=2.7.0",
+    "tqdm>=4.67.1",
+    "wandb>=0.19.11",
+    "hydra-core>=1.3.2",
+    "geomloss>=0.2.6",
+    "transformers>=4.52.3",
+    "peft>=0.11.0",
+    "cell-eval>=0.8.1",
+    "ipykernel>=6.30.1",
+    "scipy>=1.15.0"
+  ],
+  "upstream_build_system": {
+    "requires": [
+      "hatchling"
+    ],
+    "build-backend": "hatchling.build"
+  },
+  "candidate_checkpoint": {
+    "repository": "arcinstitute/ST-HVG-Tahoe",
+    "revision": "ca6b751972493f8448e3256d1340ae70ad43e1e7",
+    "path": "zeroshot/state_generalization_zeroshot_X_hvg/checkpoints/final.ckpt",
+    "sha256": null,
+    "downloaded": false,
+    "compatibility_verified": false
+  },
+  "input_representation": "X_hvg (ordered features/transform still unresolved)",
+  "primary_inference_seed_proposal": 42,
+  "resolved_python": null,
+  "resolved_dependencies": null,
+  "resolver_version": null,
+  "torch_cuda_build": null,
+  "gpu_driver": null,
+  "container_base_digest": null,
+  "container_image_digest": null,
+  "ram_limit_gb": null,
+  "gpu_vram_gb": null,
+  "walltime_limit": null,
+  "scheduler_contract": null,
+  "model_training_authorized_by_this_contract": false,
+  "required_resolution_evidence": [
+    "AIU host and active-job inspection",
+    "Exact resolved package lock with hashes",
+    "CLI/import/checkpoint loading checks",
+    "Known-label nonprostate reproduction with verified output placement",
+    "Separate code/model/data/output terms review"
+  ],
+  "source_url": "https://github.com/ArcInstitute/state/blob/9bbfe78a434a55205e4de834e1ea99f85f7a3add/pyproject.toml"
+}

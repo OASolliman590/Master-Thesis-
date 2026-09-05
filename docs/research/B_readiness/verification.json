@@ -1,0 +1,92 @@
+{
+  "source_sha256_checks": [
+    {
+      "file": "tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f_metadata.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f.tsv",
+      "sha256_ok": true
+    },
+    {
+      "file": "tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38_metadata.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38.tsv",
+      "sha256_ok": true
+    },
+    {
+      "file": "figshare.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "cbio_studies.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107298_series.soft",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107299_series.soft",
+      "sha256_ok": true
+    },
+    {
+      "file": "cbio_clinical_patient.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "cbio_clinical_sample.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "cbio_profiles.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSM2237935.soft",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107298_directory.html",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107299_directory.html",
+      "sha256_ok": true
+    },
+    {
+      "file": "GDC_case.json",
+      "sha256_ok": true
+    },
+    {
+      "file": "Nature2017.html",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107298_processed_prefix.gzpart",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE107299_processed_prefix.gzpart",
+      "sha256_ok": true
+    },
+    {
+      "file": "GSE84493_samples.soft",
+      "sha256_ok": true
+    }
+  ],
+  "TCGA_MD5_checks": [
+    {
+      "file": "tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38.tsv",
+      "matches_provider_md5": true
+    },
+    {
+      "file": "tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f.tsv",
+      "matches_provider_md5": true
+    }
+  ],
+  "scripts_compile": true,
+  "no_model_fitted": true
+}

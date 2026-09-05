@@ -1,0 +1,68 @@
+{
+  "patient": {
+    "source_cpcg_n": 130,
+    "paired_code_overlap": 73,
+    "coverage_in_210": {
+      "AGE": 73,
+      "BIOCHEMICAL_RECURRENCE_INDICATOR": 73,
+      "COHORT": 73,
+      "DAYS_TO_BIOCHEMICAL_RECURRENCE_FIRST": 73,
+      "PATH_T_STAGE": 73,
+      "PSA_MOST_RECENT_RESULTS": 73,
+      "SAMPLE_COUNT": 73,
+      "SEX": 73,
+      "TREATMENT": 73
+    }
+  },
+  "sample": {
+    "source_cpcg_n": 130,
+    "paired_code_overlap": 73,
+    "coverage_in_210": {
+      "CANCER_TYPE": 73,
+      "CANCER_TYPE_DETAILED": 73,
+      "CELLULARITY": 70,
+      "ETS": 73,
+      "GLEASON_SCORE": 73,
+      "MUTATION_COUNT": 66,
+      "ONCOTREE_CODE": 73,
+      "PLATFORM": 73,
+      "PLOIDY": 18,
+      "SOMATIC_STATUS": 73,
+      "TMB_NONSYNONYMOUS": 73,
+      "TUMOR_TISSUE_SITE": 73,
+      "WGS_BASED_PURITY_ESTIMATION": 73
+    }
+  },
+  "joint_grade_cellularity_wgs_purity": 70,
+  "methyl_prefix": {
+    "header_fields": 788,
+    "first_data_fields": 789,
+    "beta_columns": 394,
+    "patient_codes": 286,
+    "paired_codes_present": 210,
+    "detection_p_columns": 394,
+    "feature_rows": 77,
+    "minimum_beta": 0.0345839595159321,
+    "maximum_beta": 0.94822768799236,
+    "header_missing_probe_label": true
+  },
+  "expression_prefix": {
+    "annotation_columns": [
+      "GeneID",
+      "Symbol_UCSC",
+      "Name_UCSC",
+      "Chr_UCSC",
+      "Start_UCSC",
+      "End_UCSC",
+      "RefSeq_UCSC"
+    ],
+    "patient_columns": 213,
+    "paired_codes_present": 210,
+    "complete_feature_rows": 194
+  },
+  "original_series_counts": {
+    "GSE84493": 140,
+    "GSE83917": 160
+  },
+  "GSE84493_patient_mismatches": []
+}

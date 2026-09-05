@@ -1,0 +1,6 @@
+{
+  "scope": "Every indexed blob compared byte-for-byte with current working file; report generated after comparison is outside its own snapshot.",
+  "files_checked": 165,
+  "bytes_checked": 1321162,
+  "mismatches": []
+}

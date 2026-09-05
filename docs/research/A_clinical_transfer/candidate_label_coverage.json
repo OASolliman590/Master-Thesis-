@@ -1,0 +1,204 @@
+[
+  {
+    "accession": "GSE91061",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE91nnn/GSE91061/soft/GSE91061_family.soft.gz",
+    "source_sha256": "2ecd5f064b076fdce58fd651b0a3404cc01ef889c5cfb8d760dc5c7a01adeaf9",
+    "parsed_metadata_sha256": "abe3c1eca71fca75606b3b937f54e8db0e1e6bbc756def3827cdbf67b6d30fe3",
+    "records": 109,
+    "clinical_fields": {
+      "visit (pre or on treatment)": {
+        "Pre": 51,
+        "On": 58
+      },
+      "response": {
+        "PD": 48,
+        "SD": 34,
+        "UNK": 4,
+        "PRCR": 23
+      }
+    },
+    "final_eligible_patients": null,
+    "baseline_records": 51,
+    "baseline_patient_title_codes": 51,
+    "baseline_labels": {
+      "PD": 23,
+      "SD": 16,
+      "UNK": 2,
+      "PRCR": 10
+    },
+    "warning": "Study patient-code and assay-label metadata only; source trial regimen and independent cohort membership still require review"
+  },
+  {
+    "accession": "GSE176307",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/soft/GSE176307_family.soft.gz",
+    "source_sha256": "ea242fbb98aa104c384a97a3d1f0baaa938031e91a5a3872b065982d73b1bf72",
+    "parsed_metadata_sha256": "15fce2df8abff572d408b0f0239e709f31503366569e5c086018efaaad86ed2c",
+    "records": 90,
+    "clinical_fields": {
+      "io.therapy": {
+        "Atezolizumab": 35,
+        "Pembrolizumab": 47,
+        "Nivolumab": 5,
+        "Durvalumab": 2,
+        "Avelumab": 1
+      },
+      "io.response": {
+        "CR": 7,
+        "SD": 4,
+        "PD": 69,
+        "PR": 9,
+        "NA": 1
+      },
+      "pfs": {
+        "699": 1,
+        "304": 1,
+        "115": 1,
+        "727": 1,
+        "453": 1,
+        "295": 1,
+        "284": 1,
+        "61": 2,
+        "17": 3,
+        "124": 1,
+        "82": 1,
+        "357": 1,
+        "83": 1,
+        "12": 1,
+        "40": 1,
+        "39": 2,
+        "3": 2,
+        "14": 2,
+        "148": 1,
+        "74": 1,
+        "22": 2,
+        "44": 2,
+        "868": 1,
+        "84": 2,
+        "106": 1,
+        "57": 2,
+        "18": 1,
+        "30": 1,
+        "27": 2,
+        "25": 1,
+        "338": 1,
+        "339": 1,
+        "41": 1,
+        "88": 1,
+        "63": 5,
+        "126": 2,
+        "473": 1,
+        "38": 1,
+        "183": 1,
+        "261": 1,
+        "60": 2,
+        "54": 1,
+        "7": 1,
+        "196": 1,
+        "199": 1,
+        "5": 2,
+        "75": 1,
+        "154": 1,
+        "195": 1,
+        "31": 1,
+        "49": 2,
+        "67": 1,
+        "514": 1,
+        "45": 1,
+        "11": 1,
+        "51": 1,
+        "188": 1,
+        "81": 1,
+        "122": 1,
+        "53": 1,
+        "52": 1,
+        "1": 1,
+        "65": 1,
+        "102": 1,
+        "165": 1,
+        "116": 1,
+        "252": 1,
+        "236": 1,
+        "69": 1,
+        "NA": 1,
+        "109": 1
+      },
+      "progressed": {
+        "No": 10,
+        "Yes": 79,
+        "NA": 1
+      }
+    },
+    "final_eligible_patients": null
+  },
+  {
+    "accession": "GSE126044",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE126nnn/GSE126044/soft/GSE126044_family.soft.gz",
+    "source_sha256": "7741ad6098179ad0cc073794e310ca4b9e89f6d74426536e2d43fcf37d69b81a",
+    "parsed_metadata_sha256": "f4f38b042a54d599c53aace1e0f127c6f69f1139a2580cbc112099c44e635bab",
+    "records": 16,
+    "clinical_fields": {
+      "patient response": {
+        "non-responder": 11,
+        "responder": 5
+      }
+    },
+    "final_eligible_patients": null
+  },
+  {
+    "accession": "GSE135222",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE135nnn/GSE135222/soft/GSE135222_family.soft.gz",
+    "source_sha256": "6cd0243c00b2b7c88cf1c210b37a961d94e53a61ecd9b23e31d2af054f3a7598",
+    "parsed_metadata_sha256": "2cfe08e98137b0e9b91d0b758e36a17429d7c47ee3bf29520605b1192800f95d",
+    "records": 27,
+    "clinical_fields": {
+      "progression-free survival (pfs)": {
+        "1": 21,
+        "0": 6
+      },
+      "pfs.time": {
+        "95": 1,
+        "618": 1,
+        "43": 1,
+        "45": 1,
+        "412": 1,
+        "37": 2,
+        "44": 1,
+        "168": 1,
+        "82": 1,
+        "279": 1,
+        "324": 1,
+        "65": 1,
+        "59": 1,
+        "3": 1,
+        "28": 1,
+        "257": 1,
+        "250": 1,
+        "205": 1,
+        "25": 1,
+        "11": 1,
+        "34": 1,
+        "73": 1,
+        "29": 1,
+        "174": 1,
+        "23": 1,
+        "38": 1
+      }
+    },
+    "final_eligible_patients": null
+  },
+  {
+    "accession": "GSE78220",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/soft/GSE78220_family.soft.gz",
+    "source_sha256": "ed47c48810839ede910542b73002bff1506e70d5adeea5bd16367ecc9fe64c6d",
+    "parsed_metadata_sha256": "e20e5dfa2e2836145c2cef3d78fa5fa83f81c17309f42fbfc435ff59fdea4f56",
+    "records": 28,
+    "clinical_fields": {
+      "anti-pd-1 response": {
+        "Progressive Disease": 13,
+        "Partial Response": 10,
+        "Complete Response": 5
+      }
+    },
+    "final_eligible_patients": null
+  }
+]

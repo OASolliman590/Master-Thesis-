@@ -1,0 +1,43 @@
+# A retained prostate molecular and clinical transport module
+
+Status: proposed, conditional on actual sources and the competing primary choice. This module preserves prostate transferability while separating molecular distribution shifts, cell composition and clinical discrimination. It does not replace the independent ICI validation in DISCOVERY.md.
+
+## Source-by-question gates
+
+| Branch | Candidate source and measured evidence | Admission gate and retained output |
+|---|---|---|
+| Untreated localized prostate | TCGA-PRAD; existing B audit confirms open paired molecular metadata, not A score/composition completeness | Primary tumour baseline specimens, one patient each, actual RNA units and GZMA/PRF1 or frozen-model features; export the exact A/B shared patient list |
+| Tissue-context reference | TCGA-LUAD proposed as the protocol's reference; no A-eligible N asserted | Verify same pinned expression workflow/annotation, primary sample eligibility and gene coverage. Comparison measures tissue/context shift, not cold-versus-hot truth |
+| Independent prostate molecular context | PCaDB is a catalogue; select original independent prostate cohorts after source audit | Freeze accession-level matrix, primary/metastatic state, treatment exposure, platform, duplicate patients and gene coverage before scoring. No named admitted cohort or eligible N is presently established; ticket A06 must supply them |
+| Clinical prostate combination regimen | COMBAT GSE229555:15 Pretx subjects in the metadata audit; binary PSA50 yes7/no8 and radiographic yes4/no11 | Actual baseline matrix/units, source response window and patient join must pass. BAT precedes nivolumab; estimate regimen-specific association only |
+| More direct prostate ICI setting | Guan2022 reports pretreatment single-cell n8 and separate bulk n16 with PSA endpoint | Secure public expression/label files and original patient/timepoint mapping. Publication totals are not available-matrix counts; no analysis promised before access |
+
+Facts above are supported by [A source audit](../../docs/research/A_clinical_transfer.md), [B paired audit](../../docs/research/B_paired_prostate.md) and [B readiness](../../docs/research/B_readiness.md). Additional source admission requires primary metadata/publication provenance. PCaDB/atlas redistribution terms do not automatically transfer to every originating cohort.
+
+## Exact molecular statistics
+
+Freeze a score registry before any prostate score comparisons: CYT as specified in ANALYSIS.md; each source-correct secondary signature; and the frozen all-development responder model if DISCOVERY.md gates pass. These are separate products. A learned model trained on standardized log-TPM cannot be applied to RMA array values without a separately validated, preregistered transport transformation. Do not silently refit on prostate data or rescore a subset of model genes.
+
+For every score/cohort, report required features, measured/missing feature counts and fraction of patients with a valid score. For CYT, both genes are required. For the learned model, every nonzero-coefficient feature and its exact frozen transform is required. No usable score means nonestimable, not low immune activity.
+
+Proposed molecular transport anchor, conditional on comparable TCGA processing: for fixed CYT, let x=log2(1+CYT). Report L=median(x_PRAD)−median(x_LUAD) and R=IQR(x_PRAD)/IQR(x_LUAD), with IQR computed by linear0.25/0.75 quantiles. Zero reference IQR makes R nonestimable. Give percentile95% intervals from2,000 patient bootstraps independently within each frozen cohort; these are descriptive distribution contrasts, not evidence of response-model accuracy, epigenetic causality or TME conversion. For other scores use their frozen source scale (no arbitrary log of a signed score), with the same median/IQR definitions and declared units. Keep all cohort estimates separate rather than standardizing away a shift and calling transport successful.
+
+External prostate cohort summaries use the same source-compatible statistic only after its assay/scale gate passes. Otherwise report score coverage and within-cohort distributions without a cross-platform location/variance ratio. A platform-incompatible dataset remains in the coverage table; its absence is not a negative biological finding. No universal "collapsed dynamic range" cutoff is invented; any material-effect boundary needs a pre-analysis scientific rationale.
+
+## Cell composition and shared-data boundary
+
+Proposed orthogonal composition statistic: Spearman correlation between the frozen score and source-recorded **pathologist tumour-cell percentage** within each cohort, using complete patient pairs and midranks for ties. Report n/missingness and paired-patient percentile bootstrap intervals; constant inputs make the statistic nonestimable. This estimates a composition association, not malignant-cell expression or immune-cell-specific abundance. TCGA sample-linked pathology fields and their completeness are not yet verified for A; B's computational WGS purity must not be relabelled as pathologist cellularity. If pathologist data are unavailable, this branch remains unavailable until a separately named justified alternative is frozen.
+
+Expression-derived deconvolution can be added as a source-correct, within-cohort secondary sensitivity after its algorithm/units/reference genes are pinned. Report input-gene overlap with every score; agreement between RNA-derived quantities is not independent validation. Do not make deconvolution a substitute ground truth. B owns methylation-expression associations and its mechanistic/composition adjustment; A does not duplicate that inferential endpoint or count the shared TCGA patients as independent replication. A supplies assay coverage, distribution and clinical-validation context.
+
+## Exact prostate clinical statistics
+
+COMBAT proposed exploratory endpoint: AUROC of baseline fixed CYT against the source-defined final-regimen PSA50 response flag, with higher CYT predicting response and half credit for ties. Use the Pretx patient set only after the source establishes response timing, definition and evaluability; the metadata flags alone do not settle this. Radiographic binary response is a separate exploratory endpoint with its own denominator and source definition. Do not relabel either as source-independent RECIST ORR, infer SD, or combine with A-P1. Use paired patient category-stratified percentile intervals (yes/no strata,2,000 replicates); publish their width and counts, with no asymptotic precision claim.
+
+Apply a discovered score to COMBAT only if the frozen model's feature/scale gate passes; report its AUROC separately and any paired improvement over CYT as exploratory. These analyses cannot isolate nivolumab benefit from the sequential BAT/nivolumab regimen. If the baseline assay is tumour-enriched, retain that sampling limitation; comparisons with bulk tumour cohorts need the same caveat.
+
+For Guan's separate bulk cohort, the corresponding exploratory statistic is baseline-score AUROC for its original source-defined PSA-decline endpoint after its exact threshold, duration and patient linkage are recovered. Do not impose COMBAT's PSA50 definition or merge the two trial cohorts. Single cells are not independent patients; single-cell coverage/compartment characterization is separate from bulk clinical discrimination and requires patient-level grouping.
+
+These are exploratory cohort-specific estimands, with effect sizes/intervals and no confirmatory p-values unless the secondary registry is amended and frozen before analysis. No prostate prediction may be advertised as independently validated ICI treatment benefit from these designs.
+
+Acceptance gates: exact TCGA-LUAD/source-prostate manifests; compatible scales/features; explicit original-cohort independence; patient-linked pathology field or declared unavailability; clinical response definitions/timing and source joins; original shared-data crosswalk with B; frozen statistics/intervals; real-format AIU trace and leakage/claim-boundary review. The current evidence supports planning these modules, not claiming that their data gates have passed.

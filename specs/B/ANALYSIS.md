@@ -1,0 +1,45 @@
+# B exact proposed analysis
+
+**PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** The primary program, rank scale, covariates and modelling choices below are proposals, not user-approved facts. All eight candidate external genes are now verified in the complete expression object; the common annotation universe, probe coverage, comparable purity, specimen linkage and external precision remain open.
+
+## Fixed molecular endpoint
+
+Candidate program P = {HLA-A, HLA-B, HLA-C, B2M, TAP1, TAP2, PSMB8, PSMB9}, all positively oriented. This is a literature-informed antigen-presentation program, not a validated clinical signature or a published weighted diagnostic score. Its exact membership needs citation and cross-platform mapping review before freeze. The complete GSE107299 audit now verifies all eight rows, each finite in 213/213 samples; the earlier partial scan did not establish absence of TAP1/TAP2. The endpoint remains proposed, and no automatic reduction or outcome-driven replacement is allowed.
+
+For each patient specimen i, let U be the frozen common annotation-defined gene universe, m=|U|>1. Within that sample alone, compute ascending midranks `rank_i(g)` of gene abundance. TCGA uses `tpm_unstranded`; CPC-GENE uses its author-processed gene-level expression values. Define `q_i(g)=(rank_i(g)-1)/(m-1)` and `Y_i=(1/8) sum_{g in P} q_i(g)`. Higher Y means higher relative program expression. Ties receive their arithmetic midrank; no between-sample centring or external cohort rescaling. All eight P genes and all U values must be mapped and finite for the primary score; record exclusions rather than silently changing denominators.
+
+This is an explicitly specified mean-percentile-rank score, **not a claim of exact singscore equivalence**. Single-sample rank scoring is supported as an approach by [Foroutan et al., 2018](https://doi.org/10.1186/s12859-018-2435-4). The citation does not prove cross-platform measurement invariance for this particular eight-gene program. Ranks are invariant to strictly increasing transformations within a sample but do not eliminate probe affinity, transcript specificity, dynamic-range or gene-specific platform biases. U and any collapse rule must be frozen without observing external Y distributions.
+
+## Predictors and baseline
+
+Proposed baseline Z contains age in years, Gleason-sum category (<=6, 7, >=8; first category reference) and a documented non-RNA-derived tumour-purity estimate on [0,1]. Sex is constant in this prostate cohort and is not a useful fitted covariate. Continuous covariates are centred/scaled using training-fold mean/SD; categorical encoding is fixed. Purity methods must be demonstrably comparable or use an explicitly amended contract. RNA-derived immune scores containing P cannot be treated as independent confounder measurements.
+
+Primary methylation predictors X are eight promoter aggregates, one per P gene. For gene g, Q_g is the fixed eligible common promoter CpG list. A candidate probe must be annotated to the matching promoter, pass the pinned cross-reactive/polymorphic mask and be finite in at least 95% of TCGA training samples; that 95% is a **proposed QC choice**. Fold-level feature eligibility is derived within the fold, and the final test feature list is derived from full TCGA training only. External assay annotation may establish availability, but external beta/outcome distributions cannot choose probes.
+
+For patient i, `X_ig` is the arithmetic mean beta across finite eligible Q_g values, requiring at least 80% coverage and at least one retained probe. The 80% threshold is proposed, not a biological law. A missing aggregate is not imputed in the primary complete-data analysis. Training-fold means/SD standardise aggregates; zero-variance features are recorded and dropped within training, not selected using external effects. If a gene has no admissible probe after annotation/QC, the stated eight-promoter design is not executable without amendment. Do not silently fit a different feature set.
+
+**Copy number is an essential mechanistic sensitivity, not currently a verified primary covariate.** A secondary baseline may add gene-level copy number at P and comparable ploidy when available in both cohorts. Its absence means the primary result cannot be described as methylation information independent of copy number. Likewise, bulk purity adjustment alone does not fully resolve immune/stromal composition.
+
+## Model and one primary estimand
+
+Fit baseline `f0(Z)` and extended `f1(Z,X)` using ridge linear regression with unpenalised intercept. Proposed hyperparameter grid: alpha in {0.0001,0.001,0.01,0.1,1,10,100,1000,10000}; select separately for each model by mean validation MSE in TCGA only, with larger alpha breaking exact ties. Use identical patient folds and paired evaluation. Proposed internal assessment is five outer folds with five inner folds, shuffled at patient level using seed 42. Every imputation/exclusion/selection/scaling operation that learns from values belongs inside the inner training folds; no CPC-GENE values enter fitting or tuning. Final hyperparameters are selected by five-fold CV on all eligible TCGA, then both models refit on TCGA and frozen.
+
+For the frozen external patient set E, n=|E|, `SSE_k=sum_i(Y_i-fk_i)^2`, `SST=sum_i(Y_i-mean_E(Y))^2`. Define `R2_k=1-SSE_k/SST`; the single primary endpoint is:
+
+`Delta_R2 = R2_1-R2_0 = (SSE_0-SSE_1)/SST`.
+
+Positive values favour adding promoter methylation. Each patient receives equal weight; both models use exactly the same E. E is fixed by source-backed specimen/coverage/QC/covariate eligibility before examining Y/prediction errors. Computing SST from external Y is part of evaluating R-squared, not permission to refit or recalibrate either predictor. No external intercept fitting, regression of predictions on Y, Y z-scoring, distribution matching or favourable platform subset selection is allowed. Negative R-squared values remain negative. If SST=0 or n<2, the endpoint is undefined and reported as such, never forced to zero/one.
+
+## Missingness, inference and precision
+
+Primary complete-data eligibility requires all fixed score genes/universe, promoter aggregates, age, grade and comparable purity. The current 73-code clinical candidate subset is a maximum for that mapping route before focus checks, not accepted final E; 137 currently uncovered codes cannot acquire covariates by zero-filling or prefix matching alone. Report characteristics and measured data availability of included/excluded records without changing thresholds after outcomes. A reduced-baseline all-pair analysis is secondary only after an explicit amended definition and transparent claim limits.
+
+Proposed uncertainty: 2,000 paired patient bootstrap resamples of E (seed 42), keeping the two frozen predictions and Y together, recomputing the ratio each time. Report a percentile 95% interval and the fraction of undefined bootstrap SSTs. This interval is conditional on the frozen fitted models; uncertainty from retraining is assessed separately using TCGA resampling plus corresponding external evaluations only if preregistered. Repeated specimens never become separate resampled patients.
+
+One primary endpoint has no across-endpoint correction. Secondary locus tests use two-sided associations and BH FDR 0.05 across the explicitly frozen tested locus/gene family; separate exploratory analyses must not borrow the primary label. Do not define a gene as unsupported only because its sign is positive. No sample-size/power claim is justified from 497/210 catalogue numbers. Before freeze, record a meaningful minimum Delta_R2 and desired interval width, use development/design evidence for a paired-error precision assessment, and document adequacy of actual E. These numerical targets are unresolved review decisions.
+
+## Secondary science and C handoff
+
+Retain positive/negative promoter associations, within-PRAD immune-state contrasts, copy-number/purity/composition sensitivities, and lineage-confounded PRAD/LUAD comparison. Guo's hypomethylated-domain mechanism is a named counterexample, so domain methylation is annotated separately and bidirectionally; sparse 450K overlap is a domain proxy, not whole-genome PMD inference. Independent malignant-cell expression evidence is required to strengthen cell-origin interpretation, without claiming it measures matched methylation.
+
+The C signed query is a separately specified **TCGA-discovery-only** output. Its universe, disease orientation, effect estimates, source flags, selection rules and size sensitivity require a frozen handoff before C scoring. CPC-GENE Y, associations, performance and confirmation labels cannot select or reorder this query. If validation changes a hypothesis, record a new exploratory version; do not replace the originally frozen query. Exact query-selection thresholds remain unresolved and block that handoff ticket, not the fixed-program B design.

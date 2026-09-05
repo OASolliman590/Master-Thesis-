@@ -1,0 +1,163 @@
+[
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_untrt",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 445
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_untrt.cns",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 2
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vector",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 956
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vector",
+    "is_ncs_sig": "1",
+    "is_null_sig": "1",
+    "n": 731
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vector.cns",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 18
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vehicle",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 1114
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vehicle",
+    "is_ncs_sig": "1",
+    "is_null_sig": "1",
+    "n": 2448
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "ctl_vehicle.cns",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 2
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_aby",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 48
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_cp",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 8023
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_cp",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 47230
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_lig",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 177
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_lig",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 415
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_oe",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 192
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_oe",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 3703
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_sh",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 324
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_sh",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 23019
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_sh.cgs",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 800
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_sh.cgs",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 4366
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_sh.css",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 2763
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_si",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 162
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_xpr",
+    "is_ncs_sig": "0",
+    "is_null_sig": "0",
+    "n": 452
+  },
+  {
+    "cell": "PC3",
+    "pert_type": "trt_xpr",
+    "is_ncs_sig": "1",
+    "is_null_sig": "0",
+    "n": 10189
+  }
+]

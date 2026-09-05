@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "15 unique pretreatment subjects in30 GEO records",
+    "PSA50 YES7/NO8 and radiographic YES4/NO11 counted from actual GEO characteristics"
+  ],
+  "source_metadata_sha256": "6ffe453038d0e8e4faf6749f736c429b0f91fbdc03cd70c1ef1182aa3daea81e",
+  "no_matrix_analysis": true
+}

@@ -1,0 +1,307 @@
+{
+  "schema_version": "B-proposed-source-manifest-0.1",
+  "status": "PROPOSED / NOT IMPLEMENTATION-READY",
+  "snapshot_date": "2026-09-05",
+  "purpose": "Provenance index of existing evidence; no new cohort download or full eligibility claim. Partial prefixes do not establish full-object hashes or complete feature coverage.",
+  "coverage": {
+    "TCGA_shared_cases_before_QC": 497,
+    "TCGA_shared_sample_ids_before_QC": 501,
+    "CPC_expression_patient_columns": 213,
+    "CPC_methylation_records": 394,
+    "CPC_methylation_patient_codes": 286,
+    "CPC_paired_patient_codes_before_QC": 210,
+    "CPC_clinical_candidate_codes": 73,
+    "CPC_clinical_uncovered_via_inspected_route": 137,
+    "CPC_same_focus_clinical_link_verified": false,
+    "CPC_final_primary_n": null,
+    "full_external_expression_audit": {
+      "audit_path": "docs/research/B_readiness/GSE107299_full_expression_audit.json",
+      "complete_object_bytes": 32357821,
+      "complete_object_sha256": "09d866ce89adb7122879354a523ae0c1fdac03572c555a2d647b64a35c342f2b",
+      "feature_rows": 24598,
+      "sample_columns": 213,
+      "malformed_rows": 0,
+      "program_genes_verified": [
+        "HLA-A",
+        "HLA-B",
+        "HLA-C",
+        "B2M",
+        "PSMB8",
+        "PSMB9",
+        "TAP1",
+        "TAP2"
+      ],
+      "finite_samples_per_program_gene": 213,
+      "matrix_retained": false,
+      "Y_score_computed": false,
+      "common_annotation_universe_resolved": false
+    },
+    "historical_partial_scan": {
+      "found_genes": [
+        "HLA-A",
+        "HLA-B",
+        "HLA-C",
+        "B2M",
+        "PSMB8",
+        "PSMB9"
+      ],
+      "not_reached_genes": [
+        "TAP1",
+        "TAP2"
+      ],
+      "superseded_for_program_gene_presence_by": "docs/research/B_readiness/GSE107299_full_expression_audit.json"
+    }
+  },
+  "retrieved_objects": [
+    {
+      "source_file": "docs/research/B_readiness/tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f.tsv",
+      "exact_url": "https://api.gdc.cancer.gov/data/a4980c9c-6c37-46da-8db3-c60a1c29081f",
+      "retrieved_utc": "2026-09-05T20:24:01.420066+00:00",
+      "byte_count": 4230145,
+      "sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38.tsv",
+      "exact_url": "https://api.gdc.cancer.gov/data/9cebe5e9-f133-479a-b0f6-e91d8b06ab38",
+      "retrieved_utc": "2026-09-05T20:24:09.028818+00:00",
+      "byte_count": 13159478,
+      "sha256": "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSE107298_series.soft",
+      "exact_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107298&targ=self&view=brief&form=text",
+      "retrieved_utc": "2026-09-05T20:24:12.312800+00:00",
+      "byte_count": 15673,
+      "sha256": "70c1be6df3cc1c368f5999386cd3255f8473bf255ea1f75ced3536a32d82a783",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSE107299_series.soft",
+      "exact_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107299&targ=self&view=brief&form=text",
+      "retrieved_utc": "2026-09-05T20:24:12.689023+00:00",
+      "byte_count": 9934,
+      "sha256": "2b83c4c0b475165d8e949214d3d2ce180668ad39bc57edc414f64cb3dfa1bd93",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/cbio_clinical_patient.json",
+      "exact_url": "https://www.cbioportal.org/api/studies/prad_cpcg_2017/clinical-data?clinicalDataType=PATIENT&projection=DETAILED&pageSize=100000",
+      "retrieved_utc": "2026-09-05T20:26:30.579824+00:00",
+      "byte_count": 5547353,
+      "sha256": "ff947c0ba36679aa04624894e44c1bbc882d400116d6211e7b00a16b5d95578a",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/cbio_clinical_sample.json",
+      "exact_url": "https://www.cbioportal.org/api/studies/prad_cpcg_2017/clinical-data?clinicalDataType=SAMPLE&projection=DETAILED&pageSize=100000",
+      "retrieved_utc": "2026-09-05T20:26:33.375047+00:00",
+      "byte_count": 3557939,
+      "sha256": "36581c3a90cbb17e0b017b4df72f119180e34c0766dd68c6dca0bd2245d5a096",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/cbio_profiles.json",
+      "exact_url": "https://www.cbioportal.org/api/studies/prad_cpcg_2017/molecular-profiles",
+      "retrieved_utc": "2026-09-05T20:26:33.850538+00:00",
+      "byte_count": 355,
+      "sha256": "2e6459496903209037fb905ab40e6580abc54477901d391a5ef72a4b60faca61",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSM2237935.soft",
+      "exact_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2237935&targ=self&view=brief&form=text",
+      "retrieved_utc": "2026-09-05T20:26:34.252932+00:00",
+      "byte_count": 2237,
+      "sha256": "0eaed4c808bbb370f181e64523a83036acc7155e95a4b809cfbbf0ca4999b1cd",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSE107298_processed_prefix.gzpart",
+      "exact_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107298/suppl/GSE107298_Matrix_processed.txt.gz",
+      "retrieved_utc": null,
+      "byte_count": 256000,
+      "sha256": "a34821f3d38c22bcf6748ecdfb81a961843a55d878a32b071b59ab3a7cd49e16",
+      "completeness": "partial_compressed_prefix",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSE107299_processed_prefix.gzpart",
+      "exact_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz",
+      "retrieved_utc": null,
+      "byte_count": 256000,
+      "sha256": "ccb85485c521a3e02d8fd0d9edb5e15f096d9726a486da67f2e24e24b4b7099c",
+      "completeness": "partial_compressed_prefix",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    },
+    {
+      "source_file": "docs/research/B_readiness/GSE84493_samples.soft",
+      "exact_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84493&targ=gsm&view=brief&form=text",
+      "retrieved_utc": "2026-09-05T20:29:50.043276+00:00",
+      "byte_count": 685668,
+      "sha256": "f824517dcfa7bc28e70452fc3e7e85cc17d881dfbd8f98f0714775a12259a948",
+      "completeness": "full_single_object_not_full_cohort",
+      "access": "public object retrieved in prior bounded audit",
+      "redistribution": "not adjudicated by this spec; retain source-specific terms",
+      "verified_local_hash": true
+    }
+  ],
+  "local_evidence_snapshots": [
+    {
+      "path": "docs/research/B_paired_prostate.md",
+      "bytes": 12603,
+      "sha256": "636aba22ab6b472e607ecd2041bed83e244b9157b7b7e134c3777cadcc5093ad",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness.md",
+      "bytes": 16694,
+      "sha256": "d8dfd55851a8d3b9f9f529756a69d09b2198c908cf459a5f09210e139a225282",
+      "role": "prior evidence snapshot; not final eligibility manifest",
+      "historical_snapshots": [
+        {
+          "sha256": "12588d65da45b206340d53e7decc8198067d20323df789b40c68a3a0488aa808",
+          "bytes": 14269,
+          "superseded_on": "2026-09-05 full-expression addendum"
+        }
+      ]
+    },
+    {
+      "path": "docs/research/B_paired_prostate/provenance.json",
+      "bytes": 2009,
+      "sha256": "f6f8e816eb4b789b4b694d99806afae7151c8f1a92fc7f224eb9ce5cd49b13ad",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_paired_prostate/summary.json",
+      "bytes": 31680,
+      "sha256": "2a47ccd1777d85ff8c792a4f3360c4391c9171ca214395f499e0a7148a102777",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/fetch_log.json",
+      "bytes": 10713,
+      "sha256": "9996bd02541591726430d77992e229fa5a0c3dccba6411de152f2cd0eaf0a615",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/readiness_summary.json",
+      "bytes": 1687,
+      "sha256": "2652ea3dd1fb15218d5c1f90049f5b8f6c51550e32dcfd5d8df57128d59c4c1e",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/multiplicity_summary.json",
+      "bytes": 2901,
+      "sha256": "278767f1bac28121cf7469cbfeaff48606fe2afca38efc212fba37373b796cb3",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/GSE107299_target_check.json",
+      "bytes": 3994,
+      "sha256": "1153a0e74ee638cf27bc44747b0fd80dd6fcd170f7fb80d3a59cb84a9c3a30cc",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/clinical_candidate_mapping.tsv",
+      "bytes": 14194,
+      "sha256": "7365908dfa28976a04a153d148ff61015266c0a2a3f2a23d27b51bb1f4e62b2c",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/verification.json",
+      "bytes": 1992,
+      "sha256": "db9c1f0d29bc2e871133796b2bc4837a5519f8dffa719ea050de3a0381a7cc47",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/execution/aiu_python_inventory.json",
+      "bytes": 37377,
+      "sha256": "58f7cebcaf08e6522a9a6e48c366e52f2ed7629eac45400b52008e2de5585407",
+      "role": "prior evidence snapshot; not final eligibility manifest"
+    },
+    {
+      "path": "docs/research/B_readiness/GSE107299_full_expression_audit.json",
+      "bytes": 5131,
+      "sha256": "59df5e12d4c141b8910d19375a7223fd11390d175a6c5eb7f27b91530ec7203d",
+      "role": "full-expression coverage audit only"
+    },
+    {
+      "path": "docs/research/B_readiness/GSE107298_processed_prefix.tsv",
+      "bytes": 626448,
+      "sha256": "d2539ed67b6bae02c2abeb7cbcd0b4d4ef5d51acf164eb571d2555743b249f7a",
+      "role": "retained bounded format fixture; not full-object checksum"
+    },
+    {
+      "path": "docs/research/B_readiness/GSE107299_processed_prefix.tsv",
+      "bytes": 557800,
+      "sha256": "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1",
+      "role": "retained bounded format fixture; not full-object checksum"
+    }
+  ],
+  "unresolved_required_sources": [
+    "Common TCGA/CPC annotation gene universe, platform mappings and score transport; all eight deposited rows now verified",
+    "Full GSE107298 promoter probe and missingness/detection-P coverage",
+    "Versioned 450K annotation plus cross-reactive/polymorphic mask",
+    "Source-grounded rep/focus and clinical linkage",
+    "Comparable TCGA/CPC baseline purity and covariate completeness",
+    "Outcome-independent precision target and actual eligible population"
+  ],
+  "conditional_secondary_sources": [
+    "Comparable LUAD matched expression/methylation manifest",
+    "External gene-level CNA and matched specimen map",
+    "Prostate malignant-cell expression reference and domain annotation",
+    "Frozen TCGA-only B-to-C query selection contract"
+  ],
+  "final_manifest_required_fields": [
+    "patient/specimen/aliquot identity and source evidence",
+    "release/access/terms/download URL",
+    "full bytes and provider/local checksums",
+    "annotation/QC/rule versions",
+    "modality and covariate coverage",
+    "one independent patient eligibility and exclusions"
+  ],
+  "snapshot_update": "2026-09-05: full-expression coverage addendum and endpoint-independent B-F1 format ticket",
+  "full_object_audits": [
+    {
+      "exact_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz",
+      "retrieved_utc": "2026-09-05T20:44:59.490284+00:00",
+      "byte_count": 32357821,
+      "sha256": "09d866ce89adb7122879354a523ae0c1fdac03572c555a2d647b64a35c342f2b",
+      "completeness": "full_object_streamed_and_inspected",
+      "local_matrix_retained": false,
+      "audit_path": "docs/research/B_readiness/GSE107299_full_expression_audit.json",
+      "scope": "Full compressed object and all feature rows checked; no scores, patient associations or expression matrix retained.",
+      "verification": "Full byte/hash/feature audit reported by the AIU audit; this documentation update inspected the saved JSON only and did not re-download the source."
+    }
+  ]
+}

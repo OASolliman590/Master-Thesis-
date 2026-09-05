@@ -1,0 +1,162 @@
+[
+  {
+    "raw_class": "DNMTi",
+    "cell": "22RV1",
+    "time_h": "24",
+    "n_raw_BRD_ids": 6,
+    "n_sigs": 15,
+    "n_qcpass": 15,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 6
+  },
+  {
+    "raw_class": "DNMTi",
+    "cell": "PC3",
+    "time_h": "24",
+    "n_raw_BRD_ids": 8,
+    "n_sigs": 90,
+    "n_qcpass": 82,
+    "n_hiq": 36,
+    "n_BRD_qcpass": 7
+  },
+  {
+    "raw_class": "DNMTi",
+    "cell": "PC3",
+    "time_h": "6",
+    "n_raw_BRD_ids": 7,
+    "n_sigs": 9,
+    "n_qcpass": 9,
+    "n_hiq": 4,
+    "n_BRD_qcpass": 7
+  },
+  {
+    "raw_class": "DNMTi",
+    "cell": "VCAP",
+    "time_h": "24",
+    "n_raw_BRD_ids": 6,
+    "n_sigs": 13,
+    "n_qcpass": 7,
+    "n_hiq": 2,
+    "n_BRD_qcpass": 4
+  },
+  {
+    "raw_class": "DNMTi",
+    "cell": "VCAP",
+    "time_h": "6",
+    "n_raw_BRD_ids": 6,
+    "n_sigs": 9,
+    "n_qcpass": 6,
+    "n_hiq": 1,
+    "n_BRD_qcpass": 4
+  },
+  {
+    "raw_class": "EZH2i_manual_ChEMBL3414621",
+    "cell": "PC3",
+    "time_h": "24",
+    "n_raw_BRD_ids": 1,
+    "n_sigs": 3,
+    "n_qcpass": 3,
+    "n_hiq": 1,
+    "n_BRD_qcpass": 1
+  },
+  {
+    "raw_class": "EZH2i_manual_Qi2012",
+    "cell": "PC3",
+    "time_h": "24",
+    "n_raw_BRD_ids": 1,
+    "n_sigs": 3,
+    "n_qcpass": 3,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 1
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "22RV1",
+    "time_h": "24",
+    "n_raw_BRD_ids": 4,
+    "n_sigs": 12,
+    "n_qcpass": 11,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 4
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "DU145",
+    "time_h": "24",
+    "n_raw_BRD_ids": 1,
+    "n_sigs": 3,
+    "n_qcpass": 3,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 1
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "LNCAP",
+    "time_h": "24",
+    "n_raw_BRD_ids": 3,
+    "n_sigs": 12,
+    "n_qcpass": 12,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 3
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "PC3",
+    "time_h": "24",
+    "n_raw_BRD_ids": 28,
+    "n_sigs": 502,
+    "n_qcpass": 359,
+    "n_hiq": 243,
+    "n_BRD_qcpass": 24
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "PC3",
+    "time_h": "3",
+    "n_raw_BRD_ids": 1,
+    "n_sigs": 3,
+    "n_qcpass": 3,
+    "n_hiq": 3,
+    "n_BRD_qcpass": 1
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "PC3",
+    "time_h": "6",
+    "n_raw_BRD_ids": 24,
+    "n_sigs": 198,
+    "n_qcpass": 178,
+    "n_hiq": 97,
+    "n_BRD_qcpass": 22
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "VCAP",
+    "time_h": "24",
+    "n_raw_BRD_ids": 21,
+    "n_sigs": 124,
+    "n_qcpass": 76,
+    "n_hiq": 49,
+    "n_BRD_qcpass": 11
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "VCAP",
+    "time_h": "48",
+    "n_raw_BRD_ids": 2,
+    "n_sigs": 5,
+    "n_qcpass": 0,
+    "n_hiq": 0,
+    "n_BRD_qcpass": 0
+  },
+  {
+    "raw_class": "HDACi",
+    "cell": "VCAP",
+    "time_h": "6",
+    "n_raw_BRD_ids": 22,
+    "n_sigs": 99,
+    "n_qcpass": 61,
+    "n_hiq": 52,
+    "n_BRD_qcpass": 11
+  }
+]

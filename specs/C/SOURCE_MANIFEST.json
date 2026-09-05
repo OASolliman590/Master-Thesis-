@@ -1,0 +1,526 @@
+{
+  "schema_version": "0.1-proposed",
+  "paper": "C",
+  "status": "evidence_registry_not_analysis_ready_manifest",
+  "checked_date": "2026-09-05",
+  "sources": [
+    {
+      "source_id": "B_TCGA_handoff",
+      "original_url": "https://portal.gdc.cancer.gov/",
+      "role": "patient-supported signed disease query",
+      "status": "blocked_B_discovery_handoff",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "gene_id",
+        "disease_direction",
+        "expression_effect",
+        "methylation_effect",
+        "discovery_split",
+        "query_hash"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/B_readiness.md",
+          "sha256": "d8dfd55851a8d3b9f9f529756a69d09b2198c908cf459a5f09210e139a225282",
+          "bytes": 16694
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "LINCS2020_signatures",
+      "original_url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/siginfo_beta.txt",
+      "role": "central measured signature reversal",
+      "status": "complete_metadata_only",
+      "release": "2020 beta; object last modified2021-12-07",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "sig_id",
+        "pert_id",
+        "cell_iname",
+        "pert_dose",
+        "pert_dose_unit",
+        "pert_time",
+        "pert_time_unit",
+        "nsample",
+        "qc_pass",
+        "is_hiq",
+        "distil_ids",
+        "project_code"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_lincs2020_readiness/audit_summary.json",
+          "sha256": "74fb18b8ad7772b515b8eeaaacfde4c58fd38e37e2f7544efbaf0cffa1a4ad80",
+          "bytes": 6133
+        },
+        {
+          "path": "docs/research/C_lincs2020_readiness/thesis_anchor_summary.json",
+          "sha256": "6e8ec168ae26431a91d6a63c6aec3131c5e1f9b1725afc731ec3f4eaf71a7c66",
+          "bytes": 15390
+        },
+        {
+          "path": "docs/research/C_lincs2020_readiness/artifact_checksums.json",
+          "sha256": "e306fbeb77ae879f9b4e1c8c0eff712df6fcb4f890d6ce374bdd92f930141e34",
+          "bytes": 4859
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null,
+      "metadata_object_sha256": "1a38d7ea2a804be79804af4a27aff9f2537af8f13d3c8af1fdc1fef780f40201",
+      "metadata_object_bytes": 465242319,
+      "metadata_rows": 1201944,
+      "metadata_stream_complete": true,
+      "metadata_stream_started_utc": "2026-09-05T20:27:41.556716+00:00",
+      "metadata_s3_version": "IdjZYad8vgq4Fste7egTLfio9nCf9bkI",
+      "matrix_status": "URL_and_column_concordance_not_verified"
+    },
+    {
+      "source_id": "LINCS2020_dictionaries",
+      "original_url": "https://s3.amazonaws.com/macchiato.clue.io/builds/LINCS2020/README.txt",
+      "role": "gene-space, compound and model identities",
+      "status": "public_small_objects_retrieved",
+      "release": "2020 beta",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "gene_id",
+        "feature_space",
+        "pert_id",
+        "cmap_name",
+        "inchi_key",
+        "moa",
+        "target",
+        "cell_iname"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts/access_manifest.json",
+          "sha256": "0f5d62912df32219d13a8ae04b01e9050a876e1751c69916fd8c3e3a86be668e",
+          "bytes": 2341
+        },
+        {
+          "path": "docs/research/C_lincs2020_readiness/epi_panel_supplemented.json",
+          "sha256": "5560fddc559ba6e3b9fd80499ae21fe16723614191f0a1c615b9ea06b5ff7c9c",
+          "bytes": 4478
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "LINCS2017_PhaseII",
+      "original_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE70nnn/GSE70138/suppl/",
+      "role": "release-overlap/reproducibility audit",
+      "status": "signature_metadata_retrieved",
+      "release": "2017-03-06",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "sig_id",
+        "distil_id",
+        "pert_id"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts/geo_phase2_access.json",
+          "sha256": "766703dd59a30ea1149dec0ba71f11d5be3a1e0744e02e6232f86a15180b5613",
+          "bytes": 617
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "CCLE_DepMap",
+      "original_url": "https://depmap.org/portal/",
+      "role": "baseline expression/methylation and dependency context",
+      "status": "selected_objects_pending",
+      "release": "26Q1 announcement verified; analysis release unselected",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "ModelID",
+        "OmicsProfileID",
+        "gene_id",
+        "gene_effect",
+        "assay"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts.md",
+          "sha256": "d2a98f663c36038b447f71261c49e5ed14506ed1dd45e6cfe67d3b7cf5c1e3db",
+          "bytes": 21351
+        }
+      ],
+      "license": "DepMap-generated generally CC-BY4.0; external exceptions",
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "PRISM",
+      "original_url": "https://api.figshare.com/v2/articles/9393293",
+      "role": "measured growth sensitivity context",
+      "status": "dictionaries_retrieved_matrix_overlap_pending",
+      "release": "19Q4 Figshare version4",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "ModelID",
+        "broad_id",
+        "screen",
+        "dose",
+        "viability",
+        "curve_metric"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts/prism19q4_manifest.json",
+          "sha256": "98ad138567857fb5ad355e3fda68df4987e5e5f6cc2559c2214cd4b01300e135",
+          "bytes": 9748
+        },
+        {
+          "path": "docs/research/C_pharmacology_contracts/prism_access.json",
+          "sha256": "5115aa35fade1c0563e59c36715e33de9088255ac0b7cfacb71b5b0d01abdda9",
+          "bytes": 1146
+        }
+      ],
+      "license": "CC-BY4.0 for inspected record",
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "GDSC",
+      "original_url": "https://ftp.sanger.ac.uk/pub/project/cancerrxgene/releases/current_release/",
+      "role": "source-specific sensitivity corroboration",
+      "status": "HTTP403_selected_object_pending",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "COSMIC_ID",
+        "DRUG_ID",
+        "LN_IC50",
+        "AUC",
+        "dose_range"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts.md",
+          "sha256": "d2a98f663c36038b447f71261c49e5ed14506ed1dd45e6cfe67d3b7cf5c1e3db",
+          "bytes": 21351
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "ChEMBL",
+      "original_url": "https://www.ebi.ac.uk/chembl/api/data/status.json",
+      "role": "structure, mechanism, target and activity annotation",
+      "status": "status_and_three_molecules_retrieved",
+      "release": "37",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "molecule_chembl_id",
+        "standard_inchi_key",
+        "target_chembl_id",
+        "assay_chembl_id",
+        "document_chembl_id"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts/access_manifest.json",
+          "sha256": "0f5d62912df32219d13a8ae04b01e9050a876e1751c69916fd8c3e3a86be668e",
+          "bytes": 2341
+        }
+      ],
+      "license": "CC-BY-SA3.0 database",
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "DrugBank",
+      "original_url": "https://go.drugbank.com/releases/latest",
+      "role": "licensed identity/mechanism/pharmacology annotation",
+      "status": "provider_paused",
+      "release": "5.1.22 page",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "drugbank_id",
+        "structure",
+        "target",
+        "source_reference"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_pharmacology_contracts.md",
+          "sha256": "d2a98f663c36038b447f71261c49e5ed14506ed1dd45e6cfe67d3b7cf5c1e3db",
+          "bytes": 21351
+        }
+      ],
+      "license": "actual licensed object terms pending",
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "human_PK",
+      "original_url": null,
+      "role": "documented human exposure plausibility",
+      "status": "primary_documents_not_selected",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "drug",
+        "regimen",
+        "formulation",
+        "route",
+        "time",
+        "concentration",
+        "unit",
+        "total_or_unbound",
+        "binding_method",
+        "source_locator"
+      ],
+      "evidence": [],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "Perturb_CITE_seq",
+      "original_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP1064/multi-modal-pooled-perturb-cite-seq-screens-in-patient-models-define-novel-mechanisms-of-cancer-immune-evasion",
+      "role": "genetic human immune-context evidence",
+      "status": "original_download_requires_signin",
+      "release": "SCP1064; alternative scPerturb Zenodo10044268",
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "guide",
+        "target",
+        "patient_model",
+        "experiment",
+        "condition",
+        "RNA",
+        "protein",
+        "control"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_immune_context.md",
+          "sha256": "59ba2fcf878c7a5b1d1c466cffc3cfce36dd636247aedd3d43cf3a7de4867912",
+          "bytes": 9944
+        },
+        {
+          "path": "docs/research/C_immune_context/retrieval_manifest.json",
+          "sha256": "2ea77250dce4602b976d9d1744aaaac277dcc7c47365fa99b7e2a8a914563a42",
+          "bytes": 2556
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null,
+      "originating_study_id": "Frangieh2021",
+      "alternative_manifest_url": "https://zenodo.org/api/records/10044268",
+      "alternative_is_independent": false
+    },
+    {
+      "source_id": "TISMO",
+      "original_url": "https://tismo.pku-genomics.org/",
+      "role": "mouse cytokine/in-vivo ICB context",
+      "status": "current_sample_manifest_pending",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "original_study",
+        "animal",
+        "model",
+        "treatment",
+        "control",
+        "timing",
+        "species",
+        "gene"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_immune_context.md",
+          "sha256": "59ba2fcf878c7a5b1d1c466cffc3cfce36dd636247aedd3d43cf3a7de4867912",
+          "bytes": 9944
+        },
+        {
+          "path": "docs/research/C_immune_context/retrieval_manifest.json",
+          "sha256": "2ea77250dce4602b976d9d1744aaaac277dcc7c47365fa99b7e2a8a914563a42",
+          "bytes": 2556
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "LJP4_IFNG",
+      "original_url": "https://maayanlab.cloud/L1000CDS2/ligands",
+      "role": "interferon-direction reference",
+      "status": "ligand_list_verified_payload_pending",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "term",
+        "_id",
+        "cell",
+        "dose",
+        "duration",
+        "gene_space",
+        "constituent_profile"
+      ],
+      "evidence": [
+        {
+          "path": "docs/research/C_immune_context/l1000cds2_ligands.json",
+          "sha256": "06c750da4c1b5b92cda7d1732227065a2309a9c76d5c51af4d91fd9a548095eb",
+          "bytes": 1070
+        },
+        {
+          "path": "docs/research/C_immune_context/retrieval_manifest.json",
+          "sha256": "2ea77250dce4602b976d9d1744aaaac277dcc7c47365fa99b7e2a8a914563a42",
+          "bytes": 2556
+        }
+      ],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null,
+      "candidate_payload_url": "https://maayanlab.cloud/L1000CDS2/ligand?id=55d38ec50bdc501eb68f1472",
+      "candidate_payload_verified": false
+    },
+    {
+      "source_id": "GSE199800",
+      "original_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE199800",
+      "role": "additional measured prostate corroboration",
+      "status": "accession_level_contrast_audit_pending",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "model",
+        "intervention",
+        "control",
+        "dose",
+        "duration",
+        "assay",
+        "biological_replicate",
+        "gene_space"
+      ],
+      "evidence": [],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    },
+    {
+      "source_id": "GSE216053",
+      "original_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE216053",
+      "role": "additional measured prostate corroboration",
+      "status": "accession_level_contrast_audit_pending",
+      "release": null,
+      "checked_at": "2026-09-05",
+      "retrieved_at": null,
+      "analysis_object_url": null,
+      "analysis_object_sha256": null,
+      "analysis_object_bytes": null,
+      "required_fields": [
+        "model",
+        "intervention",
+        "control",
+        "dose",
+        "duration",
+        "assay",
+        "biological_replicate",
+        "gene_space"
+      ],
+      "evidence": [],
+      "license": null,
+      "redistribution_status": "source_specific_review_required",
+      "independent_eligible_n": null
+    }
+  ],
+  "tools": [
+    {
+      "id": "cmapM_QueryL1k",
+      "url": "https://github.com/cmap/cmapM",
+      "commit": "8f0e7bc4c38efbdf3f96f5ac72ee26792907a99c",
+      "status": "source_inspected_not_runtime_validated",
+      "evidence": [
+        {
+          "path": "docs/research/C_lincs2020_readiness/methods_manifest.json",
+          "sha256": "f5a0c37829e48450da66459003b329f6c105a1fef5f4afbe0ac5c301c31c992a",
+          "bytes": 14923
+        },
+        {
+          "path": "docs/research/C_lincs2020_readiness/core_methods_manifest.json",
+          "sha256": "3cf320680adf670bad382e412c111c45045cdd78de94241de90bc38d3e29a6e9",
+          "bytes": 587
+        }
+      ]
+    }
+  ],
+  "credential_policy": "Never print/copy credentials or session URLs; restricted objects stay outside repository",
+  "notes": [
+    "Evidence artifact hashes identify the inspected audit, not an undownloaded source matrix.",
+    "Null means unknown/not selected, never a zero or assumed absence.",
+    "Each source must be revalidated at acquisition time; date-of-audit access is not guaranteed future access."
+  ]
+}

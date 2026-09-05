@@ -1,0 +1,11 @@
+{
+  "scope": "Structural/document/source-cache checks only; no scientific models or validation tests",
+  "files": 158,
+  "bytes": 1277611,
+  "json_parsed": 59,
+  "python_syntax": 15,
+  "spec_markdown": 52,
+  "C_cached_hashes_checked": 32,
+  "errors": [],
+  "warnings": []
+}

@@ -1,33 +1,34 @@
 # Execution progress
 
-## Current milestone: M0 — source reconciliation and environment setup
+## Current milestone: M1 — four design drafts and feasibility evidence
 
-The user activated the full single-goal prompt on 5 September 2026. The goal remains active. Four reviewed spec packages, feasible sequential implementation, verified milestone pushes and Notion records are still required.
+The full user goal remains active. No paper is implemented or scientifically validated. Primary emphasis choices, biological data gates and independent review remain distinct from the already approved setup.
 
-Verified:
+**Post-review update,6 September2026:** Opus completed the four-kit review through Antigravity with no repository edit. [M1_ASTRA_DISPOSITION.md](../reviews/M1_ASTRA_DISPOSITION.md) records accepted findings and corrections to reviewer overstatements. Release is reviewed WIP; no scientific primary is frozen. B-F1 alone is released for endpoint-independent format tooling after M1 publication. The pre-review checklist below remains the snapshot's historical sequence; publication receipts follow in the next checkpoint.
 
-- Read the activating attachment, original protocol text, both wet-lab plans and the principal existing spec/preregistration contracts. Differences are recorded in SOURCE_RECONCILIATION.md.
-- Restored Paper C's entire agreed source architecture; prior v0.2 simplifications remain proposals, not approvals.
-- Identified the intended private repository from existing project records and current GitHub metadata: OASolliman590/Master-Thesis-. It was empty; cloned to this workspace.
-- Installed 14 AIHero skills at official upstream revision 3cca18b368ae95cdbdebbff572ccafa662551015. Existing delegate-skills 0.5.0 remain installed; no global configuration was changed.
-- AIU SSH is reachable. The designated thesis root and omq wrapper exist. Existing environment/scheduler contracts still require inspection before jobs.
-- Codex CLI authenticated; reported Spark ID gpt-5.3-codex-spark. Initial PATH checks missed the Claude app's bundled installations. Claude Code 2.1.260 is installed but its direct auth status is false. Antigravity CLI 1.1.22 successfully listed claude-opus-4-6-thinking and gemini-3.8-flash-high/medium/low. These are verified available model identifiers; execution review is still pending. Grok's initial CLI authentication check is false.
-- Three bounded evidence reports now exist for B paired prostate data, C pharmacology contracts and C immune-context access. These are metadata/documentation audits, not matrix-level validation or production analyses.
-- User approved the concrete setup with AGENTS.md. Root instructions, GitHub Issues workflow, single-context glossary and project Astra/Spark lanes are written. Project config was trusted through the delegate-setup helper; unrelated global settings are preserved.
+### Verified foundation
 
-Pending:
+- M0 commit `14e7aed76b03fdc79f686ce2967777f0b4ea7825` was pushed to private `OASolliman590/Master-Thesis-` and verified against the remote. AIU's new checkout was synchronized to that commit with a clean tree. M0 was documented in Notion page `3d24763e-55d2-81d2-8fd1-c23e61cd7ad7`.
+- User approved AGENTS.md, GitHub Issues, the single glossary and project Astra/Spark lanes. These are applied; no repeat permission is needed.
+- Fourteen AIHero skills were installed at pinned revision; existing delegate-skills0.5.0 retained. Provenance and approved configuration are in this directory.
+- Antigravity is installed in the Claude app's local package tree. Opus `claude-opus-4-6-thinking` completed an actual M0 read-only review through it. Gemini3.8 flash high/medium/low IDs are listed; coding through those routes has not been exercised. Direct Claude Code2.1.260 is installed but reports unauthenticated; Grok's primary CLI reports unauthenticated and its alternate launcher failed. These findings correct the initial PATH-only search.
+- AIU Python3.11.16 imported NumPy2.4.6, pandas2.3.3, SciPy1.17.1 and scikit-learn1.9.0. New installed-metadata inventory records 376 Conda entries/179 Python distributions. No shared environment was modified; no analytical recreation lock has passed.
 
-- Opus consultation completed through Antigravity; raw review, actual run provenance and Astra corrections are in docs/reviews/. This is review of M0 evidence/setup, not approval of a scientific spec.
-- Alternate bundled Grok launcher failed with spawn UNKNOWN; the primary CLI's authentication check remains false. Direct Claude Code authentication remains unresolved. Neither gap prevents using the verified Antigravity Opus route.
-- Finish source reconciliation and evidence-based grilling before primary endpoints are frozen.
-- No completed spec, production analysis or validated scientific result exists in the new repository yet. All primary endpoints remain unresolved; no scientific ready-for-agent tickets exist.
+### New source evidence and design work
 
-Historical material is a source of ideas and prior exposure; its tests and run summaries do not establish correctness of the new design.
+- A: actual clinical-label audit corrects claims that no public prostate ICI-associated RNA data exist. COMBAT is a sequential BAT/nivolumab setting, not isolated ICI validation. Full retained responder discovery and prostate transport modules now accompany the proposed CYT endpoint-sensitivity branch. A-P1 versus A-P2 remains a material primary choice.
+- B: 210 candidate paired CPC-GENE codes are verified in real processed headers. Clinical covariates candidate-map to 73 through the inspected portal; same-focus linkage and purity comparability remain unresolved. All 300 reanalysis edges are resolved to originating accessions. A complete 32,357,821-byte expression-file audit on AIU found all eight proposed antigen-presentation genes, each finite in 213/213 samples. No program score or association was calculated. Common gene/probe annotation, replicate meaning and final eligible external N remain open.
+- C: a complete 465,242,319-byte LINCS2020 metadata stream establishes 1,201,944 signature rows and common PC3/24h exposures for all three drugs. Tazemetostat project confounding and sparse replication limit comparisons. Mechanism annotation errors and duplicate compound IDs prevent using raw class counts as independent compounds. Broad scorer source is pinned; runtime/parity and effect matrices remain untested. Full agreed source roles are retained.
+- D: official State code/checkpoint metadata and categorical treatment vocabulary are audited. Native expression/feature compatibility and independent prostate ground truth remain unresolved. The conditional kit now requires entire prostate-context exclusion from transition training, matched control weights and a non-circular runtime-reproduction gate.
+- Four proposed kits exist under specs/. Each covers scientific scope/novelty, coverage, proposed primary, validation, figures, preregistration/decisions, engineering, tests/tickets and reproduction gates. This is drafting progress, not acceptance of unresolved content. Internal A and D review corrections are recorded; integrated Opus review is the next gate.
 
-## M0 integration state
+### Next release actions
 
-Independent local recount and checksums passed; see docs/reviews/M0_LOCAL_VERIFICATION.json and M0_ASTRA_DISPOSITION.md. The approved AGENTS.md and project lanes are active. AIU Python/R executables and an existing package inventory are verified; no remote analysis has run. GitHub publication and AIU checkout synchronization are the next integration actions.
+1. Finish and freeze the four-kit review snapshot; obtain independent Opus review and record Astra dispositions.
+2. Publish the reviewed M1 draft milestone honestly as WIP, with issues/spec mirrors and matching AIU/Notion receipts.
+3. Resolve material primary-emphasis choices with the user using concrete reviewed alternatives. Continue factual research without turning answerable questions into a questionnaire.
+4. After all-four-kit review, consider separately releasing B-F1's endpoint-independent format-inspection ticket. It uses four already available real file formats and no scores/models. Its implementation cannot count as completing B or bypass biological gates.
 
-Notion's four-month plan was corrected to identify the earlier narrow/defer proposals as unapproved, preserving all four design packages and sequential production implementation. The first published M0 commit will be linked in the next Notion update.
+Default scientific implementation sequence remains B, C, A, then D if its feasibility requirements pass; one paper active at a time. Old runs remain optional reusable assets. The registered wet-lab component remains required within the thesis's institutional scope; computational results do not replace it. Four months/five hours daily is the planning constraint, not a promise of four accepted manuscripts.
 
-New A clinical-transfer and C novelty reports have arrived in local planning/next_evidence; D's current-checkpoint audit is active there. They were deliberately outside the M0 Opus review snapshot and require their own integration review. Early findings include a public prostate combination-regimen cohort and prior label-harmonization/drug-repurposing studies, so inherited claims of complete data absence or first-ever integration must not be reused.
+M1 commit, independent Opus review, issue URLs and Notion synchronization are pending at this pre-review snapshot. See the eventual M1 review/receipt files for the actual later release state. No production test command has been run or silently counted as passed.

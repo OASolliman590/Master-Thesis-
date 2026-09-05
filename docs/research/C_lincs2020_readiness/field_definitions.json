@@ -1,0 +1,817 @@
+{
+  "xl/worksheets/sheet4.xml": [
+    [
+      "Field Name",
+      "Type",
+      "Example",
+      "Description"
+    ],
+    [
+      "gene_id",
+      "integer",
+      "4609",
+      "the Entrez gene ID",
+      ""
+    ],
+    [
+      "gene_symbol",
+      "string",
+      "MYC",
+      "the HUGO gene symbol",
+      ""
+    ],
+    [
+      "ensembl_id",
+      "string",
+      "ENSG00000136997",
+      "the Ensembl gene ID",
+      ""
+    ],
+    [
+      "gene_title",
+      "string",
+      "MYC proto-oncogene, bHLH transcription factor",
+      "the HUGO gene title",
+      ""
+    ],
+    [
+      "gene_type",
+      "string",
+      "protein-coding",
+      "whether the gene is protein-coding or some other type such as ncRNA, pseudo gene, etc",
+      ""
+    ],
+    [
+      "src",
+      "string",
+      "NCBI",
+      "source of gene annotations",
+      ""
+    ],
+    [
+      "feature_space",
+      "string",
+      "landmark",
+      "the L1000 feature space to which the gene belongs (landmark, best inferred, inferred, not reported) "
+    ]
+  ],
+  "xl/worksheets/sheet2.xml": [
+    [
+      "Field Name",
+      "Type",
+      "Example",
+      "Description"
+    ],
+    [
+      "sample_id",
+      "string",
+      "CEGS002_HIMG001_24H_X2_B36:I16",
+      "Unique identifier for the signature"
+    ],
+    [
+      "pert_id",
+      "string",
+      "BRD-K84937637",
+      "A unique identifier for a perturbagen that refers to the perturbagen in general, not to any particular batch or sample."
+    ],
+    [
+      "cmap_name",
+      "string",
+      "sirolimus",
+      "The internal (CMap-designated) name of a perturbagen. By convention, for genetic perturbations CMap uses the HUGO gene symbol."
+    ],
+    [
+      "pert_type",
+      "string",
+      "trt_cp",
+      "Abbreviated designation for perturbagen type, referring to compound or genetic perturbagens that are used in cell treatments to assess gene expression effects. The various pert_types used by CMap are listed in the pert_type sheet."
+    ],
+    [
+      "cell_iname",
+      "string",
+      "HIMG001",
+      "Curated name for the cell line"
+    ],
+    [
+      "bead_batch",
+      "string",
+      "b36",
+      "One instantiation of a complete set of beads, which have been coupled to probes at one time, under the same conditions."
+    ],
+    [
+      "nearest_dose",
+      "numeric",
+      "1.25",
+      "Rounded version of the dose, mapped to the nearest dose in a predefined series"
+    ],
+    [
+      "pert_dose",
+      "numeric",
+      "1.3",
+      "Precise dose used in the experiment."
+    ],
+    [
+      "pert_dose_unit",
+      "string",
+      "uM",
+      "Units of pert_dose"
+    ],
+    [
+      "pert_idose",
+      "string",
+      "1.25 uM",
+      "The concatenation of pert_dose and pert_dose_unit to create a string containing the dose information. We use a standardized dose for a perturbagen treatment. For example, the less common dose of 10.04 is rounded to 10. This enables grouping of signatures by a common dose."
+    ],
+    [
+      "pert_time",
+      "integer",
+      "24",
+      "The concatenation of pert_time and pert_time_unit to create a string containing the length of time that a perturbagen was applied to the cells. We use a standardized time for a perturbagen treatment. For example, if data is made by treating cells with a perturbagen for 5.5 hours, we round that time to the more common treatment time of 6 hours."
+    ],
+    [
+      "pert_itime",
+      "string",
+      "24 h",
+      "The length of time, expressed as a number, that a perturbagen was applied to the cells; does not include the unit."
+    ],
+    [
+      "pert_time_unit",
+      "string",
+      "h",
+      "The unit that applies to the pert_time numerical value."
+    ],
+    [
+      "cell_mfc_name",
+      "string",
+      "HIMG001",
+      "The supplier's name for the cell line. This will most often be equivalent to the cell_iname."
+    ],
+    [
+      "pert_mfc_id",
+      "string",
+      "BRD-K84937637-002-01",
+      "A manufacturer's id for the perturbagen; by convention, for compounds registered with Broad Compound Management this is the full BRD containing both the compound ID and the batch ID."
+    ],
+    [
+      "det_plate",
+      "string",
+      "CEGS002_HIMG001_24H_X2_B36",
+      "The plate of L1000 experiments that, at the end of the assay pipeline, is put through the Luminex scanners to detect the levels of landmark gene amplicons."
+    ],
+    [
+      "det_well",
+      "string",
+      "I16",
+      "The detection well, which refers to each well of the detection plate in which an L1000 experiment is conducted."
+    ],
+    [
+      "rna_plate",
+      "string",
+      "CEGS002_HIMG001_24H_X2",
+      "Name of the plate as it was used throughout the assay prior to detection; the name includes all information except the bead_batch_id suffix"
+    ],
+    [
+      "rna_well",
+      "string",
+      "I16",
+      "Name of a well within an rna_plate"
+    ],
+    [
+      "count_mean",
+      "numeric",
+      "98",
+      "The mean of per well-analyte bead counts."
+    ],
+    [
+      "count_cv",
+      "numeric",
+      "16",
+      "The coefficient of variation of bead counts."
+    ],
+    [
+      "qc_f_logp",
+      "numeric",
+      "7.4",
+      "The -log10 of p-value (for f statistic), representing the goodness of fit of the power model used to convert raw fluorescence intensity values to log2 expression values during the LISS process."
+    ],
+    [
+      "qc_iqr",
+      "numeric",
+      "11.8",
+      "The interquartile range of normalized expression within a level 3 profile."
+    ],
+    [
+      "qc_slope",
+      "numeric",
+      "57",
+      "The line slope in degrees (arctan of slope) of the line of best fit through the observed invariant set expression levels and their expected expression ranks."
+    ],
+    [
+      "qc_pass",
+      "binary",
+      "1",
+      "A binary indicator of whether the sample passed standard data processing QC thresholds, and was not a statistical outlier (2 SDs from the mean) for any of (dyn_range, inv_level_10, count_cv, qc_f_logp, qc_slope, qc_iqr)."
+    ],
+    [
+      "dyn_range",
+      "numeric",
+      "11.2",
+      "The dynamic range of the invariant genes in the given sample, computed as the ratio of median fluorescent intensities of invariant set 10 to invariant set 1"
+    ],
+    [
+      "inv_level_10",
+      "numeric",
+      "3512",
+      "The median fluorescent intensity for invariant set 10. This can be used as a general proxy for the signal intensity for the sample."
+    ],
+    [
+      "failure_mode",
+      "string",
+      "dyn_range",
+      "A comma-delimited list of failure modes for the sample (if qc_pass == 0) "
+    ],
+    [
+      "project_code",
+      "string",
+      "CEGS",
+      "An internal code identifying the project to which a signature belongs"
+    ]
+  ],
+  "xl/worksheets/sheet3.xml": [
+    [
+      "Field Name",
+      "Type",
+      "Example",
+      "Description",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "cell_iname",
+      "string",
+      "MCF7",
+      "Curated name for the cell line",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "cellosaurus_id",
+      "string",
+      "CVCL_0031",
+      "cellosaurus identifier",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_age",
+      "integer",
+      "70",
+      "patient age at time of cell line derivitization in years",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_age_death",
+      "integer",
+      "72",
+      "patient age at time of death",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_disease_age_onset",
+      "integer",
+      "67",
+      "patient age of disease onset",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "doubling_time",
+      "numeric",
+      "72",
+      "doubling time in hours",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "growth_medium",
+      "string",
+      "EMEM; 10% FBS ;.01mg/ml Bovine Insulin",
+      "name of gowth medium",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "provider_catalog_id",
+      "string",
+      "",
+      "catalog number from provider",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "feature_id",
+      "string",
+      "c-438",
+      "feature identifier if the given cell line is used in PRISM",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "cell_type",
+      "string",
+      "tumor",
+      "high level descriptor of cell status",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_ethnicity",
+      "string",
+      "Caucasian",
+      "ethnicity of donor",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_sex",
+      "string",
+      "F",
+      "gender of donor",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "donor_tumor_phase",
+      "string",
+      "Metastatic",
+      "whether it is primary or metastatis",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "cell_lineage",
+      "string",
+      "breast",
+      "lineage/tissue description",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "primary_disease",
+      "string",
+      "breast cancer",
+      "name of primary disease",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "subtype",
+      "string",
+      "adenocarcinoma",
+      "name of disease subtype",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "provider_name",
+      "string",
+      "ATCC",
+      "name of the provider",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "growth_pattern",
+      "string",
+      "adherent",
+      "description of growth pattern",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "ccle_name",
+      "string",
+      "MCF7_BREAST",
+      "CCLE identifier",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "cell_alias",
+      "string",
+      "IBMF-7",
+      "other names or identifiers for the cell line",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  ],
+  "xl/worksheets/sheet1.xml": [
+    [
+      "Field Name",
+      "Type",
+      "Example",
+      "Description"
+    ],
+    [
+      "sig_id",
+      "string",
+      "REP.A024_MDAMB231_24H:P19",
+      "Unique identifier for the signature"
+    ],
+    [
+      "pert_id",
+      "string",
+      "BRD-A79768653",
+      "A unique identifier for a perturbagen that refers to the perturbagen in general, not to any particular batch or sample."
+    ],
+    [
+      "cmap_name",
+      "string",
+      "sirolimus",
+      "The internal (CMap-designated) name of a perturbagen. By convention, for genetic perturbations CMap uses the HUGO gene symbol."
+    ],
+    [
+      "pert_type",
+      "string",
+      "trt_cp",
+      "Abbreviated designation for perturbagen type, referring to compound or genetic perturbagens that are used in cell treatments to assess gene expression effects. The various pert_types used by CMap are listed in the pert_type sheet."
+    ],
+    [
+      "cell_iname",
+      "string",
+      "MDAMB231",
+      "Curated name for the cell line"
+    ],
+    [
+      "bead_batch",
+      "string",
+      "b29",
+      "One instantiation of a complete set of beads, which have been coupled to probes at one time, under the same conditions."
+    ],
+    [
+      "nearest_dose",
+      "numeric",
+      "10",
+      "Rounded version of the dose, mapped to the nearest dose in a predefined series"
+    ],
+    [
+      "pert_dose",
+      "numeric",
+      "10.039999999999999",
+      "Precise dose used in the experiment."
+    ],
+    [
+      "pert_dose_unit",
+      "string",
+      "uM",
+      "Units of pert_dose"
+    ],
+    [
+      "pert_idose",
+      "string",
+      "10 uM",
+      "The concatenation of pert_dose and pert_dose_unit to create a string containing the dose information. We use a standardized dose for a perturbagen treatment. For example, the less common dose of 10.04 is rounded to 10. This enables grouping of signatures by a common dose."
+    ],
+    [
+      "pert_itime",
+      "string",
+      "24 h",
+      "The concatenation of pert_time and pert_time_unit to create a string containing the length of time that a perturbagen was applied to the cells. We use a standardized time for a perturbagen treatment. For example, if data is made by treating cells with a perturbagen for 5.5 hours, we round that time to the more common treatment time of 6 hours."
+    ],
+    [
+      "pert_time",
+      "numeric",
+      "24",
+      "The length of time, expressed as a number, that a perturbagen was applied to the cells; does not include the unit."
+    ],
+    [
+      "pert_time_unit",
+      "string",
+      "h",
+      "The unit that applies to the pert_time numerical value."
+    ],
+    [
+      "cell_mfc_name",
+      "string",
+      "MDAMB231",
+      "The supplier's name for the cell line. This will most often be equivalent to the cell_iname."
+    ],
+    [
+      "pert_mfc_id",
+      "string",
+      "BRD-A79768653-002-01",
+      "A manufacturer's id for the perturbagen; by convention, for compounds registered with Broad Compound Management this is the full BRD containing both the compound ID and the batch ID."
+    ],
+    [
+      "nsample",
+      "integer",
+      "3",
+      "Number of individual replicate profiles (level 4 / z-score) that were used to create the signature (level 5 / aggregate z-score)."
+    ],
+    [
+      "cc_q75",
+      "numeric",
+      "0.67",
+      "75th quantile of pairwise spearman correlations in landmark space of replicate level 4 profiles."
+    ],
+    [
+      "ss_ngene",
+      "integer",
+      "402",
+      "The number of significantly differentially expressed transcripts that arise from a particular perturbagen treatment. Defined as the number of genes in the signature with |replicate-adjusted modz| >= 2"
+    ],
+    [
+      "tas",
+      "numeric",
+      "0.52",
+      "Transcriptional activity score - computed as the geometric mean of ss_ngene and cc_q75, normalized to range between 0 and 1."
+    ],
+    [
+      "pct_self_rank_q25",
+      "numeric",
+      "4.03",
+      "Self connectivity of replicates expressed as a percentage of total instances in a replicate set."
+    ],
+    [
+      "wt",
+      "string",
+      "0.4,0.2,0.4",
+      "Comma-delimited list of the replicate weightings used to collapse into the level 5 signature. These will sum to 1."
+    ],
+    [
+      "median_recall_rank_spearman",
+      "numeric",
+      "5.21",
+      "The median pairwise recall rank by spearman correlation between replicate level 4 profiles."
+    ],
+    [
+      "median_recall_rank_wtcs_50",
+      "numeric",
+      "5.78",
+      "The median pairwise recall rank by weighted connectivity score between replicate level 4 profiles."
+    ],
+    [
+      "median_recall_score_spearman",
+      "numeric",
+      "0.72",
+      "The median pairwise spearman correlation between replicate level 4 profiles."
+    ],
+    [
+      "median_recall_score_wtcs_50",
+      "numeric",
+      "0.69",
+      "The median pairwise weighted connectiity score between replicate level 4 profiles."
+    ],
+    [
+      "batch_effect_tstat",
+      "numeric",
+      "13",
+      "The result of a one-sample t-test comparing the median correlation between signatures from the same plate to 0. Higher values indicate higher correlations between such signatures, and hence potentially a batch effect."
+    ],
+    [
+      "batch_effect_tstat_pct",
+      "numeric",
+      "56.9",
+      "The percentile of batch_effect_tstat relative to all other signatures."
+    ],
+    [
+      "is_hiq",
+      "binary",
+      "1",
+      "Binary indicating whether the given signature was of high techincal and functional quality. Specific requirements are qc_pass == 1 AND (median_recall_rank_spearman <= 5 OR median_recall_rank_wtcs_50 <= 5)"
+    ],
+    [
+      "qc_pass",
+      "binary",
+      "1",
+      "Binary indicating whether the given signature had at least 50% of its replicates flagged as qc_pass. See definition of qc_pass in instinfo for more details."
+    ],
+    [
+      "det_wells",
+      "string",
+      "P19",
+      "Pipe-delimited list of detection wells, which refers to each well of the detection plate in which an L1000 experiment is conducted."
+    ],
+    [
+      "det_plates",
+      "string",
+      "REP.A024_MDAMB231_24H_X1_B29|REP.A024_MDAMB231_24H_X2_B29|REP.A024_MDAMB231_24H_X3_B29",
+      "Pipe-delimited list of detection plates, the plate of L1000 experiments that, at the end of the assay pipeline, is put through the Luminex scanners to detect the levels of landmark gene amplicons."
+    ],
+    [
+      "distil_ids",
+      "string",
+      "REP.A024_MDAMB231_24H_X1_B29:P19|REP.A024_MDAMB231_24H_X2_B29:P19|REP.A024_MDAMB231_24H_X3_B29:P19",
+      "Pipe-delmited list of IDs of individual replicate profiles, referred to as level 4 / z-score data, that is used in creating the signature from replicates assayed together on an L1000 plate. The signature is referred to as level 5 / aggregated z-score data."
+    ],
+    [
+      "project_code",
+      "string",
+      "REP",
+      "An internal code identifying the project to which a signature belongs"
+    ],
+    [
+      "is_ncs_exemplar",
+      "binary",
+      "0",
+      "Binary indicating whether the given signature was chosen as the exemplar for the pert_id / cell_iname combiation. These signatures are reported in the curated output of queries against the full 1M signature level 5 dataset"
+    ]
+  ],
+  "xl/worksheets/sheet5.xml": [
+    [
+      "Field Name",
+      "Type",
+      "Example",
+      "Description"
+    ],
+    [
+      "pert_id",
+      "string",
+      "BRD-A79768653",
+      "A unique identifier for a perturbagen that refers to the perturbagen in general, not to any particular batch or sample."
+    ],
+    [
+      "cmap_name",
+      "string",
+      "sirolimus",
+      "The internal (CMap-designated) name of a perturbagen. By convention, for genetic perturbations CMap uses the HUGO gene symbol."
+    ],
+    [
+      "target",
+      "string",
+      "MTOR",
+      "The symbol of the gene that the comopund targets"
+    ],
+    [
+      "moa",
+      "string",
+      "MTOR inhibitor",
+      "A curated phrase representing the compound's mechanism of action"
+    ],
+    [
+      "canonical_smiles",
+      "string",
+      "COC1CC(CC(C)C2CC(=O)C(C)C=C(C)C(O)C(OC)C(=O)C(C)CC(C)C=CC=CC=C(C)C(CC3CCC(C)C(O)(O3)C(=O)C(=O)N3CCCCC3C(=O)O2)OC)CCC1OC(=O)C(C)(CO)CO",
+      "Canonical SMILES structure"
+    ],
+    [
+      "inchi_key",
+      "string",
+      "CBPNZQVSJQDFBE-WEDGMEQVSA-N",
+      "InChIKey - hashed version of the InChi identifier (see http://www.iupac.org/inchi/)"
+    ],
+    [
+      "compound_aliases",
+      "string",
+      "rapamycin",
+      "Alternative name for the compound"
+    ]
+  ],
+  "xl/worksheets/sheet6.xml": [
+    [
+      "Treatment",
+      "pert_type"
+    ],
+    [
+      "Compound",
+      "trt_cp"
+    ],
+    [
+      "Ligand",
+      "trt_lig"
+    ],
+    [
+      "shRNA for LoF",
+      "trt_sh"
+    ],
+    [
+      "Consensus signature from shRNAs for LoF",
+      "trt_sh.cgs"
+    ],
+    [
+      "cDNA for overexpression of wild-type of gene",
+      "trt_oe"
+    ],
+    [
+      "cDNA for overexpression of mutated form of gene",
+      "trt_oe.mut"
+    ],
+    [
+      "CRISPR for LoF",
+      "trt_xpr"
+    ],
+    [
+      "Controls - vehicle (e.g DMSO)",
+      "ctl_vehicle"
+    ],
+    [
+      "Controls - vector (e.g empty vector)",
+      "ctl_vector"
+    ],
+    [
+      "Controls - consensus signature from sister shRNAs",
+      "trt_sh.css"
+    ],
+    [
+      "Controls - consensus signature of vehicles",
+      "ctl_vehicle.cns"
+    ],
+    [
+      "Controls - consensus signature of vectors",
+      "ctl_vector.cns"
+    ],
+    [
+      "Controls - consensus signature of untreated",
+      "ctl_untrt.cns"
+    ],
+    [
+      "Untreated cells",
+      "ctl_untrt"
+    ]
+  ]
+}

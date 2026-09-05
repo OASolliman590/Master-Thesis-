@@ -1,0 +1,200 @@
+{
+  "record_n": 30,
+  "timepoints": {
+    "Pretx": 15,
+    "C4D1": 15
+  },
+  "unique_subjects": 15,
+  "pretreatment_n": 15,
+  "pretreatment_psa50": {
+    "YES": 7,
+    "NO": 8
+  },
+  "pretreatment_radiographic": {
+    "NO": 11,
+    "YES": 4
+  },
+  "pretreatment_records": [
+    {
+      "gsm": "GSM7165424",
+      "title": "S80847_S1",
+      "subjectid": "1.00",
+      "batch": "2.00",
+      "change in psa from baseline": "-0.88",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.16",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165425",
+      "title": "S81260_S4",
+      "subjectid": "5.00",
+      "batch": "2.00",
+      "change in psa from baseline": "1.05",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "0",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165426",
+      "title": "S81264_S6",
+      "subjectid": "6.00",
+      "batch": "2.00",
+      "change in psa from baseline": "0.12",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "-0.01",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165427",
+      "title": "S81299_S50",
+      "subjectid": "7.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.51",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.30",
+      "radiographic response": "YES",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165429",
+      "title": "S81877_S52",
+      "subjectid": "10.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.20",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "-0.15",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165433",
+      "title": "S82355_S57",
+      "subjectid": "11.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.75",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.50",
+      "radiographic response": "YES",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165434",
+      "title": "S82491_S61",
+      "subjectid": "13.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.94",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.64",
+      "radiographic response": "YES",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165435",
+      "title": "S82600_S58",
+      "subjectid": "12.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.55",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.53",
+      "radiographic response": "YES",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165439",
+      "title": "S83540_S34",
+      "subjectid": "18.00",
+      "batch": "1.00",
+      "change in psa from baseline": "0.84",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "0.71",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165441",
+      "title": "S83694_S35",
+      "subjectid": "20.00",
+      "batch": "1.00",
+      "change in psa from baseline": "3.52",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "0.17",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165444",
+      "title": "S84972_S67",
+      "subjectid": "24.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.95",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.23",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165445",
+      "title": "S85059_S70",
+      "subjectid": "29.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.71",
+      "psa50 response": "YES",
+      "change in tumor volume from baseline": "-0.02",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165446",
+      "title": "S85293_S38",
+      "subjectid": "31.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.44",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "0.30",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165450",
+      "title": "S87421_S40",
+      "subjectid": "47.00",
+      "batch": "1.00",
+      "change in psa from baseline": "1.96",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "-0.06",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    },
+    {
+      "gsm": "GSM7165451",
+      "title": "S87423_S43",
+      "subjectid": "49.00",
+      "batch": "1.00",
+      "change in psa from baseline": "-0.11",
+      "psa50 response": "NO",
+      "change in tumor volume from baseline": "0.00",
+      "radiographic response": "NO",
+      "time point": "Pretx",
+      "tissue": "Patient biopsy"
+    }
+  ],
+  "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE229555&targ=gsm&view=brief&form=text"
+}

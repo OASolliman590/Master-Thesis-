@@ -36,3 +36,25 @@ docs/research/C_pharmacology_contracts/*.html
 docs/research/C_immune_context/*.html
 docs/research/C_immune_context/*.js
 docs/research/C_immune_context/frangieh_bioc.json
+
+# M1 public source caches: keep retrieval records and small derived coverage only.
+docs/research/B_readiness/*.soft
+docs/research/B_readiness/*.html
+docs/research/B_readiness/*.gzpart
+docs/research/B_readiness/*_processed_prefix.tsv
+docs/research/B_readiness/GSE107299_eight_gene_rows.tsv
+docs/research/B_readiness/GSE107299_gene_annotation.tsv
+docs/research/B_readiness/tcga_*.tsv
+docs/research/B_readiness/cbio_clinical_*.json
+docs/research/B_readiness/cbio_studies.json
+docs/research/B_readiness/clinical_*.tsv
+docs/research/B_readiness/gdc_files.json
+docs/research/B_readiness/geo_samples.json
+docs/research/C_lincs2020_readiness/*.gz
+docs/research/C_lincs2020_readiness/cmapM_*.m
+docs/research/C_lincs2020_readiness/cmapM_*.arg
+docs/research/C_lincs2020_readiness/cmapM_README.md
+docs/research/C_lincs2020_readiness/cmapM_SigToolDemo.md
+docs/research/C_lincs2020_readiness/cmapM_tree.json
+docs/research/C_lincs2020_readiness/cmapPy_README.rst
+docs/research/C_lincs2020_readiness/field_definitions.xlsx

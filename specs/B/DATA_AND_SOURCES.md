@@ -1,0 +1,37 @@
+# B source and coverage contract
+
+**PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** Counts below reflect bounded metadata/table inspections, not final analysis eligibility. Cite and retain both canonical reports: `docs/research/B_paired_prostate.md` and the evolving `docs/research/B_readiness/` artifacts.
+
+| Source/question | Inspected coverage | Role / unresolved requirement |
+|---|---|---|
+| TCGA-PRAD GDC RNA plus 450K | 497 shared primary-tumour cases; 501 shared sample IDs in prior complete metadata response | Training/development; resolve repeated specimens and all mandatory covariates/QC. |
+| One matched TCGA specimen's expression table | GENCODE v36; all eight proposed genes present in 60,660 gene rows | Real parser/feature evidence for one specimen only; not all-case completeness. |
+| One TCGA methylation table | Headerless; 486,427 IDs, 417,183 finite values and 69,244 NA entries | Missingness is real. Freeze annotation and common probes; never treat NA as unmethylated. |
+| GSE107298 methylation processed header | 394 beta and 394 detection-p columns; 286 patient codes, including all 210 pairs | Main external methylation route; header omits leading probe-ID label, so data rows have one extra field. |
+| GSE107299 expression header | 213 patient columns, including all 210 paired codes | External arrays, not RNA-seq. Author RMA/custom-CDF/batch processing must remain explicit. |
+| Full external expression audit, 2026-09-05 20:44:59 UTC | Complete 32,357,821-byte compressed object; 24,598 feature rows, 213 samples, zero malformed rows; all eight proposed genes have one unique gene-ID row and 213/213 finite measurements | This supersedes the earlier six-gene partial coverage limit. Common TCGA/CPC annotation universe, platform-specific mapping and score transport remain open; no Y score or matrix retained. |
+| CPC-GENE patient multiplicity | 210 paired codes have 288 methylation records; 149/48/9/4 codes have 1/2/3/4 records | Technical replicate versus distinct focus semantics unresolved. One record is not one independent patient. |
+| Older series | 300 reanalysis links resolve to 160 GSE83917 and 140 GSE84493 original records | Historical provenance, not additional independent patients or validation cohorts. |
+| Clinical source candidate mapping | Public CPC2017 `CPCG####-F1` identifiers yield 73/210 code matches; age, Gleason and WGS purity present for 73; cellularity 70; ploidy 18 | Code-derived candidates, not verified same-focus covariate linkage. 137 codes uncovered by this route; gene-level CNA profile not established. |
+| PRAD/LUAD secondary | Registered contrast retained | Current comparable LUAD expression/methylation manifest not acquired for this kit; not part of primary training/test. |
+| Cell origin/domain annotation | Published prostate single-cell and Guo domain resources are candidates | Exact source/release/feature mappings must be frozen; no novel PMD calls from sparse 450K proxy coverage. |
+
+Primary source routes: [GDC API](https://docs.gdc.cancer.gov/API/Users_Guide/Search_and_Retrieval/), [GDC methylation processing](https://docs.gdc.cancer.gov/Data/Bioinformatics_Pipelines/Methylation_Pipeline/), [GSE107298](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107298), [GSE107299](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE107299), [GSE83917](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE83917), [GSE84493](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84493). Retrieval URLs/checksums and exact local summaries are in SOURCE_MANIFEST.json. Partial-stream hashes are not whole-object hashes. The subsequent [full expression audit](../../docs/research/B_readiness/GSE107299_full_expression_audit.json) records full-object SHA256 `09d866ce89adb7122879354a523ae0c1fdac03572c555a2d647b64a35c342f2b` for the [actual GSE107299 expression object](https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz); its matrix was not retained.
+
+## Patient, specimen and duplicate policy
+
+Preserve TCGA case/sample/portion/aliquot entities and CPCG code, GSM, focus suffix and reanalysis origin. A primary sample is tumour tissue with matched source-backed RNA/methylation specimen provenance; exact same-patient codes alone are insufficient. Do not pair a clinical F1 measurement to an unresolved different focus. Clinical covariates may be patient-level, but purity and gene-level CNA are specimen-level.
+
+Proposed resolution priority: first source-backed same specimen/focus and modality pairing; then source QC eligibility; then a deterministic source-ID tie-break among equivalent eligible biological specimens. Explicit reanalysis copies collapse to one source origin. Proven technical replicates of the same specimen may be collapsed by per-probe median beta, with concordance reported; distinct or unresolved foci may not be averaged into a synthetic specimen. Exact QC thresholds and clinical-focus maps remain review gates; ties must never be resolved using association strength or endpoint prediction quality.
+
+TCGA and CPC-GENE naming supports a separate-cohort design but does not prove recruitment independence. Record site/recruitment/publication reuse and known overlaps. The old 73-pair GEO route is nested in the expanded cohort. Republished rows, portals and pooled published analyses are not additional validation samples.
+
+## Gene, probe and covariate identifiers
+
+Proposed common expression universe U: unique genes supported by the pinned TCGA GENCODE-v36 mapping and both external array platform/custom-CDF annotation maps. Determine U from assay/annotation coverage, not external expression distributions or outcome correlations. Freeze a literal ordered ID list and checksum before scoring. Resolve versioned Ensembl-to-Entrez mappings explicitly; ambiguous or many-to-one mappings require a fixed source rule, not choosing the largest expression. The eight primary genes must map unambiguously. HLA annotations require special scrutiny because a matching symbol alone does not establish specific measurement.
+
+Promoter candidate definition: assay CpGs annotated to the matching gene's TSS200 or TSS1500 category using one pinned 450K annotation/build and correctly aligned gene/group entries. Gene body/UTR/domain probes are separate annotations, not silently mixed into promoters. Exact annotation artifact and cross-reactive/polymorphic probe lists are not yet acquired. [Chen et al. 2013](https://doi.org/10.4161/epi.23470) motivates probe-quality exclusions; it does not itself supply a versioned mask already applied here.
+
+GDC SeSAMe beta values and author dasen-processed CPC-GENE estimates differ in processing. Common array technology does not remove that difference. Preserve detection-p columns separately from beta columns. No joint TCGA+CPC-GENE ComBat, pooled quantile transformation or test-outcome recalibration is allowed. Additional harmonisation requires documented training-only or fixed sample-wise rules and a pre-test amendment.
+
+Access and redistribution are recorded per source/object. Public access does not automatically authorise every derived clinical or genomic redistribution. Store permitted small verification summaries and retrieval manifests in Git/Notion; store large or restricted data under approved AIU paths, with no credentials in source URLs.

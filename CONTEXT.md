@@ -37,3 +37,17 @@ The programme investigates prostate immune regulation and interventions that may
 **No orthologue**: An unresolved or absent cross-species mapping for the specified mapping rule. It is distinct from lack of biological effect.
 
 **Implementation-ready spec**: A reviewed design whose required scientific, data and interface decisions are settled sufficiently for its declared tickets. A complete conditional design can remain unready for execution.
+
+**Regimen-specific response**: A response observed under the study's actual treatment sequence or combination. It does not identify the benefit attributable to one component without an appropriate comparison.
+
+**Endpoint sensitivity**: The change in a fixed analysis when the clinical outcome definition changes on the same patients. It is distinct from improved prediction or proof that one outcome definition is superior.
+
+**Supported perturbation**: A treatment identity and exposure represented by the selected model's verified input vocabulary. A successful software prediction does not establish support if an unknown treatment falls back to a control representation.
+
+**Context transfer**: Evaluation of a treatment represented during model training in a separately held-out biological context. It differs from prediction for a completely unseen treatment.
+
+**Native expression representation**: The exact feature identifiers, order, transformation and scale expected or produced by a selected model. Matching only the number of features does not establish compatibility.
+
+**Reproduction**: Re-execution of a previously released analysis with its declared inputs and methods. It differs from validation using independent experiments.
+
+**Unknown training overlap**: Incomplete provenance about whether a model encountered evaluation data. It is not evidence that the evaluation set is unseen.

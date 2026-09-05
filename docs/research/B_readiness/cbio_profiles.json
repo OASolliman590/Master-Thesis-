@@ -1,0 +1,1 @@
+[{"molecularProfileId":"prad_cpcg_2017_mutations","studyId":"prad_cpcg_2017","molecularAlterationType":"MUTATION_EXTENDED","datatype":"MAF","name":"Mutations","description":"Mutations from whole-genome/exome sequencing of 477 prostate samples from CPC-GENE and public data sets, including TCGA-PRAD.","showProfileInAnalysisTab":true,"patientLevel":false}]
