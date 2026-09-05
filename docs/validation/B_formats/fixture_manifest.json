@@ -1,0 +1,37 @@
+{
+  "tool": "tools.b_formats.inspect",
+  "formats": {
+    "tcga-star-expression": {
+      "path": "docs/research/B_readiness/tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f.tsv",
+      "source_sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+      "expected_completeness": "full",
+      "source_url": "https://api.gdc.cancer.gov/data/a4980c9c-6c37-46da-8db3-c60a1c29081f"
+    },
+    "tcga-methylation-beta": {
+      "path": "docs/research/B_readiness/tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38.tsv",
+      "source_sha256": "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7",
+      "expected_completeness": "full",
+      "source_url": "https://api.gdc.cancer.gov/data/9cebe5e9-f133-479a-b0f6-e91d8b06ab38"
+    },
+    "cpc-expression": {
+      "path": "docs/research/B_readiness/GSE107299_processed_prefix.tsv",
+      "source_sha256": "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1",
+      "expected_completeness": "bounded-prefix",
+      "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz",
+      "parent_compressed_prefix_sha256": "ccb85485c521a3e02d8fd0d9edb5e15f096d9726a486da67f2e24e24b4b7099c",
+      "parent_compressed_bytes_read": 256000,
+      "derivation": "zlib gzip decompression capped at 2000000 output bytes, then retain through the last complete LF record",
+      "provenance_record": "docs/research/B_readiness/fetch_log.json, GSE107299_processed_prefix.gzpart entry"
+    },
+    "cpc-methylation": {
+      "path": "docs/research/B_readiness/GSE107298_processed_prefix.tsv",
+      "source_sha256": "d2539ed67b6bae02c2abeb7cbcd0b4d4ef5d51acf164eb571d2555743b249f7a",
+      "expected_completeness": "bounded-prefix",
+      "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107298/suppl/GSE107298_Matrix_processed.txt.gz",
+      "parent_compressed_prefix_sha256": "a34821f3d38c22bcf6748ecdfb81a961843a55d878a32b071b59ab3a7cd49e16",
+      "parent_compressed_bytes_read": 256000,
+      "derivation": "zlib gzip decompression capped at 2000000 output bytes, then retain through the last complete LF record",
+      "provenance_record": "docs/research/B_readiness/fetch_log.json, GSE107298_processed_prefix.gzpart entry"
+    }
+  }
+}

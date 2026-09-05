@@ -1,11 +1,48 @@
 {
   "schema_version": 1,
-  "updated": "2026-09-05",
-  "pending_tests": [],
-  "note": "No production tests have been scheduled. An empty queue is not evidence that any paper is validated.",
+  "updated": "2026-09-06",
+  "pending_tests": [
+    {
+      "ticket": "B-F1",
+      "base_commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
+      "state": "Reviewed WIP: local 19-test run passed, final changed fixture test passed; AIU unrun",
+      "host": "AIU omics",
+      "environment": "/home/omics/miniforge3/envs/omics-py/bin/python, 3.11.16",
+      "command": "python -m unittest discover -s tests/b_formats -v",
+      "expected_artifacts": "test log, four permitted real-format summaries, input/code hashes and independent review receipts",
+      "blocker": "AIU SSH connection timeout; no remote B-F1 job started",
+      "commands": [
+        "/home/omics/miniforge3/envs/omics-py/bin/python -m unittest discover -s tests/b_formats -v",
+        "/home/omics/miniforge3/envs/omics-py/bin/python docs/validation/B_formats/verify_real.py --output-dir /home/omics/projects/ici_thesis_pipeline/planning/2026-09-05/B_F1_aiu_run_001"
+      ],
+      "prerequisites": "Sync reviewed candidate; verify four existing fixtures against manifest and restore their ignored repo-relative paths. If output run directory already exists, inspect it before selecting a fresh run ID.",
+      "live_job": null
+    }
+  ],
+  "note": "Only format-tool validation is scheduled. No scientific analysis or full paper is validated.",
   "capability_gaps": [
-    {"role": "Direct Claude Code", "state": "Installed version 2.1.260; direct auth status false. Opus available separately through Antigravity; actual review pending."},
-    {"role": "Grok consultation/coding", "state": "Windows CLI installed; authentication false"},
-    {"role": "Antigravity/Gemini coding", "state": "CLI 1.1.22 installed; live models list verifies gemini-3.8-flash-high/medium/low. Headless execution and write permissions not tested."}
+    {
+      "role": "Direct Claude Code",
+      "state": "Installed version 2.1.260; direct auth status false. Opus completed M0/M1 reviews separately through authenticated Antigravity."
+    },
+    {
+      "role": "Grok consultation/coding",
+      "state": "Windows CLI installed; authentication false"
+    },
+    {
+      "role": "Antigravity/Gemini coding",
+      "state": "Antigravity 1.1.27 exercised for Opus M1 read-only review; live models list verifies gemini-3.8-flash-high/medium/low. Gemini coding/write route not exercised."
+    }
+  ],
+  "pending_reviews": [
+    {
+      "ticket": "B-F1",
+      "role": "Opus final recheck",
+      "model": "claude-opus-4-6-thinking",
+      "route": "Antigravity",
+      "blocker": "Provider 429 quota exhausted; final acknowledgement is not a completed review",
+      "resume_conversation": "1aef4d92-f54d-4997-a1a3-f2d4728993bc",
+      "next_action": "Resume direct-file read-only review when quota is available; inspect substantive result, not exit status alone."
+    }
   ]
 }

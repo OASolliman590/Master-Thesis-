@@ -1,0 +1,28 @@
+{
+  "milestone": "M1",
+  "status": "reviewed_wip",
+  "commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
+  "repository": "OASolliman590/Master-Thesis-",
+  "github_push_verified": true,
+  "aiu_head_verified": true,
+  "aiu_clean_checkout_verified": true,
+  "aiu_checkout": "/home/omics/projects/ici_thesis_pipeline/master-thesis",
+  "verification_date_cairo": "2026-09-06",
+  "sync_note": "Bundle fast-forward succeeded. A trailing CR broke the initial final status command; a separate one-line SSH read verified exact HEAD and empty porcelain status without repeating the merge.",
+  "notion_milestone": "https://app.notion.com/p/3d24763e55d28175afa5efa0cad7a373",
+  "notion_project_and_plan_updated": true,
+  "issues": {
+    "A": "https://github.com/OASolliman590/Master-Thesis-/issues/1",
+    "B": "https://github.com/OASolliman590/Master-Thesis-/issues/2",
+    "C": "https://github.com/OASolliman590/Master-Thesis-/issues/3",
+    "D": "https://github.com/OASolliman590/Master-Thesis-/issues/4",
+    "B-F1": "https://github.com/OASolliman590/Master-Thesis-/issues/5"
+  },
+  "issue_existence_and_open_state_verified": true,
+  "scientific_primary_frozen": false,
+  "paper_implemented": false,
+  "only_released_implementation": "B-F1 format inspection",
+  "B_F1_dispatch_model": "gpt-5.3-codex-spark",
+  "B_F1_dispatch_route": "codex-delegate 0.5.0, approved heavy lane, workspace-write",
+  "B_F1_validation_at_dispatch": "pending local tests, AIU tests, Opus code review and Astra final review"
+}

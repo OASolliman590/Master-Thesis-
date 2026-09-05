@@ -1,6 +1,16 @@
 # Execution progress
 
+## Current checkpoint: B-F1 reviewed WIP, 6 September 2026
+
+The four M1 design drafts are published; no primary is frozen and no paper is implemented. Spark produced B-F1 format tooling. Astra fixed reproduced provenance/output integrity defects and format edge cases. The local Python3.12 suite passed 19 tests; the last one-line negative-fixture correction passed its affected test separately. Four actual real-format runs have hash-attested summaries. Independent Standards/Spec rechecks are recorded in docs/reviews/; all reported code defects are resolved.
+
+Opus delivered the initial substantive code review, but its final recheck stopped at provider quota exhaustion despite exit0. AIU SSH still times out; no remote B-F1 job started. Final Opus recheck and AIU/Python3.11 validation remain queued, so issue#5 stays open. See B_F1_ASTRA_DISPOSITION.md and pending_validation.json. This checkpoint is authorized WIP backup, not full validation.
+
+Post-M1 evidence is summarized and report-hashed in docs/research/POST_M1_EVIDENCE*. The material B primary-emphasis question remains pending; replicated molecular association is a proposal, not an approved replacement for external prediction. A/C/D scope and the required wet-lab component are preserved. Continue source/spec gates independently of that question; do not run dependent scientific analyses.
+
 ## Current milestone: M1 — four design drafts and feasibility evidence
+
+**Publication receipt, 6 September 2026:** M1 `43efda19bff062a2e9e140fadd84ab32c88cee71` is pushed and independently verified on GitHub and in a clean AIU checkout. Four WIP parent issues (#1–4) and released B-F1 (#5) exist. The Notion milestone, project and plan are updated; [M1_PUBLICATION.json](M1_PUBLICATION.json) records exact links and verification. Spark B-F1 implementation is dispatched through the approved heavy lane. Its code/tests/reviews are still pending; publication does not freeze a scientific primary. Historical pre-review steps below are retained as history.
 
 The full user goal remains active. No paper is implemented or scientifically validated. Primary emphasis choices, biological data gates and independent review remain distinct from the already approved setup.
 

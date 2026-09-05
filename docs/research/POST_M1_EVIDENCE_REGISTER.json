@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-06",
+  "scope": "Report provenance only; source tables are not redistributed.",
+  "reports": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_annotation\\B_annotation.md",
+      "bytes": 15408,
+      "sha256": "0b9b760fc83b7afe2615f08ac0f45b21ce111fca5d41f09ed3fa1375a60aa137",
+      "status": "source audit or proposed design; not scientific approval"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_primary_alternative.md",
+      "bytes": 20568,
+      "sha256": "12abf82c1f22af451950287332c0aa87bee747baad3aac6deec53a51ad25904d",
+      "status": "source audit or proposed design; not scientific approval"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_discovery_feasibility\\README.md",
+      "bytes": 17397,
+      "sha256": "406bb603c3d188788d8cc87ae8c88a8598a8d2c835f77142000ee51cfee076d9",
+      "status": "source audit or proposed design; not scientific approval"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\A_additional_origins\\REPORT.md",
+      "bytes": 12202,
+      "sha256": "bd8b3262a632f089ab53e41214d56e5957f8fe8cbaa356eee2e4081a7e841666",
+      "status": "source audit or proposed design; not scientific approval"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation\\REPORT.md",
+      "bytes": 13221,
+      "sha256": "9220d816c9b5f16597d268cd3a8abece24787893f1bdab404c087b9cb8091f4a",
+      "status": "source audit or proposed design; not scientific approval"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\C_measured_validation_followup\\REPORT.md",
+      "bytes": 10093,
+      "sha256": "92bd41f136062ced94d43541b1fe7a21eccc929210bc99b0558db006467f918d",
+      "status": "source audit or proposed design; not scientific approval"
+    }
+  ]
+}

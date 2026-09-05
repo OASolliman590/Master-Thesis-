@@ -1,0 +1,41 @@
+{
+  "tcga-star-expression": {
+    "row_count": 60664,
+    "summary_record_count": 4,
+    "identifier_count": 60660,
+    "numeric_field_count": 6,
+    "finite_value_count": 363960,
+    "missing_value_count": 0,
+    "summary_structural_missing_count": 12,
+    "summary_missing_value_count": 0,
+    "summary_finite_value_count": 12
+  },
+  "tcga-methylation-beta": {
+    "row_count": 486427,
+    "identifier_count": 486427,
+    "sample_count": 1,
+    "finite_value_count": 417183,
+    "missing_value_count": 69244
+  },
+  "cpc-expression": {
+    "row_count": 194,
+    "sample_count": 213,
+    "annotation_field_count": 7
+  },
+  "cpc-methylation": {
+    "row_count": 77,
+    "sample_pair_count": 394,
+    "beta_columns": 394,
+    "detection_pval_columns": 394,
+    "sample_code_count": 286,
+    "header_repaired": true,
+    "header_repair_action": "prepended missing leading probe_id column",
+    "value_columns": 788,
+    "beta_finite_value_count": 30338,
+    "beta_missing_value_count": 0,
+    "detection_finite_value_count": 30338,
+    "detection_missing_value_count": 0,
+    "finite_value_count": 60676,
+    "missing_value_count": 0
+  }
+}

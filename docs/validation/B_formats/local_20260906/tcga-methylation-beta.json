@@ -1,0 +1,33 @@
+{
+  "actual_bytes": 13159478,
+  "actual_source_sha256": "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7",
+  "detected_header_repair": false,
+  "finite_value_count": 417183,
+  "format": "tcga-methylation-beta",
+  "format_summary": {
+    "completeness": "full",
+    "finite_value_count": 417183,
+    "format": "tcga-methylation-beta",
+    "header_repaired": false,
+    "identifier_count": 486427,
+    "missing_value_count": 69244,
+    "probe_class_counts": {
+      "cg": 482421,
+      "ch": 3091,
+      "other": 915
+    },
+    "row_count": 486427,
+    "sample_count": 1,
+    "value_columns": 1
+  },
+  "identifier_count": 486427,
+  "missing_value_count": 69244,
+  "no_biological_validation": "format-only inspection; no assay values logged; no modeling",
+  "row_count": 486427,
+  "sample_count": 1,
+  "schema_version": "1.0.0",
+  "source_sha256": "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7",
+  "summary_record_count": null,
+  "supplied_completeness": "full",
+  "tool": "tools.b_formats.inspect"
+}

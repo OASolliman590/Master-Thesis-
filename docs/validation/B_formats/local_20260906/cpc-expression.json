@@ -1,0 +1,28 @@
+{
+  "actual_bytes": 557800,
+  "actual_source_sha256": "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1",
+  "detected_header_repair": false,
+  "finite_value_count": 41322,
+  "format": "cpc-expression",
+  "format_summary": {
+    "annotation_field_count": 7,
+    "completeness": "bounded-prefix",
+    "finite_value_count": 41322,
+    "format": "cpc-expression",
+    "header_repaired": false,
+    "identifier_count": 194,
+    "missing_value_count": 0,
+    "row_count": 194,
+    "sample_count": 213
+  },
+  "identifier_count": 194,
+  "missing_value_count": 0,
+  "no_biological_validation": "format-only inspection; no assay values logged; no modeling",
+  "row_count": 194,
+  "sample_count": 213,
+  "schema_version": "1.0.0",
+  "source_sha256": "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1",
+  "summary_record_count": null,
+  "supplied_completeness": "bounded-prefix",
+  "tool": "tools.b_formats.inspect"
+}

@@ -1,0 +1,34 @@
+{
+  "actual_bytes": 4230145,
+  "actual_source_sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+  "detected_header_repair": false,
+  "finite_value_count": 363960,
+  "format": "tcga-star-expression",
+  "format_summary": {
+    "comment_lines": [
+      "gene-model: GENCODE v36"
+    ],
+    "completeness": "full",
+    "finite_value_count": 363960,
+    "format": "tcga-star-expression",
+    "header_repaired": false,
+    "identifier_count": 60660,
+    "missing_value_count": 0,
+    "numeric_field_count": 6,
+    "row_count": 60664,
+    "summary_finite_value_count": 12,
+    "summary_missing_value_count": 0,
+    "summary_record_count": 4,
+    "summary_structural_missing_count": 12
+  },
+  "identifier_count": 60660,
+  "missing_value_count": 0,
+  "no_biological_validation": "format-only inspection; no assay values logged; no modeling",
+  "row_count": 60664,
+  "sample_count": null,
+  "schema_version": "1.0.0",
+  "source_sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+  "summary_record_count": 4,
+  "supplied_completeness": "full",
+  "tool": "tools.b_formats.inspect"
+}

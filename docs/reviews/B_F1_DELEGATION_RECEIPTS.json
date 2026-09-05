@@ -1,0 +1,68 @@
+{
+  "runs": [
+    {
+      "model": "gpt-5.3-codex-spark",
+      "startedAt": "2026-09-05T21:24:14.837Z",
+      "finishedAt": "2026-09-05T21:36:51.150Z",
+      "status": "failed",
+      "exitCode": 4294967295,
+      "run": "B_F1_spark",
+      "receipt_sha256": "60170afbd32ca48d6c29f25aed2c1cdcede9ae02a4f7b410ef8df38e2aea822a"
+    },
+    {
+      "model": "gpt-5.3-codex-spark",
+      "startedAt": "2026-09-05T21:38:17.306Z",
+      "finishedAt": "2026-09-05T21:41:01.144Z",
+      "status": "completed",
+      "exitCode": 0,
+      "run": "B_F1_spark_rework",
+      "receipt_sha256": "3ed6697e1ab59e26b3aecf461ab8e55ab4c5951da524bcd49b56675d5bf92d7c"
+    },
+    {
+      "tool": "agy",
+      "model": "claude-opus-4-6-thinking",
+      "startedAt": "2026-09-05T21:44:15.826Z",
+      "finishedAt": "2026-09-05T21:44:45.915Z",
+      "status": "completed",
+      "exitCode": 0,
+      "conversationId": "1aef4d92-f54d-4997-a1a3-f2d4728993bc",
+      "readOnly": true,
+      "readOnlyViolation": false,
+      "run": "B_F1_opus_review",
+      "receipt_sha256": "897358f6b52541ac635ab90585212d5c6b8fce0255f1205896f3bf3f69f932a1"
+    },
+    {
+      "tool": "agy",
+      "model": "claude-opus-4-6-thinking",
+      "startedAt": "2026-09-05T21:47:09.335Z",
+      "finishedAt": "2026-09-05T21:52:09.875Z",
+      "status": "completed",
+      "exitCode": 0,
+      "conversationId": "1aef4d92-f54d-4997-a1a3-f2d4728993bc",
+      "readOnly": true,
+      "readOnlyViolation": true,
+      "run": "B_F1_opus_review_resume",
+      "receipt_sha256": "55b90b7bb6d3063657a815069376e5be55f351f56cb653ddc5a68253626dd88c"
+    },
+    {
+      "tool": "agy",
+      "model": "claude-opus-4-6-thinking",
+      "startedAt": "2026-09-05T22:01:31.569Z",
+      "finishedAt": "2026-09-05T22:02:16.971Z",
+      "status": "completed",
+      "exitCode": 0,
+      "conversationId": "1aef4d92-f54d-4997-a1a3-f2d4728993bc",
+      "readOnly": true,
+      "readOnlyViolation": false,
+      "run": "B_F1_opus_final",
+      "receipt_sha256": "6af5460ee84a16f21af1cec27ff0d0f51084c2fab375d9474d95caa5e81f6f56"
+    }
+  ],
+  "interpretation": {
+    "B_F1_spark": "Stopped after verified local temporary-directory test stall; not success.",
+    "B_F1_spark_rework": "Completed bounded rework; root separately tested.",
+    "B_F1_opus_review": "No substantive review; terminal call denied.",
+    "B_F1_opus_review_resume": "Substantive independent review delivered; changes requested.",
+    "B_F1_opus_final": "INCOMPLETE despite exit 0: log reports RESOURCE_EXHAUSTED/429 after file reads."
+  }
+}

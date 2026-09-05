@@ -1,0 +1,116 @@
+{
+  "scope": "four real format inspections only; no biological validation",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Users\\salma\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "passed": true,
+  "code_and_contract_sha256": {
+    "docs/validation/B_formats/fixture_manifest.json": "546eb82be6cda073ee27d0b981386eefde5fc6fd5a9e588da0fbfd67b32f5c0b",
+    "docs/validation/B_formats/real_summaries_expected.json": "6bc041190087fdeb642006534534737811eb157cde2caca6d4e2ce0455c516ed",
+    "tools/b_formats/__main__.py": "af0dba41183461dc23d22aa096bff3a19c8c4cb04743f26533b394352a5cc2ef",
+    "tools/b_formats/__init__.py": "4cd8b6900401e0e2a267c56d898738fa754492c21a1ba2ef70338eec1a0ff32f",
+    "docs/validation/B_formats/verify_real.py": "f85630287e5294cd5c26dd4e6b5b9998c60ed0b4b41e05d10706b668a36478e6"
+  },
+  "checks": [
+    {
+      "format": "tcga-star-expression",
+      "command": [
+        "C:\\Users\\salma\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "tools.b_formats",
+        "inspect",
+        "--format",
+        "tcga-star-expression",
+        "--input",
+        "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\tcga_a4980c9c-6c37-46da-8db3-c60a1c29081f.tsv",
+        "--source-sha256",
+        "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+        "--completeness",
+        "full",
+        "--output",
+        "E:\\Master_Thesis\\master-thesis\\docs\\validation\\B_formats\\local_20260906\\tcga-star-expression.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "expected_fields_match": true,
+      "summary_sha256": "06213477581b81d2113fc8a228e30628ec5db33ca67b98be71a2962568f8bc53",
+      "actual_input_bytes": 4230145,
+      "actual_input_sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c"
+    },
+    {
+      "format": "tcga-methylation-beta",
+      "command": [
+        "C:\\Users\\salma\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "tools.b_formats",
+        "inspect",
+        "--format",
+        "tcga-methylation-beta",
+        "--input",
+        "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\tcga_9cebe5e9-f133-479a-b0f6-e91d8b06ab38.tsv",
+        "--source-sha256",
+        "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7",
+        "--completeness",
+        "full",
+        "--output",
+        "E:\\Master_Thesis\\master-thesis\\docs\\validation\\B_formats\\local_20260906\\tcga-methylation-beta.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "expected_fields_match": true,
+      "summary_sha256": "5ae2cd7e0e97cdb7e3ac2389ae8353c9a00784b4f1d7e98aa61628522c097f87",
+      "actual_input_bytes": 13159478,
+      "actual_input_sha256": "11d9fa63a4b9b69b9131ebdb535501fe221751cfe172b8295526d70003d40cf7"
+    },
+    {
+      "format": "cpc-expression",
+      "command": [
+        "C:\\Users\\salma\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "tools.b_formats",
+        "inspect",
+        "--format",
+        "cpc-expression",
+        "--input",
+        "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\GSE107299_processed_prefix.tsv",
+        "--source-sha256",
+        "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1",
+        "--completeness",
+        "bounded-prefix",
+        "--output",
+        "E:\\Master_Thesis\\master-thesis\\docs\\validation\\B_formats\\local_20260906\\cpc-expression.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "expected_fields_match": true,
+      "summary_sha256": "86a7661818bd36ae27f7ef1e833005f69e61903b738d8406bb2f7521a42a6cef",
+      "actual_input_bytes": 557800,
+      "actual_input_sha256": "5a9aaaacb96c4548083bf680aaf4cef6c2a61a8ef83464da5278910318d4e8d1"
+    },
+    {
+      "format": "cpc-methylation",
+      "command": [
+        "C:\\Users\\salma\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "tools.b_formats",
+        "inspect",
+        "--format",
+        "cpc-methylation",
+        "--input",
+        "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\GSE107298_processed_prefix.tsv",
+        "--source-sha256",
+        "d2539ed67b6bae02c2abeb7cbcd0b4d4ef5d51acf164eb571d2555743b249f7a",
+        "--completeness",
+        "bounded-prefix",
+        "--output",
+        "E:\\Master_Thesis\\master-thesis\\docs\\validation\\B_formats\\local_20260906\\cpc-methylation.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "expected_fields_match": true,
+      "summary_sha256": "9340159503532363d2064883b4fa46450e80b203ebbb7461be5599ecddb6fd17",
+      "actual_input_bytes": 626448,
+      "actual_input_sha256": "d2539ed67b6bae02c2abeb7cbcd0b4d4ef5d51acf164eb571d2555743b249f7a"
+    }
+  ]
+}
