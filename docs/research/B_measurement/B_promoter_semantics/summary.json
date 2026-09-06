@@ -1,0 +1,785 @@
+{
+  "status": "CANDIDATE OPTIONS ONLY; no primary, annotation or probe-QC freeze approved",
+  "policy_label_semantics": "pc denotes transcriptTypes source field equals protein_coding; not verified transcript coding biotype",
+  "input_rows": 485577,
+  "mask_rows": 485577,
+  "aligned_field_errors": [],
+  "genesUniq_summary_disagreements": [],
+  "target_probe_gene_rows": 662,
+  "target_transcript_rows": 3127,
+  "counts": {
+    "HLA-A": {
+      "associated": 41,
+      "pc_abs1500_pre_mask": 37,
+      "pc_abs1500": 3,
+      "pc_abs200": 1,
+      "all_biotypes_abs1500": 3,
+      "pc_abs1500_unique_pc_gene": 3,
+      "naive_any_transcript_then_all_row_genes_count": 3,
+      "naive_incorrect_extra_ids": []
+    },
+    "HLA-B": {
+      "associated": 51,
+      "pc_abs1500_pre_mask": 51,
+      "pc_abs1500": 8,
+      "pc_abs200": 7,
+      "all_biotypes_abs1500": 8,
+      "pc_abs1500_unique_pc_gene": 8,
+      "naive_any_transcript_then_all_row_genes_count": 8,
+      "naive_incorrect_extra_ids": []
+    },
+    "HLA-C": {
+      "associated": 46,
+      "pc_abs1500_pre_mask": 46,
+      "pc_abs1500": 12,
+      "pc_abs200": 1,
+      "all_biotypes_abs1500": 12,
+      "pc_abs1500_unique_pc_gene": 12,
+      "naive_any_transcript_then_all_row_genes_count": 12,
+      "naive_incorrect_extra_ids": []
+    },
+    "B2M": {
+      "associated": 15,
+      "pc_abs1500_pre_mask": 15,
+      "pc_abs1500": 14,
+      "pc_abs200": 9,
+      "all_biotypes_abs1500": 14,
+      "pc_abs1500_unique_pc_gene": 1,
+      "naive_any_transcript_then_all_row_genes_count": 14,
+      "naive_incorrect_extra_ids": []
+    },
+    "TAP1": {
+      "associated": 108,
+      "pc_abs1500_pre_mask": 96,
+      "pc_abs1500": 83,
+      "pc_abs200": 34,
+      "all_biotypes_abs1500": 83,
+      "pc_abs1500_unique_pc_gene": 29,
+      "naive_any_transcript_then_all_row_genes_count": 93,
+      "naive_incorrect_extra_ids": [
+        "cg02756056",
+        "cg05693489",
+        "cg09154880",
+        "cg09354037",
+        "cg11706729",
+        "cg12253437",
+        "cg13165140",
+        "cg16890093",
+        "cg19136673",
+        "cg25384897"
+      ]
+    },
+    "TAP2": {
+      "associated": 127,
+      "pc_abs1500_pre_mask": 83,
+      "pc_abs1500": 75,
+      "pc_abs200": 21,
+      "all_biotypes_abs1500": 75,
+      "pc_abs1500_unique_pc_gene": 30,
+      "naive_any_transcript_then_all_row_genes_count": 75,
+      "naive_incorrect_extra_ids": []
+    },
+    "PSMB8": {
+      "associated": 88,
+      "pc_abs1500_pre_mask": 88,
+      "pc_abs1500": 82,
+      "pc_abs200": 34,
+      "all_biotypes_abs1500": 82,
+      "pc_abs1500_unique_pc_gene": 21,
+      "naive_any_transcript_then_all_row_genes_count": 82,
+      "naive_incorrect_extra_ids": []
+    },
+    "PSMB9": {
+      "associated": 186,
+      "pc_abs1500_pre_mask": 141,
+      "pc_abs1500": 126,
+      "pc_abs200": 32,
+      "all_biotypes_abs1500": 126,
+      "pc_abs1500_unique_pc_gene": 11,
+      "naive_any_transcript_then_all_row_genes_count": 155,
+      "naive_incorrect_extra_ids": [
+        "cg00240875",
+        "cg01255458",
+        "cg01673307",
+        "cg01979171",
+        "cg02181920",
+        "cg02351231",
+        "cg03807983",
+        "cg04773990",
+        "cg05262533",
+        "cg05412855",
+        "cg05480623",
+        "cg06473288",
+        "cg08151204",
+        "cg08351785",
+        "cg08818207",
+        "cg10666909",
+        "cg11313335",
+        "cg12499157",
+        "cg14293027",
+        "cg17626301",
+        "cg17973694",
+        "cg20357228",
+        "cg20880499",
+        "cg23132351",
+        "cg23228341",
+        "cg24111025",
+        "cg24154161",
+        "cg26033526",
+        "cg26234900"
+      ]
+    }
+  },
+  "shared_target_promoter_probes_abs1500": [
+    {
+      "gene1": "TAP1",
+      "gene2": "PSMB9",
+      "shared_n": 54,
+      "probe_ids": [
+        "cg00704844",
+        "cg01170201",
+        "cg01547742",
+        "cg01692674",
+        "cg01897517",
+        "cg02551145",
+        "cg03299066",
+        "cg03465320",
+        "cg03778035",
+        "cg05362405",
+        "cg05412930",
+        "cg05826626",
+        "cg06634056",
+        "cg06852255",
+        "cg07156249",
+        "cg07250080",
+        "cg07504780",
+        "cg08880054",
+        "cg09374375",
+        "cg09968749",
+        "cg11012835",
+        "cg12641838",
+        "cg12762680",
+        "cg12862002",
+        "cg13403689",
+        "cg14272068",
+        "cg14286550",
+        "cg14530528",
+        "cg14925994",
+        "cg15926590",
+        "cg15993458",
+        "cg16494397",
+        "cg16501436",
+        "cg16853860",
+        "cg17199468",
+        "cg17378691",
+        "cg18436324",
+        "cg18903583",
+        "cg19776032",
+        "cg20194454",
+        "cg20813491",
+        "cg21339176",
+        "cg22696542",
+        "cg23806084",
+        "cg23880953",
+        "cg23922920",
+        "cg24718356",
+        "cg25110511",
+        "cg25110530",
+        "cg25524784",
+        "cg26686999",
+        "cg26700949",
+        "cg27572016",
+        "cg27652200"
+      ]
+    },
+    {
+      "gene1": "PSMB8",
+      "gene2": "PSMB9",
+      "shared_n": 61,
+      "probe_ids": [
+        "cg00533183",
+        "cg00777968",
+        "cg00889031",
+        "cg01295600",
+        "cg01309328",
+        "cg01702338",
+        "cg02657012",
+        "cg02756056",
+        "cg03166550",
+        "cg03995852",
+        "cg05115162",
+        "cg05135714",
+        "cg05242261",
+        "cg05545172",
+        "cg05629721",
+        "cg05693489",
+        "cg05697726",
+        "cg05872513",
+        "cg06531943",
+        "cg06870868",
+        "cg07456831",
+        "cg08099136",
+        "cg08675092",
+        "cg08772265",
+        "cg09006592",
+        "cg09154880",
+        "cg09354037",
+        "cg10087598",
+        "cg10128166",
+        "cg10192196",
+        "cg11453837",
+        "cg11706729",
+        "cg11990058",
+        "cg12253437",
+        "cg13165140",
+        "cg13603062",
+        "cg14022881",
+        "cg15451100",
+        "cg16186435",
+        "cg16483840",
+        "cg16890093",
+        "cg17392730",
+        "cg18034041",
+        "cg18963307",
+        "cg19136673",
+        "cg19190163",
+        "cg20630683",
+        "cg20848216",
+        "cg21322855",
+        "cg21535207",
+        "cg21568368",
+        "cg22413126",
+        "cg22714419",
+        "cg24326130",
+        "cg24625115",
+        "cg24767041",
+        "cg24893844",
+        "cg24898914",
+        "cg25384897",
+        "cg26829379",
+        "cg27232057"
+      ]
+    }
+  ],
+  "unique_abs1500_probe_count_across_family": 288,
+  "sum_abs1500_gene_memberships": 403,
+  "distance_algebra": [
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000349264.10",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711516
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000544417.5",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711486
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000557901.5",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711518
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000559220.1",
+      "biotype": "protein_coding",
+      "probe_count": 1,
+      "algebraic_relation_only": "insufficient_distinct_positions",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": null
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000559720.5",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711486
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000559907.5",
+      "biotype": "protein_coding",
+      "probe_count": 14,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711926
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000559916.1",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711512
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000560556.1",
+      "biotype": "protein_coding",
+      "probe_count": 1,
+      "algebraic_relation_only": "insufficient_distinct_positions",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": null
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000560681.1",
+      "biotype": "protein_coding",
+      "probe_count": 14,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711958
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000561139.1",
+      "biotype": "protein_coding",
+      "probe_count": 1,
+      "algebraic_relation_only": "insufficient_distinct_positions",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": null
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000561424.5",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711508
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000623550.1",
+      "biotype": "protein_coding",
+      "probe_count": 1,
+      "algebraic_relation_only": "insufficient_distinct_positions",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": null
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000632133.1",
+      "biotype": "protein_coding",
+      "probe_count": 12,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44712776
+    },
+    {
+      "gene": "B2M",
+      "transcript": "ENST00000648006.3",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 44711516
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000376802.2",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942548
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000376806.9",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942244
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000376809.10",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942531
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000396634.5",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29941259
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000461903.1",
+      "biotype": "protein_coding",
+      "probe_count": 39,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942553
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000479320.5",
+      "biotype": "protein_coding",
+      "probe_count": 39,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942553
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000495183.5",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942551
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000496081.5",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942547
+    },
+    {
+      "gene": "HLA-A",
+      "transcript": "ENST00000638375.1",
+      "biotype": "protein_coding",
+      "probe_count": 39,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 29942553
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000412585.7",
+      "biotype": "protein_coding",
+      "probe_count": 51,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31357179
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000434333.1",
+      "biotype": "protein_coding",
+      "probe_count": 41,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31357188
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000463574.1",
+      "biotype": "protein_coding",
+      "probe_count": 38,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31355802
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000474381.1",
+      "biotype": "protein_coding",
+      "probe_count": 39,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31356905
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000481849.5",
+      "biotype": "protein_coding",
+      "probe_count": 19,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31354806
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000497377.5",
+      "biotype": "protein_coding",
+      "probe_count": 25,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31355076
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000498007.1",
+      "biotype": "protein_coding",
+      "probe_count": 43,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31357179
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000639848.1",
+      "biotype": "protein_coding",
+      "probe_count": 50,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31357158
+    },
+    {
+      "gene": "HLA-B",
+      "transcript": "ENST00000640094.1",
+      "biotype": "protein_coding",
+      "probe_count": 31,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31355404
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000376228.9",
+      "biotype": "protein_coding",
+      "probe_count": 46,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272086
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000376237.8",
+      "biotype": "protein_coding",
+      "probe_count": 46,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272105
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000383329.7",
+      "biotype": "protein_coding",
+      "probe_count": 46,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272086
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000415537.1",
+      "biotype": "protein_coding",
+      "probe_count": 38,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272069
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000466892.5",
+      "biotype": "protein_coding",
+      "probe_count": 17,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31269666
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000470363.5",
+      "biotype": "protein_coding",
+      "probe_count": 34,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31270422
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000484378.1",
+      "biotype": "protein_coding",
+      "probe_count": 30,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272090
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000487245.5",
+      "biotype": "protein_coding",
+      "probe_count": 46,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272050
+    },
+    {
+      "gene": "HLA-C",
+      "transcript": "ENST00000495835.1",
+      "biotype": "protein_coding",
+      "probe_count": 38,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 31272130
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000374881.3",
+      "biotype": "protein_coding",
+      "probe_count": 88,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844679
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000374882.8",
+      "biotype": "protein_coding",
+      "probe_count": 80,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844047
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000395339.7",
+      "biotype": "protein_coding",
+      "probe_count": 80,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844020
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000484003.1",
+      "biotype": "protein_coding",
+      "probe_count": 82,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844651
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000490613.1",
+      "biotype": "protein_coding",
+      "probe_count": 30,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32842034
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000650411.1",
+      "biotype": "protein_coding",
+      "probe_count": 87,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844557
+    },
+    {
+      "gene": "PSMB8",
+      "transcript": "ENST00000650793.1",
+      "biotype": "protein_coding",
+      "probe_count": 63,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844017
+    },
+    {
+      "gene": "PSMB9",
+      "transcript": "ENST00000374859.3",
+      "biotype": "protein_coding",
+      "probe_count": 86,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32854191
+    },
+    {
+      "gene": "PSMB9",
+      "transcript": "ENST00000395330.5",
+      "biotype": "protein_coding",
+      "probe_count": 185,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844135
+    },
+    {
+      "gene": "PSMB9",
+      "transcript": "ENST00000414474.5",
+      "biotype": "protein_coding",
+      "probe_count": 176,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32844835
+    },
+    {
+      "gene": "PSMB9",
+      "transcript": "ENST00000464863.1",
+      "biotype": "protein_coding",
+      "probe_count": 83,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32854147
+    },
+    {
+      "gene": "PSMB9",
+      "transcript": "ENST00000467593.1",
+      "biotype": "protein_coding",
+      "probe_count": 25,
+      "algebraic_relation_only": "CpG_beg_minus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32856096
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000354258.4",
+      "biotype": "protein_coding",
+      "probe_count": 108,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32853978
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000486332.1",
+      "biotype": "protein_coding",
+      "probe_count": 33,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32850142
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000487296.1",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32848230
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000643049.1",
+      "biotype": "protein_coding",
+      "probe_count": 107,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32853816
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000643923.1",
+      "biotype": "protein_coding",
+      "probe_count": 100,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32853014
+    },
+    {
+      "gene": "TAP1",
+      "transcript": "ENST00000645078.1",
+      "biotype": "protein_coding",
+      "probe_count": 94,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32852787
+    },
+    {
+      "gene": "TAP2",
+      "transcript": "ENST00000374897.4",
+      "biotype": "protein_coding",
+      "probe_count": 125,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32838739
+    },
+    {
+      "gene": "TAP2",
+      "transcript": "ENST00000464100.1",
+      "biotype": "protein_coding",
+      "probe_count": 23,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32830727
+    },
+    {
+      "gene": "TAP2",
+      "transcript": "ENST00000485701.1",
+      "biotype": "protein_coding",
+      "probe_count": 15,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32832733
+    },
+    {
+      "gene": "TAP2",
+      "transcript": "ENST00000620123.4",
+      "biotype": "protein_coding",
+      "probe_count": 125,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32838770
+    },
+    {
+      "gene": "TAP2",
+      "transcript": "ENST00000652259.1",
+      "biotype": "protein_coding",
+      "probe_count": 127,
+      "algebraic_relation_only": "CpG_beg_plus_dist_is_constant",
+      "inferred_anchor_coordinate_not_independent_TSS_validation": 32838739
+    }
+  ],
+  "source_sha256": {
+    "HM450.hg38.manifest.gencode.v36.tsv.gz": "cb908b2aa8f49b2c92e3698dc04c379607850c36c329f2ff24dc765af655e483",
+    "HM450.hg38.mask.202209.tsv.gz": "5a02fa845578a0947ef1a80262d8514092f9c7690e37da0bc31b00f8f908e69d"
+  },
+  "scope": "Annotation and historical mask only. No TCGA/CPC methylation or expression data read."
+}

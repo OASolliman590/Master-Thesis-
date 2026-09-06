@@ -1,0 +1,79 @@
+[
+  {
+    "file": "GPL19803_desc.annot.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPL19nnn/GPL19803/suppl/GPL19803_hugene20st_Hs_ENTREZG_desc.annot.txt.gz",
+    "utc": "2026-09-05T23:25:19.542909+00:00",
+    "cap_bytes": 500000,
+    "content_type": "application/x-gzip",
+    "last_modified": "Wed, 18 Feb 2015 22:17:24 GMT",
+    "bytes": 118423,
+    "sha256": "28c4e4eecfbb05ede3435b015aaa35167919bb3b177eb64d7e887a44a6ae0654"
+  },
+  {
+    "file": "Brainarray_v18.html",
+    "url": "https://brainarray.mbni.med.umich.edu/Brainarray/Database/CustomCDF/18.0.0/entrezg.asp",
+    "utc": "2026-09-05T23:25:37.362908+00:00",
+    "cap_bytes": 1000000,
+    "error": "<urlopen error timed out>"
+  },
+  {
+    "file": "GPL19803_metadata.soft",
+    "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL19803&targ=self&view=brief&form=text",
+    "utc": "2026-09-05T23:25:57.849370+00:00",
+    "cap_bytes": 2000000,
+    "content_type": "geo/text",
+    "last_modified": null,
+    "bytes": 4637,
+    "sha256": "28d24efdb2f7ad0bb27dbc6703af2e584488053a25393abe229adc2586946869"
+  },
+  {
+    "file": "Brainarray_v18_http.html",
+    "url": "http://brainarray.mbni.med.umich.edu/Brainarray/Database/CustomCDF/18.0.0/entrezg.asp",
+    "utc": "2026-09-05T23:27:38.784519+00:00",
+    "cap_bytes": 1000000,
+    "content_type": "text/html",
+    "last_modified": "Sat, 10 Jan 2026 14:23:08 GMT",
+    "bytes": 115265,
+    "sha256": "b3d47fd89fc202773d8766c83893e752516a4d43ed1e81ef949a00a0ddd56b75"
+  },
+  {
+    "file": "GPL19803_probe_tab.txt.gz",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/platforms/GPL19nnn/GPL19803/suppl/GPL19803_hugene20st_Hs_ENTREZG_probe_tab.txt.gz",
+    "utc": "2026-09-05T23:27:39.641051+00:00",
+    "cap_bytes": 7500000,
+    "content_type": "application/x-gzip",
+    "last_modified": "Wed, 18 Feb 2015 22:17:29 GMT",
+    "bytes": 6755578,
+    "sha256": "f6df0dd3c252cd28283bac818fb1b35a4d94ce65451a75bb96bd5d6dd2e98af3"
+  },
+  {
+    "file": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "url": "http://brainarray.mbni.med.umich.edu/customcdf/18.0.0/entrezg.download/hta20hsentrezg.db_18.0.0.tar.gz",
+    "utc": "2026-09-05T23:28:20.111875+00:00",
+    "cap_bytes": 5000000,
+    "content_type": "application/octet-stream",
+    "last_modified": "Wed, 29 Jan 2014 22:18:01 GMT",
+    "bytes": 814118,
+    "sha256": "e3e2e8f24951e6f067f08417e9677b571c58dc0832a5d7d3c11dfdf0b121add1"
+  },
+  {
+    "file": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "url": "http://brainarray.mbni.med.umich.edu/customcdf/18.0.0/entrezg.download/hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "utc": "2026-09-05T23:29:35.160017+00:00",
+    "cap_bytes": 2000000,
+    "content_type": "application/octet-stream",
+    "last_modified": "Wed, 29 Jan 2014 23:24:46 GMT",
+    "bytes": 781983,
+    "sha256": "4edaefa017ed2bd2c82aeeed52c25bdc781170d636c2b65b26e7c2f10350d928"
+  },
+  {
+    "file": "Brainarray_methods.html",
+    "url": "http://brainarray.mbni.med.umich.edu/Brainarray/Database/CustomCDF/genomic_curated_CDF.asp",
+    "utc": "2026-09-05T23:31:42.864953+00:00",
+    "cap_bytes": 500000,
+    "content_type": "text/html",
+    "last_modified": "Fri, 16 Aug 2019 17:02:21 GMT",
+    "bytes": 18041,
+    "sha256": "b313b3c68aca03b82ca88a51eb20376a86244dafa41baf3efd7ba1ec5db479da"
+  }
+]

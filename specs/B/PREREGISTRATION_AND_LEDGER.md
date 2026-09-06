@@ -1,5 +1,7 @@
 # B preregistration proposal and evidence ledger
 
+**Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the one Paper B primary. Selection fixes the external Delta_R2 estimand but does not complete the preregistration freeze fields below. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
+
 **Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).
 
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** No preregistration tag is created by this document. Current table/metadata audits are prior knowledge, not unseen-data claims.
@@ -26,7 +28,7 @@ Source-reported facts, locally verified metadata, proposed choices and unresolve
 | Does promoter anticorrelation prove silencing? | No — scientific inference boundary. | [Guo 2023](https://doi.org/10.1016/j.cell.2023.05.028) plus bulk measurement design. | Preserve direction, CNA/composition/domain alternatives; no causal label. |
 | Is rank transport established for this endpoint? | Sample-wise scoring has precedent; exact program/platform invariance unknown. | [Foroutan 2018](https://doi.org/10.1186/s12859-018-2435-4); ANALYSIS defines a custom score. | Common annotation universe/transport review gate. |
 | Why these eight equal-weight genes? | Proposed literature-informed program, exact membership not approved. | ANALYSIS.md; targeted membership citations still to be completed. | Biological citation review before freeze; cannot call published signature. |
-| What is the one primary result? | Proposed paired external Delta_R2 of two frozen ridge models. | ANALYSIS.md exact formula; [Ridge API](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html). | Requires precision target and independent review. |
+| What is the one primary result? | Selected paired external Delta_R2 of two frozen TCGA ridge models evaluated once in CPC-GENE. | Decision record; ANALYSIS.md exact formula; [Ridge interface](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html). | Estimand selected; population, feature, precision and full lock/review fields remain open. |
 | Does B validate C's gene selection? | No; C receives a discovery-only frozen query — design choice. | ANALYSIS/VALIDATION documents and handoff ledger. | CPC outcomes cannot select C input; exact thresholds unresolved. |
 
 ## Amendment and exclusion records
@@ -38,3 +40,7 @@ Each exclusion contains source patient/specimen IDs (restricted storage if neede
 ## Glossary and claim ceiling
 
 Patient is the independent person; specimen/focus is a biological sample; assay/aliquot is a measurement source; reanalysis is a reused origin. Program score means relative bulk expression on the defined rank scale. Promoter association means an observational locus/program relationship. Incremental prediction means lower paired error relative to the baseline in the fixed external population. None is interchangeable with ICI response, drug efficacy, tumour-cell causality or a functional immune assay.
+
+## Measurement grilling addendum — 6 September 2026
+
+The [measurement checkpoint](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) and its four source reports record verified answers, source fields/versions, audit methods and remaining choices for E1/E2/E4. Platform identity/v18 mapping availability, literal transcript-distance semantics and Qpure scale/TCGA field availability are resolved subquestions. Final U/Q, estimator comparability, exact specimen linkage, primary and precision are not resolved. These annotation and cellularity-value inspections are prior access; no molecular score/association was calculated. The earlier primary row describes the retained predictive proposal, not a decision selecting it over B-R.

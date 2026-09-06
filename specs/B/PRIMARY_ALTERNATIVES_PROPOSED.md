@@ -1,16 +1,20 @@
-# Paper B: a concrete replicated-association primary to compare with prediction
+# Paper B primary alternatives — historical comparison after B-P selection
 
-**Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md). Both alternatives remain proposed. The original-study bridge now supports 73 candidate patients at study-protocol level, with Qpure present in72; this is not final eligible N. See [specimen evidence](../../docs/research/B_SPECIMEN_RESOLUTION.md) and [updated novelty comparison](../../docs/research/B_NOVELTY_2026.md).
+**Primary decision, 6 September 2026:** the user selected B-P external prediction improvement as the single primary. This file preserves the earlier alternatives analysis; B-R is historical, unexecuted and not a co-primary or automatic fallback. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
 
-**Revised proposal, 6 September 2026. Neither alternative is selected. The original local proposal is preserved under planning/next_evidence; this revision incorporates the independent statistical correction and does not amend the active ANALYSIS contract.**
+**Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Annotation and measurement choices remain unselected.
 
-**Decision document, 6 September 2026. Neither option is selected or approved.** This document uses the current `specs/B` predictive proposal and the completed annotation audit. No scores, models, new downloads or canonical repository edits were made. Statistical procedures below are proposed design choices, not findings or claims that these exact procedures were validated in the cited biological papers.
+**Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md). The original-study bridge supports 73 candidate patients at study-protocol level, with Qpure present in72; this is not final eligible N. See [specimen evidence](../../docs/research/B_SPECIMEN_RESOLUTION.md) and [updated novelty comparison](../../docs/research/B_NOVELTY_2026.md).
+
+**Historical proposal snapshot, 6 September 2026.** The original local proposal is preserved under `planning/next_evidence`; this revision incorporated the independent statistical correction. The later B-P decision supersedes its undecided status without approving B-R inference or changing unresolved shared measurement gates.
+
+**Historical comparison, not the current decision record.** This document used the predictive proposal and completed annotation audit to compare options. The drafting step made no scores or models. Statistical procedures below remain unexecuted proposals, not findings or claims that the cited biological papers validated these exact procedures.
 
 The substantive choice is between **a model that transports useful predictive information** and **a molecular relationship that recurs in independent prostate specimens**. The latter reduces calibration and whole-transcriptome mapping dependencies. It does not make missing purity, ambiguous specimen pairing or inadequate external precision disappear.
 
 ## 1. Direct comparison
 
-| Aspect | B-P: current predictive proposal, retained | B-R: proposed replicated-association alternative |
+| Aspect | B-P: selected external-prediction primary | B-R: historical replicated-association alternative |
 |---|---|---|
 | Main question | Does promoter methylation improve prediction of a fixed antigen-presentation expression score beyond age, grade and purity in CPC-GENE, after fitting only in TCGA? | Is at least one predefined promoter–cognate immune-gene expression association present in the same direction in both TCGA and CPC-GENE after the predefined adjustments? |
 | Primary target | External paired `Delta_R2=(SSE_baseline−SSE_extended)/SST` for two frozen ridge predictors. | Maximum directionally shared partial rank-correlation magnitude across a frozen gene family, with one multiplicity-controlled global replication test defined below. |
@@ -64,7 +68,7 @@ The **constructs and categories must match**, but coefficients are fitted separa
 
 For the concrete primary proposal, use one complete eligible patient set per cohort for all eight genes, all required aggregates and Z, fixed before any association is calculated. This keeps the eight estimands tied to the same cohort target population. Gene-specific complete-case analyses can be labelled secondary; they cannot quietly replace the primary population. An undefined/constant gene or empty promoter set prevents this exact family from being fully executable and triggers a recorded amendment, not outcome-guided omission.
 
-The current external clinical mapping provides only **73 candidate patient codes before same-focus/QC checks**, not an accepted N. The alternative therefore does not inherit all 210 metadata-paired codes as its adjusted validation sample. If comparable purity remains unavailable, an unadjusted or age/grade-only primary would be a *separate material choice with weaker claims*, not an automatic fallback.
+Original clinical mapping supplies **114 candidate codes, including73 with stronger original-study support and Qpure present in72 of those73**, before specimen/QC checks; none is an accepted N. The alternative therefore does not inherit all 210 metadata-paired codes as its adjusted validation sample. If comparable purity remains unavailable, an unadjusted or age/grade-only primary would be a *separate material choice with weaker claims*, not an automatic fallback.
 
 ## 4. Measurement, platform and missingness contract
 
@@ -135,14 +139,14 @@ CPC validation may annotate the frozen query's evidence later, with its exact te
 | Multiple-gene replicability and small-sample association inference | Secondary in current proposal | Central dependency; multiplicity reduces sensitivity |
 | Strongest connection to thesis | A transportable molecular predictor if successful | Recurrent patient-level regulatory associations feeding pharmacological hypotheses |
 
-At five hours daily over four months, B-R offers a smaller primary implementation and fewer transport assumptions. It still faces the same biological data bottleneck and cannot guarantee a publishable result. Proposed planning allocation, not a delivery promise: first resolve specimen/annotation/covariate/precision gates; then freeze the chosen primary; then implement and independently review it; finally run the locked external analysis and write the four figures. Set a short gate-resolution timebox within the first fortnight so missing clinical provenance does not consume the whole thesis window.
+At the preselection checkpoint, B-R offered a smaller primary implementation and fewer transport assumptions. It still faced the same biological data bottleneck and could not guarantee a publishable result. That planning comparison is retained as decision provenance; current work follows selected B-P while resolving its specimen/annotation/covariate/precision gates.
 
-If B-R is selected, the four-figure structure can remain: (1) cohort/assay accountability; (2) TCGA signed associations and alternative explanations; (3) the locked external replication matrix, primary global result and precision; (4) the frozen B-to-C bridge and claim limits. B-P retains its current external prediction figure instead. A negative B-R result does not authorize switching the primary figure back to whichever predictive result looks favourable, or vice versa.
+The historical B-R path would have retained a four-figure structure around cohort accountability, association estimates, locked external replication and the B-to-C bridge. The selected B-P path retains its external prediction figure. A negative/null B-P result does not authorize switching the primary to B-R or whichever secondary result looks favourable.
 
-**Reviewable choice:** retain B-P when the desired principal contribution is a demonstrably transportable predictor and the score/covariate calibration gates are realistic; consider B-R when the principal contribution is independent molecular association replication and the user accepts a gene-family claim rather than predictive utility. Neither option is ready until the shared specimen, annotation, covariate and precision gates close. This document does not make that choice for the user.
+**Recorded outcome:** B-P is selected because the principal contribution will test transportable predictive improvement. Shared specimen, annotation, covariate and precision gates still block the biological run. B-R stays available only as historical decision provenance or a separately amended future analysis.
 
 ## Inference boundaries added by review
 
-B-R would permit independently fitted CPC nuisance coefficients/slopes after a frozen association contract; B-P continues to prohibit external refitting of the predictive model. These are different validation designs. Selecting B-R would require coordinated amendments to ANALYSIS, validation, schemas, eligibility and preregistration before fitting anything.
+B-R would have permitted independently fitted CPC nuisance coefficients/slopes after a frozen association contract; selected B-P prohibits external refitting of the predictive model. These are different validation designs. Any future promotion of B-R would require a new explicit decision and coordinated amendments to ANALYSIS, validation, schemas, eligibility and preregistration before fitting anything.
 
 The 2,000 descriptive bootstrap resamples are not automatically enough for primary tail probabilities near 0.003125. Recompute ranks and projections per patient resample, preserve invalid draws and define when no interval is issued. Predefine covariates/platform effects and precision/calibration requirements without inspecting external association signs. The statistical review is a required part of this proposal.

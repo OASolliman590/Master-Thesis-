@@ -1,14 +1,20 @@
-# B proposed software and environment contract
+# B selected-prediction software and environment contract
+
+**Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the single primary. [B-P1](tickets/BP1_prediction_engine.md) defines the first bounded prediction-engine implementation interface; real-cohort use remains blocked on validated measured inputs and a signed scientific lock. B-R is historical, not co-primary.
+
+**Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Annotation and measurement choices remain unselected.
 
 **Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).
 
-**PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** Interfaces below are requirements for future implementation. No module/CLI listed here is claimed to exist or to have passed a scientific test.
+**SELECTED PRIMARY / FIRST ENGINE TICKET REVIEWABLE — v0.2.** Interfaces below are requirements for implementation. No B-P prediction module/CLI is yet claimed to exist or to have passed a scientific or real-cohort test.
 
 ## Pipeline boundaries
 
 `source audit -> identity reconciliation -> assay parsing -> annotation/QC contract -> fixed molecular score -> TCGA nested development -> model lock -> external evaluation -> sensitivity/figures -> C handoff`
 
 Separate responsibilities: importers preserve raw fields and provenance; identity mapping resolves independent units; feature builders implement only the approved score/probe rules; the training module receives TCGA identifiers only; the evaluator loads an immutable fitted artifact and has no fitting method; reporting consumes exported results. C export consumes a separately frozen TCGA discovery result and never an external result directory. Modules must expose deep, narrow interfaces such as a validated cohort bundle, fitted bundle and evaluation bundle, rather than global mutable data frames shared across stages.
+
+For B-P1, the implementation seam is deliberately after biological feature construction: validated patient-feature TSV plus an exact development contract enter one `tools.b_prediction` module; it returns a checksummed, plain-numeric frozen bundle. A separate evaluator accepts that bundle, a signed evaluation lock and the external patient-feature TSV, and can only predict and compute the selected paired metric. It cannot fit, tune, recalibrate or select columns. The exact CLI, version assumptions, serialization rules and synthetic acceptance oracles are frozen in [BP1_prediction_engine.md](tickets/BP1_prediction_engine.md); those engineering choices do not approve the upstream program, U/Q, specimens, covariates, eligibility or precision contract.
 
 Raw/controlled data and execution products belong under an approved AIU project data/run root. Repository paths contain code, approved small metadata and manifests. A run root is immutable once evaluated; intermediate checkpoints contain source/config hashes, stage status and dependency versions. Resuming requires those hashes to match. Full cohort retrieval must verify full checksums independently of existing partial-stream hashes.
 
@@ -42,3 +48,7 @@ AIU is the main execution server. The existing `docs/execution/aiu_python_invent
 [Ridge documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) documents alpha and intercept behaviour; pin the exact estimator parameters, solver and precision when implementation is reviewed. [R2 documentation](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html) must be checked for finite-value handling: compute the specified SSE/SST directly or explicitly retain undefined constant-target behaviour, rather than accepting a convenience default. Serialization format, package hashes, OS/BLAS/thread counts and transitive lock are implementation deliverables after successful resolution, not invented here.
 
 If the VPN is unavailable, perform only authorised local documentation/schema work and queue AIU validation with a dated pending record. A local or synthetic pass cannot be reported as full AIU cohort validation. Never save SSH keys, VPN secrets or environment tokens in logs, GitHub or Notion.
+
+## Measurement schema refinement — source evidence, not analysis release
+
+Carry expression platform, source batch, original feature ID, historical mapping release and explicit NULL/conflict status. Promoter maps additionally preserve cognate versioned transcript, source transcript label, signed distance/coordinate convention, chosen predicate and shared-gene memberships. Collapse transcript multiplicity to one probe contribution per gene. Covariates preserve original field name, estimator/version, source call status, native scale and specimen/portion/analyte/aliquot match level. Keep purity and Cancer DNA fraction distinct. See the measurement checkpoint for concrete source-backed acceptance examples.

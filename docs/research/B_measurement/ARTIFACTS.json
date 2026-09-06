@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "checkpoint_date": "2026-09-06",
+  "scope": "Source-audit reports, independent receipts, aggregate metadata/annotation outputs and historical helpers; no patient molecular matrix, biological score, association or fitted model.",
+  "inventory_excludes": [
+    "docs/research/B_measurement/ARTIFACTS.json"
+  ],
+  "restore_instructions": "docs/research/B_measurement/README.md",
+  "retained_files": [
+    {
+      "path": "docs/research/B_measurement/B_cellularity_methods/REPORT.md",
+      "bytes": 8562,
+      "sha256": "ca6852ce5b6e075ab6af6f067742d88557450dcf4e5362969825b3274e0f8974",
+      "role": "byte-identical audit-time cellularity-method report"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/annotation_inspection.json",
+      "bytes": 13739,
+      "sha256": "33a648fad70da4aac5997b9fada164eb578e4f5c4486d279ff15a1adcd30c7ce",
+      "role": "byte-identical aggregate v18 annotation inspection output"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/EXPRESSION_REVIEW.md",
+      "bytes": 2494,
+      "sha256": "4a3f5fd4bfb27e1c2990c72ed5912d140bd7f1338fee74345eaa5e1c55663ca7",
+      "role": "byte-identical independent expression-platform review receipt",
+      "outer_origin": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/EXPRESSION_REVIEW.md"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/fetch.py",
+      "bytes": 1436,
+      "sha256": "4a5d437b2e1cfb1a3f98d7f12aec549c6d9a037c304b5435bcba2ab7f1f76937",
+      "role": "byte-identical historical public-source acquisition helper; not an offline reproduction command"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/hash_register.json",
+      "bytes": 9587,
+      "sha256": "c21dec32dfca6ea49079a9aefe5ad4dc5d7efd9d782d1801df06752282c28f4f",
+      "role": "byte-identical audit-time expression artifact and reused-input hash register"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/inspect_annotations.py",
+      "bytes": 4742,
+      "sha256": "b636c0c3b71b17ad681d76376129035d1e74a34e12ce67f9e77423b333db3445",
+      "role": "byte-identical historical v18 annotation inspection helper; requires omitted same-directory inputs"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/inspect_cached_metadata.py",
+      "bytes": 4536,
+      "sha256": "a90091635c448089b6768f70a79c8a61441318ff447b26a93d40ad931e449641",
+      "role": "byte-identical historical expression metadata helper with declared hard-coded cache dependencies"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/metadata_summary.json",
+      "bytes": 1662,
+      "sha256": "a7ac1a976300a85091ec9c21dbe1119995b8f24a625c7ef46856e7d4cfa42585",
+      "role": "byte-identical aggregate expression platform/patient summary"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/package_member_inventory.json",
+      "bytes": 11650,
+      "sha256": "e5aa73d934251d3c8087fb524c9b0736bb4d45b4324141b762875044b3e83e9d",
+      "role": "byte-identical v18 archive-member and extraction inventory"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/REPORT.md",
+      "bytes": 13270,
+      "sha256": "ea23f29811e99a5268aad9171dcb4b9b453e6c1a871c682096b9b83202088808",
+      "role": "byte-identical audit-time expression-platform report"
+    },
+    {
+      "path": "docs/research/B_measurement/B_expression_platform_contract/requests.json",
+      "bytes": 3359,
+      "sha256": "f861c29e6d0ffb5a9fafe9c27ac11a322a0d34c66451e6e50ab3e4cb191abc56",
+      "role": "byte-identical expression public-request receipt log"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/audit_promoters.py",
+      "bytes": 8430,
+      "sha256": "90e4a117f31f4790adbc5ca6a8d33c4174bfa859cedef9a00282cf5ffdaee881",
+      "role": "byte-identical historical promoter annotation helper; requires sibling B_annotation cache"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/candidate_probe_ids.tsv",
+      "bytes": 34821,
+      "sha256": "b8b3c17c74b0645396e8c2ca60ad0a61003e64344d42e5b3251c5220e329d14b",
+      "role": "byte-identical proposed source-label promoter candidate IDs; not frozen Q"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/CDS_bearing_candidate_probe_ids.tsv",
+      "bytes": 16751,
+      "sha256": "f21f84fbfd0f2d22f189b98ea57de5a5ffee17f8890cb3d0b4abee90c7a784d7",
+      "role": "byte-identical proposed positive-CDS-span promoter candidate IDs; not frozen Q"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/CDS_crosscheck_summary.json",
+      "bytes": 9797,
+      "sha256": "1f211580dbe1ef5dade7d155c6480d5ede507e312de8593114c4e57ad1e8ac60",
+      "role": "byte-identical aggregate transcript-coordinate/CDS crosscheck output"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/crosscheck_transcripts.py",
+      "bytes": 6020,
+      "sha256": "aeed3775f98c0da5d47457bdc9600e737889360e1bbd1fc5001abdb3c4f7b23e",
+      "role": "byte-identical historical transcript crosscheck helper; requires omitted generated tables and UCSC slices"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/POLICIES_PROPOSED.json",
+      "bytes": 1905,
+      "sha256": "c9cbf656e58a7a878bb04e881ad06866035db2e3fb7b5e2697f718f04f4f594a",
+      "role": "byte-identical explicit unselected promoter-policy definitions"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/PROMOTER_REVIEW.md",
+      "bytes": 5195,
+      "sha256": "f3b75087b2e3bac29e520a8de75fe3c589ee2a6ade185f740ef47fba14c08966",
+      "role": "byte-identical independent promoter-semantics review receipt",
+      "outer_origin": "E:/Master_Thesis/planning/next_evidence/B_cellularity_methods/PROMOTER_REVIEW.md"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/PROVENANCE.json",
+      "bytes": 6899,
+      "sha256": "d0a67461d5072df8eb4d1d7c3e3ac53b8061a7ed0e02e54766a205cf2ea0d213",
+      "role": "byte-identical promoter source/version/hash receipt"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/REPORT.md",
+      "bytes": 11631,
+      "sha256": "c060ae1491f982302b4e95e429aad09ea1ec580fb1d223bed9c94d530b22ff72",
+      "role": "byte-identical audit-time promoter-semantics report"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/summary.json",
+      "bytes": 25543,
+      "sha256": "c6ed4f5c06a1bd17288dc06ffd527d80b6aa8e5fbf92561e19e44ff52ade6289",
+      "role": "byte-identical aggregate literal promoter-policy audit output"
+    },
+    {
+      "path": "docs/research/B_measurement/B_promoter_semantics/transcript_coordinate_CDS_evidence.tsv",
+      "bytes": 5984,
+      "sha256": "fd04b09f2cb57449b35ee790ec108351be27423a8bae90a79342bb5de62208dd",
+      "role": "byte-identical target transcript coordinate/CDS metadata evidence"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/audit.py",
+      "bytes": 2769,
+      "sha256": "28641d226ad98b84dfde7185700088b7880f99c9e443db0b8ad8f25f74162be9",
+      "role": "byte-identical historical TCGA source-field and barcode audit helper"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/REPORT.md",
+      "bytes": 4221,
+      "sha256": "5cca5c7fdf02de63528361b9c6e144ca45132036b895cdc714c471e48f92b8f8",
+      "role": "byte-identical audit-time TCGA cellularity report"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/retrieval.json",
+      "bytes": 332,
+      "sha256": "2c545316a70eba1bc7500eb91bb2e882d880a0d4f3a4e9a3c01cf78c8625b27f",
+      "role": "byte-identical original TCGA public-object retrieval receipt; never rewritten during this integration"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/retrieve_original_20260906.py",
+      "bytes": 905,
+      "sha256": "39a5bd4bf7b9347207e81181ef162daae319c41818f5449a752562ee73baed94",
+      "role": "byte-identical original TCGA acquisition-helper snapshot; retained for provenance and not to be run"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/retrieve.py",
+      "bytes": 3939,
+      "sha256": "65516f4a57ef871382d89b49c912640151fcee7e466aa7eda2272630425fcc6d",
+      "role": "safety-modified TCGA acquisition/cache-verification helper with explicit roots, digest enforcement and timestamp preservation",
+      "derived_from_sha256": "39a5bd4bf7b9347207e81181ef162daae319c41818f5449a752562ee73baed94"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/REVIEW.md",
+      "bytes": 4527,
+      "sha256": "1474e2d7e1735d94013e0773feb6aca7027a5eca24dc4174fd3308808264760d",
+      "role": "byte-identical independent TCGA cellularity recount receipt"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/summary.json",
+      "bytes": 4735,
+      "sha256": "453bb55d82e592a9edf0f184295201d77edf677b349431510193847cf64a39da",
+      "role": "byte-identical aggregate TCGA source-field/barcode audit output"
+    },
+    {
+      "path": "docs/research/B_measurement/B_TCGA_cellularity/test_retrieve_cache.py",
+      "bytes": 4948,
+      "sha256": "116556c01e4cbbbe86e3312a0eed0044e0e092799fcd933a52188d0c16bf2f7d",
+      "role": "offline synthetic-cache regression test for timestamp and digest safety"
+    },
+    {
+      "path": "docs/research/B_measurement/README.md",
+      "bytes": 3535,
+      "sha256": "00568f2063b606feb74e7307b7c175bb4f3f3d171eb973c376a3140e58c0c3a6",
+      "role": "canonical wrapper distinguishing historical snapshots and giving exact restore commands/layouts"
+    }
+  ],
+  "omitted_dependencies": [
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_expression_platform_contract/hta20hsentrezg.db_18.0.0.tar.gz",
+      "bytes": 814118,
+      "sha256": "e3e2e8f24951e6f067f08417e9677b571c58dc0832a5d7d3c11dfdf0b121add1",
+      "required_by": "B_expression_platform_contract/inspect_annotations.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_expression_platform_contract/hugene20sthsentrezg.db_18.0.0.tar.gz",
+      "bytes": 781983,
+      "sha256": "4edaefa017ed2bd2c82aeeed52c25bdc781170d636c2b65b26e7c2f10350d928",
+      "required_by": "B_expression_platform_contract/inspect_annotations.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_expression_platform_contract/GPL19803_desc.annot.txt.gz",
+      "bytes": 118423,
+      "sha256": "28c4e4eecfbb05ede3435b015aaa35167919bb3b177eb64d7e887a44a6ae0654",
+      "required_by": "B_expression_platform_contract/inspect_annotations.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_expression_platform_contract/GPL19803_probe_tab.txt.gz",
+      "bytes": 6755578,
+      "sha256": "f6df0dd3c252cd28283bac818fb1b35a4d94ce65451a75bb96bd5d6dd2e98af3",
+      "required_by": "B_expression_platform_contract/inspect_annotations.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/feasibility/source_metadata/GSE107299_family.soft.gz",
+      "bytes": 16322790,
+      "sha256": "5ad45822b7251c0dcf8dc000f398b41898d075ef8cf194de872dfb27ce764125",
+      "required_by": "B_expression_platform_contract/inspect_cached_metadata.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_annotation/HM450.hg38.manifest.gencode.v36.tsv.gz",
+      "bytes": 17667979,
+      "sha256": "cb908b2aa8f49b2c92e3698dc04c379607850c36c329f2ff24dc765af655e483",
+      "required_by": "B_promoter_semantics/audit_promoters.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_annotation/HM450.hg38.mask.202209.tsv.gz",
+      "bytes": 3265145,
+      "sha256": "5a02fa845578a0947ef1a80262d8514092f9c7690e37da0bc31b00f8f908e69d",
+      "required_by": "B_promoter_semantics/audit_promoters.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/probe_gene_candidates.tsv",
+      "bytes": 123897,
+      "sha256": "bc528f9ce337c450e73981ffd696ec3ab3bad9e6869f3834811dc57a344f7e9c",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py; generated by audit_promoters.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/cognate_transcript_evidence.tsv",
+      "bytes": 204467,
+      "sha256": "69a07263d375564f6dee67646ca194f6f899a3bba8bbaacfb9ec55c1476d911a",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py; generated by audit_promoters.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/ucsc_gencode_v36_B2M.json",
+      "bytes": 7699,
+      "sha256": "a6ac512e46e1c25e6603b16adcffe23eee4ad407b8470362e9240c4919ba4e53",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/ucsc_gencode_v36_HLA_A.json",
+      "bytes": 4338,
+      "sha256": "475746801e5a97d48c36580cd6ef33b9d7ca1cf5bc037b6b47d12deabcb2df56",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/ucsc_gencode_v36_HLA_B.json",
+      "bytes": 4068,
+      "sha256": "f98b0d3d05f9b40feab5f1335141dde8b9cce4ef3d7f6a47062d3813344a8231",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/ucsc_gencode_v36_HLA_C.json",
+      "bytes": 3990,
+      "sha256": "20c5e3ae551f41dada910b98a23732c30e3f11f0316e05f229d34e2392d13ee5",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_promoter_semantics/ucsc_gencode_v36_TAP_PSMB.json",
+      "bytes": 13343,
+      "sha256": "1c9626241e09c01821ee6df7778fd06338e4f52d0bcd9e47bd3d1156c12a585f",
+      "required_by": "B_promoter_semantics/crosscheck_transcripts.py"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_TCGA_cellularity/TCGA_mastercalls.abs_tables_JSedit.fixed.txt",
+      "bytes": 901812,
+      "sha256": "f430a975433d82e0098d7405619d4f12a0c765fcd97e7d63cc9b1de7f2d763cd",
+      "required_by": "B_TCGA_cellularity/audit.py and retrieve.py cache verification"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_specimen_resolution/Fraser2017_Table01.xlsx",
+      "bytes": 38116,
+      "sha256": "9e1921e2667e5bf78e040557d7a2e68ab4770fdd42ea6679ba489bcd65a2b7a6",
+      "required_by": "B_cellularity_methods/REPORT.md source-field/scale audit"
+    },
+    {
+      "path": "E:/Master_Thesis/planning/next_evidence/B_specimen_resolution/Fraser2017_supplement.pdf",
+      "bytes": 4470341,
+      "sha256": "db2e84e39f6869065501eeda656ff0afcc5fbbbf10357d6c95c62e7bc6f8adbe",
+      "required_by": "B_cellularity_methods/REPORT.md source-definition audit"
+    }
+  ],
+  "scientific_choices": {
+    "primary_selected": false,
+    "final_U_frozen": false,
+    "final_Q_frozen": false,
+    "final_eligible_N": null
+  }
+}

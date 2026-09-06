@@ -1,0 +1,207 @@
+{
+  "generated_utc": "2026-09-05T23:37:03.837086+00:00",
+  "new_download_body_bytes": 8608045,
+  "new_download_cap_bytes": 15000000,
+  "per_object_cap_bytes": 10000000,
+  "files": [
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\annotation_inspection.json",
+      "bytes": 13739,
+      "sha256": "33a648fad70da4aac5997b9fada164eb578e4f5c4486d279ff15a1adcd30c7ce",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\Brainarray_methods.html",
+      "bytes": 18041,
+      "sha256": "b313b3c68aca03b82ca88a51eb20376a86244dafa41baf3efd7ba1ec5db479da",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\Brainarray_v18_http.html",
+      "bytes": 115265,
+      "sha256": "b3d47fd89fc202773d8766c83893e752516a4d43ed1e81ef949a00a0ddd56b75",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\DESCRIPTION",
+      "bytes": 745,
+      "sha256": "19ad026fae17dc2714c2a6b9855ededc8b1d203a1c5f7a2ca85b79ed5a66e6a5",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\fetch.py",
+      "bytes": 1436,
+      "sha256": "4a5d437b2e1cfb1a3f98d7f12aec549c6d9a037c304b5435bcba2ab7f1f76937",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\GPL16686_vendor_metadata.txt",
+      "bytes": 2402,
+      "sha256": "982ab7e8db5c484a908563c36077952ae584bf60079f1cc691162bf4fc12b00a",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\GPL17586_vendor_metadata.txt",
+      "bytes": 2587,
+      "sha256": "66a64f7110ef484819a275535eb10353040321af766be6e39407173397250a5f",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\GPL19803_desc.annot.txt.gz",
+      "bytes": 118423,
+      "sha256": "28c4e4eecfbb05ede3435b015aaa35167919bb3b177eb64d7e887a44a6ae0654",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\GPL19803_metadata.soft",
+      "bytes": 4637,
+      "sha256": "28d24efdb2f7ad0bb27dbc6703af2e584488053a25393abe229adc2586946869",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\GPL19803_probe_tab.txt.gz",
+      "bytes": 6755578,
+      "sha256": "f6df0dd3c252cd28283bac818fb1b35a4d94ce65451a75bb96bd5d6dd2e98af3",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hta20_DESCRIPTION.txt",
+      "bytes": 745,
+      "sha256": "19ad026fae17dc2714c2a6b9855ededc8b1d203a1c5f7a2ca85b79ed5a66e6a5",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hta20_v18_candidate_entrez_universe.tsv",
+      "bytes": 200527,
+      "sha256": "f4a5e4a7f8c9f78ae07cec8606de607361e2c4c8236e5db650f1019e6a40a0bb",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hta20hsentrezg.db_18.0.0.tar.gz",
+      "bytes": 814118,
+      "sha256": "e3e2e8f24951e6f067f08417e9677b571c58dc0832a5d7d3c11dfdf0b121add1",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hta20hsentrezg.sqlite",
+      "bytes": 2536448,
+      "sha256": "42a46e7f57b8e97252ab804e9978fb74478ec3193f055326300e3b5a27e91026",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hugene20st_DESCRIPTION.txt",
+      "bytes": 780,
+      "sha256": "273942710ff921646dda9c32e087a98c65b6fee2c4968bb3364dc9040078fb41",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hugene20st_v18_candidate_entrez_universe.tsv",
+      "bytes": 190455,
+      "sha256": "80bdd49e1b72abb065b101df4502cf23123bf2010f18ba83219d3bf93d09fc75",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hugene20sthsentrezg.db_18.0.0.tar.gz",
+      "bytes": 781983,
+      "sha256": "4edaefa017ed2bd2c82aeeed52c25bdc781170d636c2b65b26e7c2f10350d928",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\hugene20sthsentrezg.sqlite",
+      "bytes": 2415616,
+      "sha256": "c0941fd26e1d19c9479a6c6fba5be8c3ba9a32804a720b07ad0f1b81bde735ac",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\inspect_annotations.py",
+      "bytes": 4742,
+      "sha256": "b636c0c3b71b17ad681d76376129035d1e74a34e12ce67f9e77423b333db3445",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\inspect_cached_metadata.py",
+      "bytes": 4536,
+      "sha256": "a90091635c448089b6768f70a79c8a61441318ff447b26a93d40ad931e449641",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\metadata_summary.json",
+      "bytes": 1662,
+      "sha256": "a7ac1a976300a85091ec9c21dbe1119995b8f24a625c7ef46856e7d4cfa42585",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\package_member_inventory.json",
+      "bytes": 11650,
+      "sha256": "e5aa73d934251d3c8087fb524c9b0736bb4d45b4324141b762875044b3e83e9d",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\patient_platform_map.tsv",
+      "bytes": 37314,
+      "sha256": "555d9b4638d34a51c94b570f429722df5cb237fb8a7993e59ca2ab594ad3d201",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\register.py",
+      "bytes": 1690,
+      "sha256": "50c2534863e530eb0a25c3a207d3eea9da4c0c273a88f2e3461ed8d0a52ecec2",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\REPORT.md",
+      "bytes": 13270,
+      "sha256": "ea23f29811e99a5268aad9171dcb4b9b453e6c1a871c682096b9b83202088808",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\requests.json",
+      "bytes": 3359,
+      "sha256": "f861c29e6d0ffb5a9fafe9c27ac11a322a0d34c66451e6e50ab3e4cb191abc56",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\v18_two_platform_candidate_common_entrez.tsv",
+      "bytes": 188968,
+      "sha256": "8e80e5221aa1bd67d2bca5ea6cee62eb98ca657c137c134b885b8f88a6a46312",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\next_evidence\\B_expression_platform_contract\\vendor_platform_inspection.json",
+      "bytes": 630409,
+      "sha256": "1eb3f2b9fd075f6e1ca5d37e4f42f8ac7074fcbbed69254ddd03201c3ee80c64",
+      "role": "current_task_artifact"
+    },
+    {
+      "path": "E:\\Master_Thesis\\planning\\feasibility\\source_metadata\\GSE107299_family.soft.gz",
+      "bytes": 16322790,
+      "sha256": "5ad45822b7251c0dcf8dc000f398b41898d075ef8cf194de872dfb27ce764125",
+      "role": "reused_cached_source"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\GSE107299_sample_metadata.soft",
+      "bytes": 517532,
+      "sha256": "ced1cf70da2317c863c85f1ed6a5c2746474b43d5b9b2cefa6e3e2885547c78c",
+      "role": "reused_cached_source"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\GSE84042_sample_metadata.soft",
+      "bytes": 197194,
+      "sha256": "c0feb6b950c608f9eb7714f33fc83c95f2340d12997a7a6a7648cb8980b7b6a0",
+      "role": "reused_cached_source"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_paired_prostate\\CPCG_patient_pairs.tsv",
+      "bytes": 10759,
+      "sha256": "b43b74645bb1ce4d66b84c5074de271ac3cf7819c356b11d50b6a8b9eb449e6b",
+      "role": "reused_cached_source"
+    },
+    {
+      "path": "E:\\Master_Thesis\\master-thesis\\docs\\research\\B_readiness\\GSE107299_full_expression_audit.json",
+      "bytes": 5131,
+      "sha256": "59df5e12d4c141b8910d19375a7223fd11390d175a6c5eb7f27b91530ec7203d",
+      "role": "reused_cached_source"
+    }
+  ],
+  "scope": "Metadata/annotation only. No assay scores, associations, patient-matrix retrieval, installation or canonical edit."
+}

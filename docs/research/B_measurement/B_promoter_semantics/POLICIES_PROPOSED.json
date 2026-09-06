@@ -1,0 +1,35 @@
+{
+  "status": "UNSELECTED CANDIDATES; no primary or annotation freeze",
+  "shared_filters": {
+    "platform": "HM450",
+    "genome": "hg38",
+    "probe_class": "cg",
+    "mask": "historical202209 MASK_general must equal FALSE",
+    "pairing": "geneNames/transcriptTypes/transcriptIDs/distToTSS zipped; geneNames must equal requested target",
+    "aggregation": "one probe per gene regardless of matching transcript count",
+    "coordinates": "CpG_beg zero-based; CpG_end exclusive; source d plus=beg-txStart, minus=txEnd-beg",
+    "biotype_caveat": "pc in policy IDs means literal transcriptTypes=protein_coding; not independently verified coding isoform"
+  },
+  "policies": {
+    "pc_abs1500": "abs(source distance)<=1500 for at least one cognate source-labelled transcript",
+    "pc_abs200": "abs(source distance)<=200 for at least one cognate source-labelled transcript",
+    "all_biotypes_abs1500": "abs(source distance)<=1500 for at least one cognate transcript, no label filter",
+    "pc_abs1500_unique_pc_gene": "pc_abs1500 and only one matching source-labelled promoter gene among ALL associated genes at this probe",
+    "gencode36_positive_CDS_span_abs1500": "abs(source distance)<=1500 for at least one cognate version-matched transcript with UCSC GENCODEv36 cdsStart<cdsEnd"
+  },
+  "unresolved": [
+    "primary choice",
+    "annotation/mask acceptance",
+    "canonical/MANE or exact transcript-biotype criteria if desired",
+    "stable gene-ID bridge",
+    "CPC measurement coverage/detection QC",
+    "sample identity/QC",
+    "fold/complete-case eligibility",
+    "clinical/scientific precision"
+  ],
+  "exports": {
+    "candidate_probe_ids.tsv": "four source-label/biotype/window options",
+    "CDS_bearing_candidate_probe_ids.tsv": "separate positive-CDS alternative"
+  },
+  "measurement_only": "No outcomes or patient measurements read in this audit"
+}

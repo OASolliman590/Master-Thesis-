@@ -1,8 +1,12 @@
-# B exact proposed analysis
+# B selected-primary analysis contract
+
+**Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the single Paper B primary. The primary estimand is the independent CPC-GENE `Delta_R2=(SSE_baseline-SSE_extended)/SST` from frozen TCGA models. B-R remains a historical alternative, not a co-primary or fallback. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
+
+**Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Program membership, U/Q and all specimen/covariate/precision choices remain unselected.
 
 **Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).
 
-**PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** The primary program, rank scale, covariates and modelling choices below are proposals, not user-approved facts. All eight candidate external genes are now verified in the complete expression object; the common annotation universe, probe coverage, comparable purity, specimen linkage and external precision remain open.
+**PRIMARY SELECTED / REAL-COHORT EXECUTION BLOCKED — v0.2.** The estimand and validation direction are selected. The program, rank scale, U/Q, covariates, specimen linkage, eligibility and precision choices below remain proposals rather than approved measured inputs. All eight candidate external genes are verified in the complete expression object, but coverage does not freeze them or authorize fitting.
 
 ## Fixed molecular endpoint
 
@@ -22,11 +26,13 @@ For patient i, `X_ig` is the arithmetic mean beta across finite eligible Q_g val
 
 **Copy number is an essential mechanistic sensitivity, not currently a verified primary covariate.** A secondary baseline may add gene-level copy number at P and comparable ploidy when available in both cohorts. Its absence means the primary result cannot be described as methylation information independent of copy number. Likewise, bulk purity adjustment alone does not fully resolve immune/stromal composition.
 
-## Model and one primary estimand
+## Model and selected primary estimand
 
 Fit baseline `f0(Z)` and extended `f1(Z,X)` using ridge linear regression with unpenalised intercept. Proposed hyperparameter grid: alpha in {0.0001,0.001,0.01,0.1,1,10,100,1000,10000}; select separately for each model by mean validation MSE in TCGA only, with larger alpha breaking exact ties. Use identical patient folds and paired evaluation. Proposed internal assessment is five outer folds with five inner folds, shuffled at patient level using seed 42. Every imputation/exclusion/selection/scaling operation that learns from values belongs inside the inner training folds; no CPC-GENE values enter fitting or tuning. Final hyperparameters are selected by five-fold CV on all eligible TCGA, then both models refit on TCGA and frozen.
 
-For the frozen external patient set E, n=|E|, `SSE_k=sum_i(Y_i-fk_i)^2`, `SST=sum_i(Y_i-mean_E(Y))^2`. Define `R2_k=1-SSE_k/SST`; the single primary endpoint is:
+For the bounded B-P1 software milestone, the alpha grid, split seeds, estimator parameters, fold-local preprocessing, tie rule, numeric bundle and no-refit evaluator are implementation requirements rather than open engineering choices; see [BP1_prediction_engine.md](tickets/BP1_prediction_engine.md). This does not promote the proposed biological inputs above to approved measured inputs or authorize real-cohort fitting.
+
+For the frozen external patient set E, n=|E|, `SSE_k=sum_i(Y_i-fk_i)^2`, `SST=sum_i(Y_i-mean_E(Y))^2`. Define `R2_k=1-SSE_k/SST`; the selected single primary endpoint is:
 
 `Delta_R2 = R2_1-R2_0 = (SSE_0-SSE_1)/SST`.
 

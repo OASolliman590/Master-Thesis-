@@ -1,0 +1,40 @@
+{
+  "GSM_records": 213,
+  "distinct_patient_codes": 213,
+  "platform_batch_counts": {
+    "GPL16686 / Batch1": 10,
+    "GPL17586 / Batch2": 66,
+    "GPL16686 / Batch3": 54,
+    "GPL16686 / Batch4": 80,
+    "GPL16686 / Batch5": 3
+  },
+  "paired_candidate_platform_batch_counts": {
+    "GPL16686 / Batch1": 9,
+    "GPL17586 / Batch2": 66,
+    "GPL16686 / Batch3": 53,
+    "GPL16686 / Batch4": 79,
+    "GPL16686 / Batch5": 3
+  },
+  "legacy73_platform_batch_counts": {
+    "GPL16686 / Batch1": 8,
+    "GPL17586 / Batch2": 56,
+    "GPL16686 / Batch3": 9
+  },
+  "processing_text_counts": {
+    "All mRNA analysis was performed using R (v3.4.3). Background correction and normalization algorithms were implemented in the modified affy (v1.48.0) package downloaded from http://brainarray.mbni.med.umich.edu/Brainarray/Database/CustomCDF/CDF_download.asp. The Robust multichip average (RMA) algorithm was applied to the raw intensity data. Probes were mapped to Entrez gene ID using custom CDF files (v18) for HTA 2.0 and HuGene 2.0 ST array.  The sva package (v3.24.4) was used to correct for batch effects between different arrays.": 213
+  },
+  "CPCG0398_records": [
+    {
+      "patient_code": "CPCG0398",
+      "GSM": "GSM2981373",
+      "title": "prostate tumour CPCG0398",
+      "platform": "GPL17586",
+      "batch": "Batch2",
+      "paired_code_candidate": true,
+      "legacy_GSE84042_code": false,
+      "raw_file_urls": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM2981nnn/GSM2981373/suppl/GSM2981373_E1547.CEL.gz",
+      "reanalysis_source": ""
+    }
+  ],
+  "metadata_patient_set_equals_prior_actual_matrix_header": true
+}

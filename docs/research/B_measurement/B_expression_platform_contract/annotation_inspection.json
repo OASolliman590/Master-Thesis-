@@ -1,0 +1,567 @@
+{
+  "hta20": {
+    "metadata": {
+      "DBSCHEMAVERSION": "2.1",
+      "Db type": "ChipDb",
+      "Supporting package": "AnnotationDbi",
+      "DBSCHEMA": "HUMANCHIP_DB",
+      "ORGANISM": "Homo sapiens",
+      "SPECIES": "Human",
+      "MANUFACTURER": "Affymetrix",
+      "CHIPNAME": "hta20",
+      "MANUFACTURERURL": "http://www.affymetrix.com",
+      "EGSOURCEDATE": "2013-Sep12",
+      "EGSOURCENAME": "Entrez Gene",
+      "EGSOURCEURL": "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+      "CENTRALID": "ENTREZID",
+      "TAXID": "9606",
+      "GOSOURCENAME": "Gene Ontology",
+      "GOSOURCEURL": "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+      "GOSOURCEDATE": "20130907",
+      "GOEGSOURCEDATE": "2013-Sep12",
+      "GOEGSOURCENAME": "Entrez Gene",
+      "GOEGSOURCEURL": "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+      "KEGGSOURCENAME": "KEGG GENOME",
+      "KEGGSOURCEURL": "ftp://ftp.genome.jp/pub/kegg/genomes",
+      "KEGGSOURCEDATE": "2011-Mar15",
+      "GPSOURCENAME": "UCSC Genome Bioinformatics (Homo sapiens)",
+      "GPSOURCEURL": "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+      "GPSOURCEDATE": "2010-Mar22",
+      "UPSOURCENAME": "Uniprot",
+      "UPSOURCEURL": "http://www.UniProt.org/",
+      "UPSOURCEDATE": "Mon Sep 16 12:05:19 2013",
+      "ENSOURCEDATE": "2013-Sep3",
+      "ENSOURCENAME": "Ensembl",
+      "ENSOURCEURL": "ftp://ftp.ensembl.org/pub/current_fasta"
+    },
+    "map_metadata": [
+      [
+        "ENTREZID",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ACCNUM",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GENENAME",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "SYMBOL",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "CHR",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "MAP",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "OMIM",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "REFSEQ",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PMID",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PMID2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "UNIGENE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GO",
+        "Gene Ontology",
+        "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+        "20130907"
+      ],
+      [
+        "GO2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GO2ALLPROBES",
+        "Gene Ontology",
+        "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+        "20130907"
+      ],
+      [
+        "GO2ALLPROBES",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PATH",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "PATH2PROBE",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "ENZYME",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "ENZYME2PROBE",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "CHRLOC",
+        "UCSC Genome Bioinformatics (Homo sapiens)",
+        "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+        "2010-Mar22"
+      ],
+      [
+        "CHRLOCEND",
+        "UCSC Genome Bioinformatics (Homo sapiens)",
+        "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+        "2010-Mar22"
+      ],
+      [
+        "PFAM",
+        "Uniprot",
+        "http://www.UniProt.org/",
+        "Mon Sep 16 12:05:19 2013"
+      ],
+      [
+        "PROSITE",
+        "Uniprot",
+        "http://www.UniProt.org/",
+        "Mon Sep 16 12:05:19 2013"
+      ],
+      [
+        "ALIAS2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ENSEMBL",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ENSEMBL2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "UNIPROT",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ]
+    ],
+    "mapping_rows": 26194,
+    "unique_probeset_ids": 26194,
+    "unique_nonnull_Entrez_ids": 26191,
+    "null_gene_mapping_rows": 3,
+    "is_multiple_counts": {
+      "0": 26194
+    },
+    "target_mappings": {
+      "HLA-A": [
+        [
+          "3105_at",
+          "3105",
+          0
+        ]
+      ],
+      "HLA-B": [
+        [
+          "3106_at",
+          "3106",
+          0
+        ]
+      ],
+      "HLA-C": [
+        [
+          "3107_at",
+          "3107",
+          0
+        ]
+      ],
+      "B2M": [
+        [
+          "567_at",
+          "567",
+          0
+        ]
+      ],
+      "TAP1": [
+        [
+          "6890_at",
+          "6890",
+          0
+        ]
+      ],
+      "TAP2": [
+        [
+          "6891_at",
+          "6891",
+          0
+        ]
+      ],
+      "PSMB8": [
+        [
+          "5696_at",
+          "5696",
+          0
+        ]
+      ],
+      "PSMB9": [
+        [
+          "5698_at",
+          "5698",
+          0
+        ]
+      ]
+    }
+  },
+  "hugene20st": {
+    "metadata": {
+      "DBSCHEMAVERSION": "2.1",
+      "Db type": "ChipDb",
+      "Supporting package": "AnnotationDbi",
+      "DBSCHEMA": "HUMANCHIP_DB",
+      "ORGANISM": "Homo sapiens",
+      "SPECIES": "Human",
+      "MANUFACTURER": "Affymetrix",
+      "CHIPNAME": "hugene20st",
+      "MANUFACTURERURL": "http://www.affymetrix.com",
+      "EGSOURCEDATE": "2013-Sep12",
+      "EGSOURCENAME": "Entrez Gene",
+      "EGSOURCEURL": "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+      "CENTRALID": "ENTREZID",
+      "TAXID": "9606",
+      "GOSOURCENAME": "Gene Ontology",
+      "GOSOURCEURL": "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+      "GOSOURCEDATE": "20130907",
+      "GOEGSOURCEDATE": "2013-Sep12",
+      "GOEGSOURCENAME": "Entrez Gene",
+      "GOEGSOURCEURL": "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+      "KEGGSOURCENAME": "KEGG GENOME",
+      "KEGGSOURCEURL": "ftp://ftp.genome.jp/pub/kegg/genomes",
+      "KEGGSOURCEDATE": "2011-Mar15",
+      "GPSOURCENAME": "UCSC Genome Bioinformatics (Homo sapiens)",
+      "GPSOURCEURL": "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+      "GPSOURCEDATE": "2010-Mar22",
+      "UPSOURCENAME": "Uniprot",
+      "UPSOURCEURL": "http://www.UniProt.org/",
+      "UPSOURCEDATE": "Mon Sep 16 12:05:19 2013",
+      "ENSOURCEDATE": "2013-Sep3",
+      "ENSOURCENAME": "Ensembl",
+      "ENSOURCEURL": "ftp://ftp.ensembl.org/pub/current_fasta"
+    },
+    "map_metadata": [
+      [
+        "ENTREZID",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ACCNUM",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GENENAME",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "SYMBOL",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "CHR",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "MAP",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "OMIM",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "REFSEQ",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PMID",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PMID2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "UNIGENE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GO",
+        "Gene Ontology",
+        "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+        "20130907"
+      ],
+      [
+        "GO2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "GO2ALLPROBES",
+        "Gene Ontology",
+        "ftp://ftp.geneontology.org/pub/go/godatabase/archive/latest-lite/",
+        "20130907"
+      ],
+      [
+        "GO2ALLPROBES",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "PATH",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "PATH2PROBE",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "ENZYME",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "ENZYME2PROBE",
+        "KEGG GENOME",
+        "ftp://ftp.genome.jp/pub/kegg/genomes",
+        "2011-Mar15"
+      ],
+      [
+        "CHRLOC",
+        "UCSC Genome Bioinformatics (Homo sapiens)",
+        "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+        "2010-Mar22"
+      ],
+      [
+        "CHRLOCEND",
+        "UCSC Genome Bioinformatics (Homo sapiens)",
+        "ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19",
+        "2010-Mar22"
+      ],
+      [
+        "PFAM",
+        "Uniprot",
+        "http://www.UniProt.org/",
+        "Mon Sep 16 12:05:19 2013"
+      ],
+      [
+        "PROSITE",
+        "Uniprot",
+        "http://www.UniProt.org/",
+        "Mon Sep 16 12:05:19 2013"
+      ],
+      [
+        "ALIAS2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ENSEMBL",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "ENSEMBL2PROBE",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ],
+      [
+        "UNIPROT",
+        "Entrez Gene",
+        "ftp://ftp.ncbi.nlm.nih.gov/gene/DATA",
+        "2013-Sep12"
+      ]
+    ],
+    "mapping_rows": 25088,
+    "unique_probeset_ids": 25088,
+    "unique_nonnull_Entrez_ids": 25087,
+    "null_gene_mapping_rows": 1,
+    "is_multiple_counts": {
+      "0": 25088
+    },
+    "target_mappings": {
+      "HLA-A": [
+        [
+          "3105_at",
+          "3105",
+          0
+        ]
+      ],
+      "HLA-B": [
+        [
+          "3106_at",
+          "3106",
+          0
+        ]
+      ],
+      "HLA-C": [
+        [
+          "3107_at",
+          "3107",
+          0
+        ]
+      ],
+      "B2M": [
+        [
+          "567_at",
+          "567",
+          0
+        ]
+      ],
+      "TAP1": [
+        [
+          "6890_at",
+          "6890",
+          0
+        ]
+      ],
+      "TAP2": [
+        [
+          "6891_at",
+          "6891",
+          0
+        ]
+      ],
+      "PSMB8": [
+        [
+          "5696_at",
+          "5696",
+          0
+        ]
+      ],
+      "PSMB9": [
+        [
+          "5698_at",
+          "5698",
+          0
+        ]
+      ]
+    }
+  },
+  "GEO_HuGene2_desc": {
+    "rows": 25088,
+    "unique_ids": 25088,
+    "same_gene_set_as_original_v18_db": false,
+    "description_only_ids": [
+      "101928749"
+    ],
+    "database_only_ids": []
+  },
+  "platform_intersection": {
+    "candidate_common_Entrez_ids": 24937,
+    "hta20_only": 1254,
+    "hugene20st_only": 150,
+    "all_eight_in_common": true,
+    "not_final_U": "No processed feature-ID set or TCGA versioned crosswalk intersected; no annotation policy selected."
+  },
+  "HuGene2_v18_probe_annotation": {
+    "total_probe_rows": 459819,
+    "probesets_with_probe_rows": 25088,
+    "target_probe_counts": {
+      "HLA-A": 24,
+      "HLA-B": 12,
+      "HLA-C": 14,
+      "B2M": 12,
+      "TAP1": 27,
+      "TAP2": 33,
+      "PSMB8": 22,
+      "PSMB9": 16
+    },
+    "target_exact_sequence_shared_between_multiple_probesets": 0,
+    "target_sequence_lengths": [
+      25
+    ],
+    "specificity_limit": "Only exact duplicate sequences within this table checked; no genomic remapping, HLA allele/SNP evaluation or HTA2 probe sequences. This does not validate biological specificity."
+  }
+}

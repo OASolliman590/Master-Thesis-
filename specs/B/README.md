@@ -1,10 +1,14 @@
-# Paper B proposed specification kit
+# Paper B selected-primary specification kit
+
+**Primary decision, 6 September 2026:** the user selected **B-P, external prediction improvement**, as Paper B's single primary. The primary estimand is the independent CPC-GENE `Delta_R2=(SSE_baseline-SSE_extended)/SST` from two TCGA-fitted frozen ridge predictors. B-R is retained only as a historical alternative. Selection does not freeze the proposed program, U/Q, specimen/covariate policy, final eligible N or precision target and does not authorize a biological run. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
+
+**Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Annotation and measurement choices remain unselected.
 
 **Updated closest-study boundary:** the2026 published atlas already covers prostate methylation prediction, RNA/CNA associations and purity analyses. [The current comparison](../../docs/research/B_NOVELTY_2026.md) identifies APM-specific incremental transport or adjusted replication as conditional distinctions; it does not clear novelty or select either primary. Final-study methods/cohort inventory remain to be verified.
 
-**PROPOSED / NOT IMPLEMENTATION-READY — v0.1, 2026-09-05.** This kit specifies the intended analysis; no model, external validation or biological conclusion has been implemented. Primary choices require independent scientific review.
+**SELECTED PRIMARY / BIOLOGICAL INPUTS NOT FROZEN — v0.2, 2026-09-06.** The B-P estimand is selected and its first engine ticket is reviewable; no model, external validation or biological conclusion has been implemented. Unresolved measurement and population gates still block real-cohort execution.
 
-**6 September design checkpoint:** [PRIMARY_ALTERNATIVES_PROPOSED.md](PRIMARY_ALTERNATIVES_PROPOSED.md) compares the retained external-prediction primary with a molecular-association replication alternative. The latter now incorporates independent statistical review: ordinary HC3 inference is not accepted for empirical ranks. Neither option is selected; ANALYSIS.md remains the existing prediction proposal until a coordinated amendment is approved. Source audits can advance without making that decision.
+**6 September decision checkpoint:** [PRIMARY_ALTERNATIVES_PROPOSED.md](PRIMARY_ALTERNATIVES_PROPOSED.md) preserves the preselection comparison. B-P is now selected; B-R and its rank-aware inference proposal remain historical, unexecuted alternatives and cannot become co-primary or replace a null B-P result without a new explicit amendment.
 
 ## Question and thesis role
 
@@ -20,7 +24,7 @@ B is the central patient molecular chapter. It retains the registered PRAD/LUAD 
 | [Arbet et al., Cancer Discovery2026](https://doi.org/10.1158/2159-8290.CD-25-0761) | Broad prostate methylation heterogeneity and regulatory relationships | A narrowly specified external immune-program estimand and transparent incremental information beyond shared covariates. Exact overlap with the final selected data must be audited. |
 | [Guo et al., Cell 2023](https://doi.org/10.1016/j.cell.2023.05.028) | Immune-gene repression associated with hypomethylated domains in prostate cancer | Explicitly distinguish promoter association from domain-level mechanisms and preserve both directions. Rediscovering methylation-associated immune repression alone is insufficient novelty. |
 
-Proposed hypothesis: external delta-R-squared is positive. A null/negative result is scientifically valid. The study may establish predictive transport on the declared molecular scale; it cannot establish independence from every unmeasured covariate, cellular causality or ICI sensitisation. A conditional standalone manuscript decision follows the actual evidence and closest-study comparison, not the presence of a spec.
+Selected directional hypothesis: external delta-R-squared is positive. A null/negative result is scientifically valid. The study may establish predictive transport on the declared molecular scale; it cannot establish independence from every unmeasured covariate, cellular causality or ICI sensitisation. A conditional standalone manuscript decision follows the actual evidence and closest-study comparison, not the presence of a spec.
 
 ## Current evidence changing feasibility
 

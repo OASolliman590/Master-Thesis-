@@ -1,8 +1,18 @@
 {
-  "schema_version": "B-proposed-source-manifest-0.1",
-  "status": "PROPOSED / NOT IMPLEMENTATION-READY",
+  "schema_version": "B-selected-primary-source-manifest-0.2",
+  "status": "B-P SELECTED / MEASUREMENT AND REAL-COHORT EXECUTION GATED",
   "snapshot_date": "2026-09-05",
-  "purpose": "Provenance index of existing evidence; no new cohort download or full eligibility claim. Partial prefixes do not establish full-object hashes or complete feature coverage.",
+  "purpose": "Provenance index for the selected B-P external-prediction primary; no new cohort download, frozen feature contract or full eligibility claim. Partial prefixes do not establish full-object hashes or complete feature coverage.",
+  "primary_selection": {
+    "selected_id": "B-P",
+    "selected_label": "external prediction improvement",
+    "estimand": "Delta_R2=(SSE_baseline-SSE_extended)/SST on independent CPC-GENE using frozen TCGA models",
+    "decision_date": "2026-09-06",
+    "decision_record": "docs/decisions/B_PRIMARY_BP_20260906.md",
+    "B_R_status": "historical alternative; not co-primary or automatic fallback",
+    "program_U_Q_specimen_covariate_precision_frozen": false,
+    "real_biological_run_authorized": false
+  },
   "coverage": {
     "TCGA_shared_cases_before_QC": 497,
     "TCGA_shared_sample_ids_before_QC": 501,
@@ -279,7 +289,7 @@
   "unresolved_required_sources": [
     "Common TCGA/CPC annotation gene universe, platform mappings and score transport; all eight deposited rows now verified",
     "Full GSE107298 promoter probe and missingness/detection-P coverage",
-    "Versioned 450K annotation plus cross-reactive/polymorphic mask",
+    "Approved annotation/mask policy and complete cohort probe QC; legacy candidate sources now audited",
     "Source-grounded rep/focus and clinical linkage",
     "Comparable TCGA/CPC baseline purity and covariate completeness",
     "Outcome-independent precision target and actual eligible population"
@@ -298,7 +308,7 @@
     "modality and covariate coverage",
     "one independent patient eligibility and exclusions"
   ],
-  "snapshot_update": "2026-09-05: full-expression coverage addendum and endpoint-independent B-F1 format ticket",
+  "snapshot_update": "2026-09-06: measurement-source checkpoint after the full-expression and B-F1 updates; scientific choices remain open",
   "full_object_audits": [
     {
       "exact_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz",
@@ -316,6 +326,29 @@
   "source_updates": [
     "docs/research/B_PURITY_FIELD_CORRECTION.md",
     "docs/research/B_SPECIMEN_RESOLUTION.md",
-    "docs/research/TCGA_LUAD_SECONDARY.md"
-  ]
+    "docs/research/TCGA_LUAD_SECONDARY.md",
+    "docs/research/B_MEASUREMENT_CHECKPOINT.md"
+  ],
+  "measurement_checkpoint": {
+    "date": "2026-09-06",
+    "report": "docs/research/B_MEASUREMENT_CHECKPOINT.md",
+    "CPC_platform_counts": {
+      "HuGene2_ST": 147,
+      "HTA2": 66
+    },
+    "CPC_stronger73_platform_counts": {
+      "HuGene2_ST": 17,
+      "HTA2": 56
+    },
+    "v18_common_candidate_Entrez_IDs": 24937,
+    "final_U_frozen": false,
+    "promoter_policy_frozen": false,
+    "literal_source_label_promoter_candidate_unique_probes": 288,
+    "CDS_span_alternative_unique_probes": 203,
+    "TCGA_ABSOLUTE_called_matching_primary_vials": 469,
+    "TCGA_ABSOLUTE_blank_call_matching_primary_vials": 16,
+    "final_eligible_N": null,
+    "Qpure_scale": "source0-1; not divide by100",
+    "Qpure_ABSOLUTE_interchangeability_verified": false
+  }
 }

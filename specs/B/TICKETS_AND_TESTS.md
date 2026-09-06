@@ -1,8 +1,10 @@
 # B bounded implementation tickets and meaningful checks
 
+**Primary decision, 6 September 2026:** B-P external prediction improvement is selected. [B-P1](tickets/BP1_prediction_engine.md) is the first bounded reviewable coding milestone: a prediction engine over validated patient feature tables. Its synthetic implementation tests may proceed; actual TCGA/CPC inputs remain blocked by E1–E4/E6 and a signed lock.
+
 **Current engineering status, 6 September 2026:** B-F1 was released after the all-four-kit review and is now a published WIP implementation with local checks. AIU and final Opus recheck remain pending. The scientific-analysis tickets and test requirements below remain proposals; they are not certified by B-F1. Future covariate ingestion must reject the mislabeled portal WGS agreement field as purity even when numeric, finite and in0–1; verify measurement meaning against the original source.
 
-**Scientific tickets remain PROPOSED / NOT IMPLEMENTATION-READY.** Their analytical tests are future requirements. B-F1 alone has a published local WIP implementation and recorded format tests; its remaining gates are explicit above. Source/design gates still precede scientific production implementation. The orchestrator coordinates the authorised delegation fleet.
+**Real-cohort scientific execution remains NOT READY.** B-P1 is bounded engineering work whose interface can be implemented against synthetic validated tables; it cannot build features, choose eligibility or run cohort biology. B-F1 alone has a published local WIP implementation and recorded format tests; its remaining gates are explicit above. The orchestrator coordinates the authorised delegation fleet.
 
 | Ticket / dependency | Bounded task and outputs | Acceptance and stop condition |
 |---|---|---|
@@ -12,14 +14,15 @@
 | B-F1: bounded formats, after all four spec reviews and explicit reviewer release | Python 3.11 standard-library inspection of the four already verified formats; local fixtures only; source-hashed JSON summaries and subprocess contract below. | Real fixture shape/identity checks plus adversarial parser tests. No preprocessing, program score, model, full-cohort retrieval or biological readiness claim. Released as bounded WIP at fed56e6; final Opus/AIU gates remain pending, with no scientific analysis released. |
 | B-I1: analytical environment, after R1–R3 and review | Isolated AIU analytical environment and reviewed feature-stage dependency resolution. | Candidate packages actually import; resolved lock + smoke log. B-F1 alone does not satisfy this scientific environment gate. |
 | B-I2: features/identity, after F1,I1,R1–R3 | Implement approved specimen reconciliation and sample-wise score/TCGA-trained promoter feature builder. | Identity, annotation, missingness and metamorphic score tests; frozen schemas; sample exclusion audits. |
-| B-I3: development, after I2 | Implement nested TCGA-only ridge comparison and model bundle freeze. | Fitting access restricted to TCGA; fold leakage sentinels; identical patient masks; independent code/spec review. |
-| B-I4: external evaluation, after signed lock | Evaluate frozen models once against approved CPC set; bootstrap paired errors; emit immutable tables and primary report. | Exact SSE/SST arithmetic, one-patient rows, no refit path; negative/undefined metric tests. A VPN interruption leaves status pending, not passed. |
+| B-P1: prediction engine, implementation may start after ticket review; real run after I2 and signed lock | Implement the deep module for TCGA-only nested development, deterministic bundle freeze and no-refit external paired evaluation over validated numeric patient tables. | Exact [ticket](tickets/BP1_prediction_engine.md) contract and synthetic acceptance suite; no source ingestion, feature choice or biological result. |
+| B-I3: actual TCGA development, after I2 | Run the reviewed B-P1 development interface on the approved TCGA feature table and freeze the scientific bundle. | Fitting access restricted to TCGA; fold leakage sentinels; identical patient masks; independent code/spec review. |
+| B-I4: actual external evaluation, after signed lock | Run the B-P1 evaluator once against the approved CPC table; bootstrap paired errors; emit immutable tables and primary report. | Exact SSE/SST arithmetic, one-patient rows, no refit path; negative/undefined metric tests. A VPN interruption leaves status pending, not passed. |
 | B-I5: secondary/handoff, after relevant gates | Implement prespecified bidirectional sensitivities, qualified lineage contrast and separately frozen TCGA-only C query. | Input lineage audit excludes CPC outcome selection; no assay-independent or causal claims beyond source support. Query thresholds unresolved means no handoff. |
 | B-I6: figures/reproduction, after I4/I5 | Generate four evidence figures and auditable manuscript tables; rerun from an approved manifest in isolated AIU run root. | Source/contract hashes match, numerical tolerances declared, complete exclusion/negative-result reporting and independent review before milestone publication. |
 
 ## B-F1 exact reviewable ticket: four file formats only
 
-**Disposition: proposed for independent review; not ready/released.** It may be released by the orchestrator after all four specification reviews even while B's biological feature/model gates remain blocked. Its acceptance is file-format correctness only. No code is created by this ticket.
+**Disposition: released after the all-four-kit review and implemented as published WIP at fed56e6.** The original bounded ticket below defines format-only scope. Local checks and review receipts exist; final Opus recheck and AIU validation remain pending. This is not a scientific-analysis release.
 
 **Ownership:** proposed isolated paths `tools/b_formats/` for the import-inspection module and `tests/b_formats/` for tests and tiny synthetic fixtures; one small provenance/check-result artifact under `docs/validation/B_formats/`. The implementer may not edit analysis specs, cohort files, other papers, shared environments, root configuration, prior raw data or source manifests. These path reservations require orchestrator confirmation when dispatching. The implementer returns a diff and actual test logs; the orchestrator owns review/commit/publication.
 
@@ -54,3 +57,7 @@ The expected SHA256 is checked against the **actual local input bytes before par
 8. **Scientific boundary exports:** positive promoter associations survive export; domain proxies and missing CNA flags remain visible; a C-query file containing external-selected provenance is rejected. Failed/null primary metrics cannot be overwritten by a secondary analysis path.
 
 Use small controlled fixtures for invariants and the already inspected permitted real formats for integration evidence. Synthetic success validates computation, not biological transport, coverage, precision or publication novelty. One full approved AIU run with independent review remains required; repeat broad tests only for changed dependencies or unresolved failures.
+
+## Additional future measurement checks
+
+These are unimplemented acceptance requirements: retain missing/conflicting v18 mappings instead of stripping suffixes; report collinear platform/batch designs; cg16890093 must fail the TAP1 cognate-promoter predicate under the documented window; test reverse-strand boundary and source-label versus CDS criteria; prevent transcript multiplicity weighting and mark shared probes. Reject Cancer DNA fraction or WGS SNP agreement as automatic purity substitutes; preserve blank calls and barcode match granularity. The [measurement checkpoint](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) supplies real source cases.

@@ -1,0 +1,202 @@
+{
+  "scope": "Source field and candidate identifier coverage only; no purity correction, model or outcome association. Matching sample-vial does not establish portion/analyte/aliquot identity. No final eligible N.",
+  "source": {
+    "url": "https://api.gdc.cancer.gov/data/4f277128-f793-4354-a13d-30cc7fe9f6b5",
+    "source_page": "https://gdc.cancer.gov/about-data/publications/PanCan-CellOfOrigin",
+    "bytes": 901812,
+    "sha256": "f430a975433d82e0098d7405619d4f12a0c765fcd97e7d63cc9b1de7f2d763cd",
+    "retrieved_utc": "2026-09-05T23:31:40.065283+00:00"
+  },
+  "candidate_metadata_sha256": "2a47ccd1777d85ff8c792a4f3360c4391c9171ca214395f499e0a7148a102777",
+  "candidate_cases": 497,
+  "candidate_sample_vials": 501,
+  "all_table": {
+    "rows": 10786,
+    "unique_cases": 9929,
+    "unique_sample_vials": 9991,
+    "status_counts": {
+      "called": 9847,
+      "": 144,
+      "legacy_call": 558,
+      "snp_call": 56,
+      "maf_call": 146,
+      "legacy_maf_call": 35
+    },
+    "full_TCGA_aliquot_barcode_rows": 9991,
+    "non_full_TCGA_aliquot_rows": 795,
+    "sample_type_counts_for_full_barcodes": {
+      "01": 9430,
+      "06": 385,
+      "02": 30,
+      "03": 138,
+      "05": 8
+    },
+    "purity": {
+      "numeric": 10642,
+      "missing_tokens": {
+        "": 144
+      },
+      "min": 0.08,
+      "max": 1.0
+    },
+    "ploidy": {
+      "numeric": 10642,
+      "missing_tokens": {
+        "": 144
+      },
+      "min": 1.08,
+      "max": 8.01
+    },
+    "Cancer DNA fraction": {
+      "numeric": 10642,
+      "missing_tokens": {
+        "": 144
+      },
+      "min": 0.08,
+      "max": 1.0
+    }
+  },
+  "candidate_case_link": {
+    "rows": 486,
+    "unique_cases": 485,
+    "unique_sample_vials": 486,
+    "status_counts": {
+      "called": 470,
+      "": 16
+    },
+    "full_TCGA_aliquot_barcode_rows": 486,
+    "non_full_TCGA_aliquot_rows": 0,
+    "sample_type_counts_for_full_barcodes": {
+      "01": 485,
+      "06": 1
+    },
+    "purity": {
+      "numeric": 470,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 0.16,
+      "max": 1.0
+    },
+    "ploidy": {
+      "numeric": 470,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 1.79,
+      "max": 4.39
+    },
+    "Cancer DNA fraction": {
+      "numeric": 470,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 0.16,
+      "max": 1.0
+    }
+  },
+  "candidate_case_called": {
+    "rows": 470,
+    "unique_cases": 469,
+    "unique_sample_vials": 470,
+    "status_counts": {
+      "called": 470
+    },
+    "full_TCGA_aliquot_barcode_rows": 470,
+    "non_full_TCGA_aliquot_rows": 0,
+    "sample_type_counts_for_full_barcodes": {
+      "01": 469,
+      "06": 1
+    },
+    "purity": {
+      "numeric": 470,
+      "missing_tokens": {},
+      "min": 0.16,
+      "max": 1.0
+    },
+    "ploidy": {
+      "numeric": 470,
+      "missing_tokens": {},
+      "min": 1.79,
+      "max": 4.39
+    },
+    "Cancer DNA fraction": {
+      "numeric": 470,
+      "missing_tokens": {},
+      "min": 0.16,
+      "max": 1.0
+    }
+  },
+  "candidate_vial_link": {
+    "rows": 485,
+    "unique_cases": 485,
+    "unique_sample_vials": 485,
+    "status_counts": {
+      "called": 469,
+      "": 16
+    },
+    "full_TCGA_aliquot_barcode_rows": 485,
+    "non_full_TCGA_aliquot_rows": 0,
+    "sample_type_counts_for_full_barcodes": {
+      "01": 485
+    },
+    "purity": {
+      "numeric": 469,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 0.16,
+      "max": 1.0
+    },
+    "ploidy": {
+      "numeric": 469,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 1.79,
+      "max": 4.39
+    },
+    "Cancer DNA fraction": {
+      "numeric": 469,
+      "missing_tokens": {
+        "": 16
+      },
+      "min": 0.16,
+      "max": 1.0
+    }
+  },
+  "candidate_vial_called": {
+    "rows": 469,
+    "unique_cases": 469,
+    "unique_sample_vials": 469,
+    "status_counts": {
+      "called": 469
+    },
+    "full_TCGA_aliquot_barcode_rows": 469,
+    "non_full_TCGA_aliquot_rows": 0,
+    "sample_type_counts_for_full_barcodes": {
+      "01": 469
+    },
+    "purity": {
+      "numeric": 469,
+      "missing_tokens": {},
+      "min": 0.16,
+      "max": 1.0
+    },
+    "ploidy": {
+      "numeric": 469,
+      "missing_tokens": {},
+      "min": 1.79,
+      "max": 4.39
+    },
+    "Cancer DNA fraction": {
+      "numeric": 469,
+      "missing_tokens": {},
+      "min": 0.16,
+      "max": 1.0
+    }
+  },
+  "candidate_cases_without_any_table_row": 12,
+  "candidate_cases_without_called_row": 28,
+  "candidate_vials_without_called_row": 32
+}

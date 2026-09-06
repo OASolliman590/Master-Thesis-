@@ -1,0 +1,174 @@
+{
+  "date": "2026-09-06",
+  "status": "Source audit only; all annotation options and both B primaries remain unselected",
+  "cached_full_inputs": [
+    {
+      "file": "E:\\Master_Thesis\\planning\\next_evidence\\B_annotation\\HM450.hg38.manifest.gencode.v36.tsv.gz",
+      "bytes": 17667979,
+      "sha256": "cb908b2aa8f49b2c92e3698dc04c379607850c36c329f2ff24dc765af655e483",
+      "url": "https://raw.githubusercontent.com/zhou-lab/InfiniumAnnotationData/6d176d6e7e56465403d4478a09fe11b983eeb721/Anno/HM450/HM450.hg38.manifest.gencode.v36.tsv.gz"
+    },
+    {
+      "file": "E:\\Master_Thesis\\planning\\next_evidence\\B_annotation\\HM450.hg38.mask.202209.tsv.gz",
+      "bytes": 3265145,
+      "sha256": "5a02fa845578a0947ef1a80262d8514092f9c7690e37da0bc31b00f8f908e69d",
+      "url": "https://raw.githubusercontent.com/zhou-lab/InfiniumAnnotationData/6d176d6e7e56465403d4478a09fe11b983eeb721/Anno/HM450/archive/202209/HM450.hg38.mask.tsv.gz"
+    }
+  ],
+  "new_public_receipts": [
+    {
+      "url": "https://zwdzwd.github.io/InfiniumAnnotation/gene_annotation.html",
+      "bytes": 2130,
+      "sha256": "290de03a16b6990ec428f90d46360f294e0f79b4e0a8c4b386637fcdd4afd3db",
+      "file": "gene_annotation_documentation.html"
+    },
+    {
+      "file": "ucsc_gencode_v36_B2M.json",
+      "bytes": 7699,
+      "sha256": "a6ac512e46e1c25e6603b16adcffe23eee4ad407b8470362e9240c4919ba4e53",
+      "dataTime": "2020-12-21T20:33:11",
+      "downloadTime": "2026:09:05T23:29:03Z",
+      "url": "https://api.genome.ucsc.edu/getData/track?genome=hg38;track=wgEncodeGencodeCompV36;chrom=chr15;start=44700000;end=44730000"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_A.json",
+      "bytes": 4338,
+      "sha256": "475746801e5a97d48c36580cd6ef33b9d7ca1cf5bc037b6b47d12deabcb2df56",
+      "dataTime": "2020-12-21T20:33:11",
+      "downloadTime": "2026:09:05T23:31:22Z",
+      "url": "https://api.genome.ucsc.edu/getData/track?genome=hg38;track=wgEncodeGencodeCompV36;chrom=chr6;start=29939000;end=29948000"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_B.json",
+      "bytes": 4068,
+      "sha256": "f98b0d3d05f9b40feab5f1335141dde8b9cce4ef3d7f6a47062d3813344a8231",
+      "dataTime": "2020-12-21T20:33:11",
+      "downloadTime": "2026:09:05T23:31:23Z",
+      "url": "https://api.genome.ucsc.edu/getData/track?genome=hg38;track=wgEncodeGencodeCompV36;chrom=chr6;start=31353000;end=31360000"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_C.json",
+      "bytes": 3990,
+      "sha256": "20c5e3ae551f41dada910b98a23732c30e3f11f0316e05f229d34e2392d13ee5",
+      "dataTime": "2020-12-21T20:33:11",
+      "downloadTime": "2026:09:05T23:31:23Z",
+      "url": "https://api.genome.ucsc.edu/getData/track?genome=hg38;track=wgEncodeGencodeCompV36;chrom=chr6;start=31267500;end=31276000"
+    },
+    {
+      "file": "ucsc_gencode_v36_TAP_PSMB.json",
+      "bytes": 13343,
+      "sha256": "1c9626241e09c01821ee6df7778fd06338e4f52d0bcd9e47bd3d1156c12a585f",
+      "dataTime": "2020-12-21T20:33:11",
+      "downloadTime": "2026:09:05T23:31:24Z",
+      "url": "https://api.genome.ucsc.edu/getData/track?genome=hg38;track=wgEncodeGencodeCompV36;chrom=chr6;start=32827000;end=32861000"
+    }
+  ],
+  "new_retained_public_bytes": 35568,
+  "limits": [
+    "No full GTF/full patient matrices/new outcomes acquired",
+    "B2M_CDS_crosscheck.json is initial locus-only inspection superseded by all-target CDS_crosscheck_summary.json",
+    "No UCSC exact transcript-type/canonical tag supplied by genePred CDS spans"
+  ],
+  "artifacts": [
+    {
+      "file": "audit_promoters.py",
+      "bytes": 8430,
+      "sha256": "90e4a117f31f4790adbc5ca6a8d33c4174bfa859cedef9a00282cf5ffdaee881"
+    },
+    {
+      "file": "B2M_CDS_crosscheck.json",
+      "bytes": 1107,
+      "sha256": "a80e10118d9a799328193449f30ac200f50bea9516992fb10e2d7d9390f085e4"
+    },
+    {
+      "file": "candidate_probe_ids.tsv",
+      "bytes": 34821,
+      "sha256": "b8b3c17c74b0645396e8c2ca60ad0a61003e64344d42e5b3251c5220e329d14b"
+    },
+    {
+      "file": "CDS_bearing_candidate_probe_ids.tsv",
+      "bytes": 16751,
+      "sha256": "f21f84fbfd0f2d22f189b98ea57de5a5ffee17f8890cb3d0b4abee90c7a784d7"
+    },
+    {
+      "file": "CDS_crosscheck_summary.json",
+      "bytes": 9797,
+      "sha256": "1f211580dbe1ef5dade7d155c6480d5ede507e312de8593114c4e57ad1e8ac60"
+    },
+    {
+      "file": "cognate_transcript_evidence.tsv",
+      "bytes": 204467,
+      "sha256": "69a07263d375564f6dee67646ca194f6f899a3bba8bbaacfb9ec55c1476d911a"
+    },
+    {
+      "file": "crosscheck_transcripts.py",
+      "bytes": 6020,
+      "sha256": "aeed3775f98c0da5d47457bdc9600e737889360e1bbd1fc5001abdb3c4f7b23e"
+    },
+    {
+      "file": "documentation_receipt.json",
+      "bytes": 1083,
+      "sha256": "1d7a01ef05813493814ebbfd55b5b262798476e495008443fc41e7e58c6d4248"
+    },
+    {
+      "file": "gene_annotation_documentation.html",
+      "bytes": 2130,
+      "sha256": "290de03a16b6990ec428f90d46360f294e0f79b4e0a8c4b386637fcdd4afd3db"
+    },
+    {
+      "file": "POLICIES_PROPOSED.json",
+      "bytes": 1905,
+      "sha256": "c9cbf656e58a7a878bb04e881ad06866035db2e3fb7b5e2697f718f04f4f594a"
+    },
+    {
+      "file": "probe_gene_candidates.tsv",
+      "bytes": 123897,
+      "sha256": "bc528f9ce337c450e73981ffd696ec3ab3bad9e6869f3834811dc57a344f7e9c"
+    },
+    {
+      "file": "REPORT.md",
+      "bytes": 11631,
+      "sha256": "c060ae1491f982302b4e95e429aad09ea1ec580fb1d223bed9c94d530b22ff72"
+    },
+    {
+      "file": "summary.json",
+      "bytes": 25543,
+      "sha256": "c6ed4f5c06a1bd17288dc06ffd527d80b6aa8e5fbf92561e19e44ff52ade6289"
+    },
+    {
+      "file": "transcript_coordinate_CDS_evidence.tsv",
+      "bytes": 5984,
+      "sha256": "fd04b09f2cb57449b35ee790ec108351be27423a8bae90a79342bb5de62208dd"
+    },
+    {
+      "file": "ucsc_gencode_v36_B2M.json",
+      "bytes": 7699,
+      "sha256": "a6ac512e46e1c25e6603b16adcffe23eee4ad407b8470362e9240c4919ba4e53"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_A.json",
+      "bytes": 4338,
+      "sha256": "475746801e5a97d48c36580cd6ef33b9d7ca1cf5bc037b6b47d12deabcb2df56"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_B.json",
+      "bytes": 4068,
+      "sha256": "f98b0d3d05f9b40feab5f1335141dde8b9cce4ef3d7f6a47062d3813344a8231"
+    },
+    {
+      "file": "ucsc_gencode_v36_HLA_C.json",
+      "bytes": 3990,
+      "sha256": "20c5e3ae551f41dada910b98a23732c30e3f11f0316e05f229d34e2392d13ee5"
+    },
+    {
+      "file": "ucsc_gencode_v36_TAP_PSMB.json",
+      "bytes": 13343,
+      "sha256": "1c9626241e09c01821ee6df7778fd06338e4f52d0bcd9e47bd3d1156c12a585f"
+    },
+    {
+      "file": "ucsc_receipt.json",
+      "bytes": 349,
+      "sha256": "3fabd58b6f52f38c269ce979d3b2bad887f4f52b4e2b87248fcad91f26c1e10a"
+    }
+  ]
+}

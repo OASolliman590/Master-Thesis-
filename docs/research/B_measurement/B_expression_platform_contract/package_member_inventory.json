@@ -1,0 +1,374 @@
+[
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/DESCRIPTION",
+    "uncompressed_bytes": 745,
+    "extracted": true
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/NAMESPACE",
+    "uncompressed_bytes": 370,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/R/zzz.R",
+    "uncompressed_bytes": 1564,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/inst/extdata/hta20hsentrezg.sqlite",
+    "uncompressed_bytes": 2536448,
+    "extracted": true
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgACCNUM.Rd",
+    "uncompressed_bytes": 1110,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgALIAS2PROBE.Rd",
+    "uncompressed_bytes": 1253,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgBASE.Rd",
+    "uncompressed_bytes": 665,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgCHR.Rd",
+    "uncompressed_bytes": 1151,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgCHRLENGTHS.Rd",
+    "uncompressed_bytes": 630,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgCHRLOC.Rd",
+    "uncompressed_bytes": 1806,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgENSEMBL.Rd",
+    "uncompressed_bytes": 1960,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgENTREZID.Rd",
+    "uncompressed_bytes": 1391,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgENZYME.Rd",
+    "uncompressed_bytes": 2830,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgGENENAME.Rd",
+    "uncompressed_bytes": 1253,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgGO.Rd",
+    "uncompressed_bytes": 4631,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgMAP.Rd",
+    "uncompressed_bytes": 1613,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgMAPCOUNTS.Rd",
+    "uncompressed_bytes": 1236,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgOMIM.Rd",
+    "uncompressed_bytes": 1593,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgORGANISM.Rd",
+    "uncompressed_bytes": 1208,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgPATH.Rd",
+    "uncompressed_bytes": 1802,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgPFAM.Rd",
+    "uncompressed_bytes": 1242,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgPMID.Rd",
+    "uncompressed_bytes": 3030,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgPROSITE.Rd",
+    "uncompressed_bytes": 1298,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgREFSEQ.Rd",
+    "uncompressed_bytes": 2133,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgSYMBOL.Rd",
+    "uncompressed_bytes": 1281,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgUNIGENE.Rd",
+    "uncompressed_bytes": 1324,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezgUNIPROT.Rd",
+    "uncompressed_bytes": 966,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/man/hta20hsentrezg_dbconn.Rd",
+    "uncompressed_bytes": 2581,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/tests/runalltests.R",
+    "uncompressed_bytes": 408,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/tests/runalltests.Rout.save",
+    "uncompressed_bytes": 1048,
+    "extracted": false
+  },
+  {
+    "archive": "hta20hsentrezg.db_18.0.0.tar.gz",
+    "member": "hta20hsentrezg.db/tests/unit/test.R",
+    "uncompressed_bytes": 1363,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/DESCRIPTION",
+    "uncompressed_bytes": 780,
+    "extracted": true
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/NAMESPACE",
+    "uncompressed_bytes": 400,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/R/zzz.R",
+    "uncompressed_bytes": 1624,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/inst/extdata/hugene20sthsentrezg.sqlite",
+    "uncompressed_bytes": 2415616,
+    "extracted": true
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgACCNUM.Rd",
+    "uncompressed_bytes": 1130,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgALIAS2PROBE.Rd",
+    "uncompressed_bytes": 1273,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgBASE.Rd",
+    "uncompressed_bytes": 700,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgCHR.Rd",
+    "uncompressed_bytes": 1171,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgCHRLENGTHS.Rd",
+    "uncompressed_bytes": 650,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgCHRLOC.Rd",
+    "uncompressed_bytes": 1831,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgENSEMBL.Rd",
+    "uncompressed_bytes": 1990,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgENTREZID.Rd",
+    "uncompressed_bytes": 1416,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgENZYME.Rd",
+    "uncompressed_bytes": 2885,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgGENENAME.Rd",
+    "uncompressed_bytes": 1273,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgGO.Rd",
+    "uncompressed_bytes": 4711,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgMAP.Rd",
+    "uncompressed_bytes": 1633,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgMAPCOUNTS.Rd",
+    "uncompressed_bytes": 1286,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgOMIM.Rd",
+    "uncompressed_bytes": 1613,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgORGANISM.Rd",
+    "uncompressed_bytes": 1263,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgPATH.Rd",
+    "uncompressed_bytes": 1842,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgPFAM.Rd",
+    "uncompressed_bytes": 1262,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgPMID.Rd",
+    "uncompressed_bytes": 3080,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgPROSITE.Rd",
+    "uncompressed_bytes": 1318,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgREFSEQ.Rd",
+    "uncompressed_bytes": 2153,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgSYMBOL.Rd",
+    "uncompressed_bytes": 1301,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgUNIGENE.Rd",
+    "uncompressed_bytes": 1344,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezgUNIPROT.Rd",
+    "uncompressed_bytes": 991,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/man/hugene20sthsentrezg_dbconn.Rd",
+    "uncompressed_bytes": 2696,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/tests/runalltests.R",
+    "uncompressed_bytes": 408,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/tests/runalltests.Rout.save",
+    "uncompressed_bytes": 1048,
+    "extracted": false
+  },
+  {
+    "archive": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+    "member": "hugene20sthsentrezg.db/tests/unit/test.R",
+    "uncompressed_bytes": 1383,
+    "extracted": false
+  }
+]
