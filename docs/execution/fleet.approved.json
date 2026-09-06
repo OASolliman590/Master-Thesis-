@@ -1,8 +1,44 @@
 {
   "version": "delegate-fleet.v1",
   "lanes": {
-    "research": {"implementer": "codex", "model": "gpt-6-astra", "readOnly": true},
-    "heavy": {"implementer": "codex", "model": "gpt-5.3-codex-spark"},
-    "final-review": {"implementer": "codex", "model": "gpt-6-astra", "readOnly": true}
+    "planning": {
+      "implementer": "codex",
+      "model": "gpt-6-astra",
+      "effort": "high"
+    },
+    "research": {
+      "implementer": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "high",
+      "readOnly": true
+    },
+    "plan-review": {
+      "implementer": "codex",
+      "model": "gpt-5.6-sol",
+      "effort": "high",
+      "readOnly": true
+    },
+    "heavy": {
+      "implementer": "codex",
+      "model": "gpt-5.3-codex-spark"
+    },
+    "refactor": {
+      "implementer": "codex",
+      "model": "gpt-5.3-codex-spark"
+    },
+    "bugfix": {
+      "implementer": "agy",
+      "model": "gemini-3.8-flash-medium"
+    },
+    "docs": {
+      "implementer": "agy",
+      "model": "gemini-3.8-flash-medium"
+    },
+    "final-review": {
+      "implementer": "codex",
+      "model": "gpt-6-astra",
+      "effort": "high",
+      "readOnly": true
+    }
   }
 }
