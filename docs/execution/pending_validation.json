@@ -24,11 +24,11 @@
   "capability_gaps": [
     {
       "role": "Direct Claude Code",
-      "state": "Installed version 2.1.260; direct auth status false. Opus completed M0/M1 reviews separately through authenticated Antigravity."
+      "state": "Installed via official WinGet2.1.263; parent recheck launches successfully, auth false. User subscription sign-in remains required. Prior2.1.260 record is historical; Antigravity Opus is a separate authentication context."
     },
     {
       "role": "Grok consultation/coding",
-      "state": "Windows CLI installed; authentication false"
+      "state": "Grok1.0.13 launches and a bounded fixed-response authentication smoke passed in child and parent checks on2026-09-06. No production coding delegation validated; process-scoped Git ownership and unrelated MCP startup warnings remain documented."
     },
     {
       "role": "Antigravity/Gemini coding",
@@ -45,5 +45,6 @@
       "resume_conversation": "1aef4d92-f54d-4997-a1a3-f2d4728993bc",
       "next_action": "Resume direct-file read-only review when quota is available; inspect substantive result, not exit status alone."
     }
-  ]
+  ],
+  "direct_cli_repair_report": "docs/execution/fleet_repair_20260906/REPORT.md"
 }

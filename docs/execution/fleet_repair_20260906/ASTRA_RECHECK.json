@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-06T08:15:42.476242+00:00",
+  "reviewer": "parent Astra",
+  "claude": {
+    "version": "2.1.263",
+    "launch_exit": 0,
+    "auth_exit": 1,
+    "authenticated": false
+  },
+  "grok": {
+    "version": "1.0.13",
+    "launch_exit": 0,
+    "auth_smoke_exit": 0,
+    "authenticated_response": true,
+    "production_coding_validated": false
+  },
+  "combined_expected_exit": 1,
+  "remaining_user_step": "claude auth login --claudeai",
+  "artifacts": [
+    {
+      "path": "docs/execution/fleet_repair_20260906/evidence.json",
+      "bytes": 2690,
+      "sha256": "a6e5dcb52aadc82d39dcd564efae1a1cf96f81bff81ac0717384cef2b47b6969"
+    },
+    {
+      "path": "docs/execution/fleet_repair_20260906/REPORT.md",
+      "bytes": 8169,
+      "sha256": "1f16035391e8ad7748f5d98413ad53ab04584e7d82382060b940961adb79fa4f"
+    },
+    {
+      "path": "docs/execution/fleet_repair_20260906/SOURCES.md",
+      "bytes": 1346,
+      "sha256": "3c6d14e5986f9ece09b9dd2aab7691fefa423321c8ac730311fb33c99e944077"
+    },
+    {
+      "path": "planning/fleet_repair_20260906/Enter-DirectCliPath.ps1",
+      "bytes": 2505,
+      "sha256": "8f18ee346eac9c1419a747bd64bec8c7d9615fd0e7a725bfd36356916761e9ab"
+    },
+    {
+      "path": "planning/fleet_repair_20260906/Test-DirectCli.ps1",
+      "bytes": 4569,
+      "sha256": "497679b37e6e2675f3ecc3b5633e5fb0828c802449ed037a5c109c6c649f051f"
+    }
+  ]
+}

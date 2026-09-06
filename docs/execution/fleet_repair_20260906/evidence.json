@@ -1,0 +1,62 @@
+{
+  "schema": "direct-cli-repair-evidence.v1",
+  "observed_at": "2026-09-06T11:06:30+03:00",
+  "host": "Windows native",
+  "claude": {
+    "initial_state": {
+      "path_resolution": "missing from PATH",
+      "desktop_spawn_path": "C:\\Users\\salma\\AppData\\Roaming\\Claude\\claude-code\\2.1.260\\claude.exe",
+      "desktop_spawn_path_exists": false,
+      "running_processes_at_stale_path": 1
+    },
+    "repair": {
+      "method": "winget install --id Anthropic.ClaudeCode --exact --source winget",
+      "package_id": "Anthropic.ClaudeCode",
+      "package_version": "2.1.263",
+      "path_registered_for_future_shells": "C:\\Users\\salma\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe"
+    },
+    "executable": {
+      "path": "C:\\Users\\salma\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\\claude.exe",
+      "version": "2.1.263 (Claude Code)",
+      "sha256": "0B35DF94C1307004F07B738390BFEF8DFCA5E9AF29AAF6517F305BF086B95B03",
+      "authenticode": "Valid; Anthropic, PBC"
+    },
+    "auth": {
+      "probe": "claude auth status",
+      "exit_code": 1,
+      "logged_in": false,
+      "auth_method": "none",
+      "api_provider": "firstParty"
+    }
+  },
+  "grok": {
+    "primary_executable": {
+      "path": "C:\\Users\\salma\\.local\\bin\\grok.exe",
+      "version": "grok 1.0.13 (5e9a58528b76) [stable]",
+      "sha256": "6CAF906D6EF968004B5FF33422C84E33D51A1CD7B4EE5ACD19FF695AAA92672E"
+    },
+    "alternate_executable": {
+      "path": "C:\\Users\\salma\\.grok\\bin\\grok.exe",
+      "version": "grok 1.0.13 (5e9a58528b76) [stable]",
+      "sha256": "6CAF906D6EF968004B5FF33422C84E33D51A1CD7B4EE5ACD19FF695AAA92672E",
+      "relationship": "byte-identical duplicate; launch succeeds"
+    },
+    "auth": {
+      "initial_probe": "grok --no-auto-update models",
+      "initial_probe_signal": "A transient refresh reported unauthenticated while also printing cached models with exit 0; this was rejected as a positive-auth test.",
+      "final_probe": "one-turn, no-tools-requested, read-only headless request for AUTH_OK",
+      "probe_boundary": "outside Codex filesystem sandbox",
+      "exit_code": 0,
+      "authenticated": true,
+      "functional_signal": "AUTH_OK",
+      "model_request_sent": true,
+      "quality_evaluation_performed": false,
+      "note": "The final functional smoke used one fixed response, disabled subagents and web search, and did not evaluate model quality."
+    }
+  },
+  "credential_handling": {
+    "credential_files_read": false,
+    "tokens_copied_between_products": false,
+    "environment_secret_values_read": false
+  }
+}
