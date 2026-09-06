@@ -1,7 +1,7 @@
 {
   "date_cairo": "2026-09-06",
   "milestone": "B-F1",
-  "status": "reviewed_wip_not_validated",
+  "status": "reviewed_wip_aiu_software_validated",
   "code_commit": "fed56e6029afb43cc83a043ec4b5d7afbcf0fed9",
   "repository": "OASolliman590/Master-Thesis-",
   "push_verified_by_ls_remote": true,
@@ -15,13 +15,14 @@
   "whitespace_review": "Intentional trailing TSV delimiters encode STAR structural absence. Raw Opus report preserves its original whitespace. No fixture or reviewer artifact was stripped to silence diff-check warnings.",
   "reviews": "Spark implementation, substantive initial Opus review, Astra fixes, resolved Standards/Spec rechecks, Astra WIP disposition",
   "final_opus_recheck": "INCOMPLETE: provider 429 RESOURCE_EXHAUSTED despite CLI exit0",
-  "aiu_validation": "PENDING: SSH timeout; no B-F1 job started",
+  "aiu_validation": "PASSED 2026-09-07: hash-matched scratch copy under planning/2026-09-07/B_F1_aiu_run_002; Python 3.11.16; 19 tests passed in 2.232 seconds; see docs/validation/B_formats/AIU_20260907.md",
+  "aiu_scratch_root": "/home/omics/projects/ici_thesis_pipeline/planning/2026-09-07/B_F1_aiu_run_002",
   "last_verified_aiu_commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
   "scientific_primary_frozen": false,
   "paper_implemented": false,
   "next_actions": [
     "Resume final Opus direct-file review when quota is available; require substantive review output.",
-    "When AIU is reachable, sync reviewed candidate, verify/restore the four existing fixtures, and run the pending Python3.11 tests and real-format verification.",
+    "Keep the AIU scratch receipt and hashes with the reviewed B-F1 milestone; the canonical AIU checkout still needs a credentialed commit sync before future in-place runs.",
     "Resolve B primary-emphasis choice without treating a proposal as approval; continue independent source/spec gates."
   ]
 }

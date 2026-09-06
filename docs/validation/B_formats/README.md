@@ -1,6 +1,6 @@
 # B-F1 format inspection
 
-This tool checks the four audited file formats and their actual byte checksums. It does not normalize data, select probes/genes, join patients, compute scores or validate biological claims. Python3.11 standard library is the target; local Windows Python3.12 is separately recorded. AIU execution remains pending until a verified run receipt exists.
+This tool checks the four audited file formats and their actual byte checksums. It does not normalize data, select probes/genes, join patients, compute scores or validate biological claims. Python3.11 standard library is the target; local Windows Python3.12 is separately recorded. The hash-matched AIU Python3.11 software gate passed on 7 September 2026; see `AIU_20260907.md`.
 
 From the repository root:
 
@@ -38,4 +38,4 @@ Existing output paths, including aliases, are refused. The complete temporary JS
 
 Exit0 means a new completed summary;2 means invalid arguments or an existing/aliased output;3 means checksum/schema failure;4 means I/O failure. Failures never make an old output a success. Source IDs and literal NA are retained as identifiers/missing classifications; numeric assay values are not exported or logged. STAR's recognized N_ records have separately counted structural normalized-field absence, while their count fields must be numeric/NA. Beta and detection-P counts are separate. Patient-code counts do not establish independent patient N.
 
-Synthetic tests exercise software invariants. Two deterministic CLI regressions inject source replacement and output collision at filesystem boundaries, without replacing the parser or its internal collaborators. They showed the prior failures before the fixes. Local passes do not substitute for AIU/Python3.11 validation or paper-level scientific gates.
+Synthetic tests exercise software invariants. Two deterministic CLI regressions inject source replacement and output collision at filesystem boundaries, without replacing the parser or its internal collaborators. They showed the prior failures before the fixes. Local and AIU software passes do not substitute for paper-level scientific gates.

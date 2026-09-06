@@ -1,26 +1,8 @@
 {
   "schema_version": 1,
-  "updated": "2026-09-06",
-  "pending_tests": [
-    {
-      "ticket": "B-F1",
-      "base_commit": "43efda19bff062a2e9e140fadd84ab32c88cee71",
-      "code_commit": "fed56e6029afb43cc83a043ec4b5d7afbcf0fed9",
-      "state": "Reviewed WIP: local 19-test run passed, final changed fixture test passed; AIU unrun",
-      "host": "AIU omics",
-      "environment": "/home/omics/miniforge3/envs/omics-py/bin/python, 3.11.16",
-      "command": "python -m unittest discover -s tests/b_formats -v",
-      "expected_artifacts": "test log, four permitted real-format summaries, input/code hashes and independent review receipts",
-      "blocker": "AIU SSH connection timeout; no remote B-F1 job started",
-      "commands": [
-        "/home/omics/miniforge3/envs/omics-py/bin/python -m unittest discover -s tests/b_formats -v",
-        "/home/omics/miniforge3/envs/omics-py/bin/python docs/validation/B_formats/verify_real.py --output-dir /home/omics/projects/ici_thesis_pipeline/planning/2026-09-05/B_F1_aiu_run_001"
-      ],
-      "prerequisites": "Sync reviewed candidate; verify four existing fixtures against manifest and restore their ignored repo-relative paths. If output run directory already exists, inspect it before selecting a fresh run ID.",
-      "live_job": null
-    }
-  ],
-  "note": "Only format-tool validation is scheduled. No scientific analysis or full paper is validated.",
+  "updated": "2026-09-07",
+  "pending_tests": [],
+  "note": "B-F1 hash-matched local and AIU software tests passed; see docs/validation/B_formats/AIU_20260907.md. No scientific analysis or full paper is validated.",
   "capability_gaps": [
     {
       "role": "Direct Claude Code",
