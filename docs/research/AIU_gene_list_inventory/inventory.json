@@ -1,0 +1,173 @@
+{
+  "audit_date": "2026-09-06",
+  "scope": "Bounded read-only inventory for selected Paper B-P; no pipeline rerun, model fit, full-matrix download, or AIU job start.",
+  "aiu_project_root": "/home/omics/projects/ici_thesis_pipeline",
+  "historical_code_root": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary",
+  "bp_candidate_program": {
+    "status": "proposed_not_frozen",
+    "genes": ["HLA-A", "HLA-B", "HLA-C", "B2M", "TAP1", "TAP2", "PSMB8", "PSMB9"],
+    "direction": "all_positive",
+    "weights": "equal within-sample percentile-rank mean",
+    "selection_warning": "CPC-GENE outcomes cannot select or modify this program if CPC-GENE is to remain the independent external evaluation."
+  },
+  "producer": {
+    "code_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/src/pipeline/cli.py",
+    "code_sha256": "5e62429d2b7ae9db1eb64bedaac13700adad4f755dfeead7c3a8e1abc10afb82",
+    "signature_function": "cmd_signature_derive",
+    "signature_function_line_in_live_copy": 7839,
+    "identifier_function": "_standardize_expression_gene_ids",
+    "identifier_function_line_in_live_copy": 448,
+    "thresholds_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/configs/signature_thresholds.yaml",
+    "thresholds_sha256": "20ae013c3d6c60cbae455f1cb412ad4d0dc2b97fe1e9acb1542153fbbc4389a1",
+    "thresholds_version": "signature_thresholds_v1",
+    "min_meta_cohorts": 2,
+    "tier_rules": {
+      "tier_1": {"max_fdr": 0.05, "min_abs_effect": 1.0, "max_i2": 75},
+      "tier_2": {"max_fdr": 0.2, "min_abs_effect": 0.5, "max_i2": 85},
+      "tier_3": {"max_fdr": 0.5, "min_abs_effect": 0.3, "max_i2": null}
+    },
+    "module_rules_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/configs/signature_module_rules.tsv",
+    "module_rules_sha256": "a7f80abd24f559abefa30fd56234009ae3d8aabf5c4247c21daf865dffc1a2e2",
+    "git_commit": null,
+    "git_commit_note": "The imported canary directory is not a Git checkout; content hashes and the captured old-repository blob/tree identifiers are the available provenance."
+  },
+  "learned_or_reported_candidates": [
+    {
+      "id": "april_slice_20260406",
+      "run_root": "results/slice2_ready_20260406_222238",
+      "exact_list_path": null,
+      "sha256": null,
+      "gene_count": null,
+      "genes": null,
+      "direction_or_weights": "unknown",
+      "discovery_scope": "two analyzed cohorts; strict min_meta_cohorts=2 empty; exploratory nonempty output used min_meta_cohorts=1",
+      "bp_overlap": null,
+      "external_exposure": "unknown",
+      "disposition": "provenance lead only"
+    },
+    {
+      "id": "may_full_pipeline_20260507",
+      "run_root": "results/full_pipeline_20260507_134734",
+      "exact_list_path": null,
+      "sha256": null,
+      "gene_count": null,
+      "genes": null,
+      "direction_or_weights": "unknown",
+      "discovery_scope": "Spec 007 reported 21 PRE_RESPONSE cohorts; exact run manifest and per-gene sources not recovered",
+      "bp_overlap": null,
+      "external_exposure": "unknown",
+      "disposition": "missing provenance; not reusable unchanged"
+    },
+    {
+      "id": "june_pan_pre_treatment_tiered_20260607",
+      "run_root": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_runs_t7_20260607_stage07_scale_provenance",
+      "exact_list_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_runs_t7_20260607_stage07_scale_provenance/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_tiered.tsv",
+      "sha256": "306813a17f4e778307dd1178b4f05b27dd87d3278a73b7555de7bb302e24c56f",
+      "core_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_runs_t7_20260607_stage07_scale_provenance/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_core.tsv",
+      "core_sha256": "8da79794c32c984b2a43c346047a1e599f79d439256344785a4868d164dd75e8",
+      "gene_count": 23,
+      "tier_counts": {"tier_1": 1, "tier_2": 2, "tier_3": 20},
+      "direction_counts": {"up": 8, "down": 15},
+      "up_genes": ["DRAIC", "CXCL11", "CXCR3", "MIR4259", "WHAMMP1", "RP11-1J11.1", "AC064834.3", "RNU6-316P"],
+      "down_genes": ["DUSP13B", "OSER1-DT", "TRIL", "LSP1P4", "PRRT3-AS1", "SLC2A1-DT", "SPACA6P", "RP11-128A17.1", "RP3-412A9.16", "AC016405.2", "RNU6-8", "RP11-165A20.3", "GPHRA", "MIMS1", "ZBED11"],
+      "genes": [
+        "DUSP13B", "DRAIC", "OSER1-DT", "CXCL11", "CXCR3", "TRIL", "MIR4259", "LSP1P4", "PRRT3-AS1", "SLC2A1-DT", "WHAMMP1", "SPACA6P", "RP11-128A17.1", "RP11-1J11.1", "RP3-412A9.16", "AC016405.2", "AC064834.3", "RNU6-316P", "RNU6-8", "RP11-165A20.3", "GPHRA", "MIMS1", "ZBED11"
+      ],
+      "core": {"gene_id": "DUSP13B", "direction": "down", "meta_effect": -2.6786, "meta_fdr": 1.95644e-07, "n_cohorts_contributed": 2, "n_patients_contributed_reported": 132},
+      "direction_or_weights": "Rows carry responder-minus-nonresponder signed meta-effects, SE and FDR; no frozen external prediction coefficient vector is evidenced.",
+      "discovery_scope": "PAN pre-treatment responder versus non-responder; composition_unadjusted_primary; minimum two contributing cohorts per selected gene. Historical report says 21 PRE_RESPONSE cohorts; exact per-gene cohort names are not encoded in the small list.",
+      "bp_overlap": [],
+      "internal_validation": {"evaluated": 23, "direction_concordant": 21, "stable": 1, "stability_fraction": 0.0434783, "scope": "internal_nested_loco_robustness"},
+      "external_exposure": "Held-out evaluation explicitly missing. Projected into ten TCGA contexts including PRAD. CPC outcome exposure unknown.",
+      "disposition": "not defensible as unchanged B-P endpoint"
+    },
+    {
+      "id": "july_pan_pre_treatment_tiered_20260711",
+      "run_root": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_full_axes",
+      "exact_list_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_full_axes/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_tiered.tsv",
+      "sha256": "f71d184bca87b39fe442b1e659da1b7c9179a95d0e00155c70fefe41cefa6a1f",
+      "core_path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_full_axes/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_core.tsv",
+      "core_sha256": "1264ce4f7b664959ebc7936258a7b8af15c80375d3ead7ddbca4c3b09852587f",
+      "gene_count": 605,
+      "tier_counts": {"tier_1": 1, "tier_2": 39, "tier_3": 565},
+      "direction_counts": {"up": 372, "down": 233},
+      "full_gene_membership_source": "E:/Master_Thesis/assessment_2026-09-05/NMRBOX_SERVER_EVIDENCE.json",
+      "core": {"gene_id": "6-Sep", "direction": "up", "meta_effect": 1.49489, "meta_fdr": 0.0119494, "n_cohorts_contributed": 2, "n_patients_contributed_reported": 53, "actual_support_note": "GSE115821 and GSE126044; the 53 count is not a valid independent-patient count."},
+      "date_like_gene_ids": ["6-Sep", "8-Mar", "1-Sep", "1-Mar"],
+      "direction_or_weights": "Rows carry responder-minus-nonresponder signed meta-effects, SE and FDR; no frozen external prediction coefficient vector is established.",
+      "discovery_scope": "Design registry: 14 cohort identities, 330 case and 505 control sample rows; includes non-ICI ACT/DC-vaccine contexts and a known GSE115821 timing/patient/regimen error.",
+      "bp_overlap": [],
+      "internal_validation": {"evaluated": 605, "direction_concordant": 579, "stable": 1, "stability_fraction": 0.00165289, "scope": "internal_nested_loco_robustness"},
+      "external_exposure": "Held-out evaluation explicitly missing. July TCGA projection blocked for missing map. CPC outcome exposure unknown.",
+      "disposition": "not defensible as unchanged B-P endpoint"
+    },
+    {
+      "id": "july_aliases_not_independent",
+      "normalized_membership_direction_effect_sha256": "d8e8e117503944ec737cab3821fa27a4d54408707f59b950b47e46439c3b5050",
+      "files": [
+        {"path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_gate/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_tiered.tsv", "sha256": "1bbec6d3be3f19efa78b1edd5cea22ac74f7f5fe421d8d6db7abbe7a75beba8d", "gene_count": 605},
+        {"path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_full_axes/signature/PAN_ICB_RESPONSE__PRE_TREATMENT/responder_signature_tiered.tsv", "sha256": "f71d184bca87b39fe442b1e659da1b7c9179a95d0e00155c70fefe41cefa6a1f", "gene_count": 605},
+        {"path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/results/analysis_id_pipeline_phase3_analysis_id_20260711_probe_matrix_full_axes/signature/PRE_RESPONSE/responder_signature_tiered.tsv", "sha256": "4e4d624d1ec912ab1c6bf79c96f0ab28592e9d4d3ef3d031997e8f6f313089bc", "gene_count": 605}
+      ],
+      "disposition": "same normalized membership/direction/effect; do not count as independent lists"
+    },
+    {
+      "id": "spec008_routing_only_20260510",
+      "run_root": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/results/spec_008/",
+      "exact_list_path": null,
+      "sha256": null,
+      "gene_count": 0,
+      "status": "30 routed; 0 analyzed; signature_status=missing_signature",
+      "disposition": "not a gene-list run"
+    }
+  ],
+  "curated_gene_set_files": [
+    {
+      "path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/inputs/gene_sets/T_CELL_INFLAMED_GEP_18.gmt",
+      "sha256": "67aebb6d4dc08d26d8ce04b3c619b83e67e7385be50d8ec345bf06685991284a",
+      "gene_sets": [
+        {"id": "T_CELL_INFLAMED_GEP_18", "genes": ["PSMB10", "HLA-DQA1", "HLA-DRB1", "CMKLR1", "HLA-E", "NKG7", "CD8A", "CCL5", "CXCL9", "CD27", "CXCR6", "IDO1", "STAT1", "CD274", "CD276", "LAG3", "PDCD1LG2", "TIGIT"], "count": 18, "bp_overlap": []}
+      ]
+    },
+    {
+      "path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/inputs/gene_sets/exhaustion_layer/C7_T_CELL_EXHAUSTION_CORE.gmt",
+      "sha256": "05db89a18c730e09651e382184163c72f3d731b00855cd89008efad5626ccc6b",
+      "gene_sets": [
+        {"id": "C7_T_CELL_EXHAUSTION_CORE", "genes": ["PDCD1", "CD274", "PDCD1LG2", "LAG3", "HAVCR2", "TIGIT", "TOX", "CXCL13", "CTLA4", "ENTPD1", "LAYN", "IFNG", "GZMB", "CXCL9", "CXCL10"], "count": 15, "bp_overlap": []}
+      ]
+    },
+    {
+      "path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/inputs/gene_sets/hallmark_layer/HALLMARK_IMMUNE_RESPONSE_MINI.gmt",
+      "sha256": "43854890169b065969e7046cf1f1b6b8401d419f66c7c59f86539bf47dc3dc40",
+      "gene_sets": [
+        {"id": "HALLMARK_INTERFERON_GAMMA_RESPONSE_MINI", "genes": ["IFNG", "STAT1", "IRF1", "CXCL9", "CXCL10", "CD274", "HLA-DRA", "HLA-DRB1", "PSMB10", "GBP1"], "count": 10, "bp_overlap": []},
+        {"id": "HALLMARK_TNFA_SIGNALING_VIA_NFKB_MINI", "genes": ["NFKB1", "NFKBIA", "TNFAIP3", "CD83", "CD80", "CXCL10", "ICAM1", "IL6", "RELA", "BIRC3"], "count": 10, "bp_overlap": []}
+      ]
+    },
+    {
+      "path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/inputs/gene_sets/epigenetic_layer/EPIGENETIC_IMMUNE_PRIMING.gmt",
+      "sha256": "1621a34dec5548f6126987f96c7757742f3f1cb85f72ea47a0848ddbfaf13a97",
+      "direction_or_weights": "unweighted and unoriented GMT memberships",
+      "gene_sets": [
+        {"id": "EPIGENETIC_IMMUNE_PRIMING", "genes": ["BRD4", "HDAC1", "HDAC2", "EZH2", "KDM6A", "KDM5B", "SMARCA4", "ARID1A", "DNMT1", "TET2", "IRF1", "STAT1", "NLRC5", "CIITA", "HLA-DRA", "HLA-DRB1", "B2M", "TAP1"], "count": 18, "bp_overlap": ["B2M", "TAP1"]},
+        {"id": "EPIGENETIC_CHECKPOINT_REGULATION", "genes": ["CD274", "PDCD1LG2", "JAK1", "JAK2", "PTEN", "MYC", "EZH2", "HDAC3", "BRD4", "ARID1A", "SMARCB1", "SETD2", "KMT2D", "DNMT3A", "TET2"], "count": 15, "bp_overlap": []},
+        {"id": "PRC2_IMMUNE_TARGETS", "genes": ["EZH2", "EED", "SUZ12", "CXCL9", "CXCL10", "HLA-A", "HLA-B", "HLA-C", "B2M", "TAP1", "TAP2", "NLRC5"], "count": 12, "bp_overlap": ["HLA-A", "HLA-B", "HLA-C", "B2M", "TAP1", "TAP2"]},
+        {"id": "SWI_SNF_ICB", "genes": ["ARID1A", "ARID1B", "SMARCA4", "SMARCB1", "SMARCC1", "SMARCC2", "PBRM1", "KDM6A", "CIITA", "IRF1"], "count": 10, "bp_overlap": []},
+        {"id": "DNMT_IMMUNE_LOCI", "genes": ["DNMT1", "DNMT3A", "DNMT3B", "TET1", "TET2", "TET3", "CD274", "HLA-DRA", "CXCL9", "CXCL10", "STAT1"], "count": 11, "bp_overlap": []},
+        {"id": "HISTONE_WRITERS_ICB", "genes": ["KMT2D", "KMT2C", "SETD2", "EP300", "CREBBP", "KDM5B", "KDM6A", "IRF1", "IFNG", "STAT1"], "count": 10, "bp_overlap": []},
+        {"id": "RETROELEMENT_SENSING", "genes": ["DDX58", "IFIH1", "MAVS", "TMEM173", "CGAS", "MB21D1", "IRF3", "IRF7", "STAT1", "IFNB1", "OAS1", "RNASEL"], "count": 12, "bp_overlap": []},
+        {"id": "T_CELL_EXHAUSTION_EPIGENETIC", "genes": ["TOX", "TOX2", "NR4A1", "NR4A2", "NR4A3", "PDCD1", "LAG3", "TIGIT", "HAVCR2", "ENTPD1", "BATF", "EOMES"], "count": 12, "bp_overlap": []},
+        {"id": "T_CELL_MEMORY_EPIGENETIC", "genes": ["TCF7", "LEF1", "IL7R", "CCR7", "BCL6", "BACH2", "SATB1", "FOXO1", "KLF2", "SELL"], "count": 10, "bp_overlap": []}
+      ]
+    },
+    {
+      "path": "/home/omics/projects/ici_thesis_pipeline/canary/ici_thesis_pipeline_canary/inputs/gene_sets/HOPE_18.gmt",
+      "sha256": "ceccd0fbcce5779cd066bbb4a44328a739c636aae8391c7f1b87b882e6a1b43d",
+      "gene_sets": [
+        {"id": "HOPE_18", "genes": ["GZMB", "HAVCR2", "ICOS", "CXCL9", "SOCS1", "PDCD1", "CXCL10", "CD3G", "NOD2", "CD40LG", "CD3D", "SLAMF1", "CD80", "CD27", "CD3E", "TIGIT", "CD274", "IRF1"], "count": 18, "bp_overlap": []}
+      ]
+    }
+  ],
+  "curated_panel_note": "These are unweighted/unoriented scoring panels. Their presence is not evidence of B-P predictive validity or independent CPC evaluation.",
+  "reuse_recommendation": "Reuse provenance and software-interface concepts, not a historical biological list. Keep the proposed eight-gene B-P program outcome-independent; use PRC2_IMMUNE_TARGETS only as a 6/8 mechanistic crosswalk."
+}
