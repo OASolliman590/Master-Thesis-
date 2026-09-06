@@ -48,6 +48,16 @@ One primary endpoint has no across-endpoint correction. Secondary locus tests us
 
 ## Secondary science and C handoff
 
+### Accepted gene-set scope, 6 September 2026
+
+The user approved expanding the biological programs investigated while retaining one primary B-P endpoint. Maintain one coherent primary antigen-presentation program, a small prespecified secondary panel, and an explicitly exploratory remainder. The proposed eight-gene primary membership may be amended before freeze on source-backed biological and measurement grounds; this approval does not select additional genes or freeze any recovered GMT collection.
+
+Candidate secondary domains are interferon response, T-cell inflammation, and selected epigenetic programs. Use the [recovered AIU inventory](../../docs/research/AIU_gene_list_inventory/inventory.json) as candidate material. Verify original sources, versioned membership, canonical identifiers, orientation, assay coverage and overlap before selecting the small panel. Saved mini-panels must not be represented as their full named reference collections. Mixed regulator, effector and cell-type-marker sets must not be merged into a single activation score without biological justification.
+
+Freeze the selected programs, scoring methods, predictor definitions, evaluation populations and multiple-testing families before external outcome inspection. Report the remaining analyses as exploratory; do not promote the best-performing secondary program to primary. Expanding RNA outcomes does not automatically expand the primary methylation predictors. For any secondary prediction comparison, specify its own matched baseline/extended-model contract and keep all fitting and tuning in TCGA. CPC-GENE outcomes must not select program membership, promoter features or the Paper C query.
+
+The next bounded scientific deliverable is a source-and-coverage table recommending a small secondary panel with explicit include/defer reasons. This scope amendment does not change the released B-P1 engine interface or authorize real-cohort fitting. The single primary remains external Delta_R2 for the frozen primary program.
+
 Retain positive/negative promoter associations, within-PRAD immune-state contrasts, copy-number/purity/composition sensitivities, and lineage-confounded PRAD/LUAD comparison. Guo's hypomethylated-domain mechanism is a named counterexample, so domain methylation is annotated separately and bidirectionally; sparse 450K overlap is a domain proxy, not whole-genome PMD inference. Independent malignant-cell expression evidence is required to strengthen cell-origin interpretation, without claiming it measures matched methylation.
 
 The C signed query is a separately specified **TCGA-discovery-only** output. Its universe, disease orientation, effect estimates, source flags, selection rules and size sensitivity require a frozen handoff before C scoring. CPC-GENE Y, associations, performance and confirmation labels cannot select or reorder this query. If validation changes a hypothesis, record a new exploratory version; do not replace the originally frozen query. Exact query-selection thresholds remain unresolved and block that handoff ticket, not the fixed-program B design.
