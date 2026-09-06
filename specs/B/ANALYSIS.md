@@ -50,7 +50,7 @@ One primary endpoint has no across-endpoint correction. Secondary locus tests us
 
 ### Accepted gene-set scope, 6 September 2026
 
-The source handoff is now integrated in [SECONDARY_PROGRAMS.md](SECONDARY_PROGRAMS.md), dated 7 September. It specifies two conditional secondary candidates, explicit defer rules and remaining inference requirements. It does not freeze their membership/scoring or gate primary B-P1 engineering on secondary completion.
+The source handoff and later user instructions to Sol are reconciled in [SECONDARY_PROGRAMS.md](SECONDARY_PROGRAMS.md), dated 7 September. The expanded scope is three planned secondary programs (Ayers GEP, official IFNG Hallmark, HOPE_18), an exploratory approved-immunotherapy drug-target registry, and retained exploratory saved sets. Exact scoring, coverage and inference remain explicit requirements. This does not gate primary B-P1 engineering on secondary completion.
 
 The user approved expanding the biological programs investigated while retaining one primary B-P endpoint. Maintain one coherent primary antigen-presentation program, a small prespecified secondary panel, and an explicitly exploratory remainder. The proposed eight-gene primary membership may be amended before freeze on source-backed biological and measurement grounds; this approval does not select additional genes or freeze any recovered GMT collection.
 
