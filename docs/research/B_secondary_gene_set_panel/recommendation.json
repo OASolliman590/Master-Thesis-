@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-06",
+  "status": "recommendation_not_freeze",
+  "primary_program": {
+    "id": "B-P",
+    "membership_changed": false,
+    "note": "The proposed eight-gene antigen-presentation program and its unresolved measurement gates are untouched."
+  },
+  "recommended_secondary_panel": [
+    {
+      "order": 1,
+      "program": "AYERS_T_CELL_INFLAMED_GEP_18",
+      "relationship_to_recovered_set": "Exact recovered membership; published signed coefficients and normalization must replace the unoriented GMT interpretation.",
+      "question": "Does the frozen B methylation program improve prediction of a bulk T-cell-inflamed/adaptive-resistance expression state beyond its matched clinical baseline?",
+      "freeze_status": "conditional"
+    },
+    {
+      "order": 2,
+      "program": "MSIGDB_HALLMARK_INTERFERON_GAMMA_RESPONSE",
+      "relationship_to_recovered_set": "Use an exact versioned official 200-gene membership; do not use or call the recovered 10-gene mini the Hallmark set. The current official membership overlaps primary P at 6/8 genes, so prespecify an intact-reference primary score and a P-gene-excluded sensitivity score.",
+      "question": "Does the frozen B methylation program improve prediction of a broad IFNG-induced transcriptional response beyond its matched clinical baseline?",
+      "freeze_status": "conditional"
+    }
+  ],
+  "multiplicity": {
+    "family": "the two secondary Delta_R2 tests only",
+    "method": "Holm family-wise error control at two-sided alpha=0.05",
+    "primary_separate": true,
+    "exploratory_sets_outside_family": true
+  },
+  "nonnegotiable_freeze_gates": [
+    "Exact source bytes, version, license/redistribution status, identifier namespace, and SHA-256 for each membership.",
+    "Ayers coefficient vector, sign, housekeeping normalization, platform transport rule, and missing-gene rule.",
+    "Official Hallmark release and exact 200-gene membership plus ssGSEA/GSVA package version and all parameters.",
+    "Canonical raw-to-current identifier mapping with aliases retained and duplicate loci collapsed before scoring.",
+    "Full-member CPC finite-value coverage and historical two-platform mapping coverage; no outcome values inspected.",
+    "Minimum retained set size and deterministic missing-feature behavior fixed before any CPC outcome analysis.",
+    "One matched baseline and one matched extended model per secondary endpoint, with all fitting and tuning confined to TCGA.",
+    "CPC outcomes prohibited from membership, scoring, promoter, covariate, or model selection."
+  ],
+  "evidence_hashes": {
+    "AIU_gene_list_inventory/inventory.json": "9fe8427bef9a73feb59c7bd1b8be80b347f6150f97eb2e02dfa693b46e04a12e",
+    "B_readiness/GSE107299_full_expression_audit.json": "59df5e12d4c141b8910d19375a7223fd11390d175a6c5eb7f27b91530ec7203d",
+    "B_measurement/B_expression_platform_contract/annotation_inspection.json": "33a648fad70da4aac5997b9fada164eb578e4f5c4486d279ff15a1adcd30c7ce",
+    "B_measurement/B_promoter_semantics/summary.json": "c6ed4f5c06a1bd17288dc06ffd527d80b6aa8e5fbf92561e19e44ff52ade6289"
+  }
+}

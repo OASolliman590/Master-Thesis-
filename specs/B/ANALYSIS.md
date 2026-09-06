@@ -50,6 +50,8 @@ One primary endpoint has no across-endpoint correction. Secondary locus tests us
 
 ### Accepted gene-set scope, 6 September 2026
 
+The source handoff is now integrated in [SECONDARY_PROGRAMS.md](SECONDARY_PROGRAMS.md), dated 7 September. It specifies two conditional secondary candidates, explicit defer rules and remaining inference requirements. It does not freeze their membership/scoring or gate primary B-P1 engineering on secondary completion.
+
 The user approved expanding the biological programs investigated while retaining one primary B-P endpoint. Maintain one coherent primary antigen-presentation program, a small prespecified secondary panel, and an explicitly exploratory remainder. The proposed eight-gene primary membership may be amended before freeze on source-backed biological and measurement grounds; this approval does not select additional genes or freeze any recovered GMT collection.
 
 Candidate secondary domains are interferon response, T-cell inflammation, and selected epigenetic programs. Use the [recovered AIU inventory](../../docs/research/AIU_gene_list_inventory/inventory.json) as candidate material. Verify original sources, versioned membership, canonical identifiers, orientation, assay coverage and overlap before selecting the small panel. Saved mini-panels must not be represented as their full named reference collections. Mixed regulator, effector and cell-type-marker sets must not be merged into a single activation score without biological justification.
