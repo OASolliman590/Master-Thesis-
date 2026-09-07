@@ -1,0 +1,4 @@
+cohort_role	patient_id	Y	age	sex_F	sex_M	ext1	ext2
+CPC-GENE	TP001	1.10	63	1	0	0.5	1.1
+CPC-GENE	EX006	2.30	56	0	1	1.4	0.8
+CPC-GENE	EX007	2.40	57	1	0	1.2	1.0

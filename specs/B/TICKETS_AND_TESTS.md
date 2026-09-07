@@ -2,9 +2,9 @@
 
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected. [B-P1](tickets/BP1_prediction_engine.md) is the first bounded reviewable coding milestone: a prediction engine over validated patient feature tables. Its synthetic implementation tests may proceed; actual TCGA/CPC inputs remain blocked by E1–E4/E6 and a signed lock.
 
-**Current engineering status, 7 September 2026:** B-F1 was released after the all-four-kit review and is now a published WIP implementation with passing local and hash-matched AIU Python3.11 software checks. Final Opus recheck remains pending. The scientific-analysis tickets and test requirements below remain proposals; they are not certified by B-F1. Future covariate ingestion must reject the mislabeled portal WGS agreement field as purity even when numeric, finite and in0–1; verify measurement meaning against the original source.
+**Current engineering status, 7 September 2026:** B-F1 is published WIP with passing local and hash-matched AIU Python3.11 software checks. B-P1 has a parent-accepted local synthetic software checkpoint: 16 tests and fresh develop/evaluate pass; AIU B-P1 is pending after SSH timeouts before any remote state was created. Neither checkpoint is a scientific-analysis release. Future covariate ingestion must reject the mislabeled portal WGS agreement field as purity even when numeric, finite and in0–1; verify measurement meaning against the original source.
 
-**Real-cohort scientific execution remains NOT READY.** B-P1 is bounded engineering work whose interface can be implemented against synthetic validated tables; it cannot build features, choose eligibility or run cohort biology. B-F1 alone has a published local WIP implementation and recorded format tests; its remaining gates are explicit above. The orchestrator coordinates the authorised delegation fleet.
+**Real-cohort scientific execution remains NOT READY.** B-P1 is bounded engineering over synthetic validated tables; it cannot build features, choose eligibility or run cohort biology. Its local software gate does not close E1–E4/E6, B-I1/B-I2, or AIU portability. The orchestrator coordinates the authorised delegation fleet.
 
 | Ticket / dependency | Bounded task and outputs | Acceptance and stop condition |
 |---|---|---|

@@ -1,0 +1,50 @@
+{
+  "schema_version": "B-P1-contract-1",
+  "purpose": "synthetic-test",
+  "development_cohort": "TCGA-PRAD",
+  "external_cohort": "CPC-GENE",
+  "patient_id_column": "patient_id",
+  "target_column": "Y",
+  "continuous_baseline_columns": ["age"],
+  "categorical_baseline_groups": [
+    ["sex_F", "sex_M"]
+  ],
+  "extended_columns": ["ext1", "ext2"],
+  "alpha_grid": [0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000],
+  "outer_cv": {
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42
+  },
+  "inner_cv": {
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42
+  },
+  "final_cv": {
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42
+  },
+  "bootstrap": {
+    "resamples": 2000,
+    "random_state": 42,
+    "bit_generator": "PCG64",
+    "quantiles": [0.025, 0.975],
+    "quantile_method": "linear"
+  },
+  "model": {
+    "type": "ridge",
+    "continuous_scaler": "standard",
+    "fit_intercept": true,
+    "solver": "svd",
+    "tol": 0.0001,
+    "copy_X": true,
+    "positive": false,
+    "max_iter": null
+  },
+  "development_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "scientific_lock": {
+    "status": "synthetic-only"
+  }
+}

@@ -13,26 +13,18 @@
 | Checkpoint | Current evidence | Status |
 |---|---|---|
 | B-F1 format inspection | Local Python 3.12.10: 19 tests passed in 7.947 s. AIU Python 3.11.16: the same hash-matched tool/tests passed 19 tests in 2.232 s from a unique scratch root. See `docs/validation/B_formats/AIU_20260907.md`. | Local and AIU Python/POSIX software gates pass. Final milestone publication remains separate. |
-| B-P1 prediction engine | Existing Grok session `01a07894-13aa-7ad1-8b6f-a17ad2af5203` repaired the original 3/6 failures. Parent rerun: `python -m unittest discover -s tests/b_prediction -v`; 14 tests passed in 37.720 s. Synthetic CLI `develop` and `evaluate` completed locally. Receipts are under `docs/validation/B_prediction/`. | Passing current tests, but not accepted: released-ticket corrections remain for exact-byte bundle hashing, exact alpha ties, scientific lock fields, the required sklearn fitting stack, and independent model/bootstrap oracles. |
+| B-P1 prediction engine | The continued Grok session `01a07894-13aa-7ad1-8b6f-a17ad2af5203` completed the released-ticket correction. Parent review added engine/patient-set locks and strengthened discriminating tests. Final local Python 3.12.10 combined gate: B-F1 19 tests in 7.252 s and B-P1 16 tests in 51.822 s; fresh synthetic `develop` and `evaluate` exited 0. Receipts are under `docs/validation/B_prediction/`. | Parent-accepted local synthetic software checkpoint. AIU B-P1 is pending after two pre-authentication SSH timeouts; no remote state was created. No scientific release. |
 | Real-cohort workflow | No approved numeric TCGA/CPC feature tables, scientific lock, or AIU run receipt exists. | Blocked by E1-E4/E6 and B-I1/B-I2. |
 
 ## B-P1 correction gate
 
-The single correction brief is recorded outside the repository at `planning/delegation_runs/B_grok_20260907_engine/correction_brief.txt`. It must preserve the current passing behavior and close these released-ticket mismatches:
-
-1. define the bundle hash from the exact `checksums.json` bytes;
-2. use exact equality, not a tolerance, for the larger-alpha tie rule;
-3. require and record explicit scientific contract/evaluation-lock identifiers without inventing values;
-4. use the specified private `Pipeline`/`ColumnTransformer`/`StandardScaler`/`VarianceThreshold` and `GridSearchCV` fitting stack while keeping evaluation fit-free; and
-5. strengthen the ridge and paired-bootstrap tests with independent numerical oracles.
-
-External Grok continuation is awaiting explicit approval to transmit the repository-scoped correction brief. No second implementer or replacement session has been started.
+Closed locally. The same Grok session completed the single correction brief, and parent review verified exact-byte bundle integrity, strict alpha ties, explicit scientific/evaluation locks, the required private sklearn fitting stack, fit-free evaluation, and independent numerical oracles. Exact hashes and delegation receipts are in `docs/validation/B_prediction/`. AIU verification remains an explicit portability gate rather than a condition for mislabeling the local result.
 
 ## Sequential coding queue
 
 | Order | Ticket/stage | Implementation boundary | Release condition |
 |---:|---|---|---|
-| 1 | B-P1 | Numeric validated-patient-table engine only. | Corrected ticket suite, synthetic develop/evaluate, local and AIU numerical receipts, reviewed scoped commit. |
+| 1 | B-P1 | Numeric validated-patient-table engine only. | Local software checkpoint accepted; reviewed commit/push is the current publication step. AIU numerical receipt remains pending due VPN timeout. |
 | 2 | Source/specimen/covariate ingestion (B-R2/B-I2 seam) | Preserve source identity, reanalysis edges, one approved specimen per patient, covariate meanings, exclusions, and hashes. Reject portal WGS agreement as purity. | Synthetic identity/provenance tests plus signed upstream rules; unresolved focus records remain explicit. |
 | 3 | Gene-set registry/scoring (B-R1/B-I2 seam) | Primary eight-gene registry; Ayers GEP-18; full official IFNG hallmark; HOPE_18; separate approved-immunotherapy target registry and saved GMTs. | Exact source/version/hash, membership, signs/weights where known, coverage and missing/duplicate rules. Unknown weights/signs stay invalid or deferred, never inferred. |
 | 4 | Promoter/QC/features (B-R1/B-R3/B-I2) | Literal U/Q, aligned annotation mapping, fold-safe TCGA-trained promoter features, assay QC and eligibility exports. | Frozen schemas and metamorphic leakage tests; no external outcome-dependent selection. |
