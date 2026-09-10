@@ -60,4 +60,4 @@ Both registry/spec JSON files passed `python -m json.tool`. The final staged dif
 
 ## Remaining limits
 
-Only Python 3.12.10 is installed locally. AIU Python 3.11 portability remains pending and is not reported as passed. No required normalized real annotation manifest was supplied, so B-G1 has not made a real coverage audit or `COMPLETE.json`. The registry remains proposed/unfrozen, official Hallmark membership remains unresolved, checkpoint approval evidence is not built, and all B-I5 scoring/scientific gates remain closed.
+Only Python 3.12.10 is installed locally. One bounded AIU preflight timed out before authentication; no remote state was created. [AIU/Python 3.11 portability remains pending](AIU_PENDING_20260910.md) and is not reported as passed. No required normalized real annotation manifest was supplied, so B-G1 has not made a real coverage audit or `COMPLETE.json`. The registry remains proposed/unfrozen, official Hallmark membership remains unresolved, checkpoint approval evidence is not built, and all B-I5 scoring/scientific gates remain closed.
