@@ -1,0 +1,413 @@
+{
+  "$schema": "./annotation_normalization.schema.json",
+  "schema_version": "B-G2-annotation-normalization-proposed-v1",
+  "ticket_id": "B-G2",
+  "status": "proposed_not_frozen",
+  "plan_kind": "machine_checkable_preparation_plan",
+  "normalized_export_emitted": false,
+  "any_source_status_pinned": false,
+  "based_on_commit": "908766b6e6d7f5101bde1c1dd4f346d5f185b547",
+  "integration_date": "2026-09-10",
+  "depends_on": {
+    "primary_decision": "B-P",
+    "b_kit_amendment_id": "B-KIT-20260907-MODULES-v0.2",
+    "b_g1_registry_schema_version": "B-gene-set-registry-proposed-v0.2",
+    "b_g1_manifest_schema_version": "B-G1-annotation-manifest-v1",
+    "registry_required_coverage_source_ids": [
+      "tcga_gencode_v36",
+      "gse107299_processed",
+      "historical_v18_maps"
+    ]
+  },
+  "scientific_boundaries": {
+    "selected_primary": "B-P",
+    "primary_membership_frozen": false,
+    "universe_u_frozen": false,
+    "promoter_q_defined": false,
+    "specimen_policy_resolved": false,
+    "covariate_policy_resolved": false,
+    "precision_resolved": false,
+    "may_score_program": false,
+    "may_select_genes": false,
+    "may_view_cpc_outcomes": false,
+    "may_claim_measurement_specificity": false,
+    "may_claim_cross_platform_transport": false,
+    "may_release_biological_analysis": false,
+    "synthetic_fixtures_validate_biology": false,
+    "historical_availability_equals_redistribution_permission": false
+  },
+  "access_boundaries": {
+    "network_during_prepare": false,
+    "git_may_contain_source_databases": false,
+    "git_may_contain_patient_values": false,
+    "committed_private_paths_allowed": false,
+    "credentials_allowed": false,
+    "patient_sample_expression_values_in_plan": false,
+    "large_objects_storage": "outside_git_approved_aiu_or_outer_audit_cache"
+  },
+  "canonicalization": {
+    "authority": "NCBI Gene current symbols and aliases, reviewed 2026-09-10",
+    "authority_date": "2026-09-10",
+    "live_lookup_at_convert_time": false,
+    "alias_rules": [
+      {"raw_symbol": "MB21D1", "canonical_symbol": "CGAS", "evidence": "NCBI Gene alias reviewed 2026-09-10"},
+      {"raw_symbol": "TMEM173", "canonical_symbol": "STING1", "evidence": "NCBI Gene alias reviewed 2026-09-10"},
+      {"raw_symbol": "TAPBPR", "canonical_symbol": "TAPBPL", "evidence": "NCBI Gene alias reviewed 2026-09-10"}
+    ],
+    "do_not_collapse": [["TAPBP", "TAPBPL"]],
+    "matching": "exact_case_sensitive_raw_token"
+  },
+  "output_contract": {
+    "table_encoding": "uncompressed_utf8_tsv_lf_no_bom",
+    "header": ["raw_id", "canonical_symbol", "entrez_id", "ensembl_id", "mapping_status"],
+    "mapping_status_enum": ["mapped", "ambiguous", "unmapped"],
+    "mapped_requires_nonempty_canonical_symbol": true,
+    "mapped_requires_entrez_or_ensembl": true,
+    "unmapped_identifier_fields_empty": true,
+    "ambiguous_retains_source_candidates_without_resolution": true,
+    "empty_cell_token": "",
+    "forbid_na_null_nan_tokens": true,
+    "preserve_raw_id": true,
+    "forbid_patient_value_sample_expression_columns": true,
+    "identifier_namespace": "symbol_entrez_ensembl",
+    "b_g1_manifest_schema_version": "B-G1-annotation-manifest-v1",
+    "pinned_requires_freeze_receipt": true,
+    "row_order": ["raw_id", "mapping_status", "canonical_symbol", "entrez_id", "ensembl_id"],
+    "hash_algorithm": "sha256",
+    "hash_payload": "exact uncompressed UTF-8 bytes of the written TSV"
+  },
+  "mapping_rules": {
+    "no_abundance_or_outcome_selection": {
+      "rule_id": "BG2-R01",
+      "machine_status": "proposed",
+      "forbidden_selectors": ["expression_magnitude", "patient_coverage", "outcome", "effect", "convenience"]
+    },
+    "missing_native_identifiers": {
+      "rule_id": "BG2-R02",
+      "machine_status": "proposed",
+      "action": "unmapped_preserve_raw_id"
+    },
+    "retired_or_null_native_map": {
+      "rule_id": "BG2-R03",
+      "machine_status": "proposed",
+      "action": "unmapped_preserve_raw_id_do_not_fill_from_conflicting_table"
+    },
+    "ambiguous_one_raw_to_many_candidates": {
+      "rule_id": "BG2-R04",
+      "machine_status": "proposed",
+      "action": "one_row_per_candidate_mapping_status_ambiguous",
+      "packed_delimiter_in_cell": null,
+      "packed_delimiter_reason": "B-G1 does not define a multi-value delimiter"
+    },
+    "many_raw_to_one_symbol": {
+      "rule_id": "BG2-R05",
+      "machine_status": "proposed",
+      "action": "retain_all_rows"
+    },
+    "duplicate_exact_rows": {
+      "rule_id": "BG2-R06",
+      "machine_status": "proposed",
+      "action": "fail_closed"
+    },
+    "hla_symbol_caution": {
+      "rule_id": "BG2-R07",
+      "machine_status": "proposed",
+      "action": "sidecar_hla_caution_do_not_drop_or_prefer_by_abundance",
+      "symbol_prefix": "HLA-"
+    },
+    "alias_application": {
+      "rule_id": "BG2-R08",
+      "machine_status": "proposed",
+      "action": "apply_registry_aliases_to_canonical_symbol_only"
+    }
+  },
+  "freeze_gates": {
+    "receipt_schema_version": "B-G2-source-freeze-receipt-v1",
+    "required_before_pinned": true,
+    "pin_authorized_field": "pin_authorized",
+    "receipt_must_bind_plan_sha256": true,
+    "receipt_must_bind_schema_sha256": true,
+    "unknown_hashes_must_be_null": true,
+    "unknown_paths_must_be_null": true,
+    "redistribution_default": "not_adjudicated",
+    "source_reference_is_deterministic": true,
+    "validation_by_standard_library_only": true
+  },
+  "input_contract": {
+    "mode": "repeatable_input_role_path",
+    "inputs": [
+      {"source_id": "tcga_gencode_v36", "role": "tcga_gencode_v36", "cardinality": 1},
+      {"source_id": "gse107299_processed", "role": "gse107299_processed", "cardinality": 1},
+      {"source_id": "historical_v18_maps", "role": "hta20", "chip": "hta20", "cardinality": 1},
+      {"source_id": "historical_v18_maps", "role": "hugene20st", "chip": "hugene20st", "cardinality": 1}
+    ]
+  },
+  "source_reference_rendering": {
+    "template": "B-G2|{source_id}|{purpose}|{plan_sha256}|{schema_sha256}|{ordered_role_sha256_pairs}|{reviewed_utc}",
+    "components": [
+      "source_id",
+      "purpose",
+      "plan_sha256",
+      "schema_sha256",
+      "ordered_role_sha256_pairs",
+      "reviewed_utc"
+    ],
+    "allows_credentials": false
+  },
+  "freeze_receipt_contract": {
+    "schema_version": "B-G2-source-freeze-receipt-v1",
+    "additional_properties_allowed": false,
+    "production_purpose": "source_freeze",
+    "synthetic_purpose": "synthetic_test",
+    "production_pin_authorized": true,
+    "required_top_level_fields": [
+      "schema_version",
+      "purpose",
+      "source_id",
+      "pin_authorized",
+      "plan_sha256",
+      "schema_sha256",
+      "inputs",
+      "reviewer_id",
+      "reviewer_identity",
+      "reviewed_utc",
+      "notes"
+    ],
+    "input_descriptor_fields": [
+      "role",
+      "object_name",
+      "byte_count",
+      "sha256",
+      "retrieved_utc",
+      "exact_url",
+      "access_class",
+      "completeness",
+      "redistribution",
+      "committed_path"
+    ],
+    "input_access_class": "public",
+    "ordered_inputs_required": true,
+    "production_output": "pinned_b_g1_manifest_and_complete",
+    "synthetic_output": "validation_receipt_only_never_b_g1_manifest_or_complete"
+  },
+  "sources": [
+    {
+      "source_id": "tcga_gencode_v36",
+      "description": "TCGA expression feature universe using the audited GENCODE v36 identifiers",
+      "source_status": "pending_normalized_export",
+      "evidence_state": "one_specimen_star_table_audited_cohort_wide_gene_id_set_unverified",
+      "object_identity": {
+        "release_label": "GDC STAR gene-model GENCODE v36",
+        "example_file_uuid": "a4980c9c-6c37-46da-8db3-c60a1c29081f",
+        "example_object_sha256": "8339cb0b1bf80236a7fff6ec9ee18b5d8779a35fa32adf4f43c20e2495fd6d2c",
+        "example_public_url": "https://api.gdc.cancer.gov/data/a4980c9c-6c37-46da-8db3-c60a1c29081f",
+        "comment_token": "gene-model: GENCODE v36",
+        "header": [
+          "gene_id",
+          "gene_name",
+          "gene_type",
+          "unstranded",
+          "stranded_first",
+          "stranded_second",
+          "tpm_unstranded",
+          "fpkm_unstranded",
+          "fpkm_uq_unstranded"
+        ],
+        "gene_row_count_example": 60660,
+        "summary_gene_id_values": ["N_unmapped", "N_multimapping", "N_noFeature", "N_ambiguous"],
+        "cohort_wide_identity_verified": false,
+        "normalized_table_sha256": null,
+        "committed_path": null
+      },
+      "raw_identifier_namespace": "gencode_v36_versioned_ensembl_gene_id",
+      "parser_boundary": {
+        "extract_fields": ["gene_id", "gene_name"],
+        "exclude_summary_gene_ids": true,
+        "parse_abundance_for_mapping": false,
+        "filter_by_gene_type": false,
+        "gzip_accepted": false
+      },
+      "version_suffix_rule": {
+        "preserve_ensembl_version_in_raw_id": true,
+        "strip_version_to_merge_rows": false,
+        "ensembl_id_encoding": "exact_gene_id_token"
+      },
+      "entrez_crosswalk_sha256": null,
+      "entrez_crosswalk_status": "not_pinned",
+      "canonicalization_authority": "GDC STAR GENCODE v36 gene_name; NCBI Gene aliases reviewed 2026-09-10",
+      "rules": {
+        "raw_id": "gene_id",
+        "canonical_symbol": "alias(gene_name)",
+        "ensembl_id": "exact gene_id for non-summary rows when mapped or ambiguous",
+        "entrez_id": "empty unless freeze names a hashed GENCODE-v36-to-Entrez crosswalk"
+      },
+      "acceptance_checks": [
+        {"check_id": "TCGA-A1", "statement": "GENCODE v36 comment and nine STAR header fields", "status": "evidenced", "scope": "one_specimen_object"},
+        {"check_id": "TCGA-A2", "statement": "60660 gene rows after excluding four N_ summaries", "status": "evidenced", "scope": "one_specimen_object"},
+        {"check_id": "TCGA-A3", "statement": "Eight proposed primary gene_name values present with unique gene_id", "status": "evidenced", "scope": "identifier_presence_only"},
+        {"check_id": "TCGA-A4", "statement": "Export contains no patient or abundance columns", "status": "proposed", "scope": "future_tool"},
+        {"check_id": "TCGA-A5", "statement": "Cohort-wide identical gene_id set across admitted TCGA expression files", "status": "blocked", "scope": "freeze_required"}
+      ]
+    },
+    {
+      "source_id": "gse107299_processed",
+      "description": "GSE107299 processed expression gene identifiers",
+      "source_status": "pending_normalized_export",
+      "evidence_state": "complete_compressed_object_audited_matrix_not_retained",
+      "object_identity": {
+        "release_label": "GSE107299 processed matrix",
+        "object_name": "GSE107299_Matrix_processed_data.tsv.gz",
+        "public_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE107nnn/GSE107299/suppl/GSE107299_Matrix_processed_data.tsv.gz",
+        "compressed_bytes": 32357821,
+        "compressed_sha256": "09d866ce89adb7122879354a523ae0c1fdac03572c555a2d647b64a35c342f2b",
+        "retrieved_utc": "2026-09-05T20:44:59.490284+00:00",
+        "feature_row_count": 24598,
+        "sample_column_count": 213,
+        "malformed_rows": 0,
+        "matrix_retained": false,
+        "uncompressed_sha256": null,
+        "normalized_table_sha256": null,
+        "committed_path": null,
+        "annotation_fields": [
+          "GeneID",
+          "Symbol_UCSC",
+          "Name_UCSC",
+          "Chr_UCSC",
+          "Start_UCSC",
+          "End_UCSC",
+          "RefSeq_UCSC"
+        ]
+      },
+      "raw_identifier_namespace": "processed_entrez_geneid",
+      "parser_boundary": {
+        "extract_fields": ["GeneID", "Symbol_UCSC"],
+        "annotation_field_count": 7,
+        "parse_patient_columns": false,
+        "refseq_is_ensembl": false,
+        "append_at_suffix": false
+      },
+      "version_suffix_rule": {
+        "preserve_ensembl_version_in_raw_id": false,
+        "strip_version_to_merge_rows": false,
+        "ensembl_id_encoding": "empty_no_ensembl_field"
+      },
+      "entrez_crosswalk_sha256": null,
+      "entrez_crosswalk_status": "native_geneid_is_entrez_digit_string",
+      "canonicalization_authority": "GSE107299 processed Symbol_UCSC; NCBI Gene aliases reviewed 2026-09-10",
+      "rules": {
+        "raw_id": "GeneID",
+        "canonical_symbol": "alias(Symbol_UCSC)",
+        "ensembl_id": "empty",
+        "entrez_id": "GeneID when mapping_status is mapped or ambiguous and GeneID matches ^[0-9]+$"
+      },
+      "acceptance_checks": [
+        {"check_id": "GSE-A1", "statement": "Seven annotation field names match B-F1 CPC_EXPRESSION_ANNOTATION", "status": "evidenced", "scope": "header"},
+        {"check_id": "GSE-A2", "statement": "24598 feature rows on the complete compressed object", "status": "evidenced", "scope": "full_object_audit_matrix_not_retained"},
+        {"check_id": "GSE-A3", "statement": "Eight proposed genes have unique GeneID rows in the audit", "status": "evidenced", "scope": "identifier_presence_only_not_U"},
+        {"check_id": "GSE-A4", "statement": "Do not equate 24598 processed rows with 24937 v18 Entrez intersection", "status": "evidenced", "scope": "count_boundary"},
+        {"check_id": "GSE-A5", "statement": "Re-acquire identifier fields against compressed_sha256 before pinned export", "status": "blocked", "scope": "freeze_required"},
+        {"check_id": "GSE-A6", "statement": "Export contains no patient columns and does not invent Ensembl", "status": "proposed", "scope": "future_tool"}
+      ]
+    },
+    {
+      "source_id": "historical_v18_maps",
+      "description": "Already-acquired historical platform/v18 identifier maps",
+      "source_status": "pending_normalized_export",
+      "evidence_state": "both_v18_packages_inspected_not_committed_not_redistribution_permission",
+      "object_identity": {
+        "release_label": "BrainArray ENTREZG 18.0.0",
+        "packaged_date": "2014-01-29",
+        "schema": "HUMANCHIP_DB 2.1",
+        "central_id": "ENTREZID",
+        "taxon": "9606",
+        "entrez_source_date": "2013-Sep12",
+        "ensembl_source_date": "2013-Sep3",
+        "ucsc_hg19_source_date": "2010-Mar22",
+        "hta20_package": "hta20hsentrezg.db_18.0.0.tar.gz",
+        "hta20_bytes": 814118,
+        "hta20_sha256": "e3e2e8f24951e6f067f08417e9677b571c58dc0832a5d7d3c11dfdf0b121add1",
+        "hta20_mapping_rows": 26194,
+        "hta20_nonmissing_entrez": 26191,
+        "hta20_null_probesets": ["100996402_at", "101928749_at", "101928757_at"],
+        "hugene20st_package": "hugene20sthsentrezg.db_18.0.0.tar.gz",
+        "hugene20st_bytes": 781983,
+        "hugene20st_sha256": "4edaefa017ed2bd2c82aeeed52c25bdc781170d636c2b65b26e7c2f10350d928",
+        "hugene20st_mapping_rows": 25088,
+        "hugene20st_nonmissing_entrez": 25087,
+        "hugene20st_null_probesets": ["101928749_at"],
+        "gpl19803_description_only_ids": ["101928749"],
+        "common_nonmissing_entrez": 24937,
+        "hta20_only_entrez": 1254,
+        "hugene20st_only_entrez": 150,
+        "is_multiple_all_zero": true,
+        "is_multiple_proves_specificity": false,
+        "intersection_is_final_u": false,
+        "normalized_table_sha256": null,
+        "committed_path": null,
+        "sqlite_hta20_sha256": "42a46e7f57b8e97252ab804e9978fb74478ec3193f055326300e3b5a27e91026",
+        "sqlite_hugene20st_sha256": "c0941fd26e1d19c9479a6c6fba5be8c3ba9a32804a720b07ad0f1b81bde735ac"
+      },
+      "raw_identifier_namespace": "brainarray_v18_platform_qualified_probeset",
+      "parser_boundary": {
+        "extract_fields": ["probe_id", "gene_id", "is_multiple"],
+        "optional_maps": ["SYMBOL", "ENSEMBL"],
+        "sqlite_readonly": true,
+        "install_r_packages": false,
+        "use_manufacturer_gpl_as_processed_dictionary": false,
+        "fill_null_by_stripping_at": false,
+        "raw_id_encoding": "{chipname}:{probe_id}",
+        "chipnames": ["hta20", "hugene20st"]
+      },
+      "version_suffix_rule": {
+        "preserve_ensembl_version_in_raw_id": false,
+        "strip_version_to_merge_rows": false,
+        "ensembl_id_encoding": "historical_ensembl_only_if_unique_else_empty"
+      },
+      "entrez_crosswalk_sha256": null,
+      "entrez_crosswalk_status": "native_probes_gene_id_is_entrez_or_null",
+      "canonicalization_authority": "BrainArray ENTREZG 18.0.0 historical SYMBOL/ENSEMBL maps; NCBI Gene aliases reviewed 2026-09-10",
+      "rules": {
+        "raw_id": "{hta20|hugene20st}:{probe_id}",
+        "canonical_symbol": "alias(unique historical SYMBOL) else empty",
+        "ensembl_id": "historical ENSEMBL token only when unique",
+        "entrez_id": "probes.gene_id when not NULL and mapping_status is mapped or ambiguous"
+      },
+      "acceptance_checks": [
+        {"check_id": "V18-A1", "statement": "Package hashes, mapping-row counts, and listed NULL probesets", "status": "evidenced", "scope": "annotation_packages"},
+        {"check_id": "V18-A2", "statement": "Each of eight proposed genes has one Entrez_at probeset on each chip", "status": "evidenced", "scope": "annotation_coverage_not_specificity"},
+        {"check_id": "V18-A3", "statement": "HuGene NULL 101928749_at versus GPL19803 description 101928749 is retained as conflict", "status": "evidenced", "scope": "conflict_unresolved_policy"},
+        {"check_id": "V18-A4", "statement": "Platform-qualified raw_id and retained _at suffix", "status": "proposed", "scope": "future_tool"},
+        {"check_id": "V18-A5", "statement": "HTA probe-sequence specificity and HLA allele evaluation", "status": "blocked", "scope": "not_retrieved_not_in_bg2"},
+        {"check_id": "V18-A6", "statement": "Do not export 24937 as frozen U", "status": "evidenced", "scope": "scientific_boundary"}
+      ]
+    }
+  ],
+  "failure_receipts": {
+    "pinned_manifest_on_failure": false,
+    "complete_marker_on_failure": false,
+    "statuses": ["failed", "incomplete_missing_freeze", "incomplete_hash_mismatch", "incomplete_parser"],
+    "must_record_input_hashes": true
+  },
+  "prose_only_rules": [
+    {
+      "rule_id": "BG2-P01",
+      "topic": "redistribution_licence_conclusion",
+      "reason": "Package Artistic-2.0 text and public GEO/GDC access are recorded; legal redistribution permission is not adjudicated in this plan"
+    },
+    {
+      "rule_id": "BG2-P02",
+      "topic": "hla_biochemical_specificity",
+      "reason": "B-G2 can flag HLA symbol rows; it cannot prove oligonucleotide or RNA-seq locus specificity"
+    },
+    {
+      "rule_id": "BG2-P03",
+      "topic": "universe_u_and_promoter_q",
+      "reason": "U and Q remain scientific freezes outside identifier-table preparation"
+    },
+    {
+      "rule_id": "BG2-P04",
+      "topic": "cohort_wide_tcga_gene_id_identity",
+      "reason": "Only one PRAD STAR object was fully counted; identity across admitted files needs a freeze receipt"
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # Execution progress
 
+## Current checkpoint: Paper B B-G2 annotation-normalization specification kit, 10 September 2026
+
+A bounded specification-only kit defines how the three B-G1 required identifier sources (`tcga_gencode_v36`, `gse107299_processed`, `historical_v18_maps`) can later be prepared into the already-implemented B-G1 five-column annotation tables. The kit is a proposed plan plus schema and an implementation-ready ticket; it does not implement a converter, download or process source data, inspect patient values, pin a normalized export, freeze `P`/`U`/`Q`, or run biology. Historical v18 package hashes and GSE/TCGA identifier audits remain prior evidence, not newly completed exports. B-G1 synthetic software checkpoints are unchanged; real annotation coverage remains pending.
+
 ## Current checkpoint: corrected Paper B B-KIT v0.2 and B-G1 release, 10 September 2026
 
 The corrected user-supplied amendment adds a proposed, schema-validated gene-set registry for the unchanged-but-unfrozen primary `P`, three planned secondary programs and exploratory M0-M6 modules. It also catalogs proposed extra data types with explicit claim boundaries. B-G1 now has a parent-accepted local and AIU synthetic software checkpoint: 15 registry tests pass locally, the final combined local Paper B regression passes 19 format, 16 prediction and 15 registry tests, and the exact hash-matched B-G1 files pass 15 tests on AIU Python 3.11.16 in 2.430 seconds after VPN restoration. The tool emits a deterministic incomplete receipt when required annotations are missing and cannot silently weaken the v0.2 schema, aliases, program layers or primary membership. Real normalized annotation coverage remains pending. No program score, biological feature, model, real cohort, CPC outcome access or external application update was authorized or performed.

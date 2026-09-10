@@ -10,6 +10,8 @@
 
 **Exploratory-module amendment, integrated 10 September 2026:** corrected B-KIT v0.2 admits planned secondary programs, M0-M6 and proposed extra data types to an outcome-blind registry. It does not freeze `P`, add primary predictors, authorize scores or release cohort work. See [the decision](../../docs/decisions/B_KIT_MODULES_20260907.md), [human-readable module contract](EXPLORATORY_MODULES.md), [registry](gene_set_registry.proposed.json), [schema](gene_set_registry.schema.json) and [B-G1 ticket](tickets/BG1_gene_set_registry.md).
 
+**B-G2 annotation-normalization plan, drafted 10 September 2026:** a proposed, schema-validated preparation contract for the three B-G1 required identifier sources. It does not emit or pin normalized tables, freeze `P`/`U`/`Q`, download sources, or authorize scores. See [ANNOTATION_NORMALIZATION.md](ANNOTATION_NORMALIZATION.md), [plan](annotation_normalization.proposed.json), [schema](annotation_normalization.schema.json) and [B-G2 ticket](tickets/BG2_annotation_normalization.md).
+
 **6 September decision checkpoint:** [PRIMARY_ALTERNATIVES_PROPOSED.md](PRIMARY_ALTERNATIVES_PROPOSED.md) preserves the preselection comparison. B-P is now selected; B-R and its rank-aware inference proposal remain historical, unexecuted alternatives and cannot become co-primary or replace a null B-P result without a new explicit amendment.
 
 ## Question and thesis role
@@ -49,5 +51,7 @@ Research users must be able to inspect source-specific patient/sample counts, tr
 | 9 Tests | TICKETS_AND_TESTS.md |
 | 10 Reproduction/readiness | REPRODUCE_AND_READINESS.md |
 | Exploratory-module amendment | EXPLORATORY_MODULES.md; gene_set_registry.proposed.json; gene_set_registry.schema.json |
+
+| Annotation-normalization plan | ANNOTATION_NORMALIZATION.md; annotation_normalization.proposed.json; annotation_normalization.schema.json; tickets/BG2_annotation_normalization.md |
 
 **Proceed criteria:** all source/scale/covariate/precision/review gates pass. **Narrow proposal:** explicitly restrict external inference to a verified covariate-complete subset if sufficiently precise and scientifically representative; do not pretend that decision is already accepted. **Combine proposal:** if B supplies credible associations but C lacks independent standalone differentiation, consider an integrated chapter/manuscript. **Defer an analysis:** when its mandatory covariates or independent data remain missing; continue unaffected design work. None of these recommendations cancels B without user acceptance.

@@ -1,0 +1,885 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/specs/B/annotation_normalization.schema.json",
+  "title": "Paper B proposed annotation-normalization plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "ticket_id",
+    "status",
+    "plan_kind",
+    "normalized_export_emitted",
+    "any_source_status_pinned",
+    "based_on_commit",
+    "integration_date",
+    "depends_on",
+    "scientific_boundaries",
+    "access_boundaries",
+    "canonicalization",
+    "output_contract",
+    "mapping_rules",
+    "freeze_gates",
+    "input_contract",
+    "source_reference_rendering",
+    "freeze_receipt_contract",
+    "sources",
+    "failure_receipts",
+    "prose_only_rules"
+  ],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "B-G2-annotation-normalization-proposed-v1"},
+    "ticket_id": {"const": "B-G2"},
+    "status": {"const": "proposed_not_frozen"},
+    "plan_kind": {"const": "machine_checkable_preparation_plan"},
+    "normalized_export_emitted": {"const": false},
+    "any_source_status_pinned": {"const": false},
+    "based_on_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "integration_date": {"type": "string", "format": "date"},
+    "depends_on": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_decision",
+        "b_kit_amendment_id",
+        "b_g1_registry_schema_version",
+        "b_g1_manifest_schema_version",
+        "registry_required_coverage_source_ids"
+      ],
+      "properties": {
+        "primary_decision": {"const": "B-P"},
+        "b_kit_amendment_id": {"const": "B-KIT-20260907-MODULES-v0.2"},
+        "b_g1_registry_schema_version": {"const": "B-gene-set-registry-proposed-v0.2"},
+        "b_g1_manifest_schema_version": {"const": "B-G1-annotation-manifest-v1"},
+        "registry_required_coverage_source_ids": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {"const": "tcga_gencode_v36"},
+            {"const": "gse107299_processed"},
+            {"const": "historical_v18_maps"}
+          ],
+          "items": false
+        }
+      }
+    },
+    "scientific_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_primary",
+        "primary_membership_frozen",
+        "universe_u_frozen",
+        "promoter_q_defined",
+        "specimen_policy_resolved",
+        "covariate_policy_resolved",
+        "precision_resolved",
+        "may_score_program",
+        "may_select_genes",
+        "may_view_cpc_outcomes",
+        "may_claim_measurement_specificity",
+        "may_claim_cross_platform_transport",
+        "may_release_biological_analysis",
+        "synthetic_fixtures_validate_biology",
+        "historical_availability_equals_redistribution_permission"
+      ],
+      "properties": {
+        "selected_primary": {"const": "B-P"},
+        "primary_membership_frozen": {"const": false},
+        "universe_u_frozen": {"const": false},
+        "promoter_q_defined": {"const": false},
+        "specimen_policy_resolved": {"const": false},
+        "covariate_policy_resolved": {"const": false},
+        "precision_resolved": {"const": false},
+        "may_score_program": {"const": false},
+        "may_select_genes": {"const": false},
+        "may_view_cpc_outcomes": {"const": false},
+        "may_claim_measurement_specificity": {"const": false},
+        "may_claim_cross_platform_transport": {"const": false},
+        "may_release_biological_analysis": {"const": false},
+        "synthetic_fixtures_validate_biology": {"const": false},
+        "historical_availability_equals_redistribution_permission": {"const": false}
+      }
+    },
+    "access_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_during_prepare",
+        "git_may_contain_source_databases",
+        "git_may_contain_patient_values",
+        "committed_private_paths_allowed",
+        "credentials_allowed",
+        "patient_sample_expression_values_in_plan",
+        "large_objects_storage"
+      ],
+      "properties": {
+        "network_during_prepare": {"const": false},
+        "git_may_contain_source_databases": {"const": false},
+        "git_may_contain_patient_values": {"const": false},
+        "committed_private_paths_allowed": {"const": false},
+        "credentials_allowed": {"const": false},
+        "patient_sample_expression_values_in_plan": {"const": false},
+        "large_objects_storage": {"const": "outside_git_approved_aiu_or_outer_audit_cache"}
+      }
+    },
+    "canonicalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "authority_date", "live_lookup_at_convert_time", "alias_rules", "do_not_collapse", "matching"],
+      "properties": {
+        "authority": {"const": "NCBI Gene current symbols and aliases, reviewed 2026-09-10"},
+        "authority_date": {"const": "2026-09-10"},
+        "live_lookup_at_convert_time": {"const": false},
+        "alias_rules": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["raw_symbol", "canonical_symbol", "evidence"],
+              "properties": {
+                "raw_symbol": {"const": "MB21D1"},
+                "canonical_symbol": {"const": "CGAS"},
+                "evidence": {"const": "NCBI Gene alias reviewed 2026-09-10"}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["raw_symbol", "canonical_symbol", "evidence"],
+              "properties": {
+                "raw_symbol": {"const": "TMEM173"},
+                "canonical_symbol": {"const": "STING1"},
+                "evidence": {"const": "NCBI Gene alias reviewed 2026-09-10"}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["raw_symbol", "canonical_symbol", "evidence"],
+              "properties": {
+                "raw_symbol": {"const": "TAPBPR"},
+                "canonical_symbol": {"const": "TAPBPL"},
+                "evidence": {"const": "NCBI Gene alias reviewed 2026-09-10"}
+              }
+            }
+          ],
+          "items": false
+        },
+        "do_not_collapse": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [
+            {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [{"const": "TAPBP"}, {"const": "TAPBPL"}],
+              "items": false
+            }
+          ],
+          "items": false
+        },
+        "matching": {"const": "exact_case_sensitive_raw_token"}
+      }
+    },
+    "output_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "table_encoding",
+        "header",
+        "mapping_status_enum",
+        "mapped_requires_nonempty_canonical_symbol",
+        "mapped_requires_entrez_or_ensembl",
+        "unmapped_identifier_fields_empty",
+        "ambiguous_retains_source_candidates_without_resolution",
+        "empty_cell_token",
+        "forbid_na_null_nan_tokens",
+        "preserve_raw_id",
+        "forbid_patient_value_sample_expression_columns",
+        "identifier_namespace",
+        "b_g1_manifest_schema_version",
+        "pinned_requires_freeze_receipt",
+        "row_order",
+        "hash_algorithm",
+        "hash_payload"
+      ],
+      "properties": {
+        "table_encoding": {"const": "uncompressed_utf8_tsv_lf_no_bom"},
+        "header": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {"const": "raw_id"},
+            {"const": "canonical_symbol"},
+            {"const": "entrez_id"},
+            {"const": "ensembl_id"},
+            {"const": "mapping_status"}
+          ],
+          "items": false
+        },
+        "mapping_status_enum": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "prefixItems": [
+            {"const": "mapped"},
+            {"const": "ambiguous"},
+            {"const": "unmapped"}
+          ],
+          "items": false
+        },
+        "mapped_requires_nonempty_canonical_symbol": {"const": true},
+        "mapped_requires_entrez_or_ensembl": {"const": true},
+        "unmapped_identifier_fields_empty": {"const": true},
+        "ambiguous_retains_source_candidates_without_resolution": {"const": true},
+        "empty_cell_token": {"const": ""},
+        "forbid_na_null_nan_tokens": {"const": true},
+        "preserve_raw_id": {"const": true},
+        "forbid_patient_value_sample_expression_columns": {"const": true},
+        "identifier_namespace": {"const": "symbol_entrez_ensembl"},
+        "b_g1_manifest_schema_version": {"const": "B-G1-annotation-manifest-v1"},
+        "pinned_requires_freeze_receipt": {"const": true},
+        "row_order": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {"const": "raw_id"},
+            {"const": "mapping_status"},
+            {"const": "canonical_symbol"},
+            {"const": "entrez_id"},
+            {"const": "ensembl_id"}
+          ],
+          "items": false
+        },
+        "hash_algorithm": {"const": "sha256"},
+        "hash_payload": {"type": "string", "minLength": 1}
+      }
+    },
+    "mapping_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_abundance_or_outcome_selection",
+        "missing_native_identifiers",
+        "retired_or_null_native_map",
+        "ambiguous_one_raw_to_many_candidates",
+        "many_raw_to_one_symbol",
+        "duplicate_exact_rows",
+        "hla_symbol_caution",
+        "alias_application"
+      ],
+      "properties": {
+        "no_abundance_or_outcome_selection": {"$ref": "#/$defs/mapping_rule_forbidden"},
+        "missing_native_identifiers": {"$ref": "#/$defs/mapping_rule_action"},
+        "retired_or_null_native_map": {"$ref": "#/$defs/mapping_rule_action"},
+        "ambiguous_one_raw_to_many_candidates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rule_id", "machine_status", "action", "packed_delimiter_in_cell", "packed_delimiter_reason"],
+          "properties": {
+            "rule_id": {"type": "string", "pattern": "^BG2-R[0-9]{2}$"},
+            "machine_status": {"enum": ["evidenced", "proposed", "blocked"]},
+            "action": {"type": "string", "minLength": 1},
+            "packed_delimiter_in_cell": {"type": "null"},
+            "packed_delimiter_reason": {"type": "string", "minLength": 1}
+          }
+        },
+        "many_raw_to_one_symbol": {"$ref": "#/$defs/mapping_rule_action"},
+        "duplicate_exact_rows": {"$ref": "#/$defs/mapping_rule_action"},
+        "hla_symbol_caution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rule_id", "machine_status", "action", "symbol_prefix"],
+          "properties": {
+            "rule_id": {"type": "string", "pattern": "^BG2-R[0-9]{2}$"},
+            "machine_status": {"enum": ["evidenced", "proposed", "blocked"]},
+            "action": {"type": "string", "minLength": 1},
+            "symbol_prefix": {"const": "HLA-"}
+          }
+        },
+        "alias_application": {"$ref": "#/$defs/mapping_rule_action"}
+      }
+    },
+    "freeze_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_schema_version",
+        "required_before_pinned",
+        "pin_authorized_field",
+        "receipt_must_bind_plan_sha256",
+        "receipt_must_bind_schema_sha256",
+        "unknown_hashes_must_be_null",
+        "unknown_paths_must_be_null",
+        "redistribution_default",
+        "source_reference_is_deterministic",
+        "validation_by_standard_library_only"
+      ],
+      "properties": {
+        "receipt_schema_version": {"const": "B-G2-source-freeze-receipt-v1"},
+        "required_before_pinned": {"const": true},
+        "pin_authorized_field": {"const": "pin_authorized"},
+        "receipt_must_bind_plan_sha256": {"const": true},
+        "receipt_must_bind_schema_sha256": {"const": true},
+        "unknown_hashes_must_be_null": {"const": true},
+        "unknown_paths_must_be_null": {"const": true},
+        "redistribution_default": {"const": "not_adjudicated"},
+        "source_reference_is_deterministic": {"const": true},
+        "validation_by_standard_library_only": {"const": true}
+      }
+    },
+    "input_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "inputs"],
+      "properties": {
+        "mode": {"const": "repeatable_input_role_path"},
+        "inputs": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "role", "cardinality"],
+              "properties": {
+                "source_id": {"const": "tcga_gencode_v36"},
+                "role": {"const": "tcga_gencode_v36"},
+                "cardinality": {"const": 1}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "role", "cardinality"],
+              "properties": {
+                "source_id": {"const": "gse107299_processed"},
+                "role": {"const": "gse107299_processed"},
+                "cardinality": {"const": 1}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "role", "chip", "cardinality"],
+              "properties": {
+                "source_id": {"const": "historical_v18_maps"},
+                "role": {"const": "hta20"},
+                "chip": {"const": "hta20"},
+                "cardinality": {"const": 1}
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["source_id", "role", "chip", "cardinality"],
+              "properties": {
+                "source_id": {"const": "historical_v18_maps"},
+                "role": {"const": "hugene20st"},
+                "chip": {"const": "hugene20st"},
+                "cardinality": {"const": 1}
+              }
+            }
+          ],
+          "items": false
+        }
+      }
+    },
+    "source_reference_rendering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["template", "components", "allows_credentials"],
+      "properties": {
+        "template": {
+          "const": "B-G2|{source_id}|{purpose}|{plan_sha256}|{schema_sha256}|{ordered_role_sha256_pairs}|{reviewed_utc}"
+        },
+        "components": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {"const": "source_id"},
+            {"const": "purpose"},
+            {"const": "plan_sha256"},
+            {"const": "schema_sha256"},
+            {"const": "ordered_role_sha256_pairs"},
+            {"const": "reviewed_utc"}
+          ],
+          "items": false
+        },
+        "allows_credentials": {"const": false}
+      }
+    },
+    "freeze_receipt_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "additional_properties_allowed",
+        "production_purpose",
+        "synthetic_purpose",
+        "production_pin_authorized",
+        "required_top_level_fields",
+        "input_descriptor_fields",
+        "input_access_class",
+        "ordered_inputs_required",
+        "production_output",
+        "synthetic_output"
+      ],
+      "properties": {
+        "schema_version": {"const": "B-G2-source-freeze-receipt-v1"},
+        "additional_properties_allowed": {"const": false},
+        "production_purpose": {"const": "source_freeze"},
+        "synthetic_purpose": {"const": "synthetic_test"},
+        "production_pin_authorized": {"const": true},
+        "required_top_level_fields": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "prefixItems": [
+            {"const": "schema_version"},
+            {"const": "purpose"},
+            {"const": "source_id"},
+            {"const": "pin_authorized"},
+            {"const": "plan_sha256"},
+            {"const": "schema_sha256"},
+            {"const": "inputs"},
+            {"const": "reviewer_id"},
+            {"const": "reviewer_identity"},
+            {"const": "reviewed_utc"},
+            {"const": "notes"}
+          ],
+          "items": false
+        },
+        "input_descriptor_fields": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "prefixItems": [
+            {"const": "role"},
+            {"const": "object_name"},
+            {"const": "byte_count"},
+            {"const": "sha256"},
+            {"const": "retrieved_utc"},
+            {"const": "exact_url"},
+            {"const": "access_class"},
+            {"const": "completeness"},
+            {"const": "redistribution"},
+            {"const": "committed_path"}
+          ],
+          "items": false
+        },
+        "input_access_class": {"const": "public"},
+        "ordered_inputs_required": {"const": true},
+        "production_output": {"const": "pinned_b_g1_manifest_and_complete"},
+        "synthetic_output": {"const": "validation_receipt_only_never_b_g1_manifest_or_complete"}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/source_tcga"}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/source_gse"}
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/source_v18"}
+          ]
+        }
+      ],
+      "items": false
+    },
+    "failure_receipts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pinned_manifest_on_failure", "complete_marker_on_failure", "statuses", "must_record_input_hashes"],
+      "properties": {
+        "pinned_manifest_on_failure": {"const": false},
+        "complete_marker_on_failure": {"const": false},
+        "statuses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": ["failed", "incomplete_missing_freeze", "incomplete_hash_mismatch", "incomplete_parser"]
+          }
+        },
+        "must_record_input_hashes": {"const": true}
+      }
+    },
+    "prose_only_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule_id", "topic", "reason"],
+        "properties": {
+          "rule_id": {"type": "string", "pattern": "^BG2-P[0-9]{2}$"},
+          "topic": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256_or_null": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "mapping_rule_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule_id", "machine_status", "action"],
+      "properties": {
+        "rule_id": {"type": "string", "pattern": "^BG2-R[0-9]{2}$"},
+        "machine_status": {"enum": ["evidenced", "proposed", "blocked"]},
+        "action": {"type": "string", "minLength": 1}
+      }
+    },
+    "mapping_rule_forbidden": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule_id", "machine_status", "forbidden_selectors"],
+      "properties": {
+        "rule_id": {"type": "string", "pattern": "^BG2-R[0-9]{2}$"},
+        "machine_status": {"enum": ["evidenced", "proposed", "blocked"]},
+        "forbidden_selectors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"enum": ["expression_magnitude", "patient_coverage", "outcome", "effect", "convenience"]}
+        }
+      }
+    },
+    "acceptance_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "statement", "status", "scope"],
+      "properties": {
+        "check_id": {"type": "string", "minLength": 1},
+        "statement": {"type": "string", "minLength": 1},
+        "status": {"enum": ["evidenced", "proposed", "blocked"]},
+        "scope": {"type": "string", "minLength": 1}
+      }
+    },
+    "source_tcga": {
+      "allOf": [
+        {"$ref": "#/$defs/source"},
+        {
+          "properties": {
+            "source_id": {"const": "tcga_gencode_v36"},
+            "raw_identifier_namespace": {"const": "gencode_v36_versioned_ensembl_gene_id"},
+            "canonicalization_authority": {"const": "GDC STAR GENCODE v36 gene_name; NCBI Gene aliases reviewed 2026-09-10"},
+            "object_identity": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/object_identity"},
+                {
+                  "required": [
+                    "release_label",
+                    "example_file_uuid",
+                    "example_object_sha256",
+                    "example_public_url",
+                    "comment_token",
+                    "header",
+                    "gene_row_count_example",
+                    "summary_gene_id_values",
+                    "cohort_wide_identity_verified"
+                  ]
+                }
+              ]
+            },
+            "parser_boundary": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/parser_boundary"},
+                {
+                  "required": [
+                    "extract_fields",
+                    "exclude_summary_gene_ids",
+                    "parse_abundance_for_mapping",
+                    "filter_by_gene_type",
+                    "gzip_accepted"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "source_gse": {
+      "allOf": [
+        {"$ref": "#/$defs/source"},
+        {
+          "properties": {
+            "source_id": {"const": "gse107299_processed"},
+            "raw_identifier_namespace": {"const": "processed_entrez_geneid"},
+            "canonicalization_authority": {"const": "GSE107299 processed Symbol_UCSC; NCBI Gene aliases reviewed 2026-09-10"},
+            "object_identity": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/object_identity"},
+                {
+                  "required": [
+                    "release_label",
+                    "object_name",
+                    "public_url",
+                    "compressed_bytes",
+                    "compressed_sha256",
+                    "retrieved_utc",
+                    "feature_row_count",
+                    "sample_column_count",
+                    "malformed_rows",
+                    "matrix_retained",
+                    "uncompressed_sha256",
+                    "annotation_fields"
+                  ]
+                }
+              ]
+            },
+            "parser_boundary": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/parser_boundary"},
+                {
+                  "required": [
+                    "extract_fields",
+                    "annotation_field_count",
+                    "parse_patient_columns",
+                    "refseq_is_ensembl",
+                    "append_at_suffix"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "source_v18": {
+      "allOf": [
+        {"$ref": "#/$defs/source"},
+        {
+          "properties": {
+            "source_id": {"const": "historical_v18_maps"},
+            "raw_identifier_namespace": {"const": "brainarray_v18_platform_qualified_probeset"},
+            "canonicalization_authority": {"const": "BrainArray ENTREZG 18.0.0 historical SYMBOL/ENSEMBL maps; NCBI Gene aliases reviewed 2026-09-10"},
+            "object_identity": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/object_identity"},
+                {
+                  "required": [
+                    "release_label",
+                    "packaged_date",
+                    "schema",
+                    "central_id",
+                    "taxon",
+                    "entrez_source_date",
+                    "ensembl_source_date",
+                    "ucsc_hg19_source_date",
+                    "hta20_package",
+                    "hta20_bytes",
+                    "hta20_sha256",
+                    "hta20_mapping_rows",
+                    "hta20_nonmissing_entrez",
+                    "hta20_null_probesets",
+                    "hugene20st_package",
+                    "hugene20st_bytes",
+                    "hugene20st_sha256",
+                    "hugene20st_mapping_rows",
+                    "hugene20st_nonmissing_entrez",
+                    "hugene20st_null_probesets",
+                    "gpl19803_description_only_ids",
+                    "common_nonmissing_entrez",
+                    "hta20_only_entrez",
+                    "hugene20st_only_entrez",
+                    "is_multiple_all_zero",
+                    "is_multiple_proves_specificity",
+                    "intersection_is_final_u",
+                    "sqlite_hta20_sha256",
+                    "sqlite_hugene20st_sha256"
+                  ]
+                }
+              ]
+            },
+            "parser_boundary": {
+              "allOf": [
+                {"$ref": "#/$defs/source/properties/parser_boundary"},
+                {
+                  "required": [
+                    "extract_fields",
+                    "optional_maps",
+                    "sqlite_readonly",
+                    "install_r_packages",
+                    "use_manufacturer_gpl_as_processed_dictionary",
+                    "fill_null_by_stripping_at",
+                    "raw_id_encoding",
+                    "chipnames"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "description",
+        "source_status",
+        "evidence_state",
+        "object_identity",
+        "raw_identifier_namespace",
+        "parser_boundary",
+        "version_suffix_rule",
+        "entrez_crosswalk_sha256",
+        "entrez_crosswalk_status",
+        "canonicalization_authority",
+        "rules",
+        "acceptance_checks"
+      ],
+      "properties": {
+        "source_id": {"enum": ["tcga_gencode_v36", "gse107299_processed", "historical_v18_maps"]},
+        "description": {"type": "string", "minLength": 1},
+        "source_status": {"const": "pending_normalized_export"},
+        "evidence_state": {"type": "string", "minLength": 1},
+        "object_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["release_label", "normalized_table_sha256", "committed_path"],
+          "properties": {
+            "release_label": {"type": "string", "minLength": 1},
+            "example_file_uuid": {"type": "string", "minLength": 1},
+            "example_object_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "example_public_url": {"type": "string", "minLength": 1},
+            "comment_token": {"type": "string", "minLength": 1},
+            "header": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "gene_row_count_example": {"type": "integer", "minimum": 1},
+            "summary_gene_id_values": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "cohort_wide_identity_verified": {"type": "boolean"},
+            "object_name": {"type": "string", "minLength": 1},
+            "public_url": {"type": "string", "minLength": 1},
+            "compressed_bytes": {"type": "integer", "minimum": 1},
+            "compressed_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "retrieved_utc": {"type": "string", "minLength": 1},
+            "feature_row_count": {"type": "integer", "minimum": 1},
+            "sample_column_count": {"type": "integer", "minimum": 1},
+            "malformed_rows": {"type": "integer", "minimum": 0},
+            "matrix_retained": {"type": "boolean"},
+            "uncompressed_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "annotation_fields": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "packaged_date": {"type": "string", "minLength": 1},
+            "schema": {"type": "string", "minLength": 1},
+            "central_id": {"type": "string", "minLength": 1},
+            "taxon": {"type": "string", "minLength": 1},
+            "entrez_source_date": {"type": "string", "minLength": 1},
+            "ensembl_source_date": {"type": "string", "minLength": 1},
+            "ucsc_hg19_source_date": {"type": "string", "minLength": 1},
+            "hta20_package": {"type": "string", "minLength": 1},
+            "hta20_bytes": {"type": "integer", "minimum": 1},
+            "hta20_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "hta20_mapping_rows": {"type": "integer", "minimum": 1},
+            "hta20_nonmissing_entrez": {"type": "integer", "minimum": 1},
+            "hta20_null_probesets": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "hugene20st_package": {"type": "string", "minLength": 1},
+            "hugene20st_bytes": {"type": "integer", "minimum": 1},
+            "hugene20st_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "hugene20st_mapping_rows": {"type": "integer", "minimum": 1},
+            "hugene20st_nonmissing_entrez": {"type": "integer", "minimum": 1},
+            "hugene20st_null_probesets": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "gpl19803_description_only_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "common_nonmissing_entrez": {"type": "integer", "minimum": 0},
+            "hta20_only_entrez": {"type": "integer", "minimum": 0},
+            "hugene20st_only_entrez": {"type": "integer", "minimum": 0},
+            "is_multiple_all_zero": {"type": "boolean"},
+            "is_multiple_proves_specificity": {"const": false},
+            "intersection_is_final_u": {"const": false},
+            "sqlite_hta20_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "sqlite_hugene20st_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "normalized_table_sha256": {"$ref": "#/$defs/sha256_or_null"},
+            "committed_path": {"type": "null"}
+          }
+        },
+        "raw_identifier_namespace": {"type": "string", "minLength": 1},
+        "parser_boundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["extract_fields"],
+          "properties": {
+            "extract_fields": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+            "exclude_summary_gene_ids": {"type": "boolean"},
+            "parse_abundance_for_mapping": {"const": false},
+            "filter_by_gene_type": {"const": false},
+            "gzip_accepted": {"type": "boolean"},
+            "annotation_field_count": {"type": "integer", "minimum": 1},
+            "parse_patient_columns": {"const": false},
+            "refseq_is_ensembl": {"const": false},
+            "append_at_suffix": {"const": false},
+            "optional_maps": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "sqlite_readonly": {"const": true},
+            "install_r_packages": {"const": false},
+            "use_manufacturer_gpl_as_processed_dictionary": {"const": false},
+            "fill_null_by_stripping_at": {"const": false},
+            "raw_id_encoding": {"type": "string", "minLength": 1},
+            "chipnames": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "prefixItems": [{"const": "hta20"}, {"const": "hugene20st"}],
+              "items": false
+            }
+          }
+        },
+        "version_suffix_rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["preserve_ensembl_version_in_raw_id", "strip_version_to_merge_rows", "ensembl_id_encoding"],
+          "properties": {
+            "preserve_ensembl_version_in_raw_id": {"type": "boolean"},
+            "strip_version_to_merge_rows": {"const": false},
+            "ensembl_id_encoding": {"type": "string", "minLength": 1}
+          }
+        },
+        "entrez_crosswalk_sha256": {"$ref": "#/$defs/sha256_or_null"},
+        "entrez_crosswalk_status": {"type": "string", "minLength": 1},
+        "canonicalization_authority": {"type": "string", "minLength": 1},
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["raw_id", "canonical_symbol", "ensembl_id", "entrez_id"],
+          "properties": {
+            "raw_id": {"type": "string", "minLength": 1},
+            "canonical_symbol": {"type": "string", "minLength": 1},
+            "ensembl_id": {"type": "string", "minLength": 1},
+            "entrez_id": {"type": "string", "minLength": 1}
+          }
+        },
+        "acceptance_checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/acceptance_check"}
+        }
+      }
+    }
+  }
+}
