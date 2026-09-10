@@ -2,6 +2,8 @@
 
 **Attempted:** 2026-09-10T15:59:00Z
 
+**Resolved:** VPN connectivity was restored and the later bounded run passed. See [AIU_20260910.md](AIU_20260910.md). The timeout account below is retained as immutable attempt history.
+
 This is a connectivity/deferral receipt, not an AIU validation result and not a scientific-analysis run.
 
 The parent attempted one bounded, non-interactive SSH preflight against the existing authenticated alias `omics` with a 10-second connection timeout. The intended read-only preflight was to report `/home/omics/miniforge3/envs/omics-py/bin/python --version` and verify that the unique proposed scratch root `/home/omics/projects/ici_thesis_pipeline/planning/2026-09-10/B_G1_aiu_6395bb4` did not exist.

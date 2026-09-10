@@ -2,7 +2,7 @@
 
 **Reviewed:** 2026-09-10T15:53:56Z
 **Base:** `933f6a8c0c7dfa8d4c60bd7d6fb4306077b61570`
-**Status:** parent-accepted local synthetic software checkpoint; not AIU/Python 3.11 validation, real annotation coverage, a registry freeze, scoring authorization or scientific readiness
+**Status:** parent-accepted local and hash-matched AIU Python 3.11 synthetic software checkpoint; not real annotation coverage, a registry freeze, scoring authorization or scientific readiness
 
 ## Delegation disposition
 
@@ -60,4 +60,4 @@ Both registry/spec JSON files passed `python -m json.tool`. The final staged dif
 
 ## Remaining limits
 
-Only Python 3.12.10 is installed locally. One bounded AIU preflight timed out before authentication; no remote state was created. [AIU/Python 3.11 portability remains pending](AIU_PENDING_20260910.md) and is not reported as passed. No required normalized real annotation manifest was supplied, so B-G1 has not made a real coverage audit or `COMPLETE.json`. The registry remains proposed/unfrozen, official Hallmark membership remains unresolved, checkpoint approval evidence is not built, and all B-I5 scoring/scientific gates remain closed.
+Only Python 3.12.10 is installed locally. The first bounded AIU preflight timed out before authentication and created no remote state; after VPN restoration, the exact hash-matched files passed 15 tests under AIU Python 3.11.16 in 2.430 seconds. See [the AIU receipt](AIU_20260910.md). No required normalized real annotation manifest was supplied, so B-G1 has not made a real coverage audit or `COMPLETE.json`. The registry remains proposed/unfrozen, official Hallmark membership remains unresolved, checkpoint approval evidence is not built, and all B-I5 scoring/scientific gates remain closed.
