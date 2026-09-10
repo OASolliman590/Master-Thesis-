@@ -2,6 +2,8 @@
 
 Status, 7 September 2026: reconciled against the later user instructions in Sol task 01a07603-056a-7fb1-9c6b-234fae3a0430. The initial two-program source report was superseded in scope when the user requested HOPE and a broader list of targets of approved immunotherapy drugs. Retain one primary program, three planned secondary programs and an exploratory approved-drug-target panel. Source, measurement and inference validation remain separate from this accepted inclusion scope. This document does not release real-cohort scoring or change B-P1.
 
+Corrected B-KIT v0.2, integrated 10 September 2026, records these programs and M0-M6 in [EXPLORATORY_MODULES.md](EXPLORATORY_MODULES.md) and the [proposed registry](gene_set_registry.proposed.json). Registry admission is not a membership or scoring freeze. In particular, M5 contains checkpoint candidates only; approved-target status still requires the drug/authority/date/indication evidence table below.
+
 ## Primary boundary
 
 Keep the single primary external Delta_R2 for the primary antigen-presentation program, developed in TCGA and evaluated without refitting in CPC-GENE. Secondary analyses cannot replace this endpoint, select its genes, or block its implementation merely because a secondary program is not reproducible. Primary membership and measurement gates remain those in ANALYSIS.md.
@@ -35,3 +37,5 @@ Keep the remaining recovered GMT panels available as documented candidates. Cust
 For each admitted program retain source/version/hash, canonical membership, signs/weights, scoring specification, annotation and finite-value coverage, missing-data rules, predictor/baseline definitions, patient eligibility, uncertainty and multiplicity methods, and an external-outcome access lock. Explicitly mark any deferred program. Do not repeatedly expand the panel to obtain favorable results.
 
 Evidence: [initial source-and-coverage handoff](../../docs/research/B_SECONDARY_GENE_SET_PANEL.md) and [initial machine-readable recommendation](../../docs/research/B_secondary_gene_set_panel/recommendation.json) are historical two-program recommendations. Later user requests and the prepared brief at E:/Master_Thesis/planning/zcode_briefs/B_gene_set_measurement_freeze_20260906.md add HOPE and approved-drug targets. This reconciled specification controls inclusion scope; [primary analysis](ANALYSIS.md) controls the primary estimand.
+
+The remainder of the user-requested mobility, cytotoxicity, mimicry, exclusion and epigenetic context scope is exploratory. B-G1 may validate registry structure and annotation coverage only. No M0-M6 score is defined here, and no exploratory result may replace the selected primary or promote itself after CPC-GENE inspection.

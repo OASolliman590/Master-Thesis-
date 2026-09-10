@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/specs/B/gene_set_registry.schema.json",
+  "title": "Paper B proposed gene-set registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "amendment_id",
+    "decision_date",
+    "integration_date",
+    "based_on_commit",
+    "status",
+    "primary_unchanged",
+    "primary_membership_frozen",
+    "outcome_access",
+    "membership_hash_contract",
+    "canonicalization",
+    "required_coverage_sources",
+    "programs",
+    "excluded_as_endpoints",
+    "extra_data_types"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "B-gene-set-registry-proposed-v0.2"},
+    "amendment_id": {"const": "B-KIT-20260907-MODULES-v0.2"},
+    "decision_date": {"type": "string", "format": "date"},
+    "integration_date": {"type": "string", "format": "date"},
+    "based_on_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "status": {"const": "proposed_not_frozen"},
+    "primary_unchanged": {"const": true},
+    "primary_membership_frozen": {"const": false},
+    "outcome_access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cpc_outcomes_used_for_amendment", "cpc_outcomes_may_select_registry", "historical_access_state"],
+      "properties": {
+        "cpc_outcomes_used_for_amendment": {"const": false},
+        "cpc_outcomes_may_select_registry": {"const": false},
+        "historical_access_state": {"type": "string", "minLength": 1}
+      }
+    },
+    "membership_hash_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "payload"],
+      "properties": {
+        "algorithm": {"const": "sha256"},
+        "payload": {"const": "UTF-8 compact JSON array of raw_gene_symbols in listed order; no BOM or trailing newline; separators comma and colon; ensure_ascii=false"}
+      }
+    },
+    "canonicalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "authority_date", "alias_rules", "do_not_collapse"],
+      "properties": {
+        "authority": {"type": "string", "minLength": 1},
+        "authority_date": {"type": "string", "format": "date"},
+        "alias_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["raw_symbol", "canonical_symbol", "evidence"],
+            "properties": {
+              "raw_symbol": {"type": "string", "minLength": 1},
+              "canonical_symbol": {"type": "string", "minLength": 1},
+              "evidence": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "do_not_collapse": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [{"type": "string"}, {"type": "string"}],
+            "items": false,
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      }
+    },
+    "required_coverage_sources": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "description", "annotation_status"],
+        "properties": {
+          "source_id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$"},
+          "description": {"type": "string", "minLength": 1},
+          "annotation_status": {"enum": ["pending_normalized_export", "pinned"]}
+        }
+      }
+    },
+    "programs": {
+      "type": "array",
+      "minItems": 11,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/program"}
+    },
+    "excluded_as_endpoints": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "extra_data_types": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/data_type"}
+    }
+  },
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "reference", "source_sha256", "evidence_status"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "reference": {"type": "string", "minLength": 1},
+        "source_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "evidence_status": {"type": "string", "minLength": 1}
+      }
+    },
+    "program": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"raw_gene_symbols": {"type": "null"}}, "required": ["raw_gene_symbols"]},
+          "then": {
+            "properties": {
+              "membership_status": {"const": "unresolved"},
+              "membership_sha256": {"type": "null"}
+            }
+          },
+          "else": {"properties": {"membership_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}
+        }
+      ],
+      "required": [
+        "id",
+        "legacy_id",
+        "layer",
+        "membership_status",
+        "source_status",
+        "source_refs",
+        "raw_gene_symbols",
+        "membership_sha256",
+        "direction_status",
+        "weights_status",
+        "scoring_status",
+        "predictor_status",
+        "optional_extra_promoter_predictors",
+        "notes"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+        "legacy_id": {"type": ["string", "null"]},
+        "layer": {"enum": ["primary", "planned_secondary", "exploratory", "exploratory_registry", "exploratory_context"]},
+        "membership_status": {"enum": ["proposed_unfrozen", "recovered_unfrozen", "unresolved"]},
+        "source_status": {"type": "string", "minLength": 1},
+        "source_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_ref"}},
+        "raw_gene_symbols": {
+          "oneOf": [
+            {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z0-9.-]+$"}},
+            {"type": "null"}
+          ]
+        },
+        "membership_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "direction_status": {"type": "string", "minLength": 1},
+        "weights_status": {"type": "string", "minLength": 1},
+        "scoring_status": {"type": "string", "minLength": 1},
+        "predictor_status": {"type": "string", "minLength": 1},
+        "optional_extra_promoter_predictors": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[A-Za-z0-9.-]+$"}
+        },
+        "notes": {"type": "string", "minLength": 1}
+      }
+    },
+    "data_type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "layer", "alignment_key", "source_status", "allowed_use", "forbidden_claim"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "status": {"const": "proposed_unfrozen"},
+        "layer": {"type": "string", "minLength": 1},
+        "alignment_key": {"type": "string", "minLength": 1},
+        "source_status": {"type": "string", "minLength": 1},
+        "allowed_use": {"type": "string", "minLength": 1},
+        "forbidden_claim": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -37,6 +37,26 @@ Each amendment contains `amendment_id`, UTC timestamp, author/reviewer, prior/ne
 
 Each exclusion contains source patient/specimen IDs (restricted storage if needed), stage, reason code, rule version, modality and missingness/QC evidence. Publish aggregate counts and a permitted pseudonymous manifest. Record all candidate analyses and stopped branches so an unreported failed primary cannot become a “setup run.”
 
+### Amendment record: B-KIT-20260907-MODULES-v0.2
+
+| Field | Recorded value |
+|---|---|
+| UTC timestamp | `2026-09-10T11:41:04Z` |
+| Author / scope authority | User request dated 7 September 2026; standing integration authorization reconfirmed 10 September 2026 |
+| Reviewer / integrator | Codex parent review, 10 September 2026 |
+| Triggering source | User-supplied `B_kit_amendment_20260907.zip`, SHA-256 `28260ec713cef24805bca19b42d514f3ba70a5e9c4501b214daa233c62671058`; interpreted as proposed content and corrected against the canonical repository |
+| Based-on commit | `a0eb7dbfa5beb2d64aa147f6c3d0ba44255a5e4c` |
+| Prior contract hashes | `ANALYSIS.md` SHA-256 `2778e98cb512f4f069f417067500c26427878c1561b2000d8991bd37f7e2cb23`; `SECONDARY_PROGRAMS.md` SHA-256 `8c39acd9d3cc737a0d711193aedc832d953455539b9a807452be77520d44ee2c`; this ledger SHA-256 `c05b2c8a83b4748e6270c54bf94d44a393455feac6fa1974e0a093a8630e6ac4` |
+| New contract hashes | `ANALYSIS.md` SHA-256 `be3d49bf112679e6b1f3623d5e2bedb4bfdec160e03ff598bb5c34c2ad86fa5a`; `SECONDARY_PROGRAMS.md` SHA-256 `3772b3e44b84afbece5eb6becbc5dfb7025e5e0748440b9ef5637432dad57957`; proposed registry SHA-256 `469bac01033a4946bcf605ee2b8a65cabe435054704af5ce8b375ebad33a9b75`; registry schema SHA-256 `0d027b587c55a755c00984feb4d903b2ec7315292d6ce600c4b29799b7a6520b` |
+| Outcome-access state | No CPC-GENE outcome score, association or performance value was used for the amendment or registry membership. Prior header, identifier and coverage inspections remain acknowledged historical access, not prospective blindness. |
+| Estimand effect | None. B-P external paired `Delta_R2` remains the single selected primary. |
+| Population effect | None. TCGA-PRAD development and later locked CPC-GENE no-refit evaluation remain; LUAD is proposed secondary context only. |
+| Multiplicity effect | None executable. The three planned secondary comparisons still require a valid frozen family/method; M0-M6 remain outside it and exploratory. |
+| Membership / predictor effect | Proposed `P` is unchanged and still unfrozen. No M0-M6 member enters primary X; optional M1 promoter candidates remain out. |
+| Classification | Specification-only amendment: planned-secondary registry plus exploratory/context scope. Not a score freeze, model run, real-cohort release or confirmatory promotion. |
+
+The corrected v0.2 decision, human-readable module contract, registry/schema and B-G1 ticket are linked from [README.md](README.md). B-G1 may produce structural and annotation-coverage evidence only; it cannot alter this amendment record or close biological gates.
+
 ## Glossary and claim ceiling
 
 Patient is the independent person; specimen/focus is a biological sample; assay/aliquot is a measurement source; reanalysis is a reused origin. Program score means relative bulk expression on the defined rank scale. Promoter association means an observational locus/program relationship. Incremental prediction means lower paired error relative to the baseline in the fixed external population. None is interchangeable with ICI response, drug efficacy, tumour-cell causality or a functional immune assay.

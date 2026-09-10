@@ -1,5 +1,9 @@
 # Execution progress
 
+## Current checkpoint: corrected Paper B B-KIT v0.2 and B-G1 release, 10 September 2026
+
+The corrected user-supplied amendment adds a proposed, schema-validated gene-set registry for the unchanged-but-unfrozen primary `P`, three planned secondary programs and exploratory M0-M6 modules. It also catalogs proposed extra data types with explicit claim boundaries. B-G1 is released only for deterministic registry validation and patient-free annotation-coverage tooling; no program score, biological feature, model, real cohort, CPC outcome access or external application update is authorized. Missing required annotations must yield an incomplete receipt rather than guessed mappings or a false completion marker.
+
 ## Current checkpoint: Paper B B-P selection and prediction-engine contract, 6 September 2026
 
 The user selected **B-P external prediction improvement** as Paper B's single primary: independent CPC-GENE `Delta_R2=(SSE_baseline-SSE_extended)/SST` from two frozen TCGA-fitted ridge predictors. B-R remains a historical alternative, not co-primary or a null-result fallback. Selection does not freeze the proposed gene program, U/Q, specimen/covariate policy, final eligible N or precision. The first bounded B-P1 engine ticket accepts validated numeric patient tables; implementation may use synthetic fixtures, while actual biological feature ingestion and cohort runs remain gated. Historical expression platforms/v18 mappings, literal promoter candidates and cellularity source fields are audited in docs/research/B_MEASUREMENT_CHECKPOINT.md. No molecular score/model was run and B-F1 code is unchanged. AIU and final Opus gates remain pending; review/publication synchronization awaits the parent receipt.

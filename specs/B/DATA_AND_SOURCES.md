@@ -8,6 +8,8 @@
 
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** Counts below reflect bounded metadata/table inspections, not final analysis eligibility. Cite and retain both canonical reports: `docs/research/B_paired_prostate.md` and the evolving `docs/research/B_readiness/` artifacts.
 
+**B-KIT v0.2 source boundary, 10 September 2026:** proposed CNA, mutation/HLA-LOH, immune-context, methylation-composition, LUAD, promoter-mask and detection-p inputs are catalogued in [EXPLORATORY_MODULES.md](EXPLORATORY_MODULES.md) and the [registry](gene_set_registry.proposed.json). They are unfrozen and do not assert availability or comparability. Thorsson subtype is expression-derived/integrative context rather than orthogonal validation; no extra data type silently enters the primary model.
+
 | Source/question | Inspected coverage | Role / unresolved requirement |
 |---|---|---|
 | TCGA-PRAD GDC RNA plus 450K | 497 shared primary-tumour cases; 501 shared sample IDs in prior complete metadata response | Training/development; resolve repeated specimens and all mandatory covariates/QC. |
