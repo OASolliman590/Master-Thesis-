@@ -1,5 +1,7 @@
 # Epigenetic priming thesis
 
+**A/B scope amendment, 11 September 2026:** docs/decisions/AB_IMMUNE_BARRIERS_20260911.md controls. A selects responder/non-responder discovery (A-P2), with response-definition sensitivity secondary. B studies clinically anchored immune deficits and epigenetic correlates; fixed APM prediction is a validation component. MethylCIBERSORT is a separately qualified composition sensitivity. C/D and wet-lab scope remain unchanged.
+
 The programme investigates prostate immune regulation and interventions that may restore immune-recognition programmes, while distinguishing clinical associations, molecular perturbation effects and functional immune evidence.
 
 ## Language

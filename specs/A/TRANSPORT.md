@@ -1,6 +1,6 @@
 # A retained prostate molecular and clinical transport module
 
-Status: proposed, conditional on actual sources and the competing primary choice. This module preserves prostate transferability while separating molecular distribution shifts, cell composition and clinical discrimination. It does not replace the independent ICI validation in DISCOVERY.md.
+Status: proposed, conditional on actual source admission; A-P2 discovery is now the selected primary under the 11 September amendment. This module preserves prostate transferability while separating molecular distribution shifts, cell composition and clinical discrimination. It does not replace the independent ICI validation in DISCOVERY.md.
 
 ## Source-by-question gates
 

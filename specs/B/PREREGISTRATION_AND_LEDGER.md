@@ -1,5 +1,7 @@
 # B preregistration proposal and evidence ledger
 
+**Controlling scientific scope, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md) and [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md). Existing APM prediction contracts remain intact as a validation component. The framework controls the broader evidence/figure plan and MethylCIBERSORT sensitivity; unresolved new source/scoring/statistical contracts are not implicitly executable.
+
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the one Paper B primary. Selection fixes the external Delta_R2 estimand but does not complete the preregistration freeze fields below. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
 
 **Source correction, 6 September 2026:** the CPC portal `WGS_BASED_PURITY_ESTIMATION` field matches original WGS/OncoScan SNP-call agreement, not tumour purity. It must not populate a purity covariate or count toward purity availability. Genuine cellularity alternatives require their own method/specimen/scale validation. [Verified correction](../../docs/research/B_PURITY_FIELD_CORRECTION.md).

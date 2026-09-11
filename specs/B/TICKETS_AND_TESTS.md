@@ -1,5 +1,7 @@
 # B bounded implementation tickets and meaningful checks
 
+**Controlling scientific scope, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md) and [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md). Existing APM prediction contracts remain intact as a validation component. The framework controls the broader evidence/figure plan and MethylCIBERSORT sensitivity; unresolved new source/scoring/statistical contracts are not implicitly executable.
+
 **11 September engineering correction:** follow [WORKFLOW_IMPLEMENTATION.md](WORKFLOW_IMPLEMENTATION.md) W1-W8 as the connected delivery sequence. The historical ticket dependencies below restrict dependent real-cohort execution, not parameterized software construction or permitted public-source acquisition. W4-W5 must resolve fold-local probe selection before scientific use of B-P1. No additional fleet setup is part of this sequence.
 
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected. [B-P1](tickets/BP1_prediction_engine.md) is the first bounded reviewable coding milestone: a prediction engine over validated patient feature tables. Its synthetic implementation tests may proceed; actual TCGA/CPC inputs remain blocked by E1–E4/E6 and a signed lock.

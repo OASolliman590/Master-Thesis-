@@ -1,5 +1,7 @@
 # B validation and four-figure evidence plan
 
+**Controlling scientific scope, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md) and [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md). Existing APM prediction contracts remain intact as a validation component. The framework controls the broader evidence/figure plan and MethylCIBERSORT sensitivity; unresolved new source/scoring/statistical contracts are not implicitly executable.
+
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected. The paired CPC-GENE Delta_R2 below is the single primary; B-R is historical and cannot replace a null result without an explicit amendment. Program/U/Q, eligibility, purity comparability and precision remain open gates. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
 
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1.** This is an evidence requirement, not a report of successful validation. ANALYSIS.md controls the estimand and transforms.

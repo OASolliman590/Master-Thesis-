@@ -1,5 +1,9 @@
 # Execution progress
 
+## A/B scientific reconciliation, 11 September 2026
+
+User approved correcting the responder-to-prostate-to-intervention evidence chain. A-P2 discovery is selected as A primary; A-P1 endpoint sensitivity is secondary. B now has IMMUNE_BARRIER_FRAMEWORK.md with exact cross-paper boundaries and MethylCIBERSORT source/QC/composition-sensitivity requirements. Existing APM B-P estimand and W1-W5 code are preserved; W6 remains a bounded APM validation component. No new biological endpoint, scoring rule, source availability, institutional approval or real-analysis result was invented. Broader modules remain separately gated; full AIU fixture gate remains pending. This was a documentation-only amendment; no model was rerun.
+
 ## W5 reviewed software checkpoint and W6 coding handoff, 11 September 2026
 
 Corrected W5 connects fold-local feature fitting to nested ridge development; manual Grok work was independently reviewed and fixed by Sol. Final parent local regression: **116 tests passed, zero skips, 202.557 seconds**. AIU corrected fresh W1-W5 and resume passed on a hash-matched isolated snapshot; full strict suite remains **115 passed / 1 missing-fixture failure / zero skips**. The four public-source B-F1 fixtures exist in a previously validated AIU location but were excluded from the new snapshot. Two later SSH attempts timed out before authentication, preventing server-side hash verification/copy and rerun. No new fixture transfer occurred. The server regression gate remains pending, not closed.

@@ -1,12 +1,14 @@
 # A preregistration and evidence ledger
 
+**Amendment:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). This records user approval of direction only, not supervisor/institutional approval or an external registry submission.
+
 Draft only. No external registration exists for this revision. Metadata, prior pipeline outputs and earlier candidate endpoints have been inspected; list those exposures in the registration. A future Git tag is a version marker, not proof of prospective external preregistration.
 
 ## Proposed freeze
 
 Freeze the approved primary hypothesis/estimand in ANALYSIS.md, cohort and signature registries, response mappings, specimen rules, source versions, precision rationale, resampling, multiplicity, exclusions and all development/validation boundaries. Preserve signed and null outcomes. Compare the proposed change with the submitted cross-cancer discovery protocol and record supervisor/institutional decisions separately; their approval cannot be inferred here.
 
-Resolve exactly one primary choice: A-P1 fixed-CYT endpoint sensitivity or A-P2 independent-test incremental discrimination of the learned signature. Both full modules remain specified; the unchosen one becomes declared secondary, not silently cancelled. Freeze branch-specific cohort/weight registries, canonical O/SD/PD resampling and percentile quantiles, all secondary test IDs/family sizes, independent-test exposure, discovery handoff version, and prostate transport contracts. A failed frozen required source yields an incomplete primary, not a changed denominator.
+Record the resolved primary choice: A-P2 independent-test incremental discrimination of the learned signature; A-P1 fixed-CYT endpoint sensitivity is secondary. Both modules remain specified under this hierarchy. Freeze branch-specific cohort/weight registries, canonical O/SD/PD resampling and percentile quantiles, all secondary test IDs/family sizes, independent-test exposure, discovery handoff version, and prostate transport contracts. A failed frozen required source yields an incomplete primary, not a changed denominator.
 
 ## Grilling ledger
 
@@ -16,7 +18,7 @@ Resolve exactly one primary choice: A-P1 fixed-CYT endpoint sensitivity or A-P2 
 | A02 | Are prostate ICI transcriptomes absent? No: published Guan and public COMBAT evidence exist | Verified publication/metadata, resolved as an absence correction | Guan DOI10.1038/s41586-022-04522-6; COMBAT DOI10.1038/s41467-023-44514-2, Data availability and treatment schedule | Complete Guan matrix/labels unresolved; COMBAT regimen not isolated ICI |
 | A03 | Does COMBAT provide primary ORR/DCR categories? Not from inspected binary fields | Verified metadata limitation | GSE229555 `psa50 response`, `radiographic response`, `time point`; summary with source URL | Do not infer SD or ICI-specific benefit |
 | A04 | Can clinical comparisons use the same patients? GSE91061 has51 baseline patient codes linked to original BOR/prior-ipi metadata,49 category-labelled; GSE176307 has89 labelled records but88 labelled patient codes after resolving repeat sequencing | Verified metadata, final eligibility open | Historical candidate_label_coverage.json plus ../../docs/research/A_source_admission_91061/REPORT.md and ../../docs/research/A_source_admission_176307/REPORT.md; original BOR, patient keys and hashes | Timing/overlap/scale checks remain; counts are ceilings |
-| A05 | Should fixed CYT Delta be the primary rather than original discovery? Proposed for a transparent paired endpoint analysis | Material design choice, pending user review | ANALYSIS.md; Rooney DOI10.1016/j.cell.2014.12.033 supports gene basis, not our study's novelty | Keep discovery branch and full secondary scope explicit; no silent replacement |
+| A05 | Should fixed CYT Delta be the primary rather than original discovery? No: A-P2 discovery selected; fixed-CYT analysis is secondary | User decision, 11 September 2026 | ANALYSIS.md; Rooney DOI10.1016/j.cell.2014.12.033 supports gene basis, not our study's novelty | Keep discovery branch and full secondary scope explicit; no silent replacement |
 | A06 | Is DCR equivalent to durable benefit? No without duration/follow-up | Source definition distinction, resolved | Luo DOI10.1016/j.annonc.2022.04.450, SD-responder definition; original criteria | Censoring and six-month boundaries cannot be imputed |
 | A07 | Does correlation with PRAD immune scores validate ICI response? No | Inferential boundary, resolved | Untreated cohort design plus endpoint definition; submitted thesis mapping | Molecular characterization only; overlap of gene sets reported |
 | A08 | Are49+88 candidate labelled patients adequate for the proposed precision? Unknown | Unresolved factual/design dependency | Current category counts; no expression pilot or precision calculation | Admission and precision analysis required before readiness |

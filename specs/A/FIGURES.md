@@ -1,5 +1,7 @@
 # A four-figure evidence outline
 
+**11 September 2026 figure ordering:** A-P2 is selected. Figure 1: cohort/label/split provenance. Figure 2: held-out discovery and independent-test incremental AUROC, coefficient/stability product (former 3D–3E). Figure 3: secondary response-definition sensitivity and admitted comparator analyses. Figure 4: qualified prostate molecular characterization and A-to-B/C evidence handoff. Historical panel identifiers below remain content references; they no longer determine primary emphasis.
+
 Proposed panels, not generated results. Missing panels remain visible; do not replace unavailable clinical validation with an RNA proxy under the same caption.
 
 | Figure/panel | Question and inputs | Analysis and uncertainty | Maximum claim |
@@ -22,4 +24,4 @@ Proposed panels, not generated results. Missing panels remain visible; do not re
 
 Figure3 panel feasibility and Figure4 clinical endpoint validity are readiness gates. A single binary label source cannot be drawn as if CR/PR/SD/PD are available. Every point must trace to the dataset snapshot, analysis specification and patient/experiment unit.
 
-If A-P2 is selected as primary, the discovery validation panels3D–3E move to the lead quantitative Figure2 and CYT endpoint-sensitivity panels become the secondary Figure3; rewrite figure titles/captions before analysis. Keep four figures and all admitted branches without pretending the unresolved primary choice is already settled. Same-cancer replication and cross-cancer/regimen transport must be labelled separately in every forest plot.
+With A-P2 selected as primary, the discovery validation panels3D–3E move to the lead quantitative Figure2 and CYT endpoint-sensitivity panels become the secondary Figure3; rewrite figure titles/captions before analysis. Keep four figures and all admitted branches under the approved A-P2-primary/A-P1-secondary hierarchy. Same-cancer replication and cross-cancer/regimen transport must be labelled separately in every forest plot.

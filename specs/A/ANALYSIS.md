@@ -1,12 +1,14 @@
 # A proposed statistical contract
 
+**Authority:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). DISCOVERY.md controls the selected A-P2 primary. In the historical A-P1 formulas below, labels such as Delta_primary refer only to that module-local aggregate, not the paper-wide primary. Numerical/data contracts still require freeze.
+
 Status: proposed endpoint choice; no score computed. CYT is selected for a transparent assayable anchor, not because it is known to perform best. The published two-gene concept is from Rooney et al., Cell2015, DOI10.1016/j.cell.2014.12.033; the exact input-scale and analysis choices below are this protocol's proposals.
 
-## Unresolved primary choice
+## Selected primary branch
 
-Two competing primary designs remain proposed: (A-P1) fixed-CYT endpoint sensitivity below, and (A-P2) external incremental discrimination of a discovered responder signature in DISCOVERY.md. Exactly one must be selected before confirmatory scoring; the other remains a declared secondary analysis. Full discovery and prostate transport remain in scope as conditional modules, not cancelled because A-P1 is specified first. No primary approval is inferred from this draft.
+A-P2 external incremental discrimination of a discovered responder signature in DISCOVERY.md is selected. A-P1 fixed-CYT endpoint sensitivity below is secondary. Full discovery and prostate transport remain in scope as conditional modules, not cancelled because A-P1 is specified first. No primary approval is inferred from this draft.
 
-## A-P1: proposed fixed-CYT primary endpoint
+## A-P1: declared secondary fixed-CYT endpoint-sensitivity analysis
 
 Patient score s_i = sqrt(TPM_GZMA,i × TPM_PRF1,i), with nonnegative TPM and both genes present. Zero abundance is a valid zero; missing is not zero. Higher score predicts the positive outcome without post-hoc sign flips. For a labelled cohort j, AUC_j(s,Y) is the mean over positive–negative patient pairs of I(s_positive>s_negative)+0.5 I(equal).
 
@@ -42,7 +44,7 @@ Secondary fixed signature panel: IFN-gamma/TIS and other documented scores after
 
 Durable benefit is a separate endpoint requiring follow-up, progression and the source's exact duration/boundary definitions. PSA decline, RECIST response and survival are not substitutes. Do not combine binary-only datasets into the primary by guessing SD.
 
-The retained discovery branch is specified in DISCOVERY.md with a competing primary choice, regularised learner, training-only processing, cohort-held-out validation, uncertainty and a versioned B/C handoff. Its execution is conditional on admitted data and reviewed design, not on positive CYT results. No deep model is specified.
+The retained discovery branch is specified in DISCOVERY.md with selected primary A-P2, regularised learner, training-only processing, cohort-held-out validation, uncertainty and a versioned B/C handoff. Its execution is conditional on admitted data and reviewed design, not on positive CYT results. No deep model is specified.
 
 ## Prostate claim boundary
 

@@ -1,5 +1,7 @@
 # B selected-prediction software and environment contract
 
+**Controlling scientific scope, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md) and [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md). Existing APM prediction contracts remain intact as a validation component. The framework controls the broader evidence/figure plan and MethylCIBERSORT sensitivity; unresolved new source/scoring/statistical contracts are not implicitly executable.
+
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the single primary. [B-P1](tickets/BP1_prediction_engine.md) defines the first bounded prediction-engine implementation interface; real-cohort use remains blocked on validated measured inputs and a signed scientific lock. B-R is historical, not co-primary.
 
 **Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Annotation and measurement choices remain unselected.

@@ -1,5 +1,7 @@
 # Paper B exploratory modules and extra data types
 
+**11 September reconciliation:** [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) supplies the scientific role and MethylCIBERSORT implementation requirements. M0-M6 remain distinct exploratory functions; no automatic composite or promotion to primary predictors. A-derived signatures remain separately versioned. MethylCIBERSORT is a composition sensitivity, not a silent primary purity replacement.
+
 **Amendment date:** 7 September 2026  
 **Integrated:** 10 September 2026 as corrected v0.2  
 **Status:** proposed, not frozen, not a primary change and not a real-cohort release  

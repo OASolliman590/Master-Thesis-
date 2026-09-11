@@ -1,5 +1,7 @@
 # Paper B: executable implementation contract
 
+**11 September reconciliation:** W1-W5 are implemented and reviewed; W6 coding is released, W7-W8 remain pending. Existing code performs the fixed APM validation component. [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) now controls the broader scientific evidence/figure plan. MethylCIBERSORT: W3 methylation/provenance input, W4 separately frozen composition preparation, W8 sensitivity analyses, W7 visualization. Do not change the current W5/W6 baseline or add unfrozen scores. Historical proposed paths/gap descriptions below record the design; consult current PROGRESS for completion. The original four APM figures remain a component-level report, not the full broadened paper.
+
 Updated 11 September 2026. This is the controlling engineering sequence; ANALYSIS.md controls scientific choices. Existing components are reusable code, not a finished pipeline. This document does not freeze unresolved biological inputs.
 
 ## What works now

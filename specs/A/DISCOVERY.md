@@ -1,12 +1,14 @@
 # A retained responder-signature discovery module
 
-Status: full conditional design proposal. This restores an implementable branch for the submitted cross-cancer responder-signature task. It is not approved, cancelled, or satisfied by a fixed CYT analysis. Numerical settings below are proposed design choices; no performance or cohort coverage is asserted.
+**Selected 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). Preserve the existing independent-test estimand and discovery method; do not claim a new clinical predictor is validated until real tests are completed.
 
-## Question, endpoint and competing primary choice
+Status: full conditional design proposal. This restores an implementable branch for the submitted cross-cancer responder-signature task. Its A-P2 branch is now selected; data, learner details and execution release remain conditional. Fixed CYT does not substitute for discovery. Numerical settings below are proposed design choices; no performance or cohort coverage is asserted.
+
+## Question and selected primary endpoint
 
 Learn a regularised transcriptomic signature of objective response to ICI in source cancers, test it on independent originating studies, then pass a frozen gene/coefficient product to prostate characterization and B/C. Outcome Y=1 means documented best overall CR/PR (including explicitly combined PRCR); Y=0 means documented SD/PD. An unspecified binary responder label or a PSA endpoint is not automatically this outcome. Different assessment systems/treatment timelines must pass DATA.md harmonization before admission.
 
-**A-P2, competing proposed primary:** for a locked discovered score f and fixed CYT score s, estimate D_j=AUC_j(f,Y_ORR)−AUC_j(s,Y_ORR) on identical eligible baseline patients in each untouched final-test cohort j. Aggregate by equal cancer weights and equal cohort weights within cancer, as in ANALYSIS.md, using a separately frozen discovery-test manifest. The target is incremental retrospective discrimination of the locked score in that finite independent study collection, conditional on its development data. It is not predictive treatment benefit versus a non-ICI control. Exactly one of A-P1 and A-P2 must become the registered primary; the unchosen analysis remains a declared secondary module. No result may decide the choice.
+**A-P2, selected primary branch:** for a locked discovered score f and fixed CYT score s, estimate D_j=AUC_j(f,Y_ORR)−AUC_j(s,Y_ORR) on identical eligible baseline patients in each untouched final-test cohort j. Aggregate by equal cancer weights and equal cohort weights within cancer, as in ANALYSIS.md, using a separately frozen discovery-test manifest. The target is incremental retrospective discrimination of the locked score in that finite independent study collection, conditional on its development data. It is not predictive treatment benefit versus a non-ICI control. A-P2 is selected by the 11 September user amendment; A-P1 is secondary. No outcome result determined this selection. This decision is not external preregistration.
 
 If independent final-test data cannot be established, cohort-held-out development estimates remain reportable as internal-external validation of the learning procedure; they cannot silently replace A-P2's independent-test estimand. Document a reviewed endpoint amendment or leave that primary nonestimable.
 

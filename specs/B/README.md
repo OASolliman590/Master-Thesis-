@@ -1,4 +1,6 @@
-# Paper B selected-primary specification kit
+# Paper B — prostate immune deficits and epigenetic correlates
+
+**Scientific aim amended, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). The controlling broader question and figure plan are in [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md): clinically anchored prostate immune deficits, epigenetic correlates, composition alternatives and candidates for restoration testing. Existing B-P is the specified confirmatory estimand within the fixed APM validation module, not proof of the whole barrier claim. W1-W5 are now implemented/reviewed; W6 coding is released for synthetic testing. Historical engineering statuses below are superseded by current PROGRESS. No new score or real analysis is authorized here.
 
 **Engineering entry point, 11 September 2026:** [WORKFLOW_IMPLEMENTATION.md](WORKFLOW_IMPLEMENTATION.md) defines the connected acquisition-to-figures coding sequence, actual interfaces, stage-specific gates and end-to-end acceptance. B-F1, B-G1, B-G2 and B-P1 exist; the integrated workflow does not yet exist. Use [requirements-windows.txt](requirements-windows.txt) for the isolated Windows component environment.
 
@@ -18,7 +20,7 @@
 
 ## Question and thesis role
 
-Does promoter methylation add externally reproducible information about a fixed antigen-presentation expression program beyond prespecified clinical and tumour-purity covariates in prostate cancer? Develop the model in TCGA-PRAD and test it once in a distinct CPC-GENE cohort. The primary result is an external change in predictive R-squared, not a clinical ICI-response prediction or causal-silencing test.
+Which clinically relevant immune functions are deficient in defined prostate tumour contexts, which deficits have reproducible epigenetic correlates, and which candidates warrant restoration testing? The fixed APM validation module asks whether promoter methylation adds externally reproducible information beyond clinical and purity covariates, developing in TCGA-PRAD and evaluating frozen models in CPC-GENE. Its Delta_R2 is a molecular validation endpoint, not the entire barrier claim, an ICI-response prediction or proof of causal silencing.
 
 B is the central patient molecular chapter. It retains the registered PRAD/LUAD contrast as a secondary tissue comparison and a frozen, discovery-only signed handoff to C. Neither the contrast nor expression–methylation anticorrelation proves that a tumour cell is epigenetically silenced. Wet-lab requirements remain separate; this kit contains no experimental procedures.
 

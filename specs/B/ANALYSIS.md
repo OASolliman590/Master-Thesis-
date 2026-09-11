@@ -1,5 +1,7 @@
 # B selected-primary analysis contract
 
+**11 September scope reconciliation:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). This file defines the fixed APM validation module. Its B-P Delta_R2 remains unchanged; it is one component of [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md). Broader deficits/composition/chromatin analyses need separate frozen contracts and may not replace this endpoint after results.
+
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the single Paper B primary. The primary estimand is the independent CPC-GENE `Delta_R2=(SSE_baseline-SSE_extended)/SST` from frozen TCGA models. B-R remains a historical alternative, not a co-primary or fallback. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
 
 **Measurement evidence, 6 September 2026:** [verified source facts refining proposed platform, promoter and cellularity contracts](../../docs/research/B_MEASUREMENT_CHECKPOINT.md) refine shared gates. Program membership, U/Q and all specimen/covariate/precision choices remain unselected.
