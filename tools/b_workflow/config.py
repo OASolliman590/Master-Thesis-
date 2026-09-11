@@ -42,6 +42,7 @@ TOP_KEYS = {
     "w3",
     "w4",
     "w5",
+    "w6",
     "scientific_gates",
 }
 
@@ -161,6 +162,24 @@ def load_config(path: Path, *, repo_root: Path) -> dict[str, Any]:
         raise PipelineFailure("config reason=w5-must-forbid-global-nested-cv-state", 3)
     if not isinstance(w5["min_development_n"], int) or w5["min_development_n"] < 7:
         raise PipelineFailure("config reason=w5-min-development-n-below-bp1", 3)
+    w6 = payload["w6"]
+    if not isinstance(w6, dict) or w6.get("policy_label") != "synthetic-fixture-only":
+        raise PipelineFailure("config reason=w6-policy-not-fixture", 3)
+    lock = w6.get("evaluation_lock")
+    if not isinstance(lock, dict):
+        raise PipelineFailure("config reason=missing-field w6.evaluation_lock", 3)
+    for key in (
+        "synthetic_label",
+        "decision_receipt",
+        "reviewer_receipt",
+        "precision_contract_id",
+    ):
+        if key not in lock:
+            raise PipelineFailure(f"config reason=missing-field w6.evaluation_lock.{key}", 3)
+        if "synthetic" not in str(lock[key]).lower() and key != "synthetic_label":
+            raise PipelineFailure(f"config reason=w6-lock-not-fixture {key}", 3)
+    if "SYNTHETIC" not in str(lock["synthetic_label"]).upper():
+        raise PipelineFailure("config reason=w6-lock-label-required", 3)
     payload["_config_sha256"] = sha256_bytes(raw)
     payload["_config_path"] = str(path.resolve())
     payload["_repo_root"] = str(repo_root.resolve())

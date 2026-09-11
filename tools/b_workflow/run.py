@@ -11,6 +11,8 @@ from tools.b_acquire.acquire import run_acquire
 from tools.b_cohort.build import run_cohort
 from tools.b_features.provider import run_features
 from tools.b_prediction.fold_develop import run_fold_develop
+from tools.b_prediction.fold_evaluate import run_fold_evaluate
+from tools.b_report.report import run_report
 from tools.b_workflow.config import load_config
 from tools.b_workflow.io import (
     PipelineFailure,
@@ -20,6 +22,7 @@ from tools.b_workflow.io import (
     remove_tree,
     sha256_file,
     utc_stamp,
+    verify_published_stage,
 )
 from tools.b_workflow.plan import build_plan
 from tools.b_workflow.stages import CODE_PATHS, IMPLEMENTED, STAGE_DEPS, STAGE_ORDER, descendants
@@ -51,38 +54,9 @@ def load_complete(run_dir: Path, stage_id: str) -> dict[str, Any] | None:
 
 def verify_complete_stage(run_dir: Path, stage_id: str) -> tuple[bool, str]:
     stage_dir = _stage_path(run_dir, stage_id)
-    complete_path = stage_dir / "COMPLETE.json"
-    if not complete_path.is_file():
-        return False, "missing-COMPLETE"
     if _work_path(run_dir, stage_id).exists():
         return False, "work-dir-present"
-    complete = json_no_dups(complete_path.read_bytes())
-    if complete.get("status") != "complete":
-        return False, "status-not-complete"
-    if complete.get("stage") != stage_id:
-        return False, "stage-mismatch"
-    checksums = stage_dir / "checksums.json"
-    if not checksums.is_file():
-        return False, "missing-checksums"
-    if complete.get("checksums_sha256") != sha256_file(checksums):
-        return False, "checksums-hash-mismatch"
-    manifest = stage_dir / "manifest.json"
-    if not manifest.is_file():
-        return False, "missing-manifest"
-    if complete.get("manifest_sha256") != sha256_file(manifest):
-        return False, "manifest-hash-mismatch"
-    payload = json_no_dups(checksums.read_bytes())
-    artifacts = payload.get("artifact_hashes") or {}
-    for rel, expected in artifacts.items():
-        if rel == "checksums.json" or expected is None:
-            continue
-        path = stage_dir / rel
-        if not path.is_file():
-            return False, f"missing-artifact:{rel}"
-        actual = sha256_file(path)
-        if actual != expected:
-            return False, f"artifact-hash-mismatch:{rel}"
-    return True, "ok"
+    return verify_published_stage(stage_dir, stage_id)
 
 
 def invalidate(run_dir: Path, stage_id: str, log: list[dict[str, Any]]) -> None:
@@ -226,6 +200,29 @@ def _execute_stage(
             interpreter=interpreter,
         )
         return
+    if stage_id == "W6":
+        run_fold_evaluate(
+            config,
+            repo_root=repo_root,
+            w3_dir=_stage_path(run_dir, "W3"),
+            w5_dir=_stage_path(run_dir, "W5"),
+            stage_dir=_stage_path(run_dir, "W6"),
+            parent_hashes=parent,
+            code_identity=identity,
+            interpreter=interpreter,
+        )
+        return
+    if stage_id == "W7":
+        run_report(
+            w3_dir=_stage_path(run_dir, "W3"),
+            w5_dir=_stage_path(run_dir, "W5"),
+            w6_dir=_stage_path(run_dir, "W6"),
+            stage_dir=_stage_path(run_dir, "W7"),
+            parent_hashes=parent,
+            code_identity=identity,
+            interpreter=interpreter,
+        )
+        return
     _fail(f"stage-not-implemented:{stage_id.lower()}", 5, stage_id)
 
 
@@ -357,7 +354,7 @@ def run_workflow(
         "code_identity_sha256": plan["code_identity_sha256"],
         "log": log,
         "created_utc": utc_stamp(),
-        "note": "W1-W5 synthetic execution is not a completed Paper B pipeline.",
+        "note": "W1-W7 synthetic execution is an APM-component pipeline, not the completed broader Paper B analysis.",
     }
     if pipeline_complete:
         status["pipeline_complete"] = True

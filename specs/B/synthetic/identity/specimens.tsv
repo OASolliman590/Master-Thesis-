@@ -36,3 +36,7 @@ CPC-SYN	CPCG0002	CPCG0002-F1	F1	CPCG0002-expr	CPCG0002	syn.cpc.expression	syn.cp
 CPC-SYN	CPCG0002	CPCG0002-F1	F1	CPCG0002-meth	CPCG0002_rep1	syn.cpc.methylation	syn.cpc.methylation	450K-synthetic	methylation	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
 CPC-SYN	CPCG0003	CPCG0003-F1	F1	CPCG0003-expr	CPCG0003	syn.cpc.expression	syn.cpc.expression	HuGene-synthetic	expression	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
 CPC-SYN	CPCG0003	CPCG0003-F1	F1	CPCG0003-meth	CPCG0003_rep1	syn.cpc.methylation	syn.cpc.methylation	450K-synthetic	methylation	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
+CPC-SYN	CPCG0004	CPCG0004-F1	F1	CPCG0004-expr	CPCG0004	syn.cpc.expression	syn.cpc.expression	HuGene-synthetic	expression	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
+CPC-SYN	CPCG0004	CPCG0004-F1	F1	CPCG0004-meth	CPCG0004_rep1	syn.cpc.methylation	syn.cpc.methylation	450K-synthetic	methylation	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
+CPC-SYN	CPCG0005	CPCG0005-F1	F1	CPCG0005-expr	CPCG0005	syn.cpc.expression	syn.cpc.expression	HuGene-synthetic	expression	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true
+CPC-SYN	CPCG0005	CPCG0005-F1	F1	CPCG0005-meth	CPCG0005_rep1	syn.cpc.methylation	syn.cpc.methylation	450K-synthetic	methylation	synthetic-map	resolved	synthetic-fixture-v1	include	chosen-focus	true

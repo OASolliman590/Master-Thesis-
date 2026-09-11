@@ -27,6 +27,11 @@ CODE_PATHS = (
     "tools/b_prediction/__main__.py",
     "tools/b_prediction/adapter.py",
     "tools/b_prediction/fold_develop.py",
+    "tools/b_prediction/fold_evaluate.py",
+    "tools/b_prediction/w5_bundle.py",
+    "tools/b_report/__init__.py",
+    "tools/b_report/__main__.py",
+    "tools/b_report/report.py",
     "tools/b_acquire/audit.py",
 )
 
@@ -43,7 +48,7 @@ STAGE_DEPS = {
     "W8": ["W5"],
 }
 
-IMPLEMENTED = {"W1", "W2", "W3", "W4", "W5"}
+IMPLEMENTED = {"W1", "W2", "W3", "W4", "W5", "W6", "W7"}
 
 STAGE_GATES = {
     "W1": ["versioned-config", "explicit-interpreter", "permitted-source-manifest"],
@@ -56,12 +61,11 @@ STAGE_GATES = {
         "signed-training-contract",
     ],
     "W6": [
-        "stage-not-implemented:w6",
         "frozen-training-artifacts",
         "evaluation-release-receipt",
         "independently-eligible-external-specimens",
     ],
-    "W7": ["stage-not-implemented:w7", "four-figure-contract", "no-manually-entered-values"],
+    "W7": ["four-figure-contract", "no-manually-entered-values", "partial-apm-scope-labelled"],
     "W8": [
         "stage-not-implemented:w8",
         "individually-frozen-secondary-contracts",

@@ -21,6 +21,7 @@ def main():
         "b_annotation_normalize",
         "b_prediction",
         "b_workflow",
+        "b_report",
     ):
         # Separate loaders avoid silently missing non-package test directories.
         part = unittest.TestLoader().discover(str(root / "tests" / name))

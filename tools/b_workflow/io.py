@@ -136,6 +136,41 @@ def read_tsv(path: Path) -> tuple[list[str], list[list[str]]]:
     return header, rows
 
 
+def verify_published_stage(stage_dir: Path, stage_id: str) -> tuple[bool, str]:
+    """Verify an atomic stage publication without importing the workflow runner."""
+    complete_path = stage_dir / "COMPLETE.json"
+    if not complete_path.is_file():
+        return False, "missing-COMPLETE"
+    complete = json_no_dups(complete_path.read_bytes())
+    if complete.get("status") != "complete":
+        return False, "status-not-complete"
+    if complete.get("stage") != stage_id:
+        return False, "stage-mismatch"
+    checksums_path = stage_dir / "checksums.json"
+    if not checksums_path.is_file():
+        return False, "missing-checksums"
+    if complete.get("checksums_sha256") != sha256_file(checksums_path):
+        return False, "checksums-hash-mismatch"
+    manifest_path = stage_dir / "manifest.json"
+    if not manifest_path.is_file():
+        return False, "missing-manifest"
+    if complete.get("manifest_sha256") != sha256_file(manifest_path):
+        return False, "manifest-hash-mismatch"
+    checksums = json_no_dups(checksums_path.read_bytes())
+    artifacts = checksums.get("artifact_hashes")
+    if not isinstance(artifacts, dict):
+        return False, "missing-artifact-index"
+    for rel, expected in artifacts.items():
+        if rel == "checksums.json" or expected is None:
+            continue
+        path = stage_dir / rel
+        if not isinstance(expected, str) or not path.is_file():
+            return False, f"missing-artifact:{rel}"
+        if sha256_file(path) != expected:
+            return False, f"artifact-hash-mismatch:{rel}"
+    return True, "ok"
+
+
 def parse_optional_float(token: str, *, field: str, row: int) -> float | None:
     if token in {"", "NA"}:
         return None

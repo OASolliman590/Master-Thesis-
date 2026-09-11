@@ -1,5 +1,13 @@
 # Execution progress
 
+## Corrected W6 and traceable W7 APM-component checkpoint, 11 September 2026
+
+W6 was independently reviewed along separate standards and specification axes. The initial candidate's post-evaluation lock, incomplete W5 contract/code/state/patient linkage, one-patient undefined-bootstrap count and weak metamorphic tests were corrected. W6 now writes and validates the fixture-only lock before external transformation, verifies the enclosing W5 publication and every frozen link, reports all 2,000 bootstrap draws undefined when `n<2`, and reruns actual W6 evaluation in Y/predictor mutation tests. No repository-standard breach or scientific scope creep was found.
+
+W7 is now real reporting code for the implemented APM component. It produces four deterministic SVG figures, six source TSVs, traceability/report manifests and a linked plain-language Markdown report from W3/W5/W6 artifacts. W3 specimen exclusions and unique excluded-patient counts are retained separately; displayed development and external metrics have declared source tables. Every output is synthetic-labelled and the report explicitly leaves the broader immune-barrier, epigenetic-association, MethylCIBERSORT and W8 work incomplete. Default workflow continuation now stops honestly at W8; `pipeline_complete=false`.
+
+Final post-review local strict acceptance: **133 tests passed, zero skips, 219.248 seconds**. Fresh W1-W7 run and resume passed at `tmp/paper_b_checks/w7_fresh_reviewed_20260911`, code identity `6417d623242878b21ca25a3aa49d92515d58a60524f67c4ea8ce06e13aea739e`; resume executed no stages. See `docs/validation/B_W6/REVIEW.md` and `docs/validation/B_W7/REVIEW.md`. This is not a real-cohort run, biological validation, full Paper B completion or AIU acceptance. Real work remains behind E1-E4/E6/evaluation release; the existing AIU fixture gate remains pending.
+
 ## A/B scientific reconciliation, 11 September 2026
 
 User approved correcting the responder-to-prostate-to-intervention evidence chain. A-P2 discovery is selected as A primary; A-P1 endpoint sensitivity is secondary. B now has IMMUNE_BARRIER_FRAMEWORK.md with exact cross-paper boundaries and MethylCIBERSORT source/QC/composition-sensitivity requirements. Existing APM B-P estimand and W1-W5 code are preserved; W6 remains a bounded APM validation component. No new biological endpoint, scoring rule, source availability, institutional approval or real-analysis result was invented. Broader modules remain separately gated; full AIU fixture gate remains pending. This was a documentation-only amendment; no model was rerun.

@@ -1327,7 +1327,7 @@ def _bootstrap_delta(y: np.ndarray, f0: np.ndarray, f1: np.ndarray, bootstrap_cf
             "bootstrap": {
                 "status": "undefined",
                 "reason": "need at least 2 patients",
-                "undefined_count": int(n),
+                "undefined_count": int(bootstrap_cfg["resamples"]),
                 "undefined_fraction": 1.0,
                 "delta_ci_lower": None,
                 "delta_ci_upper": None,
@@ -1636,6 +1636,13 @@ def _build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--evaluation-lock", required=True, type=Path)
     evaluate.add_argument("--external", required=True, type=Path)
     evaluate.add_argument("--output", required=True, type=Path)
+
+    evaluate_fold = subparsers.add_parser("evaluate-fold")
+    evaluate_fold.add_argument("--config", required=True, type=Path)
+    evaluate_fold.add_argument("--cohort", required=True, type=Path)
+    evaluate_fold.add_argument("--w5", required=True, type=Path)
+    evaluate_fold.add_argument("--output", required=True, type=Path)
+    evaluate_fold.add_argument("--repo-root", type=Path, default=None)
     return parser
 
 
@@ -1659,6 +1666,26 @@ def main(argv: list[str] | None = None) -> int:
                 stage_dir=args.output.resolve(),
                 parent_hashes={"config": config["_config_sha256"]},
                 code_identity="cli-direct",
+                interpreter=sys.executable,
+            )
+            return 0
+        if args.command == "evaluate-fold":
+            from tools.b_prediction.fold_evaluate import run_fold_evaluate
+            from tools.b_workflow.config import load_config
+            from tools.b_workflow.io import code_identity_sha256
+            from tools.b_workflow.stages import CODE_PATHS
+
+            repo_root = (args.repo_root or Path.cwd()).resolve()
+            config = load_config(args.config, repo_root=repo_root)
+            code_identity = code_identity_sha256(repo_root, CODE_PATHS)
+            run_fold_evaluate(
+                config,
+                repo_root=repo_root,
+                w3_dir=args.cohort.resolve(),
+                w5_dir=args.w5.resolve(),
+                stage_dir=args.output.resolve(),
+                parent_hashes={"config": config["_config_sha256"]},
+                code_identity=code_identity,
                 interpreter=sys.executable,
             )
             return 0

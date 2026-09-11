@@ -1,4 +1,4 @@
-"""Connected W1-W5 workflow: plan, run, resume, tamper, unimplemented W6."""
+"""Connected W1-W7 APM workflow: plan, run, resume, tamper, unimplemented W8."""
 
 from __future__ import annotations
 
@@ -48,8 +48,12 @@ class TestWorkflow(unittest.TestCase):
         self.assertTrue(by_id["W4"]["implemented"])
         self.assertTrue(by_id["W5"]["implemented"])
         self.assertIsNone(by_id["W5"]["blocked_reason"])
-        self.assertFalse(by_id["W6"]["implemented"])
-        self.assertEqual(by_id["W6"]["blocked_reason"], "stage-not-implemented:w6")
+        self.assertTrue(by_id["W6"]["implemented"])
+        self.assertIsNone(by_id["W6"]["blocked_reason"])
+        self.assertTrue(by_id["W7"]["implemented"])
+        self.assertIsNone(by_id["W7"]["blocked_reason"])
+        self.assertFalse(by_id["W8"]["implemented"])
+        self.assertEqual(by_id["W8"]["blocked_reason"], "stage-not-implemented:w8")
         self.assertFalse(plan["pipeline_complete"])
         self.assertTrue(plan["synthetic"])
         for stage in plan["stages"]:
@@ -128,7 +132,7 @@ class TestWorkflow(unittest.TestCase):
         self.assertIn("state_sha256", state)
         self.test_run_dir = run_dir
 
-    def test_default_run_fails_honestly_at_w6(self) -> None:
+    def test_default_run_fails_honestly_at_w8(self) -> None:
         run_dir = _tmp() / "full"
         proc = _cli(
             [
@@ -142,12 +146,40 @@ class TestWorkflow(unittest.TestCase):
             ]
         )
         self.assertEqual(proc.returncode, 5, proc.stderr + proc.stdout)
-        self.assertIn("stage-not-implemented:w6", proc.stderr)
-        self.assertTrue((run_dir / "W5" / "COMPLETE.json").is_file())
-        self.assertFalse((run_dir / "W6" / "COMPLETE.json").exists())
+        self.assertIn("stage-not-implemented:w8", proc.stderr)
+        self.assertTrue((run_dir / "W7" / "COMPLETE.json").is_file())
+        self.assertFalse((run_dir / "W8" / "COMPLETE.json").exists())
         status = json.loads((run_dir / "run_status.json").read_text(encoding="utf-8"))
         self.assertFalse(status["pipeline_complete"])
-        self.assertEqual(status["failed_stage"], "W6")
+        self.assertEqual(status["failed_stage"], "W8")
+
+    def test_run_through_w6_evaluates_frozen_external(self) -> None:
+        run_dir = _tmp() / "w6"
+        proc = _cli(
+            [
+                "run",
+                "--mode",
+                "synthetic",
+                "--config",
+                str(CONFIG),
+                "--output",
+                str(run_dir),
+                "--through",
+                "W6",
+            ]
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+        status = json.loads(proc.stdout)
+        self.assertEqual(status["executed"], ["W1", "W2", "W3", "W4", "W5", "W6"])
+        self.assertFalse(status["pipeline_complete"])
+        evaluation = json.loads((run_dir / "W6" / "evaluation.json").read_text(encoding="utf-8"))
+        self.assertEqual(evaluation["metrics"]["status"], "defined")
+        self.assertFalse(evaluation["used_external_fit"])
+        resume = _cli(["resume", "--output", str(run_dir), "--through", "W6"])
+        self.assertEqual(resume.returncode, 0, resume.stderr + resume.stdout)
+        resumed = json.loads(resume.stdout)
+        self.assertEqual(resumed["executed"], [])
+        self.assertEqual(resumed["skipped"], ["W1", "W2", "W3", "W4", "W5", "W6"])
 
     def test_run_through_w5_trains_ridge(self) -> None:
         run_dir = _tmp() / "w5"

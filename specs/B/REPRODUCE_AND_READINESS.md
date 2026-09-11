@@ -12,7 +12,7 @@ From the repository root in PowerShell:
 
 This invokes all four existing component suites and fails on skips or empty discovery. Do not use top-level `unittest discover -s tests`: the current non-package directory layout can discover zero tests. The explicit environment replaces the blocked shared SciPy build for project work; it does not alter Windows security policy. Dependencies are in `requirements-windows.txt`.
 
-[WORKFLOW_IMPLEMENTATION.md](WORKFLOW_IMPLEMENTATION.md) defines the missing connected raw-assay-to-figure implementation and its target commands, explicitly marked as not yet available. Implement that sequence locally while unresolved scientific fields remain required configuration. The historical reproduction sequence below describes real-cohort release, not a prohibition on software implementation or permitted public-source preparation.
+[WORKFLOW_IMPLEMENTATION.md](WORKFLOW_IMPLEMENTATION.md) defines the connected raw-assay-to-figure implementation. Synthetic W1-W7 now runs for the bounded APM component; W8 and the broader immune-barrier analyses remain missing. Unresolved scientific fields remain required configuration. The historical reproduction sequence below describes real-cohort release, not a prohibition on software implementation or permitted public-source preparation.
 
 **Primary decision, 6 September 2026:** B-P external prediction improvement is selected as the single primary; B-R remains historical. The selection closes the alternative-choice gate only. E1-E4/E6 and real-cohort implementation acceptance remain open. [Decision record](../../docs/decisions/B_PRIMARY_BP_20260906.md).
 

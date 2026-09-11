@@ -1,5 +1,7 @@
 # Paper B W6: frozen external evaluation
 
+**Disposition, 11 September 2026:** implemented, independently reviewed and corrected as a local synthetic checkpoint. See `docs/validation/B_W6/REVIEW.md`. W7 now supplies a partial APM-component report; default continuation stops at unimplemented W8. The real/AIU boundaries below remain in force.
+
 **Scientific amendment, 11 September 2026:** Read specs/B/IMMUNE_BARRIER_FRAMEWORK.md and docs/decisions/AB_IMMUNE_BARRIERS_20260911.md. Continue this exact W6 APM-module implementation; do not invent a barrier score, change the primary baseline, add MethylCIBERSORT covariates, or treat this module as the entire paper. Broader modules are separately contracted.
 
 Release boundary: W6 synthetic software implementation may proceed from the reviewed W5 checkpoint. AIU fresh W1-W5 and resume passed, but full AIU regression remains 115/116 because four existing server fixtures were excluded from the isolated copy. Subsequent SSH timeouts prevent closure. This is NOT a full AIU test pass or real-cohort release; retain the pending server gate and resolve when connectivity returns.

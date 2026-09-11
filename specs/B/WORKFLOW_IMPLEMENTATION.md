@@ -1,8 +1,8 @@
 # Paper B: executable implementation contract
 
-**11 September reconciliation:** W1-W5 are implemented and reviewed; W6 coding is released, W7-W8 remain pending. Existing code performs the fixed APM validation component. [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) now controls the broader scientific evidence/figure plan. MethylCIBERSORT: W3 methylation/provenance input, W4 separately frozen composition preparation, W8 sensitivity analyses, W7 visualization. Do not change the current W5/W6 baseline or add unfrozen scores. Historical proposed paths/gap descriptions below record the design; consult current PROGRESS for completion. The original four APM figures remain a component-level report, not the full broadened paper.
+**11 September reconciliation:** W1-W7 are implemented and locally reviewed for the synthetic APM component; W8 remains pending. W6 is the fixed frozen-model validation and W7 is a traceable partial report, not completion of the broader paper. [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) controls the broader scientific evidence/figure plan. MethylCIBERSORT: W3 methylation/provenance input, W4 separately frozen composition preparation, W8 sensitivity analyses, W7 visualization only after those artifacts exist. Do not change the current W5/W6 baseline or add unfrozen scores.
 
-Updated 11 September 2026. This is the controlling engineering sequence; ANALYSIS.md controls scientific choices. Existing components are reusable code, not a finished pipeline. This document does not freeze unresolved biological inputs.
+Updated 11 September 2026. This is the controlling engineering sequence; ANALYSIS.md controls scientific choices. The synthetic APM component is connected through W7, but the broader Paper B pipeline is not finished. This document does not freeze unresolved biological inputs.
 
 ## What works now
 
@@ -12,13 +12,14 @@ Updated 11 September 2026. This is the controlling engineering sequence; ANALYSI
 | Annotation converters | `python -m tools.b_annotation_normalize prepare` / `validate-table` | Implements B-G2; official normalized exports still pending |
 | Gene registry | `python -m tools.b_gene_registry build` | Source-backed membership/mapping/coverage; no scoring |
 | Prediction engine | `python -m tools.b_prediction develop` / `evaluate` | Validated numeric feature TSVs to frozen models and paired external metrics |
-| Strict component check | `python tools/check_paper_b.py` | Runs all four test directories; any skip, error or empty directory fails |
+| Connected APM workflow/report | `python -m tools.b_workflow run ... --through W7`; `python -m tools.b_report --help` | Synthetic W1-W7 including four traceable component figures; not the broader scientific report or W8 |
+| Strict component check | `python tools/check_paper_b.py` | Runs all six Paper B test directories; any skip, error or empty directory fails |
 
 Use `--help` on each actual module for arguments. Existing source and tests under `tools/` and `tests/` are the implementation evidence. A successful component check is not an assay-to-figure run.
 
 ## One delivery sequence, with connected artifacts
 
-Implement the following in order in this repository. Do not create another isolated helper ticket without connecting it to this sequence. Proposed module paths below do not yet exist. Every stage must consume its predecessor's recorded artifacts, validate their hashes and emit a manifest. No arbitrary shell commands in workflow configuration.
+Implement the following in order in this repository. Do not create another isolated helper ticket without connecting it to this sequence. W1-W7 now exist; W8 remains proposed. Every stage must consume its predecessor's recorded artifacts, validate their hashes and emit a manifest. No arbitrary shell commands in workflow configuration.
 
 | Stage / proposed owner module | Inputs | Required outputs and acceptance |
 |---|---|---|
@@ -28,24 +29,24 @@ Implement the following in order in this repository. Do not create another isola
 | W4 `tools/b_features` | Canonical assays; explicit P/U/Q, detection-P, missingness, covariate policy | Score records, promoter features and per-fold feature-state bundles with exact gene/probe membership, eligibility and exclusions. Hand-calculated rank/tie/promoter fixtures. Changing an inner-validation beta must not change inner-training probe selection. |
 | W5 extend `tools/b_prediction` | W4 fold-aware feature interface; TCGA-only development IDs and fixed training contract | Nested paired predictions, final transforms/probe state and frozen baseline/extended numeric bundles. Reuse existing ridge/evaluation code and its tests. **Do not feed one globally selected feature table into nested CV when probe eligibility is learned from training values.** |
 | W6 existing evaluator + adapter | Frozen model AND upstream feature state, evaluation lock, independently eligible external specimens | Apply training-selected probes and transforms without refit; emit paired predictions, SSE/SST, Delta_R2 and bootstrap intervals. CPC outcome changes cannot alter any frozen bytes. Preserve negative and undefined results. |
-| W7 `tools/b_report` | W3 exclusions/coverage, W5 development artifacts, W6 evaluation | Four actual figures below, machine-readable source tables and manuscript report. Each plotted value traceable to an output row. No manually entered illustrative values in a real report. |
+| W7 `tools/b_report` | W3 exclusions/coverage, W5 development artifacts, W6 evaluation | Implemented partial APM report: four actual synthetic component figures, machine-readable source tables and readable report. Each plotted value is traceable; unavailable broader panels remain explicit gaps. |
 | W8 registry-driven analyses / C export | Individually frozen secondary or exploratory contracts; separately frozen TCGA-only query rules | Three planned secondary results when enabled; M0-M6 coverage/context reports; approval-evidence target table; qualified LUAD comparison and signed C handoff. Disabled/unresolved analyses receive a reason, not invented scores. A primary run can finish while an optional analysis is pending. |
 
 ### Critical interface gap to fix in W4-W5
 
 ANALYSIS.md proposes CpG finite-coverage selection within each training fold. B-P1 currently accepts an already constructed patient-feature table. That interface alone cannot implement the proposed fold-specific CpG selection. Extend development with a fold-local assay/feature-provider interface returning fitted feature state and transformed held-out rows. Persist final TCGA probe state beside the model and require its hash at external evaluation. Preserve the existing table interface for its declared fixed-feature use and regression tests. Do not silently resolve this mismatch by selecting probes globally or changing the scientific QC rule.
 
-## Target one-command acceptance (to implement, not available today)
+## Synthetic APM-component commands now available
 
 ```text
 python -m tools.b_workflow plan --config specs/B/workflow.synthetic.json
-python -m tools.b_workflow run --mode synthetic --config specs/B/workflow.synthetic.json --output RUN_DIR
-python -m tools.b_workflow resume --output RUN_DIR
+python -m tools.b_workflow run --mode synthetic --config specs/B/workflow.synthetic.json --output RUN_DIR --through W7
+python -m tools.b_workflow resume --output RUN_DIR --through W7
 ```
 
-The implementer must deliver that synthetic config and tiny raw assay/annotation/specimen fixtures as part of W1-W4. Synthetic policy values must be visibly fixture-only; they cannot become real defaults. Start from raw STAR-like expression and methylation plus CPC-like array formats, not just existing numeric prediction TSVs. The final command must traverse W2-W7 with real ridge computation and create four figures. W8 must exercise an enabled fixture contract and a blocked-unfrozen contract. Every artifact carries `synthetic=true`.
+The synthetic config and tiny raw assay/annotation/specimen fixtures now drive W1-W7 from raw-like inputs through real ridge computation and four traceable APM-component figures. Synthetic policy values are visibly fixture-only and cannot become real defaults. W8 must still exercise an enabled fixture contract and a blocked-unfrozen contract. Every current artifact carries `synthetic=true`.
 
-Acceptance: fresh run succeeds; same inputs reproduce scientific payloads within declared numerical tolerance; resume performs no completed work; tampered input invalidates dependents; malformed identity fails; external patient overlap fails; no-skips component regression passes. A failure must name the stage and preserve diagnostic receipts without publishing successful downstream artifacts. This is the software-completion milestone. Remote real-cohort validation is a different milestone.
+Acceptance through W7: fresh run succeeds; same inputs reproduce scientific payloads within declared numerical tolerance; resume performs no completed work; tampered input invalidates dependents; malformed identity fails; external patient overlap fails; no-skips component regression passes. Default continuation still stops honestly at W8. A failure must name the stage and preserve diagnostic receipts without publishing successful downstream artifacts. Full W1-W8 software completion and remote real-cohort validation remain different milestones.
 
 ## Real-data gates are stage-specific
 
@@ -72,4 +73,4 @@ Every figure must have a plain-language explanation beside it: what is plotted, 
 - [Foroutan et al. 2018](https://doi.org/10.1186/s12859-018-2435-4) supports single-sample rank-scoring methodology; our exact formula remains in ANALYSIS.md and is not asserted to be an identical published score.
 - Source-specific evidence, assay formats and provenance: DATA_AND_SOURCES.md, SOURCE_MANIFEST.json and docs/research/B_MEASUREMENT_CHECKPOINT.md. Annotation normalization follows ANNOTATION_NORMALIZATION.md and its source receipts.
 
-The next deliverable is W1-W4 connected to the existing model engine, followed by W5-W8, not another delegation setup or speculative redesign. Completion is measured by executable artifacts and the acceptance above.
+The next software deliverable is W8 with one enabled frozen fixture contract and one explicit blocked-unfrozen contract. The broader scientific deliverable separately requires the contracts and data named in IMMUNE_BARRIER_FRAMEWORK.md. Completion is measured by executable artifacts and the acceptance above, not delegation activity or synthetic biological claims.

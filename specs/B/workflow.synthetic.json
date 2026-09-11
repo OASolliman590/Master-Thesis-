@@ -22,8 +22,8 @@
       "E6-precision"
     ],
     "w5": "synthetic-fold-local-development",
-    "w6": "stage-not-implemented",
-    "w7": "stage-not-implemented",
+    "w6": "synthetic-frozen-external-evaluation",
+    "w7": "synthetic-partial-apm-report",
     "w8": "stage-not-implemented"
   },
   "sources": [
@@ -423,8 +423,8 @@
       "completeness": "full",
       "compression": "none",
       "exact_url": "file:specs/B/synthetic/raw/cpc_expression.tsv",
-      "expected_sha256": "2e6b0503fc4185ffea09854c323b70c3a11cf8904f5ac6ba2c4db65f6a515b20",
-      "expected_size": 355,
+      "expected_sha256": "01d9ab9984975b87af0fc2d82e5f2a0e762a8053c41d2ece123a6b0c30b353d5",
+      "expected_size": 396,
       "format": "cpc-expression",
       "object_name": "cpc_expression.tsv",
       "role": "cpc-expression",
@@ -436,8 +436,8 @@
       "completeness": "full",
       "compression": "none",
       "exact_url": "file:specs/B/synthetic/raw/cpc_methylation.tsv",
-      "expected_sha256": "1b4a1fa576772f8ef9b548d7343e31fc1b43b3ab245195778604c9b618c54433",
-      "expected_size": 496,
+      "expected_sha256": "050f6d64df6b636c21ebbb51acf91835f0b958bbf2059983de0e1aa1b06670a6",
+      "expected_size": 734,
       "format": "cpc-methylation",
       "object_name": "cpc_methylation.tsv",
       "role": "cpc-methylation",
@@ -580,6 +580,15 @@
     },
     "min_development_n": 7,
     "never_use_w4_full_training_state_for_nested_cv": true,
+    "policy_label": "synthetic-fixture-only"
+  },
+  "w6": {
+    "evaluation_lock": {
+      "decision_receipt": "synthetic-fixture-decision-not-a-release",
+      "precision_contract_id": "synthetic-fixture-precision-not-a-release",
+      "reviewer_receipt": "synthetic-fixture-reviewer-not-a-release",
+      "synthetic_label": "SYNTHETIC FIXTURE ONLY. Not an evaluation release receipt."
+    },
     "policy_label": "synthetic-fixture-only"
   }
 }

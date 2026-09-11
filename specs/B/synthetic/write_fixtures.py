@@ -243,24 +243,25 @@ def main() -> None:
         extra_sources.extend([f"star.{pid}", f"meth.{pid}"])
     write(
         raw / "cpc_expression.tsv",
-        "GeneID\tSymbol_UCSC\tName_UCSC\tChr_UCSC\tStart_UCSC\tEnd_UCSC\tRefSeq_UCSC\tCPCG0001\tCPCG0002\tCPCG0003\n"
-        "1001\tGENE_A\tGene A synthetic\tchr1\t1\t10\tNM_A\t10\t1\t7\n"
-        "1002\tGENE_B\tGene B synthetic\tchr1\t11\t20\tNM_B\t10\t2\t7\n"
-        "1003\tGENE_C\tGene C synthetic\tchr1\t21\t30\tNM_C\t30\t3\t7\n"
-        "1004\tGENE_D\tGene D synthetic\tchr1\t31\t40\tNM_D\t5\t4\t7\n"
-        "1005\tGENE_E\tGene E synthetic\tchr1\t41\t50\tNM_E\t20\t5\t7\n",
+        "GeneID\tSymbol_UCSC\tName_UCSC\tChr_UCSC\tStart_UCSC\tEnd_UCSC\tRefSeq_UCSC\tCPCG0001\tCPCG0002\tCPCG0003\tCPCG0004\tCPCG0005\n"
+        "1001\tGENE_A\tGene A synthetic\tchr1\t1\t10\tNM_A\t10\t1\t7\t4\t12\n"
+        "1002\tGENE_B\tGene B synthetic\tchr1\t11\t20\tNM_B\t10\t2\t7\t9\t3\n"
+        "1003\tGENE_C\tGene C synthetic\tchr1\t21\t30\tNM_C\t30\t3\t7\t6\t11\n"
+        "1004\tGENE_D\tGene D synthetic\tchr1\t31\t40\tNM_D\t5\t4\t7\t8\t2\n"
+        "1005\tGENE_E\tGene E synthetic\tchr1\t41\t50\tNM_E\t20\t5\t7\t1\t14\n",
     )
     write(
         raw / "cpc_methylation.tsv",
         "CPCG0001_rep1\tCPCG0001_rep1_Dectection_Pval\tCPCG0001_rep2\tCPCG0001_rep2_Dectection_Pval"
-        "\tCPCG0002_rep1\tCPCG0002_rep1_Dectection_Pval\tCPCG0003_rep1\tCPCG0003_rep1_Dectection_Pval\n"
-        "ch00000000\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\n"
-        "cgA1\t0.2\t0.001\t0.4\t0.001\t0.4\t0.001\t0.6\t0.001\n"
-        "cgA2\t0.3\t0.001\t0.3\t0.001\tNA\t0.001\t0.5\t0.001\n"
-        "cgA3\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\n"
-        "cgB1\t0.1\t0.001\t0.1\t0.001\t0.1\t0.001\t0.1\t0.001\n"
-        "cgB2\t0.8\t0.001\t0.8\t0.001\t0.8\t0.5\t0.8\t0.001\n"
-        "cgX1\t0.5\t0.001\t0.5\t0.001\t0.5\t0.001\t0.5\t0.9\n",
+        "\tCPCG0002_rep1\tCPCG0002_rep1_Dectection_Pval\tCPCG0003_rep1\tCPCG0003_rep1_Dectection_Pval"
+        "\tCPCG0004_rep1\tCPCG0004_rep1_Dectection_Pval\tCPCG0005_rep1\tCPCG0005_rep1_Dectection_Pval\n"
+        "ch00000000\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\t0.01\t0.001\n"
+        "cgA1\t0.2\t0.001\t0.4\t0.001\t0.4\t0.001\t0.6\t0.001\t0.15\t0.001\t0.52\t0.001\n"
+        "cgA2\t0.3\t0.001\t0.3\t0.001\tNA\t0.001\t0.5\t0.001\t0.18\t0.001\t0.49\t0.001\n"
+        "cgA3\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\t0.9\t0.001\n"
+        "cgB1\t0.1\t0.001\t0.1\t0.001\t0.1\t0.001\t0.1\t0.001\t0.22\t0.001\t0.11\t0.001\n"
+        "cgB2\t0.8\t0.001\t0.8\t0.001\t0.8\t0.5\t0.8\t0.001\t0.61\t0.001\t0.73\t0.001\n"
+        "cgX1\t0.5\t0.001\t0.5\t0.001\t0.5\t0.001\t0.5\t0.9\t0.5\t0.001\t0.5\t0.001\n",
     )
     write(
         ann / "gene_universe.tsv",
@@ -318,6 +319,10 @@ def main() -> None:
         "CPC-SYN\tCPCG0002\tCPCG0002-F1\tF1\tCPCG0002-meth\tCPCG0002_rep1\tsyn.cpc.methylation\tsyn.cpc.methylation\t450K-synthetic\tmethylation\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
         "CPC-SYN\tCPCG0003\tCPCG0003-F1\tF1\tCPCG0003-expr\tCPCG0003\tsyn.cpc.expression\tsyn.cpc.expression\tHuGene-synthetic\texpression\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
         "CPC-SYN\tCPCG0003\tCPCG0003-F1\tF1\tCPCG0003-meth\tCPCG0003_rep1\tsyn.cpc.methylation\tsyn.cpc.methylation\t450K-synthetic\tmethylation\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
+        "CPC-SYN\tCPCG0004\tCPCG0004-F1\tF1\tCPCG0004-expr\tCPCG0004\tsyn.cpc.expression\tsyn.cpc.expression\tHuGene-synthetic\texpression\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
+        "CPC-SYN\tCPCG0004\tCPCG0004-F1\tF1\tCPCG0004-meth\tCPCG0004_rep1\tsyn.cpc.methylation\tsyn.cpc.methylation\t450K-synthetic\tmethylation\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
+        "CPC-SYN\tCPCG0005\tCPCG0005-F1\tF1\tCPCG0005-expr\tCPCG0005\tsyn.cpc.expression\tsyn.cpc.expression\tHuGene-synthetic\texpression\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
+        "CPC-SYN\tCPCG0005\tCPCG0005-F1\tF1\tCPCG0005-meth\tCPCG0005_rep1\tsyn.cpc.methylation\tsyn.cpc.methylation\t450K-synthetic\tmethylation\tsynthetic-map\tresolved\tsynthetic-fixture-v1\tinclude\tchosen-focus\ttrue",
     ]
     write(ident / "specimens.tsv", spec_header + "\n".join(spec_rows) + "\n")
     cov_lines = [
@@ -331,6 +336,8 @@ def main() -> None:
         "CPCG0001-F1\tCPCG0001\t62\t3\t4\t7\t7\t0.72\t0.97\ttrue",
         "CPCG0002-F1\tCPCG0002\t64\t4\t5\t9\t>=8\t0.66\t0.93\ttrue",
         "CPCG0003-F1\tCPCG0003\t68\t3\t3\t6\t<=6\t0.77\t0.94\ttrue",
+        "CPCG0004-F1\tCPCG0004\t59\t3\t4\t7\t7\t0.63\t0.85\ttrue",
+        "CPCG0005-F1\tCPCG0005\t71\t4\t4\t8\t>=8\t0.71\t0.90\ttrue",
     ]
     write(ident / "covariates.tsv", "\n".join(cov_lines) + "\n")
 
@@ -477,13 +484,22 @@ def main() -> None:
                 "dummies": {"7": "gleason_7", ">=8": "gleason_ge8"},
             },
         },
+        "w6": {
+            "policy_label": "synthetic-fixture-only",
+            "evaluation_lock": {
+                "synthetic_label": "SYNTHETIC FIXTURE ONLY. Not an evaluation release receipt.",
+                "decision_receipt": "synthetic-fixture-decision-not-a-release",
+                "reviewer_receipt": "synthetic-fixture-reviewer-not-a-release",
+                "precision_contract_id": "synthetic-fixture-precision-not-a-release",
+            },
+        },
         "scientific_gates": {
             "real_feature_construction": ["E1-P", "E2-U", "E3-Q", "E4-specimen", "E6-precision"],
             "real_development": ["tcga-only-ids", "signed-lock"],
             "real_external_evaluation": ["frozen-training", "evaluation-release-receipt"],
             "w5": "synthetic-fold-local-development",
-            "w6": "stage-not-implemented",
-            "w7": "stage-not-implemented",
+            "w6": "synthetic-frozen-external-evaluation",
+            "w7": "synthetic-partial-apm-report",
             "w8": "stage-not-implemented",
         },
     }
