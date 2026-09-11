@@ -1,0 +1,6 @@
+discovery_manifest: ../../02_data_inventory/analysis_cohorts_merged_v1.tsv
+inventory_table: ../../02_data_inventory/ici_cross_cancer_cohorts.tsv
+primary_contrast: PRE_RESPONSE
+secondary_contrasts:
+  - TREATMENT_DELTA
+  - ON_RESPONSE

@@ -1,0 +1,28 @@
+version: signature_thresholds_v1
+signature_version: responder_signature_v1
+require_common_effect_scale: true
+min_meta_cohorts: 2
+effect_column: meta_effect_random
+standard_error_column: meta_se_random
+fdr_column: meta_fdr
+tiers:
+  - name: tier_1
+    label: core_wet_lab
+    max_fdr: 0.05
+    min_abs_effect: 1.0
+    max_i2: 75
+    role: compact high-confidence wet-lab prioritization
+  - name: tier_2
+    label: discovery
+    max_fdr: 0.20
+    min_abs_effect: 0.5
+    max_i2: 85
+    role: broader immune biology discovery
+  - name: tier_3
+    label: exploratory
+    max_fdr: 0.50
+    min_abs_effect: 0.3
+    max_i2: null
+    role: sensitivity and appendix-level exploration
+core_tiers:
+  - tier_1

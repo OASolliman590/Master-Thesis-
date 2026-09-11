@@ -1,0 +1,25 @@
+name: ici-r-bioconductor
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+channel_priority: strict
+dependencies:
+  - r-base>=4.4,<4.5
+  - bioconductor-gsva
+  - bioconductor-limma
+  - bioconductor-edger
+  - bioconductor-deseq2
+  - bioconductor-gseabase
+  - bioconductor-biocparallel
+  - bioconductor-sva
+  - r-survival
+  - r-ggplot2
+  - r-msigdbr
+  - r-yaml
+  - r-data.table
+  - r-matrix
+  - r-jsonlite
+  - r-optparse
+  - imagemagick
+  - pkg-config

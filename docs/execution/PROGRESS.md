@@ -1,5 +1,11 @@
 # Execution progress
 
+## Paper A source strategy restored and legacy code recovered, 11 September 2026
+
+ICBatlas-first acquisition is explicit; the five previously audited GEO cohorts are not the source boundary. A cited research note identifies the atlas accession queue and actual paired RNA/epigenetic candidate studies, with patient pairing/access/endpoint uncertainties retained. `specs/A/SOURCE_CANDIDATE_QUEUE.tsv` holds 77 source references, not unique admitted cohorts. Grok's manual handoff now requires the full source crosswalk and inspection of recovered code before duplicate implementation.
+
+Recovered 358 original-byte source/spec/configuration files (2,334,786 bytes) from NMRbox into `reference/legacy_nmrbox_20260911/`, including a 47-row historical study registry and gene-set registry variants. Per-file SHA-256 and exact remote origin are recorded. Results, patient/sample manifests, matrices, logs, data, credentials and environment profiles were excluded. AIU connection timed out; no fresh mirror equivalence or server test is claimed. Archive selection and hashes were checked locally; no old pipeline executed and no new cohort admitted or biological result produced.
+
 ## Corrected W6 and traceable W7 APM-component checkpoint, 11 September 2026
 
 W6 was independently reviewed along separate standards and specification axes. The initial candidate's post-evaluation lock, incomplete W5 contract/code/state/patient linkage, one-patient undefined-bootstrap count and weak metamorphic tests were corrected. W6 now writes and validates the fixture-only lock before external transformation, verifies the enclosing W5 publication and every frozen link, reports all 2,000 bootstrap draws undefined when `n<2`, and reruns actual W6 evaluation in Y/predictor mutation tests. No repository-standard breach or scientific scope creep was found.

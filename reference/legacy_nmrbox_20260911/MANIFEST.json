@@ -1,0 +1,1798 @@
+{
+  "retrieved_utc_date": "2026-09-11",
+  "host": "phosphorus.nmrbox.org",
+  "root": "/home/nmrbox/0000/osoliman/ici_thesis_pipeline_canary_20260626_110044/ici_thesis_pipeline_canary",
+  "method": "read-only SSH; source-selective archive; original bytes preserved",
+  "files": [
+    {
+      "path": "src/__init__.py",
+      "bytes": 37,
+      "sha256": "991e5d5a0d612b63348bb1dc1748ed26fd6f9f298412fbb3a4bbb8e3096f44da"
+    },
+    {
+      "path": "src/pipeline/qc_plots.py",
+      "bytes": 9395,
+      "sha256": "3120a79b2ce2ecc4efdb5d7bf63ae83430ee9410eae90a884c69558dc34f8cf5"
+    },
+    {
+      "path": "src/pipeline/__init__.py",
+      "bytes": 36,
+      "sha256": "d368fb0e0c68f531a446eb809df7eb882b2c12e6ca2e8adfd74ba6f5db6be846"
+    },
+    {
+      "path": "src/pipeline/cli.py",
+      "bytes": 569849,
+      "sha256": "5e62429d2b7ae9db1eb64bedaac13700adad4f755dfeead7c3a8e1abc10afb82"
+    },
+    {
+      "path": "src/pipeline/spec_patient_manifest/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/pipeline/spec_patient_manifest/build_patient_manifest.py",
+      "bytes": 18753,
+      "sha256": "4526aacdf730752cfe6439c94be6dc2dccaf91ca080072aee5d7a002a6c41ab4"
+    },
+    {
+      "path": "src/pipeline/common/run_manifest.py",
+      "bytes": 861,
+      "sha256": "0aa2ef9b2f5779e4dc64c00298dab5103440e4c085690baabb3e92f6d46e936a"
+    },
+    {
+      "path": "src/pipeline/common/io.py",
+      "bytes": 2608,
+      "sha256": "dc42285f4689275c859fa6db3e2b80eeb48bb9f69ecc6ab29b657abfab54ce49"
+    },
+    {
+      "path": "src/pipeline/common/contrast_resolver.py",
+      "bytes": 6172,
+      "sha256": "de6b4cf71074ca74fbb28209fb3e46e918250847b9b8b55d918f6eb5e901b113"
+    },
+    {
+      "path": "src/pipeline/common/expression.py",
+      "bytes": 10770,
+      "sha256": "f5a0f1bb4eb00a01083b6720878177ba9f19199753bb060d1d94d63ff2026f68"
+    },
+    {
+      "path": "src/pipeline/common/__init__.py",
+      "bytes": 39,
+      "sha256": "dc23986d174636599d82366f1b96910d1e46320c196a17685b5e596ec8ede202"
+    },
+    {
+      "path": "src/pipeline/modules/__init__.py",
+      "bytes": 31,
+      "sha256": "bbc11dff578f674e11772106ad43e69843a2ee28de4137c9ab2a470bd4e15464"
+    },
+    {
+      "path": "src/pipeline/modules/11_tcga_gdc_map/__init__.py",
+      "bytes": 35,
+      "sha256": "78983f5ab6963c8f8f502e0e4a0f460532dd2e4d3ccf9fdc894ee8ee0f5c64e8"
+    },
+    {
+      "path": "src/pipeline/modules/08_signature_scoring/__init__.py",
+      "bytes": 36,
+      "sha256": "eb07fd68b213b85a361c1d11db1ba0e8ae2e417733bdcffbb95e73eb8717f3ce"
+    },
+    {
+      "path": "src/pipeline/modules/06_within_cohort_de/de_models.py",
+      "bytes": 342,
+      "sha256": "230da374bbb3c2b7442a479a7cf03368fdd686e13b93b298a7a7b3d12ff93264"
+    },
+    {
+      "path": "src/pipeline/modules/06_within_cohort_de/__init__.py",
+      "bytes": 199,
+      "sha256": "42c9fcbd74bd9e2cdce9403af32ebe1e706319b9256523973ea97dbd522dd0ec"
+    },
+    {
+      "path": "src/pipeline/modules/06_within_cohort_de/harmonize.py",
+      "bytes": 711,
+      "sha256": "36fb0da029ca1fe5eb33b7f21c5cf4e5acb92a00b5b619b709f1277f2f9b7500"
+    },
+    {
+      "path": "src/pipeline/modules/_analysis_design/registry.py",
+      "bytes": 30963,
+      "sha256": "5faa9cbf74f3dbdb025035537dc5f1fb1182012be9a3d852612d948452b7206a"
+    },
+    {
+      "path": "src/pipeline/modules/_analysis_design/__init__.py",
+      "bytes": 54,
+      "sha256": "e5c48c60828260b0d3154cd19ecdc06c07ef3a2d28f6e74cf07f6c9c65da2bb7"
+    },
+    {
+      "path": "src/pipeline/modules/_analysis_design/execution_plan.py",
+      "bytes": 6373,
+      "sha256": "7f0af1b10f714de2e50ebb66d09e26643e63e9ba6f92233470c724a548e1cabf"
+    },
+    {
+      "path": "src/pipeline/modules/09_immune_state/ssgsea.py",
+      "bytes": 515,
+      "sha256": "b1216bf41dcdf2e70d243e5b6b70d2ef57c14ca1b729ed5db0961a29e0300d48"
+    },
+    {
+      "path": "src/pipeline/modules/09_immune_state/__init__.py",
+      "bytes": 127,
+      "sha256": "0c4a198d4e68fac6412457fea9d5bafd528f3fee3f5018285dd046de9ae51920"
+    },
+    {
+      "path": "src/pipeline/modules/15_reports/__init__.py",
+      "bytes": 34,
+      "sha256": "9ce6a987c055b3760a6518c766529b10d1db65cf8f3ae55b557d505de22fcb69"
+    },
+    {
+      "path": "src/pipeline/modules/10_validation/__init__.py",
+      "bytes": 38,
+      "sha256": "e2e6262c9b6865736f124af39f238912cc6004247e4eaa50a1e131a47874ee75"
+    },
+    {
+      "path": "src/pipeline/modules/_viz/registry.py",
+      "bytes": 1822,
+      "sha256": "77ed7878343f56472e678543bb56ec7bf16a91ebdbd363e2fcf7ddcee266e8a1"
+    },
+    {
+      "path": "src/pipeline/modules/_viz/forest.py",
+      "bytes": 2194,
+      "sha256": "e6f6c0206bb4fc900c6f43efa10843df17861302a0d8191ea6341f63118640cb"
+    },
+    {
+      "path": "src/pipeline/modules/_viz/__init__.py",
+      "bytes": 67,
+      "sha256": "29fd8fb075a1b774be0b4fc5632f3340965f45fb0d593dff4565b7567aa39f87"
+    },
+    {
+      "path": "src/pipeline/modules/00_retrieval/http.py",
+      "bytes": 3278,
+      "sha256": "6a95673ad4f2b8d6273471a631d6c2f1f738f786d8e5e6042e4173f4f3870b85"
+    },
+    {
+      "path": "src/pipeline/modules/00_retrieval/errors.py",
+      "bytes": 625,
+      "sha256": "c1b8fb565e5c993e56613e8d97ce9c93bee7fbbf30da2fa10c2b110c7b42f112"
+    },
+    {
+      "path": "src/pipeline/modules/00_retrieval/__init__.py",
+      "bytes": 6693,
+      "sha256": "2b9db63df5c9e68ecbc8589a439bd4e1a46bc2f4b9bff0e00f1a16a3186008c1"
+    },
+    {
+      "path": "src/pipeline/modules/00_retrieval/geo.py",
+      "bytes": 565,
+      "sha256": "5ae7e0cfff01aee109dfecfc92f33c31689faba74fefeb3e0fb267a3f6561853"
+    },
+    {
+      "path": "src/pipeline/modules/_08_signature/derive.py",
+      "bytes": 21541,
+      "sha256": "3bdb7092ccc7d26492ce9cd0227cc259cb33dbfcbf19b86c534c725c07eac5a4"
+    },
+    {
+      "path": "src/pipeline/modules/_08_signature/__init__.py",
+      "bytes": 123,
+      "sha256": "8d0ee0b54af1217454520b73d0345c1cb962ad6a9cc2af1753935b45fc9d06a4"
+    },
+    {
+      "path": "src/pipeline/modules/14_methylation_integration/__init__.py",
+      "bytes": 193,
+      "sha256": "6b6ea38b9172a853516c139c0a58e6a6872ec5971e8da9e864ac12cc84a44409"
+    },
+    {
+      "path": "src/pipeline/modules/07_meta_analysis/__init__.py",
+      "bytes": 32,
+      "sha256": "9a100ab2f59923b569bae79ec86f9db24a32492de4c0b96e43b9ef7a95596a07"
+    },
+    {
+      "path": "src/pipeline/modules/05_qc/__init__.py",
+      "bytes": 34,
+      "sha256": "f50055465a6abf66385b17c81c95e1e416205dbc0f4f1f5518a49c6984605892"
+    },
+    {
+      "path": "src/pipeline/modules/_01_dataset_intake/assay_detect.py",
+      "bytes": 5466,
+      "sha256": "fddd25d9e144350ee71f169a68737fbfc3e48cbcde8790eaa80e3268b3718aff"
+    },
+    {
+      "path": "src/pipeline/modules/_01_dataset_intake/curation_report.py",
+      "bytes": 7286,
+      "sha256": "dd1494c97e961170f84cb54a40b116434b73dc4e905840fa217aeb1f0e8ebe2b"
+    },
+    {
+      "path": "src/pipeline/modules/_01_dataset_intake/__init__.py",
+      "bytes": 212,
+      "sha256": "18f4074e8fe3cb9dbcd0f37ff5164ece39b00a0fb12933e2914e4ac0a5b7b6b2"
+    },
+    {
+      "path": "src/pipeline/modules/01_dataset_intake/patient_manifest.py",
+      "bytes": 22089,
+      "sha256": "ed39830aa1b0d73368f5afd96890a27de6345a9d698c68899dd36117c6c3f7ff"
+    },
+    {
+      "path": "src/pipeline/modules/01_dataset_intake/sample_allocation.py",
+      "bytes": 17280,
+      "sha256": "c9be1c5573cda5dabdc5b8b337295d1da1f38ed5c32e0a03f777d62d8490874f"
+    },
+    {
+      "path": "src/pipeline/modules/01_dataset_intake/__init__.py",
+      "bytes": 33,
+      "sha256": "8a51a48d1dc26668a4c3a0cb06dbce1ff2b541e63475cd253b3fa60cced68011"
+    },
+    {
+      "path": "src/pipeline/modules/04_ingest_expression/__init__.py",
+      "bytes": 36,
+      "sha256": "7bd128fdf2da6f0fc983c55415cb9907b4971dd6476266874347b0dda38daf85"
+    },
+    {
+      "path": "src/pipeline/modules/13_tcia_overlay/__init__.py",
+      "bytes": 277,
+      "sha256": "b714271c509f47eae9e4c850121ccd9e27784e6c404935d564352a9f05ed082c"
+    },
+    {
+      "path": "src/pipeline/modules/03_manifest/__init__.py",
+      "bytes": 34,
+      "sha256": "64987de3bc29529b513b57868f3546cea12b2ce5c4844ba71a1d7719741f9ba8"
+    },
+    {
+      "path": "src/pipeline/modules/12_tcga_projection/__init__.py",
+      "bytes": 34,
+      "sha256": "1f03797748b971f768f81c67f99e97845bd09bc71b147fce0f39130df79af878"
+    },
+    {
+      "path": "src/pipeline/modules/_10_external_validation/__init__.py",
+      "bytes": 96,
+      "sha256": "bb87d93bf86cb3ae267e48cbc58d9de8563f151781c8aec04772da3139e14eb3"
+    },
+    {
+      "path": "src/pipeline/modules/_10_external_validation/external_validation.py",
+      "bytes": 30623,
+      "sha256": "6b0185d920c186cbc4af337b16ebf6bf338e565da0f18cf2d01a77ff0d6c26e0"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/hub_meta.py",
+      "bytes": 4293,
+      "sha256": "de6dca9229a2e98a5f568cd4abf62470da265b94623c21818a463e05e13cebd9"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/enrich.py",
+      "bytes": 12399,
+      "sha256": "ffbfc23ddaf219d95730725b248ff86c06e1b4bb084175f61bb32cdc530ee27c"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/epi_infer.py",
+      "bytes": 5351,
+      "sha256": "1ded0abbcc60e4bafbc871e9290395746a2c6387492ff57f904167e989a5dc22"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/network.py",
+      "bytes": 6596,
+      "sha256": "abf765aa443a803cae4dda3782e49e234cfbcb670852bc997eabe5c22646d88f"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/__init__.py",
+      "bytes": 62,
+      "sha256": "4592c5b75beecfcf4dc19106554c6659c207488c778e8a305b8e6deb2f020cd0"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/contracts.py",
+      "bytes": 10240,
+      "sha256": "9f169ee543160d54985c25d3fba978964b82b2b253adc3301c5d6d98dfacb940"
+    },
+    {
+      "path": "src/pipeline/modules/10_interpretation/immunophenotype.py",
+      "bytes": 9133,
+      "sha256": "439de37eff220ed11f339c3807e1aca88ad4c182c37d8d562d6945dd731a0c65"
+    },
+    {
+      "path": "src/pipeline/modules/02_cohort_audit/__init__.py",
+      "bytes": 31,
+      "sha256": "cbaa4e29faf59af7266cf6fb114caa32ce3e1894ec2d65ef8f9043950a9869e0"
+    },
+    {
+      "path": "pipeline/__init__.py",
+      "bytes": 517,
+      "sha256": "12b6b4bd2d4670cd38c8604c271f42a84a54061b344f7b46c573dfe3929bebc3"
+    },
+    {
+      "path": "pipeline/cli.py",
+      "bytes": 494,
+      "sha256": "662afb224582a6202c947a30b7f8d406630a0a02f585beafab98a204eba0dbde"
+    },
+    {
+      "path": "scripts/run_analysis_id_pipeline.sh",
+      "bytes": 21980,
+      "sha256": "b4752bfc8ba95ee0a3443305263187f291a017e2407e06bd5ec64a3a3890991d"
+    },
+    {
+      "path": "scripts/spec_005_attach_downloads_folder.py",
+      "bytes": 1906,
+      "sha256": "58ec51a9bdd71b8f473055f0969959a12118a4dbbd04d097dff0393a8ea84476"
+    },
+    {
+      "path": "scripts/run_geo_speckit_1_13.sh",
+      "bytes": 9354,
+      "sha256": "55b0cc49866479b830cd5ff2806cd1e2c9bd9c6659839af599f37e754e6dee1d"
+    },
+    {
+      "path": "scripts/spec_005_prepare_manifests.py",
+      "bytes": 16187,
+      "sha256": "c36a1cd119fa8c6676c5f42fa422a27d7518562de8b629b5178bd58e32badaef"
+    },
+    {
+      "path": "scripts/run_timer_t7_download_full.sh",
+      "bytes": 3922,
+      "sha256": "588ebc375a90c51bce92d3dbdb0c3c25fb122852fbe8d17ed9ec0c5706199265"
+    },
+    {
+      "path": "scripts/ici_discovery_triage.py",
+      "bytes": 14094,
+      "sha256": "7a69d549ab639b43e8796fc5602be15e6b4aa53d2ec9b89fe2b58f19f464231b"
+    },
+    {
+      "path": "scripts/reconcile_t7_rosters_and_rename.py",
+      "bytes": 16647,
+      "sha256": "e64e5447090b53eb0788712be108a97c5bb31e63f8e0bf66ad831a5fb6fbe2eb"
+    },
+    {
+      "path": "scripts/rna_limma.R",
+      "bytes": 3247,
+      "sha256": "5a7ef66e18382b4bdf1c9471d3b9bf156f8b3dba7a785c7582c9861bce9f46eb"
+    },
+    {
+      "path": "scripts/combat_merge.R",
+      "bytes": 2415,
+      "sha256": "e838064e48faec4390924a424fbf0036316e8bf2cebfdba7048f26a2edd3b30a"
+    },
+    {
+      "path": "scripts/spec_005_run_extract_geo_metadata.py",
+      "bytes": 3130,
+      "sha256": "c2256e469968784baf5a5b7fd5aac8b8fb4b2d954111db22f375ce4b1a77c5ea"
+    },
+    {
+      "path": "scripts/run_msigdb_layer_retrieval_t7.sh",
+      "bytes": 1387,
+      "sha256": "2f9a252a7869eb2848181b187373795a535cccac49cb265282533d3be362b5e4"
+    },
+    {
+      "path": "scripts/inspect_assay_types.py",
+      "bytes": 4486,
+      "sha256": "2ee4f6a0920d9adfa61798a5fa49462a3b59ef05be893554ed50a2f1cbc8e808"
+    },
+    {
+      "path": "scripts/audit_gse289743_external_gate.py",
+      "bytes": 19461,
+      "sha256": "b9b47b26dd85dbb7ceab00ecab9717cd4a0fd4a0cdb4fe6b17f342bc8f9b4662"
+    },
+    {
+      "path": "scripts/build_nmrbox_curated_expression_manifest.py",
+      "bytes": 2357,
+      "sha256": "e0c22d5a7810ee7ff9998d077ba6d642b69c59214559be84e9a6988607e6ae1f"
+    },
+    {
+      "path": "scripts/download_tcga_gdc_hub_to_t7.py",
+      "bytes": 7529,
+      "sha256": "3eb1578da7c8036ae1ce2a4a500c4acdd2f6da3367d49773c466603b141542d9"
+    },
+    {
+      "path": "scripts/estimate_scores.R",
+      "bytes": 1890,
+      "sha256": "c7679b637ca7a95d473ebd7aebf43358665465340b964c4737093ec27edde261"
+    },
+    {
+      "path": "scripts/spec_005_prefill_curation_sheet.py",
+      "bytes": 3569,
+      "sha256": "b3f9bd409333f3aa037933393ac25ef5afdbd1361979d75c5576dd24c6854c89"
+    },
+    {
+      "path": "scripts/build_expanded_gene_set_atlas.R",
+      "bytes": 8443,
+      "sha256": "3066bad24bf6cf454e3f48fa62a39f99d22ba1728ecda62b2d07992ef05b50d4"
+    },
+    {
+      "path": "scripts/phase3_readiness_dashboard.py",
+      "bytes": 40714,
+      "sha256": "8dee3685e70e3ccd1b3f434f5599ee0b2563fc12c378eb3d63b1ac683c0c1b62"
+    },
+    {
+      "path": "scripts/enrich_core_gene_sets_from_sources.R",
+      "bytes": 12209,
+      "sha256": "6f5d013cb0c4ba1ab8bb274c46bec7c9fbfbc00a7586cfb14f5172b543d4c63b"
+    },
+    {
+      "path": "scripts/run_timer_t7_download_second_roster.sh",
+      "bytes": 3307,
+      "sha256": "d9ea3da95af8722ab55aae093c0b7877c871fdb1edda083ade27ef38c7ce2be2"
+    },
+    {
+      "path": "scripts/spec_005_write_reconciliation_report.py",
+      "bytes": 2999,
+      "sha256": "7c68bee9c522c4ab64d6b477faac23e9a888eb682f9e52606fc41967b9402c84"
+    },
+    {
+      "path": "scripts/run_evidence_resume.sh",
+      "bytes": 6009,
+      "sha256": "a960d38797ff662694a42e598ed88e0657c0ab0b06199d73b1a630a55afaf10f"
+    },
+    {
+      "path": "scripts/resume_analysis_id_interpretation.sh",
+      "bytes": 3287,
+      "sha256": "b7fd60bf28d138aacdb5a164db9963252ae68275d3da858165778da14f27a1ba"
+    },
+    {
+      "path": "scripts/run_evidence_20260327.sh",
+      "bytes": 3464,
+      "sha256": "ad9c047b712f9cde36d05cbcbd7d56d6bbeb6ea26e87c22b308e154375250454"
+    },
+    {
+      "path": "scripts/export_msigdb_layers.R",
+      "bytes": 2201,
+      "sha256": "285902ba4891f29dc86808befbfc57b57584bbba8606cf2bf7f483d8e585ff97"
+    },
+    {
+      "path": "scripts/mega_deseq2.R",
+      "bytes": 2533,
+      "sha256": "a3411ef2f0a01560b4c86622fe9cf25c88bbe2061c4e6d51c29b7582a370be90"
+    },
+    {
+      "path": "scripts/epic_scores.R",
+      "bytes": 1961,
+      "sha256": "eb6d9970e5297b4c691ba33a96d2049b184961b9ea46f3656af65f9c1124778b"
+    },
+    {
+      "path": "scripts/tcga_survival.R",
+      "bytes": 5055,
+      "sha256": "fcca5b397f042df8d3d8fedaed931cfdb35ae7c9ee0969325cef6ee45467382b"
+    },
+    {
+      "path": "scripts/spec_005_merge_supplementary_metadata.py",
+      "bytes": 6892,
+      "sha256": "9f61312fba85067f86b9b06e9065cdc32aaa4e853e3d0c9d5d385e9fc7cb8308"
+    },
+    {
+      "path": "scripts/ssgsea_gsva.R",
+      "bytes": 3154,
+      "sha256": "8643634313ebbfb294ad018f3657e544325ae9af23885d0b3501df57deca1bb2"
+    },
+    {
+      "path": "scripts/rna_edger.R",
+      "bytes": 2301,
+      "sha256": "b4f21e3d1f09008f714b73fa4792576bc575c83f7b0bfbc2f77e42d415eab181"
+    },
+    {
+      "path": "scripts/rna_deseq2.R",
+      "bytes": 2066,
+      "sha256": "b886f8cecf82cd97004db770a6fd5989e34abb329fad761380622fe219bee699"
+    },
+    {
+      "path": "scripts/confirm_external_ici_geo_metadata.py",
+      "bytes": 17022,
+      "sha256": "d8961a65ca28e9eaf4eee71adb20f9e2a3a43eb9f496cfdc896aa24f5259ec38"
+    },
+    {
+      "path": "scripts/run_tcga_naive_resume.sh",
+      "bytes": 7483,
+      "sha256": "36ea969e915bb868d62830628e9b2f64907eaf801cd924ee61eafa7d7e6ad616"
+    },
+    {
+      "path": "scripts/run_geo_speckit_cohortwise.sh",
+      "bytes": 10674,
+      "sha256": "602e3e5aafb91829596d0ccdc2c3553cd69bc6943ae0a6b347e93cb94603343f"
+    },
+    {
+      "path": "scripts/audit_analysis_id_pipeline_run.py",
+      "bytes": 49026,
+      "sha256": "82a028f2515801963a74c85d81e1ca0ec15fca771ab5c5b02bbb43fc7098efd3"
+    },
+    {
+      "path": "scripts/run_timer_t7_download_non_geo_controlled.sh",
+      "bytes": 4773,
+      "sha256": "c1f2513aac655c72beba85686133c120cce975cf814e44bb0603042e92dd9c41"
+    },
+    {
+      "path": "scripts/bibalex_hpc/check_backend.sh",
+      "bytes": 990,
+      "sha256": "e9d5cf65d92badc19eda7597cdfed58898e7163baa46ef51505637d9d743e2bd"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_analysis_id_pipeline.sh",
+      "bytes": 11837,
+      "sha256": "d35f1768b60d986ff8f3fdaba7f5701a8001e965cde0ec5221689b6cbb65c0af"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_intake_source_audit.sh",
+      "bytes": 12628,
+      "sha256": "5c3c597f3288981c73443c958f098dd4cf24f354eb9d152dba152d1f344befa8"
+    },
+    {
+      "path": "scripts/bibalex_hpc/submit_create_portable_r_env.sh",
+      "bytes": 1931,
+      "sha256": "b751b4c9d04a17a8b9ca97a186b29a1e2296bc863297a240d690ecd9c7e8a6e4"
+    },
+    {
+      "path": "scripts/bibalex_hpc/recover_gsva_runtime.sh",
+      "bytes": 3042,
+      "sha256": "fdf5ba5c5851a7234fc5c7b9c5af0dd0fb80494b1249c7602477a5061b460ce5"
+    },
+    {
+      "path": "scripts/bibalex_hpc/common.sh",
+      "bytes": 696,
+      "sha256": "83e7bceeec79a557f1b73d4720ca390a125a02c631941b7d67a966ca8fcd9944"
+    },
+    {
+      "path": "scripts/bibalex_hpc/bootstrap_ici_env.sh",
+      "bytes": 3072,
+      "sha256": "34399d1760777744b09190b8bdc45b51afbd749bcda9f6772c3b06efab601337"
+    },
+    {
+      "path": "scripts/bibalex_hpc/pull_analysis_id_pipeline_results.sh",
+      "bytes": 3961,
+      "sha256": "6470a88dc228f2ea536c084107568ea839b53736f71465f6c9cb77c8c55e78b1"
+    },
+    {
+      "path": "scripts/bibalex_hpc/pull_geo_retrieval_audit.sh",
+      "bytes": 1014,
+      "sha256": "3ee9a75f42567d69b4abe00eaf47e0bef4f2fc24d0c7a538144d64ffa4adaf5e"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_portable_r_smoke.sh",
+      "bytes": 2225,
+      "sha256": "c8770cf0417e426ad3fc0c4b1557fd76fc3636cba9931d195933cd13dba6f069"
+    },
+    {
+      "path": "scripts/bibalex_hpc/pull_intake_source_audit.sh",
+      "bytes": 1044,
+      "sha256": "b2395807ea00f6e27f004fa6206c0da49650e350cea4bf50f95e3dc2c888d959"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_runtime_probe.sh",
+      "bytes": 1114,
+      "sha256": "8ad97b1bb623bf4c3fa3f8c7a4954c3ef9030d88a21c7a7abdd40dd789b849b9"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_geo_retrieval_health.sh",
+      "bytes": 2123,
+      "sha256": "3b766f5940598e8d75ae446ec3edde5d996a9fe85c51605d4185969060e0b39b"
+    },
+    {
+      "path": "scripts/bibalex_hpc/sync_code_to_remote.sh",
+      "bytes": 900,
+      "sha256": "153932daedb1e9296d199f6d3befa9b7b6962f8ef0a6b0c4af6af5fc6d6470e0"
+    },
+    {
+      "path": "scripts/bibalex_hpc/check_job.sh",
+      "bytes": 718,
+      "sha256": "9c5beae58a309cf4658776cc40610de61d00e7154ec60e56ee9dcf4618f6111d"
+    },
+    {
+      "path": "scripts/bibalex_hpc/runtime_probe.sh",
+      "bytes": 1407,
+      "sha256": "3c2f6d1ad46bc2a99dbc59cf8e846f3acc825abbe3c5d50ca4bc399e73cbb949"
+    },
+    {
+      "path": "scripts/bibalex_hpc/submit_recover_gsva.sh",
+      "bytes": 1378,
+      "sha256": "2627014868fdc06316933abaad68e08c756ecbd2862dc6a66c3713c993327db8"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_geo_retrieval_full.sh",
+      "bytes": 2386,
+      "sha256": "eca807a3913c8e8b08ebd68ccd1819715707827cb81c1f77f630213012781dcb"
+    },
+    {
+      "path": "scripts/bibalex_hpc/submit_bootstrap_env.sh",
+      "bytes": 1515,
+      "sha256": "2d497f4b2a394ffe32a4516370e6a725eafc2098df5acb616abf1bebcdfbc2cf"
+    },
+    {
+      "path": "scripts/bibalex_hpc/run_analysis_id_pipeline_multijob.sh",
+      "bytes": 29580,
+      "sha256": "9f5a9f16299a114bc72aab8c15e37f4bdb3570ed918fd7543dac65572b6dc4d4"
+    },
+    {
+      "path": "scripts/runtime_probe/run_portable_r_smoke.sh",
+      "bytes": 1659,
+      "sha256": "68eb6eb0afce1af50fd061ebfabc7edfb5ab0f4e946cc87920b3a96a3745b08e"
+    },
+    {
+      "path": "scripts/runtime_probe/portable_r_smoke.R",
+      "bytes": 3679,
+      "sha256": "e47408dfd06279532878a21a3a1ca00d90fb6df30e999b5f84a0df8af17e2233"
+    },
+    {
+      "path": "scripts/runtime_probe/create_ici_r_conda_env.sh",
+      "bytes": 1602,
+      "sha256": "30d2972797e84a33e2a3a93b36f38cb9cd00e61796e86ec6261f708222a60e7b"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/pull_results.sh",
+      "bytes": 1133,
+      "sha256": "e80348371393c1521041e1b29bd2b3724902cb9ff1f6eeeb3485b0cd169d64c0"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/README.md",
+      "bytes": 1616,
+      "sha256": "344cd34727f2b1e9a26595ae10d5183f9048bacbb75ffcebbd9309c9f39ac38f"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/condor_ici_canary.sub",
+      "bytes": 368,
+      "sha256": "16bd3629c0213c13327d833dbafcf2c6e40e9485a659a5384f56276da8ccc1be"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/run_ici_canary.sh",
+      "bytes": 9267,
+      "sha256": "38013230a4b7a77c31f3e1abdc2d6bebaf04b8d35e208998dff92094fb159349"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/prepare_bundle.sh",
+      "bytes": 3449,
+      "sha256": "0f5c2445c5bc1b1cd15162779cfa25f8416088c6ace01fa5f6d71141f32cd5d5"
+    },
+    {
+      "path": "scripts/nmrbox_ici_canary/bootstrap_python_env.sh",
+      "bytes": 824,
+      "sha256": "6b527be80f7524671355bce7fa593e13af185ee1b4438c8566a700f5ea6fad61"
+    },
+    {
+      "path": "scripts/interpret/fgsea_enrich.R",
+      "bytes": 1282,
+      "sha256": "50dd4f9c025e34f956857e570732310df090de761b09b3076126a598f00630a6"
+    },
+    {
+      "path": "scripts/retrieval/download_fastq_from_manifest.sh",
+      "bytes": 2951,
+      "sha256": "abeae2b81ec7ac21f62dd89fb58bcbacc4da25fa7f3a67ef4bb4e96d860faabd"
+    },
+    {
+      "path": "scripts/retrieval/queue_next_fastq_batch.sh",
+      "bytes": 650,
+      "sha256": "5fe2ad3dee60dbd63d77095259fb17494b7096f9d2818c64b40962a570a5fd8b"
+    },
+    {
+      "path": "scripts/nmrbox_remote/check_backend.sh",
+      "bytes": 915,
+      "sha256": "7a222fb7e10be7d6e3b1c18bc95565302f991908ea5bfdd443a7a27c45217bfa"
+    },
+    {
+      "path": "scripts/nmrbox_remote/submit_command.sh",
+      "bytes": 3008,
+      "sha256": "9a4ce7a353b7fa1494b924a1985eaf10c7674278a459a5d0302da5faa2c54ad1"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_analysis_id_pipeline_remote.sh",
+      "bytes": 12850,
+      "sha256": "9e7fbd1f66deab6bfe9d41fda3adde6d096b8e30737d9428069621ebad10f27e"
+    },
+    {
+      "path": "scripts/nmrbox_remote/common.sh",
+      "bytes": 1292,
+      "sha256": "0157be5f3040e7af97f29794b7a7cba0eb0530b126b94beca392c9354df675b7"
+    },
+    {
+      "path": "scripts/nmrbox_remote/install_phase3_r_packages.sh",
+      "bytes": 1260,
+      "sha256": "dfe50ec6c519fe504c2add9b72fca0183c6b47d19449bae4e4bfafb28f996eb3"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_create_portable_r_env_remote.sh",
+      "bytes": 923,
+      "sha256": "f4808d93256992848d48a30105105e73805e3aaf183f54d7dc872f87610489a6"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_portable_r_smoke_remote.sh",
+      "bytes": 1079,
+      "sha256": "dc0674ff1cf896d10cb1c883a999ec5cd0962676586fbd0a27290b4d8c392797"
+    },
+    {
+      "path": "scripts/nmrbox_remote/sync_code_to_remote.sh",
+      "bytes": 778,
+      "sha256": "81305d8b77948f0f4d0e3f0b2297c46d07788b2ff24edd67b42e36a2b6806c3e"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_report_rebuild_remote.sh",
+      "bytes": 790,
+      "sha256": "5ad1f8c47bb7a6c835007103e46c1531372a8e8a830cb0e7fb74c8cceb46cb9f"
+    },
+    {
+      "path": "scripts/nmrbox_remote/pull_lightweight_results.sh",
+      "bytes": 1333,
+      "sha256": "01caf3da59fe3d3e7ecb043d1ccf2959ce67c9ad22061769fc075a22461d721e"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_canary_remote.sh",
+      "bytes": 489,
+      "sha256": "ec61fd9140c7bf3c0d8d150665341eb7b5606710f179653d1afa3fb17971e64c"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_geo_retrieval_full_remote.sh",
+      "bytes": 1326,
+      "sha256": "bb306b9c8cbe73c547aefdde99b1454280340b9d105c5b4757a7c89288c1a39c"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_legacy_full_pipeline_remote.sh",
+      "bytes": 1940,
+      "sha256": "189ad167f4071b70be31ecdcb25af1676104b4391abc5fc030ee266a2819d187"
+    },
+    {
+      "path": "scripts/nmrbox_remote/run_geo_retrieval_health_remote.sh",
+      "bytes": 1094,
+      "sha256": "2359d5f0fa9bf65063931a46a6c067f9555d50149664a1532c2c6a704bac4696"
+    },
+    {
+      "path": "tests/conftest.py",
+      "bytes": 136,
+      "sha256": "00f50eb1539bccf9fc23b02d0355b45f6aadc2f0c749ee1743d5426fdd7a99b0"
+    },
+    {
+      "path": "tests/unit/test_spec007_tcga_epigenetic_layer.py",
+      "bytes": 3972,
+      "sha256": "b62ffef5af73efb3267f5c790c40df3acac7b49d9879e5b9ee708276d0d6d491"
+    },
+    {
+      "path": "tests/unit/test_stage_00_failure_taxonomy.py",
+      "bytes": 2550,
+      "sha256": "63236e2406dc1e228231b4ab19d3552c33a399f4c42024ef691ed35e298763a2"
+    },
+    {
+      "path": "tests/unit/test_intake_build_geo_sample_manifest.py",
+      "bytes": 13635,
+      "sha256": "c9b98b1c74f7c55fea4bd6ccb95e609ecf298ae738abd55b2f22fabb2605c063"
+    },
+    {
+      "path": "tests/unit/test_method_inspect.py",
+      "bytes": 3364,
+      "sha256": "453328b2ab48ad1acabfc25ba74a5ec618850d0125780dd4465ecda258173630"
+    },
+    {
+      "path": "tests/unit/test_intake_build_geo_tables.py",
+      "bytes": 8083,
+      "sha256": "d1af481a380102acfd9109c3d058d00ddfbd2ddc31eb8cc39528d7301cfab0a8"
+    },
+    {
+      "path": "tests/unit/test_stage_00_duplicate_cohort.py",
+      "bytes": 1833,
+      "sha256": "fd8124429d702b16093a030ee261d5398651d4b73caf5d31db35d9a827391f65"
+    },
+    {
+      "path": "tests/unit/test_spec015_de_method_contracts.py",
+      "bytes": 21778,
+      "sha256": "4980807bc6a5647de1927560976d4758a0dc9a7a5c11184487f8ef3fde559b32"
+    },
+    {
+      "path": "tests/unit/test_common_expression_series_matrix.py",
+      "bytes": 3967,
+      "sha256": "88fe2b43f565366f60f10689aead4a0fcedda35e193c84837a0a6d11a125f2ec"
+    },
+    {
+      "path": "tests/unit/test_audit_and_manifest_rules.py",
+      "bytes": 18883,
+      "sha256": "bdf09c76c1211795482dff31ea9b48b687f089ae4efc866441b1a85d877e9f69"
+    },
+    {
+      "path": "tests/unit/test_stage_00_accession_parsing.py",
+      "bytes": 2282,
+      "sha256": "f42c41c87dcc932720ca03b30d60be68654484707cee82223540d7a4358c4874"
+    },
+    {
+      "path": "tests/unit/test_phase3_readiness_dashboard.py",
+      "bytes": 42451,
+      "sha256": "51ad9d6e9253b6e71cb17903a7c84444b2d2658b1421750be2710318d4605313"
+    },
+    {
+      "path": "tests/unit/test_second_slice_hardening.py",
+      "bytes": 18408,
+      "sha256": "0ace47dc7938e5e51400527c30275703b571418b26f2e184300dfc5d54df9b37"
+    },
+    {
+      "path": "tests/unit/test_analysis_id_pipeline_postrun_audit.py",
+      "bytes": 44780,
+      "sha256": "76186995f62c87a6bb9b293107f9e3d6d49df828a1f53d3f2174fa72f102026e"
+    },
+    {
+      "path": "tests/unit/test_accession_split.py",
+      "bytes": 294,
+      "sha256": "1d7e913e55bb5ee22a2decb9b9fed0c7d29f6e2585b13e4bb668f4f315a0ab56"
+    },
+    {
+      "path": "tests/unit/test_method_apply_curation.py",
+      "bytes": 4442,
+      "sha256": "8af980a5070bf23ba32112c85466343ffd2f002956827158d90bf8508461a30d"
+    },
+    {
+      "path": "tests/unit/test_stage_module_routing.py",
+      "bytes": 2622,
+      "sha256": "82716c77a6c732ffc6f02907e9458794455d4a8dfa4a6fba4d706d71da82dd01"
+    },
+    {
+      "path": "tests/unit/test_spec007_comparison_registry.py",
+      "bytes": 5464,
+      "sha256": "bfe38dd1d9806d137dbbe314912ef8532ecae2edaaa6e3b145d940493af12ccd"
+    },
+    {
+      "path": "tests/unit/test_stage_00_idempotency.py",
+      "bytes": 1895,
+      "sha256": "281c9a41b266171dccfdb139b0877c7040d9a64c1ccf44a2355faa9e2a8e221c"
+    },
+    {
+      "path": "tests/unit/test_spec027_interpretation.py",
+      "bytes": 11185,
+      "sha256": "7619c93441ce25c99f4c294e7d2af109eb123d65a27d662a3f69d59c56969ecf"
+    },
+    {
+      "path": "tests/unit/test_stage_00_dry_run.py",
+      "bytes": 1923,
+      "sha256": "88662d03556b5bdb9e67d0cfe6848d3a5b2d6a6013e75fb2844775d8761293d4"
+    },
+    {
+      "path": "tests/unit/test_spec007_patient_manifest.py",
+      "bytes": 6938,
+      "sha256": "5a306e84bdc1ff30a28cba92eba7f2bdc16a0052e7114109ec0bda220ffa1017"
+    },
+    {
+      "path": "tests/unit/test_stage_00_empty_manifest.py",
+      "bytes": 1795,
+      "sha256": "82887ff4754253780bb85109fd80da30390129eec726b0da9e2a130a3ca83b90"
+    },
+    {
+      "path": "tests/unit/test_spec026_analysis_design.py",
+      "bytes": 24444,
+      "sha256": "b8045e3abe3a904ee35ece4c214591b0fc3cff0d7e7aeb9e4ea50de228ee5453"
+    },
+    {
+      "path": "tests/unit/test_spec007_meta_hardening.py",
+      "bytes": 11310,
+      "sha256": "0bc6790a253ce0fdae69e91ce16a263487fa27a32107a2c7385f377ce0392b24"
+    },
+    {
+      "path": "tests/unit/test_spec025_viz_build.py",
+      "bytes": 5075,
+      "sha256": "15843baf3d5d511f730950e240e8dc230a8715871a58d4a37874e02c603a6389"
+    },
+    {
+      "path": "tests/unit/test_spec017_signature_derivation.py",
+      "bytes": 8064,
+      "sha256": "9184282dd084591b91cea24c4719db06cd6505bc5aa6e5411c123a7e4c435d59"
+    },
+    {
+      "path": "tests/unit/test_spec080_external_validation.py",
+      "bytes": 12240,
+      "sha256": "19344c537ed105918e955c0c56c780e29a70c15263e6d73d03f308609bfe5538"
+    },
+    {
+      "path": "tests/unit/test_tcga_naive_contracts.py",
+      "bytes": 12679,
+      "sha256": "3d04fd535593d1aa471578f9639b022b8c50bf345c08121141cd9338e8474198"
+    },
+    {
+      "path": "tests/unit/test_spec025_visualize_extended.py",
+      "bytes": 9299,
+      "sha256": "3ac33dff27d93c84262a39164286dbc21ff5f23f5ba5a80188df22b6c7ed1809"
+    },
+    {
+      "path": "tests/unit/test_method_curation_sheet.py",
+      "bytes": 7723,
+      "sha256": "52dc47d65a9e791e0c3b8d1aca4421a3d11b227cbe4754350b98198e96f494a8"
+    },
+    {
+      "path": "tests/unit/test_retrieval_geo_manifest.py",
+      "bytes": 2469,
+      "sha256": "bb6d84890cd13c3cc5972759516755866cb8fa836fa169fcce3730cc51fe17d5"
+    },
+    {
+      "path": "tests/unit/test_metadata_inference_rules.py",
+      "bytes": 1319,
+      "sha256": "c592575d2a5b767222259b6250ccbe688ccfd3eeb225bdc2c683e318e20dd703"
+    },
+    {
+      "path": "tests/unit/test_viz_forest_builder.py",
+      "bytes": 1012,
+      "sha256": "cc6d0fac05016f7a78f674f933bf64922541085c127d74ca034e842f428b8b1e"
+    },
+    {
+      "path": "tests/unit/test_stage_00_stale_partfiles.py",
+      "bytes": 1422,
+      "sha256": "28ad4d0f571e0b4764c4dd50f629d56adc532157fbbbcbc46d2b138a9979f9da"
+    },
+    {
+      "path": "tests/unit/test_stage_01_curation_report.py",
+      "bytes": 3809,
+      "sha256": "2bb57b4aba27d7634872957be114ce14f1f2ed85ae3ef330c490216d4feb8917"
+    },
+    {
+      "path": "tests/unit/test_analysis_id_pipeline_launcher.py",
+      "bytes": 20478,
+      "sha256": "34200f56702190a0098a78f6a443f013bb078536f8bed19e80bc5e376ca40268"
+    },
+    {
+      "path": "tests/unit/test_stage_01_assay_response_contract.py",
+      "bytes": 14703,
+      "sha256": "cdeaa09a2aed91200f49c1656c2aecffdf765fcd0671871a073047a771c7fdca"
+    },
+    {
+      "path": "tests/unit/test_gene_id_mapping_config.py",
+      "bytes": 542,
+      "sha256": "463bec7dba56ccc954dbd2657ccf6c6fda1cbcf7c373981b7a8060570d5c9046"
+    },
+    {
+      "path": "tests/unit/test_intake_analyze_geo_series_matrix.py",
+      "bytes": 3552,
+      "sha256": "4afa65dbb9aa900333f3d776fbc68e738a616c641229b21d269b968a49bf3f0b"
+    },
+    {
+      "path": "tests/unit/test_spec008_sample_allocation.py",
+      "bytes": 9088,
+      "sha256": "9bbc11da2989c03a663d73a678d578cf3cdfabd14945b2b4042506ea1345788f"
+    },
+    {
+      "path": "tests/unit/test_expression_path_resolution.py",
+      "bytes": 3564,
+      "sha256": "863e0404a906d9be6deef4c37cfbbb406ec33b166135838e62509af00b90adc8"
+    },
+    {
+      "path": "tests/unit/test_spec007_immune_state.py",
+      "bytes": 5564,
+      "sha256": "0101b5815b7bfdae206a8d0c22498c48ce5fb48fc63f787b3d46cdc207ce1b1f"
+    },
+    {
+      "path": "tests/unit/test_spec018_backend_and_spec021_projection_contracts.py",
+      "bytes": 28003,
+      "sha256": "fe92002d025b3655e123c496e50a263a65269de1f26c0dd9e69cca5c18e5f169"
+    },
+    {
+      "path": "tests/unit/test_router_readiness_status.py",
+      "bytes": 6726,
+      "sha256": "e14d736f3be613ee3932b53c77543d07dda504872dbb48461c6f7af9759332c6"
+    },
+    {
+      "path": "tests/unit/test_spec006_metadata_intake.py",
+      "bytes": 13901,
+      "sha256": "6aafac2ac8e0d43c5e5764c3c884dec95a13c2fe144996849539c8fc0ae3422b"
+    },
+    {
+      "path": "tests/contract/test_contract_paths.py",
+      "bytes": 273,
+      "sha256": "3031158650ea7ef532a6851ed898396648a1bd803e996b6695a46fd28f638073"
+    },
+    {
+      "path": "tests/integration/test_cli_help.py",
+      "bytes": 445,
+      "sha256": "2b65f19a895a11509ea93ac032daec049160b90fb00495286fd26922991bf21a"
+    },
+    {
+      "path": "tests/integration/test_tcga_two_project_smoke.py",
+      "bytes": 7137,
+      "sha256": "fdfbde07ebd0390107c044477cbb6d649436fa1877aa88092f385efd532f0ff2"
+    },
+    {
+      "path": "tests/integration/test_immune_effects_smoke.py",
+      "bytes": 10735,
+      "sha256": "67936c30cce6d3be037a9df5ab3eb0075b6ca7d097e016626c08eb079866f9d3"
+    },
+    {
+      "path": "tests/integration/test_stage_00_golden_ledger.py",
+      "bytes": 2253,
+      "sha256": "521bc122498e0bc054aece086696f283c6280c4b887a1c4ef0dccd0632fddfe8"
+    },
+    {
+      "path": "tools/extract-geo-metadata/extract-geo-metadata.py",
+      "bytes": 6460,
+      "sha256": "41d69e86d382b6f944ccd7600de89fa6f62630d5633db9c665ad880be4057abe"
+    },
+    {
+      "path": "tools/extract-geo-metadata/README.md",
+      "bytes": 3016,
+      "sha256": "c6c6eec510407ee5dc27bde4f33b9627ab2c3fc1f1806fd7bc8719ef82e0ac6b"
+    },
+    {
+      "path": "tools/extract-geo-metadata/generate-spreadsheet.py",
+      "bytes": 8490,
+      "sha256": "b025f036b221552225b9cad5cb1afa277a46bf69e22ce23ed053a8da71742215"
+    },
+    {
+      "path": "containers/ici-r-bioconductor.def",
+      "bytes": 583,
+      "sha256": "b62b04b33262a276a1eb09c2c30b0a51509d8ad4d21c9b0790e6d69f14bc8e86"
+    },
+    {
+      "path": "configs/signature_thresholds.yaml",
+      "bytes": 697,
+      "sha256": "20ae013c3d6c60cbae455f1cb412ad4d0dc2b97fe1e9acb1542153fbbc4389a1"
+    },
+    {
+      "path": "configs/tcga_config.yaml",
+      "bytes": 163,
+      "sha256": "2393667214381e450e04a5bbf15d3c88b568f3f99807d7837dc361cc5d221e39"
+    },
+    {
+      "path": "configs/discovery_config.yaml",
+      "bytes": 233,
+      "sha256": "b2b772eddd7ea8388783650a78a344bca886b0fe159cf613ba61e1bbc0143ff9"
+    },
+    {
+      "path": "configs/contrast_registry.yaml",
+      "bytes": 562,
+      "sha256": "60b9c227ac89c180307c56822b4b485e86a4ecd6b26b0017b254b867b5404ca9"
+    },
+    {
+      "path": "configs/fetchngs_lowmem.config",
+      "bytes": 120,
+      "sha256": "3e9e736985a5b785934b7b88bba22bd92ecac77cf292598236d9000e867a535d"
+    },
+    {
+      "path": "configs/immune_state_config.yaml",
+      "bytes": 288,
+      "sha256": "7df2e6bbf034ea658915a665687dadfc6bb41a480a36875a6d7edbd5bfc51efc"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/plan.md",
+      "bytes": 4100,
+      "sha256": "50e27a3dee5db8a3ea508997587c1551732393babb0254d991926df6f962268f"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/research.md",
+      "bytes": 2577,
+      "sha256": "903a8fd3b8b21768923361fee5251cebc83ad47e03280631d8c5fa658e9324a8"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/quickstart.md",
+      "bytes": 2225,
+      "sha256": "b63d8d6150faa1ec5d261ea703a9a7d6e1b4cb151b73f7fb0880255dca20687a"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/spec.md",
+      "bytes": 6374,
+      "sha256": "7e8d40f22d9e83673a7ffbc3c4815fbf5a508d4d9b39f78792b6f502cb52863c"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/tasks.md",
+      "bytes": 3830,
+      "sha256": "f4090595b4e74a72182265bcee39f4d5df6923c3db0c7a6c0a3a3955a452345f"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/plan.md",
+      "bytes": 9492,
+      "sha256": "f576b510d47ce7be358d239c28425f9e48a043c8cb81a17170094e38c322f168"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/research.md",
+      "bytes": 5989,
+      "sha256": "710fa8a618e23f97605f920603552f4b9317ba3c9c8e5113269c8a94c88cbd40"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/quickstart.md",
+      "bytes": 5786,
+      "sha256": "48e534114c4941608c7a76926bb208db3124309840afd768282fd85e5388c5a8"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/spec.md",
+      "bytes": 16085,
+      "sha256": "6e172f05887bb256822335ea9ed9be847d5158afeddacd8ae5d253dda711d563"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/tasks.md",
+      "bytes": 8337,
+      "sha256": "fcb788f7a0feb93211d18f812b458fc9cd70190a7dc63caec843036386ba5c3d"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/benchmarks.md",
+      "bytes": 776,
+      "sha256": "60ede91db549d3e930382b1241b1a71f05d3c5260811d11875f81fcd5feaf824"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/plan.md",
+      "bytes": 888,
+      "sha256": "7b79094808c0c9f20574549f08afc6c11cd1c4adc2c7d8fde3eb73fa9a1ec433"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/research.md",
+      "bytes": 1800,
+      "sha256": "35df0f2dbf0bce0187da07a53a48001b126f5311ad10e8defc2b8a70b1a6a658"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/quickstart.md",
+      "bytes": 1241,
+      "sha256": "c1a006f693a2c4e18ac68b998db35eea1f68ee8a766244d823630be6164f65c7"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/spec.md",
+      "bytes": 3694,
+      "sha256": "32a55df49cddcb9bd535950731b6dc345be75775439dcc8080053cb8d7e6f9b4"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/tasks.md",
+      "bytes": 2101,
+      "sha256": "dfc85a87d47f3750292d3fdd8300f8fab6d14cf842cf62415255e2fad3157486"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/benchmarks.md",
+      "bytes": 471,
+      "sha256": "e2a2180c454d96a030f241a4dbf2d6258b9fda04c18cfbd8245f09eb2bb9fa5d"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/plan.md",
+      "bytes": 780,
+      "sha256": "28495459e45811aefc52ba22e3b42dee2299d787d38b7203584348ff822c0097"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/research.md",
+      "bytes": 698,
+      "sha256": "609250613e51e5fbf2a4eed33432c2f2805a8e6343d8d414f6453a9e37614382"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/quickstart.md",
+      "bytes": 571,
+      "sha256": "987bdb6786af5fcd4eed5af3f38e87dd13f666150b7c90c2421e1ac6f87fc843"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/spec.md",
+      "bytes": 2533,
+      "sha256": "196ea6dc9e4cc398b94590c2d96ecca329d469be623854a9ae3373b36d997175"
+    },
+    {
+      "path": "specs/019-stage-10-validation-framing/tasks.md",
+      "bytes": 1025,
+      "sha256": "d91accd7af2765bad3a36036a853415396060fb2e45617e2ca9a04fea64a73e4"
+    },
+    {
+      "path": "specs/014-stage-05-qc/spec.md",
+      "bytes": 1513,
+      "sha256": "2c4aced89738c59d82abfac97366c45530b6ff3c41481b1943f147dfb8249088"
+    },
+    {
+      "path": "specs/014-stage-05-qc/tasks.md",
+      "bytes": 438,
+      "sha256": "2721ff56c1f6c44f668fc8bf209651f91f0d6456b30c71ee1e20d1e128fc0f2d"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/benchmarks.md",
+      "bytes": 1549,
+      "sha256": "30a2aa68ddc3ec38c51c3e0df77a3de2065c02962dabcf4f16988171c08a8ee3"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/plan.md",
+      "bytes": 2118,
+      "sha256": "f023d3d0326393c5d36422eb8530f41ba98c9e4780ac92509fedb823b18098d2"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/research.md",
+      "bytes": 3776,
+      "sha256": "3018caaa83e149b6107838f2b31dcf6154c2a5aa3ff41297cfbaa47528e38c59"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/quickstart.md",
+      "bytes": 1835,
+      "sha256": "775c91ce28d5018b27d99724576cd06658656a188d22f22441b0c6b2f88ee4da"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/spec.md",
+      "bytes": 5286,
+      "sha256": "3b0dd43b4dfa5fd5f6f77007fa6aca9dc26d90b704cedfb74c2a9bbfc8ba952d"
+    },
+    {
+      "path": "specs/015-stage-06-within-cohort-de-method/tasks.md",
+      "bytes": 2756,
+      "sha256": "6e6cf97447ecd3f01b32bc46ed32a851c01535bb45fa9dc0c8a67dd3b8d58290"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/benchmarks.md",
+      "bytes": 6404,
+      "sha256": "c504ff8cbfed5b5476bfddba63f72ea2b7ed551a78111b096293a83086ed691e"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/plan.md",
+      "bytes": 8869,
+      "sha256": "735b98bcf433f0b93e218510280a918fe9ad7fd20fe493f3bd1b127697123733"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/research.md",
+      "bytes": 19261,
+      "sha256": "1d4d96f00e49fe8f8c4b247fbcd15b16e72d334921ac9a0aad6a1f8809007137"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/quickstart.md",
+      "bytes": 5421,
+      "sha256": "8c3cd8455ce060bd9fb82245499db1d1bd85ce7671ba33bf3fdecf3cba4d764b"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/spec.md",
+      "bytes": 18029,
+      "sha256": "3af2c8d29ff6b2f74ab7455e7c480428ee0934a118b2759d5f634f47c09550e8"
+    },
+    {
+      "path": "specs/009-stage-00-retrieval-hardening/tasks.md",
+      "bytes": 12353,
+      "sha256": "d04aa48b5d9619f3bed60302f05f4032ff18457afde2298b71f9e580b9e86ae3"
+    },
+    {
+      "path": "specs/024-stage-15-reports/benchmarks.md",
+      "bytes": 1056,
+      "sha256": "dced8658c947cf7567ec9bf18554d54a59bafd1f02bed4ae069fceeaa0577c00"
+    },
+    {
+      "path": "specs/024-stage-15-reports/plan.md",
+      "bytes": 1939,
+      "sha256": "d38e2b2d83656a845737cc8c583e22952d67e0a0798f7b46bdf7c1a98c4d9ac0"
+    },
+    {
+      "path": "specs/024-stage-15-reports/research.md",
+      "bytes": 1932,
+      "sha256": "fcc14907bdd5d188dab6642c1356d9fd940763d6caf05534070d5c35b5bbc725"
+    },
+    {
+      "path": "specs/024-stage-15-reports/quickstart.md",
+      "bytes": 1553,
+      "sha256": "c209a2c218973bc4e3f4b74294124b894885a448e2aaac0a916cd90b80e69b8d"
+    },
+    {
+      "path": "specs/024-stage-15-reports/spec.md",
+      "bytes": 2029,
+      "sha256": "cb59fe9fe8ba79d10bd11fa9557258e7c7895380041927be14aa6df02b7b9d1a"
+    },
+    {
+      "path": "specs/024-stage-15-reports/tasks.md",
+      "bytes": 1905,
+      "sha256": "5d504aef1cee3ed67409d59e227af9c478d9865a02f3e968cdd0922d047fb74f"
+    },
+    {
+      "path": "specs/012-stage-03-manifest-build/spec.md",
+      "bytes": 1142,
+      "sha256": "74f1dc4f83c011302184c5d51e82c405fb8d8d36a25041ec9892ba6889c19c17"
+    },
+    {
+      "path": "specs/012-stage-03-manifest-build/tasks.md",
+      "bytes": 409,
+      "sha256": "24e172231b3878416fe5219c2c214cedbec1a76ad5b01791ff88716663e4a625"
+    },
+    {
+      "path": "specs/022-stage-13-tcia-overlay-decommission/spec.md",
+      "bytes": 1111,
+      "sha256": "c011b8fb7fcf873df48c55bb102fba92f15d6ef54e4c7bde5d5d6a266aa04a41"
+    },
+    {
+      "path": "specs/022-stage-13-tcia-overlay-decommission/tasks.md",
+      "bytes": 417,
+      "sha256": "d4fea0650e62ea8c6d3077e6753077c0ff7fe06010ef6f16e4d3432b5d11ad48"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/plan.md",
+      "bytes": 4357,
+      "sha256": "8cc133bef587ed6c179531a9a33a99bf07eb23f28af8af4b7d73cf27074026ef"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/research.md",
+      "bytes": 2475,
+      "sha256": "385124a6154d95a8e207d99881a65f7ac75693e95e2496e4c661960595a16c2f"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/quickstart.md",
+      "bytes": 3927,
+      "sha256": "e26a214baae250823f1af92dd5c91a2c7d2fd9a70f2fee6ceb32963335d3760e"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/spec.md",
+      "bytes": 5195,
+      "sha256": "9c2350ebef67ff239c9e4543c5641c16d30ebd0485606b08a14af3d0c03ca095"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/tasks.md",
+      "bytes": 3995,
+      "sha256": "4d58955859f2bc9442cd1277ab6784baa1eb697a78a164f0d0db9340ce36c8e6"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/benchmarks.md",
+      "bytes": 545,
+      "sha256": "3567a21658a579134bec8abf3e61ed2d6efbd5ecddfaf877353e1903adb54d31"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/plan.md",
+      "bytes": 855,
+      "sha256": "8412921dbfde1045432065b63c9f8ab76091367bb194a26814467f51ffc191a1"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/research.md",
+      "bytes": 816,
+      "sha256": "ee23abf63c8ce1e79ac09def756bf1239cb7c2ee26598fe952c07d1079985909"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/quickstart.md",
+      "bytes": 623,
+      "sha256": "f500f4272511d2681a278057113890948c3e55c3668917a9718cd39aeef46229"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/spec.md",
+      "bytes": 2999,
+      "sha256": "3d9a244debc06b46fa518f9b5fe6b2b45406a80623d6d9ed821e0e054c6f6f10"
+    },
+    {
+      "path": "specs/021-stage-12-tcga-projection-prognostic-vs-predictive/tasks.md",
+      "bytes": 1108,
+      "sha256": "e79e266a292efb20069da9c5aa486590afd40693e8243fdc82e8017c40e21b90"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/plan.md",
+      "bytes": 9523,
+      "sha256": "90a8ac35948c6f66f28b93dcde6b3bda9aa003147fcbbea9616b7b83f3c09d02"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/research.md",
+      "bytes": 4731,
+      "sha256": "c28f0d6873079861ae7a8b58e1ec966dd0c4511a774244632fac525b4c9826f9"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/quickstart.md",
+      "bytes": 2722,
+      "sha256": "9850ca7b87c476d70e54acf54e28f697782f3bb26da01322e9b539fcbf1f3cce"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/spec.md",
+      "bytes": 6753,
+      "sha256": "448d5f7f335593b38bdf0291caee8b3d6dba6f5680256f7429ecb82ae63360b8"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/tasks.md",
+      "bytes": 3246,
+      "sha256": "3f1733d80192936ddf6d8ad520a1dbdec59829aba253eda1fc53c9845a4e72c4"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/benchmarks.md",
+      "bytes": 387,
+      "sha256": "52a3da402eee25aab89be5ba1f18afcf84e31f1c9435f2b237bce5b729ff79dd"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/plan.md",
+      "bytes": 839,
+      "sha256": "be393903e8b4d5865a0c589c05e75ec74ae8cec8e80763d6a7829d72164131f2"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/research.md",
+      "bytes": 935,
+      "sha256": "33959215f63ef3e69b4503c4e98b76742e224b89e24e72ea776257c9966710ab"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/quickstart.md",
+      "bytes": 528,
+      "sha256": "085e4c79a0e72d24c9114ce4d7a5d3aae37bbe2bf2041610c973f97d32d42d6e"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/spec.md",
+      "bytes": 3757,
+      "sha256": "94ce18fceab733859ebf3e1e0b151e53b67b8ae1020100964476ede454594257"
+    },
+    {
+      "path": "specs/016-stage-07-meta-analysis-covariate-and-subgroups/tasks.md",
+      "bytes": 1121,
+      "sha256": "47687d6e2337197a692719a31a0a7c5b077c6e3c57752c4d6f83698ff89ff8a3"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/benchmarks.md",
+      "bytes": 362,
+      "sha256": "b71ae2d98276b4947019756017969634c75ea6508407e82e7634afafd540990c"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/plan.md",
+      "bytes": 902,
+      "sha256": "7326ec4052b9b096ea75a3775579ebffc7693ac0d71b124bfb95b41ad11d9b04"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/research.md",
+      "bytes": 1021,
+      "sha256": "36db8f8e7529bb130e3f8315eda5ec67bf1a80c2d79e0d8bfa6ec11b31df2d76"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/quickstart.md",
+      "bytes": 573,
+      "sha256": "5fc4f07138c32fad9efc73fad8fbf1755967ad11fd9acc0849bc11ac6d30ee0d"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/spec.md",
+      "bytes": 2198,
+      "sha256": "076e972508eeff7789ec9839b46b9efb37801a2e2bc4e32080ad8459d8ef9396"
+    },
+    {
+      "path": "specs/011-stage-02-cohort-audit/tasks.md",
+      "bytes": 846,
+      "sha256": "0bb57198780429952cf29bb699df270e1651fbb8454cf42b45b4a09499bc5bb2"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/plan.md",
+      "bytes": 1125,
+      "sha256": "2db1cb14e74b186eb9ca0d13b3f725c9506623b60f39cb198d9db3db23064d01"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/research.md",
+      "bytes": 1139,
+      "sha256": "6e59384ebbbf084eefb502054bb5db91befc141f4a536d0daeb4dad7819265e2"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/quickstart.md",
+      "bytes": 1226,
+      "sha256": "141e617ded7d0865ad5dfc4d2b7677fe6d70a65141849660bdd85504d9642084"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/spec.md",
+      "bytes": 3678,
+      "sha256": "48149d821293255d0d236ea755151cb6e8067481a85d718e82f0977b70bb1507"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/tasks.md",
+      "bytes": 1737,
+      "sha256": "c533619f4be49abdb3dedbe32c20ea2dba07fbd5fa2a0c224656b40e79a75aac"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/plan.md",
+      "bytes": 5032,
+      "sha256": "987ad4e6d7e0e753116440e407e38b7c231babea73fcb4b4306b56712c3b2934"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/research.md",
+      "bytes": 4080,
+      "sha256": "598b54103135706e7b7c67ebdd40b705b35ee472171bbafef6cd9527284c5406"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/quickstart.md",
+      "bytes": 4178,
+      "sha256": "164757b28f465f795934304889ff0a4b8e174fe35d8569971e4d885124475441"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/spec.md",
+      "bytes": 6745,
+      "sha256": "bd4e1ab420bda2c38f7aab14324e4deb51d87edfdee37704b234a55285757a28"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/tasks.md",
+      "bytes": 5861,
+      "sha256": "c70e99b13e31e1010075e4ac0f5d79ecf1ca0ddb7b873240bef66e59b1e48cbf"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/benchmarks.md",
+      "bytes": 3372,
+      "sha256": "74d7d2252691733e288ce913bd3d7c5056fbc8b3a6c0ebadeb7eb04d5ab402ec"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/plan.md",
+      "bytes": 5113,
+      "sha256": "49edd638eda82e212b17051169d663621bb92323b811bd33d09e53e122cf19fb"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/research.md",
+      "bytes": 7036,
+      "sha256": "81c4738f00ce2db4c93df195976aac10e1e9759fc131b520b18cba76f0a8825e"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/quickstart.md",
+      "bytes": 3164,
+      "sha256": "d08e17f87aa8ee4c4609dd19a51583aa377b8e114938e58dde837a8b79e2221c"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/spec.md",
+      "bytes": 8570,
+      "sha256": "28f9b54038106a273f9523d08d63d93f46a352ecb9305960af6b948ae43fcb9a"
+    },
+    {
+      "path": "specs/027-downstream-biological-interpretation/tasks.md",
+      "bytes": 6262,
+      "sha256": "53b870f0e81381e316552e0ed6e5f4178ac0dca55a514cfe148d16d70ff2d655"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/plan.md",
+      "bytes": 5705,
+      "sha256": "453ec631067bd8caaf937d82c127299206f90d7a598866989bbaf347e53c7f61"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/research.md",
+      "bytes": 4209,
+      "sha256": "c0ea897284448a91ff9f67a9cc63d42f3c8eca161230fa36f25bbec14028b130"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/quickstart.md",
+      "bytes": 3046,
+      "sha256": "4a8bb9da3442e238e584bed363b28c38170706bb88e29450ae2641ad06bab8f0"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/spec.md",
+      "bytes": 17099,
+      "sha256": "19c06f8e947f5a498fb36f2428e1c8405d4c4f2493a1b837d9c39051e291c38b"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/tasks.md",
+      "bytes": 4226,
+      "sha256": "010dca5fbe13b2002574c1697f11c10aaa504f40fa25d72b6936993f5d4af4c1"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/benchmarks.md",
+      "bytes": 1130,
+      "sha256": "bc00b77a1306365007336ee3ff211c618fadebc5e7a1005d83ea4108128f90e8"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/plan.md",
+      "bytes": 1801,
+      "sha256": "ba25d459f34cb94fffec95aeca3749942d929e2b5f0f77bad9917a18573cad97"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/research.md",
+      "bytes": 2599,
+      "sha256": "4dbac289109e0f588dd9f8bff938b89999624b265ada2a4bcfc52fd5c7baf93a"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/quickstart.md",
+      "bytes": 1770,
+      "sha256": "58baf92ce93d025f9852d6c151596a11de18dc2c820c15952c092d74cb1cf85f"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/spec.md",
+      "bytes": 4773,
+      "sha256": "2e4311b1145e4ec3d208a02db7ee398b1e023527f4b63bd0cb31068b27b51b2e"
+    },
+    {
+      "path": "specs/018-stage-09-immune-state-real-ssgsea/tasks.md",
+      "bytes": 2307,
+      "sha256": "df48e7e8c347f287118f334faaca67502dd3e81782574a10cd786bd46cd3b7a1"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/benchmarks.md",
+      "bytes": 3046,
+      "sha256": "f1400f2a838c2c494ae039fb405e9f5494227642066525e58d293a82ce50eeab"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/plan.md",
+      "bytes": 3903,
+      "sha256": "f43a8f772d3599f660544574295c03eb1fcb21fda688507d89b5f707360abc51"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/research.md",
+      "bytes": 7132,
+      "sha256": "1aad147d1cc28ee3f2e1e4d01029f1d9e4dab11655b9d34d3e5df1ba499b07f3"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/quickstart.md",
+      "bytes": 3392,
+      "sha256": "9a26e31d461a3a2e7d80ce01c90d54e68fca306d94bf046ecc20048201896f61"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/spec.md",
+      "bytes": 14022,
+      "sha256": "f2309cc76055840e949c800c84c3113ab5732e91c56ccdd280cf0308dc414fe5"
+    },
+    {
+      "path": "specs/010-stage-01-intake-assay-and-response-contract/tasks.md",
+      "bytes": 4458,
+      "sha256": "a65cf2aac27aa6c2c5609576084ff6bd86ce4df867c6ddd9503084d5555fc4b5"
+    },
+    {
+      "path": "specs/020-stage-11-tcga-gdc-map/spec.md",
+      "bytes": 1363,
+      "sha256": "e3dae30973c2dadb03860ff6b3f2480df33786e86ccd0509bbcbb074115116a7"
+    },
+    {
+      "path": "specs/020-stage-11-tcga-gdc-map/tasks.md",
+      "bytes": 410,
+      "sha256": "b16d93a6c17ca1f09296e9ffbc53ccefe883a9429975a6ca2b8e87bc42fca79a"
+    },
+    {
+      "path": "specs/023-stage-14-methylation-integration/spec.md",
+      "bytes": 1471,
+      "sha256": "3ea5e6f6613dd5657f52e2e5427c96eb1cb34bb3d07f1b1cc0173a5090a27cd9"
+    },
+    {
+      "path": "specs/023-stage-14-methylation-integration/tasks.md",
+      "bytes": 277,
+      "sha256": "88caa6b49bed46856f5f0f28fcd9752f51b2036cd0ab7d1b3ed115d4d3041647"
+    },
+    {
+      "path": "specs/013-stage-04-expression-resolution-and-quant/spec.md",
+      "bytes": 1786,
+      "sha256": "611bf1eb95cadbf5884460b0d1b41c69f8629aeaceac9ffa318efa7a0bd69259"
+    },
+    {
+      "path": "specs/013-stage-04-expression-resolution-and-quant/tasks.md",
+      "bytes": 503,
+      "sha256": "c60959c3b1a7741c44002e3d4fb419c8a44ad1b126be33e1a4d7b6ff34732858"
+    },
+    {
+      "path": "specs/025-visualization-module/benchmarks.md",
+      "bytes": 881,
+      "sha256": "6652793775ee066e579d5fd362faff130020f1c28cf0a96b5dd51ee826f75637"
+    },
+    {
+      "path": "specs/025-visualization-module/plan.md",
+      "bytes": 1932,
+      "sha256": "b49fdc26996da218f3182152b060ea134a49cb61b5aec010b87115fdf04397cd"
+    },
+    {
+      "path": "specs/025-visualization-module/research.md",
+      "bytes": 2297,
+      "sha256": "9d883cf49af55ace04e8440a9175f946f99e2c72cd8f3ec9b449b17902eb0b80"
+    },
+    {
+      "path": "specs/025-visualization-module/quickstart.md",
+      "bytes": 1300,
+      "sha256": "f63cfb90cf5dee12a20c90aafbde5ba3750e19c217fab0d2497d3b5374f7b1ae"
+    },
+    {
+      "path": "specs/025-visualization-module/spec.md",
+      "bytes": 5666,
+      "sha256": "35d448fc670c9ee74ba51a4e22c2f6faa611f4d71f1f9bb6a519bc2f6c78d3be"
+    },
+    {
+      "path": "specs/025-visualization-module/tasks.md",
+      "bytes": 2258,
+      "sha256": "f750800c6e6bb22ea0f18a2563342d740dea6999d07986a44f45e113443972fa"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/benchmarks.md",
+      "bytes": 1210,
+      "sha256": "dfa2a08b574663c02eaa861e66f94d2099c8f555b692ac5431f65dcb0a645c5f"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/plan.md",
+      "bytes": 2116,
+      "sha256": "184bd118942500f9b6a80b73bc159ea59466c33993a5304f1ce41a36d953884c"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/research.md",
+      "bytes": 2982,
+      "sha256": "39a77a5fdf40d7f4160361581ec1fe7456732f77a9befb28046ebbfac164b27f"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/quickstart.md",
+      "bytes": 2265,
+      "sha256": "9a03a090792063913b17df785997740ce86512d3c61a6e124622904416aeeb17"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/spec.md",
+      "bytes": 3602,
+      "sha256": "facb0ac46b6cd4750ce9266688657252d47459796124c00bc283bdfaf4e6b0b3"
+    },
+    {
+      "path": "specs/017-stage-08-signature-derivation/tasks.md",
+      "bytes": 3331,
+      "sha256": "ab4cb74873095a7b3ddd9f0f3adf237bb23888b8f0a8f0ce1e095788ce1d4b2c"
+    },
+    {
+      "path": "specs/004-rnaseq-pipeline-hardening-and-execution-readiness/contracts/io-contracts.md",
+      "bytes": 1302,
+      "sha256": "82f659bdb35bd66a038d7ec79d80497c847151abb761557bbf4ecba6b1592c41"
+    },
+    {
+      "path": "specs/002-ici-discovery-meta-pipeline/contracts/io-contracts.md",
+      "bytes": 9438,
+      "sha256": "5c01177ce6e0c3020c820724a1db6abc90bbbe6ffce990fd069a0d06f18cde83"
+    },
+    {
+      "path": "specs/026-analysis-design-contrast-registry/contracts/io-contracts.md",
+      "bytes": 1355,
+      "sha256": "dd292271ca4f0e5efcc68e8bcf8b62c86f8bf1e2e912b89be276be553ebbf3cf"
+    },
+    {
+      "path": "specs/005-cohort-bulk-ingestion-and-manifest-reconciliation/contracts/io-contracts.md",
+      "bytes": 1702,
+      "sha256": "2bda112a0c6f4359d74c3d2b21581c5748c4a333d3350c67c88c16b11349e5ec"
+    },
+    {
+      "path": "specs/006-automated-metadata-curation-and-response-label-extraction/contracts/io-contracts.md",
+      "bytes": 3664,
+      "sha256": "d49265e05a06f4b2b42d926895c00a746dee969cb2adeb9804c2563986c7294c"
+    },
+    {
+      "path": "specs/008-pipeline-cleanup-multi-contrast-and-unallocated-sample-recovery/contracts/io-contracts.md",
+      "bytes": 1589,
+      "sha256": "ad2c44c2b15eb529b1ef74db8053a16d0738cf4d15dfb93e833e41237bed5d04"
+    },
+    {
+      "path": "specs/003-tcga-naive-pan-cancer-projection/contracts/io-contracts.md",
+      "bytes": 5531,
+      "sha256": "eb1173468a82869b047f4b5273c692520b1fd7772c3b405723dda567e0805a3b"
+    },
+    {
+      "path": "specs/007-patient-granular-meta-analysis-and-epigenetic-immune-state/contracts/io-contracts.md",
+      "bytes": 6619,
+      "sha256": "8da4781289f731a6c21e0bb9c747f24d6ba69c7791cfdd9ae9a6d3b07e1e7945"
+    },
+    {
+      "path": "envs/ici-r-bioconductor.yml",
+      "bytes": 451,
+      "sha256": "0b42838ac0418356330b633f3dccf98726b614eef454984dc7bd862bbf84e8c8"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 377,
+      "sha256": "89bd5979c6e243c74344629dc5c35ca4007654dec72cc3aceb576ca9b7c25fa0"
+    },
+    {
+      "path": "run_full_pipeline.sh",
+      "bytes": 2680,
+      "sha256": "bbc9bf77d801cd957800379609f33f78c46c3db07212c7ef4abd79655cb34195"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5619,
+      "sha256": "3babf4181115f49b6aecb83698f386be4b735a70f11581411441cd856d5d292a"
+    },
+    {
+      "path": "NMRBOX_CANARY_BUNDLE.md",
+      "bytes": 530,
+      "sha256": "3460fc07982a6c9fc144d4eb0fa601e7a5d91561fc8060679e8efc643aa03184"
+    },
+    {
+      "path": "SOURCE_OF_TRUTH.md",
+      "bytes": 306,
+      "sha256": "84bbec22c125f5f76f85de1871178232cecac0ddf556528a9d8491149c3c21df"
+    },
+    {
+      "path": "configs/immune_gene_sets_registry_expanded.tsv",
+      "bytes": 2546,
+      "sha256": "3ae6e7ecdb42d8c4a40e44af2ed3432245a76f22683adbcbc0c8f62429ff2cf3"
+    },
+    {
+      "path": "configs/expanded_gene_set_atlas_rules.tsv",
+      "bytes": 2092,
+      "sha256": "01f109c29b56c9d9002c5a74e6c03db8f178f1917d890ee8052e14d6674bb3c5"
+    },
+    {
+      "path": "configs/timer_active_cohort_roster_with_stratification.tsv",
+      "bytes": 1878,
+      "sha256": "efe57e1f76623df78b3d7a8f399332808305f6011c4ea4bd7001de97f083a7b2"
+    },
+    {
+      "path": "configs/response_label_mapping.tsv",
+      "bytes": 2311,
+      "sha256": "4bcd950d105989d0e77e44050ae4395fe674664a70a55fd994d3755fcdf8c16b"
+    },
+    {
+      "path": "configs/candidate_cohort_roster_combined_active_timer.tsv",
+      "bytes": 6115,
+      "sha256": "6ba5cf621c29d04bcba151ce18e8684a454d626becbd085f7f56656fd7fc922a"
+    },
+    {
+      "path": "configs/candidate_cohort_roster.tsv",
+      "bytes": 6115,
+      "sha256": "6ba5cf621c29d04bcba151ce18e8684a454d626becbd085f7f56656fd7fc922a"
+    },
+    {
+      "path": "configs/signature_module_rules.tsv",
+      "bytes": 1190,
+      "sha256": "a7f80abd24f559abefa30fd56234009ae3d8aabf5c4247c21daf865dffc1a2e2"
+    },
+    {
+      "path": "configs/timer_candidate_cohort_roster_rnr_prepost_clean.tsv",
+      "bytes": 7468,
+      "sha256": "ad45e4a312e30594fdcc48a9605f25c72f58fa4a99f261625f5794a3e4a57b44"
+    },
+    {
+      "path": "configs/timer_candidate_cohort_roster_downloadable_only.tsv",
+      "bytes": 6084,
+      "sha256": "1c86aa1c6388519062c0d829873e322607a540552e9519cb908323503e3e29af"
+    },
+    {
+      "path": "configs/immune_gene_sets_registry.tsv",
+      "bytes": 1092,
+      "sha256": "4656d893793075bb5f04073441901d9f2b37f63f8cba99ffdc9d09b8284e6a23"
+    },
+    {
+      "path": "configs/merged_47_studies_track_stratified.tsv",
+      "bytes": 11808,
+      "sha256": "48aa947f6f251371ba6e2cc9fbc9f51da953ed24d54bf076a5f0daba3ce32142"
+    },
+    {
+      "path": "configs/merged_47_studies_track_stratified_rnr_subclasses.tsv",
+      "bytes": 13584,
+      "sha256": "8b3961eae217da9c1894bd9b01df42a15d97643c6507408fca5d6ffadd646dfe"
+    },
+    {
+      "path": "configs/timer_candidate_cohort_roster_pre_response.tsv",
+      "bytes": 5229,
+      "sha256": "9daeef4f9fa87a5d680c6d4c9352c05530fcf2ed15eea344083cdf4f5d4bfbce"
+    },
+    {
+      "path": "configs/timer_candidate_cohort_roster_treatment_delta.tsv",
+      "bytes": 2361,
+      "sha256": "f4b4689fe4db89c75f25b2bce420c7b73a04624effc12ae70ec983ef811fb873"
+    },
+    {
+      "path": "configs/immune_gene_sets_registry_core_enriched.tsv",
+      "bytes": 6433,
+      "sha256": "fc416deaebee02efc3337082464b52ad7aac288e42cd4e5db359f79523c3e76f"
+    },
+    {
+      "path": "configs/timer_candidate_cohort_roster_rnr_prepost.tsv",
+      "bytes": 7818,
+      "sha256": "f535310dc182a7dbf34009e5df1c89e6f2c0338a00898b6da19e7c04800fdb90"
+    }
+  ]
+}

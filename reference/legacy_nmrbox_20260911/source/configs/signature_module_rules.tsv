@@ -1,0 +1,8 @@
+module_id	module_label	priority	gene_symbol_regex	gene_id_regex	notes
+antigen_presentation	Antigen presentation and MHC visibility	10	^(HLA|B2M$|TAP1$|TAP2$|TAPBP$|NLRC5$)		Rule-based assignment for MHC/antigen presentation genes.
+interferon_response	Interferon and antiviral response	20	^(IFN|IFI|ISG|OAS|MX|IRF|STAT1$|STAT2$|GBP)		Rule-based assignment for interferon-stimulated biology.
+chemokine_recruitment	Chemokine and immune recruitment	30	^(CCL|CCR|CXCL|CXCR)		Rule-based assignment for chemokines and chemokine receptors.
+cytotoxic_t_cell_inflamed	Cytotoxic or T-cell-inflamed effector activity	40	^(GZM|PRF1$|NKG7$|GNLY$|CD8A$|CD8B$|CD3D$|CD3E$|CXCR3$|TBX21$)		Rule-based assignment for cytotoxic/T-cell-inflamed biology.
+checkpoint_adaptive_resistance	Checkpoint and adaptive resistance	50	^(PDCD1$|CD274$|PDCD1LG2$|CTLA4$|LAG3$|TIGIT$|HAVCR2$|IDO1$)		Rule-based assignment for checkpoint/adaptive resistance genes.
+epigenetic_repression	Epigenetic repression and chromatin regulation	60	^(EZH2$|SUZ12$|EED$|DNMT|HDAC|KDM|KMT|SMAR|ARID|CHD|CBX|SETD|PRC)		Rule-based assignment for chromatin and epigenetic regulator genes.
+other	Other or unassigned	999	.*		Fallback assignment.

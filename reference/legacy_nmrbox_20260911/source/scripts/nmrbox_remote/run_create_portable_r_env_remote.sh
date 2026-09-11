@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=common.sh
+source "${SCRIPT_DIR}/common.sh"
+
+JOB_NAME="${JOB_NAME:-ici_create_portable_r}"
+PORTABLE_R_CONDA_ENV="${PORTABLE_R_CONDA_ENV:-${NMRBOX_PORTABLE_R_CONDA_ENV:-ici-r-bioconductor}}"
+PORTABLE_R_CONDA_PREFIX="${PORTABLE_R_CONDA_PREFIX:-${NMRBOX_PORTABLE_R_CONDA_PREFIX:-}}"
+PORTABLE_R_CONDA_BIN="${PORTABLE_R_CONDA_BIN:-conda}"
+
+REMOTE_CMD="export CONDA_BIN='${PORTABLE_R_CONDA_BIN}' CONDA_ENV_NAME='${PORTABLE_R_CONDA_ENV}' CONDA_ENV_PREFIX='${PORTABLE_R_CONDA_PREFIX}' && bash scripts/runtime_probe/create_ici_r_conda_env.sh"
+REMOTE_CMD="${REMOTE_CMD}" \
+REMOTE_EXECUTION_CLASS="canary" \
+JOB_NAME="${JOB_NAME}" \
+REQUEST_CPUS="${NMRBOX_CANARY_REQUEST_CPUS}" \
+REQUEST_MEMORY="${NMRBOX_CANARY_REQUEST_MEMORY}" \
+REQUEST_DISK="${NMRBOX_CANARY_REQUEST_DISK}" \
+bash "${SCRIPT_DIR}/submit_command.sh"

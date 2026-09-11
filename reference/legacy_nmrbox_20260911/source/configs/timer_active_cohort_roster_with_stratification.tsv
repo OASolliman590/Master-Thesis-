@@ -1,0 +1,22 @@
+dataset	cancer_type	therapy_combination	has_rnr	dataset_size_rnr	responders	non_responders	has_pre_post	dataset_size_pre_post	pre_treatment	post_treatment	tracks_present
+GSE100797	Melanoma	ACT	yes	25	10	15	no				PRE_RESPONSE
+GSE106128	Melanoma	DCs_treated	yes	47	21	14	yes	47	8	39	PRE_RESPONSE|TREATMENT_DELTA
+GSE115821	Melanoma	anti-CTLA-4+anti-PD-1	yes	37	3	34	yes	37	14	23	PRE_RESPONSE|TREATMENT_DELTA
+GSE126044	Non small-cell lung cancer	anti-PD-1	yes	7	2	5	no				PRE_RESPONSE
+GSE135222	Non small-cell lung cancer	anti-PD-1	yes	27	8	19	no				PRE_RESPONSE
+GSE145996	Melanoma	anti-PD1	yes	4	2	2	no				PRE_RESPONSE
+GSE159067	Head and neck squamous cell carcinoma	anti-PD-1/PD-L1	yes	102	11	91	no				PRE_RESPONSE
+GSE195832	Head and neck squamous cell carcinoma	anti-PD-1	no				yes	56	28	28	TREATMENT_DELTA
+GSE202069	Hepatocellular carcinoma	anti-PD-1	no				yes	41	17	24	TREATMENT_DELTA
+GSE207422	Non small-cell lung cancer	anti-PD-1	yes	24	17	7	yes	24	3	21	PRE_RESPONSE|TREATMENT_DELTA
+GSE210287	Head and neck squamous cell carcinoma	anti-PDL1	yes	22	13	9	yes	22	12	10	PRE_RESPONSE|TREATMENT_DELTA
+GSE218989	Lung cancer	anti-PD-1/PD-L1	yes	355	168	187	no				PRE_RESPONSE
+GSE235910	Head and neck squamous cell carcinoma	afatinib	no				yes	26	13	13	TREATMENT_DELTA
+GSE67501	Renal cell carcinoma	anti-PD-1	yes	11	4	7	no				PRE_RESPONSE
+GSE78220	Melanoma	anti-PD-1	yes	28	15	13	no				PRE_RESPONSE
+GSE91061	Melanoma	anti-PD-1	yes	109	20	78	yes	109	51	58	PRE_RESPONSE|TREATMENT_DELTA
+GSE93157	Non small-cell lung cancer	anti-PD-1	yes	22	6	16	no				PRE_RESPONSE
+GSE96619	Melanoma	anti-PD-1	no				yes	10	5	5	TREATMENT_DELTA
+PRJEB23709	Melanoma	anti-CTLA-4+anti-PD-1	yes	91	49	42	yes	91	73	18	PRE_RESPONSE|TREATMENT_DELTA
+PRJEB25780	Stomach adenocarcinoma	anti-PD-1	yes	78	21	57	no				PRE_RESPONSE
+PRJNA482620	Glioblastoma	anti-PD-1	yes	34	17	17	no				PRE_RESPONSE

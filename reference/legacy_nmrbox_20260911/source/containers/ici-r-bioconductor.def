@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: condaforge/mambaforge:latest
+
+%labels
+    org.opencontainers.image.title ICI R Bioconductor Runtime
+    org.opencontainers.image.description Portable R runtime for GSVA, DESeq2, limma, edgeR, and TCGA survival smoke tests
+
+%files
+    ../envs/ici-r-bioconductor.yml /opt/ici-r-bioconductor.yml
+
+%post
+    set -e
+    mamba env create -f /opt/ici-r-bioconductor.yml
+    mamba clean -afy
+
+%environment
+    export PATH=/opt/conda/envs/ici-r-bioconductor/bin:/opt/conda/bin:$PATH
+    export R_HOME=/opt/conda/envs/ici-r-bioconductor/lib/R
+
+%runscript
+    exec "$@"

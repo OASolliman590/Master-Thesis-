@@ -1,5 +1,15 @@
 # Manual Grok handoff — Paper A implementation
 
+## Source correction and recovered pipeline â€” 11 September 2026
+
+**ICBatlas is the starting source catalogue, not a late optional expansion.** Audit its original ICI responder/non-responder expression studies, then extend through other catalogues, the recovered legacy rosters and newer literature. The five previously inspected GEO studies are examples with existing evidence, not the cohort boundary. Read `docs/research/A_ICBATLAS_SOURCE_EXPANSION.md` and consume `specs/A/SOURCE_CANDIDATE_QUEUE.tsv` first. The queue contains 77 source references with overlaps, aliases and unresolved entries; it is NOT 77 studies or an admitted dataset.
+
+The user has recovered prior work: inspect `reference/legacy_nmrbox_20260911/README.md`, its hash manifest and `source/` before writing duplicate retrieval, cohort-audit, differential-expression, meta-analysis or gene-set code. This is a 358-file source-only snapshot from NMRbox, with the 47-row historical study roster and other cohort/gene registries. No results or patient/sample manifests are included. AIU's mirror was unreachable at export time. Do not overwrite the historical snapshot; record reuse/missing-contract decisions in the A implementation report.
+
+Extend source admission to RNA-only and measured RNA+epigenetic ICI studies. Priority pairing audit: Hossain's publication-linked GSE213145 RNA and GSE264158 methylation; also Newell2022 and Seremet2016. EPICA requires separate molecular/adjuvant-ICI subsets. Verify original identifiers, exact same-patient/same-biopsy intersection and endpoint before calling a study paired. No paired eligible count is currently established. Keep methylation-only studies in a separate evidence inventory; do not add them to the RNA discovery denominator. RNA discovery remains the backbone; the qualified paired subset supports measured epigenetic corroboration and does not replace Paper B's prostate analysis.
+
+A1 deliverable: a machine-readable original-study crosswalk resolving ICBatlas labels plus old-run and literature candidates, with retrieval objects, permitted access, assay/units, regimen/timing, response definition, patient linkage, overlap, prior exposure, branch and explicit pending/excluded reasons. Do not stop after re-auditing only the five previously listed GEO cohorts. Secure the atlas supplement/source export where possible; preserve unavailable entries rather than inventing mappings. Separate arrays from the RNA-seq/TPM primary contract. Reconcile old ACT/DC-treated entries and assumed response labels before ICI admission. Final-test outcomes and atlas-derived DEGs must not drive discovery feature selection.
+
 Repository: https://github.com/OASolliman590/Master-Thesis- (private; use the user's existing authenticated access, never request keys in chat).
 
 Verified code baseline when this handoff was prepared: `7c9ad16fc612a37c30836130d7976cf5fd368280`. Later documentation commits may contain this handoff. Inspect the current commit and dirty tree; never reset user work. The A/B scientific amendment is `38e3026` and remains controlling.

@@ -1,0 +1,32 @@
+cohort_id	source_field	source_value	pipeline_label	notes
+DEFAULT	*	CR	responder	RECIST complete response
+DEFAULT	*	PR	responder	RECIST partial response
+DEFAULT	*	SD	non_responder	RECIST stable disease
+DEFAULT	*	PD	non_responder	RECIST progressive disease
+DEFAULT	*	Complete Response	responder	full text RECIST
+DEFAULT	*	Partial Response	responder	full text RECIST
+DEFAULT	*	Stable Disease	non_responder	full text RECIST
+DEFAULT	*	Progressive Disease	non_responder	full text RECIST
+gse67501_rcc_pd1	response to anti-pd-1 (nivolumab) immunotherapy (response or no-response)	response	responder	binary field
+gse67501_rcc_pd1	response to anti-pd-1 (nivolumab) immunotherapy (response or no-response)	no_response	non_responder	binary field
+gse91061_melanoma_pd1	response	PD	non_responder	RECIST
+gse91061_melanoma_pd1	response	PR	responder	RECIST
+gse91061_melanoma_pd1	response	CR	responder	RECIST
+gse91061_melanoma_pd1	response	SD	non_responder	RECIST
+gse159067_hnscc_pd1_pdl1	best response on immunotherapy (recist)	PD	non_responder	RECIST
+gse159067_hnscc_pd1_pdl1	best response on immunotherapy (recist)	PR	responder	RECIST
+gse159067_hnscc_pd1_pdl1	best response on immunotherapy (recist)	CR	responder	RECIST
+gse159067_hnscc_pd1_pdl1	best response on immunotherapy (recist)	SD	non_responder	RECIST
+gse106128_melanoma_dcs	dth response	+	responder	DTH positive
+gse106128_melanoma_dcs	dth response	-	non_responder	DTH negative
+gse207422_nsclc_pd1	pathologic_response	MPR	responder	major pathologic response
+gse207422_nsclc_pd1	pathologic_response	MPR (pCR)	responder	major pathologic response with pCR
+gse207422_nsclc_pd1	pathologic_response	NMPR	non_responder	no major pathologic response
+gse207422_nsclc_pd1	pathologic_response	non-MPR	non_responder	no major pathologic response
+gse91061_melanoma_pd1	response	PRCR	responder	pooled partial or complete response
+gse115821_melanoma_ctla4_pd1	response	R	responder	binary
+gse115821_melanoma_ctla4_pd1	response	NR	non_responder	binary
+gse210287_hnscc_pdl1	response	R	responder	binary
+gse210287_hnscc_pdl1	response	NR	non_responder	binary
+gse135222_srp217040_nsclc_pdl1	progression-free survival (pfs)	1	responder	SOFT proxy: progression-free indicator
+gse135222_srp217040_nsclc_pdl1	progression-free survival (pfs)	0	non_responder	SOFT proxy: progression event indicator

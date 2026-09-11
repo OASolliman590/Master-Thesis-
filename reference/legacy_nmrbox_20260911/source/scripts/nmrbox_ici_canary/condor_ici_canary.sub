@@ -1,0 +1,16 @@
+universe = vanilla
+executable = scripts/nmrbox_ici_canary/run_ici_canary.sh
+arguments =
+
+output = condor_logs/ici_canary.$(Cluster).$(Process).out
+error = condor_logs/ici_canary.$(Cluster).$(Process).err
+log = condor_logs/ici_canary.$(Cluster).log
+
+request_cpus = 4
+request_memory = 16GB
+request_disk = 20GB
+
+getenv = True
++JobBatchName = "ici_rnaseq_canary"
+
+queue 1

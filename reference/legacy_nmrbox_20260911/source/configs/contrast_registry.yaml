@@ -1,0 +1,30 @@
+PRE_RESPONSE:
+  timing_constraints:
+    - pre-treatment
+  label_constraints:
+    - responder
+    - non_responder
+  paired_design_preferred: false
+  min_sample_threshold:
+    per_group: 3
+
+TREATMENT_DELTA:
+  timing_constraints:
+    - pre-treatment
+    - on-treatment
+  label_constraints:
+    - paired
+  paired_design_preferred: true
+  min_sample_threshold:
+    total_pairs: 3
+
+ON_RESPONSE:
+  timing_constraints:
+    - on-treatment
+  label_constraints:
+    - responder
+    - non_responder
+  paired_design_preferred: false
+  min_sample_threshold:
+    per_group: 3
+

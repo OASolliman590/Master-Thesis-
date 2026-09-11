@@ -1,5 +1,13 @@
 # A data contract
 
+## ICBatlas-first acquisition and legacy-source expansion â€” 11 September 2026
+
+The acquisition universe starts with ICBatlas's original ICI responder/non-responder expression studies and expands through other catalogues, recovered pipeline rosters and eligible newer studies. The previously audited GEO examples below are not the full intended roster. `SOURCE_CANDIDATE_QUEUE.tsv` records 77 source references, deliberately retaining cross-source overlap and unknown eligibility. Resolve them to originating studies before counting cohorts or patients.
+
+Read `../../docs/research/A_ICBATLAS_SOURCE_EXPANSION.md` for primary-source citations and measured paired epigenetic candidates. RNA-seq is the primary discovery assay branch; atlas arrays require a separate declared branch. RNA-only studies remain eligible if their clinical and measurement contracts qualify. Paired RNA/epigenetic studies require explicit patient/specimen/timepoint crosswalks and separately reported RNA, epigenetic, linked, same-specimen and endpoint-eligible denominators. Methylation-only or unpaired studies cannot enlarge either RNA or paired denominators.
+
+The source-only historical archive is `../../reference/legacy_nmrbox_20260911/`; its 47-row registry is a discovery aid with non-ICI entries, assumed labels and aliases, not an admitted roster. Preserve old bytes and record corrections in the new admission output. Include old outcome exposure in development/test assignment. The current A-P2 primary and all existing no-leakage/endpoint contracts continue to apply.
+
 Status: proposed, verified facts distinguished below. Original evidence checked 5 September 2026; source-admission updates checked 6 September 2026. Resource totals are not analysis eligibility.
 
 | Question | Source and actual metadata coverage | Primary eligibility today | Validation role and limits |

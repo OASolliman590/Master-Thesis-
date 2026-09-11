@@ -1,0 +1,12 @@
+candidate_id	source_stream	cancer_type	therapy_context	comparison_type	resolved_accession	publication	proposed_role	notes
+timer_gse106128_treatment_delta	GEO	Melanoma	DCs_treated	TREATMENT_DELTA	GSE106128	https://pubmed.ncbi.nlm.nih.gov/29682201/	discovery	TIMER pre/post list; dataset_size=47; pre=8; post=39
+timer_gse115821_treatment_delta	GEO	Melanoma	anti-CTLA-4+anti-PD-1	TREATMENT_DELTA	GSE115821	https://pubmed.ncbi.nlm.nih.gov/30127394/	discovery	TIMER pre/post list; dataset_size=37; pre=14; post=23
+timer_gse195832_treatment_delta	GEO	Head and neck squamous cell carcinoma	anti-PD-1	TREATMENT_DELTA	GSE195832	https://pubmed.ncbi.nlm.nih.gov/35262677/	discovery	TIMER pre/post list; dataset_size=56; pre=28; post=28
+timer_gse202069_treatment_delta	GEO	Hepatocellular carcinoma	anti-PD-1	TREATMENT_DELTA	GSE202069	https://pubmed.ncbi.nlm.nih.gov/35842234/	discovery	TIMER pre/post list; dataset_size=41; pre=17; post=24
+timer_gse207422_treatment_delta	GEO	Non small-cell lung cancer	anti-PD-1	TREATMENT_DELTA	GSE207422	https://pubmed.ncbi.nlm.nih.gov/36869384/	discovery	TIMER pre/post list; dataset_size=24; pre=3; post=21
+timer_gse210287_treatment_delta	GEO	Head and neck squamous cell carcinoma	anti-PDL1	TREATMENT_DELTA	GSE210287	https://pubmed.ncbi.nlm.nih.gov/36385142/	discovery	TIMER pre/post list; dataset_size=22; pre=12; post=10
+timer_gse235910_treatment_delta	GEO	Head and neck squamous cell carcinoma	afatinib	TREATMENT_DELTA	GSE235910	https://pubmed.ncbi.nlm.nih.gov/37531234/	discovery	TIMER pre/post list; dataset_size=26; pre=13; post=13
+timer_gse91061_treatment_delta	GEO	Melanoma	anti-PD-1	TREATMENT_DELTA	GSE91061	https://pubmed.ncbi.nlm.nih.gov/29033130/	discovery	TIMER pre/post list; dataset_size=109; pre=51; post=58
+timer_gse96619_treatment_delta	GEO	Melanoma	anti-PD-1	TREATMENT_DELTA	GSE96619	https://pubmed.ncbi.nlm.nih.gov/28494868/	discovery	TIMER pre/post list; dataset_size=10; pre=5; post=5
+timer_nathanson_2017_treatment_delta	Publication/Controlled	Melanoma	anti-CTLA-4	TREATMENT_DELTA	Nathanson_2017	https://pubmed.ncbi.nlm.nih.gov/27956380/	discovery	TIMER pre/post list; dataset_size=24; pre=9; post=15
+timer_prjeb23709_treatment_delta	SRA/BioProject	Melanoma	anti-CTLA-4+anti-PD-1	TREATMENT_DELTA	PRJEB23709	https://pubmed.ncbi.nlm.nih.gov/30753825/	discovery	TIMER pre/post list; dataset_size=91; pre=73; post=18

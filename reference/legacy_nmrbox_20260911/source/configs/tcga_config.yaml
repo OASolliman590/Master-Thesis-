@@ -1,0 +1,12 @@
+projects:
+  - TCGA-PRAD
+  - TCGA-LUAD
+
+gdc:
+  source_of_truth: true
+
+tcia_overlay:
+  enabled: true
+  role: secondary_annotation
+  non_independent_tcga_flag: true
+
