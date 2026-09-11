@@ -1,5 +1,9 @@
 # Execution progress
 
+## Current checkpoint: Paper B B-G2 local implementation, 11 September 2026
+
+The patient-free B-G2 annotation-normalization CLI is implemented and parent-reviewed locally against the accepted specification. Sixteen B-G2 acceptance tests pass; the final combined synthetic Paper B regression passes 66 tests in 33.175 seconds with eight pre-existing environment-dependent skips. The implementation binds exact plan/schema/freeze/input hashes, preserves the three source-specific identifier boundaries, emits B-G1-compatible deterministic outputs and fails closed on the documented adversarial cases. Grok could not create its external authentication/session state within the workspace boundary and made no edit; the Sol parent completed the code. AIU connectivity reached Python 3.11.16, but private-code transfer was blocked before egress, so AIU B-G2 remains pending and no remote test ran. No real source, patient value, annotation export, coverage result, score, model, cohort analysis or external-application update was used or produced. See `docs/validation/B_annotation_normalize/`.
+
 ## Current checkpoint: Paper B B-G2 annotation-normalization specification kit, 10 September 2026
 
 A bounded specification-only kit defines how the three B-G1 required identifier sources (`tcga_gencode_v36`, `gse107299_processed`, `historical_v18_maps`) can later be prepared into the already-implemented B-G1 five-column annotation tables. The kit is a proposed plan plus schema and an implementation-ready ticket; it does not implement a converter, download or process source data, inspect patient values, pin a normalized export, freeze `P`/`U`/`Q`, or run biology. Historical v18 package hashes and GSE/TCGA identifier audits remain prior evidence, not newly completed exports. B-G1 synthetic software checkpoints are unchanged; real annotation coverage remains pending.
