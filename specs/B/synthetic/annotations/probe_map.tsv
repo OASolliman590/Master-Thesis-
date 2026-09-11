@@ -1,0 +1,7 @@
+probe_id	target_gene_id	annotation_build	promoter_category	mask_status	mask_reason	source	synthetic
+cgA1	SYN:GENE_A	synthetic-fixture-v1	promoter	pass	none	synthetic	true
+cgA2	SYN:GENE_A	synthetic-fixture-v1	promoter	pass	none	synthetic	true
+cgA3	SYN:GENE_A	synthetic-fixture-v1	body	pass	none	synthetic	true
+cgB1	SYN:GENE_B	synthetic-fixture-v1	promoter	pass	none	synthetic	true
+cgB2	SYN:GENE_B	synthetic-fixture-v1	promoter	pass	none	synthetic	true
+cgX1	SYN:GENE_C	synthetic-fixture-v1	promoter	masked	cross-reactive-synthetic-fixture	synthetic	true

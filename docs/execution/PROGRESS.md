@@ -1,5 +1,9 @@
 # Execution progress
 
+## Reviewed W1-W4 checkpoint, 11 September 2026
+
+Manual Grok delivered connected synthetic W1-W4. Sol fixed detection-P provenance, frozen QC policy, fitted-state hash validation and completion-index/manifest integrity, with regression tests. Parent post-review full suite passed **105 tests, zero skips/errors/failures, 141.338 seconds**. Evidence: `docs/validation/B_workflow/REVIEW_ACCEPTANCE.md` and `POST_REVIEW_TESTS.log`. Accepted for synthetic software checkpoint publication only; W5-W8, production acquisition hardening and AIU/real-cohort validation remain pending. Next manual implementation prompt: `docs/validation/B_workflow/NEXT_PHASE_W5.md`, covering fold-local training integration and real-source preparation without biological outcome analysis.
+
 ## Windows repaired and Paper B implementation contract reconciled, 11 September 2026
 
 Parent independently ran all 66 current component tests with zero skips/errors/failures in `E:\Master_Thesis\.venvs\paper-b-20260911` (93.060 seconds). The shared SciPy Application Control failure was reproduced; isolated official wheels restored imports without changing security policy. See `docs/validation/B_runtime/WINDOWS_20260911.md` and its complete test log. This supersedes the eight-skipped-tests checkpoint for local component acceptance only; AIU and real-cohort validation remain pending.

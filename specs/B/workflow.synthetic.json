@@ -1,0 +1,272 @@
+{
+  "interpreter": {
+    "note": "Recorded at plan/run time. This fixture does not pin a host path.",
+    "policy": "invoking-executable"
+  },
+  "purpose": "synthetic-test",
+  "schema_version": "B-workflow-config-v1",
+  "scientific_gates": {
+    "real_development": [
+      "tcga-only-ids",
+      "signed-lock"
+    ],
+    "real_external_evaluation": [
+      "frozen-training",
+      "evaluation-release-receipt"
+    ],
+    "real_feature_construction": [
+      "E1-P",
+      "E2-U",
+      "E3-Q",
+      "E4-specimen",
+      "E6-precision"
+    ],
+    "w5": "stage-not-implemented",
+    "w6": "stage-not-implemented",
+    "w7": "stage-not-implemented",
+    "w8": "stage-not-implemented"
+  },
+  "sources": [
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0001",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0001.tsv",
+      "expected_sha256": "27f918ce136b44450209b4d0bb4bb074ffcbcfc5ae8407b7843be24ad8b37e1e",
+      "expected_size": 596,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0001.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0001"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0002",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0002.tsv",
+      "expected_sha256": "4c1cc235d616aaf0e3ffd680c6386e5ea547b4ab920efa8c48ac2aee8794bcff",
+      "expected_size": 590,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0002.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0002"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0003",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0003.tsv",
+      "expected_sha256": "6c999e598ec03b1bf9988d9255391e4d718ab4df0b6d4e3793fa59cd52038210",
+      "expected_size": 590,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0003.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0003"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0004",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0004.tsv",
+      "expected_sha256": "50f4ee5eece30ca13a54a3c25b6319d2f920b139341250dbccb785a14e7fe5fe",
+      "expected_size": 541,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0004.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0004"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0001",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0001.tsv",
+      "expected_sha256": "49828b7066ce1e12ecd08ea475da5051ccfa32822013869eaf9b2ebdd0b575d8",
+      "expected_size": 70,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0001.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0001"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0002",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0002.tsv",
+      "expected_sha256": "f34b57c3a18e91810dfa79527caab44b64bbb6becd1c40597712dec9d6471054",
+      "expected_size": 69,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0002.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0002"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0003",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0003.tsv",
+      "expected_sha256": "5d1f658e1abf5b3b40b2307cdceaa712728af3341b3484a8c03fc492ef60c539",
+      "expected_size": 70,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0003.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0003"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0004",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0004.tsv",
+      "expected_sha256": "49828b7066ce1e12ecd08ea475da5051ccfa32822013869eaf9b2ebdd0b575d8",
+      "expected_size": 70,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0004.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0004"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-CPC-EXPR",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/cpc_expression.tsv",
+      "expected_sha256": "2e6b0503fc4185ffea09854c323b70c3a11cf8904f5ac6ba2c4db65f6a515b20",
+      "expected_size": 355,
+      "format": "cpc-expression",
+      "object_name": "cpc_expression.tsv",
+      "role": "cpc-expression",
+      "source_id": "syn.cpc.expression"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-CPC-METH",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/cpc_methylation.tsv",
+      "expected_sha256": "1b4a1fa576772f8ef9b548d7343e31fc1b43b3ab245195778604c9b618c54433",
+      "expected_size": 496,
+      "format": "cpc-methylation",
+      "object_name": "cpc_methylation.tsv",
+      "role": "cpc-methylation",
+      "source_id": "syn.cpc.methylation"
+    }
+  ],
+  "synthetic": true,
+  "synthetic_label": "SYNTHETIC FIXTURE ONLY. Not a scientific default. Not real-cohort policy.",
+  "w3": {
+    "annotation": {
+      "gene_map_path": "specs/B/synthetic/annotations/gene_map.tsv",
+      "gene_universe_path": "specs/B/synthetic/annotations/gene_universe.tsv",
+      "probe_map_path": "specs/B/synthetic/annotations/probe_map.tsv",
+      "release": "synthetic-fixture-v1"
+    },
+    "identity": {
+      "covariate_path": "specs/B/synthetic/identity/covariates.tsv",
+      "specimen_map_path": "specs/B/synthetic/identity/specimens.tsv"
+    },
+    "specimen_policy": {
+      "ambiguous_focus": "fail",
+      "development_cohort": "TCGA-SYN",
+      "external_cohort": "CPC-SYN",
+      "forbid_wgs_agreement_as_purity": true,
+      "label": "synthetic-fixture-only",
+      "one_evaluation_row_per_patient": true,
+      "rule_version": "synthetic-fixture-v1",
+      "technical_replicate_collapse": {
+        "distinct_or_unresolved_focus": "fail",
+        "same_focus_same_specimen": "median_beta_first_expression"
+      },
+      "unresolved_identifier": "fail"
+    }
+  },
+  "w4": {
+    "abundance_column": {
+      "cpc-expression": "author-processed-expression",
+      "tcga-star-expression": "tpm_unstranded"
+    },
+    "aggregate_min_coverage": 0.8,
+    "aggregate_min_probes": 1,
+    "covariate_policy": {
+      "purity_method": "synthetic-qpure-fixture",
+      "purity_scale": "fraction-0-1",
+      "purity_source_field": "qpure_cellularity",
+      "quarantine_fields": [
+        "WGS_BASED_PURITY_ESTIMATION"
+      ]
+    },
+    "demo_folds": {
+      "folds": [
+        {
+          "fold_id": 0,
+          "heldout": [
+            "TCGA-0003"
+          ],
+          "train": [
+            "TCGA-0001",
+            "TCGA-0002"
+          ]
+        },
+        {
+          "fold_id": 1,
+          "heldout": [
+            "TCGA-0002"
+          ],
+          "train": [
+            "TCGA-0001",
+            "TCGA-0003"
+          ]
+        },
+        {
+          "fold_id": 2,
+          "heldout": [
+            "TCGA-0001"
+          ],
+          "train": [
+            "TCGA-0002",
+            "TCGA-0003"
+          ]
+        }
+      ],
+      "label": "synthetic-interface-demo-not-model-cv"
+    },
+    "detection_p": {
+      "apply_when_present": true,
+      "max_detection_p": 0.01,
+      "missing_detection_p": "treat-as-missing-beta"
+    },
+    "eligibility": {
+      "require_age": true,
+      "require_all_promoter_aggregates": true,
+      "require_gleason": true,
+      "require_purity": true,
+      "require_score": true
+    },
+    "missingness": {
+      "incomplete_score": "exclude",
+      "na_is_not_zero": true,
+      "na_token": "NA",
+      "required_p_finite": true,
+      "required_u_finite": true
+    },
+    "policy_label": "synthetic-fixture-only",
+    "probe_training_coverage": 0.95,
+    "program_p": [
+      "SYN:GENE_A",
+      "SYN:GENE_B"
+    ],
+    "universe_u": [
+      "SYN:GENE_A",
+      "SYN:GENE_B",
+      "SYN:GENE_C",
+      "SYN:GENE_D",
+      "SYN:GENE_E"
+    ]
+  }
+}

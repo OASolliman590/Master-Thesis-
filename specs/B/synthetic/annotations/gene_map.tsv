@@ -1,0 +1,12 @@
+raw_id	canonical_symbol	stable_gene_id	mapping_status	source	synthetic
+ENSG00000000001	GENE_A	SYN:GENE_A	mapped	tcga-star	true
+ENSG00000000002	GENE_B	SYN:GENE_B	mapped	tcga-star	true
+ENSG00000000003	GENE_C	SYN:GENE_C	mapped	tcga-star	true
+ENSG00000000004	GENE_D	SYN:GENE_D	mapped	tcga-star	true
+ENSG00000000005	GENE_E	SYN:GENE_E	mapped	tcga-star	true
+ENSG00000000006	GENE_F	SYN:GENE_F	mapped	tcga-star	true
+1001	GENE_A	SYN:GENE_A	mapped	cpc-expression	true
+1002	GENE_B	SYN:GENE_B	mapped	cpc-expression	true
+1003	GENE_C	SYN:GENE_C	mapped	cpc-expression	true
+1004	GENE_D	SYN:GENE_D	mapped	cpc-expression	true
+1005	GENE_E	SYN:GENE_E	mapped	cpc-expression	true

@@ -1,0 +1,8 @@
+specimen_id	patient_id	age_years	gleason_primary	gleason_secondary	gleason_sum	approved_grade_category	qpure_cellularity	WGS_BASED_PURITY_ESTIMATION	synthetic
+TCGA-0001-01A	TCGA-0001	60	3	4	7	7	0.70	0.99	true
+TCGA-0002-01A	TCGA-0002	65	4	4	8	>=8	0.60	0.91	true
+TCGA-0003-01A	TCGA-0003	70	3	3	6	<=6	0.80	0.95	true
+TCGA-0004-01A	TCGA-0004	55	3	4	7	7	0.50	0.88	true
+CPCG0001-F1	CPCG0001	62	3	4	7	7	0.72	0.97	true
+CPCG0002-F1	CPCG0002	64	4	5	9	>=8	0.66	0.93	true
+CPCG0003-F1	CPCG0003	68	3	3	6	<=6	0.77	0.94	true

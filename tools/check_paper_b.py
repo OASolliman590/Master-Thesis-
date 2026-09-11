@@ -12,10 +12,16 @@ def main():
     scratch = root / "tmp" / "paper_b_checks"
     scratch.mkdir(parents=True, exist_ok=True)
     tempfile.tempdir = str(scratch)
-    for key in ("TMP", "TEMP", "BF1_TEST_TMP_ROOT", "BP1_TEST_TMP_ROOT"):
+    for key in ("TMP", "TEMP", "BF1_TEST_TMP_ROOT", "BP1_TEST_TMP_ROOT", "B_WORKFLOW_TEST_TMP_ROOT"):
         os.environ[key] = str(scratch)
     suite = unittest.TestSuite()
-    for name in ("b_formats", "b_gene_registry", "b_annotation_normalize", "b_prediction"):
+    for name in (
+        "b_formats",
+        "b_gene_registry",
+        "b_annotation_normalize",
+        "b_prediction",
+        "b_workflow",
+    ):
         # Separate loaders avoid silently missing non-package test directories.
         part = unittest.TestLoader().discover(str(root / "tests" / name))
         if part.countTestCases() == 0:

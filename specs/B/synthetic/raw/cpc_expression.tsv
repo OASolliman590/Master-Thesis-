@@ -1,0 +1,6 @@
+GeneID	Symbol_UCSC	Name_UCSC	Chr_UCSC	Start_UCSC	End_UCSC	RefSeq_UCSC	CPCG0001	CPCG0002	CPCG0003
+1001	GENE_A	Gene A synthetic	chr1	1	10	NM_A	10	1	7
+1002	GENE_B	Gene B synthetic	chr1	11	20	NM_B	10	2	7
+1003	GENE_C	Gene C synthetic	chr1	21	30	NM_C	30	3	7
+1004	GENE_D	Gene D synthetic	chr1	31	40	NM_D	5	4	7
+1005	GENE_E	Gene E synthetic	chr1	41	50	NM_E	20	5	7

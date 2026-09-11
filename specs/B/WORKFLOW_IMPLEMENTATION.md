@@ -55,6 +55,8 @@ Acceptance: fresh run succeeds; same inputs reproduce scientific payloads within
 
 ## Four-figure delivery contract
 
+Every figure must have a plain-language explanation beside it: what is plotted, how to read axes/colours/intervals, what the computed result supports, and what it cannot establish. Generate explanations from the actual results, including negative/undefined outcomes; label synthetic figures prominently. Export the underlying plotted table and a readable report linking all four figures. This is an acceptance requirement, not optional manuscript polishing.
+
 1. Cohort/source flow and measured cross-platform coverage: patient exclusions, gene/probe coverage, specimen evidence and final eligibility. Counts come from W3, never the headline accession sample count.
 2. Molecular measurement and methylation context: declared TCGA-only program/probe summaries and composition limitations, with retained negative associations. No external endpoint exploration before lock.
 3. Paired TCGA development performance: out-of-fold observations/predictions and baseline-versus-extended errors, labelled internal development evidence.

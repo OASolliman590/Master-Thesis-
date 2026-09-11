@@ -1,0 +1,6 @@
+stable_gene_id	symbol	ensembl_id	annotation_release	synthetic
+SYN:GENE_A	GENE_A	ENSG00000000001	synthetic-fixture-v1	true
+SYN:GENE_B	GENE_B	ENSG00000000002	synthetic-fixture-v1	true
+SYN:GENE_C	GENE_C	ENSG00000000003	synthetic-fixture-v1	true
+SYN:GENE_D	GENE_D	ENSG00000000004	synthetic-fixture-v1	true
+SYN:GENE_E	GENE_E	ENSG00000000005	synthetic-fixture-v1	true
