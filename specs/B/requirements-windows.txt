@@ -1,0 +1,8 @@
+# Working isolated Windows CPython 3.12 component-test environment, 2026-09-11.
+# Not the complete future cohort/parquet/plotting environment or an AIU lock.
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.0
+joblib==1.5.3
+threadpoolctl==3.6.0
+narwhals==2.26.0

@@ -1,5 +1,17 @@
 # Execution progress
 
+## Windows repaired and Paper B implementation contract reconciled, 11 September 2026
+
+Parent independently ran all 66 current component tests with zero skips/errors/failures in `E:\Master_Thesis\.venvs\paper-b-20260911` (93.060 seconds). The shared SciPy Application Control failure was reproduced; isolated official wheels restored imports without changing security policy. See `docs/validation/B_runtime/WINDOWS_20260911.md` and its complete test log. This supersedes the eight-skipped-tests checkpoint for local component acceptance only; AIU and real-cohort validation remain pending.
+
+`specs/B/WORKFLOW_IMPLEMENTATION.md` now defines the connected W1-W8 code sequence, input/output contracts, actual versus target commands, strict acceptance, four figures and stage-specific scientific gates. README, software, ticket and reproduction contracts were reconciled. A substantive gap is explicit: the existing numeric-table engine does not implement training-fold-specific CpG coverage selection; W4-W5 must add and persist fold-local feature state. Primary B-P, three secondaries, HOPE, M0-M6 and approved-immunotherapy target scope are preserved. No integrated workflow or scientific cohort result is claimed. No further agent/fleet setup was launched.
+
+## Parent reconciliation: components are not an integrated pipeline, 11 September 2026
+
+The manager reports B-G2 published at `3dcdb849ffbee285279cf256c36f2e3721668ebb`. Count it only as an annotation-normalization prerequisite. Its local synthetic regression is reported as 66 tests with eight environment-dependent skips; this parent reconciliation does not rerun or independently certify those tests. No official GSE/BrainArray object or real normalized export was exercised by B-G2, and its AIU Python3.11 validation remains pending. Sol implemented it directly after Grok's workspace/authentication boundary blocked delegation.
+
+Paper B still has no executable end-to-end workflow connecting ingestion, specimen selection, expression/methylation features, TCGA development, locked CPC-GENE evaluation and figures. Any earlier wording implying that these stages were integrated is retracted. The next implementation work must target those missing connections and stages with a runnable synthetic end-to-end demonstration, while keeping real-cohort analyses behind their existing scientific authorization and measurement gates. A long-module refactor alone is not the next thesis deliverable.
+
 ## Current checkpoint: Paper B B-G2 local implementation, 11 September 2026
 
 The patient-free B-G2 annotation-normalization CLI is implemented and parent-reviewed locally against the accepted specification. Sixteen B-G2 acceptance tests pass; the final combined synthetic Paper B regression passes 66 tests in 33.175 seconds with eight pre-existing environment-dependent skips. The implementation binds exact plan/schema/freeze/input hashes, preserves the three source-specific identifier boundaries, emits B-G1-compatible deterministic outputs and fails closed on the documented adversarial cases. Grok could not create its external authentication/session state within the workspace boundary and made no edit; the Sol parent completed the code. AIU connectivity reached Python 3.11.16, but private-code transfer was blocked before egress, so AIU B-G2 remains pending and no remote test ran. No real source, patient value, annotation export, coverage result, score, model, cohort analysis or external-application update was used or produced. See `docs/validation/B_annotation_normalize/`.

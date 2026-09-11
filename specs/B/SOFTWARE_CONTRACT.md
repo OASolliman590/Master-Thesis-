@@ -41,13 +41,17 @@ Every persisted output has a small sidecar recording source and parent artifact 
 
 The actual TCGA methylation example is headerless; retain its first probe. Its NA tokens and non-cg probes require explicit parsing/classification. TCGA STAR expression has a GENCODE-v36 comment and N_ summary rows; use the named TPM column, not a positional column guessed from an old template. The CPC methylation header lacks its first probe-ID label: reconstruct only this verified shape (788 header fields, 789 row fields) after checking every row; otherwise fail with diagnostics. Beta and `_Dectection_Pval` columns are 394 paired measurements, not 788 patients. CPC expression has seven annotation fields before 213 patient columns. These are verified examples, not permission to assume every future release has the same format. See canonical B_readiness.md and checksummed artifacts.
 
-## Candidate environment, not a resolved lock
+## Environment and implementation status
+
+[WORKFLOW_IMPLEMENTATION.md](WORKFLOW_IMPLEMENTATION.md) controls the connected engineering sequence. The isolated Windows component environment is pinned in `requirements-windows.txt`. This is not the future plotting/parquet environment or an AIU validation receipt. Use `tools/check_paper_b.py` to require zero skipped component tests.
+
+The current B-P1 numeric-table seam is insufficient for the proposed fold-local probe-coverage selection. W4-W5 must introduce a training-fold feature-state interface and persist the final probe state for external application. Global preselection before nested CV is not an acceptable adapter.
 
 AIU is the main execution server. The existing `docs/execution/aiu_python_inventory.json` reports Python 3.11.16, numpy 2.4.6, pandas 2.3.3, scipy 1.17.1 and scikit-learn 1.9.0. These are **candidate direct version pins based on the observed inventory**, pending an isolated project import/smoke test and compatibility review; they are not a complete resolved dependency lock or proof that this analysis ran. Required plotting/parquet packages and the pinned annotation/probe-mask artifact remain to be selected and documented. Do not mutate the existing shared environment to satisfy a speculative specification.
 
 [Ridge documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) documents alpha and intercept behaviour; pin the exact estimator parameters, solver and precision when implementation is reviewed. [R2 documentation](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html) must be checked for finite-value handling: compute the specified SSE/SST directly or explicitly retain undefined constant-target behaviour, rather than accepting a convenience default. Serialization format, package hashes, OS/BLAS/thread counts and transitive lock are implementation deliverables after successful resolution, not invented here.
 
-If the VPN is unavailable, perform only authorised local documentation/schema work and queue AIU validation with a dated pending record. A local or synthetic pass cannot be reported as full AIU cohort validation. Never save SSH keys, VPN secrets or environment tokens in logs, GitHub or Notion.
+If the VPN is unavailable, continue authorized local implementation, synthetic integration and permitted public-source preparation; queue AIU validation with a dated pending record. A local or synthetic pass cannot be reported as full AIU cohort validation. Never save SSH keys, VPN secrets or environment tokens in logs, GitHub or Notion.
 
 ## Measurement schema refinement — source evidence, not analysis release
 
