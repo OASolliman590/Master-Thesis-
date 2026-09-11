@@ -10,6 +10,7 @@ from typing import Any
 from tools.b_acquire.acquire import run_acquire
 from tools.b_cohort.build import run_cohort
 from tools.b_features.provider import run_features
+from tools.b_prediction.fold_develop import run_fold_develop
 from tools.b_workflow.config import load_config
 from tools.b_workflow.io import (
     PipelineFailure,
@@ -213,6 +214,18 @@ def _execute_stage(
             interpreter=interpreter,
         )
         return
+    if stage_id == "W5":
+        run_fold_develop(
+            config,
+            repo_root=repo_root,
+            w3_dir=_stage_path(run_dir, "W3"),
+            w4_dir=_stage_path(run_dir, "W4"),
+            stage_dir=_stage_path(run_dir, "W5"),
+            parent_hashes=parent,
+            code_identity=identity,
+            interpreter=interpreter,
+        )
+        return
     _fail(f"stage-not-implemented:{stage_id.lower()}", 5, stage_id)
 
 
@@ -344,7 +357,7 @@ def run_workflow(
         "code_identity_sha256": plan["code_identity_sha256"],
         "log": log,
         "created_utc": utc_stamp(),
-        "note": "W1-W4 synthetic execution is not a completed Paper B pipeline.",
+        "note": "W1-W5 synthetic execution is not a completed Paper B pipeline.",
     }
     if pipeline_complete:
         status["pipeline_complete"] = True

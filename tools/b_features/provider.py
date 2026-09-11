@@ -111,7 +111,7 @@ def _load_detection_p_presence(
     methylation_rows: list[list[str]],
 ) -> dict[str, bool]:
     """Resolve assay capability from W3 provenance, never from observed P values."""
-    manifest = json_no_dups((cohort_dir / "MANIFEST.json").read_bytes())
+    manifest = json_no_dups((cohort_dir / "manifest.json").read_bytes())
     format_by_source: dict[str, str] = {}
     for meta in manifest.get("parse_meta", []):
         source_id = meta.get("source_id")

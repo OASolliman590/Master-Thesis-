@@ -90,8 +90,8 @@ def build_plan(
         "stages": stages,
         "outstanding_scientific_gates": sorted(set(outstanding)),
         "note": (
-            "W1-W4 may execute in synthetic mode. A W1-W4 run is not a completed Paper B pipeline. "
-            "Default continuation past W4 fails with stage-not-implemented:w5."
+            "W1-W5 may execute in synthetic mode. A W1-W5 run is not a completed Paper B pipeline. "
+            "Default continuation past W5 fails with stage-not-implemented:w6."
         ),
     }
     plan["plan_sha256"] = sha256_bytes(

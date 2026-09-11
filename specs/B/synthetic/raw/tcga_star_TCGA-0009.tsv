@@ -1,0 +1,12 @@
+# gene-model: GENCODE v36 synthetic-fixture-only
+gene_id	gene_name	gene_type	unstranded	stranded_first	stranded_second	tpm_unstranded	fpkm_unstranded	fpkm_uq_unstranded
+N_unmapped			10	10	10			
+N_multimapping			0	0	0			
+N_noFeature			1	1	1			
+N_ambiguous			0	0	0			
+ENSG00000000001	GENE_A	protein_coding	100	50	50	6	8	8
+ENSG00000000002	GENE_B	protein_coding	100	50	50	6	8	8
+ENSG00000000003	GENE_C	protein_coding	100	50	50	6	8	8
+ENSG00000000004	GENE_D	protein_coding	100	50	50	12	8	8
+ENSG00000000005	GENE_E	protein_coding	100	50	50	2	8	8
+ENSG00000000006	GENE_F	protein_coding	100	50	50	7	8	8

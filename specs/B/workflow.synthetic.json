@@ -21,7 +21,7 @@
       "E4-specimen",
       "E6-precision"
     ],
-    "w5": "stage-not-implemented",
+    "w5": "synthetic-fold-local-development",
     "w6": "stage-not-implemented",
     "w7": "stage-not-implemented",
     "w8": "stage-not-implemented"
@@ -130,6 +130,292 @@
       "object_name": "tcga_meth_TCGA-0004.tsv",
       "role": "tcga-methylation-beta",
       "source_id": "syn.tcga.meth.0004"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0005",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0005.tsv",
+      "expected_sha256": "c65a1a1edaadadb7ca9c2db2e5bdbc29c562b9ac2a9c62a61cff4cb140cfdbc3",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0005.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0005"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0005",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0005.tsv",
+      "expected_sha256": "3136b4e84e52e3e7b07ff9dea56df6d3cf624e95ab580ebf76a8dfa41fb90f7f",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0005.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0005"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0006",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0006.tsv",
+      "expected_sha256": "7e006072789a9108644d733d505b5559932f9ca985832e38b7daff57d627b972",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0006.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0006"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0006",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0006.tsv",
+      "expected_sha256": "771f933b38b5d84e24c58343aeb0ddd3cca82eadb0f9783ac61569143e49ee45",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0006.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0006"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0007",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0007.tsv",
+      "expected_sha256": "c36fbb7efe3718bf8a1486a68de383a2fb87bb11a3daf7aa70a42cd8a1a19e8c",
+      "expected_size": 592,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0007.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0007"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0007",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0007.tsv",
+      "expected_sha256": "31f8b5cffda04723b8b108c2d1e3c21e0f95bcbb34ef4bad6d900e6974f472f5",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0007.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0007"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0008",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0008.tsv",
+      "expected_sha256": "b93a1efafe7c20ebfb1d4ae57375416db9ca448d85b4ee570b106c09771528dc",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0008.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0008"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0008",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0008.tsv",
+      "expected_sha256": "ec72f346f05a653d90a9c8c3092a94d0d4e2f968703b07bc4faa560305e072bd",
+      "expected_size": 70,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0008.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0008"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0009",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0009.tsv",
+      "expected_sha256": "ee003e52bf1f6a85a155571f9e6be9d62d68478fd7c9e7015b0f9c73389a0bf9",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0009.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0009"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0009",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0009.tsv",
+      "expected_sha256": "c16862b5a58959abbef8dc1e4988d1c72f77acbecf0cc0ffe4b8e9f3fabdaad0",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0009.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0009"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0010",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0010.tsv",
+      "expected_sha256": "f99b456885705e7ab86b892c26a0ef83e057e6aa412e63a822682e4450f8925f",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0010.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0010"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0010",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0010.tsv",
+      "expected_sha256": "63e63591e097d8136df2cd7a309757a57ff55435e1edc586769183aa23025538",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0010.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0010"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0011",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0011.tsv",
+      "expected_sha256": "69abece9e7566b0c7caba1ac1a7a2d238a036a8e3b4b9c3b9607c7ecbae1327e",
+      "expected_size": 592,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0011.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0011"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0011",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0011.tsv",
+      "expected_sha256": "35dd7178501381f8f8f43609b1b69f66dd70bc7a26758e376f7b7e3028839c80",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0011.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0011"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0012",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0012.tsv",
+      "expected_sha256": "d59e95e63fa3c0f6bd00b90c68d9f47540b630190a389307330e4a8dbc12c87e",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0012.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0012"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0012",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0012.tsv",
+      "expected_sha256": "1650c535a7ab15a036b17865383e3818ac00025bc7ba1166171d15f531ff0c0e",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0012.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0012"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0013",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0013.tsv",
+      "expected_sha256": "d0c5961d490d1177e691c17623bf23fdda5a5b8c8f3aca5917f1a5566f01de29",
+      "expected_size": 591,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0013.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0013"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0013",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0013.tsv",
+      "expected_sha256": "2e1c5a4db82831f43178afb19e3238f8d723da9c23ffa516c7e86971684e4aa3",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0013.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0013"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0014",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0014.tsv",
+      "expected_sha256": "d9463df2f2881ef13947e2e295f3b9fcaaddad6509e782176e5b119cefcab307",
+      "expected_size": 592,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0014.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0014"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0014",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0014.tsv",
+      "expected_sha256": "ad915501656fc5c3e6bf69e9721321bc8ebf07678a8056ef87a223062436d881",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0014.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0014"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-STAR-0015",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_star_TCGA-0015.tsv",
+      "expected_sha256": "7d39190e198f29cbc3b34eb45423d4897ab1cb21171d2263d84a531c1aa9fa1f",
+      "expected_size": 593,
+      "format": "tcga-star-expression",
+      "object_name": "tcga_star_TCGA-0015.tsv",
+      "role": "tcga-star-expression",
+      "source_id": "syn.tcga.star.0015"
+    },
+    {
+      "access_tier": "synthetic-fixture",
+      "accession": "SYNTHETIC-TCGA-METH-0015",
+      "completeness": "full",
+      "compression": "none",
+      "exact_url": "file:specs/B/synthetic/raw/tcga_meth_TCGA-0015.tsv",
+      "expected_sha256": "7953691c1f07521e40241bb23496c64619ca8f04586d6c4ccfec6528e7a27a47",
+      "expected_size": 72,
+      "format": "tcga-methylation-beta",
+      "object_name": "tcga_meth_TCGA-0015.tsv",
+      "role": "tcga-methylation-beta",
+      "source_id": "syn.tcga.meth.0015"
     },
     {
       "access_tier": "synthetic-fixture",
@@ -268,5 +554,32 @@
       "SYN:GENE_D",
       "SYN:GENE_E"
     ]
+  },
+  "w5": {
+    "categorical_baseline_groups": [
+      [
+        "gleason_7",
+        "gleason_ge8"
+      ]
+    ],
+    "continuous_baseline_columns": [
+      "age_years",
+      "purity_value"
+    ],
+    "extended_columns": [
+      "promoter_SYN:GENE_A",
+      "promoter_SYN:GENE_B"
+    ],
+    "gleason_encoding": {
+      "dummies": {
+        "7": "gleason_7",
+        ">=8": "gleason_ge8"
+      },
+      "reference": "<=6",
+      "source_field": "approved_grade_category"
+    },
+    "min_development_n": 7,
+    "never_use_w4_full_training_state_for_nested_cv": true,
+    "policy_label": "synthetic-fixture-only"
   }
 }

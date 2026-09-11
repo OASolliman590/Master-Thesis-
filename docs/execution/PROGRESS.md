@@ -1,5 +1,11 @@
 # Execution progress
 
+## W5 reviewed software checkpoint and W6 coding handoff, 11 September 2026
+
+Corrected W5 connects fold-local feature fitting to nested ridge development; manual Grok work was independently reviewed and fixed by Sol. Final parent local regression: **116 tests passed, zero skips, 202.557 seconds**. AIU corrected fresh W1-W5 and resume passed on a hash-matched isolated snapshot; full strict suite remains **115 passed / 1 missing-fixture failure / zero skips**. The four public-source B-F1 fixtures exist in a previously validated AIU location but were excluded from the new snapshot. Two later SSH attempts timed out before authentication, preventing server-side hash verification/copy and rerun. No new fixture transfer occurred. The server regression gate remains pending, not closed.
+
+Accepted for versioned software checkpoint publication and W6 synthetic implementation; not full AIU acceptance, real-cohort release or W6 completion. `docs/validation/B_W5/` contains review, local log, server receipt/log and fresh/resume evidence. `NEXT_PHASE_W6.md` there is the released manual coding handoff for frozen external evaluation. Real source audit still reports 24 local evidence objects, missing full GSE107299 and one stale readiness-document manifest entry. W7/W8, biological gates and full AIU regression remain open.
+
 ## Reviewed W1-W4 checkpoint, 11 September 2026
 
 Manual Grok delivered connected synthetic W1-W4. Sol fixed detection-P provenance, frozen QC policy, fitted-state hash validation and completion-index/manifest integrity, with regression tests. Parent post-review full suite passed **105 tests, zero skips/errors/failures, 141.338 seconds**. Evidence: `docs/validation/B_workflow/REVIEW_ACCEPTANCE.md` and `POST_REVIEW_TESTS.log`. Accepted for synthetic software checkpoint publication only; W5-W8, production acquisition hardening and AIU/real-cohort validation remain pending. Next manual implementation prompt: `docs/validation/B_workflow/NEXT_PHASE_W5.md`, covering fold-local training integration and real-source preparation without biological outcome analysis.

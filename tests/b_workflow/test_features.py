@@ -200,7 +200,9 @@ class TestFoldFeatureProvider(unittest.TestCase):
                 ["assay_id", "source_id", "modality", "inclusion"],
                 [["T1-METH", "syn.cpc.methylation", "methylation", "include"]],
             )
-            (cohort / "MANIFEST.json").write_text(
+            # Match the exact lowercase W3 filename so Linux/POSIX portability
+            # is exercised even when the local filesystem is case-insensitive.
+            (cohort / "manifest.json").write_text(
                 json.dumps(
                     {
                         "parse_meta": [

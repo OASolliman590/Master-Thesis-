@@ -9,7 +9,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qsl, unquote, urlparse
 
 from tools.b_workflow.io import (
     PipelineFailure,
@@ -27,6 +27,27 @@ MANIFEST_VERSION = "B-W2-manifest-v1"
 CHUNK = 1 << 16
 GZIP_MAGIC = b"\x1f\x8b"
 FORBIDDEN_HOST_SUFFIXES = (".ncbi.nlm.nih.gov", ".cancer.gov", "github.com", "googleapis.com")
+CREDENTIAL_QUERY_KEYS = {
+    "access_token",
+    "api_key",
+    "apikey",
+    "auth",
+    "authorization",
+    "awsaccesskeyid",
+    "credential",
+    "credentials",
+    "id_token",
+    "key",
+    "password",
+    "passwd",
+    "private_key",
+    "sas",
+    "secret",
+    "sig",
+    "signature",
+    "token",
+    "x-amz-security-token",
+}
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -59,6 +80,16 @@ def resolve_file_url(url: str, repo_root: Path) -> Path:
     else:
         path = path.resolve()
     return path
+
+
+def _reject_credential_url(url: str) -> None:
+    parsed = urlparse(url)
+    if parsed.username or parsed.password:
+        _fail("reason=credential-bearing-url-rejected")
+    for raw_key, _value in parse_qsl(parsed.query, keep_blank_values=True):
+        key = raw_key.lower()
+        if key in CREDENTIAL_QUERY_KEYS or "token" in key or "secret" in key or "password" in key:
+            _fail("reason=credential-bearing-url-rejected")
 
 
 def _assert_loopback_http(url: str) -> None:
@@ -115,6 +146,7 @@ def _acquire_bytes(
     timeout: float,
 ) -> tuple[Path, int, str | None, int | None]:
     url = source["exact_url"]
+    _reject_credential_url(url)
     source_id = source["source_id"]
     expected_size = source.get("expected_size")
     part = work_dir / f"{source_id}.part"
@@ -204,17 +236,27 @@ def acquire_source(
     published_path.parent.mkdir(parents=True, exist_ok=True)
     payload_source = part
     if compression == "gzip":
-        if not part.read_bytes()[:2] == GZIP_MAGIC and not part.read_bytes().startswith(GZIP_MAGIC):
-            magic = part.read_bytes()[:2]
-            if magic != GZIP_MAGIC:
+        with part.open("rb") as handle:
+            if handle.read(2) != GZIP_MAGIC:
                 _fail("reason=gzip-magic-missing")
+        if compressed_sha != expected_sha:
+            _fail(
+                f"reason=checksum-mismatch kind=compressed supplied={expected_sha} actual={compressed_sha}"
+            )
         expected_decompressed = source.get("expected_decompressed_sha256")
         if not expected_decompressed:
             _fail("reason=expected-decompressed-sha256-missing")
+        expected_decompressed_size = source.get("expected_decompressed_size")
+        if not isinstance(expected_decompressed_size, int) or expected_decompressed_size < 1:
+            _fail("reason=expected-decompressed-size-missing")
         unzipped = work_dir / f"{source_id}.decompressed"
         _decompress_gzip(part, unzipped)
         decompressed_sha = sha256_file(unzipped)
         decompressed_size = unzipped.stat().st_size
+        if decompressed_size != expected_decompressed_size:
+            _fail(
+                f"reason=decompressed-size-mismatch actual={decompressed_size} expected={expected_decompressed_size}"
+            )
         if decompressed_sha.lower() != str(expected_decompressed).lower():
             _fail(
                 f"reason=checksum-mismatch kind=decompressed supplied={expected_decompressed} actual={decompressed_sha}"
@@ -230,10 +272,6 @@ def acquire_source(
         payload_source.unlink(missing_ok=True)
         _fail(
             f"reason=checksum-mismatch supplied={expected_sha} actual={actual_sha}"
-        )
-    if compression == "gzip" and compressed_sha != expected_sha:
-        _fail(
-            f"reason=checksum-mismatch kind=compressed supplied={expected_sha} actual={compressed_sha}"
         )
     full_preview = payload_source.read_bytes()[:512]
     _reject_html_or_error(full_preview, content_type, status)
@@ -305,10 +343,9 @@ def run_acquire(
                     "source_id": r["source_id"],
                     "accession": r["accession"],
                     "exact_url": r["exact_url"],
-                    "retrieved_utc": r["retrieved_utc"],
                     "access_tier": r["access_tier"],
                     "licence_or_terms_url": "synthetic-fixture-only",
-                    "local_path": r["local_path"],
+                    "cache_relpath": f"cache/{r['source_id']}/payload",
                     "byte_count": r["byte_count"],
                     "checksum_algorithm": "sha256",
                     "checksum_value": r["checksum_value"],

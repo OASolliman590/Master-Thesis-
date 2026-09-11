@@ -41,6 +41,7 @@ TOP_KEYS = {
     "sources",
     "w3",
     "w4",
+    "w5",
     "scientific_gates",
 }
 
@@ -143,6 +144,23 @@ def load_config(path: Path, *, repo_root: Path) -> dict[str, Any]:
     w4 = payload["w4"]
     if not isinstance(w4, dict) or w4.get("policy_label") != "synthetic-fixture-only":
         raise PipelineFailure("config reason=w4-policy-not-fixture", 3)
+    w5 = payload["w5"]
+    if not isinstance(w5, dict) or w5.get("policy_label") != "synthetic-fixture-only":
+        raise PipelineFailure("config reason=w5-policy-not-fixture", 3)
+    for key in (
+        "min_development_n",
+        "never_use_w4_full_training_state_for_nested_cv",
+        "continuous_baseline_columns",
+        "categorical_baseline_groups",
+        "extended_columns",
+        "gleason_encoding",
+    ):
+        if key not in w5:
+            raise PipelineFailure(f"config reason=missing-field w5.{key}", 3)
+    if w5["never_use_w4_full_training_state_for_nested_cv"] is not True:
+        raise PipelineFailure("config reason=w5-must-forbid-global-nested-cv-state", 3)
+    if not isinstance(w5["min_development_n"], int) or w5["min_development_n"] < 7:
+        raise PipelineFailure("config reason=w5-min-development-n-below-bp1", 3)
     payload["_config_sha256"] = sha256_bytes(raw)
     payload["_config_path"] = str(path.resolve())
     payload["_repo_root"] = str(repo_root.resolve())

@@ -1624,6 +1624,13 @@ def _build_parser() -> argparse.ArgumentParser:
     develop.add_argument("--development", required=True, type=Path)
     develop.add_argument("--output", required=True, type=Path)
 
+    develop_fold = subparsers.add_parser("develop-fold")
+    develop_fold.add_argument("--config", required=True, type=Path)
+    develop_fold.add_argument("--cohort", required=True, type=Path)
+    develop_fold.add_argument("--w4", required=True, type=Path)
+    develop_fold.add_argument("--output", required=True, type=Path)
+    develop_fold.add_argument("--repo-root", type=Path, default=None)
+
     evaluate = subparsers.add_parser("evaluate")
     evaluate.add_argument("--bundle", required=True, type=Path)
     evaluate.add_argument("--evaluation-lock", required=True, type=Path)
@@ -1638,6 +1645,23 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "develop":
             return _run_develop(args.contract, args.development, args.output)
+        if args.command == "develop-fold":
+            from tools.b_prediction.fold_develop import run_fold_develop
+            from tools.b_workflow.config import load_config
+
+            repo_root = (args.repo_root or Path.cwd()).resolve()
+            config = load_config(args.config, repo_root=repo_root)
+            run_fold_develop(
+                config,
+                repo_root=repo_root,
+                w3_dir=args.cohort.resolve(),
+                w4_dir=args.w4.resolve(),
+                stage_dir=args.output.resolve(),
+                parent_hashes={"config": config["_config_sha256"]},
+                code_identity="cli-direct",
+                interpreter=sys.executable,
+            )
+            return 0
         if args.command == "evaluate":
             return _run_evaluate(args.bundle, args.evaluation_lock, args.external, args.output)
         raise Failure("unknown command", EXIT_ARGUMENT)

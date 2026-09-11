@@ -23,6 +23,11 @@ CODE_PATHS = (
     "tools/b_features/provider.py",
     "tools/b_features/scores.py",
     "tools/b_formats/records.py",
+    "tools/b_prediction/__init__.py",
+    "tools/b_prediction/__main__.py",
+    "tools/b_prediction/adapter.py",
+    "tools/b_prediction/fold_develop.py",
+    "tools/b_acquire/audit.py",
 )
 
 STAGE_ORDER = ("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8")
@@ -38,7 +43,7 @@ STAGE_DEPS = {
     "W8": ["W5"],
 }
 
-IMPLEMENTED = {"W1", "W2", "W3", "W4"}
+IMPLEMENTED = {"W1", "W2", "W3", "W4", "W5"}
 
 STAGE_GATES = {
     "W1": ["versioned-config", "explicit-interpreter", "permitted-source-manifest"],
@@ -46,7 +51,6 @@ STAGE_GATES = {
     "W3": ["b-g2-annotations", "explicit-specimen-policy", "one-patient-evaluation-row"],
     "W4": ["E1-P", "E2-U", "E3-Q", "E4-specimen-linkage", "E6-precision", "explicit-fixture-policy"],
     "W5": [
-        "stage-not-implemented:w5",
         "fold-local-feature-state-interface",
         "tcga-only-development-ids",
         "signed-training-contract",

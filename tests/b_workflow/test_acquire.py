@@ -212,6 +212,23 @@ class TestAcquire(unittest.TestCase):
             )
         self.assertIn("silent-accession-substitution", str(ctx.exception))
 
+    def test_credential_bearing_url_rejected_without_secret(self) -> None:
+        with self.assertRaises(PipelineFailure) as ctx:
+            acquire_source(
+                self._source(
+                    source_id="syn.cred",
+                    exact_url="https://example.invalid/file?token=supersecret",
+                    expected_sha256=_sha(b"x"),
+                    expected_size=1,
+                ),
+                repo_root=REPO,
+                cache_dir=self.cache,
+                work_dir=self.work,
+            )
+        message = str(ctx.exception)
+        self.assertIn("credential-bearing-url-rejected", message)
+        self.assertNotIn("supersecret", message)
+
     def test_gzip_compressed_and_decompressed_hashes(self) -> None:
         inner = b"cgA1\t0.2\ncgA2\tNA\n"
         gz_path = self.tmp / "tiny.tsv.gz"
@@ -226,6 +243,7 @@ class TestAcquire(unittest.TestCase):
                 expected_size=len(compressed),
                 compression="gzip",
                 expected_decompressed_sha256=_sha(inner),
+                expected_decompressed_size=len(inner),
                 object_name="tiny.tsv.gz",
             ),
             repo_root=REPO,
@@ -235,6 +253,48 @@ class TestAcquire(unittest.TestCase):
         self.assertEqual(receipt["compressed_sha256"], _sha(compressed))
         self.assertEqual(receipt["decompressed_sha256"], _sha(inner))
         self.assertEqual((self.cache / "syn.gz" / "payload").read_bytes(), inner)
+        with self.assertRaises(PipelineFailure) as ctx:
+            acquire_source(
+                self._source(
+                    source_id="syn.gz.nosize",
+                    exact_url=f"file:{gz_path.as_posix()}",
+                    expected_sha256=_sha(compressed),
+                    expected_size=len(compressed),
+                    compression="gzip",
+                    expected_decompressed_sha256=_sha(inner),
+                    object_name="tiny.tsv.gz",
+                ),
+                repo_root=REPO,
+                cache_dir=self.cache,
+                work_dir=self.work,
+            )
+        self.assertIn("expected-decompressed-size-missing", str(ctx.exception))
+
+    def test_gzip_compressed_mismatch_is_never_published_to_cache(self) -> None:
+        inner = b"probe\tbeta\ncgA1\t0.2\n"
+        gz_path = self.tmp / "bad-digest.tsv.gz"
+        with gzip.open(gz_path, "wb") as handle:
+            handle.write(inner)
+        compressed = gz_path.read_bytes()
+        with self.assertRaises(PipelineFailure) as ctx:
+            acquire_source(
+                self._source(
+                    source_id="syn.gz.bad-compressed",
+                    exact_url=f"file:{gz_path.as_posix()}",
+                    expected_sha256="0" * 64,
+                    expected_size=len(compressed),
+                    compression="gzip",
+                    expected_decompressed_sha256=_sha(inner),
+                    expected_decompressed_size=len(inner),
+                    object_name="bad-digest.tsv.gz",
+                ),
+                repo_root=REPO,
+                cache_dir=self.cache,
+                work_dir=self.work,
+            )
+        self.assertIn("checksum-mismatch kind=compressed", str(ctx.exception))
+        self.assertFalse((self.cache / "syn.gz.bad-compressed" / "payload.gz").exists())
+        self.assertFalse((self.cache / "syn.gz.bad-compressed" / "payload").exists())
 
 
 if __name__ == "__main__":

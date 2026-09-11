@@ -1,4 +1,4 @@
-"""Connected W1-W4 workflow: plan, run, resume, tamper, unimplemented W5."""
+"""Connected W1-W5 workflow: plan, run, resume, tamper, unimplemented W6."""
 
 from __future__ import annotations
 
@@ -10,8 +10,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.b_workflow.io import read_tsv, sha256_file
+from tools.b_workflow.io import code_identity_sha256, read_tsv, sha256_file
 from tools.b_workflow.run import run_workflow, verify_complete_stage
+from tools.b_workflow.stages import CODE_PATHS
 
 REPO = Path(__file__).resolve().parents[2]
 CONFIG = REPO / "specs" / "B" / "workflow.synthetic.json"
@@ -31,7 +32,7 @@ def _cli(args: list[str], cwd: Path = REPO) -> subprocess.CompletedProcess[str]:
         cwd=str(cwd),
         capture_output=True,
         text=True,
-        timeout=60,
+        timeout=180,
         shell=False,
     )
 
@@ -45,8 +46,10 @@ class TestWorkflow(unittest.TestCase):
         self.assertEqual(ids, ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"])
         by_id = {stage["id"]: stage for stage in plan["stages"]}
         self.assertTrue(by_id["W4"]["implemented"])
-        self.assertFalse(by_id["W5"]["implemented"])
-        self.assertEqual(by_id["W5"]["blocked_reason"], "stage-not-implemented:w5")
+        self.assertTrue(by_id["W5"]["implemented"])
+        self.assertIsNone(by_id["W5"]["blocked_reason"])
+        self.assertFalse(by_id["W6"]["implemented"])
+        self.assertEqual(by_id["W6"]["blocked_reason"], "stage-not-implemented:w6")
         self.assertFalse(plan["pipeline_complete"])
         self.assertTrue(plan["synthetic"])
         for stage in plan["stages"]:
@@ -63,6 +66,24 @@ class TestWorkflow(unittest.TestCase):
         proc = _cli(["plan", "--config", str(bad)])
         self.assertNotEqual(proc.returncode, 0)
         self.assertIn("forbidden-key", proc.stderr)
+
+    def test_prediction_sources_participate_in_workflow_code_identity(self) -> None:
+        required = {
+            "tools/b_prediction/__main__.py",
+            "tools/b_prediction/adapter.py",
+            "tools/b_prediction/fold_develop.py",
+        }
+        self.assertTrue(required.issubset(set(CODE_PATHS)))
+        replica = _tmp() / "identity-replica"
+        for rel in CODE_PATHS:
+            dest = replica / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes((REPO / rel).read_bytes())
+        before = code_identity_sha256(replica, CODE_PATHS)
+        adapter = replica / "tools" / "b_prediction" / "adapter.py"
+        adapter.write_bytes(adapter.read_bytes() + b"\n# identity probe\n")
+        after = code_identity_sha256(replica, CODE_PATHS)
+        self.assertNotEqual(before, after)
 
     def test_run_through_w4_is_connected_and_not_complete_pipeline(self) -> None:
         run_dir = _tmp() / "run"
@@ -107,7 +128,7 @@ class TestWorkflow(unittest.TestCase):
         self.assertIn("state_sha256", state)
         self.test_run_dir = run_dir
 
-    def test_default_run_fails_honestly_at_w5(self) -> None:
+    def test_default_run_fails_honestly_at_w6(self) -> None:
         run_dir = _tmp() / "full"
         proc = _cli(
             [
@@ -121,12 +142,43 @@ class TestWorkflow(unittest.TestCase):
             ]
         )
         self.assertEqual(proc.returncode, 5, proc.stderr + proc.stdout)
-        self.assertIn("stage-not-implemented:w5", proc.stderr)
-        self.assertTrue((run_dir / "W4" / "COMPLETE.json").is_file())
-        self.assertFalse((run_dir / "W5" / "COMPLETE.json").exists())
+        self.assertIn("stage-not-implemented:w6", proc.stderr)
+        self.assertTrue((run_dir / "W5" / "COMPLETE.json").is_file())
+        self.assertFalse((run_dir / "W6" / "COMPLETE.json").exists())
         status = json.loads((run_dir / "run_status.json").read_text(encoding="utf-8"))
         self.assertFalse(status["pipeline_complete"])
-        self.assertEqual(status["failed_stage"], "W5")
+        self.assertEqual(status["failed_stage"], "W6")
+
+    def test_run_through_w5_trains_ridge(self) -> None:
+        run_dir = _tmp() / "w5"
+        proc = _cli(
+            [
+                "run",
+                "--mode",
+                "synthetic",
+                "--config",
+                str(CONFIG),
+                "--output",
+                str(run_dir),
+                "--through",
+                "W5",
+            ]
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+        status = json.loads(proc.stdout)
+        self.assertEqual(status["executed"], ["W1", "W2", "W3", "W4", "W5"])
+        self.assertFalse(status["pipeline_complete"])
+        baseline = json.loads((run_dir / "W5" / "bundle" / "baseline_model.json").read_text(encoding="utf-8"))
+        extended = json.loads((run_dir / "W5" / "bundle" / "extended_model.json").read_text(encoding="utf-8"))
+        self.assertEqual(baseline["solver_"], "svd")
+        self.assertEqual(extended["solver_"], "svd")
+        self.assertTrue(baseline["coefficients"])
+        self.assertTrue(extended["coefficients"])
+        resume = _cli(["resume", "--output", str(run_dir), "--through", "W5"])
+        self.assertEqual(resume.returncode, 0, resume.stderr + resume.stdout)
+        resumed = json.loads(resume.stdout)
+        self.assertEqual(resumed["executed"], [])
+        self.assertEqual(resumed["skipped"], ["W1", "W2", "W3", "W4", "W5"])
 
     def test_resume_skips_completed_work(self) -> None:
         run_dir = _tmp() / "resume"
