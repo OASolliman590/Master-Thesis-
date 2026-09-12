@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "S0 candidate source record, version 0.1",
+  "description": "Source-level inventory only. Schema validity does not establish patient pairing, permission, assay suitability or scientific admission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source_id", "papers", "entity_type", "discovery_origin", "original_study_id", "aliases", "modalities", "status", "access_status", "object_type", "source_url", "retrieved_at", "sha256", "byte_count", "pairing_status", "counts", "prior_exposure", "evidence", "admission_receipt"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "source_id": {"type": "string", "minLength": 1},
+    "papers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["A", "A.1", "B", "C", "D"]}},
+    "entity_type": {"enum": ["resource", "study", "dataset", "processed_object", "summary_evidence"]},
+    "discovery_origin": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "original_study_id": {"type": ["string", "null"], "minLength": 1},
+    "aliases": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "modalities": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["bulk_RNA", "DNA_methylation", "miRNA", "CNA", "mutation", "protein", "phosphoprotein", "ATAC", "single_cell_RNA", "single_cell_epigenetic", "spatial_RNA", "spatial_protein", "viability", "immune_function", "clinical", "unknown"]}},
+    "status": {"enum": ["candidate", "metadata_verified", "object_retrieved", "blocked", "excluded", "admitted_to_named_branch"]},
+    "access_status": {"enum": ["open", "registration_required", "controlled", "provider_paused", "unknown"]},
+    "object_type": {"enum": ["catalogue", "metadata", "processed_matrix", "processed_cell_object", "processed_spatial_object", "summary_effect_table", "publication", "unknown"]},
+    "source_url": {"type": ["string", "null"], "minLength": 1},
+    "retrieved_at": {"type": ["string", "null"], "minLength": 1},
+    "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "byte_count": {"type": ["integer", "null"], "minimum": 0},
+    "pairing_status": {"enum": ["same_specimen", "same_patient_same_time_different_specimen", "same_patient_different_time", "unpaired", "unknown", "not_applicable"]},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["reported_subjects", "verified_unique_subjects", "linked_subjects", "same_specimen_subjects", "longitudinal_subjects", "branch_eligible_subjects"],
+      "properties": {
+        "reported_subjects": {"type": ["integer", "null"], "minimum": 0},
+        "verified_unique_subjects": {"type": ["integer", "null"], "minimum": 0},
+        "linked_subjects": {"type": ["integer", "null"], "minimum": 0},
+        "same_specimen_subjects": {"type": ["integer", "null"], "minimum": 0},
+        "longitudinal_subjects": {"type": ["integer", "null"], "minimum": 0},
+        "branch_eligible_subjects": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "prior_exposure": {"enum": ["none_documented", "metadata_only", "expression_only", "outcome_or_model_exposed", "unknown"]},
+    "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "admission_receipt": {"type": ["string", "null"], "minLength": 1},
+    "notes": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"enum": ["object_retrieved", "admitted_to_named_branch"]}}},
+      "then": {"properties": {
+        "source_url": {"type": "string", "minLength": 1},
+        "retrieved_at": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "byte_count": {"type": "integer", "minimum": 1},
+        "evidence": {"minItems": 1}
+      }}
+    },
+    {
+      "if": {"properties": {"status": {"const": "admitted_to_named_branch"}}},
+      "then": {"properties": {
+        "original_study_id": {"type": "string", "minLength": 1},
+        "entity_type": {"enum": ["processed_object", "summary_evidence"]},
+        "admission_receipt": {"type": "string", "minLength": 1}
+      }}
+    }
+  ]
+}

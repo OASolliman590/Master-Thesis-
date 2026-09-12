@@ -1,0 +1,28 @@
+search_id	papers	resource_or_lead	question_or_scope	initial_status	evidence_locator
+S01	A;A.1	Existing 77-reference queue and ICBatlas	Resolve every identifier to original study trial and processed objects; retain overlap	preserved_repository_lead	../A/SOURCE_CANDIDATE_QUEUE.tsv
+S02	A;A.1	Recovered historical registries	Audit 47 registry rows and baseline treatment-delta lists; non-ICI and aliases explicit	preserved_repository_lead	../../reference/legacy_nmrbox_20260911/README.md
+S03	A;A.1	TIGER; IOhub; Cancer-Immu	Expand original ICI studies with response timing and downloadable processed expression	search_target	REFERENCES_AND_NOVELTY.md
+S04	A;A.1	GEO; BioStudies; ArrayExpress; ENA; SRA metadata	Find original processed objects; no read-level reprocessing	search_target	DATA_CONTRACT.md
+S05	A;A.1	Hossain 2025; GSE213145; GSE264158	Verify RNA methylation patient specimen overlap and original clinical response	publication_verified_pairing_unknown	https://pubmed.ncbi.nlm.nih.gov/40089202/
+S06	A;A.1	Newell 2022	Recover multi-omics access and exact patient assay timepoint intersections	preserved_repository_lead	https://pubmed.ncbi.nlm.nih.gov/34951955/
+S07	A;A.1	Seremet 2016; EPICA	Audit paired assays and durable-benefit or adjuvant endpoint differences	preserved_repository_lead	../../docs/research/A_ICBATLAS_SOURCE_EXPANSION.md
+S08	A;A.1	TONIC spatial longitudinal study	Processed spatial protein and RNA context; treatment sequence and patient pairing	publication_lead_eligibility_unknown	https://pmc.ncbi.nlm.nih.gov/articles/PMC11838242/
+S09	A;A.1	2026 multimodal melanoma plasma proteomics	Processed serial proteins with cellular and tumour RNA context; distinguish compartments and dates	publication_lead_eligibility_unknown	https://www.nature.com/articles/s41467-026-74790-7
+S10	A;A.1	Comparative ICI trials and associated molecular substudies	Actual randomized/comparative arms for within-cancer interaction and network feasibility	search_target	A1_LONGITUDINAL_META.md
+S11	B	GDC TCGA RNA methylation miRNA CNA mutation	Actual prostate and comparator-cancer intersections with stage therapy and specimen audit	preserved_source_expansion	https://docs.gdc.cancer.gov/Data_Dictionary/viewer/
+S12	B	TCGA clinical data resource	Source-supported disease endpoints follow-up and clinical-field quality	publication_resource_lead	https://gdc.cancer.gov/about-data/publications/PanCan-Clinical-2018
+S13	B	TCGA ATAC study	Processed accessibility subset and exact specimen linkage; not universal coverage	publication_resource_lead	https://gdc.cancer.gov/about-data/publications/ATACseq-AWG
+S14	B	CPC-GENE; PCaDB original studies	Independent prostate contexts; preserve CPC fixed validation exposure boundary	preserved_repository_lead	../B/README.md
+S15	A;B	COMBAT; Guan prostate clinical studies	Retain ongoing measurement and timing admission work; not automatically ORR or isolated ICI benefit	preserved_unresolved_lead	../A/TRANSPORT.md
+S16	A;A.1;B	HTAN	Processed spatial single-cell and protein objects with original clinical metadata	resource_search_target	https://humantumoratlas.org/data-access
+S17	A;A.1;B	Single Cell Portal; CELLxGENE	Processed donor-linked RNA or multimodal objects; original outcome provenance	resource_search_target	CELLULAR_SPATIAL.md
+S18	A;A.1;B;C	PDC; CPTAC; PRIDE; MassIVE	Processed protein phosphoprotein studies; verify original study patient treatment coverage	resource_search_target	https://pdc.cancer.gov/pdc/
+S19	C	LINCS; CMap	Measured perturbation profiles and original instances with cell dose time and QC	preserved_repository_source	../C/DATA.md
+S20	C	CCLE; DepMap; PRISM; GDSC	Model context and viability evidence; deduplicate releases and retain exposure units	preserved_repository_source	../C/DATA.md
+S21	C	DrugBank; ChEMBL	Identity mechanism pharmacology; preserve lawful access and provider status	preserved_repository_source	../C/DATA.md
+S22	C	Perturb-CITE-seq; SCP1064; TISMO	Genetic immune and in-vivo context with biological replicate and species boundaries	preserved_repository_source	../C/DATA.md
+S23	C	LJP4 IFNG reference; GSE199800; GSE216053	Keep proposed reference and measured prostate corroboration with unresolved mappings	preserved_unresolved_lead	../C/DATA.md
+S24	C;D	Processed prostate epigenetic perturbation studies	RNA methylation chromatin protein functional measurements with matched controls	search_target	CD_PERTURBATION.md
+S25	D	Independent prostate perturbation benchmarks	Checkpoint vocabulary representation controls and original-experiment training overlap	conditional_search_target	../D/README.md
+S26	A;A.1;B;C;D	Original publications and citation tracing	Backward forward and dated update search across every source family; no positive-result-only selection	search_procedure	DATA_CONTRACT.md
+S27	A;A.1;B	EGA; dbGaP	Document authorized access routes for processed or clinical objects; no access bypass	conditional_access_target	DATA_CONTRACT.md
