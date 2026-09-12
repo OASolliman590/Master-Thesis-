@@ -52,8 +52,8 @@ class TestWorkflow(unittest.TestCase):
         self.assertIsNone(by_id["W6"]["blocked_reason"])
         self.assertTrue(by_id["W7"]["implemented"])
         self.assertIsNone(by_id["W7"]["blocked_reason"])
-        self.assertFalse(by_id["W8"]["implemented"])
-        self.assertEqual(by_id["W8"]["blocked_reason"], "stage-not-implemented:w8")
+        self.assertTrue(by_id["W8"]["implemented"])
+        self.assertIsNone(by_id["W8"]["blocked_reason"])
         self.assertFalse(plan["pipeline_complete"])
         self.assertTrue(plan["synthetic"])
         for stage in plan["stages"]:
@@ -132,7 +132,7 @@ class TestWorkflow(unittest.TestCase):
         self.assertIn("state_sha256", state)
         self.test_run_dir = run_dir
 
-    def test_default_run_fails_honestly_at_w8(self) -> None:
+    def test_default_run_completes_scoped_synthetic_w8(self) -> None:
         run_dir = _tmp() / "full"
         proc = _cli(
             [
@@ -145,13 +145,14 @@ class TestWorkflow(unittest.TestCase):
                 str(run_dir),
             ]
         )
-        self.assertEqual(proc.returncode, 5, proc.stderr + proc.stdout)
-        self.assertIn("stage-not-implemented:w8", proc.stderr)
+        self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
         self.assertTrue((run_dir / "W7" / "COMPLETE.json").is_file())
-        self.assertFalse((run_dir / "W8" / "COMPLETE.json").exists())
+        self.assertTrue((run_dir / "W8" / "COMPLETE.json").exists())
         status = json.loads((run_dir / "run_status.json").read_text(encoding="utf-8"))
-        self.assertFalse(status["pipeline_complete"])
-        self.assertEqual(status["failed_stage"], "W8")
+        self.assertTrue(status["pipeline_complete"])
+        self.assertEqual(status["completion_scope"], "synthetic-software-w1-w8")
+        self.assertFalse(status["biological_validation"])
+        self.assertIsNone(status["failed_stage"])
 
     def test_run_through_w6_evaluates_frozen_external(self) -> None:
         run_dir = _tmp() / "w6"

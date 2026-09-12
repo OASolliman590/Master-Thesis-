@@ -22,6 +22,7 @@ def main():
         "b_prediction",
         "b_workflow",
         "b_report",
+        "b_secondary",
     ):
         # Separate loaders avoid silently missing non-package test directories.
         part = unittest.TestLoader().discover(str(root / "tests" / name))

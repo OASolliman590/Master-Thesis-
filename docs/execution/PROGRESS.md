@@ -1,5 +1,12 @@
 # Execution progress
 
+## W8 synthetic software path completed and reviewed, 12 September 2026
+
+W8 now executes a pinned fictional signed-expression contract and independently specified TCGA-only fictional C handoff, plus explicit blocked named-program statuses, M0-M6 context and a header-only regulatory evidence table. It validates W3/W5/W6/W7 payloads and identities; real secondary models, MethylCIBERSORT, LUAD and biological nominations remain unavailable. W7 stays a partial APM report.
+
+Parent strict acceptance: **147 passed, zero skips, 353.029 seconds**. Standalone fresh run executed W1-W8; resume executed none and skipped all eight. Completion is explicitly `synthetic-software-w1-w8`, `biological_validation=false`. Code identity `42d4e8134f9956b7fd8c4ad39c0a0a3cc246b469722476d1c5aaa73abcd03042`. Review, full log, fresh/resume receipts and hashes: `docs/validation/B_W8/`. AIU validation remains pending; no real-cohort result or broader scientific completion is claimed. Paper A archive/handoff remain intact.
+
+
 ## Paper A source strategy restored and legacy code recovered, 11 September 2026
 
 ICBatlas-first acquisition is explicit; the five previously audited GEO cohorts are not the source boundary. A cited research note identifies the atlas accession queue and actual paired RNA/epigenetic candidate studies, with patient pairing/access/endpoint uncertainties retained. `specs/A/SOURCE_CANDIDATE_QUEUE.tsv` holds 77 source references, not unique admitted cohorts. Grok's manual handoff now requires the full source crosswalk and inspection of recovered code before duplicate implementation.

@@ -43,6 +43,7 @@ TOP_KEYS = {
     "w4",
     "w5",
     "w6",
+    "w8",
     "scientific_gates",
 }
 
@@ -180,6 +181,9 @@ def load_config(path: Path, *, repo_root: Path) -> dict[str, Any]:
             raise PipelineFailure(f"config reason=w6-lock-not-fixture {key}", 3)
     if "SYNTHETIC" not in str(lock["synthetic_label"]).upper():
         raise PipelineFailure("config reason=w6-lock-label-required", 3)
+    from tools.b_secondary.secondary import validate_config
+
+    validate_config(payload["w8"], repo_root)
     payload["_config_sha256"] = sha256_bytes(raw)
     payload["_config_path"] = str(path.resolve())
     payload["_repo_root"] = str(repo_root.resolve())

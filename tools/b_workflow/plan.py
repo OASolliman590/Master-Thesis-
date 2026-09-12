@@ -34,6 +34,7 @@ def build_plan(
         config["w3"]["annotation"]["gene_map_path"],
         config["w3"]["identity"]["specimen_map_path"],
         config["w3"]["identity"]["covariate_path"],
+        config["w8"]["registry_path"],
     ):
         path = repo_root / rel
         if not path.is_file():
@@ -90,8 +91,8 @@ def build_plan(
         "stages": stages,
         "outstanding_scientific_gates": sorted(set(outstanding)),
         "note": (
-            "W1-W7 may execute in synthetic mode as the APM component. This is not the completed broader Paper B analysis. "
-            "Default continuation past W7 fails with stage-not-implemented:w8."
+            "W1-W8 may execute as synthetic software. This is not the completed broader Paper B analysis. "
+            "Named secondaries and real biological analyses remain gated; W7 is a partial APM report."
         ),
     }
     plan["plan_sha256"] = sha256_bytes(

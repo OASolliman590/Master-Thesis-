@@ -590,5 +590,84 @@
       "synthetic_label": "SYNTHETIC FIXTURE ONLY. Not an evaluation release receipt."
     },
     "policy_label": "synthetic-fixture-only"
+  },
+  "w8": {
+    "policy_label": "synthetic-fixture-only",
+    "registry_path": "specs/B/gene_set_registry.proposed.json",
+    "registry_sha256": "469bac01033a4946bcf605ee2b8a65cabe435054704af5ce8b375ebad33a9b75",
+    "contracts": [
+      {
+        "id": "FICTIONAL_SIGNED_TPM_DIFFERENCE_V1",
+        "status": "frozen-fixture",
+        "scope": "synthetic-fixture-only",
+        "cohort": "TCGA-SYN",
+        "members": [
+          {
+            "gene": "SYN:GENE_A",
+            "direction": 1,
+            "weight": 1.0
+          },
+          {
+            "gene": "SYN:GENE_B",
+            "direction": -1,
+            "weight": 1.0
+          }
+        ],
+        "scale": "tpm_unstranded",
+        "input_columns": [
+          "patient_id",
+          "cohort",
+          "stable_gene_id",
+          "value",
+          "abundance_type",
+          "synthetic"
+        ],
+        "method": "signed-weighted-sum",
+        "missingness": "undefined-if-any-member-missing",
+        "output_semantics": "fictional-signed-expression-value-not-immune-activation"
+      },
+      {
+        "id": "AYERS_GEP_18",
+        "status": "blocked",
+        "reason": "source-membership-signed-weights-normalization-missingness-model-contract-unfrozen"
+      },
+      {
+        "id": "HALLMARK_INTERFERON_GAMMA_RESPONSE",
+        "status": "blocked",
+        "reason": "source-membership-signed-weights-normalization-missingness-model-contract-unfrozen"
+      },
+      {
+        "id": "HOPE_18",
+        "status": "blocked",
+        "reason": "source-membership-signed-weights-normalization-missingness-model-contract-unfrozen"
+      }
+    ],
+    "c_handoff": {
+      "id": "FICTIONAL_TCGA_QUERY_V1",
+      "status": "frozen-fixture",
+      "scope": "synthetic-fixture-only",
+      "source_cohort": "TCGA-SYN",
+      "source_stage": "W3",
+      "source_table": "expression.tsv",
+      "selection": "all-predeclared-members-no-ranking",
+      "uses_external_outcomes": false,
+      "membership_source": "independent-fictional-contract",
+      "scale": "tpm_unstranded",
+      "genes": [
+        "SYN:GENE_A",
+        "SYN:GENE_B",
+        "SYN:ABSENT"
+      ],
+      "reference_value": 20.0,
+      "contrast": "mean-minus-fixed-fictional-reference",
+      "uncertainty": "not-estimated-fixture-only",
+      "biological_context": "fictional TCGA-like bulk specimen; no biological nomination",
+      "alternative_explanations": [
+        "fixture construction",
+        "bulk composition not resolved",
+        "no causal epigenetic evidence"
+      ],
+      "missingness": "available-finite-patients-per-gene-undefined-if-none"
+    }
   }
 }

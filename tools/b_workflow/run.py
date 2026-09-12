@@ -13,6 +13,7 @@ from tools.b_features.provider import run_features
 from tools.b_prediction.fold_develop import run_fold_develop
 from tools.b_prediction.fold_evaluate import run_fold_evaluate
 from tools.b_report.report import run_report
+from tools.b_secondary.secondary import run_secondary, verify_publication
 from tools.b_workflow.config import load_config
 from tools.b_workflow.io import (
     PipelineFailure,
@@ -56,6 +57,16 @@ def verify_complete_stage(run_dir: Path, stage_id: str) -> tuple[bool, str]:
     stage_dir = _stage_path(run_dir, stage_id)
     if _work_path(run_dir, stage_id).exists():
         return False, "work-dir-present"
+    if stage_id == "W8":
+        try:
+            complete = load_complete(run_dir, stage_id)
+            if complete is None:
+                return False, "missing-COMPLETE"
+            if not isinstance(complete.get("parent_hashes"), dict):
+                return False, "invalid-parent-hashes"
+            verify_publication(stage_dir, stage_id, identity=complete["code_identity_sha256"], config_hash=complete["parent_hashes"]["config"])
+        except (PipelineFailure, KeyError) as exc:
+            return False, str(exc)
     return verify_published_stage(stage_dir, stage_id)
 
 
@@ -223,6 +234,10 @@ def _execute_stage(
             interpreter=interpreter,
         )
         return
+    if stage_id == "W8":
+        run_secondary(config, repo_root=repo_root, run_dir=run_dir, stage_dir=_stage_path(run_dir, "W8"),
+                      parent_hashes=parent, code_identity=identity, interpreter=interpreter)
+        return
     _fail(f"stage-not-implemented:{stage_id.lower()}", 5, stage_id)
 
 
@@ -251,7 +266,7 @@ def run_workflow(
         repo_root = Path(plan["repo_root"])
         config = load_config(config_path, repo_root=repo_root)
         current = build_plan(config_path, repo_root=repo_root, interpreter=plan["interpreter"])
-        if current["config_sha256"] != plan["config_sha256"] or current["code_identity_sha256"] != plan["code_identity_sha256"]:
+        if current["config_sha256"] != plan["config_sha256"] or current["code_identity_sha256"] != plan["code_identity_sha256"] or current["input_hashes"] != plan["input_hashes"]:
             log.append({"action": "plan-identity-changed", "synthetic": True})
             invalidate(run_dir, "W1", log)
             plan = current
@@ -354,9 +369,11 @@ def run_workflow(
         "code_identity_sha256": plan["code_identity_sha256"],
         "log": log,
         "created_utc": utc_stamp(),
-        "note": "W1-W7 synthetic execution is an APM-component pipeline, not the completed broader Paper B analysis.",
+        "note": "Synthetic software completion is not real-cohort or biological validation; W7 remains a partial APM report.",
     }
     if pipeline_complete:
         status["pipeline_complete"] = True
+        status["completion_scope"] = "synthetic-software-w1-w8"
+        status["biological_validation"] = False
     atomic_write_json(run_dir / "run_status.json", status)
     return status

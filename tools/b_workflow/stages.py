@@ -33,6 +33,8 @@ CODE_PATHS = (
     "tools/b_report/__main__.py",
     "tools/b_report/report.py",
     "tools/b_acquire/audit.py",
+    "tools/b_secondary/__init__.py",
+    "tools/b_secondary/secondary.py",
 )
 
 STAGE_ORDER = ("W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8")
@@ -45,10 +47,10 @@ STAGE_DEPS = {
     "W5": ["W4"],
     "W6": ["W5"],
     "W7": ["W3", "W5", "W6"],
-    "W8": ["W5"],
+    "W8": ["W3", "W5", "W6", "W7"],
 }
 
-IMPLEMENTED = {"W1", "W2", "W3", "W4", "W5", "W6", "W7"}
+IMPLEMENTED = {"W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"}
 
 STAGE_GATES = {
     "W1": ["versioned-config", "explicit-interpreter", "permitted-source-manifest"],
@@ -67,7 +69,6 @@ STAGE_GATES = {
     ],
     "W7": ["four-figure-contract", "no-manually-entered-values", "partial-apm-scope-labelled"],
     "W8": [
-        "stage-not-implemented:w8",
         "individually-frozen-secondary-contracts",
         "ayers-weights-not-inferred",
         "hope-scoring-not-inferred",

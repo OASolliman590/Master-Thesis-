@@ -1,8 +1,17 @@
 # Paper B: executable implementation contract
 
-**11 September reconciliation:** W1-W7 are implemented and locally reviewed for the synthetic APM component; W8 remains pending. W6 is the fixed frozen-model validation and W7 is a traceable partial report, not completion of the broader paper. [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) controls the broader scientific evidence/figure plan. MethylCIBERSORT: W3 methylation/provenance input, W4 separately frozen composition preparation, W8 sensitivity analyses, W7 visualization only after those artifacts exist. Do not change the current W5/W6 baseline or add unfrozen scores.
+## W8 synthetic software checkpoint, 12 September 2026
 
-Updated 11 September 2026. This is the controlling engineering sequence; ANALYSIS.md controls scientific choices. The synthetic APM component is connected through W7, but the broader Paper B pipeline is not finished. This document does not freeze unresolved biological inputs.
+Run the default complete software path with `python -m tools.b_workflow run --mode synthetic --config specs/B/workflow.synthetic.json --output RUN_DIR`; resume with `python -m tools.b_workflow resume --output RUN_DIR`. The executable config is fixture-only. This does not enable real cohorts or scientifically unresolved secondary programs.
+
+W8 validates W3/W5/W6/W7 publications and their linked identities. It writes `module_status.tsv`, `module_results.tsv`, `blocked_reasons.tsv`, `registry_context.tsv`, `approval_evidence_targets.tsv`, `paper_c_handoff.tsv`, frozen fixture contracts/provenance, checksums, manifest and COMPLETE. Ayers, full IFNG Hallmark, HOPE, MethylCIBERSORT, LUAD and regulatory-target analyses remain blocked with reasons; the target table has headers only because no approval evidence has been qualified. M0-M6 are context/coverage only.
+
+The only enabled score is an explicitly fictional signed A-minus-B expression fixture with pinned members, weights, scale and missingness. The independently specified fictional C export uses only TCGA-like rows, retains signs, missingness and undefined uncertainty, and is not a biological nomination. Completion means `synthetic-software-w1-w8`, with `biological_validation=false`; W7 remains the partial APM report. See [acceptance record](../../docs/validation/B_W8/REVIEW.md).
+
+
+**11 September reconciliation:** W1-W8 are implemented for synthetic software; W8 adds fictional-contract scoring, context/blocked reports and a fictional TCGA-only handoff. See docs/validation/B_W8/REVIEW.md for current acceptance. W6 is the fixed frozen-model validation and W7 is a traceable partial report, not completion of the broader paper. [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md) controls the broader scientific evidence/figure plan. MethylCIBERSORT: W3 methylation/provenance input, W4 separately frozen composition preparation, W8 sensitivity analyses, W7 visualization only after those artifacts exist. Do not change the current W5/W6 baseline or add unfrozen scores.
+
+Updated 11 September 2026. This is the controlling engineering sequence; ANALYSIS.md controls scientific choices. The synthetic software path is connected through W8, but the broader Paper B scientific pipeline is not finished. This document does not freeze unresolved biological inputs.
 
 ## What works now
 
@@ -13,13 +22,13 @@ Updated 11 September 2026. This is the controlling engineering sequence; ANALYSI
 | Gene registry | `python -m tools.b_gene_registry build` | Source-backed membership/mapping/coverage; no scoring |
 | Prediction engine | `python -m tools.b_prediction develop` / `evaluate` | Validated numeric feature TSVs to frozen models and paired external metrics |
 | Connected APM workflow/report | `python -m tools.b_workflow run ... --through W7`; `python -m tools.b_report --help` | Synthetic W1-W7 including four traceable component figures; not the broader scientific report or W8 |
-| Strict component check | `python tools/check_paper_b.py` | Runs all six Paper B test directories; any skip, error or empty directory fails |
+| Strict component check | `python tools/check_paper_b.py` | Runs all seven Paper B test directories; any skip, error or empty directory fails |
 
 Use `--help` on each actual module for arguments. Existing source and tests under `tools/` and `tests/` are the implementation evidence. A successful component check is not an assay-to-figure run.
 
 ## One delivery sequence, with connected artifacts
 
-Implement the following in order in this repository. Do not create another isolated helper ticket without connecting it to this sequence. W1-W7 now exist; W8 remains proposed. Every stage must consume its predecessor's recorded artifacts, validate their hashes and emit a manifest. No arbitrary shell commands in workflow configuration.
+Implement the following in order in this repository. Do not create another isolated helper ticket without connecting it to this sequence. W1-W8 now exist as synthetic software; real scientific analysis contracts remain separately gated. Every stage must consume its predecessor's recorded artifacts, validate their hashes and emit a manifest. No arbitrary shell commands in workflow configuration.
 
 | Stage / proposed owner module | Inputs | Required outputs and acceptance |
 |---|---|---|
@@ -30,7 +39,7 @@ Implement the following in order in this repository. Do not create another isola
 | W5 extend `tools/b_prediction` | W4 fold-aware feature interface; TCGA-only development IDs and fixed training contract | Nested paired predictions, final transforms/probe state and frozen baseline/extended numeric bundles. Reuse existing ridge/evaluation code and its tests. **Do not feed one globally selected feature table into nested CV when probe eligibility is learned from training values.** |
 | W6 existing evaluator + adapter | Frozen model AND upstream feature state, evaluation lock, independently eligible external specimens | Apply training-selected probes and transforms without refit; emit paired predictions, SSE/SST, Delta_R2 and bootstrap intervals. CPC outcome changes cannot alter any frozen bytes. Preserve negative and undefined results. |
 | W7 `tools/b_report` | W3 exclusions/coverage, W5 development artifacts, W6 evaluation | Implemented partial APM report: four actual synthetic component figures, machine-readable source tables and readable report. Each plotted value is traceable; unavailable broader panels remain explicit gaps. |
-| W8 registry-driven analyses / C export | Individually frozen secondary or exploratory contracts; separately frozen TCGA-only query rules | Three planned secondary results when enabled; M0-M6 coverage/context reports; approval-evidence target table; qualified LUAD comparison and signed C handoff. Disabled/unresolved analyses receive a reason, not invented scores. A primary run can finish while an optional analysis is pending. |
+| W8 `tools/b_secondary` / C export | Individually frozen secondary or exploratory contracts; separately frozen TCGA-only query rules | Three planned secondary results when enabled; M0-M6 coverage/context reports; approval-evidence target table; qualified LUAD comparison and signed C handoff. Disabled/unresolved analyses receive a reason, not invented scores. A primary run can finish while an optional analysis is pending. |
 
 ### Critical interface gap to fix in W4-W5
 
@@ -44,9 +53,9 @@ python -m tools.b_workflow run --mode synthetic --config specs/B/workflow.synthe
 python -m tools.b_workflow resume --output RUN_DIR --through W7
 ```
 
-The synthetic config and tiny raw assay/annotation/specimen fixtures now drive W1-W7 from raw-like inputs through real ridge computation and four traceable APM-component figures. Synthetic policy values are visibly fixture-only and cannot become real defaults. W8 must still exercise an enabled fixture contract and a blocked-unfrozen contract. Every current artifact carries `synthetic=true`.
+The synthetic config and tiny raw assay/annotation/specimen fixtures now drive W1-W7 from raw-like inputs through real ridge computation and four traceable APM-component figures. Synthetic policy values are visibly fixture-only and cannot become real defaults. W8 exercises a pinned fictional signed-expression contract and blocked named-program contracts; no named secondary model is released. Every current artifact carries `synthetic=true`.
 
-Acceptance through W7: fresh run succeeds; same inputs reproduce scientific payloads within declared numerical tolerance; resume performs no completed work; tampered input invalidates dependents; malformed identity fails; external patient overlap fails; no-skips component regression passes. Default continuation still stops honestly at W8. A failure must name the stage and preserve diagnostic receipts without publishing successful downstream artifacts. Full W1-W8 software completion and remote real-cohort validation remain different milestones.
+Acceptance through W7: fresh run succeeds; same inputs reproduce scientific payloads within declared numerical tolerance; resume performs no completed work; tampered input invalidates dependents; malformed identity fails; external patient overlap fails; no-skips component regression passes. Default continuation executes W8 and labels successful completion `synthetic-software-w1-w8`; `biological_validation=false`. A failure must name the stage and preserve diagnostic receipts without publishing successful downstream artifacts. Full W1-W8 synthetic software completion and remote real-cohort validation remain different milestones.
 
 ## Real-data gates are stage-specific
 

@@ -471,7 +471,7 @@ def run_report(
         "scope_status": "partial-apm-component",
         "broader_immune_barrier_framework_complete": False,
         "methylcibersort_status": "pending-source-reference-platform-and-statistical-contracts",
-        "w8_status": "stage-not-implemented",
+        "w8_status": "not-consumed-by-this-W7-report",
         "metrics": {
             "development_delta_r2": development_metrics.get("pooled", {}).get("delta_r2"),
             "external_delta_r2": metrics.get("delta_r2"),
@@ -485,7 +485,7 @@ def run_report(
         "",
         f"**{SYNTHETIC_LABEL}.**",
         "",
-        "Status: partial APM component report. The broader immune-deficit/epigenetic/composition framework and W8 are not complete. MethylCIBERSORT is not implemented here.",
+        "Status: partial APM component report. The broader immune-deficit/epigenetic/composition framework is not complete. Downstream W8 software status is recorded in ../run_status.json. MethylCIBERSORT is not implemented here.",
         "",
         f"W5 pooled internal Delta_R2: {_format_metric(report_payload['metrics']['development_delta_r2'])}.",
         f"W6 external Delta_R2: {_format_metric(report_payload['metrics']['external_delta_r2'])} ({report_payload['metrics']['external_status']}).",
