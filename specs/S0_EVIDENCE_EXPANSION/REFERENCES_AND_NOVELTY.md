@@ -66,7 +66,9 @@ Hossain et al., DOI [10.1016/j.canlet.2025.217638](https://pubmed.ncbi.nlm.nih.g
 
 ### R16 — Spatial/longitudinal precedent and candidate
 
-[Temporal and spatial composition of the tumor microenvironment predicts response to immune checkpoint inhibition](https://pmc.ncbi.nlm.nih.gov/articles/PMC11838242/). TONIC-associated longitudinal multiplexed imaging with transcriptomic/genomic context. It is principally a spatial protein-imaging source; do not call all its modalities spatial RNA. Exact processed files, patient intersections, treatment-sequence timing and endpoint eligibility remain unaudited here.
+Greenwald et al., [Temporal and spatial composition of the tumor microenvironment predicts response to immune checkpoint inhibition in metastatic TNBC](https://pubmed.ncbi.nlm.nih.gov/41708895/), **Nature Cancer 2026**, DOI [10.1038/s43018-026-01114-5](https://doi.org/10.1038/s43018-026-01114-5). The final publication record and abstract were verified. It combines longitudinal multiplexed protein imaging with bulk RNA context in TONIC. It is not an exclusively spatial-RNA study.
+
+The earlier [PMC11838242 record](https://pmc.ncbi.nlm.nih.gov/articles/PMC11838242/), also retained as the historical S08 search lead, is the **2025 preprint**, not the final article or another independent cohort. Its reported source routes include [processed analysis files on Zenodo](https://zenodo.org/records/14112853), imaging resources and controlled/request-based sequencing. These routes are leads only: reconcile them with the final publication, current terms, final patient subset and exact processed-object availability before admission. Neither version's published total is the eligible paired N for this thesis. No patient crosswalk or matrix was downloaded in this check.
 
 ### R17 — Recent multimodal proteomic precedent and candidate
 
