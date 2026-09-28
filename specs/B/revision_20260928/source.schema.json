@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Paper B candidate source review record, not admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "study",
+    "cohort",
+    "disease_state",
+    "sample_type",
+    "treatment_context",
+    "assay",
+    "platform",
+    "units",
+    "n_reported",
+    "n_verified",
+    "n_paired",
+    "same_specimen_status",
+    "clinical_variables",
+    "access",
+    "processed_object_availability",
+    "overlap",
+    "paper_b_question",
+    "limitations",
+    "primary_source",
+    "qualification",
+    "eligible_n",
+    "object_sha256"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "study": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cohort": {
+      "type": "string",
+      "minLength": 1
+    },
+    "disease_state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sample_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "treatment_context": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assay": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "units": {
+      "type": "string",
+      "minLength": 1
+    },
+    "n_reported": {
+      "type": "string",
+      "minLength": 1
+    },
+    "n_verified": {
+      "type": "string",
+      "minLength": 1
+    },
+    "n_paired": {
+      "type": "string",
+      "minLength": 1
+    },
+    "same_specimen_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "clinical_variables": {
+      "type": "string",
+      "minLength": 1
+    },
+    "access": {
+      "type": "string",
+      "minLength": 1
+    },
+    "processed_object_availability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "overlap": {
+      "type": "string",
+      "minLength": 1
+    },
+    "paper_b_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primary_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "qualification": {
+      "const": "candidate_not_admitted"
+    },
+    "eligible_n": {
+      "const": "UNKNOWN"
+    },
+    "object_sha256": {
+      "const": "UNKNOWN"
+    }
+  }
+}
