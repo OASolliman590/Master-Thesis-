@@ -29,7 +29,26 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .bootstrap/a-dav-spec-kit/part* > /tmp/a-dav-payload.b64
+          cat \
+            .bootstrap/a-dav-spec-kit/part00 \
+            .bootstrap/a-dav-spec-kit/part01 \
+            .bootstrap/a-dav-spec-kit/part02 \
+            .bootstrap/a-dav-spec-kit/part03 \
+            .bootstrap/a-dav-spec-kit/part04 \
+            .bootstrap/a-dav-spec-kit/part05 \
+            .bootstrap/a-dav-spec-kit/part06 \
+            .bootstrap/a-dav-spec-kit/part07 \
+            .bootstrap/a-dav-spec-kit/part08 \
+            .bootstrap/a-dav-spec-kit/part09 \
+            .bootstrap/a-dav-spec-kit/part10 \
+            .bootstrap/a-dav-spec-kit/part110 \
+            .bootstrap/a-dav-spec-kit/part111 \
+            .bootstrap/a-dav-spec-kit/part112 \
+            .bootstrap/a-dav-spec-kit/part113 \
+            .bootstrap/a-dav-spec-kit/part12 \
+            .bootstrap/a-dav-spec-kit/part13 \
+            .bootstrap/a-dav-spec-kit/part14 \
+            > /tmp/a-dav-payload.b64
           test "$(sha256sum /tmp/a-dav-payload.b64 | cut -d' ' -f1)" = "5b159bb2e35e3c291fe495796a43e599574db64f7486350c6927c870811314d7"
           base64 --decode /tmp/a-dav-payload.b64 > /tmp/a-dav-payload.tar.gz
           test "$(sha256sum /tmp/a-dav-payload.tar.gz | cut -d' ' -f1)" = "9923b016700c4169977fa31457e3feed7f20a0b6c03f90cb8afea11840bef340"
