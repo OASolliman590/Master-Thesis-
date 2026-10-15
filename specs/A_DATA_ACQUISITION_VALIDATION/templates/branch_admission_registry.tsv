@@ -1,0 +1,1 @@
+admission_receipt_id	study_id	publication_family_id	branch_id	admission_version	v0	v1	v2	v3	v4	v5	v6	v7	admission_status	verified_patients	verified_specimens	verified_assays	endpoint_definition	assay_platform_unit	overlap_result	prior_exposure_state	approved_branches	blocked_branches	unresolved_limitations	validator	reviewer	created_utc
