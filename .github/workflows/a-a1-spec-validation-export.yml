@@ -1,0 +1,31 @@
+name: Validate and export A-A1 Spec Kit
+on:
+  push:
+    branches:
+      - review/paper-a-a1-speckit-20261015
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  specification-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTEST_ADDOPTS: --ignore=_a_a1_export
+    steps:
+      - name: Checkout exact review commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install document-test dependencies only
+        run: python3 -m pip install -r tests/a_a1_spec_contract/requirements.txt
+      - name: Verify specification contracts and export public package
+        run: python3 tests/a_a1_spec_contract/export_package.py
+      - name: Upload package and all verification logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Paper_A_A1_Integrated_SpecKit_20261015
+          path: _a_a1_export/
+          if-no-files-found: error
+          retention-days: 30

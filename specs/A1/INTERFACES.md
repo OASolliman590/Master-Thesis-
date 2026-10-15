@@ -1,0 +1,9 @@
+# A1 interfaces and nonduplication
+
+The shared acquisition kit is the only identity, episode, endpoint, pairing, exposure and matrix authority. A1 receives immutable released views and returns effect/context products, not revised patient IDs. A shares source families and may share patients within the development population, but manuscript reporting must disclose overlap and reference common baseline results rather than presenting them as independent replication.
+
+A1 exports longitudinal_support.tsv through A/A_TO_BC_HANDOFF.md, with contrast, exact/source-supported window, episode/regimen, effect scale, estimate/uncertainty, paired patient N, source/cancer support and biopsy-selection/lesion/platform limitations. A-BIO receives corroboration, not a replacement for baseline effects. A-PRED features and B/C candidate sets cannot be changed by final-test or reserved-patient A1 observations.
+
+B and C may use frozen development-derived temporal support to refine hypotheses about response-associated programmes and restoration testing, but must distinguish observed response association from intervention-induced reversibility. D/E may ingest the same qualified observations as external data constraints only after separate model/parameter mapping. A1 does not identify a causal drug-response function, kinetic rate, tissue concentration or virtual-population distribution merely by fitting a response-time coefficient.
+
+Thesis inclusion does not require independent manuscript promotion. A1 publication requires its own distinct question, independent support, precision, novelty/overlap review and figure narrative; no p-value or positive-result gate. The actual A1 input and output release versions are recorded separately so a pairing correction invalidates downstream evidence without silently rewriting an earlier handoff.

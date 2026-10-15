@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/specimen_registry.schema.json",
+  "title": "Private specimen registry record",
+  "description": "Private one-row-per-biological-specimen registry. Multiple specimens per patient are preserved.",
+  "type": "object",
+  "required": [
+    "specimen_uid",
+    "patient_uid",
+    "raw_sample_aliases",
+    "canonical_timing_category",
+    "tissue_type",
+    "biological_compartment",
+    "baseline_candidate_status",
+    "longitudinal_pair_status",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "data_classification": {
+      "type": "string",
+      "const": "PRIVATE_PATIENT_LEVEL"
+    },
+    "specimen_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "patient_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "raw_sample_aliases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "collection_date_or_day": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "timing_raw_text": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_timing_category": {
+      "type": "string",
+      "enum": [
+        "PRE_INDEX_BASELINE",
+        "EARLY_ON_TREATMENT",
+        "LATE_ON_TREATMENT",
+        "RESPONSE_ASSESSMENT",
+        "MAXIMAL_RESPONSE",
+        "PROGRESSION",
+        "POST_TREATMENT",
+        "POST_DISCONTINUATION",
+        "AFTER_REGIMEN_CHANGE",
+        "UNKNOWN"
+      ]
+    },
+    "days_from_index_start": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "days_from_treatment_end": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "days_from_progression_or_assessment": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "tissue_type": {
+      "type": "string"
+    },
+    "biological_compartment": {
+      "type": "string",
+      "enum": [
+        "TUMOUR",
+        "NORMAL",
+        "BLOOD",
+        "PLASMA",
+        "SERUM",
+        "PBMC",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "lesion_site": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disease_context": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "same_lesion_as_baseline": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "preservation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "biopsy_method": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "biopsy_selection_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scheduled_or_clinically_indicated": {
+      "type": "string",
+      "enum": [
+        "SCHEDULED",
+        "CLINICALLY_INDICATED",
+        "UNKNOWN"
+      ]
+    },
+    "baseline_candidate_status": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO",
+        "UNKNOWN"
+      ]
+    },
+    "longitudinal_pair_status": {
+      "type": "string",
+      "enum": [
+        "PAIRABLE",
+        "NOT_PAIRABLE",
+        "UNKNOWN"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

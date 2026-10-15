@@ -1,0 +1,29 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/episode_binding.schema.json",
+ "title":"Shared episode binding for existing exposure, specimen and outcome records",
+ "description":"An evidence-backed relationship, not a second patient registry. Foreign keys, patient equality and timing consistency require relational validation.",
+ "type":"object","additionalProperties":false,
+ "required":["schema_version","data_classification","binding_id","patient_uid","treatment_episode_id","subject_type","subject_id","role","binding_status","source_locators","reviewer","reviewed_utc"],
+ "properties":{
+  "schema_version":{"const":"1.1.0"},
+  "data_classification":{"enum":["PRIVATE_PATIENT_LEVEL","SYNTHETIC_ONLY"]},
+  "binding_id":{"type":"string","minLength":1},
+  "patient_uid":{"type":"string","minLength":1},
+  "treatment_episode_id":{"type":"string","minLength":1},
+  "subject_type":{"enum":["TREATMENT_EXPOSURE","SPECIMEN","CLINICAL_OUTCOME"]},
+  "subject_id":{"type":"string","minLength":1},
+  "role":{"enum":["TREATMENT_COMPONENT","PRE_INDEX_BASELINE","ON_TREATMENT","RESPONSE_ASSESSMENT","PROGRESSION","POST_TREATMENT","AFTER_REGIMEN_CHANGE","OUTCOME_ASSESSMENT","UNKNOWN"]},
+  "binding_status":{"enum":["VERIFIED","BLOCKED_UNKNOWN","CONFLICT","EXCLUDED"]},
+  "source_locators":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+  "reviewer":{"type":["string","null"]},
+  "reviewed_utc":{"type":["string","null"]},
+  "reason":{"type":["string","null"]}
+ },
+ "allOf":[
+  {"if":{"properties":{"subject_type":{"const":"CLINICAL_OUTCOME"}}},"then":{"properties":{"role":{"const":"OUTCOME_ASSESSMENT"}}}},
+  {"if":{"properties":{"subject_type":{"const":"TREATMENT_EXPOSURE"}}},"then":{"properties":{"role":{"const":"TREATMENT_COMPONENT"}}}},
+  {"if":{"properties":{"subject_type":{"const":"SPECIMEN"}}},"then":{"properties":{"role":{"enum":["PRE_INDEX_BASELINE","ON_TREATMENT","RESPONSE_ASSESSMENT","PROGRESSION","POST_TREATMENT","AFTER_REGIMEN_CHANGE","UNKNOWN"]}}}},
+  {"if":{"properties":{"binding_status":{"const":"VERIFIED"}}},"then":{"properties":{"reviewer":{"type":"string","minLength":1},"reviewed_utc":{"type":"string","minLength":1}}}}
+ ]
+}

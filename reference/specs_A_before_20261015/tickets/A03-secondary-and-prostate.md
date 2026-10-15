@@ -1,0 +1,7 @@
+# A03 — Locked secondary signatures and qualified prostate transport
+
+Status: proposed. Blocked by A02, frozen secondary registry/multiplicity and prostate source/endpoint contracts. Not ready-for-agent.
+
+Deliver the full prespecified secondary panel and integrate qualified prostate outputs from A06; integrate discovery outputs from A05 without refitting or selecting them. Own Paper A secondary-score adapters, multiplicity/reporting/tests and integrated figure3–4 assembly. A06 owns prostate source adapters/transport calculations; A05 owns discovery fitting/handoff. Do not duplicate their scientific calculations or modify B/C to create apparent independent evidence. Final integration requires those conditional branches or an explicit reviewed disposition; freezing the source-correct secondary registry can precede their execution.
+
+Acceptance: source-correct score implementations and development-overlap exclusions; complete comparison family including failures; no score selection on holdout; molecular and clinical endpoints visibly distinct; COMBAT treatment chronology and patient joins verified before any clinical estimate; unavailable Guan data remain unavailable, not negative evidence. Report gene overlap/circularity and cohort composition. Review figure captions against claim boundaries, preserve all uncertainty, and reproduce allowed analyses on AIU before integration. Unsupported panels are explicit, not fabricated.

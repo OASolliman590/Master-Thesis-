@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/matrix_build_receipt.schema.json",
+  "title": "Matrix build receipt",
+  "description": "Aggregate immutable receipt for one materialized matrix build.",
+  "type": "object",
+  "required": [
+    "matrix_build_receipt_id",
+    "matrix_id",
+    "branch_id",
+    "schema_version_used",
+    "source_admission_receipt_ids",
+    "patient_count",
+    "input_hashes",
+    "code_hash",
+    "config_hash",
+    "output_hash",
+    "build_utc",
+    "test_status",
+    "validation_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "matrix_build_receipt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "matrix_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "branch_id": {
+      "type": "string"
+    },
+    "schema_version_used": {
+      "type": "string"
+    },
+    "source_admission_receipt_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      }
+    },
+    "patient_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "specimen_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "assay_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "class_counts": {
+      "type": "object"
+    },
+    "timepoint_counts": {
+      "type": "object"
+    },
+    "excluded_records": {
+      "type": "object"
+    },
+    "duplicate_checks": {
+      "type": "object"
+    },
+    "overlap_checks": {
+      "type": "object"
+    },
+    "feature_coverage": {
+      "type": "object"
+    },
+    "missingness": {
+      "type": "object"
+    },
+    "split_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "input_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "code_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "config_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "build_utc": {
+      "type": "string"
+    },
+    "test_status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "NOT_RUN"
+      ]
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED_UNKNOWN",
+        "NOT_APPLICABLE",
+        "SUPERSEDED"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

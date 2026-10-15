@@ -1,0 +1,11 @@
+# A05 — Retained responder-signature discovery and frozen handoff
+
+Status: proposed, conditional and not ready-for-agent. Blocked by reviewed all-paper packages, primary-choice disposition, admitted development/final-test manifests, source-correct ORR/assay contracts and meaningful precision design. This branch is not contingent on a positive A-P1 result.
+
+Scope: one bounded discovery workflow under src/thesis/paper_a/, tests/paper_a/, manifests/paper_a/discovery/ and versioned Paper A model/handoff output only. Do not edit B/C scientific specifications or shared environments. Implement DISCOVERY.md's complete training-only filter/scale/elastic-net pipeline through the public Paper A boundary; explicit original-study inner/outer splits, fitted artifacts, independent-test contrast and source-traceable gene/coefficient export.
+
+Admission first: prove at least three eligible development cohorts and a separately reserved independent-test set for the proposed tuned design; show both classes and source overlap/timing/units. Existing counts do not establish these conditions. If unfulfilled, output a bounded missing-source report and retain conditional status; do not invent cohorts or use random patient splitting to claim external validation.
+
+Acceptance: grouped leakage tests; selected-feature/transform stability under changed holdout labels; convergence failures; source-scale/missing-feature rejection; same-patient learned-versus-CYT contrast; immutable cohort weights; versioned pre-final-test handoff; paired uncertainty conditional on the fitted model correctly labelled. Trace one admitted held-out development cohort with real data before expanding to the complete frozen design. No performance-success threshold. Final-test outputs cannot select genes, signs, C or model variants.
+
+AIU execution CPU-only with bounded initial resources and actual memory/runtime measurement. Recreate the required environment before running. Preserve partial outputs and job handles; interrupted tests remain pending. Opus independent review and Astra integration/final verification precede any milestone push. A05 may be split into admission/tracer/full-run implementation issues after scientific review, without changing its scope.
