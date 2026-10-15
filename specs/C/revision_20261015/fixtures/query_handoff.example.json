@@ -1,0 +1,56 @@
+{
+  "query_id": "synthetic-qm-v1",
+  "query_version": "synthetic-1.0.0",
+  "query_type": "Q_M",
+  "query_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "programme_id": "SYNTHETIC_ANTIGEN_PRESENTATION",
+  "gene_id": "ENSG_SYNTHETIC_0001",
+  "gene_symbol": "SYN1",
+  "gene_annotation_release": "synthetic-v1",
+  "desired_direction": "desired_up",
+  "selection_rank": 1,
+  "tie_break_key": "ENSG_SYNTHETIC_0001",
+  "source_patient_set": "synthetic-patients",
+  "discovery_split": "synthetic-discovery",
+  "clinical_effect": {
+    "estimate": 0.5,
+    "standard_error": 0.1,
+    "p_value": 0.01,
+    "q_value": 0.02,
+    "contrast": "synthetic responder versus non-responder",
+    "scale": "synthetic log2 effect"
+  },
+  "prostate_expression_effect": {
+    "estimate": -0.7,
+    "standard_error": 0.2,
+    "p_value": 0.01,
+    "q_value": 0.03,
+    "contrast": "synthetic prostate deficit",
+    "scale": "synthetic log2 effect"
+  },
+  "methylation_support": {
+    "status": "supported",
+    "feature_id": "cgSYNTHETIC001",
+    "region": "promoter",
+    "effect": {
+      "estimate": -0.4,
+      "standard_error": 0.1,
+      "p_value": 0.01,
+      "q_value": 0.04,
+      "contrast": "synthetic methylation-expression association",
+      "scale": "synthetic coefficient"
+    },
+    "model": "synthetic adjusted linear model",
+    "multiplicity_rule": "synthetic BH family"
+  },
+  "composition_sensitivity": "stable",
+  "cellular_localisation": "tumour_supported",
+  "genetic_alternatives": [],
+  "prior_outcome_exposure": ["synthetic A discovery only"],
+  "l1000_coverage_tier": "landmark",
+  "provenance": {
+    "source_ids": ["SYNTHETIC-A", "SYNTHETIC-B"],
+    "config_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "created_utc": "2026-10-15T00:00:00Z"
+  }
+}

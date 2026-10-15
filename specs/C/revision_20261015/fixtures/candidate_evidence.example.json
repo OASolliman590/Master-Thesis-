@@ -1,0 +1,50 @@
+{
+  "candidate_id": "SYN-CAND-001",
+  "canonical_parent": "Synthetic compound",
+  "inchikey": "AAAAAAAAAAAAAA-BBBBBBBBBB-C",
+  "salt_or_formulation": null,
+  "aliases": ["SYN-1"],
+  "mechanism_class": "DNMT_inhibitor",
+  "direct_targets": ["SYNTHETIC_DNMT"],
+  "identity_status": "verified",
+  "discovery_evidence": {
+    "status": "supportive",
+    "summary": "Synthetic discovery evidence only.",
+    "source_ids": ["SYNTHETIC-LINCS"]
+  },
+  "independent_measured_evidence": {
+    "status": "not_tested",
+    "summary": "No biological experiment in this fixture.",
+    "source_ids": []
+  },
+  "mechanistic_evidence": {
+    "status": "unknown",
+    "summary": "Unknown in the synthetic fixture.",
+    "source_ids": []
+  },
+  "viability_stress_evidence": {
+    "status": "unknown",
+    "summary": "Unknown in the synthetic fixture.",
+    "source_ids": []
+  },
+  "model_relevance": {
+    "status": "unknown",
+    "summary": "Unknown in the synthetic fixture.",
+    "source_ids": []
+  },
+  "pharmacology": {
+    "status": "unknown",
+    "summary": "Unknown in the synthetic fixture.",
+    "source_ids": []
+  },
+  "wetlab_feasibility": {
+    "status": "unknown",
+    "summary": "Unknown in the synthetic fixture.",
+    "source_ids": []
+  },
+  "contradictions": [],
+  "missing_evidence": ["independent measured validation", "PK", "wet-lab product"],
+  "evidence_tier": "unassigned",
+  "candidate_roles": ["none"],
+  "claim_ceiling": "Synthetic software fixture only; no biological claim."
+}
