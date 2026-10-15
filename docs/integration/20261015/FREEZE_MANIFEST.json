@@ -1,5 +1,5 @@
 {
-  "release": "specs/thesis-20261015-v1-rc1",
+  "release": "specs/thesis-20261015-v1-rc2",
   "release_level": "S_SPECIFICATION_BASELINE_RC_WITH_TYPED_PENDING_GATES",
   "data_analysis_execution_granted": false,
   "base_ref": "a8278c776da7c6b096cc14139d729979db286b50",
@@ -156,13 +156,18 @@
     "FREEZE_MANIFEST.json",
     "GITHUB_PUBLICATION_RECEIPT.json",
     "INDEPENDENT_REVIEW.md",
-    "logs/freeze_final.json"
+    "logs/freeze_final.json",
+    "RC2_PATHS.txt",
+    "logs/rc2_working_tree.json",
+    "logs/rc2_index.json",
+    "logs/rc2_head.json",
+    "RC2_INDEPENDENT_REVIEW.md"
   ],
   "files": [
     {
       "path": "START_HERE.md",
-      "sha256": "d76e65b3ee59954cf8e7c66998cb2af233c5ccd07d2728f31e1f9db5825f95ff",
-      "bytes": 976
+      "sha256": "7bbf1ae4ce1fb17cc6d8b905ba0ca8d3df8414ca33a24997e780d68a95f2df7d",
+      "bytes": 1193
     },
     {
       "path": "docs/decisions/AB_IMMUNE_BARRIERS_20260911.md",
@@ -295,6 +300,16 @@
       "bytes": 292
     },
     {
+      "path": "docs/integration/20261015/RC1_PUBLICATION_COMPLETENESS_AUDIT.json",
+      "sha256": "e6534165cf57d230028e8cb63e0387f058a7b7ce25b6c0905e9cf835f9828de4",
+      "bytes": 1429
+    },
+    {
+      "path": "docs/integration/20261015/RC2_PACKAGING_AMENDMENT.md",
+      "sha256": "c69f177a1991ac892978e1bc637d24f3dfc26e86851743371f611ca5c5969396",
+      "bytes": 2351
+    },
+    {
       "path": "docs/integration/20261015/RECOVERY_FINGERPRINTS.json",
       "sha256": "fe909b512c4b38111c8748b3295c2dc489a08f05bc15a0a1d12adabae9d2c724",
       "bytes": 1155
@@ -306,8 +321,8 @@
     },
     {
       "path": "docs/integration/20261015/VALIDATION_REPORT.md",
-      "sha256": "bb6f4be813b51aa2dfc3f123728b6dc39460ad921ae857c2483c97c4714f8f2b",
-      "bytes": 4703
+      "sha256": "69b5a4913a60748a21d906382b53f219d8ad8ebd5a6842db81046bd3cd9517cc",
+      "bytes": 5098
     },
     {
       "path": "docs/integration/20261015/lineage_ledger.template.tsv",
@@ -398,6 +413,11 @@
       "path": "docs/integration/20261015/logs/integration_initial.json",
       "sha256": "26c4d79a4f20f17deb1bf9f98782ea80b90a12da43ab0919f4d37d5c06eebfd2",
       "bytes": 321
+    },
+    {
+      "path": "docs/integration/20261015/logs/rc2_freeze_adversarial.log",
+      "sha256": "f7d518cfe7612aacac9f60eaea2341891afd89a47e296f98cbd273428ced4356",
+      "bytes": 587
     },
     {
       "path": "docs/integration/20261015/source_package_notes/Paper_C_C3_SpecKit_20261015/CONTEXT.md",
@@ -546,13 +566,13 @@
     },
     {
       "path": "docs/integration/20261015/test_freeze_verification.py",
-      "sha256": "5459f0ce29f23bc10ebda7a6c71669db9e559710b4f147d6a65ae02b97cca350",
-      "bytes": 1304
+      "sha256": "6e8d36073b7e9ec7b2641dd6d0c5ee27c366625abaa79af62578f4f31915b878",
+      "bytes": 2635
     },
     {
       "path": "docs/integration/20261015/verify_integration.py",
-      "sha256": "81d13b831f66c3a317f565059cdc94b056ce92343b3ccfa5ecef6218af784680",
-      "bytes": 2984
+      "sha256": "b39a1f463e9ad13a0f2ee9b6b3f51d9c6528e75d2a97433d110616dbea618d4b",
+      "bytes": 5478
     },
     {
       "path": "specs/A/ANALYSIS.md",
@@ -3624,5 +3644,8 @@
       "sha256": "d1d645ea3fd6136aa084b71041527e8b37804d33daa2d0b1cd01525cdcdfeb6d",
       "bytes": 8101
     }
-  ]
+  ],
+  "supersedes": "specs/thesis-20261015-v1-rc1",
+  "amendment": "docs/integration/20261015/RC2_PACKAGING_AMENDMENT.md",
+  "publication_acceptance": "Exact manifest and every scoped path must match staged INDEX, committed HEAD and remote tag bytes; disk-only validation insufficient"
 }

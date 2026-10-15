@@ -1,0 +1,15 @@
+START_HERE.md
+docs/integration/20261015/FREEZE_MANIFEST.json
+docs/integration/20261015/verify_integration.py
+docs/integration/20261015/test_freeze_verification.py
+docs/integration/20261015/RC2_PACKAGING_AMENDMENT.md
+docs/integration/20261015/RC1_PUBLICATION_COMPLETENESS_AUDIT.json
+docs/integration/20261015/VALIDATION_REPORT.md
+docs/integration/20261015/logs/rc2_freeze_adversarial.log
+docs/integration/20261015/RC2_PATHS.txt
+specs/E/data/CURATION_AND_DIGITIZATION.md
+specs/E/data/DATA_MODEL_AND_DICTIONARIES.md
+specs/E/data/EXPERIMENTAL_DATA_GOVERNANCE.md
+specs/E/data/EXTERNAL_PUBLIC_DATA_POLICY.md
+specs/E/data/SOURCE_DISCOVERY_AND_ACCESS.md
+specs/E/data/SOURCE_PARAMETER_AND_ASSAY_GAPS.md

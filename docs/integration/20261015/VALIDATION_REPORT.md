@@ -1,5 +1,7 @@
 # Fresh integration verification — 15 October 2026
 
+RC2 correction: RC1 disk hashes passed but six ignored E/data Markdown files were absent from Git. RC1 publication completeness therefore FAILED. The versioned packaging amendment and committed-tree audit document the scope. RC2 adds Git HEAD/INDEX byte verification; four adversarial verifier tests pass. Original science/synthetic test results below are retained and not rerun or relabelled.
+
 Specification/schema/reference tests pass after two packaging compatibility fixes. The standard applicable B regression is **not fully passing**: its real-format fixture is absent. No cohort, fitted biological model, AIU environment or execution/result release is validated here.
 
 | Command/suite | Fresh result | Scope |
