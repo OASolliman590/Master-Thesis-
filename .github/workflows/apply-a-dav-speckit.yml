@@ -1,0 +1,56 @@
+name: Apply A-DAV Spec Kit
+
+on:
+  push:
+    branches:
+      - review/a-data-acquisition-validation-speckit-20261012
+    paths:
+      - '.bootstrap/a-dav-spec-kit/**'
+      - '.github/workflows/apply-a-dav-speckit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: review/a-data-acquisition-validation-speckit-20261012
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Expand reviewed payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .bootstrap/a-dav-spec-kit/part* > /tmp/a-dav-payload.b64
+          test "$(sha256sum /tmp/a-dav-payload.b64 | cut -d' ' -f1)" = "5b159bb2e35e3c291fe495796a43e599574db64f7486350c6927c870811314d7"
+          base64 --decode /tmp/a-dav-payload.b64 > /tmp/a-dav-payload.tar.gz
+          test "$(sha256sum /tmp/a-dav-payload.tar.gz | cut -d' ' -f1)" = "9923b016700c4169977fa31457e3feed7f20a0b6c03f90cb8afea11840bef340"
+          tar -tzf /tmp/a-dav-payload.tar.gz
+          tar -xzf /tmp/a-dav-payload.tar.gz -C .
+          rm -rf .bootstrap/a-dav-spec-kit
+          rm -f .github/workflows/apply-a-dav-speckit.yml
+
+      - name: Validate specification kit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check jsonschema
+          python -W error::ResourceWarning -m unittest tests.a_data_acquisition_validation.test_spec_kit -v
+
+      - name: Commit validated package
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add standalone Paper A and A.1 acquisition validation spec kit [skip ci]"
+          git push origin HEAD:review/a-data-acquisition-validation-speckit-20261012
