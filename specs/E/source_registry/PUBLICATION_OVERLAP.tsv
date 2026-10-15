@@ -1,0 +1,4 @@
+object	core_role	biological_role	extension_role	independence_rule
+public original study	source constrained analysis	literature context	prior/context only	same study/mirror/control has one original identity
+original local experiment	excluded from v2 numerical development	original findings	assigned future development or evaluation role	one experiment never counted twice as independent validation
+core model/figure	primary computational contribution	hypothesis/design context	frozen foundation benchmark	disclose reuse and a distinct new prediction comparison

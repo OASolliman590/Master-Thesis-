@@ -1,0 +1,11 @@
+{
+ "configuration_version":"1.0.0",
+ "status":"SPECIFICATION_ONLY_NOT_EXECUTABLE",
+ "primary":"A_P2",
+ "A_P2":{"estimand":"learned_AUROC_minus_CYT_AUROC","aggregation":"equal_cancer_equal_study_within_cancer","test_roster":null,"study_weights":null,"precision_target":null,"bootstrap_repetitions":null,"confidence_level":null,"seed":null},
+ "A_P1":{"status":"SECONDARY","principal_score":"CYT_Rooney_TPM_v1","estimand":"DCR_AUROC_minus_ORR_AUROC","learned_score_additional_only":true,"require_same_patients":true,"refit_by_endpoint":false},
+ "learner":{"family":"elastic_net_logistic","grouping":"originating_study_overlap_family","measurement":"PROPOSED_log2_TPM_plus_1","feature_filter":null,"variance_cap":null,"regularization_grid":null,"training_weights":null,"solver_version":null,"tolerance":null,"max_iterations":null,"retry_policy":null,"imputation":null},
+ "biology":{"effect_scale_registry":null,"covariate_registry":null,"programme_registry":null,"multiplicity":null,"synthesis":"PROPOSED_REML_modified_KH","required_A_P2_superiority":false},
+ "A1":{"active":true,"publication":"THESIS_DEFAULT_CONDITIONAL_MANUSCRIPT","window_registry":null,"statistical_model_registry":null,"require_clinical_NMA":false},
+ "permission":{"real_response_analysis":false,"final_test_access":false,"raw_reprocessing":false,"controlled_access_application":false,"supervisor_contact":false,"automatic_merge":false}
+}

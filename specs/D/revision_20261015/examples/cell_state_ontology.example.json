@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "ontology_version": "demo-v0",
+  "state_id": "TUMOUR",
+  "source_label": "synthetic malignant",
+  "compartment": "malignant",
+  "major_cell_type": "tumour",
+  "functional_state": null,
+  "parent_state_id": null,
+  "mapping_confidence": "EXACT",
+  "represented_in_model": true,
+  "permitted_claim": "software fixture only"
+}

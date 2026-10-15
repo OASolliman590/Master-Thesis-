@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Model/checkpoint record",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "code_revision": {
+      "type": "string"
+    },
+    "model_family": {
+      "type": "string"
+    },
+    "task": {
+      "type": "string"
+    },
+    "checkpoint_path": {
+      "type": "string"
+    },
+    "checkpoint_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "input_representation": {
+      "type": "string"
+    },
+    "output_representation": {
+      "type": "string"
+    },
+    "training_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "overlap_status": {
+      "type": "string"
+    },
+    "licence_status": {
+      "type": "string"
+    },
+    "known_fallbacks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "model_id",
+    "repository",
+    "code_revision",
+    "model_family",
+    "task",
+    "checkpoint_path",
+    "checkpoint_sha256",
+    "input_representation",
+    "output_representation",
+    "training_sources",
+    "overlap_status",
+    "licence_status",
+    "known_fallbacks",
+    "status"
+  ],
+  "additionalProperties": false
+}

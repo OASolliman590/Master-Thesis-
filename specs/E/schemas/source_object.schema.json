@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:source_object:1.0.0",
+  "title": "source_object",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "publication_family_id": {
+      "type": "string"
+    },
+    "study_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "url": {
+      "type": "string"
+    },
+    "object_identifier": {
+      "type": "string"
+    },
+    "object_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "format": {
+      "type": "string"
+    },
+    "access_state": {
+      "enum": [
+        "open_numbers",
+        "open_table",
+        "open_figure",
+        "metadata_only",
+        "free_registration",
+        "restricted",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    "retrieval_status": {
+      "enum": [
+        "source_inspected",
+        "raw_retained",
+        "metadata_only",
+        "blocked",
+        "unknown"
+      ]
+    },
+    "bytes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hash_unknown_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parser_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_locator": {
+      "type": "string"
+    },
+    "verification": {
+      "type": "string"
+    },
+    "permitted_role": {
+      "enum": [
+        "exploratory_qualification",
+        "calibration",
+        "model_selection",
+        "independent_public_evaluation",
+        "prospective_internal_validation",
+        "contextual_corroboration",
+        "upstream_reconstruction",
+        "unassigned"
+      ]
+    },
+    "licence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "source_id",
+    "publication_family_id",
+    "study_id",
+    "url",
+    "object_identifier",
+    "object_version",
+    "format",
+    "access_state",
+    "retrieval_status",
+    "bytes",
+    "sha256",
+    "hash_unknown_reason",
+    "parser_version",
+    "source_locator",
+    "verification",
+    "permitted_role",
+    "licence"
+  ],
+  "additionalProperties": false
+}

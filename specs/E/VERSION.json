@@ -1,0 +1,10 @@
+{
+  "spec_version": "2.0.0-draft-20261015",
+  "mode": "public_core",
+  "dependency_change": "user_directed",
+  "primary_estimand": "proposed_not_approved",
+  "original_wetlab_required": false,
+  "optional_extension": "E_LAST",
+  "remote_write": false,
+  "scientific_fit_performed": false
+}

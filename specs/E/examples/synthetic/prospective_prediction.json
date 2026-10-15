@@ -1,0 +1,41 @@
+{
+  "schema": "prospective_prediction",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-PROSPECTIVE_PREDICTION",
+    "synthetic": true,
+    "prediction_id": "SYN-PRED",
+    "model_version": "SYN-v1",
+    "model_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "data_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "software_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+    "scenario_id": "SYN-SCENARIO",
+    "primary_estimand": "synthetic contract",
+    "population_unit": "synthetic_run",
+    "time_grid": [
+      0,
+      1
+    ],
+    "prediction_payload": {
+      "values": [
+        0,
+        1
+      ],
+      "lower": [
+        0,
+        0
+      ],
+      "upper": [
+        1,
+        2
+      ]
+    },
+    "payload_sha256": "83258c86d730e9c47ff2d87396bb0eda21636e06fadad824bd3e3f7af4e36533",
+    "analysis_reference": "synthetic_fixture",
+    "exclusion_missingness_reference": "synthetic_fixture",
+    "decision_reference": "synthetic_fixture",
+    "frozen_at": null,
+    "witness_reference": null,
+    "status": "synthetic_fixture"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "perturbation_id": "PERT-DEMO",
+  "parent_name": "SYNTHETIC_DRUG",
+  "structure_id": null,
+  "salt_or_form": "parent",
+  "dose_value": 1.0,
+  "dose_unit": "uM",
+  "duration_value": 24,
+  "duration_unit": "h",
+  "sequence": "single_agent",
+  "context_id": "CTX-DEMO",
+  "control_id": "CTRL-DEMO",
+  "checkpoint_token": null,
+  "support_status": "UNSUPPORTED",
+  "mapping_evidence": [
+    "Synthetic negative fixture"
+  ]
+}

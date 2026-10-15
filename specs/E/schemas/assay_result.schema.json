@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:assay_result:1.0.0",
+  "title": "assay_result",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "assay_result_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "assay_type": {
+      "enum": [
+        "qPCR",
+        "flow",
+        "western",
+        "secreted_factor",
+        "functional",
+        "engagement",
+        "PK"
+      ]
+    },
+    "observation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "raw_file_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "normalization": {
+      "type": "string"
+    },
+    "scale": {
+      "type": "string"
+    },
+    "tumour_immune_gate": {
+      "type": "string"
+    },
+    "qc_status": {
+      "enum": [
+        "planned",
+        "pass",
+        "fail",
+        "unknown"
+      ]
+    },
+    "processing_version": {
+      "type": "string"
+    },
+    "reference_stability": {
+      "type": "string"
+    },
+    "detection_limit_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "batch_plate_well_reference": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "assay_result_id",
+    "experiment_id",
+    "assay_type",
+    "observation_ids",
+    "raw_file_references",
+    "normalization",
+    "scale",
+    "tumour_immune_gate",
+    "qc_status",
+    "processing_version",
+    "reference_stability",
+    "detection_limit_reference",
+    "batch_plate_well_reference"
+  ],
+  "additionalProperties": false
+}

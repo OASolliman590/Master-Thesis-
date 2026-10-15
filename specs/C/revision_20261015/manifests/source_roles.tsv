@@ -1,0 +1,20 @@
+source_id	original_study_or_resource	role	assay_or_object	biological_unit	verified_n	independent_n	status	primary_question	blocker_or_limit
+C-S001	Paper A frozen clinical handoff	clinical_anchor	pretreatment ICI expression programmes	patient/study	UNKNOWN	UNKNOWN	blocked_pending_A_release	Desired clinical programme direction	A final product not frozen
+C-S002	Paper B frozen discovery handoff	query_derivation	paired prostate expression/methylation and alternatives	patient	UNKNOWN	UNKNOWN	blocked_pending_B_release	Construct Q_E and Q_M	B query not frozen
+C-S003	LINCS2020	C2_discovery_and_C1_calibration	Level 5 chemical signatures	collapsed signature/project	metadata_audited	UNKNOWN	metadata_ready_matrix_blocked	Context-specific connectivity	matrix/runtime/scorer parity pending
+C-S004	GSE199800 / PRJNA821516	independent_measured_candidate	prostate drug perturbation transcriptomics	independent culture/plate experiment	UNKNOWN	UNKNOWN	blocked_control_join	Paired Q_M vs Q_E responsiveness	row-to-GSM/plate/control mapping unresolved
+C-S005	GSE35242 / PRJNA156031	independent_measured_candidate	prostate expression perturbation	independent culture day	UNKNOWN	UNKNOWN	candidate_admission	Paired Q_M vs Q_E responsiveness	full platform/contrast/coverage audit pending
+C-S006	GSE35246 related methylation series	orthogonal_measured_candidate	prostate methylation perturbation	independent culture day	UNKNOWN	UNKNOWN	candidate_admission	Regulatory/mechanistic corroboration	sample pairing and exact contrasts pending
+C-S007	GSE216053	independent_measured_candidate	prostate perturbation transcriptomics	biological replicate	UNKNOWN	UNKNOWN	metadata_unresolved	Paired Q_M vs Q_E responsiveness	intervention/genotype/control/replicates unresolved
+C-S008	CCLE/DepMap	model_context	baseline expression/dependency/context	cell line	UNKNOWN	UNKNOWN	conditional_release	Model relevance and target context	exact public release to pin
+C-S009	PRISM	viability_context	compound viability	compound-cell assay	UNKNOWN	UNKNOWN	conditional_release	Cytotoxicity confounding	native scale/exposure/overlap to pin
+C-S010	GDSC	viability_context	compound response	compound-cell assay	UNKNOWN	UNKNOWN	conditional_release	Cytotoxicity confounding	release and compound mapping to pin
+C-S011	CTRP	viability_context	compound response	compound-cell assay	UNKNOWN	UNKNOWN	optional	Additional viability context	overlap and added value must be justified
+C-S012	Perturb-CITE-seq Frangieh et al.	orthogonal_mechanism	genetic RNA/protein perturbation in melanoma/TIL context	original perturbation experiment	UNKNOWN	UNKNOWN	secondary_only	Immune-evasion/target coherence	non-prostate; genetic not chemical
+C-S013	TISMO	immune_context	mouse syngeneic transcriptomics	original mouse experiment	UNKNOWN	UNKNOWN	secondary_only	Immune/ICI context	species/model/intervention specific
+C-S014	ChEMBL	identity_and_bioactivity	molecule/assay records	molecule/assay	UNKNOWN	UNKNOWN	conditional_release	Identity/mechanism/pharmacology	not regulatory approval
+C-S015	PubChem	identity_support	structure/identifier/selected assays	molecule/assay	UNKNOWN	UNKNOWN	restricted_role	Identity support	not sufficient mechanism or clinical status
+C-S016	DrugBank	optional_annotation	identity/target/pharmacology	molecule	UNKNOWN	UNKNOWN	access_conditional	Supplementary annotation	licence/access and source provenance
+C-S017	FDA/NCI/primary human PK records	regulatory_and_PK	labels/reviews/clinical PK	participant/study/formulation	UNKNOWN	UNKNOWN	shortlist_only	Translational plausibility	candidate-specific extraction after freeze
+C-S018	Wet-lab protocol v2	prospective_validation_design	molecular and functional assays	independent culture/donor experiment	0	0	planned_not_executed	Level 5 validation	no completed experiments
+C-S019	Paper D virtual-cell outputs	separate_prediction	model prediction	predicted perturbation	0	0	future_separate	Exploratory comparison	cannot count as independent measured evidence

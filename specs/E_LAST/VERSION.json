@@ -1,0 +1,9 @@
+{
+  "spec_version": "2.0.0-draft-20261015",
+  "mode": "optional_experimental_last",
+  "requires_scientifically_complete_core": true,
+  "required_by_core": false,
+  "data_generated_in_this_package": false,
+  "activation": "DORMANT",
+  "production_implementation": false
+}

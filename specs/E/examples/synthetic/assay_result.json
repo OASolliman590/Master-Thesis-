@@ -1,0 +1,23 @@
+{
+  "schema": "assay_result",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-ASSAY_RESULT",
+    "synthetic": true,
+    "assay_result_id": "SYN-ASSAY",
+    "experiment_id": "SYN-EXP",
+    "assay_type": "flow",
+    "observation_ids": [
+      "SYN-OBS"
+    ],
+    "raw_file_references": [],
+    "normalization": "synthetic ratio",
+    "scale": "relative_fluorescence",
+    "tumour_immune_gate": "synthetic target gate",
+    "qc_status": "planned",
+    "processing_version": "fixture",
+    "reference_stability": "not established; synthetic only",
+    "detection_limit_reference": null,
+    "batch_plate_well_reference": "SYN-MAP"
+  }
+}

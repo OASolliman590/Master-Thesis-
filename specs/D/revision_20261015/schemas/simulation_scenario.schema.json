@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Simulation scenario",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "initialization_id": {
+      "type": "string"
+    },
+    "schedule_id": {
+      "type": "string"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "parameter_set_id": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation_status": {
+      "type": "string"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "initialization_id",
+    "schedule_id",
+    "model_id",
+    "parameter_set_id",
+    "seed",
+    "assumptions",
+    "outputs",
+    "validation_status",
+    "claim_ceiling"
+  ],
+  "additionalProperties": false
+}

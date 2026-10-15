@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/treatment_exposure.schema.json",
+  "title": "Private treatment exposure record",
+  "description": "Private one-row-per-patient-treatment-episode/component registry.",
+  "type": "object",
+  "required": [
+    "treatment_exposure_id",
+    "patient_uid",
+    "regimen_id",
+    "agent",
+    "pharmacological_class",
+    "sequence",
+    "line_of_therapy",
+    "prior_ici",
+    "certainty",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "data_classification": {
+      "type": "string",
+      "const": "PRIVATE_PATIENT_LEVEL"
+    },
+    "treatment_exposure_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "patient_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "regimen_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "agent": {
+      "type": "string"
+    },
+    "pharmacological_class": {
+      "type": "string"
+    },
+    "checkpoint_target": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "monotherapy_or_combination": {
+      "type": "string",
+      "enum": [
+        "MONOTHERAPY",
+        "COMBINATION",
+        "SEQUENTIAL",
+        "UNKNOWN"
+      ]
+    },
+    "combination_components": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sequence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "line_of_therapy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dose_schedule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "start_date_or_day": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stop_date_or_day": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prior_ici": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO",
+        "UNKNOWN"
+      ]
+    },
+    "prior_systemic_therapy": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO",
+        "UNKNOWN"
+      ]
+    },
+    "concomitant_therapy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "steroid_immunosuppressant_exposure": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "progression_discontinuation_relationship": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "certainty": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "PROBABLE",
+        "POSSIBLE",
+        "UNRESOLVED",
+        "DISPROVED"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

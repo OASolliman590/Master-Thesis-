@@ -1,0 +1,16 @@
+{
+  "schema": "source_access",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "PUB-S004-source_access",
+    "synthetic": false,
+    "source_id": "S004",
+    "access_state": "open_numbers",
+    "access_method": "browser_source_inspection",
+    "required_dependency": false,
+    "terms_url": null,
+    "redistribution": "unknown",
+    "query_date": "2026-10-13",
+    "reason": "Article inspected; object-level data admission and redistribution unresolved"
+  }
+}

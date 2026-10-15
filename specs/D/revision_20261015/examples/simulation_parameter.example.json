@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "parameter_id": "PAR-DEMO",
+  "component": "software_fixture",
+  "name": "dummy rate",
+  "unit": "1/h",
+  "value": 0.1,
+  "prior_or_range": "[0,1]",
+  "source": "synthetic",
+  "calibration_dataset": "synthetic",
+  "test_dataset": "synthetic",
+  "uncertainty": "not biological",
+  "identifiability_status": "NOT_APPLICABLE",
+  "sensitivity_rank": null,
+  "frozen_version": "demo-v0",
+  "status": "FIXTURE_ONLY"
+}

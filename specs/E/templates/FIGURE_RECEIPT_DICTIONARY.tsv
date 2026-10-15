@@ -1,0 +1,11 @@
+field	required_content
+panel_id	Unique paper/figure/panel and owner
+question	Falsifiable scientific question
+source_ids	Original studies/experiments, not mirrors
+biological_n_unit	Actual independent N/unit, UNKNOWN until admitted
+analysis_run	Model/code/data/config hashes
+comparator	Fair declared baseline and permitted data
+uncertainty	Measurement/parameter/structural/population distinctions
+status	Design/calibration/evaluation/prospective/simulation
+permitted_conclusion	Claim ladder level
+overlap_disclosure	Shared experiment/first-reporting panel and paper

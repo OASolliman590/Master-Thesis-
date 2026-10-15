@@ -1,0 +1,9 @@
+{
+  "core_release_complete_fixture.json": "core_release.schema.json",
+  "core_release_incomplete_fixture.json": "core_release.schema.json",
+  "capability_none_fixture.json": "capability_snapshot.schema.json",
+  "capability_full_fixture.json": "capability_snapshot.schema.json",
+  "evidence_profile_fixture.json": "evidence_profile.schema.json",
+  "activation_dormant_fixture.json": "extension_activation.schema.json",
+  "public_run_fixture.json": "public_run_input.schema.json"
+}

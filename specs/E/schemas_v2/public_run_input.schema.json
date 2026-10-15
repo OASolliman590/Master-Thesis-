@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "public_run_input",
+  "description": "Draft contract. Passing schema validation alone does not admit scientific data or authorise analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "lane": {
+      "enum": [
+        "public_core",
+        "experimental_extension"
+      ]
+    },
+    "scientific_numeric_inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "origin": {
+            "enum": [
+              "public_external",
+              "public_project_release",
+              "internal_unpublished",
+              "synthetic",
+              "unknown"
+            ]
+          },
+          "admitted": {
+            "type": "boolean"
+          },
+          "role": {
+            "enum": [
+              "DEVELOPMENT",
+              "EVALUATION",
+              "CONTEXTUAL",
+              "FIXTURE"
+            ]
+          }
+        },
+        "required": [
+          "source_id",
+          "origin",
+          "admitted",
+          "role"
+        ]
+      }
+    },
+    "model_release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_namespace": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "lane",
+    "scientific_numeric_inputs",
+    "model_release_id",
+    "output_namespace"
+  ]
+}

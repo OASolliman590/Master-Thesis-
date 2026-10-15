@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:study:1.0.0",
+  "title": "study",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "study_id": {
+      "type": "string"
+    },
+    "family_id": {
+      "type": "string"
+    },
+    "original_identifier": {
+      "type": "string"
+    },
+    "design": {
+      "type": "string"
+    },
+    "species": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "culture",
+        "human",
+        "animal",
+        "other",
+        "unknown"
+      ]
+    },
+    "population_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "independence_status": {
+      "enum": [
+        "resolved",
+        "shared",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "study_id",
+    "family_id",
+    "original_identifier",
+    "design",
+    "species",
+    "context",
+    "population_ids",
+    "source_ids",
+    "independence_status"
+  ],
+  "additionalProperties": false
+}

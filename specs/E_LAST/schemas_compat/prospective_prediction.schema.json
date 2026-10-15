@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:prospective_prediction:1.0.0",
+  "title": "prospective_prediction",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "prediction_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "model_hash": {
+      "type": "string"
+    },
+    "data_hash": {
+      "type": "string"
+    },
+    "software_hash": {
+      "type": "string"
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "primary_estimand": {
+      "type": "string"
+    },
+    "population_unit": {
+      "type": "string"
+    },
+    "time_grid": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "prediction_payload": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "lower": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "upper": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "values",
+        "lower",
+        "upper"
+      ],
+      "additionalProperties": false
+    },
+    "payload_sha256": {
+      "type": "string"
+    },
+    "analysis_reference": {
+      "type": "string"
+    },
+    "exclusion_missingness_reference": {
+      "type": "string"
+    },
+    "decision_reference": {
+      "type": "string"
+    },
+    "frozen_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "witness_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "frozen",
+        "evaluated",
+        "synthetic_fixture"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "prediction_id",
+    "model_version",
+    "model_hash",
+    "data_hash",
+    "software_hash",
+    "scenario_id",
+    "primary_estimand",
+    "population_unit",
+    "time_grid",
+    "prediction_payload",
+    "payload_sha256",
+    "analysis_reference",
+    "exclusion_missingness_reference",
+    "decision_reference",
+    "frozen_at",
+    "witness_reference",
+    "status"
+  ],
+  "additionalProperties": false
+}

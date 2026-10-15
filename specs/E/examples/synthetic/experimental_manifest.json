@@ -1,0 +1,33 @@
+{
+  "schema": "experimental_manifest",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-EXPERIMENTAL_MANIFEST",
+    "synthetic": true,
+    "experiment_id": "SYN-EXP",
+    "question": "Software contract only; not a proposed biological experiment",
+    "state": "planned",
+    "approval_reference": null,
+    "release_status": "unknown",
+    "cell_model": "synthetic",
+    "cell_qc_reference": null,
+    "donor_codes": [],
+    "hierarchy": [
+      "synthetic_run",
+      "plate",
+      "well"
+    ],
+    "independent_unit": "synthetic_run",
+    "material_lot_references": [],
+    "instrument_reference": null,
+    "event_ids": [
+      "SYN-EVENT"
+    ],
+    "sample_map_reference": null,
+    "raw_files": [],
+    "observation_ids": [],
+    "qc_reference": null,
+    "role": "unassigned",
+    "privacy_class": "synthetic"
+  }
+}

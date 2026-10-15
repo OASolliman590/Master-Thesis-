@@ -1,0 +1,16 @@
+{
+ "spec_kit_version":"1.1.0-integrated-review.20261015",
+ "status":"SPECIFICATION_REVIEW_ONLY",
+ "canonical_authority":"specs/A_DATA_ACQUISITION_VALIDATION",
+ "inherited_commit":"58ac943acbe8c981c7c8c269103c602b4425bd50",
+ "inherited_tree":"663d8dca228ad52509141b3e56976bb50ced1735",
+ "historical_manifest":"reference/specs_A_DAV_before_20261015/SPEC_KIT_MANIFEST.json",
+ "current_file_hash_manifest":"PACKAGE_MANIFEST.json generated at repository-root export",
+ "manifest_policy":"Historical hashes describe the preserved snapshot, not modified current files. Export generates all current file hashes from actual bytes, excluding its own recursive hash.",
+ "biological_validation":false,
+ "data_readiness_claimed":false,
+ "patient_records_included":false,
+ "schema_extensions":["treatment_episode","episode_binding","prior_exposure_record","materialized_matrix","release_contract"],
+ "normalized_identity_owner":"shared_DAV_only",
+ "consumers":["specs/A","specs/A1"]
+}

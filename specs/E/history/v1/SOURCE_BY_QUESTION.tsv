@@ -1,0 +1,15 @@
+question_id	question	sources	exact_object_status	destination	packet	admission_caution
+Q01	Human small-molecule PK	S001,O02,O03	Original review/table/profile; complete object pending	PK observations	E2	Original-study independence and analyte/formulation
+Q02	Antibody PK	O01,O02,O03	Selected-antibody original PK study pending	PK/model assets	E2/E4	D02 identity
+Q03	Drug identity/properties	O05,O06	Verified parent/salt and original assay objects	compounds/parameter evidence	E0/E1	IC50 not cellular PD potency
+Q04	HDAC engagement/recovery	S001,S007,INT04	Compound-specific cellular time course pending	engagement/PD	E3	Source HDAC PD not HLA validation
+Q05	DNMT mechanism	INT02,O01	Selected-agent activation/replication/proximal assay evidence	parameter/assay evidence	E3	No generic HDAC substitution
+Q06	Prostate recognition	S004,INT02	Actual local antigen/HLA/functional qualification	assay registry	E4	Precedent not local qualification
+Q07	Immune impairment	INT02,O01	Independent immune exposure/viability/function data	observations	E4	No assumed immune activation
+Q08	Checkpoint function	S002,S003,INT02	Selected-axis blocking/recognition controls	assay/functional observations	E4	Expression/occupancy not benefit
+Q09	Upstream models	S001,S002,S003,O08,O15	Released files or full audited equations pending	model_assets	E1	Scripts on request not required
+Q10	Trial/population context	O04	Exact NCT/regimen/results documents pending	studies/populations	E0/E6	Metadata not individual data
+Q11	Molecular handoffs	A/A.1/B/C/D versioned handoffs,O13,O14	Actual permitted processed objects/handoff hashes	handoffs/observations	E3/E4	Associations not rates
+Q12	Virtual population targets	S006,O01,O04	Original target distributions/summary N/uncertainty	vpop_targets	E6	No covariance from means
+Q13	Independent validation	O01,INT02 annex	Original nonoverlapping public studies or new frozen experiments	role assignments/receipts	E2/E5	No technical-well splitting
+Q14	Tumour/culture exposure bridge	O01,original analytical data	Free/total/stability/uptake evidence pending	parameter evidence	E2/E4/E6	Nominal is not intracellular

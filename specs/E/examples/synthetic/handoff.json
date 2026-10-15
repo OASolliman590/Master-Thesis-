@@ -1,0 +1,27 @@
+{
+  "schema": "handoff",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-HANDOFF",
+    "synthetic": true,
+    "handoff_id": "SYN-HANDOFF",
+    "producer_paper": "A",
+    "producer_version": "fixture",
+    "source_ids": [
+      "SYN-SOURCE"
+    ],
+    "feature_ids": [
+      "SYN-FEATURE"
+    ],
+    "scale": "association",
+    "context": "synthetic",
+    "uncertainty_reference": "fixture",
+    "permitted_use": "context only",
+    "forbidden_use": [
+      "rate constants"
+    ],
+    "outcome_exposure": "synthetic only",
+    "sha256": null,
+    "approval_status": "proposed"
+  }
+}

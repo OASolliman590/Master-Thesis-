@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "extension_activation",
+  "description": "Draft contract. Passing schema validation alone does not admit scientific data or authorise analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "core_release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "DORMANT",
+        "DEFERRED_NO_DATA",
+        "BLOCKED_CORE",
+        "BLOCKED_PERMISSION",
+        "QUARANTINED_QC",
+        "BLOCKED_IDENTITY",
+        "BLOCKED_CONTEXT",
+        "INSUFFICIENT_CAPABILITY",
+        "ELIGIBLE_FOR_REVIEW",
+        "AUTHORISED",
+        "WITHDRAWN_PERMISSION"
+      ]
+    },
+    "candidate_modules": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "scientific_authorisation": {
+      "type": "boolean"
+    },
+    "reviewer_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "core_modified": {
+      "const": false
+    },
+    "permitted_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "core_release_id",
+    "capability_snapshot_id",
+    "status",
+    "candidate_modules",
+    "reasons",
+    "scientific_authorisation",
+    "reviewer_receipts",
+    "core_modified",
+    "permitted_roles",
+    "limitations"
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "file": "Paper_A_A1_Decision_Handoff_20261015.zip",
+    "sha256": "67ea30073442238b79d896a9f647741c93ad3c1ff739c4e0a6dd4cc9494a2c74",
+    "members": 27,
+    "expanded_bytes": 148055,
+    "status": "SAFE_MEMBERSHIP"
+  },
+  {
+    "file": "Paper_C_C3_SpecKit_20261015.zip",
+    "sha256": "73e45b6357c5dc94f20ea2d1481b98344733a3d4621b275e0fccc50a1c47ec7a",
+    "members": 40,
+    "expanded_bytes": 146109,
+    "status": "SAFE_MEMBERSHIP"
+  },
+  {
+    "file": "Paper_E_Revised_2026-10-15.zip",
+    "sha256": "8192e1d5579d12753a859bae96c95e22c7ee83e6e49e09085852299631f55c34",
+    "members": 235,
+    "expanded_bytes": 646711,
+    "status": "SAFE_MEMBERSHIP"
+  },
+  {
+    "file": "Paper_A_A1_Data_Acquisition_Validation_SpecKit_20261015.zip",
+    "sha256": "17b987192b2ea8ac080ae748bcb58618c1a181efb9a88d672756a4b8b12fa169",
+    "members": 76,
+    "expanded_bytes": 294164,
+    "status": "SAFE_MEMBERSHIP"
+  },
+  {
+    "file": "Thesis_SpecKit_Integration_Handoff_20261015.zip",
+    "sha256": "3cfdfcb34fd36c32a15903eb6ade75fa22ed90d1a7b17e2984b69c0aac98bdf8",
+    "members": 7,
+    "expanded_bytes": 37930,
+    "status": "SAFE_MEMBERSHIP"
+  },
+  {
+    "file": "Paper_D_Decision_Spec_Kit_v1_20261015.zip",
+    "sha256": "e6a24f74aeb8319e3d76140c7f6dfd5bcc8877285ff630ad98b71ca3dd59dff4",
+    "members": 112,
+    "expanded_bytes": 240546,
+    "status": "SAFE_MEMBERSHIP"
+  }
+]

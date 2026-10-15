@@ -1,0 +1,161 @@
+{
+  "version": "2.0.0",
+  "date": "2026-10-15",
+  "mode": "public_core",
+  "lanes": [
+    "PK",
+    "epigenetic_PD_recovery",
+    "antibody_PK_function",
+    "prostate_immune_function",
+    "upstream_assets",
+    "independent_evaluation"
+  ],
+  "lane_parallelism": "read-only discovery may proceed independently; one integrator owns canonical deduplication",
+  "api_routes": "Official routes in data/SOURCE_DISCOVERY_AND_ACCESS.md are inherited specifications, not newly exercised calls. Verify current versions/rate limits before use.",
+  "objects": [
+    {
+      "source_id": "S001",
+      "query": "10.1007/s00280-017-3447-x",
+      "route": "https://pubmed.ncbi.nlm.nih.gov/28988277/",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_article_metadata_and_abstract",
+      "allowed_role": "Partial reconstruction candidate; no exact public model/data admission",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "S002",
+      "query": "10.3389/fbioe.2020.00141",
+      "route": "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2020.00141/full",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_article",
+      "allowed_role": "Public equations/figures audit; no mandatory request-only script dependency",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "S003",
+      "query": "10.1038/s41598-020-65590-0",
+      "route": "https://www.nature.com/articles/s41598-020-65590-0",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_article",
+      "allowed_role": "Recoverable source/equation audit; no accepted transferred parameter set",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "S004",
+      "query": "10.1038/s42003-022-03843-6",
+      "route": "https://www.nature.com/articles/s42003-022-03843-6",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_article_supplement_identified_not_retrieved",
+      "allowed_role": "Biological/context evidence; compound-matched extraction only, not vorinostat recovery or ICI validation",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "V201",
+      "query": "10.18632/oncotarget.7180",
+      "route": "https://www.oncotarget.com/article/7180/text/",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_article_and_figures",
+      "allowed_role": "Exposure/target/growth/lysis constraints after figure/replicate curation; no tested ICI schedule or resolved recovery claimed",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "V202",
+      "query": "10.1002/psp4.12063",
+      "route": "https://pubmed.ncbi.nlm.nih.gov/27069777/",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_abstract_index",
+      "allowed_role": "Methodological reference, not population targets or reproduced algorithm",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "V203",
+      "query": "10.1002/psp4.13270",
+      "route": "https://pubmed.ncbi.nlm.nih.gov/39508122/",
+      "exact_object": "article text and linked original study/supplement objects; object IDs to be logged",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "open_abstract",
+      "allowed_role": "Methodology context only; no survival module mandated",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    },
+    {
+      "source_id": "V204",
+      "query": "10.64898/2026.06.09.730783",
+      "route": "https://doi.org/10.64898/2026.06.09.730783",
+      "exact_object": "UNKNOWN; resolve primary version first",
+      "parser": "HTML metadata/text; table/figure/supplement-specific parser only after object retrieval",
+      "destination": "source_objects -> studies -> observations -> parameter_evidence",
+      "access": "unknown",
+      "allowed_role": "UNVERIFIED novelty lead; do not cite as verified technical evidence",
+      "pagination": "not applicable to this direct object; API discovery must log cursor/end state",
+      "retry_policy": {
+        "maximum_attempts_per_object": 3,
+        "respect_retry_after": true,
+        "blocked_object_anonymous_alternative_checks": 1
+      },
+      "cache_policy": "content-addressed immutable bytes when lawfully retained; verify content type/status/hash before parse; resume verifies identity",
+      "numeric_data_admitted": false
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "run",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-RUN",
+    "synthetic": true,
+    "run_id": "SYN-RUN",
+    "model_version": "SYN-v1",
+    "input_hashes": [
+      "0000000000000000000000000000000000000000000000000000000000000000"
+    ],
+    "config_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "code_version": "fixture",
+    "environment_reference": "fixture",
+    "seed": 1,
+    "solver": "not executed",
+    "tolerances_reference": "not executed",
+    "output_hashes": [],
+    "status": "planned",
+    "biological_fit": false,
+    "data_roles": [
+      "unassigned"
+    ]
+  }
+}

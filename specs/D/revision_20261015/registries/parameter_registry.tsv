@@ -1,0 +1,5 @@
+parameter_id	component	name	unit	prior_or_range	source	calibration_data	test_data	identifiability_status	sensitivity_rank	version	status
+PAR-TUM-GROWTH	tumour	net proliferation rate	1/time	UNKNOWN	measured growth curve required	calibration experiment	held-out growth experiment	UNKNOWN	UNKNOWN	v0	UNSET
+PAR-TCELL-KILL	interaction	contact-dependent killing rate/probability	model-specific	UNKNOWN	functional co-culture required	calibration donor/experiment	held-out donor/experiment	UNKNOWN	UNKNOWN	v0	UNSET
+PAR-PD1	checkpoint	checkpoint blockade effect	model-specific	UNKNOWN	qualified receptor/ligand/blocking assay	calibration experiment	held-out experiment	UNKNOWN	UNKNOWN	v0	UNSET
+PAR-DRUG-DIRECT	tumour drug	direct post-washout growth/death effect	model-specific	UNKNOWN	measured tumour-only controls	calibration experiment	held-out experiment	UNKNOWN	UNKNOWN	v0	UNSET

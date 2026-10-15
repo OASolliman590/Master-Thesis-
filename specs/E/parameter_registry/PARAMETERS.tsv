@@ -1,0 +1,35 @@
+parameter_id	unit	public_source_route	status	numeric_value	resolution	permitted_use	internal_data_required
+pk.ka	h^-1	S001 original human PK	UNRESOLVED_NO_DEFAULT		identify absorption before separating lag/rate	candidate; not automatically fitted	False
+pk.F	fraction	source route/formulation or absolute availability	UNRESOLVED_NO_DEFAULT		do not infer independently from oral CL/F	candidate; not automatically fitted	False
+pk.CL	L/h	S001 or verified original-study PK	UNRESOLVED_NO_DEFAULT		keep CL/F distinct	candidate; not automatically fitted	False
+pk.Q	L/h	recoverable compartmental/PBPK model	UNRESOLVED_NO_DEFAULT		test structural/practical identifiability	candidate; not automatically fitted	False
+pk.Vc	L	source PK/model	UNRESOLVED_NO_DEFAULT		keep V/F distinct	candidate; not automatically fitted	False
+pk.Vp	L	source PK/model	UNRESOLVED_NO_DEFAULT		do not infer tissue exposure from central volume	candidate; not automatically fitted	False
+pk.fu	fraction	original binding assay	UNRESOLVED_NO_DEFAULT		matrix/concentration/species dependence	candidate; not automatically fitted	False
+bridge.Ksite	dimensionless	public compartment measurement or explicit assumption stratum	UNRESOLVED_NO_DEFAULT		not fitted to desired killing	candidate; not automatically fitted	False
+bridge.keq	h^-1	public temporal tissue/effect site data	UNRESOLVED_NO_DEFAULT		unresolved if absent; do not duplicate PD delay	candidate; not automatically fitted	False
+ab.CL	L/h	selected antibody public PK	UNRESOLVED_NO_DEFAULT		antibody not yet selected	candidate; not automatically fitted	False
+ab.Q	L/h	selected antibody source model	UNRESOLVED_NO_DEFAULT		not symmetry requirement	candidate; not automatically fitted	False
+ab.Vc	L	selected antibody source model	UNRESOLVED_NO_DEFAULT		source population/formulation retained	candidate; not automatically fitted	False
+ab.Vp	L	selected antibody source model	UNRESOLVED_NO_DEFAULT		simpler model allowed	candidate; not automatically fitted	False
+binding.KD	concentration	selected antibody original binding study	UNRESOLVED_NO_DEFAULT		not functional blockade efficacy	candidate; not automatically fitted	False
+binding.kon	concentration^-1 h^-1	binding kinetics	UNRESOLVED_NO_DEFAULT		only if equilibrium unjustified	candidate; not automatically fitted	False
+binding.koff	h^-1	binding kinetics	UNRESOLVED_NO_DEFAULT		avoid double counting elimination	candidate; not automatically fitted	False
+pd.IC50	matching exposure unit	public drug/assay matched response	UNRESOLVED_NO_DEFAULT		not connectivity score	candidate; not automatically fitted	False
+pd.n	dimensionless	public concentration response	UNRESOLVED_NO_DEFAULT		do not fix without model rationale	candidate; not automatically fitted	False
+pd.kH	h^-1	public proximal time series	UNRESOLVED_NO_DEFAULT		single endpoint generally insufficient	candidate; not automatically fitted	False
+pd.kP	h^-1	public phenotype/recovery series	UNRESOLVED_NO_DEFAULT		set/profile if absent	candidate; not automatically fitted	False
+pd.beta	dimensionless signed	public paired phenotype response	UNRESOLVED_NO_DEFAULT		unobserved intermediate collapse	candidate; not automatically fitted	False
+qsp.rT	h^-1	public tumour-only counts/growth	UNRESOLVED_NO_DEFAULT		net growth versus separate cytostasis/death	candidate; not automatically fitted	False
+qsp.KT	tumour count/burden unit	public density-response evidence	UNRESOLVED_NO_DEFAULT		omit unsupported saturation	candidate; not automatically fitted	False
+qsp.ddir	h^-1	public tumour-only death data	UNRESOLVED_NO_DEFAULT		not mixed coculture signal	candidate; not automatically fitted	False
+qsp.dEdrug	h^-1	public immune-only viability	UNRESOLVED_NO_DEFAULT		no zero-impairment default	candidate; not automatically fitted	False
+qsp.krec	h^-1	public immune recovery/function	UNRESOLVED_NO_DEFAULT		unbounded if source lacks kinetics	candidate; not automatically fitted	False
+qsp.kimp	h^-1	public immune function under drug	UNRESOLVED_NO_DEFAULT		separate from tumour PD	candidate; not automatically fitted	False
+qsp.kkill	h^-1	V201 or other qualified function	UNRESOLVED_NO_DEFAULT		assay duration/ratio/control mapping required	candidate; not automatically fitted	False
+qsp.KE	cells	public effector-ratio response	UNRESOLVED_NO_DEFAULT		otherwise simplify encounter term	candidate; not automatically fitted	False
+qsp.betaR	dimensionless signed	public recognition/phenotype-function link	UNRESOLVED_NO_DEFAULT		hypothesis if unsupported	candidate; not automatically fitted	False
+qsp.eta	dimensionless	qualified checkpoint-functional source	UNRESOLVED_NO_DEFAULT		not inferred from HLA expression alone	candidate; not automatically fitted	False
+qsp.kappa	fraction	selected antibody functional contrast	UNRESOLVED_NO_DEFAULT		occupancy not efficacy	candidate; not automatically fitted	False
+population.joint	parameter-dependent	public joint targets	UNRESOLVED_NO_DEFAULT		alternative correlations; no prevalence from arbitrary draws	candidate; not automatically fitted	False
+observation.noise	assay-scale	original SD/SE/replicate definitions	UNRESOLVED_NO_DEFAULT		unknown stays unknown	candidate; not automatically fitted	False

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validation benchmark",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "benchmark_id": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "independent_unit": {
+      "type": "string"
+    },
+    "development_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "test_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "primary_endpoint": {
+      "type": "string"
+    },
+    "primary_comparator": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "frozen_hash": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "benchmark_id",
+    "question",
+    "role",
+    "independent_unit",
+    "development_sources",
+    "test_sources",
+    "primary_endpoint",
+    "primary_comparator",
+    "metrics",
+    "frozen_hash",
+    "status"
+  ],
+  "additionalProperties": false
+}

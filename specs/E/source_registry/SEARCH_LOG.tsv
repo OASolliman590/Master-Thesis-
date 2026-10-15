@@ -1,0 +1,8 @@
+date	lane	query	resolved_ids	outcome
+2026-10-15	PK	"""vorinostat"" ""3447"" pharmacokinetic model"	S001	abstract recovered; PMC challenge
+2026-10-15	novelty	epigenetic checkpoint QSP scheduling prostate model uncertainty identifiability 2025 2026	S002,S003,V204	bounded search; V204 primary unresolved
+2026-10-15	population	"""quantitative systems pharmacology"" ""virtual populations"" ""uncertainty"" identifiability 2024 2025"	V202,V203	method leads; no numerical dataset admitted
+2026-10-15	prostate_function	vorinostat prostate cancer immunogenic modulation washout HLA time course T cells Gameiro	V201	full article methods/captions inspected
+2026-10-15	prostate_function	entinostat prostate cancer immune cytotoxic T lymphocytes 2016 Gameiro washout	V201	same original study; deduplicate
+2026-10-15	novelty	"""Mechanistically informed adaptive dosing"" ""biorxiv"""	V204	secondary lead; primary DOI tool error
+2026-10-15	S001	Direct PubMed reopen	Browser challenge on follow-up; earlier public abstract metadata check retained	No numbers admitted; resolve anonymous primary route during E0

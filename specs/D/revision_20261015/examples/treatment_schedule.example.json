@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "schedule_id": "SCH-DEMO",
+  "context_id": "CTX-DEMO",
+  "events": [
+    {
+      "time_value": 0,
+      "time_unit": "h",
+      "action": "vehicle",
+      "perturbation_id": null,
+      "dose_value": null,
+      "dose_unit": null
+    }
+  ],
+  "status": "SYNTHETIC"
+}

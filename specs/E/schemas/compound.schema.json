@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:compound:1.0.0",
+  "title": "compound",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "compound_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "entity_type": {
+      "enum": [
+        "small_molecule",
+        "biologic"
+      ]
+    },
+    "identifiers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parent_salt": {
+      "type": "string"
+    },
+    "target_axis": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "species_reactivity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "identity_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "identity_status": {
+      "enum": [
+        "verified",
+        "proposed",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "compound_id",
+    "name",
+    "entity_type",
+    "identifiers",
+    "parent_salt",
+    "target_axis",
+    "species_reactivity",
+    "identity_evidence",
+    "identity_status"
+  ],
+  "additionalProperties": false
+}

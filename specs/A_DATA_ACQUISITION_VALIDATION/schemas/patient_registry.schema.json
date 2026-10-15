@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/patient_registry.schema.json",
+  "title": "Private patient registry record",
+  "description": "Private one-row-per-unique-patient registry. Raw identifiers and aliases remain in authorized storage.",
+  "type": "object",
+  "required": [
+    "patient_uid",
+    "study_id",
+    "source_patient_id",
+    "patient_identity_confidence",
+    "treatment_naive_status",
+    "inclusion_state",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "data_classification": {
+      "type": "string",
+      "const": "PRIVATE_PATIENT_LEVEL",
+      "description": "This record must not enter public Git."
+    },
+    "patient_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "study_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "source_patient_id": {
+      "type": "string"
+    },
+    "source_aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "patient_identity_confidence": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "PROBABLE",
+        "POSSIBLE",
+        "UNRESOLVED",
+        "DISPROVED"
+      ]
+    },
+    "cancer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subtype": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disease_state": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "age": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "sex": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "performance_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "molecular_subtype": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prior_systemic_treatment": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prior_ici": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO",
+        "UNKNOWN"
+      ]
+    },
+    "prior_radiotherapy": {
+      "type": "string",
+      "enum": [
+        "YES",
+        "NO",
+        "UNKNOWN"
+      ]
+    },
+    "treatment_naive_status": {
+      "type": "string",
+      "enum": [
+        "VERIFIED_YES",
+        "VERIFIED_NO",
+        "UNKNOWN"
+      ]
+    },
+    "inclusion_state": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "INCLUDED",
+        "EXCLUDED",
+        "BLOCKED_UNKNOWN"
+      ]
+    },
+    "exclusion_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

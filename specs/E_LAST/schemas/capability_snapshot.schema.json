@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "capability_snapshot",
+  "description": "Draft contract. Passing schema validation alone does not admit scientific data or authorise analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "data_state": {
+      "enum": [
+        "NONE",
+        "PLANNED",
+        "APPROVED",
+        "GENERATED",
+        "QUALITY_CHECKED",
+        "ADMITTED",
+        "WITHDRAWN"
+      ]
+    },
+    "permission": {
+      "enum": [
+        "APPROVED",
+        "UNKNOWN",
+        "DENIED",
+        "WITHDRAWN"
+      ]
+    },
+    "qc": {
+      "enum": [
+        "PASSED",
+        "PENDING",
+        "FAILED",
+        "UNKNOWN"
+      ]
+    },
+    "identity_verified": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "biological_units_known": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "context_compatible": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "assay_mapping_reviewed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "exposure_events": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tumour_viability": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tumour_target_counts": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "proximal_engagement": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "molecular_endpoint": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "protein_endpoint": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tumour_timecourse": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "tumour_withdrawal_series": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "immune_viability": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "immune_function": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "immune_timecourse": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "immune_withdrawal_series": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "target_specific_killing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "compartment_controls": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "checkpoint_qualified": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "schedule_arms": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "analytical_exposure": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "variation_estimated": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "population_targets_qualified": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "exposure_events",
+        "tumour_viability",
+        "tumour_target_counts",
+        "proximal_engagement",
+        "molecular_endpoint",
+        "protein_endpoint",
+        "tumour_timecourse",
+        "tumour_withdrawal_series",
+        "immune_viability",
+        "immune_function",
+        "immune_timecourse",
+        "immune_withdrawal_series",
+        "target_specific_killing",
+        "compartment_controls",
+        "checkpoint_qualified",
+        "schedule_arms",
+        "analytical_exposure",
+        "variation_estimated",
+        "population_targets_qualified"
+      ]
+    },
+    "role": {
+      "enum": [
+        "UNASSIGNED",
+        "QUALIFICATION",
+        "CALIBRATION",
+        "RETROSPECTIVE_EVALUATION",
+        "PROSPECTIVE_VALIDATION",
+        "CONTEXTUAL"
+      ]
+    },
+    "independent_of_development": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "used_for_fit": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "prediction_freeze_before_outcomes": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "freeze_receipt_verified": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "outcome_sign": {
+      "enum": [
+        "UNOBSERVED",
+        "BENEFICIAL",
+        "NULL",
+        "ADVERSE",
+        "CONTRADICTORY",
+        "MIXED",
+        "IMPRECISE"
+      ]
+    },
+    "donor_scope": {
+      "enum": [
+        "NO_DONORS",
+        "ONE_DONOR",
+        "MULTIPLE_DONORS",
+        "UNKNOWN"
+      ]
+    },
+    "source_object_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reviewer_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "data_state",
+    "permission",
+    "qc",
+    "identity_verified",
+    "biological_units_known",
+    "context_compatible",
+    "assay_mapping_reviewed",
+    "capabilities",
+    "role",
+    "independent_of_development",
+    "used_for_fit",
+    "prediction_freeze_before_outcomes",
+    "freeze_receipt_verified",
+    "outcome_sign",
+    "donor_scope",
+    "source_object_ids",
+    "reviewer_receipts"
+  ]
+}

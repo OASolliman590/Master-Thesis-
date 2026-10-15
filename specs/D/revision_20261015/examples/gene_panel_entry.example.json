@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "panel_version": "demo-v0",
+  "panel": "F",
+  "gene_or_protein": "viability",
+  "cell_type": "tumour",
+  "programme": "toxicity control",
+  "expected_direction": "maintained",
+  "evidence_sources": [
+    "synthetic"
+  ],
+  "provenance": [
+    "software fixture"
+  ],
+  "evidence_type": "UNKNOWN",
+  "assay_type": "synthetic",
+  "suitability": "fixture only",
+  "functional_relevance": "prevents toxicity confounding in concept",
+  "alternative_explanations": [
+    "none; synthetic"
+  ],
+  "required_controls": [
+    "vehicle"
+  ],
+  "confidence": "not biological",
+  "status": "FIXTURE_ONLY"
+}

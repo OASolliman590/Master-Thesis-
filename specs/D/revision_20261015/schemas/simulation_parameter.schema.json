@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Simulation parameter",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "parameter_id": {
+      "type": "string"
+    },
+    "component": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "prior_or_range": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "calibration_dataset": {
+      "type": "string"
+    },
+    "test_dataset": {
+      "type": "string"
+    },
+    "uncertainty": {
+      "type": "string"
+    },
+    "identifiability_status": {
+      "type": "string"
+    },
+    "sensitivity_rank": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "frozen_version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "parameter_id",
+    "component",
+    "name",
+    "unit",
+    "value",
+    "prior_or_range",
+    "source",
+    "calibration_dataset",
+    "test_dataset",
+    "uncertainty",
+    "identifiability_status",
+    "sensitivity_rank",
+    "frozen_version",
+    "status"
+  ],
+  "additionalProperties": false
+}

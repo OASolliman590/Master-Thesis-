@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Training overlap record",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "record_id": {
+      "type": "string"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "evaluation_object_id": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "STUDY",
+        "PATIENT",
+        "DONOR",
+        "EXPERIMENT",
+        "PLATE",
+        "CELL_LINE",
+        "CONDITION",
+        "CONTEXT",
+        "UNKNOWN"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "EXACT_OVERLAP",
+        "PLAUSIBLE_SHARED_ORIGIN",
+        "NO_OVERLAP_VERIFIED",
+        "UNKNOWN"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "independent_test_allowed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "model_id",
+    "evaluation_object_id",
+    "level",
+    "status",
+    "evidence",
+    "independent_test_allowed"
+  ],
+  "additionalProperties": false
+}

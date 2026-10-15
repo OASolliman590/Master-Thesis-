@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TME initialization",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "initialization_id": {
+      "type": "string"
+    },
+    "model_scope": {
+      "type": "string",
+      "enum": [
+        "D2_PAIR",
+        "D2_TISSUE",
+        "FUTURE_PATIENT_SPECIFIC"
+      ]
+    },
+    "context_id": {
+      "type": "string"
+    },
+    "geometry": {
+      "type": "string"
+    },
+    "cell_populations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "cell_type": {
+            "type": "string"
+          },
+          "initial_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cell_type",
+          "initial_count",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parameter_set_id": {
+      "type": "string"
+    },
+    "unsupported_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "initialization_id",
+    "model_scope",
+    "context_id",
+    "geometry",
+    "cell_populations",
+    "fields",
+    "parameter_set_id",
+    "unsupported_outputs",
+    "status"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:run:1.0.0",
+  "title": "run",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "input_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "config_hash": {
+      "type": "string"
+    },
+    "code_version": {
+      "type": "string"
+    },
+    "environment_reference": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "solver": {
+      "type": "string"
+    },
+    "tolerances_reference": {
+      "type": "string"
+    },
+    "output_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "running",
+        "completed",
+        "failed"
+      ]
+    },
+    "biological_fit": {
+      "type": "boolean"
+    },
+    "data_roles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "exploratory_qualification",
+          "calibration",
+          "model_selection",
+          "independent_public_evaluation",
+          "prospective_internal_validation",
+          "contextual_corroboration",
+          "upstream_reconstruction",
+          "unassigned"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "run_id",
+    "model_version",
+    "input_hashes",
+    "config_hash",
+    "code_version",
+    "environment_reference",
+    "seed",
+    "solver",
+    "tolerances_reference",
+    "output_hashes",
+    "status",
+    "biological_fit",
+    "data_roles"
+  ],
+  "additionalProperties": false
+}

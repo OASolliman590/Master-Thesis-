@@ -1,0 +1,3 @@
+# Local verification scope
+
+Run validate_kit.py from this directory or via its bundle-root path. It validates all schemas/examples and decision JSONL, then runs bounded synthetic/seed semantic tests. QA_RECEIPT.json and TEST_OUTPUT.txt contain actual results. TDD_RED records a deliberately observed missing-module failure before e_contracts.py implementation. The tests cover selected schema, units/statistics, aggregate/individual, BLQ/log-axis, hierarchy/state, role/receipt integrity, weighting and privacy guards. They do not execute real source acquisition, ODE/PK/QSP fitting, numerical source parity, full domain deduplication or empirical validation. requirements.lock records this QA environment; clean-environment/AIU reproduction is not claimed.

@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-10-15T11:25:26.578314+00:00",
+  "scope": "v2-synthetic-schema-and-declared-contract-checks-only",
+  "tests_run": 42,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "success": true,
+  "schemas_checked": 5,
+  "synthetic_examples_checked": 7,
+  "selected_capability_combinations_checked": 4096,
+  "python": "3.13.5",
+  "jsonschema": "4.26.0",
+  "scientific_authorisation": false,
+  "biological_validation": false,
+  "production_implementation": false,
+  "real_model_noninterference_tested": false,
+  "not_run": [
+    "ODE simulation or fitting",
+    "upstream numerical parity",
+    "actual scientific data admission",
+    "real-fit held-out isolation",
+    "AIU execution",
+    "independent biological evaluation",
+    "prospective experimental validation",
+    "clinical evaluation"
+  ],
+  "duplicate_distribution_notice": "Same reference suite in core and optional extension; do not count copies as independent tests."
+}

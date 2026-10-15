@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gene/readout panel entry",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "panel_version": {
+      "type": "string"
+    },
+    "panel": {
+      "type": "string",
+      "enum": [
+        "T",
+        "I",
+        "R",
+        "F"
+      ]
+    },
+    "gene_or_protein": {
+      "type": "string"
+    },
+    "cell_type": {
+      "type": "string"
+    },
+    "programme": {
+      "type": "string"
+    },
+    "expected_direction": {
+      "type": "string"
+    },
+    "evidence_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "MEASURED",
+        "PREDICTED",
+        "LITERATURE_ANCHOR",
+        "UNKNOWN"
+      ]
+    },
+    "assay_type": {
+      "type": "string"
+    },
+    "suitability": {
+      "type": "string"
+    },
+    "functional_relevance": {
+      "type": "string"
+    },
+    "alternative_explanations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_controls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "panel_version",
+    "panel",
+    "gene_or_protein",
+    "cell_type",
+    "programme",
+    "expected_direction",
+    "evidence_sources",
+    "provenance",
+    "evidence_type",
+    "assay_type",
+    "suitability",
+    "functional_relevance",
+    "alternative_explanations",
+    "required_controls",
+    "confidence",
+    "status"
+  ],
+  "additionalProperties": false
+}

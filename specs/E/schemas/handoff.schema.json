@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:handoff:1.0.0",
+  "title": "handoff",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "handoff_id": {
+      "type": "string"
+    },
+    "producer_paper": {
+      "enum": [
+        "A",
+        "A.1",
+        "B",
+        "C",
+        "D",
+        "Biological",
+        "E"
+      ]
+    },
+    "producer_version": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "feature_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scale": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    },
+    "uncertainty_reference": {
+      "type": "string"
+    },
+    "permitted_use": {
+      "type": "string"
+    },
+    "forbidden_use": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outcome_exposure": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approval_status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "handoff_id",
+    "producer_paper",
+    "producer_version",
+    "source_ids",
+    "feature_ids",
+    "scale",
+    "context",
+    "uncertainty_reference",
+    "permitted_use",
+    "forbidden_use",
+    "outcome_exposure",
+    "sha256",
+    "approval_status"
+  ],
+  "additionalProperties": false
+}

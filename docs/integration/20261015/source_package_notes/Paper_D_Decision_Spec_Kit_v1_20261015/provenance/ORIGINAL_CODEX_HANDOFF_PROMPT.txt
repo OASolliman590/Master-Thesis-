@@ -1,0 +1,23 @@
+Implement the accepted technical packets for Paper D in OASolliman590/Master-Thesis-, using this attached Paper_D_Decision_Spec_Kit_v1_20261015.
+
+1. Read START_HERE.md, specs/D/revision_20261015/DECISIONS_DA_DH.md, DEPENDENCIES_AND_RELEASES.md and TICKETS_AND_ACCEPTANCE.md. Then inspect current AGENTS.md, CONTEXT.md, progress, branches, D specifications and uncommitted work where available. Do not assume a new D branch or user approval exists. This ZIP's decisions are recommendations until the user or authorized integrator records acceptance.
+
+2. Compare this kit with the original D primary. Preserve exact theta and same-drug baseline, prostate context and supported treatment restriction. No implicit rewrite to an outcome-selected comparator, pathway-only metric or nonprostate test. Preserve the original source archive/report. Do not copy private files or the entire ZIP into public Git.
+
+3. The initial assignment is D-R02/03/05/07: inspect reusable source/provenance tooling, resolve the public-source inventory, implement typed condition/feature/control/overlap validation and a tested arithmetic evaluator. D-R04 Lin source/rights and D-R10 wet-lab/E interface can proceed as separate read-only packets. Each unavailable dataset gets a typed gap, not an invented matrix or sample count.
+
+4. Use one integrator and no more than two simultaneous independent children initially. Search workers are read-only and return compact source-linked records; one writer owns each module/registry. Follow actual runtime/tool availability, not guessed model IDs or MCP calls. Do not create an orchestration platform as a prerequisite.
+
+5. D0-M/model provenance is a dependency of D1, but Lin reconstruction is not. Measured-driver D2 can proceed after its own assay/parameter gates even if D1 data are unavailable or STATE fails its benchmark. Learned D2 requires valid context/programme/time predictions and a measured bridge. A 24-hour response prediction does not define a validated time course.
+
+6. Start D2 only with the qualified experiment's cells and observables. Two-cell co-culture is not a full TME; adding myeloid/stroma is conditional; missing B/TLS states remain unsupported. Do not invent unmeasured fields or molecular-to-killing rates. Exposures may come from a frozen E driver or actual experiments. E owns systemic PK/QSP and schedule optimization; preserve shared-data role boundaries.
+
+7. Write failing tests for new behavior, make the smallest change, and run scoped plus project regression tests, reporting failures/skips honestly. Validate units, identity, control weights, outcome exclusion, unavailable required conditions, exact primary arithmetic, unsupported tokens, nonphysical rates and false approval/release claims. The included package checker is a starting contract aid, not the production evidence validator.
+
+8. Run CPU metadata checks first. No model training, large atlas download, paid requester-pays transfer, controlled access, author contact, AIU job or GPU workload without the relevant permissions and explicit budget. Discover actual resources. Treat Colab as a temporary execution adapter with persistent verified checkpoints, not the only data copy.
+
+9. No real model scoring or calibration without the specified source/statistical/assay release. Technical coding and labelled fixtures may proceed despite unrelated missing biology. A null/negative result does not fail technical acceptance. Missing required sources leave the aggregate incomplete; do not silently remove them.
+
+10. Deliver a bounded diff, exact inspected/downloaded object list, implementation-reuse matrix, source/condition coverage, concrete validators, test commands and actual outcomes, model/data gaps, and the next executable task. Do not stop at another roadmap. Do not claim scientific readiness because schemas pass.
+
+Integrate reviewed specifications at specs/D/revision_20261015/ or a repository-approved versioned location. The authorized integrator owns commits/pushes/draft PRs. Do not merge, reset dirty work or close original D issues unless their acceptance criteria are actually met. If access is missing, deliver the complete local diff and honest status.

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Perturbation identity",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "perturbation_id": {
+      "type": "string"
+    },
+    "parent_name": {
+      "type": "string"
+    },
+    "structure_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "salt_or_form": {
+      "type": "string"
+    },
+    "dose_value": {
+      "type": "number",
+      "minimum": 0
+    },
+    "dose_unit": {
+      "type": "string"
+    },
+    "duration_value": {
+      "type": "number",
+      "minimum": 0
+    },
+    "duration_unit": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "string"
+    },
+    "context_id": {
+      "type": "string"
+    },
+    "control_id": {
+      "type": "string"
+    },
+    "checkpoint_token": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "support_status": {
+      "type": "string",
+      "enum": [
+        "SUPPORTED",
+        "UNSUPPORTED",
+        "UNKNOWN"
+      ]
+    },
+    "mapping_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "perturbation_id",
+    "parent_name",
+    "salt_or_form",
+    "dose_value",
+    "dose_unit",
+    "duration_value",
+    "duration_unit",
+    "sequence",
+    "context_id",
+    "control_id",
+    "checkpoint_token",
+    "support_status",
+    "mapping_evidence"
+  ],
+  "additionalProperties": false
+}

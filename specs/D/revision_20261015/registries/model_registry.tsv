@@ -1,0 +1,6 @@
+model_id	family	task	repository	revision	checkpoint	input	output	training_overlap	licence	role	status
+STATE-HVG-TAHOE-FINAL	STATE-ST	chemical perturbation context transfer	arcinstitute/ST-HVG-Tahoe	ca6b751972493f8448e3256d1340ae70ad43e1e7	zeroshot/state_generalization_zeroshot_X_hvg/checkpoints/final.ckpt	X_hvg ordered genes; exact transform UNKNOWN	gene expression; exact ordered IDs UNKNOWN	UNKNOWN	separate code/model terms	D1 candidate	BLOCKED_PENDING_AUDIT
+TAHOE-X1	Tahoe-x1	UNKNOWN exact task	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	conditional comparator	UNQUALIFIED
+PIE	PIE	UNKNOWN exact task	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	UNKNOWN	conditional comparator	UNQUALIFIED
+D2-NONSPATIAL	population model	tumour-immune count dynamics	project	to implement	none	measured parameters	counts/killing	not applicable	project	mandatory baseline	PROPOSED
+D2-PHYSICELL-PAIR	PhysiCell	spatial tumour-T-cell assay	upstream PhysiCell + project adapter	UNKNOWN	none	qualified experiment/parameters	spatial counts/contact/killing	not applicable	to resolve	D2 candidate	PROPOSED

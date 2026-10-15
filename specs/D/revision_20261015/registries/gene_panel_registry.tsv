@@ -1,0 +1,5 @@
+panel_version	panel	gene_or_protein	cell_type	programme	expected_direction	evidence_source	provenance	measured_or_predicted	assay	inventory_status	confidence	status
+pilot-v0	T	HLA-ABC protein	tumour	antigen presentation	increase after successful priming	internal wet-lab protocol	protocol anchor	measured	flow	UNKNOWN	moderate	ASSAY_QUALIFICATION_CANDIDATE
+pilot-v0	T	PD-L1 protein	tumour	adaptive resistance	context dependent	internal wet-lab protocol + listed reagent	protocol/procurement	measured	flow	LISTED_NOT_CONFIRMED	moderate	ASSAY_QUALIFICATION_CANDIDATE
+pilot-v0	R	viable tumour loss	tumour-immune	functional response	increase for successful interaction	internal wet-lab protocol	functional endpoint	measured	flow/live-cell	UNKNOWN	high concept confidence	PRIMARY_CANDIDATE_NOT_FROZEN
+pilot-v0	F	post-washout viability	tumour	toxicity/stress	maintained	internal wet-lab protocol	safety control	measured	viability/count	UNKNOWN	high	MANDATORY_CONTROL

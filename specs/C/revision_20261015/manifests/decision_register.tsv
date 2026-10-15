@@ -1,0 +1,8 @@
+decision_id	decision	status	authority_date	analysis_effect	requires_before_execution
+C-D001	Adopt C3 as Paper C framework	approved_framework	user:2026-10-15	Controls paper-level design	merged decision and review
+C-D002	Develop paired independent measured Q_M versus Q_E endpoint	proposed_not_frozen	user:2026-10-15	Proposed primary	frozen B handoff; admitted sources; validated scorer; explicit release
+C-D003	Demote C1 PC3 24h 1.11111 uM three-drug anchor	secondary_calibration	user:2026-10-15	Secondary numerical/provenance analysis	WTCS parity and matrix access
+C-D004	Use bounded C2 screen	approved_bounded_discovery	user:2026-10-15	Candidate discovery only	frozen universe; identity release; query release
+C-D005	Use transparent tiers and Pareto reasoning	approved_integration	user:2026-10-15	No default total score	completed evidence matrix
+C-D006	Keep Paper D predictions separate	approved_boundary	user:2026-10-15	Predictions cannot validate C	separate evidence-type fields
+C-D007	Do not execute biological scoring from this review	no_run_authorization	user:2026-10-15	Blocks real primary and candidate winner	explicit later analysis release

@@ -1,0 +1,28 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/treatment_episode.schema.json",
+ "title":"Shared private treatment episode, integration extension 1.1.0",
+ "description":"One patient by source-defined treatment episode. Does not replace existing patient or treatment-exposure records. JSON validity is not clinical admission.",
+ "type":"object","additionalProperties":false,
+ "required":["schema_version","data_classification","treatment_episode_id","patient_uid","study_id","regimen_id","index_event","start_day","stop_day","timing_precision","prior_ici","episode_status","source_locators"],
+ "properties":{
+  "schema_version":{"const":"1.1.0"},
+  "data_classification":{"enum":["PRIVATE_PATIENT_LEVEL","SYNTHETIC_ONLY"]},
+  "treatment_episode_id":{"type":"string","minLength":1},
+  "patient_uid":{"type":"string","minLength":1},
+  "study_id":{"type":"string","minLength":1},
+  "regimen_id":{"type":"string","minLength":1},
+  "index_event":{"type":"string","minLength":1},
+  "start_day":{"type":["number","null"]},
+  "stop_day":{"type":["number","null"]},
+  "start_source_text":{"type":["string","null"]},
+  "stop_source_text":{"type":["string","null"]},
+  "timing_precision":{"enum":["EXACT","BOUNDED_INTERVAL","SOURCE_CATEGORY","UNKNOWN"]},
+  "prior_ici":{"enum":["YES","NO","UNKNOWN"]},
+  "episode_status":{"enum":["VERIFIED","BLOCKED_UNKNOWN","CONFLICT","EXCLUDED"]},
+  "component_exposure_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},
+  "source_locators":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+  "notes":{"type":["string","null"]}
+ },
+ "allOf":[{"if":{"properties":{"timing_precision":{"const":"EXACT"}}},"then":{"properties":{"start_day":{"type":"number"}}}}]
+}

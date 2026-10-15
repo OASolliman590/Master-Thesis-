@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cell-state ontology node",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "ontology_version": {
+      "type": "string"
+    },
+    "state_id": {
+      "type": "string"
+    },
+    "source_label": {
+      "type": "string"
+    },
+    "compartment": {
+      "type": "string"
+    },
+    "major_cell_type": {
+      "type": "string"
+    },
+    "functional_state": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parent_state_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mapping_confidence": {
+      "type": "string",
+      "enum": [
+        "EXACT",
+        "COMPATIBLE",
+        "BROADER_PARENT",
+        "AMBIGUOUS",
+        "UNSUPPORTED"
+      ]
+    },
+    "represented_in_model": {
+      "type": "boolean"
+    },
+    "permitted_claim": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "ontology_version",
+    "state_id",
+    "source_label",
+    "compartment",
+    "major_cell_type",
+    "functional_state",
+    "parent_state_id",
+    "mapping_confidence",
+    "represented_in_model",
+    "permitted_claim"
+  ],
+  "additionalProperties": false
+}

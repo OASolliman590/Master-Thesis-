@@ -1,0 +1,23 @@
+Suggested decision message for the user to send; it is NOT an approval already issued by this package.
+
+I approve the staged Paper D direction with the following modifications. Use the attached decision/specification kit to finish the repository integration and implementation handoff, rather than producing another appraisal-only response.
+
+D-A: Retain the historical D1/P1 primary proposal conditionally, preserving its exact human-prostate population, supported chemical–dose–duration task, full ordered measured output genes, original theta and one fixed same-drug comparator. Do not replace it with an undefined 'strongest baseline' or broaden it to nonprostate data without a pre-test amendment. Suitable independent data and precision remain unresolved.
+
+D-B: Include D2-lite, beginning with a tumour–T-cell model matched to the qualified experiment. Add myeloid/stromal components only when relevant calibration and validation data exist. Measured-driver D2 does not depend on STATE winning or on obtaining a native D1 test set. Learned coupling requires task-specific validity.
+
+D-C: Defer patient-specific digital twins, not Paper E. E owns PBPK/PKPD–QSP exposure, induction/recovery, virtual clinical populations and pharmacological schedule optimization. D owns spatial/contact modeling and the incremental value of molecular predictions. Define their interfaces and shared-experiment ledger.
+
+D-D: Propose a D2 primary only through an explicit amendment before confirmatory outcome inspection. If results already informed the choice, label them exploratory and seek new validation. Negative benchmarks are valid findings, not grounds to hide results or stop every workstream.
+
+D-E: Use public external evidence plus appropriately approved project wet-lab data. Resolve final Lin methods/code/rights via lawful public sources first. No EGA application, controlled-data download, author email, account creation, paid cloud use or agreement acceptance is implicitly authorized. Lin-specific gaps block only dependent Lin claims. No exact reproduction claim from guessed methods.
+
+D-F: Audit STATE first; keep Tahoe-x1 and PIE conditional on actual task, checkpoint, licence and overlap evidence. Use strong baselines and evaluation-side positive controls. No large foundation-model training or unnecessary model fleet.
+
+D-G: Plan one epigenetic agent × one qualified checkpoint/immune-system family. Reconcile actual drug/cell/antigen/HLA/assay inventory before fixing experiments. Distinguish calibration, model selection and genuinely prospective tests across D, E and the biological paper. Gene markers alone do not prove ICI success.
+
+D-H: Produce the complete populated Spec Kit and draft review PR under current repository conventions. Preserve original D files and the uploaded appraisal, use dated amendments, and do not merge automatically. Follow the integrator-owned commit/push rule. Do not infer authorization for unreleased scientific analysis.
+
+Also fix the report's reused D3/D4 phase names; use D-Rxx tickets. Explicitly reject unsupported B-cell/TLS state predictions in two-/four-population models lacking that compartment. Distinguish structural-identifiability risk from a demonstrated structural result.
+
+Read START_HERE.md and the decision record, inspect live changes, then implement the accepted bounded source/contract packet and deliver its actual tests and remaining gates. Do not repeat the full proposal or fabricate unavailable data, parameter values, model results or approvals.

@@ -1,0 +1,21 @@
+{
+  "schema": "compound",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-COMPOUND",
+    "synthetic": true,
+    "compound_id": "SYN-COMPOUND",
+    "name": "Synthetic test entity",
+    "entity_type": "small_molecule",
+    "identifiers": [
+      "SYN-ENTITY"
+    ],
+    "parent_salt": "synthetic parent",
+    "target_axis": null,
+    "species_reactivity": null,
+    "identity_evidence": [
+      "SYN-SOURCE"
+    ],
+    "identity_status": "proposed"
+  }
+}

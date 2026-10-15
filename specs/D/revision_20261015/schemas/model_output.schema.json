@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Model output",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "output_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "checkpoint_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_data_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "parameter_hash": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "environment_hash": {
+      "type": "string"
+    },
+    "output_hash": {
+      "type": "string"
+    },
+    "validation_status": {
+      "type": "string"
+    },
+    "payload_uri": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "output_id",
+    "model_version",
+    "checkpoint_sha256",
+    "source_data_hashes",
+    "input_hash",
+    "parameter_hash",
+    "seed",
+    "environment_hash",
+    "output_hash",
+    "validation_status",
+    "payload_uri"
+  ],
+  "additionalProperties": false
+}

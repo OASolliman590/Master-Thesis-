@@ -1,0 +1,47 @@
+{
+  "schema_version": "2.0.0",
+  "record_id": "FIXTURE-CORE-INCOMPLETE",
+  "synthetic": true,
+  "profile": "C-INCOMPLETE",
+  "complete": false,
+  "gates": {
+    "source_lineage_audited": null,
+    "public_numerical_exposure": null,
+    "independent_exposure_evaluation": null,
+    "prostate_biological_constraint": null,
+    "all_three_layers_executed": null,
+    "data_roles_frozen": null,
+    "decisions_frozen": null,
+    "baselines_complete": null,
+    "uncertainty_complete": null,
+    "reproduction_complete": null,
+    "scientific_review_complete": null,
+    "artifact_hashes_verified": null,
+    "no_internal_data_dependency": null
+  },
+  "packet_status": {
+    "E0": "PENDING",
+    "E1": "PENDING",
+    "E2": "PENDING",
+    "E3": "PENDING",
+    "E4": "PENDING",
+    "E5": "PENDING",
+    "E6": "PENDING",
+    "E7": "PENDING"
+  },
+  "numeric_input_origins": [
+    "public_external"
+  ],
+  "profile_evidence": {
+    "temporal_pd": false,
+    "functional_constraints": true,
+    "checkpoint_constraint_or_justified_transfer": false,
+    "nonempty_admissible_set": true,
+    "measurement_linked_identifiability_certificate": true
+  },
+  "artifacts": [],
+  "unvalidated_claims": [
+    "All biological and clinical claims; this entire record is a software fixture."
+  ],
+  "reviewer_receipts": []
+}

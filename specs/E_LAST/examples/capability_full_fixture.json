@@ -1,0 +1,46 @@
+{
+  "schema_version": "2.0.0",
+  "record_id": "FIXTURE-CAPABILITIES-PROSPECTIVE",
+  "synthetic": true,
+  "data_state": "ADMITTED",
+  "permission": "APPROVED",
+  "qc": "PASSED",
+  "identity_verified": true,
+  "biological_units_known": true,
+  "context_compatible": true,
+  "assay_mapping_reviewed": true,
+  "capabilities": {
+    "exposure_events": true,
+    "tumour_viability": true,
+    "tumour_target_counts": true,
+    "proximal_engagement": true,
+    "molecular_endpoint": true,
+    "protein_endpoint": true,
+    "tumour_timecourse": true,
+    "tumour_withdrawal_series": true,
+    "immune_viability": true,
+    "immune_function": true,
+    "immune_timecourse": true,
+    "immune_withdrawal_series": true,
+    "target_specific_killing": true,
+    "compartment_controls": true,
+    "checkpoint_qualified": true,
+    "schedule_arms": true,
+    "analytical_exposure": true,
+    "variation_estimated": true,
+    "population_targets_qualified": true
+  },
+  "role": "PROSPECTIVE_VALIDATION",
+  "independent_of_development": true,
+  "used_for_fit": false,
+  "prediction_freeze_before_outcomes": true,
+  "freeze_receipt_verified": true,
+  "outcome_sign": "UNOBSERVED",
+  "donor_scope": "MULTIPLE_DONORS",
+  "source_object_ids": [
+    "FIXTURE-ONLY-NOT-MEASURED"
+  ],
+  "reviewer_receipts": [
+    "FIXTURE-NOT-AN-ACTUAL-APPROVAL"
+  ]
+}

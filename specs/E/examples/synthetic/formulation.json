@@ -1,0 +1,20 @@
+{
+  "schema": "formulation",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-FORMULATION",
+    "synthetic": true,
+    "formulation_id": "SYN-FORM",
+    "compound_id": "SYN-COMPOUND",
+    "parent_salt": "synthetic parent",
+    "route": "culture",
+    "form": "synthetic solution",
+    "dose_basis": "parent",
+    "vehicle": "synthetic vehicle",
+    "supplier_lot_reference": null,
+    "research_grade_status": "unknown",
+    "evidence_ids": [
+      "SYN-SOURCE"
+    ]
+  }
+}

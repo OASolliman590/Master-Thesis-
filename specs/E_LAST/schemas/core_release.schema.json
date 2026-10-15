@@ -1,0 +1,321 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "core_release",
+  "description": "Draft contract. Passing schema validation alone does not admit scientific data or authorise analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "profile": {
+      "enum": [
+        "C-SCHEDULING",
+        "C-IDENTIFIABILITY",
+        "C-INCOMPLETE"
+      ]
+    },
+    "complete": {
+      "type": "boolean"
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source_lineage_audited": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "public_numerical_exposure": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "independent_exposure_evaluation": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "prostate_biological_constraint": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "all_three_layers_executed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "data_roles_frozen": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "decisions_frozen": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "baselines_complete": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "uncertainty_complete": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "reproduction_complete": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "scientific_review_complete": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "artifact_hashes_verified": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "no_internal_data_dependency": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "source_lineage_audited",
+        "public_numerical_exposure",
+        "independent_exposure_evaluation",
+        "prostate_biological_constraint",
+        "all_three_layers_executed",
+        "data_roles_frozen",
+        "decisions_frozen",
+        "baselines_complete",
+        "uncertainty_complete",
+        "reproduction_complete",
+        "scientific_review_complete",
+        "artifact_hashes_verified",
+        "no_internal_data_dependency"
+      ]
+    },
+    "packet_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "E0": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E1": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E2": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E3": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E4": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E5": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E6": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        },
+        "E7": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "BLOCKED",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "required": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7"
+      ]
+    },
+    "numeric_input_origins": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "public_external",
+          "public_project_release",
+          "internal_unpublished",
+          "synthetic",
+          "unknown"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "profile_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "temporal_pd": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "functional_constraints": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "checkpoint_constraint_or_justified_transfer": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "nonempty_admissible_set": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "measurement_linked_identifiability_certificate": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "temporal_pd",
+        "functional_constraints",
+        "checkpoint_constraint_or_justified_transfer",
+        "nonempty_admissible_set",
+        "measurement_linked_identifiability_certificate"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "role",
+          "path",
+          "sha256"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "unvalidated_claims": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reviewer_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "profile",
+    "complete",
+    "gates",
+    "packet_status",
+    "numeric_input_origins",
+    "profile_evidence",
+    "artifacts",
+    "unvalidated_claims",
+    "reviewer_receipts"
+  ]
+}

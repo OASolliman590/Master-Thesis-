@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "SCEN-DEMO",
+  "initialization_id": "INIT-DEMO",
+  "schedule_id": "SCH-DEMO",
+  "model_id": "D2-DEMO",
+  "parameter_set_id": "PARAM-DEMO",
+  "seed": 42,
+  "assumptions": [
+    "synthetic only"
+  ],
+  "outputs": [
+    "viable_tumour_count"
+  ],
+  "validation_status": "SOFTWARE_FIXTURE",
+  "claim_ceiling": "no biological claim"
+}

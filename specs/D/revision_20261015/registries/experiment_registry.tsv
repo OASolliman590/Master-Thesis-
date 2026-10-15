@@ -1,0 +1,4 @@
+experiment_id	hypothesis	context	intervention	comparator	model_output	wetlab_readout	success_criterion	falsifying_result	claim_ceiling	status
+H1	tumour-cell priming	qualified prostate tumour model	epigenetic priming	vehicle	immunogenicity programme/protein eligibility	qPCR/flow/Western	predeclared direction and meaningful effect	no effect or toxicity-only effect	molecular priming only	PROPOSED
+H4	antigen presentation	qualified tumour-immune pair	priming +/- checkpoint	matched controls	recognition/contact/killing	HLA/APM plus HLA-dependent killing	predeclared functional gain attenuated by HLA block	no functional gain or HLA-independent gain	assay-specific recognition	PROPOSED
+H6	sequence dependence	qualified pair assay	priming then ICI vs concurrent/reverse	matched single agents	tumour loss/killing interval	viable tumour count/killing	predeclared contrast	interval includes null or opposite direction	hypothesis for tested assay	PROPOSED

@@ -1,0 +1,19 @@
+Implement the approved technical packets for Paper D in OASolliman590/Master-Thesis-, using Paper_D_Decision_Spec_Kit_v1_20261015.
+
+1. The user approved D-A through D-H on 2026-10-15. Read START_HERE.md, APPROVAL_RECORD.md, specs/D/revision_20261015/DECISIONS_DA_DH.md, DEPENDENCIES_AND_RELEASES.md and TICKETS_AND_ACCEPTANCE.md. Then inspect current AGENTS.md, CONTEXT.md, docs/execution/PROGRESS.md, branches, PRs/issues, historical D files and any live uncommitted work available to the integrator.
+
+2. Preserve the historical D1 primary exactly: human prostate context, checkpoint-supported chemical–dose–duration labels, full ordered measured output genes, original theta, equal drug/condition/biological-unit weighting, and the fixed same-supported-drug–dose–duration mean response in non-test training contexts. Do not replace it with an outcome-selected comparator, pathway-only endpoint, nearest dose, nonprostate primary, or silent feature subset.
+
+3. Initial implementation release: D-R02/03/05/07. Inspect reusable source/provenance tooling, resolve the public-source inventory, implement typed condition/feature/control/overlap validation, and implement/test the exact arithmetic evaluator. D-R04 Lin source/rights and D-R10 wet-lab/E interface may proceed as separate read-only packets. Unavailable data receive typed UNKNOWN or BLOCKED records, never invented matrices or counts.
+
+4. D0-M model provenance is a dependency of D1; Lin reconstruction is not. Measured-driver D2-PAIR may proceed after its own assay/parameter/validation gates even if no native D1 dataset is found or STATE fails. Learned D2 requires task-specific molecular validity plus a measured bridge. One 24-hour molecular prediction is not a validated time course.
+
+5. Start D2 only with qualified experimental cells and observables. A tumour–T-cell pair model is not a full TME. Add myeloid/stroma/recruitment only with measured calibration and independent validation. Return UNSUPPORTED for B/TLS outputs when the simulated compartments are absent. Do not invent cytokine fields, molecular-to-killing rates, or pharmacological trajectories.
+
+6. Paper E owns systemic PK/PBPK, antibody pharmacology, induction/recovery, virtual clinical populations, and schedule optimisation. Paper D may consume a frozen E trajectory or measured exposure, and owns spatial/contact behaviour and incremental-value tests. Use the shared-experiment ledger to prevent calibration data from being relabelled as untouched validation.
+
+7. Use TDD. Write a failing test, make the smallest code change, run scoped tests, then run applicable project regression tests. Test units, aliases, salts, dose/time, feature order, matched controls, equal replicate weighting, outcome exclusion, overlap, unsupported states, nonphysical rates, exact theta arithmetic, null results, and false readiness/approval claims.
+
+8. CPU metadata checks first. No model training, large atlas download, requester-pays transfer, controlled access, author contact, AIU/GPU job, or paid compute without separate permission and budget. No real scoring/calibration before source/statistical/assay release.
+
+9. Deliver a bounded diff, inspected/downloaded object list, reuse matrix, source/condition coverage, validators, exact test commands and outcomes, explicit gaps, and the next executable ticket. Do not merge automatically, reset dirty work, close the original D issue, or claim scientific readiness because schemas or fixtures pass.

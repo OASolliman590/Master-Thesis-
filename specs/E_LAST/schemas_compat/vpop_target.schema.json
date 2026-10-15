@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:vpop_target:1.0.0",
+  "title": "vpop_target",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "target_id": {
+      "type": "string"
+    },
+    "population_id": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "virtual_experimental",
+        "human_translational"
+      ]
+    },
+    "source_context": {
+      "enum": [
+        "culture",
+        "donor",
+        "human",
+        "animal"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statistic": {
+      "enum": [
+        "individual",
+        "arithmetic_mean",
+        "geometric_mean",
+        "median",
+        "fraction",
+        "count",
+        "fitted_estimate",
+        "annotation",
+        "unknown"
+      ]
+    },
+    "measurement": {
+      "type": "object",
+      "properties": {
+        "raw_value": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "raw_unit": {
+          "type": "string"
+        },
+        "canonical_value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "canonical_unit": {
+          "type": "string"
+        },
+        "statistic": {
+          "enum": [
+            "individual",
+            "arithmetic_mean",
+            "geometric_mean",
+            "median",
+            "fraction",
+            "count",
+            "fitted_estimate",
+            "annotation",
+            "unknown"
+          ]
+        },
+        "biological_n": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "biological_unit": {
+          "type": "string"
+        },
+        "n_unknown_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uncertainty": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "SD",
+                "SE",
+                "CI",
+                "digitization",
+                "posterior",
+                "range",
+                "unknown",
+                "none"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "lower": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "upper": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "value",
+            "lower",
+            "upper",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "transformation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "conversion_factor": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "raw_statistic": {
+          "enum": [
+            "individual",
+            "arithmetic_mean",
+            "geometric_mean",
+            "median",
+            "fraction",
+            "count",
+            "fitted_estimate",
+            "annotation",
+            "unknown"
+          ]
+        },
+        "raw_uncertainty_type": {
+          "enum": [
+            "SD",
+            "SE",
+            "CI",
+            "digitization",
+            "posterior",
+            "range",
+            "unknown",
+            "none"
+          ]
+        }
+      },
+      "required": [
+        "raw_value",
+        "raw_unit",
+        "canonical_value",
+        "canonical_unit",
+        "statistic",
+        "biological_n",
+        "biological_unit",
+        "n_unknown_reason",
+        "uncertainty",
+        "transformation",
+        "conversion_factor",
+        "raw_statistic",
+        "raw_uncertainty_type"
+      ],
+      "additionalProperties": false
+    },
+    "joint_distribution_status": {
+      "enum": [
+        "supported",
+        "alternative_assumptions",
+        "unknown"
+      ]
+    },
+    "correlation_evidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "role": {
+      "enum": [
+        "exploratory_qualification",
+        "calibration",
+        "model_selection",
+        "independent_public_evaluation",
+        "prospective_internal_validation",
+        "contextual_corroboration",
+        "upstream_reconstruction",
+        "unassigned"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "target_id",
+    "population_id",
+    "context",
+    "source_context",
+    "source_ids",
+    "statistic",
+    "measurement",
+    "joint_distribution_status",
+    "correlation_evidence",
+    "role"
+  ],
+  "additionalProperties": false
+}

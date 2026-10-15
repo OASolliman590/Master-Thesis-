@@ -1,0 +1,40 @@
+{
+  "schema": "vpop_target",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-VPOP_TARGET",
+    "synthetic": true,
+    "target_id": "SYN-TARGET",
+    "population_id": "SYN-POP",
+    "context": "virtual_experimental",
+    "source_context": "culture",
+    "source_ids": [
+      "SYN-SOURCE"
+    ],
+    "statistic": "arithmetic_mean",
+    "measurement": {
+      "raw_value": 1.0,
+      "raw_unit": "arbitrary_unit",
+      "canonical_value": 1.0,
+      "canonical_unit": "arbitrary_unit",
+      "statistic": "arithmetic_mean",
+      "biological_n": 2,
+      "biological_unit": "synthetic_run",
+      "n_unknown_reason": null,
+      "uncertainty": {
+        "type": "unknown",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "reason": "Fixture only; not biological uncertainty"
+      },
+      "transformation": null,
+      "conversion_factor": 1.0,
+      "raw_statistic": "arithmetic_mean",
+      "raw_uncertainty_type": "unknown"
+    },
+    "joint_distribution_status": "unknown",
+    "correlation_evidence": null,
+    "role": "calibration"
+  }
+}

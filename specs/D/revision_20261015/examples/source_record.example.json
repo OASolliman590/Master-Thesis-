@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "source_id": "SRC-DEMO",
+  "source_class": "chemical_perturbation_single_cell",
+  "origin_study": "SYNTHETIC EXAMPLE ONLY",
+  "publication": null,
+  "repository": "synthetic://example",
+  "release": "v0",
+  "access": "local fixture",
+  "licence_status": "synthetic",
+  "biological_unit": "experiment",
+  "modality": "scRNA-seq",
+  "training_overlap": "UNKNOWN",
+  "permitted_role": [
+    "SOFTWARE_TEST"
+  ],
+  "limitations": [
+    "Not biological evidence"
+  ],
+  "status": "VALIDATED"
+}
