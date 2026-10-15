@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Expand reviewed payload
+      - name: Assemble reviewed payload
         shell: bash
         run: |
           set -euo pipefail
@@ -49,10 +49,30 @@ jobs:
             .bootstrap/a-dav-spec-kit/part13 \
             .bootstrap/a-dav-spec-kit/part14 \
             > /tmp/a-dav-payload.b64
-          test "$(sha256sum /tmp/a-dav-payload.b64 | cut -d' ' -f1)" = "5b159bb2e35e3c291fe495796a43e599574db64f7486350c6927c870811314d7"
+          printf '%s  %s\n' \
+            '5b159bb2e35e3c291fe495796a43e599574db64f7486350c6927c870811314d7' \
+            '/tmp/a-dav-payload.b64' | sha256sum --check --strict
+
+      - name: Decode and verify archive
+        shell: bash
+        run: |
+          set -euo pipefail
           base64 --decode /tmp/a-dav-payload.b64 > /tmp/a-dav-payload.tar.gz
-          test "$(sha256sum /tmp/a-dav-payload.tar.gz | cut -d' ' -f1)" = "9923b016700c4169977fa31457e3feed7f20a0b6c03f90cb8afea11840bef340"
-          tar -tzf /tmp/a-dav-payload.tar.gz
+          printf '%s  %s\n' \
+            '9923b016700c4169977fa31457e3feed7f20a0b6c03f90cb8afea11840bef340' \
+            '/tmp/a-dav-payload.tar.gz' | sha256sum --check --strict
+
+      - name: Inspect archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -tzf /tmp/a-dav-payload.tar.gz > /tmp/a-dav-archive-files.txt
+          test -s /tmp/a-dav-archive-files.txt
+
+      - name: Expand reviewed payload
+        shell: bash
+        run: |
+          set -euo pipefail
           tar -xzf /tmp/a-dav-payload.tar.gz -C .
           rm -rf .bootstrap/a-dav-spec-kit
           rm -f .github/workflows/apply-a-dav-speckit.yml
