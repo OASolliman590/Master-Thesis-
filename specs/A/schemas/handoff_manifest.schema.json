@@ -1,0 +1,17 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A/schemas/handoff_manifest.schema.json",
+ "title":"Patient-free A biological/predictive handoff manifest",
+ "type":"object","additionalProperties":false,
+ "required":["handoff_version","product","state","development_only","artifacts","source_release_ids","split_sha256","exposure_sha256","selection_rule_sha256","permitted_uses","blocked_uses","validation_annotations","reviewer","created_utc"],
+ "properties":{
+  "handoff_version":{"type":"string","pattern":"^[0-9]+[.][0-9]+[.][0-9]+$"},
+  "product":{"enum":["A_BIO","A_PRED","A1_SUPPORT","A_CONTEXT"]},"state":{"enum":["DRAFT","FROZEN","SUPERSEDED"]},"development_only":{"const":true},
+  "artifacts":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["path","sha256","schema_id"],"properties":{"path":{"type":"string","minLength":1},"sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"schema_id":{"type":"string","minLength":1}}}},
+  "source_release_ids":{"type":"array","items":{"type":"string","minLength":1}},"split_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"exposure_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"selection_rule_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},
+  "permitted_uses":{"type":"array","items":{"type":"string"}},"blocked_uses":{"type":"array","items":{"type":"string"}},
+  "validation_annotations":{"type":"array","description":"Append-only references; they cannot rewrite the artifact set.","items":{"type":"object","additionalProperties":false,"required":["evaluation_release_id","annotation_sha256"],"properties":{"evaluation_release_id":{"type":"string"},"annotation_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}}},
+  "reviewer":{"type":["string","null"]},"created_utc":{"type":["string","null"]}
+ },
+ "allOf":[{"if":{"properties":{"state":{"const":"FROZEN"}}},"then":{"properties":{"artifacts":{"minItems":1},"source_release_ids":{"minItems":1},"split_sha256":{"type":"string"},"exposure_sha256":{"type":"string"},"selection_rule_sha256":{"type":"string"},"reviewer":{"type":"string","minLength":1},"created_utc":{"type":"string","minLength":1}}}}]
+}

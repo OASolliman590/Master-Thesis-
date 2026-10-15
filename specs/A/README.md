@@ -1,39 +1,27 @@
-# Paper A — ICI responder-signature discovery, robustness and prostate relevance
+# Paper A — baseline clinical-reference Spec Kit v1.0.0
 
-**Current decision, 11 September 2026:** responder/non-responder discovery is the primary scientific emphasis (A-P2). Response-definition sensitivity is secondary. See [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). The discovery product supplies a frozen clinical reference to B/C; it does not directly validate prostate treatment response.
+**Architectural specification completed for review on 15 October 2026; real-data execution NOT released.** Controlling decision: ../../docs/decisions/A_A1_INTEGRATED_SPEC_20261015.md. A separate directory for A1 expresses a distinct analysis workstream, not a promised second publication.
 
-Status: **proposed specification, not implementation-ready**. Version0.2, 5 September2026. This draft specifies both the original responder-signature discovery scope and the proposed endpoint-sensitivity analysis, with a separate prostate transport module. A-P2 discovery was selected on 11 September 2026; A-P1 is secondary. Cohort admission, numerical settings, precision and real execution remain unfrozen.
+## Question and products
 
-## Problem and proposed contribution
+Which pretreatment immune-expression programmes are reproducibly associated with objective ICI response, how do they vary by cancer/regimen, and how well does one frozen learned score discriminate response in independent studies?
 
-Which pretreatment expression programs associate reproducibly with objective response across eligible ICI cohorts, and does a frozen discovered signature improve independent-test discrimination over CYT? Discovery is primary; paired response-definition sensitivity examines robustness as a secondary analysis. The frozen product supplies clinical context for prostate immune-function studies. Untreated prostate expression describes molecular state, not treatment-response validation.
+A-BIO exports effects, uncertainty, context and contradictory evidence. A-PRED exports a reproducible frozen score and honestly labelled validation. A-BIO does not require A-PRED to beat CYT. Neither establishes a treatment effect, tumour-cell mechanism, epigenetic reversibility or prostate ICI efficacy.
 
-Broad biomarker benchmarking and response harmonization already have direct precedents: Kang 2023, DOI10.3390/cancers15164094; Luo 2022, DOI10.1016/j.annonc.2022.04.450. ICBatlas and current external-validation benchmarks also overlap. See ../../docs/research/A_clinical_transfer.md. The proposed addition is a reproducible, patient-paired account of how endpoint definitions change a fixed signature's discrimination, with original label provenance, uncertainty and an explicit boundary around prostate transfer. This remains a candidate contribution; a formula alone does not establish novelty. The July2026 final COMPASS publication (DOI10.1038/s41591-026-04502-7) adds a direct precedent for cross-cancer transcriptomic prediction and transfer evaluation. See ../../docs/research/A_COMPASS_2026.md; this addition neither selects the primary nor silently adds a mandatory model comparator.
+## Single primary and secondary hierarchy
 
-## Scope and thesis mapping
+A-P2 is the selected primary: paired learned-score minus CYT AUROC on identical ORR-evaluable independent-test patients, averaged with equal cancer weights and equal study weights within cancer. A-P1 is a secondary fixed-CYT DCR-minus-ORR endpoint-sensitivity contrast. Baseline biological discovery is a prespecified secondary evidence product, not a second predictive primary. Composition, orthogonal modalities, qualified transport and additional comparators have branch-specific releases. A1 owns longitudinal response-associated change.
 
-- Retain clinical immune-signature robustness, clinical endpoint definitions and prostate transferability. Historical label: Paper3; original cross-cancer responder analysis in the submitted protocol.
-- Historical alternatives (selection now resolved): A-P1, signed change in CYT discrimination between disease control and objective response on identical patients; A-P2, independent-test incremental ORR discrimination of the discovered signature over CYT. A-P2 is selected; A-P1 is the declared secondary module.
-- Retain discovery-derived responder signatures as a conditional full module in DISCOVERY.md, with regularised cohort-held-out development, an independent-test contract and a frozen gene/coefficient handoff. This draft does not claim that fixed CYT implements discovery or that the required cohorts are already available.
-- Prostate: untreated TCGA/PCaDB molecular characterization; a trial cohort only for its actual regimen-specific endpoint after source verification. COMBAT is not evidence isolating ICI efficacy. Publicly reusable Guan expression/label linkage is unresolved.
-- No treatment recommendation, causal treatment-effect estimate, wet-lab replacement or guaranteed standalone manuscript.
+## Read in order
 
-## Decision criteria
+SCIENTIFIC_AIM_AND_CLAIMS.md; PREREGISTRATION_AND_DECISIONS.md; DATA_ACQUISITION.md; PATIENT_DATA_MODEL.md; ASSAY_PROCESSING_CONTRACT.md; BASELINE_BIOLOGICAL_ANALYSIS.md; PREDICTION_ANALYSIS.md; ENDPOINT_SENSITIVITY.md; VALIDATION_AND_SPLITS.md; A_TO_BC_HANDOFF.md; TICKETS_AND_TESTS.md; REPRODUCE_AND_READINESS.md. FIGURES.md specifies panel-level claims and no-result rules. NUMERICAL_FREEZE_REGISTER.tsv distinguishes selected architecture from unresolved numerical values.
 
-The primary choice is approved; proceed only after response definitions/timing and independent patient membership are reconciled, score units are established and precision is assessed. Require at least two independently sourced eligible cohorts to use the term replication, and more than one cancer to claim a cross-cancer summary; these are minimum design conditions, not power claims. Label same-cancer reproducibility separately from cross-context transport. The proposed tuned discovery additionally requires at least three qualifying development cohorts and separately reserved independent final-test data; neither is verified today. Report source/cohort estimates even if broader aggregation is unsupported.
+All study, patient, treatment, specimen, assay, endpoint and split identities belong to ../A_DATA_ACQUISITION_VALIDATION. The wrappers PATIENT_MATRIX_SCHEMA.json and SOURCE_RECORD_SCHEMA.json point to that authority. A's analysis configuration must reference admission and matrix receipts; no ad hoc inclusion spreadsheet is accepted.
 
-Narrow only by an explicit reviewed decision if a transport or durable-benefit arm lacks data. Recommend combining with thesis methods/B if the result adds little beyond existing endpoint-sensitivity work or precision is too poor. A recommendation does not cancel A. Do not require a nonzero or favorable result to proceed.
+## First bounded implementation packet
 
-## Package map
+../../docs/execution/PAPER_A_A1_PACKET_01.md permits code/data inventory, exact hash reconciliation, synthetic contract tests and separately gated format tracers. It does not permit response-associated analysis, feature selection, model fitting, score production or final-test release. The standalone Codex instruction is ../../docs/execution/PAPER_A_A1_CODEX_HANDOFF.md.
 
-- DATA.md: source-by-question coverage, access and mappings.
-- ANALYSIS.md: selected A-P2 hierarchy and secondary detailed A-P1 estimand, composition decomposition and uncertainty.
-- DISCOVERY.md: selected discovery branch, A-P2 primary estimand, regularised learner, splits and B/C handoff.
-- TRANSPORT.md: exact molecular/clinical prostate statistics and cohort-specific admission gates.
-- FIGURES.md: four-figure evidence contract and permitted claims.
-- ENGINEERING.md: interfaces, environment requirements, workflow and reproduction.
-- PREREGISTRATION.md: exposure, decision ledger and readiness checklist.
-- REVIEW_RESPONSE.md: disposition of eight independent review findings.
-- tickets/: bounded proposed vertical slices; none are ready-for-agent.
+## History and dependencies
 
-Read ../../docs/execution/GOAL.md and root AGENTS.md first. All four design packages need independent review before any paper's production implementation.
+The original A tree, including tickets, is preserved in ../../reference/specs_A_before_20261015. The old ANALYSIS/DATA/DISCOVERY/ENGINEERING/TRANSPORT/PREREGISTRATION entry points now route to current contracts. The acquisition package from draft PR #9 is inherited, not duplicated. Draft PR #6 is explicitly reconciled, not silently adopted. No change is made to the selected Paper B primary or Paper C drug architecture.
