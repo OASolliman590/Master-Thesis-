@@ -1,0 +1,72 @@
+parameter_id	symbol	unit	question	evidence_required	value	status	source_seed_policy	affected_packets
+E-P001	pk.ka	h^-1	Absorption	Original route/formulation PK		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P002	pk.F	fraction	Bioavailability	IV/oral or independently sourced F; not oral-only apparent CL		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P003	pk.CL	L/h	Systemic clearance	Original analyte/population PK		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P004	pk.Q	L/h	Intercompartmental flow	Identifiable systemic PK or source asset		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P005	pk.Vc	L	Central volume	Systemic PK/population evidence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P006	pk.Vp	L	Peripheral volume	Identifiable systemic PK or source asset		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P007	pk.fu	fraction	Plasma unbound fraction	Matched matrix/concentration property evidence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P008	pbpk.Qi	L/h	Tissue flow	Pinned physiological model/source		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P009	pbpk.Vi	L	Tissue volume	Pinned physiological model/source		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P010	pbpk.Kp_i	dimensionless	Partition coefficient	Source model/property and context rationale		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P011	pbpk.CLi	L/h	Tissue elimination	Source pathway/analyte evidence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P012	bridge.Ksite	dimensionless	Site partition observer	Measured bridge or justified uncertainty bounds		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2/E6
+E-P013	bridge.keq	h^-1	Site equilibration observer	Site time course or explicit prior sensitivity		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2/E6
+E-P014	ab.CL	L/h	Antibody clearance	Selected molecule population PK		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P015	ab.Q	L/h	Antibody exchange	Selected molecule/source model		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P016	ab.Vc	L	Antibody central volume	Selected molecule population PK		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P017	ab.Vp	L	Antibody peripheral volume	Selected molecule/source model		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E2
+E-P018	culture.kdeg	h^-1	Medium drug loss	Actual stability/analytical exposure or bounds		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P019	culture.rho	fraction	Residual drug after change	Documented replacement/carryover measurement		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P020	pd.IC50	matching exposure unit	Empirical potency	Qualified concentration-response, not connectivity score		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P021	pd.n	dimensionless	Hill shape	Identifiable dose-response or simpler fixed structure with rationale		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P022	pd.kinA	activity_unit/h	Activity production	Proximal trajectory and baseline		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P023	pd.koutA	h^-1	Activity turnover	Proximal induction/recovery		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P024	pd.Sout	dimensionless	Activity loss modulation	Qualified concentration-response		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P025	pd.H0	relative mark unit	Baseline mark	Matched control assay		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P026	pd.kH	h^-1	Mark turnover	Qualified time course		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P027	pd.SH	dimensionless	Mark response	Qualified dose/time course		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P028	pd.ke0	h^-1	Optional effect delay	Comparison against nonduplicated exposure/turnover delay		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P029	pd.kM	h^-1	RNA turnover	Observed RNA time course or collapse intermediate		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P030	pd.kP	h^-1	Protein turnover	Observed protein induction/recovery		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P031	pd.betaM	dimensionless signed	Mark-to-RNA coupling	Paired observed dynamics and alternatives		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P032	pd.betaP	dimensionless signed	RNA-to-protein coupling	Paired observed dynamics or direct model		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P033	dnmt.kact	h^-1	Activation template	Selected-agent intracellular evidence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P034	dnmt.kloss	h^-1	Active-species loss	Intracellular time course		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P035	dnmt.ktrap	h^-1	Trapping template	Audited compound-specific mechanism/units		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P036	dnmt.ksyn	h^-1	DNMT recovery	Qualified DNMT trajectory		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P037	dnmt.ktrapD	concentration^-1 h^-1	DNMT loss template	Selected mechanism/replication evidence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P038	dnmt.kmeth	h^-1	Methylation recovery	Measured methylation/replication context		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P039	dnmt.kpass	h^-1	Passive methylation loss	Division/methylation observations		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3
+E-P040	qsp.rT	h^-1	Tumour growth	Tumour-only counts		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P041	qsp.KT	cells	Density scale	Growth range evidence or omit density dependence		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P042	qsp.ddir	h^-1	Direct tumour death	Tumour-only death versus growth data		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P043	qsp.gE	h^-1	Immune growth	Immune-only counts or omit growth		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P044	qsp.dEbase	h^-1	Baseline immune loss	Immune-only controls		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P045	qsp.dEdrug	h^-1	Drug immune loss	Separate immune exposure counts		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P046	qsp.F0	fraction	Reference immune competence	Qualified function normalization		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P047	qsp.krec	h^-1	Function recovery	Separate immune recovery/function data		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P048	qsp.kimp	h^-1	Function impairment	Separate immune exposure/function data		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P049	qsp.kact	h^-1	Function activation	Qualified data or omit activation		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P050	qsp.kkill	h^-1	Effective killing	Qualified target-specific interaction counts		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P051	qsp.KE	cells	Encounter saturation	Effector-ratio range or simpler structure		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P052	qsp.eta	dimensionless	Checkpoint suppression	Qualified axis functional data		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P053	qsp.kappa	fraction	Functional blockade efficacy	Qualified antibody/axis contrast		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P054	binding.kon	concentration^-1 h^-1	Binding association	Selected antibody/target assay		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P055	binding.koff	h^-1	Binding dissociation	Selected antibody/target assay		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P056	binding.KD	concentration	Equilibrium binding	Selected target/assay and timescale rationale		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E4
+E-P057	obs.sigma	assay-scale	Measurement uncertainty	Qualified assay/pilot hierarchy		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E3/E4
+E-P058	vpop.covariance	parameter-scale	Joint variation	Actual population/run/donor evidence or alternatives		UNRESOLVED_NO_DEFAULT	S001 seeds not automatically imported	E6
+E-OPT001	qsp.ddir.qmax	h^-1	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT002	qsp.ddir.EC50	matching compartment exposure unit	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT003	qsp.ddir.n	dimensionless	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT004	qsp.dEdrug.qmax	h^-1	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT005	qsp.dEdrug.EC50	matching compartment exposure unit	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT006	qsp.dEdrug.n	dimensionless	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT007	qsp.kimp.qmax	h^-1	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT008	qsp.kimp.EC50	matching compartment exposure unit	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT009	qsp.kimp.n	dimensionless	Optional QSP response function	Optional bounded response; select only with identifiable compartment data		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT010	qsp.betaR	dimensionless signed	Optional QSP response function	Qualified measured recognition response		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT011	qsp.P0	relative protein unit	Optional QSP response function	Qualified reference normalization		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT012	qsp.rT0	h^-1	Optional QSP response function	Tumour-only growth		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4
+E-OPT013	qsp.Igrowth_parameters	structure-specific	Optional QSP response function	Only if cytostasis and death are distinguished		UNRESOLVED_NO_DEFAULT	Not imported from source seeds	E4

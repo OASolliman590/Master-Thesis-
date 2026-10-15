@@ -1,0 +1,25 @@
+{
+  "schema": "source_object",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "PUB-S001-source_object",
+    "synthetic": false,
+    "source_id": "S001",
+    "publication_family_id": "FAM-S001",
+    "study_id": null,
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6056765/",
+    "object_identifier": "S001",
+    "object_version": null,
+    "format": "article_html",
+    "access_state": "open_table",
+    "retrieval_status": "source_inspected",
+    "bytes": null,
+    "sha256": null,
+    "hash_unknown_reason": "Original bytes not retained; browser text is not original-file hash",
+    "parser_version": null,
+    "source_locator": "Article; Table 2 for S001 seeds",
+    "verification": "source inspected; second numerical/context review pending",
+    "permitted_role": "upstream_reconstruction",
+    "licence": null
+  }
+}

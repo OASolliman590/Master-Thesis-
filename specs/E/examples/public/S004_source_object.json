@@ -1,0 +1,25 @@
+{
+  "schema": "source_object",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "PUB-S004-source_object",
+    "synthetic": false,
+    "source_id": "S004",
+    "publication_family_id": "FAM-S004",
+    "study_id": null,
+    "url": "https://www.nature.com/articles/s42003-022-03843-6",
+    "object_identifier": "S004",
+    "object_version": null,
+    "format": "article_html",
+    "access_state": "open_numbers",
+    "retrieval_status": "source_inspected",
+    "bytes": null,
+    "sha256": null,
+    "hash_unknown_reason": "Original bytes not retained; browser text is not original-file hash",
+    "parser_version": null,
+    "source_locator": "Article; Table 2 for S001 seeds",
+    "verification": "source inspected; second numerical/context review pending",
+    "permitted_role": "contextual_corroboration",
+    "licence": null
+  }
+}

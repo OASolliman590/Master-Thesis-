@@ -1,0 +1,24 @@
+{
+  "schema": "validation_receipt",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-VALIDATION_RECEIPT",
+    "synthetic": true,
+    "receipt_id": "SYN-RECEIPT",
+    "model_version": "SYN-v1",
+    "validation_level": "software_contract",
+    "run_ids": [
+      "SYN-RUN"
+    ],
+    "data_ids": [],
+    "metric": "synthetic contract",
+    "biological_n": null,
+    "biological_unit": "not_applicable",
+    "status": "not_run",
+    "claim": "software fixture only",
+    "biological_validation": false,
+    "limitations": [
+      "Not biological validation"
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:population:1.0.0",
+  "title": "population",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "population_id": {
+      "type": "string"
+    },
+    "study_id": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "culture",
+        "human",
+        "animal",
+        "other"
+      ]
+    },
+    "representation": {
+      "enum": [
+        "individual",
+        "aggregate"
+      ]
+    },
+    "biological_n": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "n_unknown_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "individual_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "group_definition": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "population_id",
+    "study_id",
+    "context",
+    "representation",
+    "biological_n",
+    "n_unknown_reason",
+    "individual_ids",
+    "group_definition",
+    "source_ids"
+  ],
+  "additionalProperties": false
+}

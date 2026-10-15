@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:source_access:1.0.0",
+  "title": "source_access",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "access_state": {
+      "enum": [
+        "open_numbers",
+        "open_table",
+        "open_figure",
+        "metadata_only",
+        "free_registration",
+        "restricted",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    "access_method": {
+      "type": "string"
+    },
+    "required_dependency": {
+      "type": "boolean"
+    },
+    "terms_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "redistribution": {
+      "enum": [
+        "permitted",
+        "prohibited",
+        "unknown"
+      ]
+    },
+    "query_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "source_id",
+    "access_state",
+    "access_method",
+    "required_dependency",
+    "terms_url",
+    "redistribution",
+    "query_date",
+    "reason"
+  ],
+  "additionalProperties": false
+}

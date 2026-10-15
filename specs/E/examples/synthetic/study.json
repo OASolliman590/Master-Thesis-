@@ -1,0 +1,21 @@
+{
+  "schema": "study",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-STUDY",
+    "synthetic": true,
+    "study_id": "SYN-STUDY",
+    "family_id": "SYN-FAMILY",
+    "original_identifier": "SYN-STUDY",
+    "design": "synthetic",
+    "species": "synthetic",
+    "context": "culture",
+    "population_ids": [
+      "SYN-POP"
+    ],
+    "source_ids": [
+      "SYN-SOURCE"
+    ],
+    "independence_status": "resolved"
+  }
+}

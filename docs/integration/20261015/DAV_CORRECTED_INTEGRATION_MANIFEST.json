@@ -1,0 +1,416 @@
+{
+  "label": "INTEGRATION_MANIFEST_NOT_ORIGINAL_ARCHIVE_MANIFEST",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/ACCESS_PRIVACY_AND_REDISTRIBUTION.md",
+      "sha256": "f6fb6b8adc38146eb8a915f4cab632914ba44f0d3814add33467131604c6b053",
+      "bytes": 2957
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/AGENTIC_SEARCH_ARCHITECTURE.md",
+      "sha256": "50339509398404a9bb6748d93d35659d98f3d04fe5d954c01c5af668faa4be54",
+      "bytes": 3856
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/ASSAY_AND_MEASUREMENT_CONTRACT.md",
+      "sha256": "c240ef736cd5053f7021cf30b4e980e1adc40c7f272e8809d4dbc025efc95acd",
+      "bytes": 3320
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/A_DATA_ACQUISITION_VALIDATION_APPRAISAL.md",
+      "sha256": "bc9eb0f43c7602363eebd825f51dc6a7d535d40e80b1803566567d67950e4b4f",
+      "bytes": 67421
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/COHORT_ADMISSION_AND_RELEASE.md",
+      "sha256": "3116ea443a0819dc74a94009c74508f391f0889b518fdeceda74cdbc4079260c",
+      "bytes": 3379
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/DECISION_LOG.md",
+      "sha256": "443d7e927b205293c49fd0cd776f5896bd282e1e82c4278a15400d74b1fa704a",
+      "bytes": 2690
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/ENDPOINT_ONTOLOGY.md",
+      "sha256": "9268c20c867b820b5593279f5e4350b407f8e85c79fba983b7c0e04c3fc7377c",
+      "bytes": 2946
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/IMPLEMENTATION_RECONCILIATION.md",
+      "sha256": "81888cc62cc73baf470be895d22fa0a2e369a1fb5e3dfbf087426ecb08761b08",
+      "bytes": 3295
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/INTEGRATION_AMENDMENT_20261015.md",
+      "sha256": "a154dfd8dff8165f7fdef8deb760e6426128ed282f1b77005bb5c91c6ec81599",
+      "bytes": 3543
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/LONGITUDINAL_PAIRING_CONTRACT.md",
+      "sha256": "a4cdd5c5a3f1efc74439eb570da027d8a965b973fa22c4d93d92bfef7fc94323",
+      "bytes": 2610
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/MULTIOMICS_PAIRING_CONTRACT.md",
+      "sha256": "217a9f13786eb124dec06fa425e7982be8252d5510c08237bf8df93df1a38ec8",
+      "bytes": 1896
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/OUTPUT_AND_SCHEMA_INDEX.md",
+      "sha256": "69da7819fa0c6106f00a5cef257282351655d517316112c4697fb3f56f8c8424",
+      "bytes": 2839
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/PATIENT_DATA_MODEL.md",
+      "sha256": "f8f6c03f2002dacb4a92f7cb47bd33a2b98fa8d95de1136810cd9810cae6f3eb",
+      "bytes": 4003
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/PATIENT_MATRIX_CONTRACT.md",
+      "sha256": "1f9fd163f0a1c55e295e1a4ce318828e88ec75707f922e86218175ed341dcf91",
+      "bytes": 2935
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/PROCESSED_DATA_POLICY.md",
+      "sha256": "64a1f7e46ff80b2fcfed991f99107daa19776451217de5f395348a53f54d1d91",
+      "bytes": 3327
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/PROTOCOL_CROSSWALK.md",
+      "sha256": "20a8533fc8101207bcaa6a460773dad661712c8a038103bcb5b61623ac7bfeba",
+      "bytes": 3605
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/README.md",
+      "sha256": "ba9c97f08100e6c853ddf5ad99d7db09a9a5fc5a42f84cb7cfe7ab131de4bcf2",
+      "bytes": 2894
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/RELATIONAL_INVARIANTS.md",
+      "sha256": "d570fcb6b39f9baddf7bb43ce37dbfb2154946af669ece3dafe0856e48ef8ac4",
+      "bytes": 3593
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/REPRODUCE_AND_READINESS.md",
+      "sha256": "7894645e24eb169c7760cfb90b5fe596a480a8c593672cf23314e680646505a8",
+      "bytes": 2579
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SCOPE_AND_INTERFACES.md",
+      "sha256": "17c776c809824fc11524d3cc34d19a5ae95cf956a856c4124e85e4e68ef175d5",
+      "bytes": 3768
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SEARCH_PLAN_20261015.md",
+      "sha256": "8830ac1917d1bf7cbc0bd751ca61d2304ee4b49c0592d349f98dce05084d4490",
+      "bytes": 3289
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SOFTWARE_ARCHITECTURE.md",
+      "sha256": "d1eb015a269ea7e067722baaa00d4f31403cdca837c99c65b3f7b3779da67451",
+      "bytes": 3331
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SOURCE_BY_QUESTION_COVERAGE.tsv",
+      "sha256": "198d3bdb0c468d6a6e024abda31acb08fc765fd5614507d3244dc2166bee7bfc",
+      "bytes": 4611
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SOURCE_DISCOVERY_STRATEGY.md",
+      "sha256": "36366755a94311b96340be81e66674a2476ca3b270f4d136c8e0126147243597",
+      "bytes": 4184
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SOURCE_IDENTITY_AND_DEDUPLICATION.md",
+      "sha256": "73d2f99f40af24e58225d24b50b384d47de00e2be112369ebe7d98bab2741f3c",
+      "bytes": 3373
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SPEC_KIT_MANIFEST.json",
+      "sha256": "2f18209fd4baa7ee1256c02ce31785a80b49a50d390933386948e4d7e1bf74b8",
+      "bytes": 971
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/SPLIT_AND_PRIOR_EXPOSURE_VALIDATION.md",
+      "sha256": "2b50d9ee5b25925b597ee4ce45aecfd1f9e4c062b8069e4c56b79c912985c7c8",
+      "bytes": 2592
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/TICKETS_AND_TESTS.md",
+      "sha256": "ffdf7494057b8778bca52399e7521dd8cd6360e6cae27ea3693950b74b8fc1f9",
+      "bytes": 11623
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/TREATMENT_AND_TIMEPOINT_ONTOLOGY.md",
+      "sha256": "caf049def809d0d44dde2d918a254666a380b3feceb55c1e27fb0ca65d80e819",
+      "bytes": 2537
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/UNRESOLVED_QUESTIONS.md",
+      "sha256": "cd5dd68f47b8a34210e1fd5f05a25a1658a919e498462c0ac36dc7777f1adde0",
+      "bytes": 2680
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/VALIDATION_FRAMEWORK.md",
+      "sha256": "0e08c7a5efe9b2763b923b57debc652257df271173c8bfd073fcb6aa3ff2b1fe",
+      "bytes": 3061
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/catalogue_resolution.md",
+      "sha256": "95727813bbf7ca85cbac8f8f14d772a604af075e8b44e3a8d319b04d9113fff2",
+      "bytes": 2114
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/controlled_access_search.md",
+      "sha256": "d7726cb9c0854cf81d41f66353d604b1d377d2ee225cf6e2c19af494a9821d69",
+      "bytes": 2023
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/longitudinal_study_search.md",
+      "sha256": "9d7516aebe000f5e7ddf451833a24ded2e97e1bf3ad3d36fdac3ff68bc03d0e6",
+      "bytes": 2097
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/multiomics_source_search.md",
+      "sha256": "1fcb3e4ea66dcd7fef50b87cdbf1a222433a0ce5cf5904d0bb987dc1c2afa146",
+      "bytes": 2035
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/novelty_and_method_overlap.md",
+      "sha256": "0a7e45d0fb26fac3c7565239bd656fcd1fda169c28106b7196dbae56da97361f",
+      "bytes": 2097
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/overlap_and_alias_audit.md",
+      "sha256": "6cffe82da75461eedce6f4c9da0be3c431173d9c8c2cd9f9fc3ef10c24909d82",
+      "bytes": 2017
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/publication_and_supplement_search.md",
+      "sha256": "b4e89105cd6e5f8ff04ada05d7146d5665b93663c5f3a9fbadbda52581744b49",
+      "bytes": 2038
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/agent_prompts/repository_object_discovery.md",
+      "sha256": "f8434417c183cc182947fa44434c0d1ff1698e99bb2a0ca5a66990e2809df4aa",
+      "bytes": 2179
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/examples/specification_only_release.json",
+      "sha256": "2a539980dd56ed64914d0829fb52fbc998416206b66353a2227ec4240f623da7",
+      "bytes": 704
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/examples/synthetic_episode.json",
+      "sha256": "79e82fbebf2f17df75946bf894a646ad2a1dfaa787a0b7f3c5d4f5fd87d6ba7d",
+      "bytes": 515
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/examples/synthetic_episode_binding.json",
+      "sha256": "02cd4d795ece63f2b1ef2efbca113fd8df891810ddf1da3b872684be7c9339a6",
+      "bytes": 460
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/implementation_reconciliation.tsv",
+      "sha256": "03eeb1893b95f8e36fd6847ba78836e5abcf8d7038af77462fa5126467ec67fb",
+      "bytes": 9440
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/ANALYSIS_MEMBERSHIP.md",
+      "sha256": "dd300a16b36cac5ffe1020be8b1ad0b492f999b59fd6a5a33e43e0d4edd8ae92",
+      "bytes": 877
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/ASSAY_FEATURE_COVERAGE.md",
+      "sha256": "6135148baa64dc2fe19ca82bb5a06b5d7ca45e560a4283a474dfecb6678450d1",
+      "bytes": 813
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/BASELINE_PATIENT_MATRIX.md",
+      "sha256": "96f52b4f46656741e75e4e56e13544f911fc0bde4451222ef8bbee2678065e2b",
+      "bytes": 1273
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/ENDPOINT_MATRIX.md",
+      "sha256": "b231e44388fc90f5a4891af88928b8d20b6e31a61d8bc19da09e43b5bc8f57e9",
+      "bytes": 944
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/LONGITUDINAL_PAIR_MATRIX.md",
+      "sha256": "c0cbe375427f0aac8d49140df9fb6e400771febb931642e25df3a0d4d5474a7a",
+      "bytes": 1079
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/PATIENT_TIMEPOINT_LONG.md",
+      "sha256": "42580535c5fc133ddaf8900401e85d5f1a615d041f4bfc5609f2e90a8821f229",
+      "bytes": 1019
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/matrices/SPLIT_REGISTRY.md",
+      "sha256": "ce5bede2ede120bd11e4f883fd7dc9dec948521b7e6935943eadb408d131101e",
+      "bytes": 898
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/protocol_crosswalk.tsv",
+      "sha256": "9c91eb97b0d73e8a459e1c959c779271f622df3e658f83ca86fdd7f2fdefc4f2",
+      "bytes": 7177
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/assay_registry.schema.json",
+      "sha256": "f5e3ff9c036e67554a97140f40b6e8c6a65f22f0e60d0220defae389da852983",
+      "bytes": 3558
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/clinical_outcome.schema.json",
+      "sha256": "98c03dcd36a43b612f6c96fd1518b9bd1c64320727a37b1c09a29f3e35f2cfe0",
+      "bytes": 4122
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/cohort_admission_receipt.schema.json",
+      "sha256": "541c615af44780c7b949640fd580fd8f8ceda7dfadacd98137611c908d18082f",
+      "bytes": 4402
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/episode_binding.schema.json",
+      "sha256": "438d7963ebd37bd826bcc1133f904ddf37aea5854948e61f719e3437a73d071e",
+      "bytes": 2303
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/materialized_matrix.schema.json",
+      "sha256": "1ffc48cbd8ea32d93e0a77b3b9db970937a2e5a116269cfa25d9c478544b1285",
+      "bytes": 13522
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/matrix_build_receipt.schema.json",
+      "sha256": "2e9db61d6af0e36ba157ca4ee27af1597ca3be11c0a6686c7694d09f77a331ee",
+      "bytes": 2778
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/overlap_edge.schema.json",
+      "sha256": "787cb8036ef6b12ca3a39687d77abc702d977d3da91f9d6a99fcfc2c95665204",
+      "bytes": 2952
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/patient_registry.schema.json",
+      "sha256": "5b6da0acc8ff995a242516a7d9e4095354e16989909cf588923604d5004c638b",
+      "bytes": 3530
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/prior_exposure_record.schema.json",
+      "sha256": "513ca7da5c1bcd4d23c537abb438bb03ac55323ff10b250d23691ceff5429458",
+      "bytes": 2234
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/publication_family.schema.json",
+      "sha256": "ca78d371009f5747769449848772422ebc2ce36ffc8a59434cc167e1808d8bf7",
+      "bytes": 3006
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/release_contract.schema.json",
+      "sha256": "3e3b81c2370b25dbde6d4621185e7c15bd840ea66c1557741cfe8cb8db2a9ff5",
+      "bytes": 3894
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/source_record.schema.json",
+      "sha256": "0e097febdc83a6ecb833edaf1aeb1b2c722a63805338d8e8a00dedee3f6df7f3",
+      "bytes": 4960
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/specimen_registry.schema.json",
+      "sha256": "e04c519bdebfeea8fa699f263fb4ee2c00567561a732dd2aca7cd56aa155a6cd",
+      "bytes": 3993
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/study_registry.schema.json",
+      "sha256": "06bf4e1cfacc70ee6b1470dc66cb6b6bb3db5daa8aa77b208f714fae94095f7b",
+      "bytes": 4014
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/treatment_episode.schema.json",
+      "sha256": "403489b33f48e2a7f089778e8a0b73f6b3c14f6399591a347c1a8451fac88a14",
+      "bytes": 1869
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/treatment_exposure.schema.json",
+      "sha256": "8a6acfb3df336e4489013eba7301867d1c78e37be0f89bf7bfc1de4d7e721a06",
+      "bytes": 3454
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/schemas/validation_receipt.schema.json",
+      "sha256": "5f6a102e8e3abab31dbc11f9fff6981e46ca05a5e950fd463ad905148a1a77ff",
+      "bytes": 3581
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/search_plan.tsv",
+      "sha256": "569b809c388d7834db825e78d93a2b94795f279736498a470676a44e5b84087b",
+      "bytes": 2866
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/source_search_update_log.tsv",
+      "sha256": "be5d693517684756e8181f15c1573639d97472400a80a308f5fb55bce4a51266",
+      "bytes": 2170
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/analysis_membership.tsv",
+      "sha256": "13465ada984a10981efee0e135e8dc8f461c27ef30cb336f5e5c407785190135",
+      "bytes": 223
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/branch_admission_registry.tsv",
+      "sha256": "e8311adf7b9fc50da36d192ace8f9c802baf855b2b048b14371c9c8c095f2a9a",
+      "bytes": 339
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/feature_coverage.tsv",
+      "sha256": "591de75211e0f1e339d5e669fea2119d50043ca13cac88ecb112e115ab7e953b",
+      "bytes": 214
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/overlap_edges.tsv",
+      "sha256": "53f75aea17b0c6a460b99135b94a063a048b9c518e6bc2fbf24403800718ee22",
+      "bytes": 193
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/prior_exposure_ledger.tsv",
+      "sha256": "159e79eedf808d93c723bcf343b6d6e8797ec75a91d818ee863f79ba3fe6dbd7",
+      "bytes": 251
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/publication_family_registry.tsv",
+      "sha256": "dc8a2c0ce598987ce13d0d1cf19771088bd98b71f1f90e91398ea291976e1ebc",
+      "bytes": 218
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/search_log.tsv",
+      "sha256": "71a7d2848c63ecc099c5db25e2f8fac580ad5d3609de3e42c9ad4e1af316f2e2",
+      "bytes": 235
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/source_gap_register.tsv",
+      "sha256": "d866a7acaffc509231ae1bc793d654107f981cc9efcd6f25f4e992f5202b8d10",
+      "bytes": 136
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/source_object_registry.tsv",
+      "sha256": "a48124c527d59d4384806b64623df381dd7185543ff89821d51aa66dd93e0f92",
+      "bytes": 497
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/split_registry.tsv",
+      "sha256": "6c43bbbab5d464a8a5168b57021e33ca44b4c70855d7dd6cad2e3a6d84f80f3d",
+      "bytes": 208
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/study_alias_crosswalk.tsv",
+      "sha256": "a02a1a5d00d46493f5e4c50fd21f2dfc2117bd58f183fb003742c24cf6b253ec",
+      "bytes": 124
+    },
+    {
+      "path": "specs/A_DATA_ACQUISITION_VALIDATION/templates/study_registry.tsv",
+      "sha256": "1de4db519c8f45b57314fffe2de7654669bb9b60172869da9cdb009fb9333e57",
+      "bytes": 447
+    }
+  ]
+}

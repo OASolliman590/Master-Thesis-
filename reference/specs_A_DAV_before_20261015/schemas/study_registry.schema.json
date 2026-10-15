@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/study_registry.schema.json",
+  "title": "Study registry record",
+  "description": "One record per originating trial, cohort or molecular study; not per accession or publication.",
+  "type": "object",
+  "required": [
+    "study_id",
+    "publication_family_id",
+    "study_title",
+    "study_class",
+    "cancer_type",
+    "study_design",
+    "candidate_paper_branches",
+    "study_status",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "study_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "trial_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "publication_family_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "study_title": {
+      "type": "string"
+    },
+    "study_class": {
+      "type": "string",
+      "enum": [
+        "CLINICAL_ICI",
+        "NON_ICI_COMPARATOR",
+        "VACCINE",
+        "ADOPTIVE_CELL",
+        "DENDRITIC_CELL",
+        "MECHANISTIC_CELL_MODEL",
+        "UNTREATED_MOLECULAR",
+        "OTHER"
+      ]
+    },
+    "cancer_type": {
+      "type": "string"
+    },
+    "cancer_subtype": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disease_state": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "study_design": {
+      "type": "string"
+    },
+    "country_centre": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "treatment_regimen_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "checkpoint_target": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drug": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "drug_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "monotherapy_or_combination": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "treatment_sequence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "line_of_therapy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prior_ici_policy": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "biopsy_schedule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "response_assessment_system": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primary_publication": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "secondary_publications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_repositories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "access_status": {
+      "type": "string"
+    },
+    "candidate_paper_branches": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "study_status": {
+      "type": "string",
+      "enum": [
+        "CANDIDATE",
+        "RESOLVING",
+        "RESOLVED",
+        "EXCLUDED",
+        "SUPERSEDED"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

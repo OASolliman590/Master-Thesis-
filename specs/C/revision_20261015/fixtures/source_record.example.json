@@ -1,0 +1,35 @@
+{
+  "source_id": "C-S999",
+  "original_study": "Synthetic independent perturbation study",
+  "persistent_id": "SYNTHETIC:999",
+  "release": "synthetic-v1",
+  "object_hashes": ["sha256:synthetic"],
+  "assay": "synthetic bulk RNA expression",
+  "role": "independent_measured",
+  "intervention": {
+    "type": "chemical",
+    "name": "synthetic epigenetic compound",
+    "parent_id": "SYNTHETIC-COMPOUND-1",
+    "dose": 1.0,
+    "dose_unit": "uM",
+    "duration_h": 24,
+    "sequence": "single agent"
+  },
+  "model": {
+    "species": "Homo sapiens",
+    "lineage": "synthetic prostate",
+    "model_name": "SYN-PC",
+    "provenance": "fictional validation fixture"
+  },
+  "control": "synthetic vehicle",
+  "measurement": "complete synthetic gene universe",
+  "biological_unit": "independent synthetic culture day",
+  "verified_n": 6,
+  "independent_n": 6,
+  "access": "public",
+  "licence": "synthetic fixture only",
+  "overlap_status": "independent",
+  "admission_status": "candidate",
+  "paper_c_question": "Can the source test paired Q_M versus Q_E responsiveness?",
+  "limitations": ["Fictional fixture; not biological evidence"]
+}

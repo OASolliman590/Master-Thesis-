@@ -1,0 +1,4 @@
+source	asset_state	reuse_category	numeric_parity	resolution
+S001	public/unpublished input mix; complete public asset UNKNOWN	partial_reconstruction_candidate	NOT_RUN	enumerate recoverable original inputs; choose openly reproducible subset/comparator
+S002	article/supplements route; original scripts on request	independent_reimplementation_candidate	NOT_RUN	audit public equations/tables; do not require original scripts
+S003	supplementary analysis source mentioned; not downloaded here	UNRESOLVED	NOT_RUN	inspect actual source files/licence/role before reuse

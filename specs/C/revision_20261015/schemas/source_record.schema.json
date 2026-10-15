@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/paper-c/source_record.schema.json",
+  "title": "Paper C source record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id", "original_study", "persistent_id", "release", "assay", "role",
+    "intervention", "model", "control", "measurement", "biological_unit",
+    "verified_n", "independent_n", "access", "licence", "overlap_status",
+    "admission_status", "paper_c_question", "limitations"
+  ],
+  "properties": {
+    "source_id": {"type": "string", "pattern": "^C-S[0-9]{3}$"},
+    "original_study": {"type": "string", "minLength": 1},
+    "persistent_id": {"type": "string", "minLength": 1},
+    "release": {"type": "string", "minLength": 1},
+    "object_hashes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "assay": {"type": "string", "minLength": 1},
+    "role": {"enum": ["clinical_anchor", "query_derivation", "C2_discovery", "C1_calibration", "independent_measured", "model_context", "viability_context", "orthogonal_mechanism", "immune_context", "identity", "regulatory_PK", "prospective_wetlab", "virtual_prediction"]},
+    "intervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "name", "parent_id", "dose", "dose_unit", "duration_h", "sequence"],
+      "properties": {
+        "type": {"enum": ["chemical", "genetic", "cytokine", "combination", "none", "unknown"]},
+        "name": {"type": "string"},
+        "parent_id": {"type": ["string", "null"]},
+        "dose": {"type": ["number", "null"]},
+        "dose_unit": {"type": ["string", "null"]},
+        "duration_h": {"type": ["number", "null"], "minimum": 0},
+        "sequence": {"type": ["string", "null"]}
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["species", "lineage", "model_name", "provenance"],
+      "properties": {
+        "species": {"type": "string"},
+        "lineage": {"type": "string"},
+        "model_name": {"type": "string"},
+        "provenance": {"type": "string"}
+      }
+    },
+    "control": {"type": "string", "minLength": 1},
+    "measurement": {"type": "string", "minLength": 1},
+    "biological_unit": {"type": "string", "minLength": 1},
+    "verified_n": {"anyOf": [{"type": "integer", "minimum": 0}, {"const": "UNKNOWN"}]},
+    "independent_n": {"anyOf": [{"type": "integer", "minimum": 0}, {"const": "UNKNOWN"}]},
+    "access": {"enum": ["public", "controlled", "licensed", "unavailable", "unknown"]},
+    "licence": {"type": "string"},
+    "overlap_status": {"enum": ["independent", "overlap_present", "overlap_unknown", "not_applicable"]},
+    "admission_status": {"enum": ["admitted_primary", "admitted_secondary", "candidate", "blocked", "excluded", "unavailable"]},
+    "paper_c_question": {"type": "string", "minLength": 1},
+    "limitations": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  }
+}

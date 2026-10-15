@@ -1,0 +1,16 @@
+{
+  "schemas": 94,
+  "D_examples": 16,
+  "entry_links": 37,
+  "manifest_hashes": 0,
+  "failures": [
+    [
+      "START_HERE.md",
+      "broken link docs/integration/20261015/VALIDATION_REPORT.md"
+    ],
+    [
+      "specs/B/README.md",
+      "broken link ../../docs/integration/20261015/VALIDATION_REPORT.md"
+    ]
+  ]
+}

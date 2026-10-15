@@ -1,0 +1,15 @@
+test_agent_prompts_are_read_only_and_structured (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_agent_prompts_are_read_only_and_structured) ... ok
+test_json_schemas_are_draft_2020_12_and_self_validating (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_json_schemas_are_draft_2020_12_and_self_validating) ... ok
+test_manifest_hashes_match (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_manifest_hashes_match) ... ok
+test_matrix_contracts_define_grain_invariants_and_receipt (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_matrix_contracts_define_grain_invariants_and_receipt) ... ok
+test_no_obvious_secrets_or_patient_records_in_public_package (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_no_obvious_secrets_or_patient_records_in_public_package) ... ok
+test_protocol_and_reconciliation_tables_are_substantive (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_protocol_and_reconciliation_tables_are_substantive) ... ok
+test_readme_and_decisions_keep_analysis_blocked (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_readme_and_decisions_keep_analysis_blocked) ... ok
+test_required_files_exist (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_required_files_exist) ... ok
+test_required_mermaid_diagrams_exist (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_required_mermaid_diagrams_exist) ... ok
+test_tsv_templates_have_unique_nonempty_headers_and_no_records (tests.a_data_acquisition_validation.test_spec_kit.SpecKitTests.test_tsv_templates_have_unique_nonempty_headers_and_no_records) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.097s
+
+OK

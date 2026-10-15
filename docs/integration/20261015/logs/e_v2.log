@@ -1,0 +1,47 @@
+test_activation_does_not_mutate_inputs (test_v2_contracts.V2Contracts.test_activation_does_not_mutate_inputs) ... ok
+test_activation_results_match_receipt_schema (test_v2_contracts.V2Contracts.test_activation_results_match_receipt_schema) ... ok
+test_admitted_record_needs_source_and_review_references (test_v2_contracts.V2Contracts.test_admitted_record_needs_source_and_review_references) ... ok
+test_all_examples_valid_and_synthetic (test_v2_contracts.V2Contracts.test_all_examples_valid_and_synthetic) ... ok
+test_all_schemas_are_valid (test_v2_contracts.V2Contracts.test_all_schemas_are_valid) ... ok
+test_changed_context_or_unreviewed_mapping_blocks (test_v2_contracts.V2Contracts.test_changed_context_or_unreviewed_mapping_blocks) ... ok
+test_core_contract_unchanged_by_extension_changes (test_v2_contracts.V2Contracts.test_core_contract_unchanged_by_extension_changes) ... ok
+test_empty_artifact_or_review_references_block (test_v2_contracts.V2Contracts.test_empty_artifact_or_review_references_block) ... ok
+test_every_foundation_gate_required (test_v2_contracts.V2Contracts.test_every_foundation_gate_required) ... ok
+test_every_packet_required (test_v2_contracts.V2Contracts.test_every_packet_required) ... ok
+test_exhaustive_key_capability_combinations (test_v2_contracts.V2Contracts.test_exhaustive_key_capability_combinations) ... ok
+test_function_without_schedule_not_timing (test_v2_contracts.V2Contracts.test_function_without_schedule_not_timing) ... ok
+test_general_killing_not_checkpoint_specific (test_v2_contracts.V2Contracts.test_general_killing_not_checkpoint_specific) ... ok
+test_hash_mutation_detected (test_v2_contracts.V2Contracts.test_hash_mutation_detected) ... ok
+test_identifiability_needs_observation_linked_certificate (test_v2_contracts.V2Contracts.test_identifiability_needs_observation_linked_certificate) ... ok
+test_identity_and_biological_grouping_required (test_v2_contracts.V2Contracts.test_identity_and_biological_grouping_required) ... ok
+test_immune_viability_not_function (test_v2_contracts.V2Contracts.test_immune_viability_not_function) ... ok
+test_incomplete_core_blocks_extension (test_v2_contracts.V2Contracts.test_incomplete_core_blocks_extension) ... ok
+test_induction_without_washout_not_recovery (test_v2_contracts.V2Contracts.test_induction_without_washout_not_recovery) ... ok
+test_internal_unknown_and_synthetic_inputs_rejected (test_v2_contracts.V2Contracts.test_internal_unknown_and_synthetic_inputs_rejected) ... ok
+test_mixed_signal_not_target_killing (test_v2_contracts.V2Contracts.test_mixed_signal_not_target_killing) ... ok
+test_no_analytical_measurement_limits_bridge_not_pd (test_v2_contracts.V2Contracts.test_no_analytical_measurement_limits_bridge_not_pd) ... ok
+test_no_or_planned_data_defers_only_extension (test_v2_contracts.V2Contracts.test_no_or_planned_data_defers_only_extension) ... ok
+test_null_adverse_conflicting_sign_never_changes_admission (test_v2_contracts.V2Contracts.test_null_adverse_conflicting_sign_never_changes_admission) ... ok
+test_one_donor_not_representative_population (test_v2_contracts.V2Contracts.test_one_donor_not_representative_population) ... ok
+test_permission_unknown_denied_withdrawn_blocks (test_v2_contracts.V2Contracts.test_permission_unknown_denied_withdrawn_blocks) ... ok
+test_population_needs_distribution_and_target_evidence (test_v2_contracts.V2Contracts.test_population_needs_distribution_and_target_evidence) ... ok
+test_profile_incomplete_never_complete (test_v2_contracts.V2Contracts.test_profile_incomplete_never_complete) ... ok
+test_public_core_input_scope_rejects_original_data (test_v2_contracts.V2Contracts.test_public_core_input_scope_rejects_original_data) ... ok
+test_qc_and_not_yet_admitted_block (test_v2_contracts.V2Contracts.test_qc_and_not_yet_admitted_block) ... ok
+test_real_declarations_only_ready_for_artifact_review (test_v2_contracts.V2Contracts.test_real_declarations_only_ready_for_artifact_review) ... ok
+test_retrospective_not_prospective_without_freeze (test_v2_contracts.V2Contracts.test_retrospective_not_prospective_without_freeze) ... ok
+test_scheduling_needs_temporal_functional_checkpoint_and_nonempty (test_v2_contracts.V2Contracts.test_scheduling_needs_temporal_functional_checkpoint_and_nonempty) ... ok
+test_static_endpoint_not_kinetics (test_v2_contracts.V2Contracts.test_static_endpoint_not_kinetics) ... ok
+test_synthetic_never_authorises_science (test_v2_contracts.V2Contracts.test_synthetic_never_authorises_science) ... ok
+test_unadmitted_numeric_input_cannot_enter_core (test_v2_contracts.V2Contracts.test_unadmitted_numeric_input_cannot_enter_core) ... ok
+test_unassigned_role_requires_review (test_v2_contracts.V2Contracts.test_unassigned_role_requires_review) ... ok
+test_unknown_capabilities_fail_closed_for_affected_modules (test_v2_contracts.V2Contracts.test_unknown_capabilities_fail_closed_for_affected_modules) ... ok
+test_unknown_gate_not_true (test_v2_contracts.V2Contracts.test_unknown_gate_not_true) ... ok
+test_unknown_schema_key_rejected (test_v2_contracts.V2Contracts.test_unknown_schema_key_rejected) ... ok
+test_unverified_or_postoutcome_freeze_never_prospective (test_v2_contracts.V2Contracts.test_unverified_or_postoutcome_freeze_never_prospective) ... ok
+test_used_for_fit_not_independent_validation (test_v2_contracts.V2Contracts.test_used_for_fit_not_independent_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 0.418s
+
+OK

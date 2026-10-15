@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "record_id": "OVL-DEMO",
+  "model_id": "MODEL-DEMO",
+  "evaluation_object_id": "OBJ-DEMO",
+  "level": "UNKNOWN",
+  "status": "UNKNOWN",
+  "evidence": [
+    "Synthetic fixture has no real lineage"
+  ],
+  "independent_test_allowed": false
+}

@@ -1,0 +1,11 @@
+# RC2 packaging correction — 15 October 2026
+
+The published RC1 specification snapshot was incomplete: its manifest described 693 disk files, but six public Markdown contracts under specs/E/data were ignored by the repository's general data/ exclusion and absent from the committed tree. All 687 other manifest entries matched the audited commit. The original disk-only verifier failed to detect publication completeness. RC1 is retained unchanged as historical evidence and must not be described as a complete distributable snapshot.
+
+RC2 supersedes RC1 for packaging only. It adds the six exact, previously reviewed and hashed public specifications listed in RC1_PUBLICATION_COMPLETENESS_AUDIT.json. Independent review confirms they contain specification/governance text, no raw data, patient/donor records or credentials. Their source bytes and scientific meaning are unchanged. No data/analysis/execution permission changes, new scientific decisions, model fitting or clinical results are introduced.
+
+The verifier now checks HEAD by default using Git blob bytes, including the manifest itself, as well as working-tree schemas and links. `--git-ref INDEX` verifies staged bytes before committing. `--working-tree-only` is explicitly a construction check and cannot constitute publication acceptance. Missing, ignored, untracked or mismatched snapshot files fail closed. A regression recreates the exact ignored-file omission, verifies rejection, verifies explicit force-add success and rejects changed staged bytes. Four verifier tests pass.
+
+Publication procedure: force-add only the six reviewed Markdown paths; stage RC2 amendments and manifest explicitly; pass the INDEX verifier; commit; pass the HEAD verifier; create a fresh annotated specs/thesis-20261015-v1-rc2 tag without moving RC1; push and read back every scoped blob from the tag; build the sanitized bundle from committed bytes and verify every extracted manifest hash. Final publication and bundle receipts are external to the manifest to avoid self-reference.
+
+Existing limitations remain: B's real-format fixture is absent, full B strict regression is not green, remote scientific environments/jobs are not validated, and all module-specific data/analysis/execution gates remain pending. The approved B framework and archived unapproved revision remain separately classified.

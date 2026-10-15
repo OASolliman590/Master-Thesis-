@@ -1,0 +1,60 @@
+{
+  "main": "a8278c776da7c6b096cc14139d729979db286b50",
+  "A": "9cc7c327ea6fda9032b8f1cd35392f78628bc1bd",
+  "DAV_and_misnamed_integrated_branch": "58ac943acbe8c981c7c8c269103c602b4425bd50",
+  "B": "4fbd5e27c3097f010b419ddffe28ad95e42b5d82",
+  "C": "9f9bece797d904cd59f8a1c285f809e892040086",
+  "historical_repository": {
+    "html_url": "https://github.com/OASolliman590/epigenetic-ici-priming-thesis/commit/96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+    "sha": "96c16794bafc8946ae9f0bdcef81d5f3a599542b"
+  },
+  "PRs": [
+    {
+      "base": "main",
+      "head": "review/paper-a-a1-speckit-20261015",
+      "merged_at": null,
+      "number": 11,
+      "sha": "9cc7c327ea6fda9032b8f1cd35392f78628bc1bd",
+      "state": "open",
+      "title": "Draft: finalized Paper A/A1 scientific Spec Kits integrated with shared acquisition authority"
+    },
+    {
+      "base": "main",
+      "head": "review/paper-c-scientific-revision-20261015",
+      "merged_at": null,
+      "number": 10,
+      "sha": "9f9bece797d904cd59f8a1c285f809e892040086",
+      "state": "open",
+      "title": "Draft: Paper C scientific revision and C3 prioritisation framework (2026-10-15)"
+    },
+    {
+      "base": "main",
+      "head": "review/a-data-acquisition-validation-speckit-20261012",
+      "merged_at": null,
+      "number": 9,
+      "sha": "58ac943acbe8c981c7c8c269103c602b4425bd50",
+      "state": "open",
+      "title": "Draft: standalone Paper A/A.1 data acquisition and validation spec kit"
+    },
+    {
+      "base": "main",
+      "head": "review/paper-b-scientific-revision-20260928",
+      "merged_at": null,
+      "number": 8,
+      "sha": "4fbd5e27c3097f010b419ddffe28ad95e42b5d82",
+      "state": "open",
+      "title": "Draft: Paper B scientific revision and gated review kit (2026-09-28)"
+    },
+    {
+      "base": "main",
+      "head": "review/evidence-expansion-20260912",
+      "merged_at": null,
+      "number": 6,
+      "sha": "48373c5eae2c6e22dc9a53b54f6cfc84bf969d54",
+      "state": "open",
+      "title": "Review: structured thesis roadmap and processed-first multi-omics expansion kit"
+    }
+  ],
+  "B_reviews": [],
+  "B_comments": []
+}

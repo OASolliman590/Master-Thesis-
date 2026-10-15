@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Paper D source record",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_class": {
+      "type": "string"
+    },
+    "origin_study": {
+      "type": "string"
+    },
+    "publication": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "repository": {
+      "type": "string"
+    },
+    "release": {
+      "type": "string"
+    },
+    "access": {
+      "type": "string"
+    },
+    "licence_status": {
+      "type": "string"
+    },
+    "biological_unit": {
+      "type": "string"
+    },
+    "modality": {
+      "type": "string"
+    },
+    "training_overlap": {
+      "type": "string"
+    },
+    "permitted_role": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DISCOVERED",
+        "RESOLVED",
+        "VALIDATED",
+        "BLOCKED",
+        "UNKNOWN"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_id",
+    "source_class",
+    "origin_study",
+    "repository",
+    "release",
+    "access",
+    "licence_status",
+    "biological_unit",
+    "modality",
+    "training_overlap",
+    "permitted_role",
+    "limitations",
+    "status"
+  ],
+  "additionalProperties": false
+}

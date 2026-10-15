@@ -1,0 +1,2 @@
+experiment_id	description	d_calibration	d_model_selection	d_final_test	e_calibration	e_model_selection	e_final_test	wetlab_publication	exploratory	locked_role	notes
+UNKNOWN	No experiment admitted yet	false	false	false	false	false	false	false	false	UNASSIGNED	Populate before data access

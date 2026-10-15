@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A/SOURCE_RECORD_SCHEMA.json","title":"Paper A source record: shared authority alias","$ref":"../A_DATA_ACQUISITION_VALIDATION/schemas/source_record.schema.json"}

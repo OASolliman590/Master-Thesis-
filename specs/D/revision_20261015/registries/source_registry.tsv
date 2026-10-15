@@ -1,0 +1,7 @@
+source_id	source_class	resource	release_or_doi	access	licence_status	proposed_role	validation_role	status	limitation
+SRC-LIN-FINAL	longitudinal_ici_single_cell	Lin et al. Cancer Cell final article	10.1016/j.ccell.2026.08.007	public article	UNKNOWN until final object/code review	observer/transition precedent	reproduction target	CANDIDATE	complete supplement/source composition unresolved
+SRC-LIN-ZENODO	processed_single_cell_spatial	Zenodo record 19586163	19586163	public record/object links	visible licence unresolved	observer/spatial reproduction	development/reproduction	CANDIDATE	redistribution not assumed
+SRC-STATE-HVG	model_checkpoint	Arc ST-HVG-Tahoe	ca6b751972493f8448e3256d1340ae70ad43e1e7	public metadata/checkpoint subject to terms	separate code/model terms	D1 candidate	model under test	CANDIDATE	weights hash/runtime/training lineage unresolved
+SRC-TAHOE100M	chemical_perturbation_single_cell	Tahoe-100M	exact release UNKNOWN	public resource subject to terms	UNKNOWN per release	training/coverage audit	not independent test by default	CANDIDATE	prostate/immune/combination coverage to resolve
+SRC-PHYSICELL	agent_based_software	PhysiCell	current version UNKNOWN	public source	to resolve	D2 spatial engine	software under test	CANDIDATE	version/build/calibration tooling to audit
+SRC-WETLAB-V2	project_protocol	Epigenetic Priming Wet-Lab Protocol v2	2026-07-13	user-provided	private project material	assay design	prospective handoff	AVAILABLE	proposal, not completed experiment

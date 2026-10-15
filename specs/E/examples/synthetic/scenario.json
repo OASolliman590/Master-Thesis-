@@ -1,0 +1,22 @@
+{
+  "schema": "scenario",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-SCENARIO",
+    "synthetic": true,
+    "scenario_id": "SYN-SCENARIO",
+    "context": "culture",
+    "event_ids": [
+      "SYN-EVENT"
+    ],
+    "comparison_family": "concurrent",
+    "total_dose_or_exposure": null,
+    "total_unit": "synthetic_only",
+    "duration_h": null,
+    "horizon_h": null,
+    "matching_rule": "fixture only, no regimen",
+    "endpoint": "relative_fluorescence",
+    "constraint_references": [],
+    "status": "synthetic_fixture"
+  }
+}

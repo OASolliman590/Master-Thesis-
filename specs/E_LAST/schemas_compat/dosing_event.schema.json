@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:dosing_event:1.0.0",
+  "title": "dosing_event",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "event_id": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "culture",
+        "human",
+        "animal"
+      ]
+    },
+    "experiment_or_regimen_id": {
+      "type": "string"
+    },
+    "compound_id": {
+      "type": "string"
+    },
+    "formulation_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "addition",
+        "bolus",
+        "infusion_start",
+        "infusion_end",
+        "washout",
+        "medium_change",
+        "sampling",
+        "cell_addition",
+        "cell_removal"
+      ]
+    },
+    "time": {
+      "type": "number"
+    },
+    "time_unit": {
+      "enum": [
+        "h",
+        "min",
+        "day"
+      ]
+    },
+    "time_origin": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "quantity_unit": {
+      "type": "string"
+    },
+    "dose_basis": {
+      "type": "string"
+    },
+    "route": {
+      "type": "string"
+    },
+    "duration": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "retained_fraction": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "volume": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "volume_unit": {
+      "type": "string"
+    },
+    "ordering": {
+      "enum": [
+        "before_observation",
+        "after_observation",
+        "not_coincident"
+      ]
+    },
+    "source_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "event_id",
+    "context",
+    "experiment_or_regimen_id",
+    "compound_id",
+    "formulation_id",
+    "event_type",
+    "time",
+    "time_unit",
+    "time_origin",
+    "quantity",
+    "quantity_unit",
+    "dose_basis",
+    "route",
+    "duration",
+    "retained_fraction",
+    "volume",
+    "volume_unit",
+    "ordering",
+    "source_id"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:publication_family:1.0.0",
+  "title": "publication_family",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "family_id": {
+      "type": "string"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "original_study_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relationship": {
+      "type": "string"
+    },
+    "relationship_evidence": {
+      "type": "string"
+    },
+    "overlap_status": {
+      "enum": [
+        "resolved",
+        "suspected",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "family_id",
+    "members",
+    "original_study_ids",
+    "relationship",
+    "relationship_evidence",
+    "overlap_status"
+  ],
+  "additionalProperties": false
+}

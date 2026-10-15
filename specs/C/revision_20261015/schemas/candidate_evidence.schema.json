@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/paper-c/candidate_evidence.schema.json",
+  "title": "Paper C candidate evidence record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_id", "canonical_parent", "inchikey", "mechanism_class", "identity_status",
+    "discovery_evidence", "independent_measured_evidence", "mechanistic_evidence",
+    "viability_stress_evidence", "model_relevance", "pharmacology", "wetlab_feasibility",
+    "contradictions", "missing_evidence", "evidence_tier", "candidate_roles", "claim_ceiling"
+  ],
+  "properties": {
+    "candidate_id": {"type": "string", "minLength": 1},
+    "canonical_parent": {"type": "string", "minLength": 1},
+    "inchikey": {"type": ["string", "null"], "pattern": "^[A-Z]{14}-[A-Z]{10}-[A-Z]$"},
+    "salt_or_formulation": {"type": ["string", "null"]},
+    "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "mechanism_class": {"enum": ["DNMT_inhibitor", "pan_HDAC_inhibitor", "class_selective_HDAC_inhibitor", "HDAC6_focused", "EZH2_catalytic_inhibitor", "EED_PRC2_modulator", "BET_inhibitor", "LSD1_inhibitor", "G9a_GLP_inhibitor", "other_chromatin", "unknown"]},
+    "direct_targets": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "identity_status": {"enum": ["verified", "partial", "blocked"]},
+    "discovery_evidence": {"$ref": "#/$defs/evidence"},
+    "independent_measured_evidence": {"$ref": "#/$defs/evidence"},
+    "mechanistic_evidence": {"$ref": "#/$defs/evidence"},
+    "viability_stress_evidence": {"$ref": "#/$defs/evidence"},
+    "model_relevance": {"$ref": "#/$defs/evidence"},
+    "pharmacology": {"$ref": "#/$defs/evidence"},
+    "wetlab_feasibility": {"$ref": "#/$defs/evidence"},
+    "contradictions": {"type": "array", "items": {"type": "string"}},
+    "missing_evidence": {"type": "array", "items": {"type": "string"}},
+    "evidence_tier": {"enum": ["A", "B", "C", "D", "unassigned"]},
+    "candidate_roles": {
+      "type": "array",
+      "items": {"enum": ["best_molecular_restorer", "best_mechanistic_candidate", "best_translational_candidate", "feasible_pilot", "informative_control", "none"]},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "claim_ceiling": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "summary", "source_ids"],
+      "properties": {
+        "status": {"enum": ["supportive", "contradictory", "mixed", "negative", "not_tested", "unknown"]},
+        "summary": {"type": "string"},
+        "source_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    }
+  }
+}

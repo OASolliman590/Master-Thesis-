@@ -1,0 +1,53 @@
+{
+  "schema": "observation",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-OBSERVATION",
+    "synthetic": true,
+    "observation_id": "SYN-OBS",
+    "study_or_experiment_id": "SYN-EXP",
+    "source_id": "SYN-SOURCE",
+    "source_locator": "fixture",
+    "context": "culture",
+    "analyte": "synthetic_marker",
+    "matrix": "synthetic_culture",
+    "binding_basis": "not_applicable",
+    "cell_signal": "tumour_specific",
+    "endpoint": "relative_fluorescence",
+    "time": 1,
+    "time_unit": "h",
+    "time_origin": "synthetic zero",
+    "measurement": {
+      "raw_value": 1.0,
+      "raw_unit": "arbitrary_unit",
+      "canonical_value": 1.0,
+      "canonical_unit": "arbitrary_unit",
+      "statistic": "arithmetic_mean",
+      "biological_n": 2,
+      "biological_unit": "synthetic_run",
+      "n_unknown_reason": null,
+      "uncertainty": {
+        "type": "unknown",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "reason": "Fixture only; not biological uncertainty"
+      },
+      "transformation": null,
+      "conversion_factor": 1.0,
+      "raw_statistic": "arithmetic_mean",
+      "raw_uncertainty_type": "unknown"
+    },
+    "evidence_class": "measured_observation",
+    "extraction_method": "synthetic_generation",
+    "curator": "fixture_generator",
+    "verification": "fixture_only",
+    "censoring": "none",
+    "assay_limit": null,
+    "missing_reason": null,
+    "axis_scale": "linear",
+    "axis_calibration": [],
+    "role": "calibration",
+    "dependency_ids": []
+  }
+}

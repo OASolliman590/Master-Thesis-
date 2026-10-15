@@ -1,0 +1,19 @@
+{
+  "schema": "inventory",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-INVENTORY",
+    "synthetic": true,
+    "inventory_id": "SYN-INV",
+    "item": "Synthetic fixture",
+    "category": "assay",
+    "status": "planned",
+    "source_ids": [
+      "SYN-SOURCE"
+    ],
+    "receipt_reference": null,
+    "qualification_reference": null,
+    "owner_role": "experimental lead",
+    "resolution": "Actual receipt and qualification required"
+  }
+}

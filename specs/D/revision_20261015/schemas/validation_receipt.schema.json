@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validation receipt",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "benchmark_id": {
+      "type": "string"
+    },
+    "code_hash": {
+      "type": "string"
+    },
+    "environment_hash": {
+      "type": "string"
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "checkpoint_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parameter_hash": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "output_hash": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "benchmark_id",
+    "code_hash",
+    "environment_hash",
+    "input_hash",
+    "checkpoint_hash",
+    "parameter_hash",
+    "seed",
+    "output_hash",
+    "status",
+    "metrics",
+    "limitations",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

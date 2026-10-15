@@ -1,0 +1,5 @@
+source_id	reuse_status	asset_status	parity	calibration_overlap	licence	next_action
+S001	candidate_partial_reconstruction	Full executable asset not recovered	NOT_RUN	UNKNOWN; original-source audit required	UNKNOWN for executable asset	Transcribe complete equations/parameters and original PK sources
+S002	conceptual_precedent_or_independent_reimplementation	Scripts offered on request; not required open dependency	NOT_RUN	UNKNOWN; original-source audit required	UNKNOWN for executable asset	Audit public equations/supplements; do not require scripts
+S003	contextual_structural_precedent	Exact asset/runtime/licence not recovered	NOT_RUN	UNKNOWN; original-source audit required	UNKNOWN for executable asset	Resolve species/context and source parameters before reuse
+OSP_library	discovery_only	No exact compatible asset claimed found	NOT_RUN	UNKNOWN; original-source audit required	UNKNOWN for executable asset	Inspect actual versioned model release if discovered

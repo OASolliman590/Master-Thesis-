@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "mapping_id": "MAP-DEMO",
+  "cell_type": "tumour",
+  "programme": "synthetic",
+  "features": [
+    "GENE_A"
+  ],
+  "behaviour": "dummy output",
+  "direction": "positive",
+  "mapping_function": "identity for software fixture",
+  "parameter_ids": [
+    "PAR-DEMO"
+  ],
+  "evidence": [
+    "synthetic only"
+  ],
+  "uncertainty": "not biological",
+  "calibration_source": "synthetic",
+  "validation_source": "synthetic",
+  "claim_limit": "software test only",
+  "status": "FIXTURE_ONLY"
+}

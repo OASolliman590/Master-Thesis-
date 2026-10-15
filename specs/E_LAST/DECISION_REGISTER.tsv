@@ -1,0 +1,8 @@
+decision_id	decision	owner	resolution_evidence	affected_stages	status	consequence_if_open
+XL01	Actual data/use permissions	PI/data steward	generated files, QC/identity/units and appropriate approvals	X0	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL02	Assay/context mapping	assay/immunology lead	cell/drug/recognition/scale compatibility and capabilities	X1	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL03	Allowed updated parameters	modeller/statistician	identifiability from available measurements	X2	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL04	Role and independence	statistician/data steward	development versus holdout grouping/exposure history	X2-X4	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL05	Single prospective endpoint/design	user/supervisor	pre-outcome estimand/time/grid/precision decision	X4	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL06	Population and release rights	data steward/statistician	actual variance targets, consent/release and publication overlap	X5	OPEN	affected extension module remains dormant/blocked; core unchanged
+XL07	Last-stage implementation authorisation	integrator	completed actual core foundation and released X packet	X0-X5	OPEN	affected extension module remains dormant/blocked; core unchanged

@@ -1,0 +1,12 @@
+test_credential_bearing_url_rejected_without_secret (test_acquire.TestAcquire.test_credential_bearing_url_rejected_without_secret) ... ok
+test_file_success (test_acquire.TestAcquire.test_file_success) ... ok
+test_gzip_compressed_and_decompressed_hashes (test_acquire.TestAcquire.test_gzip_compressed_and_decompressed_hashes) ... ok
+test_gzip_compressed_mismatch_is_never_published_to_cache (test_acquire.TestAcquire.test_gzip_compressed_mismatch_is_never_published_to_cache) ... ok
+test_http_success_html_interrupt_checksum (test_acquire.TestAcquire.test_http_success_html_interrupt_checksum) ... ok
+test_non_loopback_http_forbidden (test_acquire.TestAcquire.test_non_loopback_http_forbidden) ... ok
+test_object_name_substitution_rejected (test_acquire.TestAcquire.test_object_name_substitution_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.598s
+
+OK

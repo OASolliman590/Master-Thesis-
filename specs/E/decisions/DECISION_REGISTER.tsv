@@ -1,0 +1,9 @@
+decision_id	decision	owner	resolution_evidence	affected_stages	status	consequence_if_open
+C01	Lead compound	scientific lead/pharmacologist	public identity PK/PD/function coverage, asset/rights audit	E1-E6	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C02	Checkpoint/antibody/context	immunology and pharmacometric leads	qualified source axis plus drug-matched PK; relevant prostate context	E1-E6	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C03	Primary contrast and horizon	user/supervisor/statistician	review proposed set-valued Delta, schedule fairness, horizon and optional epsilon	E5-E7	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C04	Evidence profile/tolerances	scientific lead/statistician	public coverage before ranking, admissible-set construction, certificate criteria	E0-E7	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C05	Public roles and independent exposure check	data lead	original-study and upstream-overlap audit, reserved source object	E2,E5,E7	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C06	Canonical simulator/runtime	integrator/numerical reviewer	open dependency licence/OS audit and native/port parity	E1-E7	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C07	Bridge and population interpretation	PK/statistics leads	source-supported bounds/targets versus explicit assumptions; no invented covariance	E2,E6,E7	OPEN	only compatible specification/fixture work; no unsupported scientific default
+C08	Core scientific release	scientific lead/integrator	actual E0-E7 receipts, evidence/claims/reproduction review	E7 then optional X0	OPEN	only compatible specification/fixture work; no unsupported scientific default

@@ -1,0 +1,6 @@
+{
+  "files_scanned": 637,
+  "high_confidence_findings": [],
+  "scope": "changed files only; canonical public text, schemas, synthetic fixtures; no private work copied",
+  "reviewer": "Astra integration agent; not independent human approval"
+}

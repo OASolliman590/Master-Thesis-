@@ -1,0 +1,36 @@
+{
+  "repository": "OASolliman590/Master-Thesis-",
+  "branch": "codex/thesis-speckits-20261015",
+  "base_commit": "a8278c776da7c6b096cc14139d729979db286b50",
+  "verified_snapshot_commit": "92f9099c1a2e5442590729cce6d54f1a81958f27",
+  "tag": "specs/thesis-20261015-v1-rc2",
+  "tag_target": "92f9099c1a2e5442590729cce6d54f1a81958f27",
+  "remote_refs": [
+    "92f9099c1a2e5442590729cce6d54f1a81958f27\trefs/heads/codex/thesis-speckits-20261015",
+    "d614fe9e20b02304d1fb467668d0ce845b479dce\trefs/tags/specs/thesis-20261015-v1-rc2",
+    "92f9099c1a2e5442590729cce6d54f1a81958f27\trefs/tags/specs/thesis-20261015-v1-rc2^{}"
+  ],
+  "pr": {
+    "baseRefName": "main",
+    "headRefName": "codex/thesis-speckits-20261015",
+    "headRefOid": "92f9099c1a2e5442590729cce6d54f1a81958f27",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [],
+    "url": "https://github.com/OASolliman590/Master-Thesis-/pull/12"
+  },
+  "canonical_readback": {
+    "method": "GitHub recursive Git tree blob OIDs compared against local bytes and independently verified SHA256 manifest",
+    "truncated": false,
+    "matched_scoped_blobs_including_manifest": 697
+  },
+  "changed_file_count": 694,
+  "test_status": "Specification suites pass; strict B 145/147 with missing fixture and initial sandbox bind error; bind subset later passes; full suite not green",
+  "release_level": "S-only scoped RC; D/A/X not granted",
+  "receipt_note": "RC2 supersedes RC1 completeness claim. Verified exact remote snapshot; later receipt-only commit excluded from manifest.",
+  "superseded_snapshot": {
+    "commit": "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6",
+    "tag": "specs/thesis-20261015-v1-rc1",
+    "reason": "Six manifest-listed E Markdown files absent from committed tree; RC1 packaging incomplete; tag preserved."
+  }
+}

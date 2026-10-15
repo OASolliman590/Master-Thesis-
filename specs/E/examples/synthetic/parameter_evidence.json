@@ -1,0 +1,41 @@
+{
+  "schema": "parameter_evidence",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-PARAMETER_EVIDENCE",
+    "synthetic": true,
+    "parameter_id": "SYN-PARAM",
+    "symbol": "synthetic_k",
+    "context": "synthetic",
+    "measurement": {
+      "raw_value": 1,
+      "raw_unit": "h^-1",
+      "canonical_value": 1,
+      "canonical_unit": "h^-1",
+      "statistic": "arithmetic_mean",
+      "biological_n": null,
+      "biological_unit": "synthetic_run",
+      "n_unknown_reason": "Synthetic fixture, no biological N",
+      "uncertainty": {
+        "type": "unknown",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "reason": "Fixture only; not biological uncertainty"
+      },
+      "transformation": null,
+      "conversion_factor": 1.0,
+      "raw_statistic": "arithmetic_mean",
+      "raw_uncertainty_type": "unknown"
+    },
+    "evidence_class": "assumption",
+    "source_ids": [],
+    "source_locator": "synthetic fixture",
+    "parameter_status": "unresolved",
+    "prior_definition": null,
+    "curator": "fixture_generator",
+    "verification": "fixture_only",
+    "permitted_role": "unassigned",
+    "transferability": "none; fixture only"
+  }
+}

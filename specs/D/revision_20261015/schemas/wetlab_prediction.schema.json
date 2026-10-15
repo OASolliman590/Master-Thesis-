@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prospective wet-lab prediction",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "prediction_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "cell_model": {
+      "type": "string"
+    },
+    "immune_source": {
+      "type": "string"
+    },
+    "intervention": {
+      "type": "string"
+    },
+    "dose_and_schedule": {
+      "type": "string"
+    },
+    "timepoints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "predicted_changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prediction_interval": {
+      "type": "string"
+    },
+    "assays": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "comparator": {
+      "type": "string"
+    },
+    "success_criterion": {
+      "type": "string"
+    },
+    "falsifying_result": {
+      "type": "string"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "frozen_at": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "prediction_id",
+    "model_version",
+    "cell_model",
+    "immune_source",
+    "intervention",
+    "dose_and_schedule",
+    "timepoints",
+    "predicted_changes",
+    "prediction_interval",
+    "assays",
+    "comparator",
+    "success_criterion",
+    "falsifying_result",
+    "claim_ceiling",
+    "frozen_at",
+    "status"
+  ],
+  "additionalProperties": false
+}

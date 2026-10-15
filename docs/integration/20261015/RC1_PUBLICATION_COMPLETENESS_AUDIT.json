@@ -1,0 +1,40 @@
+{
+  "audited_head": "ba925117fccd966758e5a1b6bd58d0f8c1ce72fb",
+  "manifest_paths": 693,
+  "tracked_matching_paths": 687,
+  "missing": [
+    {
+      "path": "specs/E/data/CURATION_AND_DIGITIZATION.md",
+      "sha256": "78ab95e2dc74b7c1d9a86a34dd9865a0773b8f9dfd276864a51ce6a7560d3a43",
+      "bytes": 4005
+    },
+    {
+      "path": "specs/E/data/DATA_MODEL_AND_DICTIONARIES.md",
+      "sha256": "fc4bfede3796b8dddf519cd8b96ea9a775d0c5e7df5ae59f9336022d7d67e777",
+      "bytes": 4916
+    },
+    {
+      "path": "specs/E/data/EXPERIMENTAL_DATA_GOVERNANCE.md",
+      "sha256": "2173525ecda59b4ce34b29278275d40a673b1effb1bcf39caab0bced95490a79",
+      "bytes": 1430
+    },
+    {
+      "path": "specs/E/data/EXTERNAL_PUBLIC_DATA_POLICY.md",
+      "sha256": "5a9173c914c9c3c931a5a3e1fa5d20b0fc518a2d28a770a746b47840cec27537",
+      "bytes": 2270
+    },
+    {
+      "path": "specs/E/data/SOURCE_DISCOVERY_AND_ACCESS.md",
+      "sha256": "9d133cf0fd1c881f7d56bca6809dd16b16b04014320185143333e2fd8ef9e303",
+      "bytes": 6167
+    },
+    {
+      "path": "specs/E/data/SOURCE_PARAMETER_AND_ASSAY_GAPS.md",
+      "sha256": "b0e2539eea1101285b1ad8403bd28284886e5aea1ecb241b5af4d0b7353c8324",
+      "bytes": 1926
+    }
+  ],
+  "mismatched_tracked_paths": [],
+  "cause": "unanchored .gitignore data/ pattern excluded six reviewed canonical Markdown files",
+  "RC1_disposition": "PACKAGING_INCOMPLETE_SUPERSEDED_BY_RC2; do not overwrite tag"
+}

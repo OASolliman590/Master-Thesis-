@@ -1,0 +1,18 @@
+{
+  "schema": "decision",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-DECISION",
+    "synthetic": true,
+    "decision_id": "SYN-DECISION",
+    "question": "Synthetic contract only",
+    "status": "OPEN",
+    "owner_role": "scientific lead",
+    "resolution_evidence": "Actual evidence required",
+    "consequence": "No biological release",
+    "affected_packets": [
+      "E0"
+    ],
+    "approved_value": null
+  }
+}

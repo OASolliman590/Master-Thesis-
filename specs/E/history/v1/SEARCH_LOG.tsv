@@ -1,0 +1,7 @@
+lane	query	route	question_ids	date	status	transport_receipt	stop_rule
+PK	vorinostat pharmacokinetics plasma human PBPK	O01/O02	Q01	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study
+PD	vorinostat entinostat acetylation washout recovery immune	O01	Q04	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study
+antibody	selected antibody population pharmacokinetics receptor binding	O01/O02	Q02	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study
+function	prostate epigenetic HLA antigen T cell checkpoint	O01	Q06/Q08	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study
+models	epigenetic immune checkpoint QSP virtual population model code	O01/O08	Q09	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study
+validation	selected compound induction recovery prospective schedule prediction	O01	Q13	2026-10-13	planned_update_query	UNKNOWN; earlier review summaries not full transport logs	Named precedents plus two bounded pages; no new eligible original study

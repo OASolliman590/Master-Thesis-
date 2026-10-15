@@ -1,0 +1,6 @@
+material	biological_role	E_role	independent_validation_rule	figure_owner
+Screening runs	Biological selection	Development only	Not prospective E validation	OPEN D15
+Baseline/engagement	Mechanism/qualification	Calibration/context	Shared controls linked	OPEN D15
+Induction/recovery annex	Temporal observations	Kinetic modelling/primary challenge if separately frozen	Only genuinely independent challenge qualifies	OPEN D15
+Functional factorial	Mechanism/interaction	Calibration or preassigned evaluation	One run counted once as independent	OPEN D15
+Frozen new challenge	Shared experimental contribution	Prediction-versus-observation	After updating becomes development for new version	OPEN D15

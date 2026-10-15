@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "sample_id": "SAMPLE-DEMO",
+  "source_sample_id": "SYN-001",
+  "origin_study_id": "SYNTHETIC",
+  "experiment_id": "EXP-DEMO",
+  "biological_unit_id": "BIO-DEMO",
+  "plate_id": "P1",
+  "context_id": "CTX-DEMO",
+  "species": "human",
+  "tissue": "prostate",
+  "role": "test_control",
+  "control_group_id": "CTRL-DEMO",
+  "condition_id": "CTRL-DEMO",
+  "qc_status": "PASS",
+  "identity_status": "SYNTHETIC"
+}

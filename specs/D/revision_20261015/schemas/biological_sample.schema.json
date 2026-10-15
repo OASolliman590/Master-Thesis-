@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Biological sample",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "sample_id": {
+      "type": "string"
+    },
+    "source_sample_id": {
+      "type": "string"
+    },
+    "origin_study_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "biological_unit_id": {
+      "type": "string"
+    },
+    "plate_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "context_id": {
+      "type": "string"
+    },
+    "species": {
+      "type": "string"
+    },
+    "tissue": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "control_group_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "condition_id": {
+      "type": "string"
+    },
+    "qc_status": {
+      "type": "string"
+    },
+    "identity_status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "sample_id",
+    "source_sample_id",
+    "origin_study_id",
+    "experiment_id",
+    "biological_unit_id",
+    "plate_id",
+    "context_id",
+    "species",
+    "tissue",
+    "role",
+    "control_group_id",
+    "condition_id",
+    "qc_status",
+    "identity_status"
+  ],
+  "additionalProperties": false
+}

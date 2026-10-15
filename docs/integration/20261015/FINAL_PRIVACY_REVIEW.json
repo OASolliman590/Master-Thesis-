@@ -1,0 +1,9 @@
+{
+  "scope": "changed candidate files; temporary B outputs and caches excluded",
+  "high_confidence_findings": [],
+  "files_scanned": 42,
+  "public_repository": true,
+  "raw_archives_included": false,
+  "private_patient_records_included": false,
+  "source_notes": "scientific decisions/proposals and synthetic test receipts only"
+}

@@ -1,0 +1,14 @@
+id	source_a	source_b	consequence	disposition	status
+PKG-A	requested integrated ZIP ce741a9f	available decision handoff 67ea3007	archive identity unavailable	recover canonical PR11; never assert ZIP equality	RESOLVED_SCOPE_LIMIT
+DAV-HASH	original self-inclusive prefixed SHA256SUMS	75 payload hashes match; self fails	original manifest cannot pass unchanged	retain evidence; new scoped manifest excludes itself	PACKAGING_FIXED
+DAV-TEST	old test expects manifest files and predecessor README	integrated manifest deliberately has no files key	test targets wrong version	bind predecessor tests to reference tree; keep current mutation suite	PACKAGING_FIXED
+C-PATH	test requires docs/superpowers/plans	ZIP supplies docs/plans	three test outcomes affected	correct test path only	PACKAGING_FIXED
+B-AUTH	11 September approved broad aim	28 September proposed revision	proposal cannot replace B-P	retain separate revision pointer; owner user at future amendment	PENDING_SCIENTIFIC
+B-STATUS	README says W8 pending	PROGRESS W8 synthetic complete; tools/b_secondary exists	stale engineering status	add current controlling pointer; fresh tests separate	EDITORIAL_FIXED
+D-AUTH	historical D appraisal	supplied amended D-A through D-H approval	unamended reading gates D2 incorrectly	amended record controls measured D2	RESOLVED
+E-SCOPE	historical original-experiment requirement	revised public core/optional E_LAST	hidden wet-lab dependency	revised core controls; experiment governance separate	RESOLVED
+WHITESPACE	source trailing whitespace/CRLF	git diff --check 334 warnings at import	style warning not content failure	retain original bytes; no claim whitespace-clean	ACCEPTED_PACKAGING_WARNING
+LIVE-ENV	remote AIU/NMRbox state	not inspected live	current jobs and non-Git data unknown	read-only preflight required before any remote packet	UNKNOWN
+REVIEW-B-FREEZE	approved broad B aim	unapproved revision layer	generic status could imply adoption	split approved framework and archived proposal modules	FIXED
+REVIEW-D2	D2 qualified observables	D2 primary amendment	amendment could block approved preparation	amendment applies only primary promotion	FIXED
+REVIEW-MANIFEST	absent manifest returned zero hashes	release verifier required	incomplete bundle could pass	fail closed; three adversarial tests pass	FIXED

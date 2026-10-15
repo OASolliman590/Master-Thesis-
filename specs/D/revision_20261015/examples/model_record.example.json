@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "model_id": "MODEL-DEMO",
+  "repository": "synthetic://model",
+  "code_revision": "demo",
+  "model_family": "baseline",
+  "task": "software_test",
+  "checkpoint_path": "none",
+  "checkpoint_sha256": null,
+  "input_representation": "two-gene vector",
+  "output_representation": "two-gene vector",
+  "training_sources": [
+    "synthetic"
+  ],
+  "overlap_status": "NOT_APPLICABLE",
+  "licence_status": "synthetic",
+  "known_fallbacks": [],
+  "status": "FIXTURE_ONLY"
+}

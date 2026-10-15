@@ -1,0 +1,18 @@
+{
+  "schema": "publication_family",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-PUBLICATION_FAMILY",
+    "synthetic": true,
+    "family_id": "SYN-FAMILY",
+    "members": [
+      "SYN-SOURCE"
+    ],
+    "original_study_ids": [
+      "SYN-STUDY"
+    ],
+    "relationship": "synthetic",
+    "relationship_evidence": "fixture",
+    "overlap_status": "resolved"
+  }
+}

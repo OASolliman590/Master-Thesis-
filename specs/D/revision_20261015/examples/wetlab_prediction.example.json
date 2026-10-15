@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "prediction_id": "PRED-DEMO",
+  "model_version": "demo-v0",
+  "cell_model": "synthetic tumour",
+  "immune_source": "synthetic effector",
+  "intervention": "vehicle",
+  "dose_and_schedule": "none",
+  "timepoints": [
+    "48h"
+  ],
+  "predicted_changes": [
+    "no change"
+  ],
+  "prediction_interval": "synthetic exact",
+  "assays": [
+    "synthetic count"
+  ],
+  "comparator": "vehicle",
+  "success_criterion": "software fixture matches",
+  "falsifying_result": "mismatch",
+  "claim_ceiling": "software test only",
+  "frozen_at": "2026-10-15T00:00:00Z",
+  "status": "FIXTURE_ONLY"
+}

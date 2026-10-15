@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:scenario:1.0.0",
+  "title": "scenario",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "scenario_id": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "culture",
+        "human_exploratory"
+      ]
+    },
+    "event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "comparison_family": {
+      "enum": [
+        "monotherapy",
+        "concurrent",
+        "priming_first",
+        "reverse",
+        "pulse_washout"
+      ]
+    },
+    "total_dose_or_exposure": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "total_unit": {
+      "type": "string"
+    },
+    "duration_h": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "horizon_h": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "matching_rule": {
+      "type": "string"
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "constraint_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "synthetic_fixture"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "scenario_id",
+    "context",
+    "event_ids",
+    "comparison_family",
+    "total_dose_or_exposure",
+    "total_unit",
+    "duration_h",
+    "horizon_h",
+    "matching_rule",
+    "endpoint",
+    "constraint_references",
+    "status"
+  ],
+  "additionalProperties": false
+}

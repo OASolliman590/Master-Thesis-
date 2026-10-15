@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A/PATIENT_MATRIX_SCHEMA.json","title":"Paper A baseline row: shared authority alias","$ref":"../A_DATA_ACQUISITION_VALIDATION/schemas/materialized_matrix.schema.json#/$defs/baseline"}

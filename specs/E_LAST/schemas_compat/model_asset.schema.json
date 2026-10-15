@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:model_asset:1.0.0",
+  "title": "model_asset",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "asset_id": {
+      "type": "string"
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "version": {
+      "type": "string"
+    },
+    "asset_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime": {
+      "type": "string"
+    },
+    "licence": {
+      "type": "string"
+    },
+    "access_state": {
+      "enum": [
+        "open_numbers",
+        "open_table",
+        "open_figure",
+        "metadata_only",
+        "free_registration",
+        "restricted",
+        "unavailable",
+        "unknown"
+      ]
+    },
+    "reuse_class": {
+      "enum": [
+        "exact_reproduction",
+        "partial_reconstruction",
+        "independent_reimplementation",
+        "new_model",
+        "unresolved"
+      ]
+    },
+    "equation_audit": {
+      "type": "string"
+    },
+    "parameter_audit": {
+      "type": "string"
+    },
+    "calibration_study_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evaluation_study_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parity_status": {
+      "enum": [
+        "not_run",
+        "pass",
+        "fail",
+        "incomplete"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "asset_id",
+    "source_ids",
+    "version",
+    "asset_url",
+    "sha256",
+    "runtime",
+    "licence",
+    "access_state",
+    "reuse_class",
+    "equation_audit",
+    "parameter_audit",
+    "calibration_study_ids",
+    "evaluation_study_ids",
+    "parity_status"
+  ],
+  "additionalProperties": false
+}

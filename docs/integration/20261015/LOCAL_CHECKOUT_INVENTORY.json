@@ -1,0 +1,296 @@
+[
+  {
+    "checkout": "paper-a-A-K03-review-fix",
+    "head": "f339db7d336128809d48dd601b5a0c860b2467af",
+    "branch": "luna/A-K03-review-fix",
+    "dirty_paths": 0,
+    "remote": "local sibling checkout (not a remote publication receipt)"
+  },
+  {
+    "checkout": "paper-a-A-K03-software",
+    "head": "133455b009fe42d4303a59aaf83ff2d5db4e5c04",
+    "branch": "luna/A-K03",
+    "dirty_paths": 0,
+    "remote": "local sibling checkout (not a remote publication receipt)"
+  },
+  {
+    "checkout": "paper-a-braun-bounded-recovery",
+    "head": "06f8561aaebfc3baef18e3f6f788ca2c15e57de7",
+    "branch": "codex/braun-bounded-recovery-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-braun-envelope-deflate-options",
+    "head": "f2ac421a313c3ad99bbb283ea5eb309bcd0d6a6a",
+    "branch": "codex/braun-envelope-deflate-options-r2",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-braun-opaque-audit",
+    "head": "df02e417850b6340196b1e5195ac3d1304cd4ac4",
+    "branch": "codex/braun-opaque-audit-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-braun-recovery-audit",
+    "head": "2cae219a57c58e8d06f7b1ca94b96e8cf23b6cf7",
+    "branch": "codex/braun-recovery-opaque-audit-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-braun-single-object",
+    "head": "29edd2bc540651afa65bdca75ecb3c4c78af3708",
+    "branch": "codex/braun-single-object-first-attempt",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-braun-workbook-envelope",
+    "head": "449ec3f49ea0f826ae7ea53ec68f6373d5c572de",
+    "branch": "codex/braun-workbook-envelope-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-byte-acquisition",
+    "head": "17cd42049413501f4709fbbfbef6f71806e43ff1",
+    "branch": "codex/paper-a-private-author-declarations-20261002",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-code-review-check",
+    "head": "a8278c776da7c6b096cc14139d729979db286b50",
+    "branch": "",
+    "dirty_paths": 0,
+    "remote": "local sibling checkout (not a remote publication receipt)"
+  },
+  {
+    "checkout": "paper-a-gide-last-membership-fix",
+    "head": "1a2a144b21265cab4bb184027ded1063058fb4a5",
+    "branch": "codex/gide-last-membership-fix",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-gide-native-audit",
+    "head": "066c4ad23a2b3a8f0dc361165a41ac2d7106a5fa",
+    "branch": "work/gide-native-structure-audit",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-gide-q1",
+    "head": "45c225635509d3c06bdc4a8b5cf79bc012a18db1",
+    "branch": "work/gide-q1-structure",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-hugo-native-worker",
+    "head": "e76eec74f87889894e47dff7131850fc7fffdecf",
+    "branch": "codex/paper-a-hugo-native-worker-20261003",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-hugo-worksheet-phonetic",
+    "head": "57a13a5df57db5cda8a495cfd108d89bbf1931b9",
+    "branch": "codex/paper-a-hugo-worksheet-phonetic-20261003",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-integration",
+    "head": "d574f8aef9b4e26204d06d6b68ad94d427663c6d",
+    "branch": "codex/paper-a-recovery-20260930",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-braun-blocked-audit",
+    "head": "01075cf822b05c25bdaa0622eac39b2bcf4bef23",
+    "branch": "work/liu-braun-blocked-audit",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-braun-opaque-audit",
+    "head": "52bdcfe934f49514c456aafd3008dc9918709d0e",
+    "branch": "work/liu-braun-opaque-audit",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-coarse-custody-fix",
+    "head": "460f9c9949fadee5d04813215ce273cc3efb5f28",
+    "branch": "codex/liu-final-coarse-custody-r4",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-final-manifest-fix",
+    "head": "679b0cbc07f976ed1c8167ee947f8e72222b618b",
+    "branch": "work/liu-final-manifest-fix",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-rna-bounded-recovery",
+    "head": "504d223dbc230fa33f2c84f0e7547cf4711d6e1f",
+    "branch": "codex/liu-rna-bounded-recovery-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-rna-recovery-audit",
+    "head": "095697be472fbeb62be7522203635c1044fb2d6a",
+    "branch": "codex/liu-rna-opaque-audit-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-liu-workbook-first-attempt",
+    "head": "5fbfb603629071583df7a926fbf5460fb6f3e4c9",
+    "branch": "codex/liu-workbook-first-attempt-r1",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-matrix-qc",
+    "head": "fa640eca5bd1523ddacfc1a638b91552b8124122",
+    "branch": "luna/A-K03-matrix-tsv-20261001",
+    "dirty_paths": 1,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-native-audit-final-content",
+    "head": "c887fa640c4c313e7bb2e631b00a7b5e864755a2",
+    "branch": "codex/paper-a-native-audit-final-content-20261003",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-native-product-audit",
+    "head": "5c929eedf2862679a142b5b6a17e739da78c5496",
+    "branch": "codex/paper-a-native-product-audit-20261002",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-native-xlsx",
+    "head": "ef48a94ec0f3964539be20461f99032da1c911a0",
+    "branch": "codex/paper-a-native-xlsx-20261002",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-native-audit",
+    "head": "4e8c12e83c34c93d1172e0646da74577a2c9899a",
+    "branch": "codex/paper-a-porter-native-audit-20261003",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-private",
+    "head": "5ee1c6dec6381886bf9ea1143babcb5bfae57ec1",
+    "branch": "work/porter-private-objects",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-q1",
+    "head": "58349440a6bfd6ab28b1936a3db1f1bcb80b0803",
+    "branch": "work/porter-q1-structure",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-rna-audit",
+    "head": "2bf71d87d09190ff87b73b4cd7b5c6c47b76faf0",
+    "branch": "work/porter-native-rna-audit",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-rna-repair",
+    "head": "a0f0e4b22341354fdec889ad25be0ce74a86189a",
+    "branch": "work/porter-native-rna-repair",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-workbook-audit",
+    "head": "1a2a144b21265cab4bb184027ded1063058fb4a5",
+    "branch": "work/porter-workbook-audit",
+    "dirty_paths": 3,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-workbook-audit-r2",
+    "head": "4d8a8f35575d5180fbd1e01b189b597ff838dca5",
+    "branch": "work/porter-workbook-audit-r2",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-workbook-audit-runtime-r3",
+    "head": "49b4c861778024da059fd1a0af9626820f4483de",
+    "branch": "codex/porter-workbook-audit-runtime-r3",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-porter-workbook-structure",
+    "head": "d1f66929719046670dad2c98e99b4fb714bd6120",
+    "branch": "codex/porter-workbook-structure",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-recovery-validation",
+    "head": "a859a8dec0e7887bd114c506566a1951cbf61bb5",
+    "branch": "luna/A-K02-recovery-20260930",
+    "dirty_paths": 0,
+    "remote": "local sibling checkout (not a remote publication receipt)"
+  },
+  {
+    "checkout": "paper-a-riaz-semantic-s1",
+    "head": "e8cef90807b26374c093cedbaa91403470dfc323",
+    "branch": "",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-rose-endpoint-methods",
+    "head": "83b039fecd1aa5e03f5b4aad6a8cd837727e7b04",
+    "branch": "codex/paper-a-next-source-20261003",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-source-led-version",
+    "head": "cb502fdd9a841f625b518869663fbf1d2c3fee7a",
+    "branch": "work/paper-a-source-led-version",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "paper-a-statistical-candidate",
+    "head": "e802351b8fa73a17f48fa6c8cdab981cd472bc78",
+    "branch": "luna/A-K04-statistical-candidate-20261001",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  },
+  {
+    "checkout": "thesis-speckits-20261015",
+    "head": "7c3a842d7e0fd1b614651c8c2ad2e84971040ebb",
+    "branch": "codex/thesis-speckits-20261015",
+    "dirty_paths": 0,
+    "remote": "https://github.com/OASolliman590/Master-Thesis-.git"
+  }
+]

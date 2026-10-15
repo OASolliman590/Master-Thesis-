@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:experimental_manifest:1.0.0",
+  "title": "experimental_manifest",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "approved",
+        "generated",
+        "quality_checked",
+        "admitted",
+        "assigned_role"
+      ]
+    },
+    "approval_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "release_status": {
+      "enum": [
+        "private",
+        "deidentified_permitted",
+        "unknown"
+      ]
+    },
+    "cell_model": {
+      "type": "string"
+    },
+    "cell_qc_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "donor_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hierarchy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "independent_unit": {
+      "type": "string"
+    },
+    "material_lot_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "instrument_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sample_map_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "raw_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "observation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "qc_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "role": {
+      "enum": [
+        "exploratory_qualification",
+        "calibration",
+        "model_selection",
+        "independent_public_evaluation",
+        "prospective_internal_validation",
+        "contextual_corroboration",
+        "upstream_reconstruction",
+        "unassigned"
+      ]
+    },
+    "privacy_class": {
+      "enum": [
+        "restricted_internal",
+        "public_deidentified",
+        "synthetic"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "experiment_id",
+    "question",
+    "state",
+    "approval_reference",
+    "release_status",
+    "cell_model",
+    "cell_qc_reference",
+    "donor_codes",
+    "hierarchy",
+    "independent_unit",
+    "material_lot_references",
+    "instrument_reference",
+    "event_ids",
+    "sample_map_reference",
+    "raw_files",
+    "observation_ids",
+    "qc_reference",
+    "role",
+    "privacy_class"
+  ],
+  "additionalProperties": false
+}

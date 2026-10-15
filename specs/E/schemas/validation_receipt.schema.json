@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:validation_receipt:1.0.0",
+  "title": "validation_receipt",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "receipt_id": {
+      "type": "string"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "validation_level": {
+      "enum": [
+        "software_contract",
+        "source_parity",
+        "systemic_PK",
+        "engagement",
+        "priming_PD",
+        "functional",
+        "population",
+        "human_clinical"
+      ]
+    },
+    "run_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metric": {
+      "type": "string"
+    },
+    "biological_n": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "biological_unit": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "not_run",
+        "pass",
+        "fail",
+        "inconclusive"
+      ]
+    },
+    "claim": {
+      "type": "string"
+    },
+    "biological_validation": {
+      "type": "boolean"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "receipt_id",
+    "model_version",
+    "validation_level",
+    "run_ids",
+    "data_ids",
+    "metric",
+    "biological_n",
+    "biological_unit",
+    "status",
+    "claim",
+    "biological_validation",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

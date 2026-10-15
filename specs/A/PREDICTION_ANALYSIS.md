@@ -1,0 +1,31 @@
+# A-PRED and A-P2 prediction contract
+
+## Estimand and release population
+
+For each required independent final-test study j, compute paired d_j=AUC_j(s_learned,ORR)−AUC_j(CYT,ORR) on identical eligible baseline patients. Aggregate D with equal cancer weights and equal originating-study weights within cancer. Freeze the complete finite roster and numerical weights after admission and before feature exploration/test release. No inverse-variance or patient-count reweighting; no renormalization among surviving sources. Report both AUROCs, d_j, class counts, patient/specimen/assay counts and missing-score reasons. If a required study fails, D is INCOMPLETE_REQUIRED_SOURCE; remaining studies can be reported descriptively without the original aggregate claim.
+
+## Development eligibility and grouping
+
+At least three independent development study families and an estimable grouped inner/outer structure are required for the proposed nested learner. Every training set must contain both ORR classes; an AUROC-scored validation set also needs both. Enumerate all folds before fitting. An invalid fold is not silently dropped and patient-random folds cannot replace the cross-study design. When the admitted structure is inadequate, stop that learner and propose a reduced reviewed design; do not self-amend the primary. Studies split across publications/cancers remain one independence group.
+
+## Exact learning procedure to implement after numerical freeze
+
+Use elastic-net logistic regression on a prespecified common gene feature representation. The intended baseline representation is log2(TPM+1) only for an admitted TPM-compatible branch; another route requires an explicit measurement amendment. Within each training fold: apply the fixed annotation map; fit the expression/variance filter and variance cap; retain the resulting ordered features; fit training means/SDs; reject unsupported missingness or apply only an explicitly released training-fitted imputer; fit candidate regularization settings. No source-wide ComBat across training and held-out cohorts. Held-out expression cannot affect filtering/scaling or programme construction.
+
+Use grouped inner validation to select the model on equal-cancer/equal-study mean validation AUROC, where all required validation cells are estimable. The proposed tie-break is stronger regularization, then lower model complexity, then a stable declared parameter order; the exact grid, regularization parameterization, tolerance and tie definition must be frozen. The solver must genuinely support elastic net (for scikit-learn, the pinned compatible SAGA API). Pin Python/package versions and assert the actual parameter names; do not blindly copy a version-dependent deprecated API. All preprocessing is part of the serialized pipeline. Record seeds, convergence warnings and iteration counts. A nonconvergent fit is a failed candidate under a prespecified retry ceiling, not a successful model; all-candidate failure blocks the fold.
+
+Patient weighting is a separate training-design choice, not inherited from reporting weights: propose equal study contribution, with any class reweighting explicitly documented and never silently multiplied twice. Grid values, cap, weighting, retry ceiling and optional imputation are NOT frozen by this document. NUMERICAL_FREEZE_REGISTER.tsv is authoritative. No classifier threshold is needed for AUROC; any thresholded endpoint is separately specified.
+
+Each outer development study is predicted once by a pipeline built without it, including all inner tuning. Outer predictions evaluate a learning procedure, not one fixed all-development model. Do not merge them and claim the A-P2 independent test. After development choices are frozen, repeat the prescribed grouped tuning on all development studies and refit one final model using all development data. Freeze feature list, transforms, coefficients/intercept, package/environment, seeds, source/split hashes and model hash before final-test permission.
+
+## Final-test isolation and fair scoring
+
+A designated evaluator receives the immutable model and admitted test matrices after the release receipt. No tuning, direction flipping, missing-gene rescue, outcome-informed exclusion, model selection or calibration refitting occurs. Source-correct comparator scores use the same eligible patients; published methods that fail coverage or implementation admission are reported unavailable rather than approximated. A common complete-case population and its exclusions must be fixed before predictions; method-specific secondary populations cannot substantiate superiority on different patients.
+
+## Paired uncertainty
+
+The planned primary interval is a patient bootstrap stratified within each test study by ORR, retaining both score values for each sampled patient and the same frozen study/cancer weights in every replicate. This targets conditional test-population uncertainty with the model, roster and observed class counts fixed. Pair both scores in every resample; independent bootstrap runs for the two AUCs are wrong. Bootstrap repetitions, interval level, percentile/alternative interval choice and RNG seed require statistical freeze after outcome-association-free precision planning. A paired DeLong estimate on identical labels/patients is a separately labelled sensitivity, not an endpoint-sensitivity substitute. Undefined AUC returns a reasoned nonestimable status, never 0.5. This interval excludes training-procedure and future-study/cancer uncertainty; those require distinct analyses.
+
+## Calibration and interpretation
+
+AUC difference is not conditional information beyond CYT. A model containing CYT plus new features versus CYT-only would be a distinct comparison. Class/study weighted logistic outputs need not be calibrated clinical probabilities. Calibration slope/intercept, Brier score and clinical utility require separately justified representative populations and a frozen protocol; they are not silently added or recalibrated on final-test data. Negative d_j or D is a valid result. If independence cannot be established, label internal–external/previously inspected validation honestly and mark the selected independent-test primary unavailable pending an explicit amendment.

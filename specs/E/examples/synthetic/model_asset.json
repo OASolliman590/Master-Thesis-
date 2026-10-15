@@ -1,0 +1,24 @@
+{
+  "schema": "model_asset",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-MODEL_ASSET",
+    "synthetic": true,
+    "asset_id": "SYN-ASSET",
+    "source_ids": [
+      "SYN-SOURCE"
+    ],
+    "version": "fixture",
+    "asset_url": null,
+    "sha256": null,
+    "runtime": "not executed",
+    "licence": "unknown",
+    "access_state": "unknown",
+    "reuse_class": "new_model",
+    "equation_audit": "not run",
+    "parameter_audit": "not run",
+    "calibration_study_ids": [],
+    "evaluation_study_ids": [],
+    "parity_status": "not_run"
+  }
+}

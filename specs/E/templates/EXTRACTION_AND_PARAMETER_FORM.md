@@ -1,0 +1,5 @@
+# Extraction/parameter completion instructions
+
+Resolve original study/family before extraction. Record exact object/version/access/terms, page/table/panel/row, original analyte/formulation/population/time origin, raw number/unit/statistic/N/error-bar meaning, canonical transformation and uncertainty, extraction method/tool/project, curator and independent review. Link source-curve/summary dependencies. Assign permissible empirical role before fitting. For a fitted source parameter retain fitted_estimate and its original calibration context; never relabel as measured physiology.
+
+S001 fraction-unbound seed illustrates the boundary: raw 28.8 ± 2.9 percent becomes 0.288 with uncertainty magnitude 0.029, but the uncertainty type and biological N are not established here. Original table/source review must resolve them; they are not silently called SD/SE. No original-byte hash exists until permitted raw retrieval. New E priors/rates remain unresolved until approved evidence/rationale is attached.

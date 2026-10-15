@@ -1,0 +1,339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:observation:1.0.0",
+  "title": "observation",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "observation_id": {
+      "type": "string"
+    },
+    "study_or_experiment_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_locator": {
+      "type": "string"
+    },
+    "context": {
+      "enum": [
+        "culture",
+        "human",
+        "animal",
+        "other"
+      ]
+    },
+    "analyte": {
+      "type": "string"
+    },
+    "matrix": {
+      "type": "string"
+    },
+    "binding_basis": {
+      "enum": [
+        "total",
+        "unbound",
+        "intracellular",
+        "nominal",
+        "not_applicable",
+        "unknown"
+      ]
+    },
+    "cell_signal": {
+      "enum": [
+        "tumour_specific",
+        "immune_specific",
+        "mixed",
+        "not_applicable"
+      ]
+    },
+    "endpoint": {
+      "type": "string"
+    },
+    "time": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "time_unit": {
+      "type": "string"
+    },
+    "time_origin": {
+      "type": "string"
+    },
+    "measurement": {
+      "type": "object",
+      "properties": {
+        "raw_value": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "raw_unit": {
+          "type": "string"
+        },
+        "canonical_value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "canonical_unit": {
+          "type": "string"
+        },
+        "statistic": {
+          "enum": [
+            "individual",
+            "arithmetic_mean",
+            "geometric_mean",
+            "median",
+            "fraction",
+            "count",
+            "fitted_estimate",
+            "annotation",
+            "unknown"
+          ]
+        },
+        "biological_n": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "biological_unit": {
+          "type": "string"
+        },
+        "n_unknown_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uncertainty": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "SD",
+                "SE",
+                "CI",
+                "digitization",
+                "posterior",
+                "range",
+                "unknown",
+                "none"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "lower": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "upper": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "value",
+            "lower",
+            "upper",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "transformation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "conversion_factor": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "raw_statistic": {
+          "enum": [
+            "individual",
+            "arithmetic_mean",
+            "geometric_mean",
+            "median",
+            "fraction",
+            "count",
+            "fitted_estimate",
+            "annotation",
+            "unknown"
+          ]
+        },
+        "raw_uncertainty_type": {
+          "enum": [
+            "SD",
+            "SE",
+            "CI",
+            "digitization",
+            "posterior",
+            "range",
+            "unknown",
+            "none"
+          ]
+        }
+      },
+      "required": [
+        "raw_value",
+        "raw_unit",
+        "canonical_value",
+        "canonical_unit",
+        "statistic",
+        "biological_n",
+        "biological_unit",
+        "n_unknown_reason",
+        "uncertainty",
+        "transformation",
+        "conversion_factor",
+        "raw_statistic",
+        "raw_uncertainty_type"
+      ],
+      "additionalProperties": false
+    },
+    "evidence_class": {
+      "enum": [
+        "measured_observation",
+        "reported_summary",
+        "digitization",
+        "annotation",
+        "fitted_estimate",
+        "prior",
+        "assumption",
+        "hypothesis",
+        "prediction",
+        "extrapolation"
+      ]
+    },
+    "extraction_method": {
+      "type": "string"
+    },
+    "curator": {
+      "type": "string"
+    },
+    "verification": {
+      "type": "string"
+    },
+    "censoring": {
+      "enum": [
+        "none",
+        "BLQ",
+        "above_limit",
+        "missing"
+      ]
+    },
+    "assay_limit": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "missing_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "axis_scale": {
+      "enum": [
+        "linear",
+        "log",
+        "not_applicable"
+      ]
+    },
+    "axis_calibration": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "role": {
+      "enum": [
+        "exploratory_qualification",
+        "calibration",
+        "model_selection",
+        "independent_public_evaluation",
+        "prospective_internal_validation",
+        "contextual_corroboration",
+        "upstream_reconstruction",
+        "unassigned"
+      ]
+    },
+    "dependency_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "observation_id",
+    "study_or_experiment_id",
+    "source_id",
+    "source_locator",
+    "context",
+    "analyte",
+    "matrix",
+    "binding_basis",
+    "cell_signal",
+    "endpoint",
+    "time",
+    "time_unit",
+    "time_origin",
+    "measurement",
+    "evidence_class",
+    "extraction_method",
+    "curator",
+    "verification",
+    "censoring",
+    "assay_limit",
+    "missing_reason",
+    "axis_scale",
+    "axis_calibration",
+    "role",
+    "dependency_ids"
+  ],
+  "additionalProperties": false
+}

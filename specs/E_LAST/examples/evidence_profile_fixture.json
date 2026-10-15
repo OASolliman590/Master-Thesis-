@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.0.0",
+  "record_id": "FIXTURE-EVIDENCE-PROFILE",
+  "synthetic": true,
+  "candidate_profile": "C-IDENTIFIABILITY",
+  "public_numerical_exposure": true,
+  "independent_exposure_evaluation": true,
+  "prostate_biological_constraint": true,
+  "temporal_pd": false,
+  "functional_constraints": true,
+  "checkpoint_constraint_or_justified_transfer": false,
+  "measurement_linked_identifiability_certificate": true,
+  "source_ids": [
+    "FIXTURE-ONLY-NOT-A-STUDY"
+  ],
+  "selection_before_schedule_ranking": true,
+  "unresolved_items": [
+    "Fixture; no actual evidence admission."
+  ]
+}

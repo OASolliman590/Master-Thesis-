@@ -1,0 +1,10 @@
+source_id	authority_class	status	rule
+USER01	current_user_approved_decision	Architecture and data policy approved; lead/endpoint/N/regimens open	Current scope controls E
+INT01	submitted_university_protocol	Submitted scientific text; administrative approval not established	Preserve terminology; explicit amendment/correction
+INT02	proposed_internal_experiment	13 July 2026 proposal; approved version and generation unknown	Annex interface, not available measurements
+INT03	historical_experimental_proposal	Earlier seven-page plan	Historical contradictions retained
+INT04	procurement_proposal	Listed alternatives, no receipt/qualification proof	Inventory planned/unknown
+REP01	historical_code_and_execution	Live main snapshot and historical progress	No fresh A-D test claim
+REP02	proposal_not_merged	Review branch and draft PR 6	No silent adoption
+REP03	proposal_not_merged	B draft PR 8	Preserve fixed B-P contract
+S001-S004	newly_inspected_external_evidence	Public articles inspected; raw objects/numeric admission incomplete	Context/reconstruction seed roles only

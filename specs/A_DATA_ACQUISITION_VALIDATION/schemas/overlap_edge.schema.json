@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/overlap_edge.schema.json",
+  "title": "Overlap edge record",
+  "description": "Typed relationship used to prevent duplicate counting and false independence.",
+  "type": "object",
+  "required": [
+    "overlap_edge_id",
+    "source_node_type",
+    "source_node_id",
+    "target_node_type",
+    "target_node_id",
+    "edge_type",
+    "evidence",
+    "certainty",
+    "implication_for_independence",
+    "reviewer",
+    "review_date"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "overlap_edge_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "source_node_type": {
+      "type": "string"
+    },
+    "source_node_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "target_node_type": {
+      "type": "string"
+    },
+    "target_node_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "edge_type": {
+      "type": "string",
+      "enum": [
+        "SAME_STUDY",
+        "SAME_TRIAL",
+        "PUBLICATION_REUSE",
+        "ACCESSION_ALIAS",
+        "REPOSITORY_MIRROR",
+        "SAME_PATIENT",
+        "SUSPECTED_SAME_PATIENT",
+        "SAME_SPECIMEN",
+        "REPEATED_SEQUENCING",
+        "TECHNICAL_REPLICATE",
+        "MULTIPLE_LESIONS",
+        "REANALYSIS",
+        "SHARED_CONTROLS",
+        "DERIVED_ATLAS_MATRIX",
+        "PRIOR_MODEL_TRAINING_OVERLAP",
+        "OTHER"
+      ]
+    },
+    "evidence": {
+      "type": "string"
+    },
+    "source_locators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "certainty": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "PROBABLE",
+        "POSSIBLE",
+        "UNRESOLVED",
+        "DISPROVED"
+      ]
+    },
+    "implication_for_independence": {
+      "type": "string",
+      "enum": [
+        "NOT_INDEPENDENT",
+        "INDEPENDENCE_BLOCKED",
+        "INDEPENDENT_FOR_DECLARED_UNIT",
+        "NO_IMPLICATION",
+        "UNKNOWN"
+      ]
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "review_date": {
+      "type": "string"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

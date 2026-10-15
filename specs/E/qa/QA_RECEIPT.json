@@ -1,0 +1,25 @@
+{
+  "schemas_checked": 22,
+  "examples_validated": 33,
+  "biological_validation": false,
+  "timestamp_utc": "2026-10-15T11:25:24.902018+00:00",
+  "python": "3.13.5",
+  "jsonschema": "4.26.0",
+  "tests_run": 50,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "success": true,
+  "validation_level": "software_contract",
+  "not_run": [
+    "ODE positivity/mass balance",
+    "solver and event convergence",
+    "upstream numerical parity",
+    "real source acquisition/cache restart",
+    "scientific deduplication adjudication",
+    "real-fit heldout isolation",
+    "PK or biological calibration",
+    "independent empirical evaluation",
+    "prospective biological validation"
+  ]
+}

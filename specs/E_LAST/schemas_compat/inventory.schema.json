@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:paper-e:schema:inventory:1.0.0",
+  "title": "inventory",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.0.0"
+      ]
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "inventory_id": {
+      "type": "string"
+    },
+    "item": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "confirmed",
+        "planned",
+        "missing",
+        "optional",
+        "unknown"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "receipt_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "qualification_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "owner_role": {
+      "type": "string"
+    },
+    "resolution": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "inventory_id",
+    "item",
+    "category",
+    "status",
+    "source_ids",
+    "receipt_reference",
+    "qualification_reference",
+    "owner_role",
+    "resolution"
+  ],
+  "additionalProperties": false
+}

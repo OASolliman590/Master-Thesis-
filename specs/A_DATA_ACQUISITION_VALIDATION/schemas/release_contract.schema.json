@@ -1,0 +1,28 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/release_contract.schema.json",
+ "title":"Branch-specific scientific release contract; not a self-signing admission",
+ "description":"A declared release must also pass relational, hash, reviewer and environment checks. Example drafts do not authorize execution.",
+ "type":"object","additionalProperties":false,
+ "required":["schema_version","release_id","branch_id","state","evidence_class","source_universe_version","required_source_ids","admitted_source_ids","requires_final_test","software_gate","data_gate","statistical_gate","protected_set_gate","admission_receipt_ids","matrix_build_receipt_ids","config_sha256","environment_sha256","split_sha256","model_sha256","weight_registry_sha256","reviewer","reviewed_utc","blocked_reasons"],
+ "properties":{
+  "schema_version":{"const":"1.1.0"},"release_id":{"type":"string","minLength":1},
+  "branch_id":{"enum":["A_BASELINE_BIO","A_P2_DEVELOPMENT","A_P2_FINAL_TEST","A_P1_ENDPOINT_SENSITIVITY","A1_PAIRED_CHANGE","A1_RESPONSE_TIME_INTERACTION","A1_SYNTHESIS","A1_MODERATOR","PROSTATE_TRANSPORT","A_TO_BC"]},
+  "state":{"enum":["SPECIFICATION_ONLY","BLOCKED","READY_FOR_REVIEW","RELEASED","SUPERSEDED"]},
+  "evidence_class":{"enum":["SPECIFICATION","SYNTHETIC","REAL_SOURCE_FORMAT","REAL_BRANCH_VALIDATION"]},
+  "source_universe_version":{"type":"string","minLength":1},
+  "required_source_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},
+  "admitted_source_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},
+  "requires_final_test":{"type":"boolean"},
+  "software_gate":{"enum":["PASS","FAIL","NOT_RUN","BLOCKED"]},"data_gate":{"enum":["PASS","FAIL","NOT_RUN","BLOCKED"]},"statistical_gate":{"enum":["PASS","FAIL","NOT_RUN","BLOCKED"]},"protected_set_gate":{"enum":["PASS","FAIL","NOT_RUN","BLOCKED"]},
+  "admission_receipt_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},"matrix_build_receipt_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},
+  "config_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"environment_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"split_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"model_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},"weight_registry_sha256":{"type":["string","null"],"pattern":"^[a-f0-9]{64}$"},
+  "reviewer":{"type":["string","null"]},"reviewed_utc":{"type":["string","null"]},"blocked_reasons":{"type":"array","items":{"type":"string","minLength":1}}
+ },
+ "allOf":[
+  {"if":{"properties":{"branch_id":{"const":"A_P2_FINAL_TEST"}}},"then":{"properties":{"requires_final_test":{"const":true}}},"else":{"properties":{"requires_final_test":{"const":false}}}},
+  {"if":{"properties":{"state":{"const":"RELEASED"}}},"then":{"properties":{"evidence_class":{"const":"REAL_BRANCH_VALIDATION"},"required_source_ids":{"minItems":1},"admitted_source_ids":{"minItems":1},"software_gate":{"const":"PASS"},"data_gate":{"const":"PASS"},"statistical_gate":{"const":"PASS"},"protected_set_gate":{"const":"PASS"},"admission_receipt_ids":{"minItems":1},"matrix_build_receipt_ids":{"minItems":1},"config_sha256":{"type":"string"},"environment_sha256":{"type":"string"},"split_sha256":{"type":"string"},"reviewer":{"type":"string","minLength":1},"reviewed_utc":{"type":"string","minLength":1},"blocked_reasons":{"maxItems":0}}}},
+  {"if":{"properties":{"state":{"const":"RELEASED"},"branch_id":{"const":"A_P2_FINAL_TEST"}}},"then":{"properties":{"model_sha256":{"type":"string"},"weight_registry_sha256":{"type":"string"}}}},
+  {"if":{"properties":{"state":{"const":"BLOCKED"}}},"then":{"properties":{"blocked_reasons":{"minItems":1}}}}
+ ]
+}

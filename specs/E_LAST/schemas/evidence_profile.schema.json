@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "evidence_profile",
+  "description": "Draft contract. Passing schema validation alone does not admit scientific data or authorise analysis.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "candidate_profile": {
+      "enum": [
+        "C-SCHEDULING",
+        "C-IDENTIFIABILITY",
+        "C-INCOMPLETE"
+      ]
+    },
+    "public_numerical_exposure": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "independent_exposure_evaluation": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "prostate_biological_constraint": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "temporal_pd": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "functional_constraints": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "checkpoint_constraint_or_justified_transfer": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "measurement_linked_identifiability_certificate": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "selection_before_schedule_ranking": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "unresolved_items": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "synthetic",
+    "candidate_profile",
+    "public_numerical_exposure",
+    "independent_exposure_evaluation",
+    "prostate_biological_constraint",
+    "temporal_pd",
+    "functional_constraints",
+    "checkpoint_constraint_or_justified_transfer",
+    "measurement_linked_identifiability_certificate",
+    "source_ids",
+    "selection_before_schedule_ranking",
+    "unresolved_items"
+  ]
+}

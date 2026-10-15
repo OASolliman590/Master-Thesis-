@@ -1,0 +1,7 @@
+flowchart LR
+    F["Publication family"] --> S["Original study"] --> O["Measured source object"] --> A["Observation with units/N/context"]
+    A --> C["Development role: fit or constrain"]
+    A --> V["Independent public evaluation role"]
+    C --> M["Frozen public-core model"]
+    M --> Q["Conditional schedule or identifiability result"]
+    V --> E["Layer-specific evaluation; no retroactive role swap"]

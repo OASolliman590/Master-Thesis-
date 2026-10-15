@@ -1,0 +1,19 @@
+{
+  "schema": "population",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-POPULATION",
+    "synthetic": true,
+    "population_id": "SYN-POP",
+    "study_id": "SYN-STUDY",
+    "context": "culture",
+    "representation": "aggregate",
+    "biological_n": null,
+    "n_unknown_reason": "Synthetic fixture only",
+    "individual_ids": [],
+    "group_definition": "synthetic aggregate",
+    "source_ids": [
+      "SYN-SOURCE"
+    ]
+  }
+}

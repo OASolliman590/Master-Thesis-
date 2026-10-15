@@ -1,0 +1,27 @@
+{
+  "schema": "dosing_event",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-DOSING_EVENT",
+    "synthetic": true,
+    "event_id": "SYN-EVENT",
+    "context": "culture",
+    "experiment_or_regimen_id": "SYN-EXP",
+    "compound_id": "SYN-COMPOUND",
+    "formulation_id": "SYN-FORM",
+    "event_type": "addition",
+    "time": 0,
+    "time_unit": "h",
+    "time_origin": "synthetic zero",
+    "quantity": 1,
+    "quantity_unit": "synthetic_concentration",
+    "dose_basis": "parent",
+    "route": "culture",
+    "duration": null,
+    "retained_fraction": null,
+    "volume": null,
+    "volume_unit": "not_applicable",
+    "ordering": "before_observation",
+    "source_id": "SYN-SOURCE"
+  }
+}

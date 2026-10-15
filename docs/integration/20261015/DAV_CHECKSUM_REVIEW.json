@@ -1,0 +1,8 @@
+{
+  "original_matches": 75,
+  "original_failed": [
+    "Paper_A_A1_Data_Acquisition_Validation_SpecKit_20261015/SHA256SUMS.txt"
+  ],
+  "prefix_mapping": "remove one absent wrapper component where necessary",
+  "self_hash_not_rewritten": true
+}

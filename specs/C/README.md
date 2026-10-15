@@ -1,18 +1,20 @@
 # Paper C — Epigenetic-drug prioritisation with contextual validation
 
-Version 0.1, 5 September 2026. **Design proposal; not implementation-ready.** This is the third current paper, Claude's original Paper 4. No primary endpoint or source removal is approved by this draft.
+> **Approved framework amendment, 15 October 2026:** [C_FRAMEWORK_20261015.md](../../docs/decisions/C_FRAMEWORK_20261015.md) controls where it conflicts with the Version 0.1 proposal below. C3 is the approved framework, C2 is bounded discovery, C1 is secondary calibration, and the paired independent-measured `Q_M` versus `Q_E` endpoint is developed as the proposed primary. See [revision_20261015](revision_20261015/README.md). No biological analysis is released by this pointer.
+
+Version 0.1, 5 September 2026. **Historical design proposal; not implementation-ready.** This is the third current paper, Claude's original Paper 4. Its former primary proposal is retained below for exposure history and C1 calibration provenance.
 
 ## Question and contribution
 
 Which measured epigenetic perturbations oppose a prostate immune-associated disease signature, and how does patient methylation evidence, independent measured perturbation evidence and pharmacology change the interpretation of an expression-only ranking?
 
-The proposed primary outcome is condition-specific **negative WTCS**, with separate estimates for the three protocol compounds at the lowest common measured QC-passing PC3/24 h dose. This is a finite assay-context description. It does not estimate comparative drug efficacy or a class treatment effect. The dose is an assay anchor, not a recommended exposure. The broader compound screen, class comparisons where identifiable, context dependence and independent corroboration remain in scope.
+The former proposed primary outcome was condition-specific **negative WTCS**, with separate estimates for the three protocol compounds at the lowest common measured QC-passing PC3/24 h dose. Under the 15 October amendment, this is C1 secondary calibration. It is a finite assay-context description. It does not estimate comparative drug efficacy or a class treatment effect. The dose is an assay anchor, not a recommended exposure. The broader compound screen, class comparisons where identifiable, context dependence and independent corroboration remain in scope under the revised contracts.
 
 The main novelty test is substantive: demonstrate what the patient methylation/context evidence changes relative to an expression-only prioritisation, then examine those changed interpretations with independent measurements. A longer database list is insufficient. Chang 2022 already combined prostate immune signatures, CMap/L1000 resources and GDSC; MD-Miner, OncoLoop and prior HDAC/EZH2 immune studies also overlap. See [the six-study comparison](../../docs/research/C_novelty_comparison.md). Rediscovering known drugs alone is unlikely to sustain a distinct manuscript.
 
 ## Thesis and source commitments
 
-Paper B supplies a frozen discovery-derived molecular handoff; C tests perturbation direction and translational plausibility. A is not required to finish first if the B discovery handoff is independent of A. Keep TCGA PRAD/LUAD, LINCS, CCLE/DepMap, PRISM/GDSC, DrugBank/ChEMBL, Perturb-CITE-seq, TISMO and the proposed LJP4 IFNG reference. GSE199800/GSE216053 are additional measured prostate corroboration, not replacements. Each source has a distinct role and an explicit access/coverage gate in DATA.md.
+Paper B supplies a frozen discovery-derived molecular handoff; C tests perturbation direction and translational plausibility. A is not required to finish first if the B discovery handoff is independent of A. Keep TCGA PRAD/LUAD, LINCS, CCLE/DepMap, PRISM/GDSC, DrugBank/ChEMBL, Perturb-CITE-seq, TISMO and the proposed LJP4 IFNG reference. GSE199800/GSE216053 are additional measured prostate corroboration, not replacements. Each source has a distinct role and an explicit access/coverage gate in DATA.md and the revision kit.
 
 Registered decitabine/entinostat/tazemetostat experiments remain separate. C may motivate a proposed experimental revision, but cannot silently change the approved protocol. Signature reversal in monoculture does not demonstrate immune killing, TME conversion or clinical ICI sensitisation. Human genetic screens and mouse ICB experiments test related claims in different settings, not the same prostate-drug clinical endpoint.
 
@@ -26,4 +28,4 @@ Registered decitabine/entinostat/tazemetostat experiments remain separate. C may
 
 ## Package map
 
-DATA.md defines coverage and provenance; ANALYSIS.md defines the proposed primary and secondary estimands; VALIDATION_AND_FIGURES.md binds four figures to evidence; ENGINEERING.md defines schemas, tools and reproduction; PREREGISTRATION.md records factual grilling, decisions and gates; references.bib contains core scientific references. Tickets are bounded proposals, not dispatchable production work.
+The historical files remain useful engineering and evidence records. The approved review package begins at [revision_20261015/README.md](revision_20261015/README.md). Production implementation remains gated.

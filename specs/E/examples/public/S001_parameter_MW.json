@@ -1,0 +1,43 @@
+{
+  "schema": "parameter_evidence",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "PUB-VOR-MW",
+    "synthetic": false,
+    "parameter_id": "PUB-VOR-MW",
+    "symbol": "molecular_weight",
+    "context": "S001 original context only",
+    "measurement": {
+      "raw_value": 264.32,
+      "raw_unit": "g/mol",
+      "canonical_value": 264.32,
+      "canonical_unit": "g/mol",
+      "statistic": "unknown",
+      "biological_n": null,
+      "biological_unit": "synthetic_run",
+      "n_unknown_reason": "Not established from inspected table",
+      "uncertainty": {
+        "type": "unknown",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "reason": "Fixture only; not biological uncertainty"
+      },
+      "transformation": null,
+      "conversion_factor": 1.0,
+      "raw_statistic": "unknown",
+      "raw_uncertainty_type": "unknown"
+    },
+    "evidence_class": "reported_summary",
+    "source_ids": [
+      "S001"
+    ],
+    "source_locator": "S001 Table 2",
+    "parameter_status": "source_reported",
+    "prior_definition": null,
+    "curator": "source-review agent",
+    "verification": "Source inspected; independent extraction review pending",
+    "permitted_role": "upstream_reconstruction",
+    "transferability": "Source property; original referenced measurement/method review required"
+  }
+}

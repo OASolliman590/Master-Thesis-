@@ -1,0 +1,19 @@
+{
+  "schema": "role_assignment",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-ROLE_ASSIGNMENT",
+    "synthetic": true,
+    "assignment_id": "SYN-ROLE",
+    "model_version": "SYN-v1",
+    "group_id": "SYN-EXP",
+    "group_type": "experiment",
+    "object_ids": [
+      "SYN-OBS"
+    ],
+    "role": "calibration",
+    "assigned_at": "2026-10-13",
+    "outcome_access": "synthetic only",
+    "freeze_reference": null
+  }
+}

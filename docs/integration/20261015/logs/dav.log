@@ -1,0 +1,32 @@
+test_agent_prompts_are_read_only_and_structured (test_spec_kit.SpecKitTests.test_agent_prompts_are_read_only_and_structured) ... ok
+test_json_schemas_are_draft_2020_12_and_self_validating (test_spec_kit.SpecKitTests.test_json_schemas_are_draft_2020_12_and_self_validating) ... ok
+test_manifest_hashes_match (test_spec_kit.SpecKitTests.test_manifest_hashes_match) ... ERROR
+test_matrix_contracts_define_grain_invariants_and_receipt (test_spec_kit.SpecKitTests.test_matrix_contracts_define_grain_invariants_and_receipt) ... ok
+test_no_obvious_secrets_or_patient_records_in_public_package (test_spec_kit.SpecKitTests.test_no_obvious_secrets_or_patient_records_in_public_package) ... ok
+test_protocol_and_reconciliation_tables_are_substantive (test_spec_kit.SpecKitTests.test_protocol_and_reconciliation_tables_are_substantive) ... ok
+test_readme_and_decisions_keep_analysis_blocked (test_spec_kit.SpecKitTests.test_readme_and_decisions_keep_analysis_blocked) ... FAIL
+test_required_files_exist (test_spec_kit.SpecKitTests.test_required_files_exist) ... ok
+test_required_mermaid_diagrams_exist (test_spec_kit.SpecKitTests.test_required_mermaid_diagrams_exist) ... ok
+test_tsv_templates_have_unique_nonempty_headers_and_no_records (test_spec_kit.SpecKitTests.test_tsv_templates_have_unique_nonempty_headers_and_no_records) ... ok
+
+======================================================================
+ERROR: test_manifest_hashes_match (test_spec_kit.SpecKitTests.test_manifest_hashes_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTEGRATION_CHECKOUT>/tests/a_data_acquisition_validation/test_spec_kit.py", line 180, in test_manifest_hashes_match
+    for item in manifest["files"]:
+                ~~~~~~~~^^^^^^^^^
+KeyError: 'files'
+
+======================================================================
+FAIL: test_readme_and_decisions_keep_analysis_blocked (test_spec_kit.SpecKitTests.test_readme_and_decisions_keep_analysis_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTEGRATION_CHECKOUT>/tests/a_data_acquisition_validation/test_spec_kit.py", line 149, in test_readme_and_decisions_keep_analysis_blocked
+    self.assertIn("Implementation completion is separate", readme)
+AssertionError: 'Implementation completion is separate' not found in '# Shared Paper A/A.1 acquisition and validation authority\n\nThe completed original DAV package from draft PR #9 is inherited and extended by the 15 October integrated specification. Start with [INTEGRATION_AMENDMENT_20261015.md](INTEGRATION_AMENDMENT_20261015.md), [OUTPUT_AND_SCHEMA_INDEX.md](OUTPUT_AND_SCHEMA_INDEX.md) and [RELATIONAL_INVARIANTS.md](RELATIONAL_INVARIANTS.md). The exact pre-integration DAV tree is preserved at ../../reference/specs_A_DAV_before_20261015.\n\n## One authority, two scientific consumers\n\nPaper A owns baseline biology, prediction, CYT-led endpoint sensitivity and qualified prostate transport. Paper A1 owns longitudinal estimands, timing/context interpretation and synthesis. This shared package owns source discovery, originating-study/publication identity, exact objects, private patients/treatment/specimens/assays/outcomes, overlap/exposure, pairing, branch admission and materialized matrices. No competing A or A1 identity registry is permitted.\n\n## Preserved core and extensions\n\nThe original twelve normalized/receipt schemas, ontology and matrix documents, 14 DAV tickets, 15-row protocol crosswalk and 20-row historical implementation reconciliation remain included. The integration adds episode records/bindings, executable materialized-row schemas, exposure and branch-release contracts, a source-by-question candidate table and a machine-readable search plan. These are specification artifacts, not patient data or executed searches. JSON validity does not establish clinical linkage or a reviewer signature.\n\nThe episode extension is necessary because the inherited clinical-outcome/exposure records do not explicitly bind every record to a treatment episode. Existing records are preserved; the new shared bridge prevents outcome reuse across sequential treatments. See schema/version and migration details in the amendment.\n\n## Required reading\n\nPATIENT_DATA_MODEL.md; PROCESSED_DATA_POLICY.md; SOURCE_IDENTITY_AND_DEDUPLICATION.md; TREATMENT_AND_TIMEPOINT_ONTOLOGY.md; ENDPOINT_ONTOLOGY.md; ASSAY_AND_MEASUREMENT_CONTRACT.md; LONGITUDINAL_PAIRING_CONTRACT.md; MULTIOMICS_PAIRING_CONTRACT.md; SPLIT_AND_PRIOR_EXPOSURE_VALIDATION.md; COHORT_ADMISSION_AND_RELEASE.md; VALIDATION_FRAMEWORK.md; TICKETS_AND_TESTS.md; REPRODUCE_AND_READINESS.md. SEARCH_PLAN_20261015.md supersedes the historical two-quiet-pages completion shortcut. The original appraisal is preserved, not treated as fresh execution.\n\n## Release state\n\nSpecification-review only. No cohort is admitted, no patient matrix is built, no independent final-test roster is assigned and no biological analysis is run by this package. Missing A-P2 final-test data blocks that claim, not independently released A-BIO/A-P1/A1 work; protected families still remain protected across all branches. Controlled access/raw reprocessing and institutional contact remain separately authorized lanes.\n'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.449s
+
+FAILED (failures=1, errors=1)

@@ -1,0 +1,25 @@
+{
+  "schema": "source_object",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "SYN-SOURCE_OBJECT",
+    "synthetic": true,
+    "source_id": "SYN-SOURCE",
+    "publication_family_id": "SYN-FAMILY",
+    "study_id": "SYN-STUDY",
+    "url": "urn:synthetic:source",
+    "object_identifier": "SYN-OBJECT",
+    "object_version": "fixture",
+    "format": "json",
+    "access_state": "open_table",
+    "retrieval_status": "source_inspected",
+    "bytes": null,
+    "sha256": null,
+    "hash_unknown_reason": "Synthetic fixture, no source bytes",
+    "parser_version": null,
+    "source_locator": "synthetic fixture",
+    "verification": "fixture only",
+    "permitted_role": "unassigned",
+    "licence": null
+  }
+}

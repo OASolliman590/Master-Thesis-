@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "initialization_id": "INIT-DEMO",
+  "model_scope": "D2_PAIR",
+  "context_id": "CTX-DEMO",
+  "geometry": "synthetic square",
+  "cell_populations": [
+    {
+      "cell_type": "tumour",
+      "initial_count": 10,
+      "evidence": "synthetic"
+    },
+    {
+      "cell_type": "cytotoxic_immune",
+      "initial_count": 5,
+      "evidence": "synthetic"
+    }
+  ],
+  "fields": [],
+  "parameter_set_id": "PARAM-DEMO",
+  "unsupported_outputs": [
+    "B_CELL_TLS_STATE",
+    "MYELOID_STATE"
+  ],
+  "status": "FIXTURE_ONLY"
+}

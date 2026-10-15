@@ -1,0 +1,55 @@
+{
+  "schema_version": "2.0.0",
+  "record_id": "FIXTURE-CORE-IDENTIFIABILITY",
+  "synthetic": true,
+  "profile": "C-IDENTIFIABILITY",
+  "complete": true,
+  "gates": {
+    "source_lineage_audited": true,
+    "public_numerical_exposure": true,
+    "independent_exposure_evaluation": true,
+    "prostate_biological_constraint": true,
+    "all_three_layers_executed": true,
+    "data_roles_frozen": true,
+    "decisions_frozen": true,
+    "baselines_complete": true,
+    "uncertainty_complete": true,
+    "reproduction_complete": true,
+    "scientific_review_complete": true,
+    "artifact_hashes_verified": true,
+    "no_internal_data_dependency": true
+  },
+  "packet_status": {
+    "E0": "COMPLETE",
+    "E1": "COMPLETE",
+    "E2": "COMPLETE",
+    "E3": "COMPLETE",
+    "E4": "COMPLETE",
+    "E5": "COMPLETE",
+    "E6": "COMPLETE",
+    "E7": "COMPLETE"
+  },
+  "numeric_input_origins": [
+    "public_external"
+  ],
+  "profile_evidence": {
+    "temporal_pd": false,
+    "functional_constraints": true,
+    "checkpoint_constraint_or_justified_transfer": false,
+    "nonempty_admissible_set": true,
+    "measurement_linked_identifiability_certificate": true
+  },
+  "artifacts": [
+    {
+      "role": "FICTIONAL_REFERENCE",
+      "path": "fixtures/not_a_real_model.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "unvalidated_claims": [
+    "All biological and clinical claims; this entire record is a software fixture."
+  ],
+  "reviewer_receipts": [
+    "FIXTURE-NOT-AN-ACTUAL-APPROVAL"
+  ]
+}

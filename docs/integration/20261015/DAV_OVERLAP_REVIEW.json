@@ -1,0 +1,25 @@
+{
+  "identical": 65,
+  "changed": [
+    "README.md",
+    "SPEC_KIT_MANIFEST.json"
+  ],
+  "added": [
+    "INTEGRATION_AMENDMENT_20261015.md",
+    "OUTPUT_AND_SCHEMA_INDEX.md",
+    "RELATIONAL_INVARIANTS.md",
+    "SEARCH_PLAN_20261015.md",
+    "SOURCE_BY_QUESTION_COVERAGE.tsv",
+    "examples/specification_only_release.json",
+    "examples/synthetic_episode.json",
+    "examples/synthetic_episode_binding.json",
+    "schemas/episode_binding.schema.json",
+    "schemas/materialized_matrix.schema.json",
+    "schemas/prior_exposure_record.schema.json",
+    "schemas/release_contract.schema.json",
+    "schemas/treatment_episode.schema.json",
+    "search_plan.tsv",
+    "source_search_update_log.tsv"
+  ],
+  "standalone_only": []
+}

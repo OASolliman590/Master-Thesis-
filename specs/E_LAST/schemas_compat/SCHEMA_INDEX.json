@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "schemas": [
+    "source_access",
+    "source_object",
+    "publication_family",
+    "study",
+    "compound",
+    "formulation",
+    "population",
+    "experimental_manifest",
+    "dosing_event",
+    "observation",
+    "assay_result",
+    "parameter_evidence",
+    "model_asset",
+    "role_assignment",
+    "prospective_prediction",
+    "vpop_target",
+    "scenario",
+    "run",
+    "validation_receipt",
+    "handoff",
+    "decision",
+    "inventory"
+  ],
+  "policy": "Strict unknown-field rejection; semantic/cross-record guards in qa/validate_kit.py; synthetic records never biological evidence."
+}

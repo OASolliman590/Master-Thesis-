@@ -1,0 +1,86 @@
+{
+  "status": "retrieval_specification_not_download_receipt",
+  "query_date": "2026-10-13",
+  "max_retries": 3,
+  "local_requests_per_second": 1,
+  "host_workers": 1,
+  "service_limits": "Verify current official limits; obey stricter limit and Retry-After",
+  "cache": "Immutable object version; hash only retained original bytes",
+  "routes": [
+    {
+      "id": "S001_identity",
+      "method": "GET",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "params": {
+        "query": "DOI:10.1007/s00280-017-3447-x",
+        "format": "json",
+        "pageSize": 25,
+        "cursorMark": "*"
+      },
+      "pagination": "returned nextCursorMark",
+      "parser": "JSON identity; validate DOI/PMID",
+      "destination": "studies/source_objects",
+      "required_measurement": false
+    },
+    {
+      "id": "FDA_vorinostat",
+      "method": "GET",
+      "url": "https://api.fda.gov/drug/drugsfda.json",
+      "params": {
+        "search": "products.active_ingredients.name:\"VORINOSTAT\"",
+        "limit": 1
+      },
+      "pagination": "official limit/skip after review",
+      "parser": "JSON applications/documents; follow actual links",
+      "destination": "source_objects",
+      "required_measurement": false
+    },
+    {
+      "id": "CTG_search",
+      "method": "GET",
+      "url": "https://clinicaltrials.gov/api/v2/studies",
+      "params": {
+        "query.cond": "prostate cancer",
+        "query.intr": "vorinostat",
+        "pageSize": 10,
+        "format": "json"
+      },
+      "pagination": "returned nextPageToken",
+      "parser": "JSON protocol/results modules",
+      "destination": "studies/regimens",
+      "required_measurement": false
+    },
+    {
+      "id": "ChEMBL_identity",
+      "method": "GET",
+      "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search.json",
+      "params": {
+        "q": "vorinostat"
+      },
+      "pagination": "returned page_meta.next",
+      "parser": "JSON candidate identities; no guessed ChEMBL ID",
+      "destination": "compounds",
+      "required_measurement": false
+    },
+    {
+      "id": "S001_regulatory_review",
+      "method": "GET",
+      "url": "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2006/021991s000_Zolinza_ClinPharmR.pdf",
+      "params": {},
+      "pagination": "not_applicable",
+      "parser": "PDF table/figure extraction with page verification",
+      "destination": "PK observations after admission",
+      "required_measurement": false
+    },
+    {
+      "id": "PKDB",
+      "method": "UNKNOWN",
+      "url": "https://pk-db.com/",
+      "params": {},
+      "pagination": "UNKNOWN",
+      "parser": "Resolve official current object/API before adapter",
+      "destination": "optional source candidates",
+      "required_measurement": false
+    }
+  ]
+}

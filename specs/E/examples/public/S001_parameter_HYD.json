@@ -1,0 +1,43 @@
+{
+  "schema": "parameter_evidence",
+  "record": {
+    "schema_version": "1.0.0",
+    "record_id": "PUB-VOR-HYD",
+    "synthetic": false,
+    "parameter_id": "PUB-VOR-HYD",
+    "symbol": "additional_hydrolysis_beta_oxidation",
+    "context": "S001 original context only",
+    "measurement": {
+      "raw_value": 1.8,
+      "raw_unit": "h^-1",
+      "canonical_value": 1.8,
+      "canonical_unit": "h^-1",
+      "statistic": "fitted_estimate",
+      "biological_n": null,
+      "biological_unit": "synthetic_run",
+      "n_unknown_reason": "Not established from inspected table",
+      "uncertainty": {
+        "type": "unknown",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "reason": "Fixture only; not biological uncertainty"
+      },
+      "transformation": null,
+      "conversion_factor": 1.0,
+      "raw_statistic": "fitted_estimate",
+      "raw_uncertainty_type": "unknown"
+    },
+    "evidence_class": "fitted_estimate",
+    "source_ids": [
+      "S001"
+    ],
+    "source_locator": "S001 Table 2",
+    "parameter_status": "source_fitted",
+    "prior_definition": null,
+    "curator": "source-review agent",
+    "verification": "Source inspected; independent extraction review pending",
+    "permitted_role": "upstream_reconstruction",
+    "transferability": "Source fitted additional process; not measured systemic CL in L/h"
+  }
+}

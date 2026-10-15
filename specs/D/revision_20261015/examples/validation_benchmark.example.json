@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "BENCH-DEMO",
+  "question": "software arithmetic fixture",
+  "role": "SOFTWARE_TEST",
+  "independent_unit": "synthetic condition",
+  "development_sources": [
+    "synthetic"
+  ],
+  "test_sources": [
+    "synthetic"
+  ],
+  "primary_endpoint": "theta",
+  "primary_comparator": "fixed synthetic baseline",
+  "metrics": [
+    "MSE_GAIN"
+  ],
+  "frozen_hash": "5555555555555555555555555555555555555555555555555555555555555555",
+  "status": "FIXTURE_ONLY"
+}

@@ -1,27 +1,19 @@
-# A four-figure evidence outline
+# Paper A four-figure contract
 
-**11 September 2026 figure ordering:** A-P2 is selected. Figure 1: cohort/label/split provenance. Figure 2: held-out discovery and independent-test incremental AUROC, coefficient/stability product (former 3D–3E). Figure 3: secondary response-definition sensitivity and admitted comparator analyses. Figure 4: qualified prostate molecular characterization and A-to-B/C evidence handoff. Historical panel identifiers below remain content references; they no longer determine primary emphasis.
+Each panel declares question, data-release/source IDs, unique patient N, specimen/assay N, experimental unit, analysis, interval definition and permitted conclusion. N remains UNKNOWN until a matrix receipt exists. Missing inputs yield a labelled unavailable panel or an explicitly revised layout; no synthetic plot is presented as evidence. Null/negative effects remain in the figure.
 
-Proposed panels, not generated results. Missing panels remain visible; do not replace unavailable clinical validation with an RNA proxy under the same caption.
+| Panel | Question / source | Unit and N | Analysis / uncertainty | Permitted conclusion |
+|---|---|---|---|---|
+| 1A | How were sources resolved? Shared search/study/alias records | Publication/source records; patient N separately UNKNOWN | Source flow and exclusion reasons, no inferential interval | Audited search coverage, not cohort count from catalogue rows |
+| 1B | How many unique eligible patients? Branch matrices/receipts | Patients plus specimens/assays, each UNKNOWN | Branch-specific denominator cascade and endpoint/coverage heatmap | Actual analysis population and losses |
+| 1C | Is evaluation independent? Overlap/exposure/split registry | Study families/patients | Connected overlap graph and role annotations | Declared lineage and remaining restrictions |
+| 2A | Which programmes associate with ORR? A-BIO full effect table | Patient within independent family | Forests of compatible-scale effects/intervals | Context-specific response association |
+| 2B | Robust versus context-dependent biology? A-BIO synthesis | Independent studies/cancers | Direction/support, heterogeneity, influence; prediction interval only if estimable | Qualified reproducibility, not universal mechanism |
+| 2C | Which cellular alternatives remain? Context/corroboration releases | Patients; nested cells/spots separately | Matched composition sensitivity and source-qualified localization | Interpretation support, not tumour-cell causality |
+| 3A | What transfers during development? Outer-fold predictions | Held-out development families/patients | Study-held-out AUROC/uncertainty and model stability | Learning-procedure performance, not untouched confirmation |
+| 3B | Does frozen score improve on CYT? A-P2 final-test receipt | Same test patients for both scores | Both AUCs, paired differences, fixed-weight aggregate and conditional intervals | Finite independent-test discrimination |
+| 3C | Does endpoint definition change discrimination? A-P1 release | Same O/SD/PD patients | Fixed CYT DCR−ORR contrast, category decomposition and joint bootstrap | Endpoint-definition sensitivity; learned score additional only |
+| 4A | What can be characterized in prostate? Qualified PRAD/clinical-source releases | Patient; N UNKNOWN | Coverage/distribution/pathology context; actual clinical endpoint if admitted | Molecular characterization or specifically qualified clinical transport |
+| 4B | What does B/C receive? Frozen handoff manifest | Features/programmes, study support | Evidence graph with uncertainty/conflicting directions | Clinical-reference input, not causal restoration proof |
 
-| Figure/panel | Question and inputs | Analysis and uncertainty | Maximum claim |
-|---|---|---|---|
-| 1A | Which originating ICI cohorts actually qualify? Original clinical/expression manifests | Flow from records to patients to shared primary set, with exclusion reasons | Audited source eligibility |
-| 1B | Which outcomes can each cohort support? Original response/timing fields | Coverage heatmap; ORR/DCR/DCB/PSA distinguished; unknowns visible | Endpoint availability |
-| 1C | Which records overlap? Study/patient/specimen graph | Repeated visits, accessions and signature-development sources labelled | Independence audit, not proof from different IDs |
-| 2A | How much does endpoint definition change CYT discrimination? Identical patient pairs per cohort | ORR and DCR AUC with paired interval and original category counts | Retrospective discrimination |
-| 2B | What is the prespecified primary summary? Frozen eligible cancers/cohorts | Delta forest plot, equal cancer/cohort weights,95% interval | Endpoint sensitivity in sampled cohorts |
-| 2C | Does one source dominate? Same inputs | Leave-cohort/cancer-out influence and bootstrap validity rates | Sensitivity, not nested classifier validation |
-| 2D | Does category composition explain part of Delta? Same O/SD/PD patients | Category counts and A_OS/A_OP/A_SP decomposition, no extra primary test | Separates prevalence weights from category-specific score separation |
-| 3A | Does the finding extend to a frozen signature panel? Verified implementations/feature coverage | Full secondary comparison with BH family and uncertainty | Signature-specific reproducibility |
-| 3B | Do independently sourced cohorts agree? Locked mapping and predeclared replication | Development/replication estimates side by side; no winner selection | Independent retrospective replication if overlap audit passes |
-| 3C | Do durable endpoints change interpretation? Only eligible follow-up records | Separate duration/censoring-aware sensitivity; report excluded fields | Duration-qualified endpoint differences |
-| 3D | Does the discovered signature improve held-out discrimination? Frozen development/model/test registries | Outer-cohort/cancer results separately from untouched-test paired AUROC improvement over CYT; conditional-on-training interval | Independent-test discrimination only if DISCOVERY.md gates pass |
-| 3E | What discovery product reaches B/C? Frozen coefficients and fold manifests | Full coefficient/sign/coverage table and descriptive fold stability | Prespecified signature handoff; no immune mechanism inferred from coefficient sign |
-| 4A | What transfers molecularly to PRAD? Admitted TCGA-PRAD/LUAD and original PCaDB cohorts | TRANSPORT.md median shift/IQR ratio after scale gates, coverage and patient-linked pathology Spearman correlation when available | Molecular/context characterization; not clinical model accuracy |
-| 4B | Is there usable prostate clinical evidence? COMBAT and any secured independent trial | Regimen/timing map and separately labelled endpoint analysis with broad uncertainty | Regimen-specific exploratory association |
-| 4C | What cannot be concluded? Cross-paper evidence map | Unsupported clinical arrows visibly absent; link A's frozen products to B | Explicit thesis interpretation boundary |
-
-Figure3 panel feasibility and Figure4 clinical endpoint validity are readiness gates. A single binary label source cannot be drawn as if CR/PR/SD/PD are available. Every point must trace to the dataset snapshot, analysis specification and patient/experiment unit.
-
-With A-P2 selected as primary, the discovery validation panels3D–3E move to the lead quantitative Figure2 and CYT endpoint-sensitivity panels become the secondary Figure3; rewrite figure titles/captions before analysis. Keep four figures and all admitted branches under the approved A-P2-primary/A-P1-secondary hierarchy. Same-cancer replication and cross-cancer/regimen transport must be labelled separately in every forest plot.
+Figure 3B is visibly marked nonestimable/incomplete when final-test requirements fail; do not substitute outer-fold predictions under its title. Figure 4 has no unsupported arrow from untreated PRAD to ICI response or from predictor coefficient to epigenetic drug target. Calibration is absent unless separately justified. Detailed longitudinal panels belong to A1 and are not duplicated as a second baseline publication.

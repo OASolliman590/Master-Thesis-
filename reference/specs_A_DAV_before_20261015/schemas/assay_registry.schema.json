@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/assay_registry.schema.json",
+  "title": "Private assay registry record",
+  "description": "Private one-row-per-assay/aliquot/processed-measurement registry.",
+  "type": "object",
+  "required": [
+    "assay_uid",
+    "specimen_uid",
+    "source_sample_id",
+    "source_object_id",
+    "modality",
+    "platform",
+    "measurement_unit",
+    "matrix_header",
+    "qc_status",
+    "branch_suitability",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "data_classification": {
+      "type": "string",
+      "const": "PRIVATE_PATIENT_LEVEL"
+    },
+    "assay_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "specimen_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "source_sample_id": {
+      "type": "string"
+    },
+    "source_object_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "modality": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "assay_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "genome_build": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "feature_annotation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "measurement_unit": {
+      "type": "string"
+    },
+    "transform": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "matrix_header": {
+      "type": "string"
+    },
+    "processing_history": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "qc_status": {
+      "type": "string",
+      "enum": [
+        "NOT_EVALUATED",
+        "PASS",
+        "FAIL",
+        "BLOCKED_UNKNOWN"
+      ]
+    },
+    "replicate_status": {
+      "type": "string",
+      "enum": [
+        "PRIMARY",
+        "TECHNICAL_REPLICATE",
+        "REPEATED_SEQUENCING",
+        "BIOLOGICAL_REPLICATE",
+        "UNKNOWN"
+      ]
+    },
+    "gene_probe_coverage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "missingness": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "branch_suitability": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "BASELINE_DE",
+          "BASELINE_SCORING",
+          "PREDICTION_DEVELOPMENT",
+          "OUTER_VALIDATION",
+          "FINAL_TEST",
+          "LONGITUDINAL",
+          "METHYLATION",
+          "PROTEIN",
+          "SINGLE_CELL",
+          "SPATIAL",
+          "UNSUPPORTED"
+        ]
+      }
+    },
+    "unsupported_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
