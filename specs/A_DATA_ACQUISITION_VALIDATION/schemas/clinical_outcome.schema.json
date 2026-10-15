@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/OASolliman590/Master-Thesis-/main/specs/A_DATA_ACQUISITION_VALIDATION/schemas/clinical_outcome.schema.json",
+  "title": "Private clinical outcome record",
+  "description": "Private endpoint instance preserving original and branch-derived values.",
+  "type": "object",
+  "required": [
+    "outcome_id",
+    "patient_uid",
+    "raw_endpoint_label",
+    "endpoint_class",
+    "assessment_criteria",
+    "canonical_category",
+    "mapping_rule_version",
+    "mapping_confidence",
+    "source_locators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "data_classification": {
+      "type": "string",
+      "const": "PRIVATE_PATIENT_LEVEL"
+    },
+    "outcome_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "patient_uid": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "raw_endpoint_label": {
+      "type": "string"
+    },
+    "endpoint_class": {
+      "type": "string",
+      "enum": [
+        "TUMOUR_RESPONSE",
+        "ORR",
+        "DCR",
+        "DCB",
+        "PSA_RESPONSE",
+        "PATHOLOGICAL_RESPONSE",
+        "PFS",
+        "OS",
+        "TTP",
+        "RECURRENCE_PROGRESSION",
+        "SOURCE_BINARY",
+        "OTHER"
+      ]
+    },
+    "assessment_criteria": {
+      "type": "string"
+    },
+    "assessment_date_or_day": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "assessment_window": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "best_overall_response": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "CR",
+        "PR",
+        "SD",
+        "PD",
+        "NE",
+        "UNKNOWN",
+        null
+      ]
+    },
+    "canonical_category": {
+      "type": "string",
+      "enum": [
+        "CR",
+        "PR",
+        "SD",
+        "PD",
+        "NE",
+        "OBJECTIVE_RESPONDER",
+        "OBJECTIVE_NONRESPONDER",
+        "DISEASE_CONTROL",
+        "NO_DISEASE_CONTROL",
+        "DURABLE_BENEFIT",
+        "NO_DURABLE_BENEFIT",
+        "SOURCE_POSITIVE",
+        "SOURCE_NEGATIVE",
+        "UNKNOWN",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "orr_mapping": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "dcr_mapping": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "dcb_mapping": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "duration_threshold": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_time": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "event_indicator": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "censoring": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evaluability": {
+      "type": "string",
+      "enum": [
+        "EVALUABLE",
+        "NOT_EVALUABLE",
+        "UNKNOWN"
+      ]
+    },
+    "mapping_rule_version": {
+      "type": "string"
+    },
+    "mapping_confidence": {
+      "type": "string",
+      "enum": [
+        "VERIFIED",
+        "PROBABLE",
+        "POSSIBLE",
+        "UNRESOLVED",
+        "DISPROVED"
+      ]
+    },
+    "discrepancy_status": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "CONFLICT",
+        "UNRESOLVED",
+        "RESOLVED"
+      ]
+    },
+    "source_locators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "page_or_section": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accessed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

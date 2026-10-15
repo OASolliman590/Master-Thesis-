@@ -1,0 +1,18 @@
+{
+  "package": "specs/A_DATA_ACQUISITION_VALIDATION",
+  "errors": [],
+  "warnings": [],
+  "file_count": 67,
+  "markdown_count": 40,
+  "json_count": 13,
+  "tsv_count": 14,
+  "total_bytes": 254766,
+  "total_lines": 6643,
+  "mermaid_diagrams": 10,
+  "approved_decisions": 11,
+  "ticket_ids": 14,
+  "protocol_rows": 15,
+  "reconciliation_rows": 20,
+  "manifest_entries": 66,
+  "status": "PASS"
+}
