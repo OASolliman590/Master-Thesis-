@@ -2,77 +2,35 @@
   "repository": "OASolliman590/Master-Thesis-",
   "branch": "codex/thesis-speckits-20261015",
   "base_commit": "a8278c776da7c6b096cc14139d729979db286b50",
-  "verified_snapshot_commit": "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6",
-  "tag": "specs/thesis-20261015-v1-rc1",
-  "tag_target": "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6",
+  "verified_snapshot_commit": "92f9099c1a2e5442590729cce6d54f1a81958f27",
+  "tag": "specs/thesis-20261015-v1-rc2",
+  "tag_target": "92f9099c1a2e5442590729cce6d54f1a81958f27",
   "remote_refs": [
-    "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6\trefs/heads/codex/thesis-speckits-20261015",
-    "d727f3024de6bda77b9c48db3ed5147e40f1d0a9\trefs/tags/specs/thesis-20261015-v1-rc1",
-    "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6\trefs/tags/specs/thesis-20261015-v1-rc1^{}"
+    "92f9099c1a2e5442590729cce6d54f1a81958f27\trefs/heads/codex/thesis-speckits-20261015",
+    "d614fe9e20b02304d1fb467668d0ce845b479dce\trefs/tags/specs/thesis-20261015-v1-rc2",
+    "92f9099c1a2e5442590729cce6d54f1a81958f27\trefs/tags/specs/thesis-20261015-v1-rc2^{}"
   ],
   "pr": {
     "baseRefName": "main",
     "headRefName": "codex/thesis-speckits-20261015",
-    "headRefOid": "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6",
+    "headRefOid": "92f9099c1a2e5442590729cce6d54f1a81958f27",
     "isDraft": true,
     "state": "OPEN",
     "statusCheckRollup": [],
     "url": "https://github.com/OASolliman590/Master-Thesis-/pull/12"
   },
-  "canonical_readback": [
-    {
-      "path": "START_HERE.md",
-      "sha256": "d76e65b3ee59954cf8e7c66998cb2af233c5ccd07d2728f31e1f9db5825f95ff",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/A/README.md",
-      "sha256": "0c42caf5b77190edc9165eded51d48e839d39718257392cd819bdbe74a0f9562",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/A1/README.md",
-      "sha256": "a6a2a92eea10b6c82ba5848b48f317ec46bd576ec9eee8072b0f87ffeb505efe",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/A_DATA_ACQUISITION_VALIDATION/README.md",
-      "sha256": "ba9c97f08100e6c853ddf5ad99d7db09a9a5fc5a42f84cb7cfe7ab131de4bcf2",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/B/README.md",
-      "sha256": "7b51ff1b3b2a64ca92dfd85d3171dc466beec29013f347cb95ffa1d993f704f5",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/C/README.md",
-      "sha256": "2059433c649f4448c86546143cb0319b32057ee175665ad35418de624564fb97",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/D/README.md",
-      "sha256": "496e3c28dfad65bcadd08d2cdee3b6f6c1d130c1fe69e05ab7159129ecb39c39",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/E/README.md",
-      "sha256": "46294afcc97827a1f10e40be49e488f7d3504d86f86666698075877b53969503",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "specs/E_LAST/README.md",
-      "sha256": "edccd66395bd03611cabe29906aff35b436e5343458692db14f3268a523e63d7",
-      "remote_bytes_match": true
-    },
-    {
-      "path": "docs/integration/20261015/FREEZE_MANIFEST.json",
-      "sha256": "72cdd3470a2e71232949cf92672fd1fa43c403b745793e056618f342194d4cd6",
-      "remote_bytes_match": true
-    }
-  ],
-  "changed_file_count": 682,
+  "canonical_readback": {
+    "method": "GitHub recursive Git tree blob OIDs compared against local bytes and independently verified SHA256 manifest",
+    "truncated": false,
+    "matched_scoped_blobs_including_manifest": 697
+  },
+  "changed_file_count": 694,
   "test_status": "Specification suites pass; strict B 145/147 with missing fixture and initial sandbox bind error; bind subset later passes; full suite not green",
   "release_level": "S-only scoped RC; D/A/X not granted",
-  "receipt_note": "Written after remote snapshot verification; receipt commit is a later descendant, not included in scoped manifest."
+  "receipt_note": "RC2 supersedes RC1 completeness claim. Verified exact remote snapshot; later receipt-only commit excluded from manifest.",
+  "superseded_snapshot": {
+    "commit": "b1d7a0b5e5ad541978863d25e4b54bb91b786ba6",
+    "tag": "specs/thesis-20261015-v1-rc1",
+    "reason": "Six manifest-listed E Markdown files absent from committed tree; RC1 packaging incomplete; tag preserved."
+  }
 }
