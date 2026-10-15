@@ -1,0 +1,55 @@
+test_actual_approval_needed (test_contracts.Contracts.test_actual_approval_needed) ... ok
+test_aggregate_not_individual (test_contracts.Contracts.test_aggregate_not_individual) ... ok
+test_all_schemas_and_examples (test_contracts.Contracts.test_all_schemas_and_examples) ... ok
+test_ambiguous_dose_basis (test_contracts.Contracts.test_ambiguous_dose_basis) ... ok
+test_blq_needs_limit (test_contracts.Contracts.test_blq_needs_limit) ... ok
+test_cl_apparent (test_contracts.Contracts.test_cl_apparent) ... ok
+test_culture_not_clinical (test_contracts.Contracts.test_culture_not_clinical) ... ok
+test_duplicate_conflict (test_contracts.Contracts.test_duplicate_conflict) ... ok
+test_exact_reproduction_needs_asset (test_contracts.Contracts.test_exact_reproduction_needs_asset) ... ok
+test_extrapolation_not_validation (test_contracts.Contracts.test_extrapolation_not_validation) ... ok
+test_generated_needs_raw (test_contracts.Contracts.test_generated_needs_raw) ... ok
+test_hash_integrity (test_contracts.Contracts.test_hash_integrity) ... ok
+test_human_target_not_culture (test_contracts.Contracts.test_human_target_not_culture) ... ok
+test_interval_order (test_contracts.Contracts.test_interval_order) ... ok
+test_log_calibration_positive (test_contracts.Contracts.test_log_calibration_positive) ... ok
+test_metadata_not_pk (test_contracts.Contracts.test_metadata_not_pk) ... ok
+test_missing_formulation (test_contracts.Contracts.test_missing_formulation) ... ok
+test_missing_needs_reason (test_contracts.Contracts.test_missing_needs_reason) ... ok
+test_missing_time_origin (test_contracts.Contracts.test_missing_time_origin) ... ok
+test_mixed_not_target_count (test_contracts.Contracts.test_mixed_not_target_count) ... ok
+test_negative_N (test_contracts.Contracts.test_negative_N) ... ok
+test_negative_dose (test_contracts.Contracts.test_negative_dose) ... ok
+test_next_version_update_allowed (test_contracts.Contracts.test_next_version_update_allowed) ... ok
+test_numeric_conversion (test_contracts.Contracts.test_numeric_conversion) ... ok
+test_planned_not_generated (test_contracts.Contracts.test_planned_not_generated) ... ok
+test_predictions_not_biological_evaluation (test_contracts.Contracts.test_predictions_not_biological_evaluation) ... ok
+test_public_email_leak (test_contracts.Contracts.test_public_email_leak) ... ok
+test_public_identifier_leak (test_contracts.Contracts.test_public_identifier_leak) ... ok
+test_real_numeric_source_needed (test_contracts.Contracts.test_real_numeric_source_needed) ... ok
+test_receipt_tamper (test_contracts.Contracts.test_receipt_tamper) ... ok
+test_registration_required (test_contracts.Contracts.test_registration_required) ... ok
+test_restricted_required (test_contracts.Contracts.test_restricted_required) ... ok
+test_retention_range (test_contracts.Contracts.test_retention_range) ... ok
+test_role_overlap (test_contracts.Contracts.test_role_overlap) ... ok
+test_sd_se_relabel (test_contracts.Contracts.test_sd_se_relabel) ... ok
+test_software_not_biological (test_contracts.Contracts.test_software_not_biological) ... ok
+test_source_bytes_require_retention (test_contracts.Contracts.test_source_bytes_require_retention) ... ok
+test_source_hash_requires_bytes (test_contracts.Contracts.test_source_hash_requires_bytes) ... ok
+test_source_missing_hash_reason (test_contracts.Contracts.test_source_missing_hash_reason) ... ok
+test_statistic_relabel (test_contracts.Contracts.test_statistic_relabel) ... ok
+test_synthetic_cannot_freeze (test_contracts.Contracts.test_synthetic_cannot_freeze) ... ok
+test_synthetic_id_required (test_contracts.Contracts.test_synthetic_id_required) ... ok
+test_unknown_N_requires_reason (test_contracts.Contracts.test_unknown_N_requires_reason) ... ok
+test_unknown_field (test_contracts.Contracts.test_unknown_field) ... ok
+test_unresolved_real_value_forbidden (test_contracts.Contracts.test_unresolved_real_value_forbidden) ... ok
+test_v_apparent (test_contracts.Contracts.test_v_apparent) ... ok
+test_washout_retention_required (test_contracts.Contracts.test_washout_retention_required) ... ok
+test_weights_ess (test_contracts.Contracts.test_weights_ess) ... ok
+test_weights_negative (test_contracts.Contracts.test_weights_negative) ... ok
+test_weights_not_normalized (test_contracts.Contracts.test_weights_not_normalized) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 0.534s
+
+OK

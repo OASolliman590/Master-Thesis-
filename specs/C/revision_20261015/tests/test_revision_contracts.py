@@ -15,7 +15,7 @@ REV = ROOT / "specs" / "C" / "revision_20261015"
 REQUIRED_FILES = [
     ROOT / "docs/decisions/C_FRAMEWORK_20261015.md",
     ROOT / "docs/research/C_SCIENTIFIC_REVISION_20261015.md",
-    ROOT / "docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md",
+    ROOT / "docs/plans/2026-10-15-paper-c-scientific-revision.md",
     ROOT / "CONTEXT.md",
     ROOT / "specs/C/README.md",
     REV / "README.md",

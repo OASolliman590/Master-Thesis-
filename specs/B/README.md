@@ -1,3 +1,7 @@
+# Integration status — 15 October 2026
+
+B-P and the approved 11 September immune-barrier framework remain controlling. The [28 September revision](SCIENTIFIC_REVISION_REVIEW.md) is a proposal, not an approved replacement. W1–W8 synthetic software exists; historical W8-pending language below is superseded by docs/execution/PROGRESS.md. Fresh integration test status is in [VALIDATION_REPORT](../../docs/integration/20261015/VALIDATION_REPORT.md). Real cohort release remains pending.
+
 # Paper B — prostate immune deficits and epigenetic correlates
 
 **Scientific aim amended, 11 September 2026:** [approved A/B reconciliation](../../docs/decisions/AB_IMMUNE_BARRIERS_20260911.md). The controlling broader question and figure plan are in [IMMUNE_BARRIER_FRAMEWORK.md](IMMUNE_BARRIER_FRAMEWORK.md): clinically anchored prostate immune deficits, epigenetic correlates, composition alternatives and candidates for restoration testing. Existing B-P is the specified confirmatory estimand within the fixed APM validation module, not proof of the whole barrier claim. W1-W7 are implemented/reviewed locally for the synthetic APM component; W8 and broader scientific modules remain pending. Historical engineering statuses below are superseded by current PROGRESS. No new score or real analysis is authorized here.

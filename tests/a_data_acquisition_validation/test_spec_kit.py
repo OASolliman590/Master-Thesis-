@@ -13,7 +13,9 @@ except Exception:  # pragma: no cover
     validator_for = None
 
 ROOT = Path(__file__).resolve().parents[2]
-PKG = ROOT / "specs" / "A_DATA_ACQUISITION_VALIDATION"
+# Predecessor contract suite: preserve original manifest/README assertions.
+# Extended current contracts are tested by tests/a_a1_spec_contract.
+PKG = ROOT / "reference" / "specs_A_DAV_before_20261015"
 
 CORE_DOCS = [
     "README.md",
@@ -178,7 +180,7 @@ class SpecKitTests(unittest.TestCase):
         manifest_path = PKG / "SPEC_KIT_MANIFEST.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         for item in manifest["files"]:
-            path = ROOT / item["path"]
+            path = PKG / Path(item["path"]).relative_to("specs/A_DATA_ACQUISITION_VALIDATION")
             self.assertTrue(path.is_file(), item["path"])
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             self.assertEqual(digest, item["sha256"], item["path"])

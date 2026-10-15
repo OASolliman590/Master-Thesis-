@@ -1,0 +1,67 @@
+[
+  {
+    "suite": "dav",
+    "command": [
+      "<ISOLATED_VENV>/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/a_data_acquisition_validation",
+      "-v"
+    ],
+    "exit": 1
+  },
+  {
+    "suite": "c",
+    "command": [
+      "<ISOLATED_VENV>/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "specs/C/revision_20261015/tests",
+      "-v"
+    ],
+    "exit": 1
+  },
+  {
+    "suite": "e_v1",
+    "command": [
+      "<ISOLATED_VENV>/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "specs/E/qa",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "suite": "e_v2",
+    "command": [
+      "<ISOLATED_VENV>/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "specs/E/qa_v2",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "suite": "e_last",
+    "command": [
+      "<ISOLATED_VENV>/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "specs/E_LAST/qa",
+      "-v"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,63 @@
+test_c1_is_secondary_and_not_comparative_efficacy (test_revision_contracts.PaperCRevisionContractTests.test_c1_is_secondary_and_not_comparative_efficacy) ... ok
+test_decision_register_records_approved_framework_and_unfrozen_primary (test_revision_contracts.PaperCRevisionContractTests.test_decision_register_records_approved_framework_and_unfrozen_primary) ... ok
+test_json_schemas_are_valid_and_examples_conform (test_revision_contracts.PaperCRevisionContractTests.test_json_schemas_are_valid_and_examples_conform) ... ok
+test_package_contains_no_biological_completion_claim (test_revision_contracts.PaperCRevisionContractTests.test_package_contains_no_biological_completion_claim) ... ERROR
+test_primary_contract_is_paired_and_uses_biological_units (test_revision_contracts.PaperCRevisionContractTests.test_primary_contract_is_paired_and_uses_biological_units) ... ok
+test_query_contract_requires_equal_budgets_and_no_padding (test_revision_contracts.PaperCRevisionContractTests.test_query_contract_requires_equal_budgets_and_no_padding) ... ok
+test_relative_markdown_links_resolve_or_are_known_existing_paths (test_revision_contracts.PaperCRevisionContractTests.test_relative_markdown_links_resolve_or_are_known_existing_paths) ... ERROR
+test_required_package_files_exist_and_are_nonempty (test_revision_contracts.PaperCRevisionContractTests.test_required_package_files_exist_and_are_nonempty) ... FAIL
+test_source_manifest_keeps_roles_and_unknown_counts_explicit (test_revision_contracts.PaperCRevisionContractTests.test_source_manifest_keeps_roles_and_unknown_counts_explicit) ... ok
+test_unresolved_register_has_no_closed_scientific_unknowns (test_revision_contracts.PaperCRevisionContractTests.test_unresolved_register_has_no_closed_scientific_unknowns) ... ok
+
+======================================================================
+ERROR: test_package_contains_no_biological_completion_claim (test_revision_contracts.PaperCRevisionContractTests.test_package_contains_no_biological_completion_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTEGRATION_CHECKOUT>/specs/C/revision_20261015/tests/test_revision_contracts.py", line 143, in test_package_contains_no_biological_completion_claim
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in REQUIRED_FILES if path.suffix == ".md")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<INTEGRATION_CHECKOUT>/specs/C/revision_20261015/tests/test_revision_contracts.py", line 143, in <genexpr>
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in REQUIRED_FILES if path.suffix == ".md")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<INTEGRATION_CHECKOUT>/docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md'
+
+======================================================================
+ERROR: test_relative_markdown_links_resolve_or_are_known_existing_paths (test_revision_contracts.PaperCRevisionContractTests.test_relative_markdown_links_resolve_or_are_known_existing_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTEGRATION_CHECKOUT>/specs/C/revision_20261015/tests/test_revision_contracts.py", line 160, in test_relative_markdown_links_resolve_or_are_known_existing_paths
+    text = path.read_text(encoding="utf-8")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_RUNTIME>/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<INTEGRATION_CHECKOUT>/docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md'
+
+======================================================================
+FAIL: test_required_package_files_exist_and_are_nonempty (test_revision_contracts.PaperCRevisionContractTests.test_required_package_files_exist_and_are_nonempty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<INTEGRATION_CHECKOUT>/specs/C/revision_20261015/tests/test_revision_contracts.py", line 78, in test_required_package_files_exist_and_are_nonempty
+    self.assertEqual(missing, [])
+AssertionError: Lists differ: ['docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md'
+
+- ['docs/superpowers/plans/2026-10-15-paper-c-scientific-revision.md']
++ []
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.138s
+
+FAILED (failures=1, errors=2)

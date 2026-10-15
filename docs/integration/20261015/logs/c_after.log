@@ -1,0 +1,15 @@
+test_c1_is_secondary_and_not_comparative_efficacy (test_revision_contracts.PaperCRevisionContractTests.test_c1_is_secondary_and_not_comparative_efficacy) ... ok
+test_decision_register_records_approved_framework_and_unfrozen_primary (test_revision_contracts.PaperCRevisionContractTests.test_decision_register_records_approved_framework_and_unfrozen_primary) ... ok
+test_json_schemas_are_valid_and_examples_conform (test_revision_contracts.PaperCRevisionContractTests.test_json_schemas_are_valid_and_examples_conform) ... ok
+test_package_contains_no_biological_completion_claim (test_revision_contracts.PaperCRevisionContractTests.test_package_contains_no_biological_completion_claim) ... ok
+test_primary_contract_is_paired_and_uses_biological_units (test_revision_contracts.PaperCRevisionContractTests.test_primary_contract_is_paired_and_uses_biological_units) ... ok
+test_query_contract_requires_equal_budgets_and_no_padding (test_revision_contracts.PaperCRevisionContractTests.test_query_contract_requires_equal_budgets_and_no_padding) ... ok
+test_relative_markdown_links_resolve_or_are_known_existing_paths (test_revision_contracts.PaperCRevisionContractTests.test_relative_markdown_links_resolve_or_are_known_existing_paths) ... ok
+test_required_package_files_exist_and_are_nonempty (test_revision_contracts.PaperCRevisionContractTests.test_required_package_files_exist_and_are_nonempty) ... ok
+test_source_manifest_keeps_roles_and_unknown_counts_explicit (test_revision_contracts.PaperCRevisionContractTests.test_source_manifest_keeps_roles_and_unknown_counts_explicit) ... ok
+test_unresolved_register_has_no_closed_scientific_unknowns (test_revision_contracts.PaperCRevisionContractTests.test_unresolved_register_has_no_closed_scientific_unknowns) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.165s
+
+OK

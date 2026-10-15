@@ -1,0 +1,32 @@
+{
+  "active_code": [
+    {
+      "checkout": "paper-a-integration",
+      "commit": "d574f8aef9b4e26204d06d6b68ad94d427663c6d",
+      "path": "tools/a_intake/core.py",
+      "sha256": "5f69e44c3816351432a703c8937b89542b3e005fddd7ad56cebd98b8d1710290"
+    },
+    {
+      "checkout": "paper-a-integration",
+      "commit": "d574f8aef9b4e26204d06d6b68ad94d427663c6d",
+      "path": "tools/a_sources/byte_acquisition.py",
+      "sha256": "17f86e7d333d7d5f5b32f62d4b9476f0bc906fc8ea1f533cd12dd5ca8405908e"
+    },
+    {
+      "checkout": "paper-a-integration",
+      "commit": "d574f8aef9b4e26204d06d6b68ad94d427663c6d",
+      "path": "tools/a_sources/registry.py",
+      "sha256": "c72909a894c406b26e69c8fee0e911e99edc754ba1939335b281790b45c8aeba"
+    },
+    {
+      "checkout": "paper-a-integration",
+      "commit": "d574f8aef9b4e26204d06d6b68ad94d427663c6d",
+      "path": "tools/a_sources/native_assay_product.py",
+      "sha256": "6d08abf6a50a280e20f36bd9f4ee4872b48ab4160ecf4e0a2497fdab4bf41cba"
+    }
+  ],
+  "legacy_manifest_files": 358,
+  "legacy_mismatches": [],
+  "live_remote_jobs": "UNKNOWN",
+  "non_git_data": "NOT_RECOVERED_BY_THIS_INTEGRATION"
+}

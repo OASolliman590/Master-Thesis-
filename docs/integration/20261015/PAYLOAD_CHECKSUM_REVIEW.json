@@ -1,0 +1,17 @@
+[
+  {
+    "package": "Paper_C_C3_SpecKit_20261015",
+    "matches": 39,
+    "failures": []
+  },
+  {
+    "package": "Paper_D_Decision_Spec_Kit_v1_20261015",
+    "matches": 111,
+    "failures": []
+  },
+  {
+    "package": "Paper_E_Revised_2026-10-15",
+    "matches": 233,
+    "failures": []
+  }
+]

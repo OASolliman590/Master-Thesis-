@@ -1,3 +1,7 @@
+# Current controlling D specification
+
+The [2026-10-15 amended revision](revision_20261015/README.md) and [supplied approval record](../../docs/integration/20261015/source_package_notes/Paper_D_Decision_Spec_Kit_v1_20261015/APPROVAL_RECORD.md) control. Historical text below remains provenance, not a competing active primary. No execution is released.
+
 # Paper D conditional specification kit
 
 **PROPOSED / NOT IMPLEMENTATION-READY — v0.1, 2026-09-05.** No checkpoint inference or scientific benchmark has run. D remains an active paper idea. Earlier recommendations to defer are reviewable recommendations, not user acceptance of cancellation.

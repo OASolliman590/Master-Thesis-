@@ -1,0 +1,8 @@
+test_empty_fails_closed (test_freeze_verification.FreezeTests.test_empty_fails_closed) ... ok
+test_missing_fails_closed (test_freeze_verification.FreezeTests.test_missing_fails_closed) ... ok
+test_valid_then_mutation_rejected (test_freeze_verification.FreezeTests.test_valid_then_mutation_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+OK
