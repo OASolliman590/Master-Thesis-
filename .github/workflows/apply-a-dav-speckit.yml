@@ -59,7 +59,7 @@ jobs:
           set -euo pipefail
           base64 --decode /tmp/a-dav-payload.b64 > /tmp/a-dav-payload.tar.gz
           printf '%s  %s\n' \
-            '9923b016700c4169977fa31457e3feed7f20a0b6c03f90cb8afea11840bef340' \
+            'bde66e18ab8e4488c720eeb01c88b41e1929691b4b22eca8863310d67c3b6b7d' \
             '/tmp/a-dav-payload.tar.gz' | sha256sum --check --strict
 
       - name: Inspect archive
