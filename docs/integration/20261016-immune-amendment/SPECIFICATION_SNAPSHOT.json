@@ -1,0 +1,104 @@
+{
+  "snapshot_id": "immune-programmes-v1-20261016",
+  "status": "reviewed_specification_only_pending_scientific_gates",
+  "base_tag": "specs/thesis-20261015-v1-rc2",
+  "base_commit": "92f9099c1a2e5442590729cce6d54f1a81958f27",
+  "biological_execution_authorized": false,
+  "files": [
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/AMENDMENT.md",
+      "bytes": 7344,
+      "sha256": "1c9a4f8facbd1961aad607fdf8bbe6fae16ce5d050809c7d08a21d79077ca5f6"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/INTERFACES_AND_GATES.md",
+      "bytes": 6679,
+      "sha256": "d4b8a84d3d641ab9c8385e61ae41cb346dc5884772b296974c272b5489fb1c59"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/SOURCE_VERIFICATION.md",
+      "bytes": 7715,
+      "sha256": "ea036674c155e94eb94a4aa7627d7e3b548e0e33408c1d1e3ed52cc4b5fa832f"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/VALIDATION.md",
+      "bytes": 1748,
+      "sha256": "5d662ebead7b6b4880d99d76946a84102a7c24216c5c0359bed9272275b068b9"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/ayers_inventor_disclosure.candidate.json",
+      "bytes": 1675,
+      "sha256": "e1cce7efb66183acf4f0fe26c2087f08d75099edc327c20c70db7d39671a21c3"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/C7_T_CELL_EXHAUSTION_CORE.gmt",
+      "bytes": 174,
+      "sha256": "05db89a18c730e09651e382184163c72f3d731b00855cd89008efad5626ccc6b"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/EPIGENETIC_IMMUNE_PRIMING.gmt",
+      "bytes": 421,
+      "sha256": "2a37add2783808e9392c3a897aa270e2139e5eb0b9fd721bfabb836300af02ae"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/HALLMARK_IMMUNE_RESPONSE_MINI.gmt",
+      "bytes": 297,
+      "sha256": "43854890169b065969e7046cf1f1b6b8401d419f66c7c59f86539bf47dc3dc40"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/HOPE_18.gmt",
+      "bytes": 173,
+      "sha256": "ceccd0fbcce5779cd066bbb4a44328a739c636aae8391c7f1b87b882e6a1b43d"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/T_CELL_INFLAMED_GEP_18.gmt",
+      "bytes": 187,
+      "sha256": "67aebb6d4dc08d26d8ce04b3c619b83e67e7385be50d8ec345bf06685991284a"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/immune_gene_sets_registry.tsv",
+      "bytes": 1092,
+      "sha256": "4656d893793075bb5f04073441901d9f2b37f63f8cba99ffdc9d09b8284e6a23"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy/immune_state_config.yaml",
+      "bytes": 288,
+      "sha256": "7df2e6bbf034ea658915a665687dadfc6bb41a480a36875a6d7edbd5bfc51efc"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/legacy_provenance.json",
+      "bytes": 6048,
+      "sha256": "321526182eab087b8b53c24391f4dac998e7699affaea285c3fa878bfbff86ef"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/programme_registry.v1.json",
+      "bytes": 18302,
+      "sha256": "747c8264b36e2c06dc378d27f5f33136d05339163a553899becf64319d692cd2"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/validate_packet.py",
+      "bytes": 3353,
+      "sha256": "0845baa2d57aba347ff8d7b90689301df87f7f28da685b229c85e75bbb74d132"
+    },
+    {
+      "path": "specs/amendments/2026-10-16-immune-programmes/validation_result.json",
+      "bytes": 178,
+      "sha256": "00002f88c74664e966c3f26b943d129687594766b706575ebd0f6d3a74d1cb8f"
+    },
+    {
+      "path": "docs/integration/20261016-immune-amendment/REVIEW_AND_VALIDATION.md",
+      "bytes": 2903,
+      "sha256": "d0a3e24b210732b255b567d890983f64c824943a0b72df31d660727a63a36e92"
+    },
+    {
+      "path": "docs/integration/20261016-immune-amendment/a_contract_tests.log",
+      "bytes": 13600,
+      "sha256": "d5e27759c8d3769583b7d619130c3f1875be92a09f5c03a16cada103f3d24657"
+    },
+    {
+      "path": "docs/integration/20261016-immune-amendment/freeze_tests.log",
+      "bytes": 587,
+      "sha256": "9db90e67b84fb60e79e820765e9ec972b5075265137a1307344d799ae135c27a"
+    }
+  ]
+}

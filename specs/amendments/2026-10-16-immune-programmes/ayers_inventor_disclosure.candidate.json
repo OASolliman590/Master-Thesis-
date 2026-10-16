@@ -1,0 +1,55 @@
+{
+  "source_id": "AYERS_INVENTOR_PATENT",
+  "url": "https://patents.google.com/patent/US20180327848A1/en",
+  "source_locators": [
+    "Table 3A Set 2.4",
+    "Table 3B 18-Gene Up-Down",
+    "Table 1C"
+  ],
+  "patent_family": "PCT/US2015/064445 as named in Ayers2017 conflict-of-interest disclosure",
+  "status": "inventor_disclosure_candidate_not_admitted_published_assay",
+  "weights": {
+    "CCL5": 0.008346,
+    "CD27": 0.072293,
+    "CD274": 0.042853,
+    "CD276": -0.0239,
+    "CD8A": 0.031021,
+    "CMKLR1": 0.151253,
+    "CXCL9": 0.074135,
+    "CXCR6": 0.004313,
+    "HLA-DQA1": 0.020091,
+    "HLA-DRB1": 0.058806,
+    "HLA-E": 0.07175,
+    "IDO1": 0.060679,
+    "LAG3": 0.123895,
+    "NKG7": 0.075524,
+    "PDCD1LG2": 0.003734,
+    "PSMB10": 0.032999,
+    "STAT1": 0.250229,
+    "TIGIT": 0.084767
+  },
+  "normalization_genes_raw": [
+    "ABCF1",
+    "C14ORF102",
+    "G6PD",
+    "OAZ1",
+    "POLR2A",
+    "SDHA",
+    "STK11IP",
+    "TBC1D10B",
+    "TBP",
+    "UBB",
+    "ZBTB34"
+  ],
+  "normalization": "log10 gene count minus arithmetic mean log10 normalization-gene counts",
+  "symbol_mapping": "Table punctuation HLA.DQA1/HLA.DRB1/HLA.E transcribed as hyphens; no other alias assumed",
+  "pending": [
+    "adjudicate exact equivalence to JCI final score and selected assay version",
+    "resolve patent prose 10 versus Table1C 11 normalization-gene discrepancy",
+    "pin normalization probe/transcript identifiers and alias for C14ORF102",
+    "pin source bytes and validate coefficient transcription against original table",
+    "qualify zero/count handling and cross-platform transfer",
+    "review use/access requirements"
+  ],
+  "scientific_release": false
+}

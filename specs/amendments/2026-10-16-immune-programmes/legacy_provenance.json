@@ -1,0 +1,102 @@
+{
+  "retrieved_date": "2026-10-16",
+  "records": [
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__configs__immune_gene_sets_registry.tsv",
+      "local_receipt_sha256": "4656d893793075bb5f04073441901d9f2b37f63f8cba99ffdc9d09b8284e6a23",
+      "bytes": 1092,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/immune_gene_sets_registry.tsv",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/configs/immune_gene_sets_registry.tsv",
+      "upstream_blob_sha1": "b4b48ea19e2fed54be54f606d734ac7fbe1e5d79",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__configs__immune_state_config.yaml",
+      "local_receipt_sha256": "7df2e6bbf034ea658915a665687dadfc6bb41a480a36875a6d7edbd5bfc51efc",
+      "bytes": 288,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/immune_state_config.yaml",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/configs/immune_state_config.yaml",
+      "upstream_blob_sha1": "c670a372091e5927f00214c50936224d6da98397",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__inputs__gene_sets__HOPE_18.gmt",
+      "local_receipt_sha256": "ceccd0fbcce5779cd066bbb4a44328a739c636aae8391c7f1b87b882e6a1b43d",
+      "bytes": 173,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/HOPE_18.gmt",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/inputs/gene_sets/HOPE_18.gmt",
+      "upstream_blob_sha1": "ca2a333a96e904f72a57e6016ac915dcef7c02a0",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__inputs__gene_sets__T_CELL_INFLAMED_GEP_18.gmt",
+      "local_receipt_sha256": "67aebb6d4dc08d26d8ce04b3c619b83e67e7385be50d8ec345bf06685991284a",
+      "bytes": 187,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/T_CELL_INFLAMED_GEP_18.gmt",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/inputs/gene_sets/T_CELL_INFLAMED_GEP_18.gmt",
+      "upstream_blob_sha1": "d724e852f8b056bdd6efc58cb47dea965a8a296c",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__inputs__gene_sets__epigenetic_layer__EPIGENETIC_IMMUNE_PRIMING.gmt",
+      "local_receipt_sha256": "2a37add2783808e9392c3a897aa270e2139e5eb0b9fd721bfabb836300af02ae",
+      "bytes": 421,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/EPIGENETIC_IMMUNE_PRIMING.gmt",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/inputs/gene_sets/epigenetic_layer/EPIGENETIC_IMMUNE_PRIMING.gmt",
+      "upstream_blob_sha1": "3da6c58ea30beaff09645b675dc11702e7652977",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__inputs__gene_sets__exhaustion_layer__C7_T_CELL_EXHAUSTION_CORE.gmt",
+      "local_receipt_sha256": "05db89a18c730e09651e382184163c72f3d731b00855cd89008efad5626ccc6b",
+      "bytes": 174,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/C7_T_CELL_EXHAUSTION_CORE.gmt",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/inputs/gene_sets/exhaustion_layer/C7_T_CELL_EXHAUSTION_CORE.gmt",
+      "upstream_blob_sha1": "2c115a708c336b5010cbbce82f7c6176c1e3b7d8",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "2-Experimental__Computation Arm__06_analysis_pipeline_repo__inputs__gene_sets__hallmark_layer__HALLMARK_IMMUNE_RESPONSE_MINI.gmt",
+      "local_receipt_sha256": "43854890169b065969e7046cf1f1b6b8401d419f66c7c59f86539bf47dc3dc40",
+      "bytes": 297,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": "legacy/HALLMARK_IMMUNE_RESPONSE_MINI.gmt",
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/inputs/gene_sets/hallmark_layer/HALLMARK_IMMUNE_RESPONSE_MINI.gmt",
+      "upstream_blob_sha1": "53c4b67f3a4630ecd63a27be4dd018b7be17bd99",
+      "git_blob_match": true
+    },
+    {
+      "recovered_name": "old_cli.py",
+      "local_receipt_sha256": "e5f90152870bce8501cf63ccb37efc322fb89587af66474c7994cd2bb43742c7",
+      "bytes": 428481,
+      "repository": "OASolliman590/epigenetic-ici-priming-thesis",
+      "upstream_commit": "96c16794bafc8946ae9f0bdcef81d5f3a599542b",
+      "archive_copy": null,
+      "scope": "historical source, not executed",
+      "upstream_path": "2-Experimental/Computation Arm/06_analysis_pipeline_repo/src/pipeline/cli.py",
+      "upstream_blob_sha1": "74bd5338b85e1e678b354a5d772c057f6c5ed55a",
+      "git_blob_match": true
+    }
+  ],
+  "boundary": "Recovered local bytes match Git blob identities in parent-retrieved recursive tree for pinned upstream commit; source correctness and method admission are separate."
+}
