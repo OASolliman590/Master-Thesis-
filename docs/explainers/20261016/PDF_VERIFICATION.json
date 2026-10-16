@@ -1,0 +1,11 @@
+{
+  "pdf": "Thesis_Papers_SpecKit_and_Epigenetic_Priming_Guide_Amendment_20261016.pdf",
+  "pages": 26,
+  "uri_annotations": 56,
+  "sha256": "99f8dafc4d1011ad21f42f6f568dcb468997dfccfec7f2283aa28bc1af211d77",
+  "bytes": 207922,
+  "specification_commit": "855384e5c8dcffc9d0863165b11486bf681905c5",
+  "visual_review": "All pages inspected; base pages via contact sheets, amendment pages at readable resolution; no clipping or overflow observed",
+  "text_checks": "PASS after correcting a case-sensitive verification assertion; no PDF change required",
+  "biological_analysis": false
+}
