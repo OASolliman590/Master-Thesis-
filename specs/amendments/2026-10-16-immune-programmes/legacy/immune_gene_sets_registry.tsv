@@ -1,0 +1,6 @@
+gene_set_id	gene_set_layer	gene_set_name	gmt_path	source	enabled	notes
+T_CELL_INFLAMED_GEP_18	L1_ICB_PREDICTOR	T cell-inflamed gene expression profile	inputs/gene_sets/T_CELL_INFLAMED_GEP_18.gmt	Ayers et al. IFNG/T-cell inflamed GEP	true	Layer 1 ICB predictor
+C7_T_CELL_EXHAUSTION_CORE	L2_C7_EXHAUSTION	T-cell exhaustion and checkpoint core	inputs/gene_sets/exhaustion_layer/C7_T_CELL_EXHAUSTION_CORE.gmt	Curated C7-style exhaustion/checkpoint module	true	Layer 2 exhaustion proxy
+HALLMARK_IMMUNE_RESPONSE_MINI	L3_HALLMARK	Hallmark immune response mini panel	inputs/gene_sets/hallmark_layer/HALLMARK_IMMUNE_RESPONSE_MINI.gmt	Compact local Hallmark proxies	true	Layer 3 Hallmark proxy for local reproducibility
+EPIGENETIC_IMMUNE_PRIMING	L4_EPIGENETIC	Epigenetic immune priming and checkpoint regulation	inputs/gene_sets/epigenetic_layer/EPIGENETIC_IMMUNE_PRIMING.gmt	Spec 007 curated epigenetic immune layer	true	Layer 4 epigenetic mechanism layer
+HOPE_18	L5_HOPE_18	HOPE 18 immune subtype genes	inputs/gene_sets/HOPE_18.gmt	HOPE project 18-gene immune classifier	true	Layer 5 HOPE-18 scoring

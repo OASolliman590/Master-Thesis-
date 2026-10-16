@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "programmes": 21,
+  "negative_mutations_rejected": 4,
+  "rc2_manifest_files_unchanged": 696,
+  "legacy_copies_verified": 7,
+  "biology_executed": false
+}

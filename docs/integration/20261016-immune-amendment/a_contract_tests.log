@@ -1,0 +1,115 @@
+test_A_baseline_schema_is_only_shared_alias (test_contracts.DocumentContractTests.test_A_baseline_schema_is_only_shared_alias) ... ok
+test_A_source_schema_is_only_shared_alias (test_contracts.DocumentContractTests.test_A_source_schema_is_only_shared_alias) ... ok
+test_TSV_shapes_unique_headers_and_rectangular_rows (test_contracts.DocumentContractTests.test_TSV_shapes_unique_headers_and_rectangular_rows) ... <repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A/REQUIREMENTS_TRACEABILITY.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A/NUMERICAL_FREEZE_REGISTER.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A/MIGRATION_MAP.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A/SOURCE_CANDIDATE_QUEUE.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A1/contrast_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/implementation_reconciliation.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/protocol_crosswalk.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/source_search_update_log.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/SOURCE_BY_QUESTION_COVERAGE.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/search_plan.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/search_log.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/branch_admission_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/feature_coverage.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/overlap_edges.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/publication_family_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/source_object_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/prior_exposure_ledger.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/source_gap_register.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/study_alias_crosswalk.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/study_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/analysis_membership.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<repo>/tests/a_a1_spec_contract/test_contracts.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/templates/split_registry.tsv' mode='r' encoding='utf-8'>
+  rows=list(csv.reader(f.open(encoding='utf-8',newline=''),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_all_local_schema_references_resolve_offline (test_contracts.DocumentContractTests.test_all_local_schema_references_resolve_offline) ... ok
+test_all_schemas_self_validate (test_contracts.DocumentContractTests.test_all_schemas_self_validate) ... ok
+test_current_DAV_manifest_does_not_reuse_stale_file_hashes (test_contracts.DocumentContractTests.test_current_DAV_manifest_does_not_reuse_stale_file_hashes) ... ok
+test_historical_A_bytes_preserved (test_contracts.DocumentContractTests.test_historical_A_bytes_preserved) ... ok
+test_historical_DAV_manifest_matches_preserved_bytes (test_contracts.DocumentContractTests.test_historical_DAV_manifest_matches_preserved_bytes) ... ok
+test_pending_config_does_not_authorize_analysis (test_contracts.DocumentContractTests.test_pending_config_does_not_authorize_analysis) ... ok
+test_required_A1_documents_are_populated (test_contracts.DocumentContractTests.test_required_A1_documents_are_populated) ... ok
+test_required_A_documents_are_populated (test_contracts.DocumentContractTests.test_required_A_documents_are_populated) ... ok
+test_scientific_entry_links_resolve (test_contracts.DocumentContractTests.test_scientific_entry_links_resolve) ... ok
+test_search_plan_does_not_claim_execution (test_contracts.DocumentContractTests.test_search_plan_does_not_claim_execution) ... <repo>/tests/a_a1_spec_contract/test_contracts.py:102: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/search_plan.tsv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((DAV/'search_plan.tsv').open(),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_seven_materialized_definitions_exist (test_contracts.DocumentContractTests.test_seven_materialized_definitions_exist) ... ok
+test_source_coverage_has_no_admitted_population (test_contracts.DocumentContractTests.test_source_coverage_has_no_admitted_population) ... <repo>/tests/a_a1_spec_contract/test_contracts.py:106: ResourceWarning: unclosed file <_io.TextIOWrapper name='<repo>/specs/A_DATA_ACQUISITION_VALIDATION/SOURCE_BY_QUESTION_COVERAGE.tsv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((DAV/'SOURCE_BY_QUESTION_COVERAGE.tsv').open(),delimiter='\t'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_DCB_requires_duration (test_contracts.SchemaMutationTests.test_DCB_requires_duration) ... ok
+test_DCR_SD_positive_PD_negative (test_contracts.SchemaMutationTests.test_DCR_SD_positive_PD_negative) ... ok
+test_ORR_CR_PR_mapping (test_contracts.SchemaMutationTests.test_ORR_CR_PR_mapping) ... ok
+test_ORR_SD_PD_mapping (test_contracts.SchemaMutationTests.test_ORR_SD_PD_mapping) ... ok
+test_binding_valid_but_wrong_subject_role_rejected (test_contracts.SchemaMutationTests.test_binding_valid_but_wrong_subject_role_rejected) ... ok
+test_biology_not_dependent_on_final_test_flag (test_contracts.SchemaMutationTests.test_biology_not_dependent_on_final_test_flag) ... ok
+test_exact_episode_day_cannot_be_unknown (test_contracts.SchemaMutationTests.test_exact_episode_day_cannot_be_unknown) ... ok
+test_final_test_cannot_be_inner_training (test_contracts.SchemaMutationTests.test_final_test_cannot_be_inner_training) ... ok
+test_final_test_cannot_have_unknown_exposure (test_contracts.SchemaMutationTests.test_final_test_cannot_have_unknown_exposure) ... ok
+test_final_test_release_requires_final_test_flag (test_contracts.SchemaMutationTests.test_final_test_release_requires_final_test_flag) ... ok
+test_frozen_handoff_cannot_be_empty_or_test_derived (test_contracts.SchemaMutationTests.test_frozen_handoff_cannot_be_empty_or_test_derived) ... ok
+test_pair_exclusion_requires_reason (test_contracts.SchemaMutationTests.test_pair_exclusion_requires_reason) ... ok
+test_pair_included_requires_both_assays (test_contracts.SchemaMutationTests.test_pair_included_requires_both_assays) ... ok
+test_specification_release_valid_not_executable (test_contracts.SchemaMutationTests.test_specification_release_valid_not_executable) ... ok
+test_synthetic_episode_valid_and_numeric_id_rejected (test_contracts.SchemaMutationTests.test_synthetic_episode_valid_and_numeric_id_rejected) ... ok
+test_unknown_response_not_fabricated_nonresponse (test_contracts.SchemaMutationTests.test_unknown_response_not_fabricated_nonresponse) ... ok
+test_verified_binding_requires_review_record (test_contracts.SchemaMutationTests.test_verified_binding_requires_review_record) ... ok
+test_AUC_ties_and_undefined (test_contracts.SyntheticEstimandTests.test_AUC_ties_and_undefined) ... ok
+test_A_P1_category_decomposition (test_contracts.SyntheticEstimandTests.test_A_P1_category_decomposition) ... ok
+test_A_P1_no_SD_is_structural_zero (test_contracts.SyntheticEstimandTests.test_A_P1_no_SD_is_structural_zero) ... ok
+test_A_P2_finite_weights_not_patient_weighting (test_contracts.SyntheticEstimandTests.test_A_P2_finite_weights_not_patient_weighting) ... ok
+test_direct_response_change_not_significance_shortcut (test_contracts.SyntheticEstimandTests.test_direct_response_change_not_significance_shortcut) ... ok
+test_response_main_effect_aliases_patient_intercepts (test_contracts.SyntheticEstimandTests.test_response_main_effect_aliases_patient_intercepts) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.515s
+
+OK
