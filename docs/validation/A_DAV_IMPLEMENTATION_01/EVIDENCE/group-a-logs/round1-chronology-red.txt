@@ -1,0 +1,94 @@
+FFF..FF                                                                  [100%]
+=================================== FAILURES ===================================
+_____ test_timing_component_interval_must_be_ordered_inside_episode[50-10] _____
+
+component_start = '50', component_stop = '10'
+
+    @pytest.mark.parametrize("component_start,component_stop", [("50", "10"), ("61", "60"), ("0", "-1"), ("-1", "10"), ("0", "61")])
+    def test_timing_component_interval_must_be_ordered_inside_episode(component_start, component_stop):
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet())
+        p["records"]["treatment_exposure"][0].update(start_date_or_day=component_start, stop_date_or_day=component_stop)
+        result = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:486: AssertionError
+_____ test_timing_component_interval_must_be_ordered_inside_episode[61-60] _____
+
+component_start = '61', component_stop = '60'
+
+    @pytest.mark.parametrize("component_start,component_stop", [("50", "10"), ("61", "60"), ("0", "-1"), ("-1", "10"), ("0", "61")])
+    def test_timing_component_interval_must_be_ordered_inside_episode(component_start, component_stop):
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet())
+        p["records"]["treatment_exposure"][0].update(start_date_or_day=component_start, stop_date_or_day=component_stop)
+        result = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:486: AssertionError
+_____ test_timing_component_interval_must_be_ordered_inside_episode[0--1] ______
+
+component_start = '0', component_stop = '-1'
+
+    @pytest.mark.parametrize("component_start,component_stop", [("50", "10"), ("61", "60"), ("0", "-1"), ("-1", "10"), ("0", "61")])
+    def test_timing_component_interval_must_be_ordered_inside_episode(component_start, component_stop):
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet())
+        p["records"]["treatment_exposure"][0].update(start_date_or_day=component_start, stop_date_or_day=component_stop)
+        result = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:486: AssertionError
+_______ test_timing_missing_component_date_is_unknown[start_date_or_day] _______
+
+missing_field = 'start_date_or_day'
+
+    @pytest.mark.parametrize("missing_field", ["start_date_or_day", "stop_date_or_day"])
+    def test_timing_missing_component_date_is_unknown(missing_field):
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet())
+        p["records"]["treatment_exposure"][0][missing_field] = None
+        result = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:497: AssertionError
+_______ test_timing_missing_component_date_is_unknown[stop_date_or_day] ________
+
+missing_field = 'stop_date_or_day'
+
+    @pytest.mark.parametrize("missing_field", ["start_date_or_day", "stop_date_or_day"])
+    def test_timing_missing_component_date_is_unknown(missing_field):
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet())
+        p["records"]["treatment_exposure"][0][missing_field] = None
+        result = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:497: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_component_interval_must_be_ordered_inside_episode[50-10]
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_component_interval_must_be_ordered_inside_episode[61-60]
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_component_interval_must_be_ordered_inside_episode[0--1]
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_missing_component_date_is_unknown[start_date_or_day]
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_missing_component_date_is_unknown[stop_date_or_day]
+5 failed, 2 passed, 87 deselected in 1.64s

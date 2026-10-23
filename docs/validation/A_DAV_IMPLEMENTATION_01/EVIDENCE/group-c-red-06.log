@@ -1,0 +1,36 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_unadmitted_assay_source_is_excluded_with_audit ______________
+
+    def test_unadmitted_assay_source_is_excluded_with_audit():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet();other=copy.deepcopy(p['records']['source_record'][0]);other['source_object_id']='SRC2'
+        p['records']['source_record'].append(other);p['records']['assay_registry'][0]['source_object_id']='SRC2'
+        r=build_baseline(seal(p),schemas=STORE)
+>       assert r['records']['baseline'][0]['specimen_uid']=='B2'
+E       AssertionError: assert 'B1' == 'B2'
+E         
+E         - B2
+E         + B1
+
+tests/a_dav_implementation/test_group_c.py:346: AssertionError
+____________ test_canonically_excluded_patient_cannot_enter_matrix _____________
+
+    def test_canonically_excluded_patient_cannot_enter_matrix():
+        from tools.a_dav.matrices import build_baseline,build_longitudinal
+        p=material_packet();p['records']['patient_registry'][0].update(inclusion_state='EXCLUDED',exclusion_reason='invented')
+        p=seal(p)
+        baseline=build_baseline(p,schemas=STORE)
+>       assert baseline['records']['baseline'][0]['inclusion_status']=='EXCLUDED'
+E       AssertionError: assert 'INCLUDED' == 'EXCLUDED'
+E         
+E         - EXCLUDED
+E         ? ^^
+E         + INCLUDED
+E         ? ^^
+
+tests/a_dav_implementation/test_group_c.py:355: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_unadmitted_assay_source_is_excluded_with_audit
+FAILED tests/a_dav_implementation/test_group_c.py::test_canonically_excluded_patient_cannot_enter_matrix
+2 failed, 29 deselected in 1.26s

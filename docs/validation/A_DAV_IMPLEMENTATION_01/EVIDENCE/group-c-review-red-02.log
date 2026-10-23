@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______ test_prat_bound_general_report_is_count_free_despite_count_request ______
+
+    def test_prat_bound_general_report_is_count_free_despite_count_request():
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['dependencies']['prat_review']=finish('prat_review',p,p['records'],schemas=STORE)
+        r=build_public_report(p,schemas=STORE)
+        assert r['status']=='SYNTHETIC_READY'
+        public=next(a['public_report'] for a in r['audit'] if 'public_report' in a)
+>       assert 'patient_count' not in public;assert 'count_table' not in public
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'patient_count' not in {'classification': 'SYNTHETIC_ONLY', 'status': 'SYNTHETIC_READY', 'stage_statuses': {'admission': 'SYNTHETIC_READY', '...f4ed364d9d42250776603b7ed5079aed5d', 'split': '015a2f2529eca5c6a6f79518443c8a0a939caf40013841b83c8198831db180ff'}, ...}
+
+tests/a_dav_implementation/test_group_c.py:472: AssertionError
+___________ test_prat_bound_public_report_rejects_stale_prat_config ____________
+
+    def test_prat_bound_public_report_rejects_stale_prat_config():
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();stale=copy.deepcopy(p);stale['config']['public_report']['include_counts']=False
+        p['dependencies']['prat_review']=finish('prat_review',stale,stale['records'],schemas=STORE)
+        r=build_public_report(p,schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['DEPENDENCY_INVALID']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:484: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_prat_bound_general_report_is_count_free_despite_count_request
+FAILED tests/a_dav_implementation/test_group_c.py::test_prat_bound_public_report_rejects_stale_prat_config
+2 failed, 39 deselected in 5.59s

@@ -1,0 +1,39 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 20 items / 18 deselected / 2 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py FF                   [100%]
+
+=================================== FAILURES ===================================
+__________ test_prat_inventory_scope_change_invalidates_reader_basis ___________
+
+    def test_prat_inventory_scope_change_invalidates_reader_basis() -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        c["inventory_scope"] = "another-invented-bounded-universe"
+>       assert invoke("prat_review", "review_prat_packet", p)["reasons"] == ["REVIEW_BASIS_MISMATCH"]
+E       AssertionError: assert [] == ['REVIEW_BASIS_MISMATCH']
+E         
+E         Right contains one more item: 'REVIEW_BASIS_MISMATCH'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_protocol.py:168: AssertionError
+__________ test_prat_missing_reader_auth_reference_has_distinct_block __________
+
+    def test_prat_missing_reader_auth_reference_has_distinct_block() -> None:
+        p = prat(); r = p["config"]["prat_review"]["readers"][0]
+        r.pop("authentication_reference")
+        r["seal_sha256"] = digest({k: v for k, v in r.items() if k != "seal_sha256"})
+        result = invoke("prat_review", "review_prat_packet", p)
+        assert result["status"] == "BLOCKED_UNKNOWN"
+>       assert result["reasons"] == ["READER_AUTHENTICATION_REFERENCE_MISSING"]
+E       AssertionError: assert ['OBJECT_MANIFEST_INCOMPLETE'] == ['READER_AUTH...ENCE_MISSING']
+E         
+E         At index 0 diff: 'OBJECT_MANIFEST_INCOMPLETE' != 'READER_AUTHENTICATION_REFERENCE_MISSING'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_protocol.py:177: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_inventory_scope_change_invalidates_reader_basis
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_missing_reader_auth_reference_has_distinct_block
+======================= 2 failed, 18 deselected in 1.38s =======================

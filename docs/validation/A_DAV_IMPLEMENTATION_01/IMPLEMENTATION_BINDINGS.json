@@ -1,0 +1,1083 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "files": [
+    {
+      "path": "docs/superpowers/plans/2026-10-23-shared-dav-implementation.md",
+      "bytes": 10818,
+      "sha256": "1534f5cef39c8e58aa554344320ff12e0f059b1005f0c6da80177318a544aaae"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/ACCEPTANCE.json",
+      "bytes": 9104,
+      "sha256": "cb0e9c76b9622188e899eab621ad78f46ba812e1e62db07d4a9df5dabf16dee9"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/DECISIONS.md",
+      "bytes": 6967,
+      "sha256": "888e7fe900747f6273de4f428ef0d6601f941008295c65aa39bbd74e70ce64dd"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-green.log",
+      "bytes": 100,
+      "sha256": "f1ba3188a1a0003a162d6f0cc51806e2986b748ff47d92bbe8577c8747540bc1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-mypy.log",
+      "bytes": 42,
+      "sha256": "5d4b6d285b77932e3d08212c3b4974d0a803f98ec60408ac6ccf6a063fa6c19e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log",
+      "bytes": 7063,
+      "sha256": "6a4f85cb672980877a5ff201a4ed11f3fab2501fd1b71de78bdf7c1c57cf9cc2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-report.md",
+      "bytes": 1934,
+      "sha256": "2a7d2804d6b08808c444a8a0b0aed6e472676e5a9aa7a4d0d17d4fa38e1d3bdb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-focused.log",
+      "bytes": 98,
+      "sha256": "07c69986b7fb4579cf1af8a4b99fb3e81813f5d658289bc62df53c0910e6c1cb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-green.log",
+      "bytes": 98,
+      "sha256": "808dfae1ed8f9fdc74e04e9f4daf48a799b85ea62a74ce685b5f7c7368c58182"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-lineage-green.log",
+      "bytes": 98,
+      "sha256": "52c458e60d83a036302a30939a5cedb0fd31047b49413dde14ccde7e8dd46153"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-lineage-red.log",
+      "bytes": 1507,
+      "sha256": "a74509bbffcb327bd4fc7e9e823b7cb0222c90f27cec988e41c1478efa9fcd44"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-red.log",
+      "bytes": 1089,
+      "sha256": "e1c524a9e52c549db20144b91b0f35015ffd10028c3ad6ee79953c7676d06193"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/existing-seams-focused.log",
+      "bytes": 1511,
+      "sha256": "9ab3d5b0eb74d238c0ac0f702129988568fe384659f29fd0bd77050e31b1028b"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/existing-seams-green.log",
+      "bytes": 943,
+      "sha256": "5dca0dd07e069eb68ec306afb05638cbec3f6e6997b39db51cb8a399e2571785"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/existing-seams-red.log",
+      "bytes": 1097,
+      "sha256": "86ef3211dc082f6de5d61daaf7e98f08c6487d06da5ef598079eee56fc1921f7"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-compatible.log",
+      "bytes": 114,
+      "sha256": "c2de604889c72f7397599432ba99a300f3427f83118e42d7235fceac34cd4b5d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-final-green.log",
+      "bytes": 114,
+      "sha256": "1bb29bce09623fe4b5dd9fa3d48ac4d3fb29630819f902b8f7b7d96790be2b0e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-green.log",
+      "bytes": 112,
+      "sha256": "545ff852aa604d1c0dc9dfd2b7e081948889fff03912035e94b1bff7b58487d2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-modality-alias-red.log",
+      "bytes": 3826,
+      "sha256": "a1b16f651d0fff54c9cf082d0c75605229a1e44522e2ec36471d91f979aa0c83"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-red.log",
+      "bytes": 2553,
+      "sha256": "190e4bf79d0c7d3abed289ce63ab137189f498cd22b5ccbcd027aa193ee857de"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-window-red.log",
+      "bytes": 1314,
+      "sha256": "927b7d65b73e71a1040a4aa2d33e101da908469ccf86fb7896fc11fe8c379681"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F2-green.log",
+      "bytes": 113,
+      "sha256": "62f5350bcf1ca8d0788e3b0b67681831a2b54a39c51f54dad69a050a778b977e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F2-red.log",
+      "bytes": 1762,
+      "sha256": "82e526e789510215a7a6776b9bf12d64f8358f4ffca8bffa53a6fb0ee163e3c1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F3-green.log",
+      "bytes": 113,
+      "sha256": "f29cbc02d063ddcf74e754e7478fed42a3b6d4a917552007659938daf38cd9de"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F3-red.log",
+      "bytes": 3963,
+      "sha256": "ed50ad100e370d4779a968e6cf1f139bbc2bd1c667a485bafaa14cac662a6ad0"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F4-green-attempt1.log",
+      "bytes": 114,
+      "sha256": "500165a65a4dc9dfa04c42e3802f06ba29e8091738373b7effca197a3538a73d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F4-red.log",
+      "bytes": 2710,
+      "sha256": "ed19e3ea1afd5d7e330335a66f2f17ac2dbe1c4d5afd5b6eb8ae9c72bf125aac"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F4-runtime-red-isolated.log",
+      "bytes": 1758,
+      "sha256": "3e539b7ab6ae6c0714703b8c6c12051a4d1909b244f490e1519406661f7eece8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-affected-final.log",
+      "bytes": 192,
+      "sha256": "9eb8c5cd12f55b26094a55a44613b273bbf15d46716d066fcba05ec7b8dfa512"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-group-c-attempt1.log",
+      "bytes": 1287,
+      "sha256": "4776fae94d5da09c1eca4451616758c9aa16a5fa15472b135ce3c6a8f551d09a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-hashes.json",
+      "bytes": 2110,
+      "sha256": "0eaf35d366daa3aaaff59b1613ff0979816059e9f75773c3fdff244d4f5aea25"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-metadata-green.log",
+      "bytes": 114,
+      "sha256": "09c5477b1b0a32ff1c6f55a9a015c1c6d5f04a0f1036bbe11e097d7fdf599678"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-mypy-attempt1.log",
+      "bytes": 458,
+      "sha256": "e6903125fbecca5f24030f9bfe7808eff2b0bce6b143a752b5fc2f6393e8e46f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-mypy-final.log",
+      "bytes": 203,
+      "sha256": "3520827ffa884c220b3d9de2a7225b7683abe1b71b1b1a65a6544fb6aca89f6f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-mypy-green.log",
+      "bytes": 43,
+      "sha256": "050c52a2b0c61e8b681ef5c485e0bc03340b8d55148e0acef27d744c8be42033"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-report.md",
+      "bytes": 13119,
+      "sha256": "f20846446850c0ca99febce84aae6a60918871b56aa702bc2fe98020f1397042"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review-inputs.json",
+      "bytes": 4617,
+      "sha256": "0c7176bd31a5d8ad05ce56505b3864298c43b0c4ac9b915f24fa5158d5b4cab2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff",
+      "bytes": 102066,
+      "sha256": "c8343e8ec345832dd57f35cad1c8d34a78070afa1ba54bcc17156ee2039d29d0"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-review-brief.md",
+      "bytes": 2940,
+      "sha256": "5073f62ebf427e5fc198bd2310cf7644dbc10b60cafaf1e069ed878586e770bf"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-review-inputs.json",
+      "bytes": 4616,
+      "sha256": "f85756b98d37613d4c64870c6991f0017ae40699e433a95c79e61dcdb0a18ffc"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-review-package.diff",
+      "bytes": 489659,
+      "sha256": "5d02307bfcc5f95b53261ea2c860de3f4e38dc791e486f1987bb5edfadf93317"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/full-synthetic-suite.json",
+      "bytes": 367,
+      "sha256": "389423d5cdd84a0eaf23913639e334cb4ad16b496290b28cf307dfd4cf68021e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/full-synthetic-suite.log",
+      "bytes": 352,
+      "sha256": "45e3152d9e1e0ef65a4701c2cc933e6378f0ba5efda33835d50a6a15a0c4028d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-brief.md",
+      "bytes": 3176,
+      "sha256": "45f51d6da0dd0b985d26a59750dbd440ce85b8a64f21a891e4f29b5f17d9e39f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/01-registry-red.txt",
+      "bytes": 1078,
+      "sha256": "232bec0575859c95fea2b154dbc83904d659158c00269d5bfd667c25aea959c3"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/02-registry-green.txt",
+      "bytes": 1588,
+      "sha256": "0c5cc6efe35c80ba7b9a63a1f7aefb0f0f90a8932e517ecfc519a424b2539dd5"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/03-registry-green.txt",
+      "bytes": 98,
+      "sha256": "02c5dfcf1833086d76d92ea26073bdcf33b0cb1e7c335865faab83befb6481ad"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/04-endpoint-red.txt",
+      "bytes": 1136,
+      "sha256": "3bc3727f04f9e29737159435e884643c814c49a499c1ebc6ccef8d8f5990512c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/05-endpoint-green.txt",
+      "bytes": 112,
+      "sha256": "0c0c826fe87fb29ed61c0ec4a96253a872b1e7eed4609e96b36b05843463487f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/06-timing-red.txt",
+      "bytes": 1124,
+      "sha256": "408fbb809b6188d5838a11b8ca886e024bf1d62ca90fb91874aaf6116b8114c7"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/07-timing-green.txt",
+      "bytes": 112,
+      "sha256": "d7008a3ae293dd8a8e96772177d20379307d0286ef781bfb00cb18edcb2d547a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/08-assay-red.txt",
+      "bytes": 1102,
+      "sha256": "c08b9ac3bb0e3a98f124c71068c392d75bc534b698411498a3ed8e8c1d5683b6"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/09-assay-green.txt",
+      "bytes": 112,
+      "sha256": "89a536a5e4c0725f08160773b9822640ade9c021221f353a67c92b19eb60a442"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/10-mypy.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/11-expanded-green.txt",
+      "bytes": 110,
+      "sha256": "084eb3d91b5b6e9fa9d5f838dbe0d5898f30af33e904bda826b55c0569e49f19"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/12-adversarial.txt",
+      "bytes": 2219,
+      "sha256": "c8f35323681b9f8fb42d2811f49aab592b4d3faae4e8ebf35b1e1ab56158ca19"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/13-cached-schemas.txt",
+      "bytes": 2249,
+      "sha256": "2117e18bf774b46619c99713e6a76edddb0b98bc942fa78080f963891f7bf779"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/14-mypy.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/15-adversarial-green.txt",
+      "bytes": 99,
+      "sha256": "390594fe00c4ee86f5229fbf0e1bf77465f180913e4a9a1a7e9e7a11777aa91b"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/16-mypy-green.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/17-review-red.txt",
+      "bytes": 3228,
+      "sha256": "778ad703e84ddf5e4f827b374d338398927cf75c3963dd5299c218fcb765b785"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/18-review-green.txt",
+      "bytes": 179,
+      "sha256": "fdf211c5d351abf84227c42c16c9f33b3d4803e19dccfb44266a1689a9d1e4ad"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/19-final-green.txt",
+      "bytes": 179,
+      "sha256": "d7714daa1350f61195930ab67fa3ce5ea0f6376d714a3d1c96d6333b04a76269"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/20-final-mypy.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/21-source-assertion-red.txt",
+      "bytes": 1877,
+      "sha256": "b92ec1bb5cbbbb8dbd552dbc7cfb7e3e7c9361cecc75aab72f8d1af322b763d8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/22-final-green.txt",
+      "bytes": 179,
+      "sha256": "642880271b32bd2a51d4117cccb6e9e66658aab5c76d2036dfbc41bb8b968c44"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/23-final-mypy.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt",
+      "bytes": 8406,
+      "sha256": "ba82419be556e6b664242ff457b9e609b6935e86bb7fbb9f4c6bd07e6f008196"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt",
+      "bytes": 5002,
+      "sha256": "8ad361f62b6b87413a99060f16c00a82d7062194a1bc601f09195d21951bc650"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-context-red.txt",
+      "bytes": 1751,
+      "sha256": "eaf38a8cc468c131f3ce4ddd6311558101acd717cfd6a2475d3def3d99da8fc1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-endpoints-before.py",
+      "bytes": 8671,
+      "sha256": "3943344cee914cc10512a2f567a4974013bb810f75bdc4bb2e04d5af2583f3f1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-final-green.txt",
+      "bytes": 114,
+      "sha256": "4d9068f8116c4402de2195e964e1fb182bc09855924b95d7d4e498592d8e16fb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-focused-green.txt",
+      "bytes": 114,
+      "sha256": "b35a087301f26a4167fa75b5bdac38070595a760458efe6ec40f4f4f59604507"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-mypy-green.txt",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-mypy.txt",
+      "bytes": 121,
+      "sha256": "e2100331e5e34d45138d29ffbd1fd1b1bebc9c4ef0fe70cee442b10bbae103b5"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing-before.py",
+      "bytes": 12186,
+      "sha256": "86b0df92ce43c6a1d117095918e163d6fa6211d01ded6029285e1f943ff425fb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing-green.txt",
+      "bytes": 114,
+      "sha256": "93c13f87c83546c0e3b66af332edbc5d26cc65e43c4cc6cc8c557a0cde76cfba"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing.diff",
+      "bytes": 12056,
+      "sha256": "563347d54eca6e40e3aa66dd0c1f87652abcb2884863b1e7cff49aecbc1ecd4d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-report.md",
+      "bytes": 23034,
+      "sha256": "8c36cd6d8b407e60f7ed75b276c88628d5330bfc69dd687803a66d6fe142bd15"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-brief.md",
+      "bytes": 3801,
+      "sha256": "eb37d0c6ec5cd6c9f8453ab9f77dfde7a13104e646ad50d463e503a9020a8adb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-01.log",
+      "bytes": 1612,
+      "sha256": "f10116fdd1fd97149b45abdff2ed374a8116bc31f644a20c43adb51452cade47"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-03.log",
+      "bytes": 411,
+      "sha256": "3841c41b4d65cdf6eb957a9885521f0a2a830c99351e671f14e772e145279e8c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-04.log",
+      "bytes": 4631,
+      "sha256": "31e16bfac266de5a99cd809656aa130a2e37220262ef896b4477cc7396ef21ea"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-final.log",
+      "bytes": 651,
+      "sha256": "10cdd1bc55b94b86ea01305aa67ad591002f377bad296b8f68a7139623faea73"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-mypy.log",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log",
+      "bytes": 36513,
+      "sha256": "7ddee19cd3fbb84d92bc016d3fc993fb94aae94de716fd2d6ffd12b771c16c99"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log",
+      "bytes": 5080,
+      "sha256": "cea1e3310bd09fc9727d443ca5bb5e0c9675c92ff9628195bd356ed5f96c27f1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-03.log",
+      "bytes": 2370,
+      "sha256": "bfb6f5731f7ac9ca1db27ff70dc24398cb53990876d821f1708200e0559eb9e2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-04.log",
+      "bytes": 3480,
+      "sha256": "2771dffd126dd056509ec32c8c1ebceefc9e875ea1b961e8e7eac1a5637cba88"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-05.log",
+      "bytes": 2328,
+      "sha256": "c732bdc97bc74fb2db0d5884a108e1ed4db85fbf081c3ea0f305e47823c90aaf"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-06.log",
+      "bytes": 2031,
+      "sha256": "4dd095c943f7770457817588aa6c8260a5acd9d44555984f2072646e80fdf118"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-07.log",
+      "bytes": 2738,
+      "sha256": "b5c16b2cc5188792ab8342dd256206711fbc8cc57d216664128e90704ef46ce7"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-08.log",
+      "bytes": 2133,
+      "sha256": "da82afed2ba6a5b332d0abe04bcdd5d40986ee2404fbecefe47b4dc193ba49c1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-09.log",
+      "bytes": 5214,
+      "sha256": "e8dc13cac0526c96ac1888a1f81d21ba0db1cc3ecad20d0277bfe761798255cd"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-10.log",
+      "bytes": 1894,
+      "sha256": "ba551991948766416d5f60ae72d367891478f6ff2e8baa63ff6541ad741ae67c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-report.md",
+      "bytes": 15169,
+      "sha256": "2e6e7629664892487e1fe4097d53c4e5d7d402e8cda8ca50a797cd73796ea66d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-green.log",
+      "bytes": 651,
+      "sha256": "27023426c0bb127ea6bb5072b2855419161fe66e2833fa9175bec73864ed5616"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-mypy.log",
+      "bytes": 43,
+      "sha256": "71144743c83babea384888a735db0c4daba3d4d7b7942b6839984bd5c21b52bb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log",
+      "bytes": 15925,
+      "sha256": "c2287e6dfb1d6b49962bb7dfd9935e7343e551cac5043f33467f5856cc43e123"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-brief.md",
+      "bytes": 3715,
+      "sha256": "a8f37976df5a20750ae805e64790fa859aadedd57744780e67f35ff9b0ca5a84"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-01.log",
+      "bytes": 98,
+      "sha256": "fe6ef34397b36e46055a67d0e2a469b73856f49d68c598e515d5e88eeb35ec6e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-02-path.log",
+      "bytes": 98,
+      "sha256": "36daf390f2b5bd3fe6c2740693dd33b4f6bd7137f0887ef443e3606d8acefa22"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log",
+      "bytes": 5281,
+      "sha256": "2da722de203761a39521e8d692a383d30d70632f1ab373b90a1d95b0ee1c9409"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03.log",
+      "bytes": 99,
+      "sha256": "91bbc99bd7f17a1bbacaf40b6d954a576e4a7c0ba2523fa3762b10c21aa635c2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-04.log",
+      "bytes": 99,
+      "sha256": "a26a7e5e89fd08f7cb42a4a5fea897bfadec45340a17b6dee1683a49f4f19bf3"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-05.log",
+      "bytes": 99,
+      "sha256": "577413f072754f8dce0e7e628b5dca1571659011ce5945db1b517589bc50d18b"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-06.log",
+      "bytes": 100,
+      "sha256": "fd8bbbe66e5c1a6bb31a2cad6d0f2b8f9c58c2fb7b50b9a7a8f7c588a682f433"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-final.log",
+      "bytes": 100,
+      "sha256": "5392b297f5c0b028b3a14680a8951964685f3418f8282cc644036154855853fc"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-mypy-01.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-mypy-02.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-mypy-final.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log",
+      "bytes": 6756,
+      "sha256": "bf8fe176e70809e1c58f2bc77d6b94d29b095cf86280c0faa3295bc5759a3e77"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-path.log",
+      "bytes": 1061,
+      "sha256": "850d14deba743eb5cbda883e74cec6cb5f1efc6f4b2b43be09b493c3877ac0c3"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log",
+      "bytes": 44648,
+      "sha256": "87fff4a2cb30080a7cad9095e9bffee3f9279e697bec7c17da9315ea7e88d5c6"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log",
+      "bytes": 13396,
+      "sha256": "387aca0a7cc8abc8c211dc8e0cb085474087e36620ce5a8749c71deea1eec959"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-04.log",
+      "bytes": 3109,
+      "sha256": "99f277a6aad8008aed3fa23290dac989c2df51ec46828f72f04c4f25db21ca79"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-05.log",
+      "bytes": 2516,
+      "sha256": "e8b6487b6f371aa7c71a20ce622c1e298bd67ab8ae4113025e0177c423624fa5"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-06.log",
+      "bytes": 1875,
+      "sha256": "ac9e72756f0d8f6e22eafeefa30891ccb702a8e605d75caa1e57fd0797b2aaf5"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-07.log",
+      "bytes": 1297,
+      "sha256": "f3c33732942c48d30776e60e44f67fa286bda58082d3481b48b877e710ddcee9"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-report.md",
+      "bytes": 16844,
+      "sha256": "6c39d9e6481648c6fa799c487efe5b6002b6dbd316079557eb3624e39a47afef"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-01-attempt.log",
+      "bytes": 100,
+      "sha256": "89787dffab9f3fdf22b2e40339fe9d04705fc248a9565bf4923a9145fc4807a1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final-corrected.log",
+      "bytes": 100,
+      "sha256": "5bd7536e11bf549201acd2167c7d2d9888cb7c3afee52f4ca07ea468b667a6ee"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final.log",
+      "bytes": 3757,
+      "sha256": "e048f720ea387275587a3f7925ac618929a492fc714c2b067bf6f8b683a3431c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-mypy-01.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-mypy-final.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log",
+      "bytes": 7311,
+      "sha256": "f0a4b3de865238a509edef8a3f6fc343659123416e3c3f6217575f937e014f98"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-02.log",
+      "bytes": 2250,
+      "sha256": "bb3b7175cdb8e8d9a607fc6ab06af172009bfb81b73631485892f269109b6970"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-focused.log",
+      "bytes": 1916,
+      "sha256": "22e1e09b44e2fa4a271342d1e1fad53676fcb85fb032bfa5152c23a64dd1ef5b"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-mypy.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-review-connected.log",
+      "bytes": 100,
+      "sha256": "f921325a0e0d7f9559054cea3b1c75ab39a561fb402aca1eb2af23cf975b646e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-review-missing-pair-red.log",
+      "bytes": 1095,
+      "sha256": "355a02bf131142c24f322372f00df40ebf7b55e89b000f771474314a1a267667"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-review-mypy.log",
+      "bytes": 43,
+      "sha256": "8228fcc5ce46d42d01caf3cd941f4e9c5f2bcc372bb5b147a2f0572d2dd675a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix-full-synthetic-suite.json",
+      "bytes": 351,
+      "sha256": "de84a16e62d9cf1f7c452a7dc224aa1e12a04f2cacf41e0ebb7485fbe4aec319"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix-full-synthetic-suite.log",
+      "bytes": 351,
+      "sha256": "96126aca76ff1ec56309e6fd92f33f5c8ead143a80480cb494f90a2c150dca83"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/admission.py.snapshot",
+      "bytes": 17151,
+      "sha256": "0f5e36164a846b80e6e72e5a00b9203dacab8756181527447fbec275380dd093"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/assays.py.snapshot",
+      "bytes": 11254,
+      "sha256": "c8e0376d9de869ca69ae349eb35489348db91b63cde5a6ab66fd285ec7a2682f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/core.py.snapshot",
+      "bytes": 13432,
+      "sha256": "49afc1fb9454eb97182454dd68b61c701423bb9431e3aaac4ed734245bedbe6c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/demo.py.snapshot",
+      "bytes": 15093,
+      "sha256": "51ee82c7e1a375811f4a7c29fd8f1f938764e80fa94106e3b9b4e1eae2765e0a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/endpoints.py.snapshot",
+      "bytes": 10357,
+      "sha256": "3bfe5786674bcb5e4a5692fa31af96a55d1d3fbaf9297512b061abb4a5f4dad2"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/exposure.py.snapshot",
+      "bytes": 4181,
+      "sha256": "b8c7844ec9f2009e8fcb60e12be06356a53864ae50ce80e36e29f4dde68e78fe"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/matrices.py.snapshot",
+      "bytes": 24980,
+      "sha256": "2cb3a2e90a6d9fca6e9f8047fb26659d07b07106d89a08b8e9c474534e711717"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/overlap.py.snapshot",
+      "bytes": 6043,
+      "sha256": "9d02db5c0453812e9ab0947799f319a9a0b2cc8629394c1bf41206a9b325d6ba"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/prat_review.py.snapshot",
+      "bytes": 11021,
+      "sha256": "28938f74b953920823f784ab781834115cf62d30890499d577f0d2b244b2a181"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/registries.py.snapshot",
+      "bytes": 6398,
+      "sha256": "8fce15fa880d7a92876e283fea5cf7988778f398415e13d729b3204bfe60414a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/release.py.snapshot",
+      "bytes": 16097,
+      "sha256": "b003325edff179577f40613a487b12b5b94f1f5550ff081cdd86d912e44c6dc6"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/reporting.py.snapshot",
+      "bytes": 3174,
+      "sha256": "d5f390ef192339f83db2c5c04d339736b28efff94e55be65b343685f79079c41"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/timing.py.snapshot",
+      "bytes": 14753,
+      "sha256": "ab8d588e0610371cebd647c3e92fc5f305dda8a21cf673124adba355bb5678a7"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-final-fix/workflow.py.snapshot",
+      "bytes": 7287,
+      "sha256": "2afea0b4e0f99e6932f07d55b89d262cbdff8f3b14cd972d87a2b17a8b8adf65"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/admission.py.snapshot",
+      "bytes": 16529,
+      "sha256": "245f1092d5a51dc0bbccfc929fc4a3e19a3c87c7ffed78aa4abbc1f3a747647a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/assays.py.snapshot",
+      "bytes": 11254,
+      "sha256": "c8e0376d9de869ca69ae349eb35489348db91b63cde5a6ab66fd285ec7a2682f"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/demo.py.snapshot",
+      "bytes": 14929,
+      "sha256": "3b3988715f377dccc268dd330971d5992e3d4c8928e50bb60cf870fb43c9c994"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/endpoints.py.snapshot",
+      "bytes": 8671,
+      "sha256": "3943344cee914cc10512a2f567a4974013bb810f75bdc4bb2e04d5af2583f3f1"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/exposure.py.snapshot",
+      "bytes": 4181,
+      "sha256": "b8c7844ec9f2009e8fcb60e12be06356a53864ae50ce80e36e29f4dde68e78fe"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/matrices.py.snapshot",
+      "bytes": 21382,
+      "sha256": "6088325e6779e34d594daa205c0054ed4e0aed9458721c873e7bea90cc8f3875"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/overlap.py.snapshot",
+      "bytes": 6043,
+      "sha256": "9d02db5c0453812e9ab0947799f319a9a0b2cc8629394c1bf41206a9b325d6ba"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/prat_review.py.snapshot",
+      "bytes": 10899,
+      "sha256": "e311611115b5081bf5d61e38cdf286ff50a0fd618470a7344b2418fc32cabed5"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/registries.py.snapshot",
+      "bytes": 6398,
+      "sha256": "8fce15fa880d7a92876e283fea5cf7988778f398415e13d729b3204bfe60414a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/release.py.snapshot",
+      "bytes": 16097,
+      "sha256": "b003325edff179577f40613a487b12b5b94f1f5550ff081cdd86d912e44c6dc6"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/reporting.py.snapshot",
+      "bytes": 2353,
+      "sha256": "fbc3040578ae0bb784a0d75be6a2f2701a3376992f64c8c7709f9d3e90f064f8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/timing.py.snapshot",
+      "bytes": 12186,
+      "sha256": "86b0df92ce43c6a1d117095918e163d6fa6211d01ded6029285e1f943ff425fb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/pre-review-fix/workflow.py.snapshot",
+      "bytes": 7238,
+      "sha256": "cbd335ccb68c1802ff8fb7edcc82f8381eb3ea8aea1aa07f26714a6d5d822c35"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/prior-bridge-preservation.log",
+      "bytes": 623,
+      "sha256": "a63c597e3c8d44024ec4cf41872f58ad1e8cfc2652c805a044a17da4f536eff3"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/prior-brief-preservation.log",
+      "bytes": 711,
+      "sha256": "926fc12be7cf4f390d17a7e02d3e15589102c32c95c368233730d671b12d8147"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/progress.md",
+      "bytes": 6967,
+      "sha256": "888e7fe900747f6273de4f428ef0d6601f941008295c65aa39bbd74e70ce64dd"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-core-b.diff",
+      "bytes": 9144,
+      "sha256": "9478a7cc85b4c10370b033ba8a0b678a3219ad715e11efa4767135e1d2a3bcc0"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff",
+      "bytes": 77354,
+      "sha256": "f28a0f943d45b4efa248960cab56aa7997e26ec33768cfb09b36062459ec7784"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-inputs.json",
+      "bytes": 4453,
+      "sha256": "908f5ba1d2eae67eb775362537914d304460c66e570ecf559763edc77b96aa91"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-package.diff",
+      "bytes": 456790,
+      "sha256": "b10507b1900baaa1e3bf0622d274912696c9daf7370598cb0b4594163c4459cd"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/self-contained-cli-final.log",
+      "bytes": 2179,
+      "sha256": "a70fed431629c7d92b3c52c7fb6d38af6ede80a21a598e4f9d5a85140cc86d9c"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/self-contained-cli-green.log",
+      "bytes": 2164,
+      "sha256": "da26530592b196262bc49987d90511765c03838bf2c8154eade3a71a29119cfd"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/self-contained-cli.log",
+      "bytes": 862,
+      "sha256": "fea7fe5aa3726bb999e431c519b6592006a8f9d3aef59b538c867ea356c8b3de"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/typecheck-all.log",
+      "bytes": 44,
+      "sha256": "fe22d95914d7fdd98483ace256b7f2708db4be1255737e5d7cca4d16703ca242"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-connected.log",
+      "bytes": 98,
+      "sha256": "259c788e434a47d238595d8b583bba468afd491a30b552cb28ee9135cc68aa4a"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-focused.log",
+      "bytes": 1887,
+      "sha256": "62f135fe9d2e82a19ed8e5e5da9510e58ae07c9dcaeda9e1264d608b0268bc1e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-freeze.log",
+      "bytes": 99,
+      "sha256": "eaaf8b04ac1de256e1bb7a8d26f019cf28ea5155694efd59582909bd829b066d"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-matrix-binding.log",
+      "bytes": 99,
+      "sha256": "6a83ab215ee68c362d6dab19eb84913e9e940eb116ed813bcaecd8673696b3e9"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-red.log",
+      "bytes": 1191,
+      "sha256": "30e383be4b449b5450de5504600a776664b0d22e6dbb968ffcf23bdf9f324f93"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/PRESERVATION_BASELINE.json",
+      "bytes": 400004,
+      "sha256": "1a7a5a63f619a9de006fd7ff5ab3630b12cfe2fbbcc61b96704b31e21649e93e"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/README.md",
+      "bytes": 6743,
+      "sha256": "a24fe40fc7bb566fce0927da69c8868b282b02948ca828af23a2a42d3a70f1cb"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_FINAL.md",
+      "bytes": 14624,
+      "sha256": "7e6a3be623c008cc58e0643c465e6cc8ee4897bea68d672aee5594616f786447"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_FINAL_FIX.md",
+      "bytes": 7164,
+      "sha256": "cf06572e65dea1237a673f402bc96deae4ffad52284bf99e2e7828fbaabfde61"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_SPEC.md",
+      "bytes": 6221,
+      "sha256": "c7528b8091c501c20572229bd883930c98fe6069540cef2002740495a4e165a8"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_SPEC_FIX1.md",
+      "bytes": 4780,
+      "sha256": "8a44c921b910a5a3724674f665a7b098e933c02e8aed51b33a9c7e6c49777400"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_STANDARDS.md",
+      "bytes": 6695,
+      "sha256": "0ef38b544d23633d22dd83f465b8ccf6b119f8be69a9617734515775d794d8ee"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/REVIEW_STANDARDS_FIX1.md",
+      "bytes": 4237,
+      "sha256": "4cff0abbfef84ba8d62d863aad2f048237c00c500244b40c7bf6a5a2510aec64"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/VERIFY.py",
+      "bytes": 2077,
+      "sha256": "2dd3d2be4b107b11b35dcdfe53ea6e306865ba357a42db607a4e790e7df0e9b4"
+    },
+    {
+      "path": "docs/validation/A_DAV_IMPLEMENTATION_01/WHITESPACE_CHECK.log",
+      "bytes": 41298,
+      "sha256": "a4a36e1fb60f0b8596e68cb2da9828e484882871c32578641dcd8ea1d7e63abd"
+    },
+    {
+      "path": "docs/validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md",
+      "bytes": 23846,
+      "sha256": "81c684e2368d660168dacd3e96eb6ca3001cb5437b58259f1d666a0f968602f6"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_core.py",
+      "bytes": 8429,
+      "sha256": "7f8cb6cca5cd13f22db52939d065c337bf174416cb99424693c3febc201682a9"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_existing_seams.py",
+      "bytes": 3620,
+      "sha256": "eb8aeee1759cf0349338dca8f0d5ca22723838b2929db41091855d6868c670fb"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_group_a.py",
+      "bytes": 40958,
+      "sha256": "cf064145a9a928cc4d4f752a292e59f8bb406f52695fa6d097199b1742d97d64"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_group_b_graph_admission.py",
+      "bytes": 15605,
+      "sha256": "d56405e72084c8bd6c6ae50ad40ca863e138ab35feb5f57fe391c8e49376cff6"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_group_b_protocol.py",
+      "bytes": 13855,
+      "sha256": "db2baebe3c893c38ad5f82b8ba2a3e9619e25442814f61cb3958e9fd94af58b1"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_group_c.py",
+      "bytes": 32998,
+      "sha256": "8a9804c34b20aaaa69ba37dbb6109022136139fa601a94a278e5866b9cd4bbfc"
+    },
+    {
+      "path": "tests/a_dav_implementation/test_workflow.py",
+      "bytes": 20321,
+      "sha256": "d6d8bf383c65fb5315792d28fff7f53111cb37f625dd426fe8a150ac00ccf974"
+    },
+    {
+      "path": "tools/a_dav/__init__.py",
+      "bytes": 56,
+      "sha256": "cc6ec322d5373127080b2de0002e2004bb0850122cc06c405c438db4bbe9fa57"
+    },
+    {
+      "path": "tools/a_dav/admission.py",
+      "bytes": 27557,
+      "sha256": "ae57181dd1ced267e34f6d0728e9056dd9a4191afede2d3a08db460ff1c2b1a8"
+    },
+    {
+      "path": "tools/a_dav/assays.py",
+      "bytes": 11254,
+      "sha256": "c8e0376d9de869ca69ae349eb35489348db91b63cde5a6ab66fd285ec7a2682f"
+    },
+    {
+      "path": "tools/a_dav/core.py",
+      "bytes": 16865,
+      "sha256": "0bef3e9fe31bc8a962caa312f7dda4e4ebfe84d647c251498791097ec8e37642"
+    },
+    {
+      "path": "tools/a_dav/demo.py",
+      "bytes": 15093,
+      "sha256": "51ee82c7e1a375811f4a7c29fd8f1f938764e80fa94106e3b9b4e1eae2765e0a"
+    },
+    {
+      "path": "tools/a_dav/endpoints.py",
+      "bytes": 10357,
+      "sha256": "3bfe5786674bcb5e4a5692fa31af96a55d1d3fbaf9297512b061abb4a5f4dad2"
+    },
+    {
+      "path": "tools/a_dav/exposure.py",
+      "bytes": 6060,
+      "sha256": "5c94d89cb48d698162d0a3dede02a112b4c007240f5c9acb3aaeb973c2847f0f"
+    },
+    {
+      "path": "tools/a_dav/matrices.py",
+      "bytes": 26381,
+      "sha256": "81fe81908d9b7e8f8207a9e9771341b7b9d74d257013fab36d0e43f9b674bd5e"
+    },
+    {
+      "path": "tools/a_dav/object_verification.py",
+      "bytes": 88875,
+      "sha256": "cd84ee094fa9efe2f306c28ed0b83a70f5d53cca529378aaa1197aaba68885a9"
+    },
+    {
+      "path": "tools/a_dav/overlap.py",
+      "bytes": 6043,
+      "sha256": "9d02db5c0453812e9ab0947799f319a9a0b2cc8629394c1bf41206a9b325d6ba"
+    },
+    {
+      "path": "tools/a_dav/prat_review.py",
+      "bytes": 11021,
+      "sha256": "28938f74b953920823f784ab781834115cf62d30890499d577f0d2b244b2a181"
+    },
+    {
+      "path": "tools/a_dav/registries.py",
+      "bytes": 6523,
+      "sha256": "ca0aa09d28c121a7a2c5b48338ecb803739b744f82dfd07160d4cf62821dd103"
+    },
+    {
+      "path": "tools/a_dav/release.py",
+      "bytes": 16745,
+      "sha256": "2dbd66eb25dbbf155f380d2f70b77fbab391c90db49c2e94e0b92191fcb826de"
+    },
+    {
+      "path": "tools/a_dav/reporting.py",
+      "bytes": 3174,
+      "sha256": "d5f390ef192339f83db2c5c04d339736b28efff94e55be65b343685f79079c41"
+    },
+    {
+      "path": "tools/a_dav/requirements-synthetic.txt",
+      "bytes": 126,
+      "sha256": "0bda19369fb8c8b46fa8732a254cd9fe3f7c9d903d8edf66fa4026fe8cc07d7b"
+    },
+    {
+      "path": "tools/a_dav/search_log.py",
+      "bytes": 24876,
+      "sha256": "5f1f5c3787445e2866192808cc07079746ec950839210e90ea7e371bf14f7650"
+    },
+    {
+      "path": "tools/a_dav/study_resolution.py",
+      "bytes": 48936,
+      "sha256": "b14a0e173651c51a59a8f36d07d2b27093e229cb190e7088408abd80fb56d40f"
+    },
+    {
+      "path": "tools/a_dav/timing.py",
+      "bytes": 14753,
+      "sha256": "ab8d588e0610371cebd647c3e92fc5f305dda8a21cf673124adba355bb5678a7"
+    },
+    {
+      "path": "tools/a_dav/workflow.py",
+      "bytes": 7290,
+      "sha256": "8f6ae141f8b46336f54218b4e4b380da16fc26c0dd2b06acd4c6d26f2a248cb0"
+    }
+  ],
+  "analysis_ready": false,
+  "source_admission": false,
+  "statistical_release": false,
+  "biological_analysis_executed": false,
+  "real_source_data_used": false,
+  "frozen_specs_changed": false,
+  "authenticated_source_review": "NOT_RUN",
+  "real_source_tracers": "NOT_RUN"
+}

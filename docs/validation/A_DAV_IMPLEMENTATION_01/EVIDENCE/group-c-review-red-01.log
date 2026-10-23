@@ -1,0 +1,119 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+______ test_computed_coverage_fail_overrides_declared_branch_suitability _______
+
+    def test_computed_coverage_fail_overrides_declared_branch_suitability():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet()
+        for coverage in p['records']['coverage']:coverage['de_suitability']='FAIL'
+        r=build_baseline(seal(p),schemas=STORE)
+>       assert all(v['inclusion_status']!='INCLUDED' for v in r['records']['baseline'])
+E       assert False
+E        +  where False = all(<generator object test_computed_coverage_fail_overrides_declared_branch_suitability.<locals>.<genexpr> at 0x1083939f0>)
+
+tests/a_dav_implementation/test_group_c.py:381: AssertionError
+___________ test_source_defined_binary_uses_own_meaning_without_orr ____________
+
+    def test_source_defined_binary_uses_own_meaning_without_orr():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet();p['records']['endpoint'][0].update(endpoint_class='OTHER',canonical_category='SOURCE_BINARY')
+        p['config']['baseline']['endpoint_policy']['endpoint_class']='OTHER'
+        r=build_baseline(seal(p),schemas=STORE)
+>       assert r['status']=='SYNTHETIC_READY'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:393: AssertionError
+___ test_longitudinal_explicit_endpoint_optional_preserves_unlabelled_pairs ____
+
+    def test_longitudinal_explicit_endpoint_optional_preserves_unlabelled_pairs():
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();p['records']['endpoint']=[]
+        p['config']['longitudinal']['endpoint_policy'].update(required=False,endpoint_class=None)
+        r=build_longitudinal(seal(p),schemas=STORE)
+>       assert r['status']=='SYNTHETIC_READY'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:404: AssertionError
+______ test_adjudicated_endpoint_selection_uses_sealed_preferred_outcome _______
+
+    def test_adjudicated_endpoint_selection_uses_sealed_preferred_outcome():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet();second=copy.deepcopy(p['records']['endpoint'][0])
+        second.update(outcome_id='O2',endpoint_id='ORR2',raw_value='PD',canonical_category='PD',binary_value=0)
+        p['records']['endpoint'].append(second);p=seal(p)
+        p['dependencies']['endpoints']=finish('endpoints',p,p['records'],schemas=STORE,audit=[{
+            'check':'DISCREPANCY_RETAINED','patient_uid':'P1','treatment_episode_id':'E1',
+            'preferred_outcome_id':'O1','all_outcome_ids':['O1','O2']}])
+        r=build_baseline(p,schemas=STORE)
+>       assert r['status']=='SYNTHETIC_READY';assert r['records']['baseline'][0]['orr']==1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:418: AssertionError
+__________ test_missing_pre_or_followup_only_emits_denominator_audit ___________
+
+    def test_missing_pre_or_followup_only_emits_denominator_audit():
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();p['config']['longitudinal']['windows'][0].update(lower_day=30,upper_day=40)
+        r=build_longitudinal(seal(p),schemas=STORE)
+>       assert r['records']['pair']==[]
+E       AssertionError: assert [{'row_type':...': 'P1', ...}] == []
+E         
+E         Left contains 2 more items, first extra item: {'row_type': 'PAIR', 'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'patient_uid': 'P1', ...}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_c.py:426: AssertionError
+________ test_public_report_has_allowlisted_gate_and_limitation_tables _________
+
+    def test_public_report_has_allowlisted_gate_and_limitation_tables():
+        from tools.a_dav.reporting import build_public_report
+        r=build_public_report(report_packet(),schemas=STORE)
+        public=next(a['public_report'] for a in r['audit'] if 'public_report' in a)
+>       assert public['gate_table']==[
+               ^^^^^^^^^^^^^^^^^^^^
+            {'gate':'SYNTHETIC_SOFTWARE','status':'SYNTHETIC_READY'},
+            {'gate':'SOURCE_REVIEW','status':'NOT_RUN'},{'gate':'INDEPENDENT_REVIEW','status':'NOT_RUN'},
+            {'gate':'ENVIRONMENT_VALIDATION','status':'NOT_RUN'},{'gate':'STATISTICAL_RELEASE','status':'NOT_RUN'}]
+E       KeyError: 'gate_table'
+
+tests/a_dav_implementation/test_group_c.py:436: KeyError
+_ test_multiple_evidenced_specimen_contexts_preserve_episode_specific_timepoints _
+
+    def test_multiple_evidenced_specimen_contexts_preserve_episode_specific_timepoints():
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();episode=copy.deepcopy(p['records']['treatment_episode'][0]);episode.update(treatment_episode_id='E2',regimen_id='R2')
+        p['records']['treatment_episode'].append(episode)
+        binding=copy.deepcopy(p['records']['episode_binding'][2]);binding.update(binding_id='reuseF1',treatment_episode_id='E2',role='PRE_INDEX_BASELINE')
+        p['records']['episode_binding'].append(binding)
+        p['config']['longitudinal']['index_episode_by_patient']={'P1':'E1'};p=seal(p)
+        audits=copy.deepcopy(p['dependencies']['timing']['audit'])
+        audits.append({'check':'TIMING_ASSERTION','specimen_uid':'F1','treatment_episode_id':'E2',
+            'binding_id':'reuseF1','role':'PRE_INDEX_BASELINE','canonical_category':'PRE_INDEX_BASELINE',
+            'precision':'EXACT','relative_day':-3,'interval':[None,None]})
+        p['dependencies']['timing']=finish('timing',p,p['records'],audit=audits,schemas=STORE)
+        r=build_longitudinal(p,schemas=STORE)
+>       assert r['status']=='SYNTHETIC_READY'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:458: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_computed_coverage_fail_overrides_declared_branch_suitability
+FAILED tests/a_dav_implementation/test_group_c.py::test_source_defined_binary_uses_own_meaning_without_orr
+FAILED tests/a_dav_implementation/test_group_c.py::test_longitudinal_explicit_endpoint_optional_preserves_unlabelled_pairs
+FAILED tests/a_dav_implementation/test_group_c.py::test_adjudicated_endpoint_selection_uses_sealed_preferred_outcome
+FAILED tests/a_dav_implementation/test_group_c.py::test_missing_pre_or_followup_only_emits_denominator_audit
+FAILED tests/a_dav_implementation/test_group_c.py::test_public_report_has_allowlisted_gate_and_limitation_tables
+FAILED tests/a_dav_implementation/test_group_c.py::test_multiple_evidenced_specimen_contexts_preserve_episode_specific_timepoints
+7 failed, 32 deselected in 3.69s

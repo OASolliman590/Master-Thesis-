@@ -1,0 +1,42 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+___ test_unknown_timing_never_becomes_an_exact_pair_from_numeric_source_day ____
+
+    def test_unknown_timing_never_becomes_an_exact_pair_from_numeric_source_day():
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet()
+        audit=[{'check':'TIMING_ASSERTION','specimen_uid':sp['specimen_uid'],
+            'precision':'UNKNOWN' if sp['specimen_uid']=='F1' else 'EXACT',
+            'relative_day':None if sp['specimen_uid']=='F1' else sp['days_from_index_start'],
+            'canonical_category':sp['canonical_timing_category'],'treatment_episode_id':'E1',
+            'interval':[None,None]} for sp in p['records']['specimen_registry']]
+        p['dependencies']['timing']=finish('timing',p,p['records'],audit=audit,schemas=STORE)
+        r=build_longitudinal(p,schemas=STORE)
+>       assert not any(v['inclusion_status']=='INCLUDED' and v['followup_specimen_uid']=='F1' for v in r['records']['pair'])
+E       assert not True
+E        +  where True = any(<generator object test_unknown_timing_never_becomes_an_exact_pair_from_numeric_source_day.<locals>.<genexpr> at 0x109313510>)
+
+tests/a_dav_implementation/test_group_c.py:234: AssertionError
+_______ test_matrix_receipts_are_invariant_under_source_row_permutations _______
+
+    def test_matrix_receipts_are_invariant_under_source_row_permutations():
+        from tools.a_dav.matrices import build_baseline,build_longitudinal
+        p=material_packet();other=copy.deepcopy(p)
+        for rows in other['records'].values():rows.reverse()
+        other=seal(other)
+        for api in (build_baseline,build_longitudinal):
+>           assert api(p,schemas=STORE)==api(other,schemas=STORE)
+E           AssertionError: assert {'classificat...INE_BIO', ...} == {'classificat...INE_BIO', ...}
+E             
+E             Omitting 10 identical items, use -vv to show
+E             Differing items:
+E             {'records': {'assay_registry': [{'assay_uid': 'A1', 'specimen_uid': 'B1', 'source_sample_id': 'A1', 'source_object_id'...a_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bindF2', 'patient_uid': 'P1', ...}], ...}} != {'records': {'assay_registry': [{'assay_uid': 'A1', 'specimen_uid': 'B1', 'source_sample_id': 'A1', 'source_object_id'...a_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bindF2', 'patient_uid': 'P1', ...}], ...}}
+E             {'receipt_id': 'f493e70fc533a377...
+E             
+E             ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_c.py:244: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_unknown_timing_never_becomes_an_exact_pair_from_numeric_source_day
+FAILED tests/a_dav_implementation/test_group_c.py::test_matrix_receipts_are_invariant_under_source_row_permutations
+2 failed, 3 passed, 21 deselected in 4.75s

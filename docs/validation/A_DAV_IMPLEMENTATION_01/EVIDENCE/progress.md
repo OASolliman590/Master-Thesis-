@@ -1,0 +1,34 @@
+# Implementation ledger — all shared DAV tickets
+
+User explicitly chose all shared DAV tickets, synthetic-only, frozen specs unchanged, no real data or biological analysis. implement/tdd/code-review/wait-what active. Parent owns current branch local commit after checks; never push. Base 9da3b1afaeba04aa9a8a29095c01574e8c87579c, codex/a-dav-01. Preserve all previous untracked work and packets.
+
+Independent Prat documentation review completed: docs/validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md (eight gaps; no actual source acceptance).
+
+Ruling: all14 tickets mean complete software/synthetic acceptance within current no-real-data scope, with real-source tracers and clinical/environment/statistical gates explicitly NOT_RUN, not fabricated — matches user constraints — cost if wrong: later real-source integration and validation remain.
+Ruling: reuse current T01-T03 unchanged and add missing normalized/governance/materialization modules rather than rewrite accepted code — preserves prior receipts — cost if wrong: a proved old-code defect needs separately reviewed additive repair.
+Ruling: commit only this turn's named new files after review, as the explicitly invoked implement skill directs; retain prior untracked work unstaged — cost if wrong: new modules rely on separately retained earlier work until broader integration.
+
+Tasks: core contract/T01-T03 reuse; group A T04-T07; group B T08-T09 plus Prat procedure; group C T10-T14; parent connected workflow/demo, full synthetic regression/typecheck, Standards+Spec review, local commit. Groups A/B/C dispatched on disjoint new files. A complete (87 focused tests; strict mypy4 clean), B/C finalizing. Parent connected6 tests and core6 green; typecheck3 clean. Independent Standards review dispatched; Spec and broad final reviews next.
+
+Preflight: core produces packet/receipt/schema contracts for A/B/C; canonical source records remain immutable, all groups preserve full snapshots. No shared-file writes: A fourmodules, B fourmodules, C threemodules, parent core/workflow/fixtures. T01-T03 reuse unchanged; prior packets protected. Synthetic stage readiness permits test materialization, while canonical admission/release drafts stay blocked; actual clinical flags alwaysfalse. Core initial RED import failure observed, GREEN1 pass; strict mypy now passes.
+
+Ruling: include the four unchanged reused runtime dependency files (__init__, search_log, study_resolution, object_verification) in the local commit because none is tracked at this base — a new-module-only commit would not import — cost if wrong: review and commit surface includes prior software bytes; other previous work remains unstaged.
+
+Integration: existing source checker emits STRUCTURAL_ONLY, never PASS. Registries and admission now permit synthetic processing of measured complete structurally checked source only with same-source sealed assay suitability; canonical records stay unchanged and all actual admission/release flags stay false. Parent connected bytes are parsed into the exact invented matrix; changed values cannot reuse a valid object hash. Core lineage compares all canonical tables symmetrically and every owned derived view.
+Preservation baseline reverified: 1,931 files, zero missing or changed, including frozen specs and prior packets.
+
+Review wave1: Standards fourP2, Spec oneP1 +sixP2. Core malformed failure fixed by Luna high (10coretests, strictmypy1clean). A correcting component chronology, legitimate multi-episode specimen contexts and explicit source-definedbinary view. B correcting required-object bypass and study-scopedreasons. C correcting coverage enforcement, endpoint selection/adjudication/optionality, missingpairrow, percontext timing, publicgate/limitation tables. Parent corrected connected missingfollowup expectation and retains private stage checks in workflowaudit. Independent scoped re-reviews will follow all fixes.
+
+Ruling: frozen relational invariant controls missing-followup semantics over the initial implementation's denominator pair-row design — retain a reasoned audit denominator and emit no pair with an absent side — cost if wrong: consumers must read denominator audit separately from complete-pair rows.
+
+Standards scoped fix1: all four original P2 findings ADDRESSED, zero outstanding, reviewed exact code hashes and matching logs (no test rerun). Spec fix1 checking S1–S7; new C Prat-bound report also suppresses general aggregate counts and verifies fulldependency binding. Parent post-review connected/existing-seams focused run: 11 passed in42.95s.
+
+Spec scoped fix1: S1–S7 all ADDRESSED, zero outstanding, five original invented tracers independently replayed; final worker reports/hashes checked. Broad final review dispatched Astra high on sealed29-file addition package. Self-contained named-runtime CLI initial attempt rejected macOS /var symlink destination (expected safety behavior); reattempt uses resolved temp path, no product change. Historical initial log retained.
+
+Broad Astra review found fourP2 genuine integration defects F1–F4 (known branch-policy contradictions, baseline ineligibility, split/exposure field inconsistency, stale ancestor/runtime-code closure). They remain software defects, not source evidence. First full affected suite 242passed76.32s is pre-final-fix history, not final acceptance. One comprehensive final fix agent receives allfindings, then one scoped re-review.
+
+Final fix wave dispatched one Astra high implementer (dav_final_fix), ownership all14newmodules/sevennewtests asneeded, no frozen/oldfile writes. Requires connected negative/positive F1–F4 regressions and focusedtests/typecheck; parent will do one scoped re-review then post-fix complete affected suite because code changed after242-pass snapshot. No finding parked or recast as evidencegap.
+
+Final fix progress: targeted F1 contradiction/positive multiomics, F2 NO/BLOOD alternates, F3 EXCLUDED/mixed role+exposure and F4 code-only ancestor refresh/rebuild/runtime closure tests pass per worker. Declared upstream IDs avoid incidental future/self edges; recursive lineage verification implemented. Worker running five affected testfiles and strictmypy, no fullsuite or frozenwrites. Parent doc plan/README now describe split beforematrices and runtime/upstream bindings; scoped reviewer must see these docedits too.
+
+FINAL: single scoped Astra re-review F1–F4 allADDRESSED, zeronewfindings; parent post-fix complete seven-file suite255passed241.20s, strictmypy14clean, copied named-runtime fresh/resume match. All1931protectedbytes unchanged (final packet verifier checks again). Software/synthetic checkpoint accepted; actualsource/reviewer/environment/statistical gates NOT_RUN, no biology. Currentbranch localcommit follows, worktree preserved; exact namedruntime dependencybytes included, other previousuntrackedwork untouched. Evidence copied into versioned validation packet before scratchcleanup.

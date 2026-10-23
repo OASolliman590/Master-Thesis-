@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_baseline_rejects_explicit_no_and_wrong_compartment_before_ranking ____
+
+    def test_baseline_rejects_explicit_no_and_wrong_compartment_before_ranking():
+        for change, reason in [({'baseline_candidate_status': 'NO'}, 'BASELINE_INELIGIBLE'),
+                               ({'biological_compartment': 'BLOOD'}, 'COMPARTMENT_INELIGIBLE')]:
+            packet = synthetic_workflow_packet()
+            packet['records']['specimen_registry'][0].update(change)
+            packet['records']['specimen_registry'][1].update(canonical_timing_category='PRE_INDEX_BASELINE',
+                collection_date_or_day='-1', days_from_index_start=-1, baseline_candidate_status='YES')
+            for binding in packet['records']['episode_binding']:
+                if binding['subject_id'] == 'sp2': binding['role'] = 'PRE_INDEX_BASELINE'
+            packet['config']['timing']['specimens']['sp2'].update(relative_day=-1,
+                canonical_category='PRE_INDEX_BASELINE', window_id='invented-pre')
+            first = run_workflow(packet)
+            assert first['status'] == 'SYNTHETIC_READY', first['audit']
+>           assert first['records']['baseline'][0]['specimen_uid'] == 'sp2'
+E           AssertionError: assert 'sp1' == 'sp2'
+E             
+E             - sp2
+E             + sp1
+
+tests/a_dav_implementation/test_workflow.py:145: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_baseline_rejects_explicit_no_and_wrong_compartment_before_ranking
+1 failed, 8 deselected in 3.31s

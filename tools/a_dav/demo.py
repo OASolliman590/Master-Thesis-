@@ -1,0 +1,185 @@
+"""Invented demonstration context; no catalogue request or patient source."""
+from __future__ import annotations
+
+import hashlib
+import json
+import copy
+from typing import Any
+
+from tools.a_dav.core import SchemaStore
+from tools.a_dav.search_log import candidate_packet_id
+from tools.a_dav.study_resolution import resolve
+
+
+def synthetic_context() -> dict[str, Any]:
+    """Small explicit test context; none of its labels or policies represent Prat."""
+    schemas = SchemaStore()
+    locator = {"kind": "URL", "value": "https://example.org/SYNTHETIC/context", "page_or_section": "invented"}
+    query = "SYNTHETIC_CONTEXT_ONLY"
+    run = {"query_id": "SYN-QUERY-1", "lane": "catalogue_resolution", "source": "SYNTHETIC",
+           "exact_query": query, "searched_utc": "2026-10-23T00:00:00Z", "filters": "synthetic",
+           "pagination_start": 0, "pagination_end": 1, "result_ids": ["SYN-RESULT-1"],
+           "screened_count": 1, "included_count": 0, "excluded_count": 0,
+           "disposition_summary": "Invented candidate only", "follow_up_action": "Synthetic resolution",
+           "completion_status": "COMPLETE", "agent_id": "synthetic-agent", "reviewer": "synthetic-reviewer",
+           "supersedes_query_id": "", "pages": [{"query": query, "count": 1, "retstart": 0,
+           "retmax": 1, "result_ids": ["SYN-RESULT-1"], "url": "https://example.org/SYNTHETIC/query"}]}
+    candidate = {"lane": "catalogue_resolution", "query_ids": ["SYN-QUERY-1"], "candidate_label": "Invented",
+                 "verified_facts": [{"claim": "Invented catalogue fixture", "source_locator": locator}],
+                 "inferences": [], "unknowns": [{"field": "clinical evidence", "resolution_path": "Not real",
+                 "blocking_branches": ["admission"]}], "proposed_records": {}, "suspected_overlap": [],
+                 "recommended_next_action": "Synthetic only", "agent_id": "synthetic-agent",
+                 "completed_utc": "2026-10-23T00:00:00Z"}
+    candidate["packet_id"] = candidate_packet_id(candidate)
+    study = {"study_id": "s1", "publication_family_id": "f1", "study_title": "Invented study",
+             "study_class": "CLINICAL_ICI", "cancer_type": "INVENTED", "study_design": "INVENTED",
+             "candidate_paper_branches": ["A_BASELINE_BIO"], "access_status": "SYNTHETIC_NOT_RETRIEVED",
+             "source_repositories": [], "source_locators": [locator]}
+    publication = {"publication_id": "pub1", "study_id": "s1", "publication_family_id": "f1",
+                   "publication_role": "PRIMARY_CLINICAL", "doi": None, "pmid": None,
+                   "data_reused": None, "patient_subset": None, "assay_subset": None,
+                   "treatment_subset": None, "outcome_subset": None, "known_overlap": None,
+                   "source_object_ids": ["obj1"], "independence_claim": "UNRESOLVED",
+                   "source_locators": [locator], "notes": None}
+    decision = {"decision_id": "SYN-DECISION-1", "reviewer": "synthetic-integrator",
+                "decided_utc": "2026-10-23T01:00:00Z", "provisional": False,
+                "packet_ids": [candidate["packet_id"]], "studies": [study], "aliases": [],
+                "publications": [publication], "superseries": [], "overlap_flags": []}
+    resolved = resolve([candidate], decision, {"SYN-QUERY-1"},  # type: ignore[no-untyped-call]
+                       json.loads((schemas.root / "study_registry.schema.json").read_text()),
+                       json.loads((schemas.root / "publication_family.schema.json").read_text()))
+    content = b"SYNTHETIC_ONLY\ncomplete invented source object\n"
+    source = {"source_object_id": "obj1", "study_id": "s1", "publication_family_id": "f1",
+              "repository": "SYNTHETIC", "object_type": "synthetic_matrix", "exact_file_name": "invented.tsv",
+              "access_route": "UNKNOWN", "retrieval_status": "RETRIEVED", "validation_status": "STRUCTURAL_ONLY",
+              "hash_scope": "FULL_OBJECT", "sha256": hashlib.sha256(content).hexdigest(), "byte_size": len(content),
+              "retrieval_utc": "2026-10-23T00:00:00Z", "source_version": None,
+              "license_terms": "SYNTHETIC_ONLY", "redistribution_status": "NOT_PERMITTED",
+              "source_locators": [{"kind": "FILE", "value": "synthetic-in-memory-object"}]}
+    return {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+            "records": {"study_registry": resolved["study_records"], "publication_family": resolved["publication_records"],
+                        "source_record": [source]}, "schema_hashes": schemas.hashes, "dependencies": {},
+            "config": {"existing_seams": {"search_runs": [run], "candidate_packets": [candidate],
+                       "resolution_decision": decision, "source_payloads": {"obj1": content.hex()}}}}
+
+
+def synthetic_workflow_packet() -> dict[str, Any]:
+    """One invented patient and two specimens; policies are examples, never defaults."""
+    packet = synthetic_context()
+    loc = [{"kind": "INVENTED", "value": "synthetic-row"}]
+    records = packet["records"]
+    records.update({
+        "patient_registry": [{"patient_uid": "p1", "study_id": "s1", "source_patient_id": "001",
+            "source_aliases": ["0001"], "patient_identity_confidence": "VERIFIED", "prior_ici": "NO",
+            "treatment_naive_status": "VERIFIED_YES", "inclusion_state": "CANDIDATE", "cancer": "INVENTED",
+            "source_locators": loc}],
+        "specimen_registry": [{"specimen_uid": "sp1", "patient_uid": "p1", "raw_sample_aliases": ["sample-001"],
+            "canonical_timing_category": "PRE_INDEX_BASELINE", "collection_date_or_day": "-2",
+            "days_from_index_start": -2, "tissue_type": "invented", "biological_compartment": "TUMOUR",
+            "lesion_site": "invented-a", "baseline_candidate_status": "YES", "longitudinal_pair_status": "PAIRABLE",
+            "source_locators": loc}],
+        "assay_registry": [{"assay_uid": "a1", "specimen_uid": "sp1", "source_sample_id": "sample-001",
+            "source_object_id": "obj1", "modality": "RNA", "platform": "INVENTED", "measurement_unit": "counts",
+            "transform": "NONE", "feature_annotation": "invented-v1", "matrix_header": "sample-001", "qc_status": "PASS",
+            "replicate_status": "PRIMARY", "branch_suitability": ["BASELINE_DE", "LONGITUDINAL"], "source_locators": loc}],
+        "clinical_outcome": [{"outcome_id": "o1", "patient_uid": "p1", "raw_endpoint_label": "invented-partial",
+            "endpoint_class": "TUMOUR_RESPONSE", "assessment_criteria": "INVENTED", "canonical_category": "PR",
+            "orr_mapping": True, "dcr_mapping": True, "mapping_rule_version": "invented-v1", "mapping_confidence": "VERIFIED",
+            "evaluability": "EVALUABLE", "discrepancy_status": "NONE", "source_locators": loc}],
+        "treatment_episode": [{"schema_version": "1.1.0", "data_classification": "SYNTHETIC_ONLY",
+            "treatment_episode_id": "e1", "patient_uid": "p1", "study_id": "s1", "regimen_id": "r1",
+            "index_event": "invented-start", "start_day": 0, "stop_day": 60, "timing_precision": "EXACT",
+            "prior_ici": "NO", "episode_status": "VERIFIED", "component_exposure_ids": ["x1"],
+            "source_locators": ["invented-row"]}],
+        "treatment_exposure": [{"treatment_exposure_id": "x1", "patient_uid": "p1", "regimen_id": "r1",
+            "agent": "invented", "pharmacological_class": "ICI", "sequence": "1", "line_of_therapy": "1",
+            "prior_ici": "NO", "certainty": "VERIFIED", "start_date_or_day": "0", "stop_date_or_day": "60", "source_locators": loc}],
+        "prior_exposure_record": [{"schema_version": "1.1.0", "exposure_id": "invented-use", "subject_type": "STUDY_FAMILY",
+            "subject_id": "f1", "analysis_lineage_id": "invented-lineage", "fields_accessed": ["title"],
+            "use": "METADATA_INSPECTION", "occurred_utc": None, "date_precision": "UNKNOWN", "actor_role": "invented",
+            "independence_implication": "METADATA_ONLY_REVIEWED", "source_locators": ["invented"]}],
+        "episode_binding": [], "overlap_edge": []})
+    follow = copy.deepcopy(records["specimen_registry"][0])
+    follow.update(specimen_uid="sp2", raw_sample_aliases=["sample-002"], canonical_timing_category="EARLY_ON_TREATMENT",
+                  collection_date_or_day="10", days_from_index_start=10, baseline_candidate_status="NO")
+    records["specimen_registry"].append(follow)
+    assay = copy.deepcopy(records["assay_registry"][0])
+    assay.update(assay_uid="a2", specimen_uid="sp2", source_sample_id="sample-002", matrix_header="sample-002")
+    records["assay_registry"].append(assay)
+    for subject_type, subject_id, role in [("SPECIMEN", "sp1", "PRE_INDEX_BASELINE"),
+            ("SPECIMEN", "sp2", "ON_TREATMENT"), ("CLINICAL_OUTCOME", "o1", "OUTCOME_ASSESSMENT"),
+            ("TREATMENT_EXPOSURE", "x1", "TREATMENT_COMPONENT")]:
+        records["episode_binding"].append({"schema_version": "1.1.0", "data_classification": "SYNTHETIC_ONLY",
+            "binding_id": "b" + subject_id, "patient_uid": "p1", "treatment_episode_id": "e1",
+            "subject_type": subject_type, "subject_id": subject_id, "role": role, "binding_status": "VERIFIED",
+            "source_locators": ["invented-row"], "reviewer": "invented-reader", "reviewed_utc": "2026-10-23"})
+    source_hash = records["source_record"][0]["sha256"]
+    selection = {"selection_basis": "PRESPECIFIED_METADATA", "specimen_rank": {"sp1": 0, "sp2": 1},
+        "assay_rank": {"a1": 0, "a2": 1}, "assay_suitability": "BASELINE_DE", "build_utc": "2026-10-23T00:00:00Z",
+        "split_role": "DEVELOPMENT", "prior_exposure_status": "METADATA_ONLY", "coverage_suitability": "de_suitability",
+        "endpoint_policy": {"required": True, "endpoint_class": "ORR", "discrepancy_policy": "SEALED_PREFERRED_OUTCOME"}}
+    packet["config"].update({
+        "registries": {"study_ids": ["s1"], "source_hashes": {"obj1": source_hash}},
+        "endpoints": {"version": "invented-v1", "category_map": {"invented-partial": "PR"}, "classes": ["ORR", "DCR"], "source_priority": ["o1"]},
+        "timing": {"version": "invented-time-v1", "episode_order": ["e1"], "windows": {
+            "invented-pre": {"category": "PRE_INDEX_BASELINE", "min_day": -5, "max_day": -1},
+            "invented-on": {"category": "EARLY_ON_TREATMENT", "min_day": 1, "max_day": 20}}, "specimens": {
+            "sp1": {"treatment_episode_id": "e1", "precision": "EXACT", "relative_day": -2, "canonical_category": "PRE_INDEX_BASELINE",
+                    "window_id": "invented-pre", "source_locator": "invented-row", "inferred_from_order": False},
+            "sp2": {"treatment_episode_id": "e1", "precision": "EXACT", "relative_day": 10, "canonical_category": "EARLY_ON_TREATMENT",
+                    "window_id": "invented-on", "source_locator": "invented-row", "inferred_from_order": False}}},
+        "assays": {"required_features": ["F1", "F2"], "matrices": [{"source_object_id": "obj1", "source_sha256": source_hash,
+            "headers": ["sample-001", "sample-002"], "features": ["F1", "F2"], "values": [[0, 1], [2, 3]], "unit": "counts",
+            "platform": "INVENTED", "modality": "RNA", "library_properties": {
+                "sample-001": {"library_size": 2, "source_locator": "invented-library"},
+                "sample-002": {"library_size": 4, "source_locator": "invented-library"}},
+            "transform": "NONE", "annotation": "invented-v1", "feature_universe": ["F1", "F2"], "feature_map": {"F1": "F1", "F2": "F2"},
+            "feature_scope": "COMPLETE", "normalization": "NONE", "lane": "COUNTS", "source_locator": "invented-row",
+            "replicate_policy": "PRESERVE", "missingness_policy": "PRESERVE", "delimiter": "TAB", "encoding": "UTF-8"}]},
+        "overlap": {"review_complete": True},
+        "exposure": {"analysis_lineage_id": "invented-lineage", "review_complete": True,
+                     "covered_subjects": [{"subject_type": "STUDY_FAMILY", "subject_id": "f1"}]},
+        "admission": {"required_source_object_ids": ["obj1"], "branch_policies": {"A_BASELINE_BIO": {
+            "baseline": {"policy_version": "invented-v1", "source_locators": ["invented"]},
+            "endpoint": {"policy_version": "invented-v1", "source_locators": ["invented"], "endpoint_class": "ORR"}}}},
+        "baseline": copy.deepcopy(selection),
+        "longitudinal": {**selection, "assay_suitability": "LONGITUDINAL", "windows": [{"window_id": "invented-on", "contrast_id": "invented-pre-on",
+            "category": "EARLY_ON_TREATMENT", "lower_day": 1, "upper_day": 20}]},
+        "split": {"selection_basis": "PRESPECIFIED_METADATA", "performance_observed": False, "version": "invented-v1",
+            "analysis_lineage_id": "invented-lineage", "required_source_ids": ["obj1"], "assignments": [{
+            "row_type": "SPLIT", "schema_version": "1.1.0", "data_classification": "SYNTHETIC_ONLY", "patient_uid": "p1", "study_id": "s1",
+            "independence_family_id": "f1", "permanent_role": "DEVELOPMENT", "prior_exposure_state": "METADATA_ONLY",
+            "exposure_decision_id": None, "split_version": "invented-v1", "reason": "PRESPECIFIED_METADATA", "nested_assignments": []}]},
+        "public_report": {"minimum_cell_count": 3, "include_counts": True},
+        "freeze": {"commands": ["python -B -m tools.a_dav.demo"], "environment": {"python": "3.12", "scope": "SYNTHETIC_ONLY"},
+                   "required_source_ids": ["obj1"], "source_universe_version": "invented-v1"}})
+    # The connected example parses these exact invented bytes. A caller cannot
+    # supply a different numeric matrix while retaining the same object hash.
+    from tools.a_dav.core import canonical_bytes
+    fields = ("headers", "features", "values", "unit", "transform", "annotation", "platform", "modality")
+    matrix = packet["config"]["assays"]["matrices"][0]
+    content = b"SYNTHETIC_ONLY\n" + canonical_bytes({"assay_matrix": {key: matrix[key] for key in fields}})
+    source_hash = hashlib.sha256(content).hexdigest()
+    records["source_record"][0].update(sha256=source_hash, byte_size=len(content))
+    packet["config"]["existing_seams"]["source_payloads"]["obj1"] = content.hex()
+    packet["config"]["registries"]["source_hashes"]["obj1"] = source_hash
+    matrix["source_sha256"] = source_hash
+    return packet
+
+
+def main() -> int:
+    """Run only the built-in invented fixture, printing a count-free status."""
+    import argparse
+    from pathlib import Path
+    from tools.a_dav.core import public_summary
+    from tools.a_dav.workflow import run_workflow
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--freeze", type=Path, help="Create or verify an immutable synthetic reproduction directory")
+    args = parser.parse_args()
+    result = run_workflow(synthetic_workflow_packet(), args.freeze)
+    print(json.dumps(public_summary(result, include_counts=False), sort_keys=True))
+    return 0 if result["status"] == "SYNTHETIC_READY" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

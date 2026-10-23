@@ -1,0 +1,296 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 74 items / 62 deselected / 12 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py FFFFFFFF.            [ 75%]
+tests/a_dav_implementation/test_group_b_graph_admission.py FFF           [100%]
+
+=================================== FAILURES ===================================
+_ test_review_required_inventory_overrides_optional_flag_after_fresh_seals[MISSING] _
+
+state = 'MISSING'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_required_inventory_overrides_optional_flag_after_fresh_seals(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        obj = c["manifest"][0]
+        obj.update(state=state, required=False)
+        obj.pop("content_hex")
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:228: AssertionError
+_ test_review_required_inventory_overrides_optional_flag_after_fresh_seals[UNAVAILABLE] _
+
+state = 'UNAVAILABLE'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_required_inventory_overrides_optional_flag_after_fresh_seals(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        obj = c["manifest"][0]
+        obj.update(state=state, required=False)
+        obj.pop("content_hex")
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:228: AssertionError
+_ test_review_required_inventory_overrides_optional_flag_after_fresh_seals[UNINSPECTED] _
+
+state = 'UNINSPECTED'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_required_inventory_overrides_optional_flag_after_fresh_seals(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        obj = c["manifest"][0]
+        obj.update(state=state, required=False)
+        obj.pop("content_hex")
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:228: AssertionError
+_ test_review_required_inventory_overrides_optional_flag_after_fresh_seals[SUPERSEDED] _
+
+state = 'SUPERSEDED'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_required_inventory_overrides_optional_flag_after_fresh_seals(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        obj = c["manifest"][0]
+        obj.update(state=state, required=False)
+        obj.pop("content_hex")
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:228: AssertionError
+__ test_review_assertions_cannot_use_unavailable_optional_authority[MISSING] ___
+
+state = 'MISSING'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_assertions_cannot_use_unavailable_optional_authority(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        optional = {"object_id": "invented-optional", "state": state, "required": False}
+        c["manifest"].append(optional)
+        for reader in c["readers"]:
+            reader["assertions"][0]["authority_object_id"] = "invented-optional"
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:243: AssertionError
+_ test_review_assertions_cannot_use_unavailable_optional_authority[UNAVAILABLE] _
+
+state = 'UNAVAILABLE'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_assertions_cannot_use_unavailable_optional_authority(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        optional = {"object_id": "invented-optional", "state": state, "required": False}
+        c["manifest"].append(optional)
+        for reader in c["readers"]:
+            reader["assertions"][0]["authority_object_id"] = "invented-optional"
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:243: AssertionError
+_ test_review_assertions_cannot_use_unavailable_optional_authority[UNINSPECTED] _
+
+state = 'UNINSPECTED'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_assertions_cannot_use_unavailable_optional_authority(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        optional = {"object_id": "invented-optional", "state": state, "required": False}
+        c["manifest"].append(optional)
+        for reader in c["readers"]:
+            reader["assertions"][0]["authority_object_id"] = "invented-optional"
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:243: AssertionError
+_ test_review_assertions_cannot_use_unavailable_optional_authority[SUPERSEDED] _
+
+state = 'SUPERSEDED'
+
+    @pytest.mark.parametrize("state", ["MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"])
+    def test_review_assertions_cannot_use_unavailable_optional_authority(state: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        optional = {"object_id": "invented-optional", "state": state, "required": False}
+        c["manifest"].append(optional)
+        for reader in c["readers"]:
+            reader["assertions"][0]["authority_object_id"] = "invented-optional"
+        reseal_review_inventory(c)
+        result = invoke("prat_review", "review_prat_packet", p)
+>       assert result["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:243: AssertionError
+_ test_review_study_eligibility_is_scoped_and_invariant_under_reversal[missing_evidence-BLOCKED_UNKNOWN-BLOCKED_UNKNOWN] _
+
+unsupported = 'missing_evidence', aggregate_status = 'BLOCKED_UNKNOWN'
+second_status = 'BLOCKED_UNKNOWN'
+
+    @pytest.mark.parametrize("unsupported,aggregate_status,second_status", [
+        ("missing_evidence", "BLOCKED_UNKNOWN", "BLOCKED_UNKNOWN"),
+        ("non_ici", "FAIL", "FAIL"),
+        ("source_failure", "FAIL", "FAIL"),
+    ])
+    def test_review_study_eligibility_is_scoped_and_invariant_under_reversal(
+        unsupported: str, aggregate_status: str, second_status: str,
+    ) -> None:
+        p = packet(); two_studies(p)
+        other = deepcopy(p["records"]["source_record"][0])
+        other.update(source_object_id="obj2", study_id="s2", publication_family_id="f2")
+        p["records"]["source_record"].append(other)
+        p["config"]["admission"]["required_source_object_ids"].append("obj2")
+        if unsupported == "non_ici":
+            p["records"]["study_registry"][1]["study_class"] = "UNTREATED_MOLECULAR"
+        if unsupported == "source_failure":
+            other["validation_status"] = "FAIL"
+        stages = ("registries", "endpoints", "timing", "assays", "overlap", "exposure")
+        forward = evaluate_admission(seal(p, stages))
+        reversed_packet = deepcopy(p)
+        for rows in reversed_packet["records"].values():
+            rows.reverse()
+        reversed_result = evaluate_admission(seal(reversed_packet, stages))
+        assert forward["status"] == aggregate_status
+        expected = {"s1": "SYNTHETIC_READY", "s2": second_status}
+        assert {a["study_id"]: a["eligibility"] for a in forward["audit"] if a["kind"] == "admission_eligibility"} == expected
+>       assert {a["study_id"]: a["eligibility"] for a in reversed_result["audit"] if a["kind"] == "admission_eligibility"} == expected
+E       AssertionError: assert {'s1': 'BLOCK...CKED_UNKNOWN'} == {'s1': 'SYNTH...CKED_UNKNOWN'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'s1': 'BLOCKED_UNKNOWN'} != {'s1': 'SYNTHETIC_READY'}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:269: AssertionError
+_ test_review_study_eligibility_is_scoped_and_invariant_under_reversal[non_ici-FAIL-FAIL] _
+
+unsupported = 'non_ici', aggregate_status = 'FAIL', second_status = 'FAIL'
+
+    @pytest.mark.parametrize("unsupported,aggregate_status,second_status", [
+        ("missing_evidence", "BLOCKED_UNKNOWN", "BLOCKED_UNKNOWN"),
+        ("non_ici", "FAIL", "FAIL"),
+        ("source_failure", "FAIL", "FAIL"),
+    ])
+    def test_review_study_eligibility_is_scoped_and_invariant_under_reversal(
+        unsupported: str, aggregate_status: str, second_status: str,
+    ) -> None:
+        p = packet(); two_studies(p)
+        other = deepcopy(p["records"]["source_record"][0])
+        other.update(source_object_id="obj2", study_id="s2", publication_family_id="f2")
+        p["records"]["source_record"].append(other)
+        p["config"]["admission"]["required_source_object_ids"].append("obj2")
+        if unsupported == "non_ici":
+            p["records"]["study_registry"][1]["study_class"] = "UNTREATED_MOLECULAR"
+        if unsupported == "source_failure":
+            other["validation_status"] = "FAIL"
+        stages = ("registries", "endpoints", "timing", "assays", "overlap", "exposure")
+        forward = evaluate_admission(seal(p, stages))
+        reversed_packet = deepcopy(p)
+        for rows in reversed_packet["records"].values():
+            rows.reverse()
+        reversed_result = evaluate_admission(seal(reversed_packet, stages))
+        assert forward["status"] == aggregate_status
+        expected = {"s1": "SYNTHETIC_READY", "s2": second_status}
+        assert {a["study_id"]: a["eligibility"] for a in forward["audit"] if a["kind"] == "admission_eligibility"} == expected
+>       assert {a["study_id"]: a["eligibility"] for a in reversed_result["audit"] if a["kind"] == "admission_eligibility"} == expected
+E       AssertionError: assert {'s1': 'BLOCK... 's2': 'FAIL'} == {'s1': 'SYNTH... 's2': 'FAIL'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'s1': 'BLOCKED_UNKNOWN'} != {'s1': 'SYNTHETIC_READY'}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:269: AssertionError
+_ test_review_study_eligibility_is_scoped_and_invariant_under_reversal[source_failure-FAIL-FAIL] _
+
+unsupported = 'source_failure', aggregate_status = 'FAIL'
+second_status = 'FAIL'
+
+    @pytest.mark.parametrize("unsupported,aggregate_status,second_status", [
+        ("missing_evidence", "BLOCKED_UNKNOWN", "BLOCKED_UNKNOWN"),
+        ("non_ici", "FAIL", "FAIL"),
+        ("source_failure", "FAIL", "FAIL"),
+    ])
+    def test_review_study_eligibility_is_scoped_and_invariant_under_reversal(
+        unsupported: str, aggregate_status: str, second_status: str,
+    ) -> None:
+        p = packet(); two_studies(p)
+        other = deepcopy(p["records"]["source_record"][0])
+        other.update(source_object_id="obj2", study_id="s2", publication_family_id="f2")
+        p["records"]["source_record"].append(other)
+        p["config"]["admission"]["required_source_object_ids"].append("obj2")
+        if unsupported == "non_ici":
+            p["records"]["study_registry"][1]["study_class"] = "UNTREATED_MOLECULAR"
+        if unsupported == "source_failure":
+            other["validation_status"] = "FAIL"
+        stages = ("registries", "endpoints", "timing", "assays", "overlap", "exposure")
+        forward = evaluate_admission(seal(p, stages))
+        reversed_packet = deepcopy(p)
+        for rows in reversed_packet["records"].values():
+            rows.reverse()
+        reversed_result = evaluate_admission(seal(reversed_packet, stages))
+        assert forward["status"] == aggregate_status
+        expected = {"s1": "SYNTHETIC_READY", "s2": second_status}
+>       assert {a["study_id"]: a["eligibility"] for a in forward["audit"] if a["kind"] == "admission_eligibility"} == expected
+E       AssertionError: assert {'s1': 'BLOCK...CKED_UNKNOWN'} == {'s1': 'SYNTH... 's2': 'FAIL'}
+E         
+E         Differing items:
+E         {'s1': 'BLOCKED_UNKNOWN'} != {'s1': 'SYNTHETIC_READY'}
+E         {'s2': 'BLOCKED_UNKNOWN'} != {'s2': 'FAIL'}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:268: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_required_inventory_overrides_optional_flag_after_fresh_seals[MISSING]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_required_inventory_overrides_optional_flag_after_fresh_seals[UNAVAILABLE]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_required_inventory_overrides_optional_flag_after_fresh_seals[UNINSPECTED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_required_inventory_overrides_optional_flag_after_fresh_seals[SUPERSEDED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_assertions_cannot_use_unavailable_optional_authority[MISSING]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_assertions_cannot_use_unavailable_optional_authority[UNAVAILABLE]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_assertions_cannot_use_unavailable_optional_authority[UNINSPECTED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_review_assertions_cannot_use_unavailable_optional_authority[SUPERSEDED]
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_review_study_eligibility_is_scoped_and_invariant_under_reversal[missing_evidence-BLOCKED_UNKNOWN-BLOCKED_UNKNOWN]
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_review_study_eligibility_is_scoped_and_invariant_under_reversal[non_ici-FAIL-FAIL]
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_review_study_eligibility_is_scoped_and_invariant_under_reversal[source_failure-FAIL-FAIL]
+================= 11 failed, 1 passed, 62 deselected in 3.49s ==================

@@ -1,0 +1,634 @@
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:15: trailing whitespace.
++tests/a_dav_implementation/test_core.py:105: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:16: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:25: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:51: trailing whitespace.
++tests/a_dav_implementation/test_core.py:122: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:52: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:61: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:85: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:100: trailing whitespace.
++tests/a_dav_implementation/test_core.py:149: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:101: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/core-failure-red.log:108: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/existing-seams-green.log:11: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-modality-alias-red.log:48: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-red.log:19: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-red.log:36: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F1-window-red.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F2-red.log:20: trailing whitespace.
++E             
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F3-red.log:13: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F3-red.log:54: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-F4-red.log:41: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-group-c-attempt1.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:11: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:13: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:16: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:18: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:20: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:35: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:37: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:39: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:41: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:47: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:53: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:56: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:59: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:61: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:63: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:80: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:82: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:126: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:127: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:172: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:173: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:181: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:182: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:193: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:194: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:212: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:213: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:228: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:229: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:241: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:242: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:260: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:261: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:279: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:280: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:299: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:300: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:303: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:304: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:628: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:642: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:643: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:666: trailing whitespace.
+++                return 'CONTRADICTED' 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:875: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:876: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:977: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:978: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:995: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:996: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1033: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1034: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1084: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1091: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1092: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1205: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1206: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1252: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1254: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1257: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1260: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1261: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1289: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1291: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1316: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/final-fix-review.diff:1317: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/02-registry-green.txt:13: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/12-adversarial.txt:6: trailing whitespace.
++    
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/12-adversarial.txt:7: trailing whitespace.
++    
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/12-adversarial.txt:21: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/12-adversarial.txt:26: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/13-cached-schemas.txt:20: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/13-cached-schemas.txt:25: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/17-review-red.txt:10: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/17-review-red.txt:23: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/17-review-red.txt:36: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/17-review-red.txt:48: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/21-source-assertion-red.txt:12: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/21-source-assertion-red.txt:25: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:14: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:30: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:57: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:84: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:111: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-binary-red.txt:138: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt:15: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt:32: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt:49: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt:66: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-chronology-red.txt:83: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-context-red.txt:11: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-context-red.txt:24: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing.diff:6: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing.diff:10: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-a-logs/round1-timing.diff:12: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-01.log:19: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-04.log:28: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-04.log:33: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-04.log:52: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-green-04.log:54: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:16: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:50: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:17: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:28: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:43: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:57: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:44: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:55: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:90: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:91: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:102: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:137: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:138: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:149: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:184: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:185: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:196: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:231: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:232: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:243: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:278: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:279: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:290: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:325: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:326: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:337: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:372: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:373: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:384: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:419: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:420: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:431: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:466: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:467: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:478: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:513: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:86: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:514: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:525: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:543: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:95: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:544: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:555: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:573: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:109: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:574: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:585: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:600: trailing whitespace.
++tests/a_dav_implementation/test_group_b_protocol.py:115: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:601: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-01.log:612: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log:28: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log:33: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log:52: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log:54: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-02.log:64: trailing whitespace.
++E     
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-03.log:22: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-03.log:35: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-04.log:17: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-04.log:30: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-04.log:46: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-05.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-05.log:31: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-06.log:25: trailing whitespace.
++E             
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-07.log:19: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-07.log:35: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-08.log:28: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-09.log:17: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-09.log:53: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-10.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-red-10.log:28: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:24: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:43: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:62: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:81: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:101: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:121: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:141: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:161: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:199: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:238: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-b-review-r1-red.log:277: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log:34: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log:52: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log:70: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-green-03-attempt.log:88: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:13: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:19: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:14: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:22: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:40: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:19: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:41: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:49: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:67: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:19: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:68: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:76: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:94: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:19: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:95: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-01.log:103: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-path.log:13: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:10: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:83: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:11: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:27: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:52: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:98: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:53: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:69: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:94: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:106: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:95: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:111: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:140: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:123: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:141: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:157: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:187: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:123: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:188: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:204: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:229: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:142: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:230: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:249: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:274: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:154: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:275: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:294: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:320: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:162: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:321: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:340: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:365: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:180: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:366: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:388: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:417: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:192: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:418: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:440: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:469: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:192: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:470: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:492: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:521: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:192: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:522: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:544: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:573: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:192: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:574: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:596: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:625: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:192: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:626: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:648: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:676: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:200: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:677: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:699: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:727: trailing whitespace.
++tests/a_dav_implementation/test_group_c.py:215: 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:728: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-02-prerequisite.log:750: trailing whitespace.
++_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:25: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:90: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:103: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:132: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:150: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:168: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:186: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:204: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:214: trailing whitespace.
++    
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-03-features.log:215: trailing whitespace.
++    
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-04.log:30: trailing whitespace.
++E             
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-04.log:35: trailing whitespace.
++E             
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-05.log:18: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-05.log:33: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-06.log:12: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-06.log:26: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-red-07.log:16: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final.log:14: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final.log:17: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final.log:36: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-green-final.log:39: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log:24: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log:38: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log:57: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log:70: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-01.log:106: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/group-c-review-red-02.log:26: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-focused.log:12: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-focused.log:25: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/parent-review-missing-pair-red.log:12: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:104: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:107: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:109: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:112: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:113: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:194: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:201: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:202: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:216: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:217: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:246: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:247: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:384: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:396: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:397: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:417: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:491: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:492: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:766: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:770: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:772: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:774: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/review-fix-wave1.diff:775: trailing whitespace.
++ 
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-focused.log:12: trailing whitespace.
++E         
+docs/validation/A_DAV_IMPLEMENTATION_01/EVIDENCE/workflow-focused.log:25: trailing whitespace.
++E         
+tools/a_dav/admission.py:97: trailing whitespace.
++                return 'CONTRADICTED' 

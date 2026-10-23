@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 24 items / 22 deselected / 2 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py FF                   [100%]
+
+=================================== FAILURES ===================================
+___________ test_prat_missing_second_first_pass_is_unknown_evidence ____________
+
+    def test_prat_missing_second_first_pass_is_unknown_evidence() -> None:
+        p = prat(); p["config"]["prat_review"]["readers"].pop()
+        r = invoke("prat_review", "review_prat_packet", p)
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_b_protocol.py:202: AssertionError
+________ test_prat_missing_seal_is_unknown_and_present_tampering_fails _________
+
+    def test_prat_missing_seal_is_unknown_and_present_tampering_fails() -> None:
+        p = prat(); p["config"]["prat_review"]["readers"][1].pop("seal_sha256")
+        r = invoke("prat_review", "review_prat_packet", p)
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_b_protocol.py:209: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_missing_second_first_pass_is_unknown_evidence
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_missing_seal_is_unknown_and_present_tampering_fails
+======================= 2 failed, 22 deselected in 1.39s =======================

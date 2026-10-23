@@ -1,0 +1,61 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 32 items
+
+tests/a_dav_implementation/test_group_b_graph_admission.py F.........F.. [ 40%]
+...................                                                      [100%]
+
+=================================== FAILURES ===================================
+_________ test_potential_overlap_transitive_and_permutation_invariant __________
+
+    def test_potential_overlap_transitive_and_permutation_invariant() -> None:
+        p = packet()
+        for number in [2, 3]:
+            s = deepcopy(p["records"]["study_registry"][0]); s.update(study_id=f"s{number}", publication_family_id=f"f{number}")
+            f = deepcopy(p["records"]["publication_family"][0]); f.update(study_id=f"s{number}", publication_family_id=f"f{number}", publication_id=f"pub{number}")
+            p["records"]["study_registry"].append(s); p["records"]["publication_family"].append(f)
+        p["records"]["overlap_edge"] = [edge("edge1", "s1", "s2"), edge("edge2", "s2", "s3")]
+        r = validate_overlap(seal(p))
+        assert r["status"] == "SYNTHETIC_READY"
+        component = r["audit"][0]
+        assert component["protection"] == "POTENTIAL_OR_UNKNOWN"
+        assert {x["node_id"] for x in component["nodes"] if x["node_type"] == "STUDY"} == {"s1", "s2", "s3"}
+        before = deepcopy(r)
+        for rows in p["records"].values(): rows.reverse()
+>       assert validate_overlap(seal(p)) == before
+E       AssertionError: assert {'classificat...INE_BIO', ...} == {'classificat...INE_BIO', ...}
+E         
+E         Omitting 11 identical items, use -vv to show
+E         Differing items:
+E         {'bindings': {'input_sha256': '41ffebf25c55652ee6686b23d033633fe4bbdd1ce541d60ebbf52bbfb7448d22', 'config_sha256': '12...71fa3b4b87dc6532f97cc8954e6b', 'code_sha256': '56cb134849eeee29ee87966d8b983e6b9b8f4f88124a189306856ae6fc15d7a7', ...}} != {'bindings': {'input_sha256': '4c7be3fd3c64d2e8243db96c5d058df4af700369a2d5800ac6007dee6e27f3d6', 'config_sha256': '12...71fa3b4b87dc6532f97cc8954e6b', 'code_sha256': '56cb134849eeee29ee87966d8b983e6b9b8f4f88124a189306856ae6fc15d7a7', ...}}
+E         {'receipt_id': '7151f76d24740848...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:52: AssertionError
+________ test_synthetic_eligibility_never_admits_and_preserves_all_rows ________
+
+    def test_synthetic_eligibility_never_admits_and_preserves_all_rows() -> None:
+        p = admission_packet(); before = deepcopy(p)
+        r = evaluate_admission(p)
+        assert r["status"] == "SYNTHETIC_READY"
+        assert r["audit"][0]["eligibility"] == "SYNTHETIC_READY"
+        assert r["source_admission"] is False
+        draft = r["records"]["cohort_admission_receipt"][0]
+        assert draft["admission_status"] == "BLOCKED_UNKNOWN"
+        assert draft["approved_branches"] == []
+        assert {x["status"] for x in draft["gate_results"]} == {"BLOCKED_UNKNOWN"}
+>       for table, rows in before["records"].items(): assert r["records"][table] == rows
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert [{'schema_ver...': 'p1', ...}] == [{'schema_ver...': 'p1', ...}]
+E         
+E         At index 0 diff: {'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bo1', 'patient_uid': 'p1', 'treatment_episode_id': 'e1', 'subject_type': 'CLINICAL_OUTCOME', 'subject_id': 'o1', 'role': 'OUTCOME_ASSESSMENT', 'binding_status': 'VERIFIED', 'source_locators': ['invented-row'], 'reviewer': 'invented-reader', 'reviewed_utc': '2026-10-23'} != {'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bsp1', 'patient_uid': 'p1', 'treatment_episode_id': 'e1', 'subject_type': 'SPECIMEN', 'subject_id': 'sp1', 'role': 'P...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:114: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_potential_overlap_transitive_and_permutation_invariant
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_synthetic_eligibility_never_admits_and_preserves_all_rows
+======================== 2 failed, 30 passed in 42.12s =========================

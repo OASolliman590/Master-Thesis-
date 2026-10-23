@@ -1,0 +1,21 @@
+{
+  "preservation_files": 1844,
+  "preservation_mismatches": [],
+  "legacy_code_bindings": 4,
+  "legacy_synthetic_input_bindings": 3,
+  "canonical_schema_bindings": 10,
+  "fix_rounds_bound": [
+    1,
+    2,
+    3
+  ],
+  "final_review_fix_bound": true,
+  "initial_final_fix_history_bound": true,
+  "residual_fix_bound": true,
+  "initial_residual_fix_logs_bound": true,
+  "initial_residual_fix_source_snapshot_bound": false,
+  "residual_schema_fix_bound": true,
+  "current_code_test_fixture_bindings_match": true,
+  "parent_test_log_bindings_match": true,
+  "bridge_or_biological_computation_executed_by_this_check": false
+}

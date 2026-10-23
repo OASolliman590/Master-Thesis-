@@ -1,0 +1,77 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 60 items / 55 deselected / 5 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py F                    [ 20%]
+tests/a_dav_implementation/test_group_b_graph_admission.py FFFF          [100%]
+
+=================================== FAILURES ===================================
+______ test_prat_changed_required_inventory_invalidates_first_pass_basis _______
+
+    def test_prat_changed_required_inventory_invalidates_first_pass_basis() -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        c["required_object_ids"] = []
+>       assert invoke("prat_review", "review_prat_packet", p)["reasons"] == ["REVIEW_BASIS_MISMATCH"]
+E       AssertionError: assert ['OBJECT_MANIFEST_INCOMPLETE'] == ['REVIEW_BASIS_MISMATCH']
+E         
+E         At index 0 diff: 'OBJECT_MANIFEST_INCOMPLETE' != 'REVIEW_BASIS_MISMATCH'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_protocol.py:192: AssertionError
+_________ test_shared_publication_under_different_studies_is_protected _________
+
+    def test_shared_publication_under_different_studies_is_protected() -> None:
+        p = packet(); two_studies(p)
+        r = validate_overlap(seal(p))
+        assert r["status"] == "SYNTHETIC_READY"
+>       assert len(r["audit"]) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'kind': 'overlap_component', 'nodes': [{'node_type': 'ASSAY', 'node_id': 'a1'}, {'node_type': 'PATIENT', 'node_id': ... 'node_id': 'f2'}, {'node_type': 'STUDY', 'node_id': 's2'}], 'protection': 'RELATED', 'independence_certified': False}])
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:212: AssertionError
+______ test_same_repository_accession_is_alias_but_cross_namespace_is_not ______
+
+    def test_same_repository_accession_is_alias_but_cross_namespace_is_not() -> None:
+        p = packet(); two_studies(p)
+        p["records"]["publication_family"][1]["publication_id"] = "other-publication"
+        p["records"]["source_record"][0]["accession"] = "invented-accession"
+        other = deepcopy(p["records"]["source_record"][0]); other.update(source_object_id="obj2", study_id="s2", publication_family_id="f2", sha256="b" * 64)
+        p["records"]["source_record"].append(other)
+>       assert len(validate_overlap(seal(p))["audit"]) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'kind': 'overlap_component', 'nodes': [{'node_type': 'ASSAY', 'node_id': 'a1'}, {'node_type': 'PATIENT', 'node_id': ...node_id': 'obj2'}, {'node_type': 'STUDY', 'node_id': 's2'}], 'protection': 'RELATED', 'independence_certified': False}])
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:221: AssertionError
+_______ test_known_clinical_curation_is_retained_without_untouched_claim _______
+
+    def test_known_clinical_curation_is_retained_without_untouched_claim() -> None:
+        p = packet(); p["records"]["prior_exposure_record"][0].update(use="CLINICAL_ENDPOINT_CURATION", independence_implication="REVIEW_REQUIRED")
+        r = validate_exposure(seal(p))
+>       assert r["status"] == "SYNTHETIC_READY"
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:229: AssertionError
+____________ test_admission_same_draft_is_not_duplicated_on_repeat _____________
+
+    def test_admission_same_draft_is_not_duplicated_on_repeat() -> None:
+        p = admission_packet(); r = evaluate_admission(p)
+        p["records"] = r["records"]
+        seal(p, ("registries", "endpoints", "timing", "assays", "overlap", "exposure"))
+        repeated = evaluate_admission(p)
+        assert repeated["status"] == "SYNTHETIC_READY"
+>       assert len(repeated["records"]["cohort_admission_receipt"]) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'admission_receipt_id': 'synthetic-draft-8b69d28cc3b6bb5975de', 'study_id': 's1', 'publication_family_id': 'f1', 'br...etic-draft-8b69d28cc3b6bb5975de', 'study_id': 's1', 'publication_family_id': 'f1', 'branch_id': 'A_BASELINE_BIO', ...}])
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:240: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_changed_required_inventory_invalidates_first_pass_basis
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_shared_publication_under_different_studies_is_protected
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_same_repository_accession_is_alias_but_cross_namespace_is_not
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_known_clinical_curation_is_retained_without_untouched_claim
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_admission_same_draft_is_not_duplicated_on_repeat
+======================= 5 failed, 55 deselected in 2.93s =======================

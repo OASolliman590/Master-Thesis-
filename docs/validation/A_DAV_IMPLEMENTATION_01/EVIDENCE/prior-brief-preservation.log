@@ -1,0 +1,22 @@
+{
+  "status": "PASS_DOCUMENT_AND_PRESERVATION_CHECKS_ONLY",
+  "source_candidate": "Prat-GSE93157",
+  "branch": "A_BASELINE_BIO",
+  "evidence_rows": 10,
+  "software_routes": 7,
+  "protected_files_verified": 1923,
+  "input_documents_bound": 19,
+  "local_links_checked": 21,
+  "source_readiness": "BLOCKED_UNKNOWN",
+  "new_software_defects_established": [],
+  "test_suites_executed": [],
+  "real_source_data_used": false,
+  "biological_analysis_executed": false,
+  "source_admission": false,
+  "statistical_release": false,
+  "frozen_specs_and_prior_packets_unchanged": true,
+  "code_and_source_evidence_register_unchanged": true,
+  "new_document_verifier_created": true,
+  "committed": false,
+  "pushed": false
+}

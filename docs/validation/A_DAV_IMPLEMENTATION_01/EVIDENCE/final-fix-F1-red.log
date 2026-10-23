@@ -1,0 +1,44 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_outer_validation_reconciles_current_lineage_training ___________
+
+    def test_outer_validation_reconciles_current_lineage_training():
+        packet = synthetic_workflow_packet()
+        packet['branch_id'] = 'A_P2_OUTER_VALIDATION'
+        policy = deepcopy(packet['config']['admission']['branch_policies']['A_BASELINE_BIO'])
+        policy.update(originating_study_holdout=_evidence(held_out_study_ids=['s1'], training_study_ids=[]),
+                      lineage_no_training=_evidence(analysis_lineage_id='invented-lineage'))
+        packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
+        good = run_workflow(packet)
+        assert good['status'] == 'SYNTHETIC_READY', good['audit']
+        packet['records']['prior_exposure_record'][0].update(use='MODEL_TUNING', fields_accessed=['response'],
+            independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
+        bad = run_workflow(packet)
+>       assert bad['status'] == 'FAIL'
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_workflow.py:109: AssertionError
+_________ test_multiomics_reconciles_exact_specimens_times_and_assays __________
+
+    def test_multiomics_reconciles_exact_specimens_times_and_assays():
+        packet = synthetic_workflow_packet()
+        packet['branch_id'] = 'PAIRED_MULTIOMICS'
+        policy = {'patient_link': _evidence(specimen_uids=['sp1', 'sp2']),
+                  'same_time_specimen': _evidence(specimen_uids=['sp1', 'sp2'], same_time=True, same_specimen=True),
+                  'modality_gates': _evidence(modalities=['RNA', 'METHYLATION'], assay_uids=['a1', 'a2'])}
+        packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
+        bad = run_workflow(packet)
+>       assert bad['status'] == 'FAIL'
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_workflow.py:121: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_outer_validation_reconciles_current_lineage_training
+FAILED tests/a_dav_implementation/test_workflow.py::test_multiomics_reconciles_exact_specimens_times_and_assays
+2 failed, 6 deselected in 7.55s

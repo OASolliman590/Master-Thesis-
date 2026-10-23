@@ -1,0 +1,20 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_timing_preserves_rows_and_exact_day_evidence _______________
+
+    def test_timing_preserves_rows_and_exact_day_evidence():
+>       from tools.a_dav.timing import validate_timing
+E       ModuleNotFoundError: No module named 'tools.a_dav.timing'
+
+tests/a_dav_implementation/test_group_a.py:79: ModuleNotFoundError
+__________________ test_timing_exact_day_contradiction_fails ___________________
+
+    def test_timing_exact_day_contradiction_fails():
+>       from tools.a_dav.timing import validate_timing
+E       ModuleNotFoundError: No module named 'tools.a_dav.timing'
+
+tests/a_dav_implementation/test_group_a.py:88: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_preserves_rows_and_exact_day_evidence
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_exact_day_contradiction_fails
+2 failed, 4 deselected in 0.30s

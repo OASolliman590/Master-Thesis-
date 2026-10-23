@@ -1,0 +1,243 @@
+"""Synthetic split protection and immutable local reproduction bundles."""
+from __future__ import annotations
+import copy
+import ctypes
+import errno
+import sys
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import tempfile
+from typing import Any, cast
+from .core import (FLAGS, DavError, SchemaStore, canonical_bytes, check_packet, dependency,
+                   digest, finish, require, stage_boundary, verify_result)
+
+FREEZE_DEPENDENCIES = ('public_report','admission','baseline','longitudinal','split','registries','endpoints','timing','assays','overlap','exposure')
+
+REASON_CODES = frozenset({'SPLIT_LEAKAGE','SPLIT_POLICY_UNKNOWN','FINAL_TEST_SELECTED_AFTER_PERFORMANCE',
+    'REQUIRED_SOURCE_MISSING','UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM','PRIOR_MODEL_EXPOSURE',
+    'BUNDLE_INVALID','BUNDLE_COLLISION','UNSAFE_DESTINATION','FREEZE_POLICY_UNKNOWN'})
+
+
+def _source_complete(packet: dict[str, Any], required: Any) -> None:
+    require(isinstance(required,list) and bool(required) and all(type(v) is str and bool(v) for v in required),
+            'REQUIRED_SOURCE_MISSING',blocked=True)
+    available={r['source_object_id'] for r in packet['records'].get('source_record',[])}
+    require(set(required)<=available,'REQUIRED_SOURCE_MISSING',blocked=True)
+
+
+@stage_boundary('split')
+def validate_split(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+    store=schemas or SchemaStore()
+    deps={name:dependency(packet,name,store) for name in ('admission','overlap','exposure')}
+    cfg=packet['config'].get('split',{})
+    require(cfg.get('performance_observed') is False,'FINAL_TEST_SELECTED_AFTER_PERFORMANCE')
+    require(cfg.get('selection_basis')=='PRESPECIFIED_METADATA' and isinstance(cfg.get('version'),str)
+            and bool(cfg['version']) and isinstance(cfg.get('analysis_lineage_id'),str), 'SPLIT_POLICY_UNKNOWN',blocked=True)
+    _source_complete(packet,cfg.get('required_source_ids'))
+    rows=cfg.get('assignments');require(isinstance(rows,list) and bool(rows),'SPLIT_POLICY_UNKNOWN',blocked=True)
+    records=copy.deepcopy(packet['records']);patients={p['patient_uid']:p for p in records.get('patient_registry',[])}
+    assigned: dict[str,dict[str,Any]] = {}
+    for row in rows:
+        # Schema rejects a final-test row with nested folds before policy is considered.
+        store.validate('split',row)
+        require(row['data_classification']=='SYNTHETIC_ONLY','SYNTHETIC_ONLY_REQUIRED')
+        uid=row['patient_uid'];require(uid in patients,'FOREIGN_KEY_UNRESOLVED')
+        require(uid not in assigned,'SPLIT_LEAKAGE');assigned[uid]=row
+        require(row['study_id']==patients[uid]['study_id'] and row['split_version']==cfg['version'],'SPLIT_LEAKAGE')
+        require(row['permanent_role']!='UNKNOWN','SPLIT_POLICY_UNKNOWN',blocked=True)
+        require(row['permanent_role']=='DEVELOPMENT' or not row['nested_assignments'],'SPLIT_LEAKAGE')
+        folds: set[tuple[str,str]] = set()
+        for fold in row['nested_assignments']:
+            key=(fold['evaluation_id'],fold['fold_id']);require(key not in folds,'SPLIT_LEAKAGE');folds.add(key)
+    require(set(assigned)==set(patients),'SPLIT_POLICY_UNKNOWN',blocked=True)
+    # Typed closure includes upstream possible edges and canonical ancestry/trial/family links.
+    adjacency: dict[tuple[str,str],set[tuple[str,str]]] = {}
+    def link(a: tuple[str,str], b: tuple[str,str]) -> None:
+        adjacency.setdefault(a,set()).add(b);adjacency.setdefault(b,set()).add(a)
+    for component in deps['overlap']['audit']:
+        if component.get('kind')=='overlap_component':
+            component_nodes=[(n['node_type'],n['node_id']) for n in component['nodes']]
+            for node in component_nodes[1:]:link(component_nodes[0],node)
+    for p in patients.values():link(('PATIENT',p['patient_uid']),('STUDY',p['study_id']))
+    for study in records.get('study_registry',[]):
+        link(('STUDY',study['study_id']),('PUBLICATION_FAMILY',study['publication_family_id']))
+        if study.get('trial_id'):link(('STUDY',study['study_id']),('TRIAL',study['trial_id']))
+    for sp in records.get('specimen_registry',[]):link(('SPECIMEN',sp['specimen_uid']),('PATIENT',sp['patient_uid']))
+    for a in records.get('assay_registry',[]):
+        link(('ASSAY',a['assay_uid']),('SPECIMEN',a['specimen_uid']))
+        link(('SOURCE_OBJECT',a['source_object_id']),('ASSAY',a['assay_uid']))
+    for edge in records.get('overlap_edge',[]):
+        if edge['certainty']!='DISPROVED' and edge['implication_for_independence']!='NO_IMPLICATION':
+            link((edge['source_node_type'],edge['source_node_id']),(edge['target_node_type'],edge['target_node_id']))
+    audit=[];seen: set[tuple[str,str]] = set()
+    for uid,row in sorted(assigned.items()):
+        start=('PATIENT',uid)
+        if start in seen:continue
+        nodes: set[tuple[str,str]]=set();pending=[start]
+        while pending:
+            current=pending.pop()
+            if current in nodes:continue
+            nodes.add(current);pending.extend(adjacency.get(current,set())-nodes)
+        seen.update(nodes)
+        members=[assigned[node[1]] for node in nodes if node[0]=='PATIENT' and node[1] in assigned]
+        roles={r['permanent_role'] for r in members if r['permanent_role']!='EXCLUDED'}
+        require(len(roles)<=1,'SPLIT_LEAKAGE')
+        families={r['independence_family_id'] for r in members};require(len(families)<=1,'SPLIT_LEAKAGE')
+        folds_by_key: dict[tuple[str,str],set[str]]={}
+        for member in members:
+            for f in member['nested_assignments']:
+                folds_by_key.setdefault((f['evaluation_id'],f['fold_id']),set()).add(f['role'])
+        require(all(len(v)<=1 for v in folds_by_key.values()),'SPLIT_LEAKAGE')
+        if 'FINAL_TEST' in roles:
+            review=cfg.get('final_test_review',{})
+            subject_kinds={'STUDY_FAMILY':'PUBLICATION_FAMILY','PATIENT_SET':'PATIENT','SPECIMEN_SET':'SPECIMEN','SOURCE_OBJECT':'SOURCE_OBJECT'}
+            for exposure in records.get('prior_exposure_record',[]):
+                store.validate('prior_exposure_record',exposure)
+                subject=(subject_kinds.get(exposure['subject_type'],exposure['subject_type']),exposure['subject_id'])
+                if subject not in nodes:continue
+                # Older lineage use is retained; a new lineage name cannot erase exposure.
+                require(exposure['use'] not in {'MOLECULAR_RESPONSE_INSPECTION','DIFFERENTIAL_EXPRESSION','PROGRAMME_LEARNING','FEATURE_SELECTION','MODEL_TUNING','THRESHOLD_SELECTION','PUBLISHED_COMPARATOR_DEVELOPMENT','FINAL_TEST_EVALUATION','PROSTATE_TRANSFER'},'PRIOR_MODEL_EXPOSURE')
+                require(exposure['use']=='METADATA_INSPECTION' and exposure['independence_implication']=='METADATA_ONLY_REVIEWED','UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+            decisions=[a for a in deps['exposure']['audit'] if a.get('kind')=='exposure_decision'
+                and a.get('analysis_lineage_id')==cfg['analysis_lineage_id']
+                and (a.get('subject_type'),a.get('subject_id')) in nodes | {('PATIENT_SET',m['patient_uid']) for m in members}
+                    | {('STUDY_FAMILY',m['independence_family_id']) for m in members}]
+            require(not any(a['state']=='RESPONSE_ASSOCIATED' for a in decisions),'PRIOR_MODEL_EXPOSURE')
+            require(bool(decisions) and all(a['state']=='METADATA_ONLY' for a in decisions),
+                    'UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+            require(review.get('review_complete') is True and review.get('metadata_only_permitted') is True
+                and review.get('analysis_lineage_id')==cfg['analysis_lineage_id'] and bool(review.get('source_locators'))
+                and {m['patient_uid'] for m in members}<=set(review.get('covered_patient_uids',[]))
+                and all(m['exposure_decision_id']==review.get('decision_id') for m in members),
+                'UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+            # A potential/unknown component cannot certify final-test separation.
+            require(not any(c.get('protection')=='POTENTIAL_OR_UNKNOWN' and any((n['node_type'],n['node_id']) in nodes
+                for n in c.get('nodes',[])) for c in deps['overlap']['audit']), 'UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+        audit.append({'kind':'SPLIT_COMPONENT','patient_count':len(members),'membership_sha256':digest(sorted(nodes)),
+                      'actual_untouched_certified':False})
+    records['split']=copy.deepcopy(rows)
+    return finish('split',packet,records,audit=audit,schemas=store)
+
+
+def _safe_destination(destination: Path) -> Path:
+    target=Path(destination)
+    require('..' not in target.parts,'UNSAFE_DESTINATION')
+    require(not any(path.is_symlink() for path in (target,*target.parents)),'UNSAFE_DESTINATION')
+    return target.absolute()
+
+
+def _sha(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _release_draft(packet: dict[str,Any], deps: dict[str,Any], store: SchemaStore) -> dict[str,Any]:
+    cfg=packet['config']['freeze']
+    row={'schema_version':'1.1.0','release_id':'synthetic-'+digest(packet)[:24],'branch_id':packet['branch_id'],
+        'state':'READY_FOR_REVIEW','evidence_class':'SYNTHETIC','source_universe_version':cfg['source_universe_version'],
+        'required_source_ids':cfg['required_source_ids'],'admitted_source_ids':[],
+        'requires_final_test':packet['branch_id']=='A_P2_FINAL_TEST','software_gate':'PASS','data_gate':'NOT_RUN',
+        'statistical_gate':'NOT_RUN','protected_set_gate':'NOT_RUN','admission_receipt_ids':[],
+        'matrix_build_receipt_ids':[],'config_sha256':digest(packet['config']),
+        'environment_sha256':digest(cfg['environment']),'split_sha256':deps['split']['receipt_id'],
+        'model_sha256':None,'weight_registry_sha256':None,'reviewer':None,'reviewed_utc':None,
+        'blocked_reasons':['ACTUAL_SOURCE_REVIEW_NOT_RUN','ACTUAL_STATISTICAL_REVIEW_NOT_RUN']}
+    store.validate('release_contract',row)
+    return row
+
+
+def _publish(staging: Path, target: Path) -> None:
+    """Atomically publish a directory without replacing any existing entry."""
+    libc=ctypes.CDLL(None,use_errno=True)
+    if sys.platform=='darwin':
+        operation=libc.renamex_np
+        operation.argtypes=[ctypes.c_char_p,ctypes.c_char_p,ctypes.c_uint]
+        operation.restype=ctypes.c_int
+        result=operation(os.fsencode(staging),os.fsencode(target),4)  # RENAME_EXCL
+    elif sys.platform.startswith('linux'):
+        operation=libc.renameat2
+        operation.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int,ctypes.c_char_p,ctypes.c_uint]
+        operation.restype=ctypes.c_int
+        result=operation(-100,os.fsencode(staging),-100,os.fsencode(target),1)  # RENAME_NOREPLACE
+    else:
+        raise DavError('UNSAFE_DESTINATION')
+    if result != 0:
+        failure=ctypes.get_errno()
+        if failure in {errno.EEXIST,errno.ENOTEMPTY}:raise DavError('BUNDLE_COLLISION')
+        raise OSError(failure,'BUNDLE_INVALID')
+
+
+def freeze_bundle(packet: dict[str, Any], destination: Path, *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+    @stage_boundary('freeze')
+    def run(value: dict[str,Any], *, schemas: SchemaStore | None = None) -> dict[str,Any]:
+        store=schemas or SchemaStore();target=_safe_destination(destination)
+        deps={name:dependency(value,name,store) for name in FREEZE_DEPENDENCIES}
+        for name in value['dependencies']:dependency(value,name,store)
+        cfg=value['config'].get('freeze',{})
+        _source_complete(value,cfg.get('required_source_ids'))
+        require(isinstance(cfg.get('commands'),list) and bool(cfg['commands']) and all(type(v) is str and bool(v) for v in cfg['commands'])
+            and isinstance(cfg.get('environment'),dict) and bool(cfg['environment'])
+            and isinstance(cfg.get('source_universe_version'),str) and bool(cfg['source_universe_version']),
+            'FREEZE_POLICY_UNKNOWN',blocked=True)
+        draft=_release_draft(value,deps,store)
+        result=finish('freeze',value,value['records'],audit=[{'kind':'SYNTHETIC_FREEZE',
+            'release_draft_sha256':digest(draft),'commands_sha256':digest(cfg['commands']),
+            'environment_sha256':digest(cfg['environment'])}],schemas=store)
+        files={'packet.json':canonical_bytes(value),'release_draft.json':canonical_bytes(draft),
+               'result.json':canonical_bytes(result)}
+        manifest={'classification':'SYNTHETIC_ONLY','files':{name:_sha(raw) for name,raw in sorted(files.items())},
+                  'receipt_id':result['receipt_id'],'schema_hashes':store.hashes,**dict.fromkeys(FLAGS,False)}
+        files['manifest.json']=canonical_bytes(manifest)
+        if target.exists():
+            try:
+                verified=verify_bundle(target)
+                require(verified==result and all((target/name).read_bytes()==raw for name,raw in files.items()),'BUNDLE_COLLISION')
+                return result
+            except (OSError,ValueError):
+                raise DavError('BUNDLE_COLLISION') from None
+        require(target.parent.is_dir(),'UNSAFE_DESTINATION')
+        staging=Path(tempfile.mkdtemp(prefix='.dav-synthetic-',dir=target.parent))
+        try:
+            for name,raw in files.items():
+                with (staging/name).open('xb') as stream:
+                    stream.write(raw);stream.flush();os.fsync(stream.fileno())
+            verify_bundle(staging)
+            _publish(staging,target)
+        finally:
+            if staging.exists():shutil.rmtree(staging)
+        return result
+    try:
+        return run(packet,schemas=schemas)
+    except OSError:
+        return finish('freeze',packet,packet.get('records',{}),status='FAIL',reasons=['BUNDLE_INVALID'],schemas=schemas)
+
+
+def verify_bundle(destination: Path) -> dict[str, Any]:
+    try:
+        target=_safe_destination(destination)
+        require(target.is_dir(),'BUNDLE_INVALID')
+        expected={'manifest.json','packet.json','release_draft.json','result.json'}
+        require({p.name for p in target.iterdir()}==expected,'BUNDLE_INVALID')
+        require(all((target/name).is_file() and not (target/name).is_symlink() for name in expected),'BUNDLE_INVALID')
+        manifest=json.loads((target/'manifest.json').read_bytes())
+        require(set(manifest)=={'classification','files','receipt_id','schema_hashes',*FLAGS},'BUNDLE_INVALID')
+        require(manifest['classification']=='SYNTHETIC_ONLY' and all(manifest[k] is False for k in FLAGS),'BUNDLE_INVALID')
+        require(set(manifest['files'])==expected-{'manifest.json'},'BUNDLE_INVALID')
+        for name,sha in manifest['files'].items():require(_sha((target/name).read_bytes())==sha,'BUNDLE_INVALID')
+        store=SchemaStore(expected_hashes=manifest['schema_hashes'])
+        packet=json.loads((target/'packet.json').read_bytes());check_packet(packet,store)
+        for name in FREEZE_DEPENDENCIES:dependency(packet,name,store)
+        for name in packet['dependencies']:dependency(packet,name,store)
+        result=json.loads((target/'result.json').read_bytes());verify_result(result,stage='freeze',branch_id=packet['branch_id'],schemas=store)
+        require(result['receipt_id']==manifest['receipt_id'],'BUNDLE_INVALID')
+        require(result['bindings']['input_sha256']==finish('freeze',packet,packet['records'],schemas=store)['bindings']['input_sha256'],'BUNDLE_INVALID')
+        draft=json.loads((target/'release_draft.json').read_bytes());store.validate('release_contract',draft)
+        require(draft==_release_draft(packet,packet['dependencies'],store),'BUNDLE_INVALID')
+        require(result['audit']==[{'kind':'SYNTHETIC_FREEZE','release_draft_sha256':digest(draft),
+            'commands_sha256':digest(packet['config']['freeze']['commands']),
+            'environment_sha256':digest(packet['config']['freeze']['environment'])}],'BUNDLE_INVALID')
+        return cast(dict[str,Any],result)
+    except (OSError,KeyError,TypeError,json.JSONDecodeError) as exc:
+        raise DavError('BUNDLE_INVALID') from exc

@@ -1,0 +1,55 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 32 items / 29 deselected / 3 selected
+
+tests/a_dav_implementation/test_group_b_graph_admission.py FFF           [100%]
+
+=================================== FAILURES ===================================
+____________ test_all_families_must_have_explicit_exposure_coverage ____________
+
+    def test_all_families_must_have_explicit_exposure_coverage() -> None:
+        p = packet(); f = deepcopy(p["records"]["publication_family"][0]); f["publication_family_id"] = "uncovered-family"
+        p["records"]["publication_family"].append(f)
+        r = validate_exposure(seal(p))
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:141: AssertionError
+______ test_required_source_unknown_policy_does_not_mask_present_failure _______
+
+    def test_required_source_unknown_policy_does_not_mask_present_failure() -> None:
+        p = packet(); p["records"]["source_record"][0]["validation_status"] = "FAIL"
+        p["config"]["admission"]["branch_policies"] = {}
+        r = evaluate_admission(seal(p, ("registries", "endpoints", "timing", "assays", "overlap", "exposure")))
+>       assert r["status"] == "FAIL"
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:149: AssertionError
+__________ test_wrong_study_policy_record_reference_is_contradiction ___________
+
+    def test_wrong_study_policy_record_reference_is_contradiction() -> None:
+        p = packet(); p["branch_id"] = "PROSTATE_TRANSPORT"; p["records"]["study_registry"][0]["cancer_type"] = "prostate"
+        ev = {"policy_version": "invented", "source_locators": ["invented"], "rule": "invented", "record_refs": [{"table": "patient_registry", "key": "patient_uid", "value": "other-study-patient"}]}
+        other = deepcopy(p["records"]["patient_registry"][0]); other.update(patient_uid="other-study-patient", study_id="other-study")
+        p["records"]["patient_registry"].append(other)
+        p["config"]["admission"]["branch_policies"] = {"PROSTATE_TRANSPORT": {name: deepcopy(ev) for name in ["prostate_eligibility", "transport_assay", "transport_specimen", "claim_ceiling"]}}
+        r = evaluate_admission(seal(p, ("registries", "endpoints", "timing", "assays", "overlap", "exposure")))
+>       assert r["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:160: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_all_families_must_have_explicit_exposure_coverage
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_required_source_unknown_policy_does_not_mask_present_failure
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_wrong_study_policy_record_reference_is_contradiction
+====================== 3 failed, 29 deselected in 20.88s =======================

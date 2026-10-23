@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________ test_freeze_requires_upstream_code_closure __________________
+
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-331/test_freeze_requires_upstream_0')
+
+    def test_freeze_requires_upstream_code_closure(tmp_path):
+        from tools.a_dav.reporting import build_public_report
+        from tools.a_dav.release import freeze_bundle
+        p=report_packet();p['dependencies']['public_report']=build_public_report(p,schemas=STORE)
+        del p['dependencies']['assays']
+        r=freeze_bundle(p,tmp_path/'incomplete',schemas=STORE)
+>       assert r['status']=='BLOCKED_UNKNOWN';assert r['reasons']==['DEPENDENCY_MISSING']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:366: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_freeze_requires_upstream_code_closure
+1 failed in 2.66s

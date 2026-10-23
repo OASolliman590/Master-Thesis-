@@ -1,0 +1,31 @@
+........................................F............................... [100%]
+=================================== FAILURES ===================================
+_____ test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant _____
+
+    def test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant():
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet()); evidence = p["config"]["timing"]["specimens"]["sp1"]
+        evidence.update(precision="BOUNDED_INTERVAL", interval=[-3, -1]); evidence.pop("relative_day")
+        p["records"]["specimen_registry"][0]["days_from_index_start"] = None
+        p["records"]["specimen_registry"][0]["collection_date_or_day"] = None
+        first = validate_timing(with_registries(p), schemas=SCHEMAS)
+        assert first["status"] == "SYNTHETIC_READY"
+        assert first["audit"][0]["precision"] == "BOUNDED_INTERVAL"
+        assert first["audit"][0]["relative_day"] is None
+        for rows in p["records"].values():
+            rows.reverse()
+        second = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert first == second
+E       AssertionError: assert {'classificat...INE_BIO', ...} == {'classificat...INE_BIO', ...}
+E         
+E         Omitting 11 identical items, use -vv to show
+E         Differing items:
+E         {'receipt_id': '1d0f4754c92587bfca74b95dce2d508b5ea57d43f049976d468bffc34dd89134'} != {'receipt_id': '1b40fdcd28330de5b165235d0a5d9b1fadaa6c03ead9ce298b9090919542c9d9'}
+E         {'bindings': {'input_sha256': '3b5fae3c0409253e9130d370f29cbdc86319398d7957f3fd68dd53cae5922994', 'config_sha256': '65...71fa3b4b87dc6532f97cc8954e6b', 'code_sha256': '965d697cd28f55612ac1b5a9f10745476ce01eb654b825c283230fb25a713422', ...}} != {'bindings': {'input_sha256': 'b3598bf8f5f1fd66037b673173366f6428eae5e0fd22e8eef0abe8c204ec6dbf', 'confi...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_a.py:263: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant
+1 failed, 71 passed in 5.02s

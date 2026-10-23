@@ -1,0 +1,22 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_registry_preserves_lexical_identity_and_all_records ___________
+
+    def test_registry_preserves_lexical_identity_and_all_records():
+        p = packet()
+        before = deepcopy(p)
+        result = build_registries(p)
+        assert result["status"] == "SYNTHETIC_READY"
+        assert result["records"]["patient_registry"][0]["source_patient_id"] == "001"
+>       assert result["records"] == before["records"]
+E       AssertionError: assert {'assay_regis...], ...}], ...} == {'study_regis...], ...}], ...}
+E         
+E         Omitting 9 identical items, use -vv to show
+E         Differing items:
+E         {'episode_binding': [{'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bo1', 'patien..., {'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bx1', 'patient_uid': 'p1', ...}]} != {'episode_binding': [{'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bsp1', 'patie..., {'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'binding_id': 'bx1', 'patient_uid': 'p1', ...}]}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_a.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_registry_preserves_lexical_identity_and_all_records
+1 failed, 1 passed in 3.51s

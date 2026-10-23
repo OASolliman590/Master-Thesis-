@@ -1,0 +1,58 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_timing_component_start_can_be_delayed_within_episode ___________
+
+    def test_timing_component_start_can_be_delayed_within_episode():
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet()); p["records"]["treatment_exposure"][0].update(start_date_or_day="1", stop_date_or_day="59")
+>       assert validate_timing(with_registries(p), schemas=SCHEMAS)["status"] == "SYNTHETIC_READY"
+E       AssertionError: assert 'FAIL' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:366: AssertionError
+__________ test_timing_unknown_precision_never_certifies_exact_window __________
+
+    def test_timing_unknown_precision_never_certifies_exact_window():
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet()); e = p["config"]["timing"]["specimens"]["sp1"]
+        e.update(precision="UNKNOWN", category_only_allowed=True); e.pop("relative_day")
+>       assert validate_timing(with_registries(p), schemas=SCHEMAS)["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:373: AssertionError
+__________ test_assay_missing_modality_platform_documentation_blocks ___________
+
+    def test_assay_missing_modality_platform_documentation_blocks():
+        from tools.a_dav.assays import validate_assays
+        p = assay_config(packet()); m = p["config"]["assays"]["matrices"][0]
+        m.pop("platform", None); m.pop("modality", None)
+>       assert validate_assays(with_registries(p), schemas=SCHEMAS)["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:380: AssertionError
+_________________ test_assay_count_library_properties_required _________________
+
+    def test_assay_count_library_properties_required():
+        from tools.a_dav.assays import validate_assays
+        p = assay_config(packet()); p["config"]["assays"]["matrices"][0].pop("library_properties", None)
+>       assert validate_assays(with_registries(p), schemas=SCHEMAS)["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:386: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_component_start_can_be_delayed_within_episode
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_unknown_precision_never_certifies_exact_window
+FAILED tests/a_dav_implementation/test_group_a.py::test_assay_missing_modality_platform_documentation_blocks
+FAILED tests/a_dav_implementation/test_group_a.py::test_assay_count_library_properties_required
+4 failed, 72 deselected in 1.56s

@@ -1,0 +1,23 @@
+{
+  "tools/a_dav/core.py": "0bef3e9fe31bc8a962caa312f7dda4e4ebfe84d647c251498791097ec8e37642",
+  "tools/a_dav/registries.py": "ca0aa09d28c121a7a2c5b48338ecb803739b744f82dfd07160d4cf62821dd103",
+  "tools/a_dav/endpoints.py": "3bfe5786674bcb5e4a5692fa31af96a55d1d3fbaf9297512b061abb4a5f4dad2",
+  "tools/a_dav/timing.py": "ab8d588e0610371cebd647c3e92fc5f305dda8a21cf673124adba355bb5678a7",
+  "tools/a_dav/assays.py": "c8e0376d9de869ca69ae349eb35489348db91b63cde5a6ab66fd285ec7a2682f",
+  "tools/a_dav/overlap.py": "9d02db5c0453812e9ab0947799f319a9a0b2cc8629394c1bf41206a9b325d6ba",
+  "tools/a_dav/exposure.py": "5c94d89cb48d698162d0a3dede02a112b4c007240f5c9acb3aaeb973c2847f0f",
+  "tools/a_dav/admission.py": "ae57181dd1ced267e34f6d0728e9056dd9a4191afede2d3a08db460ff1c2b1a8",
+  "tools/a_dav/prat_review.py": "28938f74b953920823f784ab781834115cf62d30890499d577f0d2b244b2a181",
+  "tools/a_dav/matrices.py": "81fe81908d9b7e8f8207a9e9771341b7b9d74d257013fab36d0e43f9b674bd5e",
+  "tools/a_dav/release.py": "2dbd66eb25dbbf155f380d2f70b77fbab391c90db49c2e94e0b92191fcb826de",
+  "tools/a_dav/reporting.py": "d5f390ef192339f83db2c5c04d339736b28efff94e55be65b343685f79079c41",
+  "tools/a_dav/workflow.py": "8f6ae141f8b46336f54218b4e4b380da16fc26c0dd2b06acd4c6d26f2a248cb0",
+  "tools/a_dav/demo.py": "51ee82c7e1a375811f4a7c29fd8f1f938764e80fa94106e3b9b4e1eae2765e0a",
+  "tools/a_dav/__init__.py": "cc6ec322d5373127080b2de0002e2004bb0850122cc06c405c438db4bbe9fa57",
+  "tools/a_dav/search_log.py": "5f1f5c3787445e2866192808cc07079746ec950839210e90ea7e371bf14f7650",
+  "tools/a_dav/study_resolution.py": "b14a0e173651c51a59a8f36d07d2b27093e229cb190e7088408abd80fb56d40f",
+  "tools/a_dav/object_verification.py": "cd84ee094fa9efe2f306c28ed0b83a70f5d53cca529378aaa1197aaba68885a9",
+  "tests/a_dav_implementation/test_core.py": "7f8cb6cca5cd13f22db52939d065c337bf174416cb99424693c3febc201682a9",
+  "tests/a_dav_implementation/test_group_c.py": "8a9804c34b20aaaa69ba37dbb6109022136139fa601a94a278e5866b9cd4bbfc",
+  "tests/a_dav_implementation/test_workflow.py": "d6d8bf383c65fb5315792d28fff7f53111cb37f625dd426fe8a150ac00ccf974"
+}

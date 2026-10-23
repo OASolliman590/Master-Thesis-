@@ -1,0 +1,292 @@
+"""Outcome-blind synthetic materialized views; canonical assertions stay immutable."""
+from __future__ import annotations
+import copy
+import hashlib
+from pathlib import Path
+from typing import Any, cast
+from .core import DavError, SchemaStore, canonical_bytes, dependency, digest, finish, require, stage_boundary
+
+REASON_CODES = frozenset({'SELECTION_TIE', 'SELECTION_POLICY_UNKNOWN', 'NO_PRE_INDEX_SPECIMEN',
+    'NO_FOLLOWUP_IN_WINDOW', 'LESION_MISMATCH', 'PLATFORM_MISMATCH', 'MEASUREMENT_SCALE_INCOMPATIBLE',
+    'AFTER_REGIMEN_CHANGE', 'PROGRESSION_MIXED_WITH_SCHEDULED_ON', 'EPISODE_AMBIGUOUS',
+    'EPISODE_MISMATCH', 'ENDPOINT_UNKNOWN', 'SOURCE_NOT_ELIGIBLE', 'ASSAY_UNSUITABLE',
+    'TIMING_UNKNOWN', 'LOWER_RANK', 'NOT_BASELINE', 'SYNTHETIC_BUILD_DRAFT', 'PATIENT_EXCLUDED', 'PATIENT_UNKNOWN'})
+
+
+def _prepare(packet: dict[str, Any], store: SchemaStore) -> tuple[dict[str, Any], dict[str, Any]]:
+    deps = {name: dependency(packet, name, store) for name in
+            ('admission', 'registries', 'endpoints', 'timing', 'assays')}
+    for table in ('patient_registry','specimen_registry','assay_registry','treatment_episode','episode_binding'):
+        seen: set[str] = set()
+        key = {'patient_registry':'patient_uid','specimen_registry':'specimen_uid',
+               'assay_registry':'assay_uid','treatment_episode':'treatment_episode_id',
+               'episode_binding':'binding_id'}[table]
+        for row in packet['records'].get(table, []):
+            store.validate(table, row)
+            require(row[key] not in seen, 'DUPLICATE_ID'); seen.add(row[key])
+    for patient in packet['records'].get('patient_registry', []):
+        require(any(a.get('kind') == 'admission_eligibility' and a.get('study_id') == patient['study_id']
+                    and a.get('branch_id') == packet['branch_id'] and a.get('eligibility') == 'SYNTHETIC_READY'
+                    for a in deps['admission']['audit']), 'SOURCE_NOT_ELIGIBLE', blocked=True)
+    return copy.deepcopy(packet['records']), deps
+
+
+def _policy(packet: dict[str, Any], stage: str) -> dict[str, Any]:
+    cfg = packet['config'].get(stage, {})
+    require(cfg.get('selection_basis') == 'PRESPECIFIED_METADATA', 'SELECTION_POLICY_UNKNOWN', blocked=True)
+    require(isinstance(cfg.get('specimen_rank'), dict) and isinstance(cfg.get('assay_rank'), dict),
+            'SELECTION_POLICY_UNKNOWN', blocked=True)
+    for ranks in (cfg['specimen_rank'], cfg['assay_rank']):
+        require(all(type(v) is int and v >= 0 for v in ranks.values()), 'SELECTION_POLICY_UNKNOWN')
+    require(isinstance(cfg.get('assay_suitability'), str) and bool(cfg['assay_suitability']),
+            'SELECTION_POLICY_UNKNOWN', blocked=True)
+    require(isinstance(cfg.get('build_utc'), str) and bool(cfg['build_utc']), 'SELECTION_POLICY_UNKNOWN', blocked=True)
+    return dict(cfg)
+
+
+def _eligible_sources(deps: dict[str,Any], store: SchemaStore) -> set[tuple[str,str]]:
+    sources: set[tuple[str,str]]=set()
+    drafts=deps['admission']['records'].get('cohort_admission_receipt',[])
+    require(bool(drafts),'SOURCE_NOT_ELIGIBLE',blocked=True)
+    for draft in drafts:
+        store.validate('cohort_admission_receipt',draft)
+        require(draft['admission_status']=='BLOCKED_UNKNOWN' and draft['approved_branches']==[], 'SOURCE_NOT_ELIGIBLE')
+        if draft.get('branch_id')==deps['admission']['branch_id']:
+            sources.update((draft['study_id'],source) for source in draft['source_object_ids'])
+    return sources
+
+
+def _episode(records: dict[str, Any], patient: dict[str, Any], cfg: dict[str, Any]) -> dict[str, Any]:
+    rows = [r for r in records.get('treatment_episode', []) if r['patient_uid'] == patient['patient_uid']]
+    selected = cfg.get('index_episode_by_patient', {}).get(patient['patient_uid'])
+    if selected is not None:
+        rows = [r for r in rows if r['treatment_episode_id'] == selected]
+    require(len(rows) == 1, 'EPISODE_AMBIGUOUS', blocked=True)
+    ep: dict[str, Any] = rows[0]
+    require(ep['study_id'] == patient['study_id'], 'EPISODE_MISMATCH')
+    require(ep['episode_status'] == 'VERIFIED', 'TIMING_UNKNOWN', blocked=True)
+    return ep
+
+
+def _bound(records: dict[str, Any], specimen: dict[str, Any], episode: dict[str, Any]) -> bool:
+    rows = [r for r in records.get('episode_binding', []) if r['subject_type'] == 'SPECIMEN'
+            and r['subject_id'] == specimen['specimen_uid']]
+    require(len(rows) == 1, 'EPISODE_AMBIGUOUS', blocked=True)
+    row = rows[0]
+    require(row['patient_uid'] == specimen['patient_uid'], 'EPISODE_MISMATCH')
+    require(row['binding_status'] == 'VERIFIED', 'TIMING_UNKNOWN', blocked=True)
+    return bool(row['treatment_episode_id'] == episode['treatment_episode_id'])
+
+
+def _candidates(records: dict[str, Any], patient: dict[str, Any], ep: dict[str, Any],
+                cfg: dict[str, Any], *, baseline: bool, audit: list[dict[str, Any]]) -> list[tuple[dict[str, Any], dict[str, Any]]]:
+    candidates = []
+    for sp in records.get('specimen_registry', []):
+        if sp['patient_uid'] != patient['patient_uid']:
+            continue
+        bound = _bound(records, sp, ep)
+        assays = [a for a in records.get('assay_registry', []) if a['specimen_uid'] == sp['specimen_uid']]
+        if not assays:
+            audit.append({'kind':'CANDIDATE','specimen_uid':sp['specimen_uid'],'assay_uid':None,'reason':'ASSAY_UNSUITABLE'})
+        for assay in assays:
+            reason = None
+            if patient['inclusion_state']=='EXCLUDED':reason='PATIENT_EXCLUDED'
+            elif patient['inclusion_state']=='BLOCKED_UNKNOWN':reason='PATIENT_UNKNOWN'
+            elif not bound: reason = 'EPISODE_MISMATCH'
+            elif (patient['study_id'],assay['source_object_id']) not in cfg['_eligible_sources']:reason='SOURCE_NOT_ELIGIBLE'
+            elif baseline and (sp['canonical_timing_category'] != 'PRE_INDEX_BASELINE' or sp['baseline_candidate_status'] != 'YES'):
+                reason = 'NOT_BASELINE'
+            elif assay['qc_status'] != 'PASS' or cfg['assay_suitability'] not in assay['branch_suitability']:
+                reason = 'ASSAY_UNSUITABLE'
+            elif not assay.get('feature_annotation') or not assay.get('matrix_header'):
+                reason = 'ASSAY_UNSUITABLE'
+            audit.append({'kind':'CANDIDATE','specimen_uid':sp['specimen_uid'],'assay_uid':assay['assay_uid'],
+                          'reason':reason or 'LOWER_RANK'})
+            if reason is None: candidates.append((sp,assay))
+    return candidates
+
+
+def _choose(candidates: list[tuple[dict[str, Any], dict[str, Any]]], cfg: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    if not candidates: return None
+    ranked = []
+    for sp, assay in candidates:
+        require(sp['specimen_uid'] in cfg['specimen_rank'] and assay['assay_uid'] in cfg['assay_rank'],
+                'SELECTION_POLICY_UNKNOWN', blocked=True)
+        ranked.append(((cfg['specimen_rank'][sp['specimen_uid']],cfg['assay_rank'][assay['assay_uid']]),sp,assay))
+    best = min(row[0] for row in ranked)
+    winners = [(sp,a) for rank,sp,a in ranked if rank == best]
+    require(len(winners) == 1, 'SELECTION_TIE', blocked=True)
+    return winners[0]
+
+
+def _endpoint(records: dict[str, Any], patient: dict[str, Any], ep: dict[str, Any], store: SchemaStore) -> dict[str, Any]:
+    rows = [r for r in records.get('endpoint', []) if r['patient_uid'] == patient['patient_uid']
+            and r['treatment_episode_id'] == ep['treatment_episode_id'] and r['endpoint_class'] == 'ORR']
+    require(len(rows) == 1, 'ENDPOINT_UNKNOWN', blocked=True)
+    store.validate('endpoint', rows[0])
+    return dict(rows[0])
+
+
+def _draft(stage: str, packet: dict[str, Any], records: dict[str, Any], deps: dict[str, Any],
+           cfg: dict[str, Any], store: SchemaStore, build_id: str) -> dict[str, Any]:
+    row = {'matrix_build_receipt_id':build_id,'matrix_id':'synthetic-'+stage,'branch_id':packet['branch_id'],
+           'schema_version_used':'1.1.0','source_admission_receipt_ids':[deps['admission']['receipt_id']],
+           'patient_count':len(records.get('patient_registry',[])),
+           'input_hashes':sorted(v['receipt_id'] for v in deps.values()),
+           'code_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+           'config_hash':digest(packet['config']),'output_hash':digest({k:sorted(v,key=canonical_bytes) for k,v in records.items()}),'build_utc':cfg['build_utc'],
+           'test_status':'NOT_RUN','validation_status':'BLOCKED_UNKNOWN'}
+    store.validate('matrix_build_receipt',row)
+    return row
+
+
+@stage_boundary('baseline')
+def build_baseline(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+    store = schemas or SchemaStore(); records,deps = _prepare(packet,store); cfg = _policy(packet,'baseline')
+    cfg['_eligible_sources']=_eligible_sources(deps,store)
+    audit: list[dict[str, Any]] = []; rows = []
+    build_id = 'synthetic-baseline-' + digest([packet['config'],deps['admission']['receipt_id']])[:20]
+    for patient in records.get('patient_registry',[]):
+        ep = _episode(records,patient,cfg)
+        try:
+            chosen = _choose(_candidates(records,patient,ep,cfg,baseline=True,audit=audit),cfg)
+        except DavError as exc:
+            if exc.code != 'SELECTION_TIE':raise
+            return finish('baseline',packet,records,status='BLOCKED_UNKNOWN',reasons=[exc.code],audit=audit,schemas=store)
+        endpoint = _endpoint(records,patient,ep,store)
+        sp,assay = chosen if chosen is not None else ({},{})
+        included = chosen is not None and endpoint['evaluability'] == 'EVALUABLE'
+        require(patient.get('cancer'), 'MISSING_ASSERTION', blocked=True)
+        require(cfg.get('split_role') and cfg.get('prior_exposure_status'), 'SELECTION_POLICY_UNKNOWN', blocked=True)
+        row = {'row_type':'BASELINE','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+            'patient_uid':patient['patient_uid'],'study_id':patient['study_id'],'cancer':patient['cancer'],
+            'subtype':patient.get('subtype'),'treatment_episode_id':ep['treatment_episode_id'],
+            'regimen_id':ep['regimen_id'],'treatment_class':None,'prior_ici':ep['prior_ici'],
+            'prior_treatment':patient.get('prior_systemic_treatment'),'specimen_uid':sp.get('specimen_uid'),
+            'assay_uid':assay.get('assay_uid'),'expression_column':assay.get('matrix_header'),
+            'biopsy_site':sp.get('lesion_site'),'raw_response':endpoint['raw_value'],
+            'response_system':endpoint['assessment_system'],'canonical_category':endpoint['canonical_category'],
+            'orr':endpoint['binary_value'],'dcr':next((e['binary_value'] for e in records.get('endpoint',[])
+                if e['patient_uid']==patient['patient_uid'] and e['treatment_episode_id']==ep['treatment_episode_id']
+                and e['endpoint_class']=='DCR'),None),'endpoint_evaluability':endpoint['evaluability'],
+            'inclusion_status':'INCLUDED' if included else 'EXCLUDED',
+            'exclusion_reason':None if included else 'PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if chosen is None else 'ENDPOINT_UNKNOWN',
+            'expression_unit':assay.get('measurement_unit'),'feature_annotation':assay.get('feature_annotation'),
+            'branch_id':packet['branch_id'],'split_role':cfg['split_role'],
+            'prior_exposure_status':cfg['prior_exposure_status'],'build_receipt_id':build_id}
+        store.validate('baseline',row); rows.append(row)
+        audit.append({'kind':'BASELINE_SELECTION','patient_uid':patient['patient_uid'],
+                      'specimen_uid':sp.get('specimen_uid'),'assay_uid':assay.get('assay_uid'),
+                      'reason':'SYNTHETIC_BUILD_DRAFT' if included else row['exclusion_reason']})
+    records['baseline'] = rows
+    records.setdefault('matrix_build_receipt',[]).append(_draft('baseline',packet,records,deps,cfg,store,build_id))
+    return finish('baseline',packet,records,audit=audit,schemas=store)
+
+
+@stage_boundary('longitudinal')
+def build_longitudinal(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+    store = schemas or SchemaStore(); records,deps = _prepare(packet,store); cfg = _policy(packet,'longitudinal')
+    cfg['_eligible_sources']=_eligible_sources(deps,store)
+    raw_windows = cfg.get('windows')
+    require(isinstance(raw_windows,list) and bool(raw_windows),'SELECTION_POLICY_UNKNOWN',blocked=True)
+    windows = cast(list[dict[str,Any]],raw_windows)
+    window_ids: set[str] = set()
+    for w in windows:
+        require(set(w)=={'window_id','contrast_id','category','lower_day','upper_day'},'SELECTION_POLICY_UNKNOWN')
+        require(w['window_id'] not in window_ids and w['lower_day'] <= w['upper_day'],'SELECTION_POLICY_UNKNOWN')
+        require(w['category'] in {'EARLY_ON_TREATMENT','LATE_ON_TREATMENT','RESPONSE_ASSESSMENT','MAXIMAL_RESPONSE',
+                                 'PROGRESSION','POST_TREATMENT','POST_DISCONTINUATION'},'SELECTION_POLICY_UNKNOWN')
+        window_ids.add(w['window_id'])
+    audit: list[dict[str, Any]] = []; points = []; pairs = []
+    build_id = 'synthetic-longitudinal-'+digest([packet['config'],deps['admission']['receipt_id']])[:20]
+    timing_by_specimen: dict[str,dict[str,Any]] = {}
+    for assertion in deps['timing']['audit']:
+        if assertion.get('check') == 'TIMING_ASSERTION':
+            key=assertion['specimen_uid']
+            require(key not in timing_by_specimen,'TIMING_UNKNOWN',blocked=True)
+            timing_by_specimen[key]=assertion
+    require(all(sp['specimen_uid'] in timing_by_specimen for sp in records.get('specimen_registry',[])), 'TIMING_UNKNOWN',blocked=True)
+    patients={p['patient_uid']:p for p in records.get('patient_registry',[])}
+    episodes={e['treatment_episode_id']:e for e in records.get('treatment_episode',[])}
+    for sp in records.get('specimen_registry',[]):
+        require(sp['patient_uid'] in patients,'FOREIGN_KEY_UNRESOLVED')
+        bindings=[b for b in records.get('episode_binding',[]) if b['subject_type']=='SPECIMEN' and b['subject_id']==sp['specimen_uid']]
+        require(len(bindings)==1,'EPISODE_AMBIGUOUS',blocked=True)
+        binding=bindings[0];require(binding['treatment_episode_id'] in episodes,'FOREIGN_KEY_UNRESOLVED')
+        require(binding['patient_uid']==sp['patient_uid']==episodes[binding['treatment_episode_id']]['patient_uid'],'EPISODE_MISMATCH')
+        assays=[a for a in records.get('assay_registry',[]) if a['specimen_uid']==sp['specimen_uid']]
+        timing=timing_by_specimen[sp['specimen_uid']]
+        require(timing['canonical_category']==sp['canonical_timing_category'] and timing['treatment_episode_id']==binding['treatment_episode_id'],'EPISODE_MISMATCH')
+        day=timing.get('relative_day')
+        precision=timing['precision']
+        for assay in assays or [None]:
+            endpoint: dict[str,Any]=next((e for e in records.get('endpoint',[]) if e['patient_uid']==sp['patient_uid']
+                           and e['treatment_episode_id']==binding['treatment_episode_id'] and e['endpoint_class']=='ORR'),{})
+            row={'row_type':'TIMEPOINT','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+                'patient_uid':sp['patient_uid'],'study_id':patients[sp['patient_uid']]['study_id'],
+                'specimen_uid':sp['specimen_uid'],'assay_uid':assay['assay_uid'] if assay else None,
+                'treatment_episode_id':binding['treatment_episode_id'],'raw_timing_label':sp.get('timing_raw_text'),
+                'canonical_timing':sp['canonical_timing_category'],'relative_day':day,'timing_precision':precision,
+                'lesion_site':sp.get('lesion_site'),'outcome_id':endpoint.get('outcome_id'),
+                'endpoint_assessment_day':endpoint.get('assessment_day'),'pairability':sp['longitudinal_pair_status'],
+                'missingness_reason':None if assay else 'ASSAY_UNSUITABLE','build_receipt_id':build_id}
+            store.validate('timepoint',row);points.append(row)
+    records['timepoint']=points
+    for patient in patients.values():
+        ep=_episode(records,patient,cfg)
+        try:
+            pre=_choose(_candidates(records,patient,ep,cfg,baseline=True,audit=audit),cfg)
+        except DavError as exc:
+            if exc.code != 'SELECTION_TIE':raise
+            return finish('longitudinal',packet,records,status='BLOCKED_UNKNOWN',reasons=[exc.code],audit=audit,schemas=store)
+        all_follow=_candidates(records,patient,ep,cfg,baseline=False,audit=[])
+        endpoint=_endpoint(records,patient,ep,store)
+        for w in windows:
+            candidates=[]
+            for sp,assay in all_follow:
+                timing=timing_by_specimen[sp['specimen_uid']]
+                day=timing.get('relative_day'); category=sp['canonical_timing_category']
+                if category=='PRE_INDEX_BASELINE': continue
+                reason=None
+                if category=='AFTER_REGIMEN_CHANGE': reason='AFTER_REGIMEN_CHANGE'
+                elif category=='PROGRESSION' and w['category']!='PROGRESSION': reason='PROGRESSION_MIXED_WITH_SCHEDULED_ON'
+                elif timing['precision']!='EXACT' or day is None: reason='TIMING_UNKNOWN'
+                elif category!=w['category'] or not w['lower_day']<=day<=w['upper_day']: reason='NO_FOLLOWUP_IN_WINDOW'
+                elif sp['longitudinal_pair_status']!='PAIRABLE':reason='TIMING_UNKNOWN'
+                if reason is None: candidates.append((sp,assay))
+                audit.append({'kind':'WINDOW_CANDIDATE','window_id':w['window_id'],'patient_uid':patient['patient_uid'],
+                              'specimen_uid':sp['specimen_uid'],'assay_uid':assay['assay_uid'],'reason':reason or 'LOWER_RANK'})
+            try:
+                follow=_choose(candidates,cfg)
+            except DavError as exc:
+                if exc.code != 'SELECTION_TIE':raise
+                return finish('longitudinal',packet,records,status='BLOCKED_UNKNOWN',reasons=[exc.code],audit=audit,schemas=store)
+            pre_sp,pre_a=pre if pre else ({},{})
+            sp,assay=follow if follow else ({},{})
+            lesion=None if pre_sp.get('lesion_site') is None or sp.get('lesion_site') is None else pre_sp['lesion_site']==sp['lesion_site']
+            platform=None if not pre or not follow else pre_a['platform']==assay['platform']
+            reason='PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if pre is None else 'NO_FOLLOWUP_IN_WINDOW' if follow is None else None
+            if reason is None:
+                if pre_sp['longitudinal_pair_status']!='PAIRABLE':reason='TIMING_UNKNOWN'
+                elif lesion is not True: reason='LESION_MISMATCH'
+                elif platform is not True: reason='PLATFORM_MISMATCH'
+                elif (pre_a['measurement_unit'],pre_a.get('transform'),pre_a.get('feature_annotation'))!=(assay['measurement_unit'],assay.get('transform'),assay.get('feature_annotation')):
+                    reason='MEASUREMENT_SCALE_INCOMPATIBLE'
+                elif timing_by_specimen[pre_sp['specimen_uid']]['precision']!='EXACT' or timing_by_specimen[pre_sp['specimen_uid']].get('relative_day') is None:reason='TIMING_UNKNOWN'
+                elif timing_by_specimen[pre_sp['specimen_uid']]['relative_day']>=timing_by_specimen[sp['specimen_uid']]['relative_day']:reason='TIMING_UNKNOWN'
+                elif endpoint['evaluability']!='EVALUABLE':reason='ENDPOINT_UNKNOWN'
+            included=reason is None
+            row={'row_type':'PAIR','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+                'patient_uid':patient['patient_uid'],'study_id':patient['study_id'],'treatment_episode_id':ep['treatment_episode_id'],
+                'contrast_id':w['contrast_id'],'window_id':w['window_id'],'response_group':'R' if endpoint['binary_value']==1 else 'NR' if endpoint['binary_value']==0 else 'UNKNOWN',
+                'regimen_id':ep['regimen_id'],'pre_specimen_uid':pre_sp.get('specimen_uid'),'pre_assay_uid':pre_a.get('assay_uid'),
+                'followup_specimen_uid':sp.get('specimen_uid'),'followup_assay_uid':assay.get('assay_uid'),
+                'pre_day':timing_by_specimen.get(pre_sp.get('specimen_uid',''),{}).get('relative_day'),'followup_day':timing_by_specimen.get(sp.get('specimen_uid',''),{}).get('relative_day'),
+                'followup_category':w['category'],'same_lesion':lesion,'same_platform':platform,
+                'pair_quality':'VERIFIED' if included else 'EXCLUDED','inclusion_status':'INCLUDED' if included else 'EXCLUDED',
+                'exclusion_reason':reason,'missing_followup_reason':'NO_FOLLOWUP_IN_WINDOW' if follow is None else None,'build_receipt_id':build_id}
+            store.validate('pair',row);pairs.append(row)
+            audit.append({'kind':'PAIR_SELECTION','window_id':w['window_id'],'patient_uid':patient['patient_uid'],'reason':reason or 'SYNTHETIC_BUILD_DRAFT'})
+    records['timepoint']=points;records['pair']=pairs
+    records.setdefault('matrix_build_receipt',[]).append(_draft('longitudinal',packet,records,deps,cfg,store,build_id))
+    return finish('longitudinal',packet,records,audit=audit,schemas=store)

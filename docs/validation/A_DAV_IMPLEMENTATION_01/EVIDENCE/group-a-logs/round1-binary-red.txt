@@ -1,0 +1,150 @@
+FFFFF..F.                                                                [100%]
+=================================== FAILURES ===================================
+_____ test_endpoint_explicit_defined_source_binary_separate_other_lane[0] ______
+
+binary_value = 0
+
+    @pytest.mark.parametrize("binary_value", [0, 1])
+    def test_endpoint_explicit_defined_source_binary_separate_other_lane(binary_value):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(binary_value); before = deepcopy(p["records"]["clinical_outcome"])
+        result = map_endpoints(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "SYNTHETIC_READY"
+E       AssertionError: assert 'FAIL' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:562: AssertionError
+_____ test_endpoint_explicit_defined_source_binary_separate_other_lane[1] ______
+
+binary_value = 1
+
+    @pytest.mark.parametrize("binary_value", [0, 1])
+    def test_endpoint_explicit_defined_source_binary_separate_other_lane(binary_value):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(binary_value); before = deepcopy(p["records"]["clinical_outcome"])
+        result = map_endpoints(with_registries(p), schemas=SCHEMAS)
+>       assert result["status"] == "SYNTHETIC_READY"
+E       AssertionError: assert 'FAIL' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:562: AssertionError
+_ test_endpoint_defined_source_binary_requires_consistent_explicit_definition[missing-BLOCKED_UNKNOWN] _
+
+change = 'missing', status = 'BLOCKED_UNKNOWN'
+
+    @pytest.mark.parametrize("change,status", [("missing", "BLOCKED_UNKNOWN"), ("no_locator", "BLOCKED_UNKNOWN"), ("no_version", "BLOCKED_UNKNOWN"), ("contradictory", "FAIL"), ("boolean", "FAIL"), ("unmapped_raw", "BLOCKED_UNKNOWN")])
+    def test_endpoint_defined_source_binary_requires_consistent_explicit_definition(change, status):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(); definitions = p["config"]["endpoints"]["binary_definitions"]
+        if change == "missing":
+            definitions.clear()
+        elif change == "no_locator":
+            definitions["o1"].pop("source_locator")
+        elif change == "no_version":
+            definitions["o1"].pop("version")
+        elif change == "contradictory":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = 0
+        elif change == "boolean":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = True
+        else:
+            definitions["o1"]["raw_value_map"].pop("invented-positive")
+>       assert map_endpoints(with_registries(p), schemas=SCHEMAS)["status"] == status
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:586: AssertionError
+_ test_endpoint_defined_source_binary_requires_consistent_explicit_definition[no_locator-BLOCKED_UNKNOWN] _
+
+change = 'no_locator', status = 'BLOCKED_UNKNOWN'
+
+    @pytest.mark.parametrize("change,status", [("missing", "BLOCKED_UNKNOWN"), ("no_locator", "BLOCKED_UNKNOWN"), ("no_version", "BLOCKED_UNKNOWN"), ("contradictory", "FAIL"), ("boolean", "FAIL"), ("unmapped_raw", "BLOCKED_UNKNOWN")])
+    def test_endpoint_defined_source_binary_requires_consistent_explicit_definition(change, status):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(); definitions = p["config"]["endpoints"]["binary_definitions"]
+        if change == "missing":
+            definitions.clear()
+        elif change == "no_locator":
+            definitions["o1"].pop("source_locator")
+        elif change == "no_version":
+            definitions["o1"].pop("version")
+        elif change == "contradictory":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = 0
+        elif change == "boolean":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = True
+        else:
+            definitions["o1"]["raw_value_map"].pop("invented-positive")
+>       assert map_endpoints(with_registries(p), schemas=SCHEMAS)["status"] == status
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:586: AssertionError
+_ test_endpoint_defined_source_binary_requires_consistent_explicit_definition[no_version-BLOCKED_UNKNOWN] _
+
+change = 'no_version', status = 'BLOCKED_UNKNOWN'
+
+    @pytest.mark.parametrize("change,status", [("missing", "BLOCKED_UNKNOWN"), ("no_locator", "BLOCKED_UNKNOWN"), ("no_version", "BLOCKED_UNKNOWN"), ("contradictory", "FAIL"), ("boolean", "FAIL"), ("unmapped_raw", "BLOCKED_UNKNOWN")])
+    def test_endpoint_defined_source_binary_requires_consistent_explicit_definition(change, status):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(); definitions = p["config"]["endpoints"]["binary_definitions"]
+        if change == "missing":
+            definitions.clear()
+        elif change == "no_locator":
+            definitions["o1"].pop("source_locator")
+        elif change == "no_version":
+            definitions["o1"].pop("version")
+        elif change == "contradictory":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = 0
+        elif change == "boolean":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = True
+        else:
+            definitions["o1"]["raw_value_map"].pop("invented-positive")
+>       assert map_endpoints(with_registries(p), schemas=SCHEMAS)["status"] == status
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:586: AssertionError
+_ test_endpoint_defined_source_binary_requires_consistent_explicit_definition[unmapped_raw-BLOCKED_UNKNOWN] _
+
+change = 'unmapped_raw', status = 'BLOCKED_UNKNOWN'
+
+    @pytest.mark.parametrize("change,status", [("missing", "BLOCKED_UNKNOWN"), ("no_locator", "BLOCKED_UNKNOWN"), ("no_version", "BLOCKED_UNKNOWN"), ("contradictory", "FAIL"), ("boolean", "FAIL"), ("unmapped_raw", "BLOCKED_UNKNOWN")])
+    def test_endpoint_defined_source_binary_requires_consistent_explicit_definition(change, status):
+        from tools.a_dav.endpoints import map_endpoints
+        p = defined_source_binary_packet(); definitions = p["config"]["endpoints"]["binary_definitions"]
+        if change == "missing":
+            definitions.clear()
+        elif change == "no_locator":
+            definitions["o1"].pop("source_locator")
+        elif change == "no_version":
+            definitions["o1"].pop("version")
+        elif change == "contradictory":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = 0
+        elif change == "boolean":
+            definitions["o1"]["raw_value_map"]["invented-positive"] = True
+        else:
+            definitions["o1"]["raw_value_map"].pop("invented-positive")
+>       assert map_endpoints(with_registries(p), schemas=SCHEMAS)["status"] == status
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:586: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_explicit_defined_source_binary_separate_other_lane[0]
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_explicit_defined_source_binary_separate_other_lane[1]
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_defined_source_binary_requires_consistent_explicit_definition[missing-BLOCKED_UNKNOWN]
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_defined_source_binary_requires_consistent_explicit_definition[no_locator-BLOCKED_UNKNOWN]
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_defined_source_binary_requires_consistent_explicit_definition[no_version-BLOCKED_UNKNOWN]
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_defined_source_binary_requires_consistent_explicit_definition[unmapped_raw-BLOCKED_UNKNOWN]
+6 failed, 3 passed, 97 deselected in 2.35s

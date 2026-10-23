@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_window_policy_cannot_override_sealed_timing_window ____________
+
+    def test_window_policy_cannot_override_sealed_timing_window():
+        packet = synthetic_workflow_packet()
+        packet['branch_id'] = 'A1_ON_R_NR'
+        policy = deepcopy(packet['config']['admission']['branch_policies']['A_BASELINE_BIO'])
+        policy.update(on_window=_evidence(baseline_specimen_uid='sp1', followup_specimen_uid='sp2',
+                                         window_id='invented-wrong'),
+                      no_treatment_change=_evidence(specimen_uids=['sp1', 'sp2']))
+        packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
+        result = run_workflow(packet)
+>       assert result['status'] == 'FAIL'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_workflow.py:337: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_window_policy_cannot_override_sealed_timing_window
+1 failed, 15 deselected in 3.41s

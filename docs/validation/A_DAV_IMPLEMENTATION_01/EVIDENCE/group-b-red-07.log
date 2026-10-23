@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 55 items / 53 deselected / 2 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py F                    [ 50%]
+tests/a_dav_implementation/test_group_b_graph_admission.py F             [100%]
+
+=================================== FAILURES ===================================
+______ test_prat_canonical_episode_binding_cannot_transfer_between_people ______
+
+    def test_prat_canonical_episode_binding_cannot_transfer_between_people() -> None:
+        from test_group_a import packet as registry_packet
+        p = prat(); p["records"] = registry_packet()["records"]
+        p["records"]["episode_binding"][0]["patient_uid"] = "invented-wrong-person"
+        r = invoke("prat_review", "review_prat_packet", p)
+>       assert r["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:185: AssertionError
+_ test_arbitrary_existing_record_and_rule_cannot_replace_branch_specific_policy _
+
+    def test_arbitrary_existing_record_and_rule_cannot_replace_branch_specific_policy() -> None:
+        p = packet(); p["branch_id"] = "A_P2_DEVELOPMENT"
+        p["config"]["admission"]["branch_policies"]["A_P2_DEVELOPMENT"] = deepcopy(p["config"]["admission"]["branch_policies"]["A_BASELINE_BIO"])
+        policy = p["config"]["admission"]["branch_policies"]["A_P2_DEVELOPMENT"]
+        for name in ["assay_compatibility", "class_representation", "development_freeze"]:
+            policy[name] = {"policy_version": "invented", "source_locators": ["invented"], "rule": "PASS", "record_refs": [{"table": "patient_registry", "key": "patient_uid", "value": "p1"}]}
+        r = evaluate_admission(seal(p, ("registries", "endpoints", "timing", "assays", "overlap", "exposure")))
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:198: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_canonical_episode_binding_cannot_transfer_between_people
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_arbitrary_existing_record_and_rule_cannot_replace_branch_specific_policy
+======================= 2 failed, 53 deselected in 3.65s =======================

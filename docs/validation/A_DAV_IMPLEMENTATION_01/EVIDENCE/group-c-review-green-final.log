@@ -1,0 +1,46 @@
+.............F.........................F.                                [100%]
+=================================== FAILURES ===================================
+_______ test_reporting_suppresses_small_cells_and_exports_no_source_rows _______
+
+    def test_reporting_suppresses_small_cells_and_exports_no_source_rows():
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();r=build_public_report(p,schemas=STORE)
+        assert r['status']=='SYNTHETIC_READY'
+        public=next(v['public_report'] for v in r['audit'] if 'public_report' in v)
+        assert public['classification']=='SYNTHETIC_ONLY'
+>       assert '001' not in str(public); assert 'P1' not in str(public); assert 'invented' not in str(public)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert '001' not in "{'classific...ount': None}"
+E         
+E         '001' is contained here:
+E           a0a939caf40013841b83c8198831db180ff'}, 'config_sha256': '489d551f1760799d6ce3e047d5d047c1180ac0a98187c24d026b3fda52b29c1a', 'actual_source_review': 'NOT_RUN', 'actual_statistical_review': 'NOT_RUN', 'gate_table': [{'gate': 'SYNTHETIC_SOFTWARE', 'status': 'SYNTHETIC_READY'}, {'gate': 'SOURCE_REVIEW', 'status': 'NOT_RUN'}, {'gate': 'INDEPENDENT_REVIEW', 'status': 'NOT_RUN'}, {'gate': 'ENVIRONMENT_VALIDATION', 'status': 'NOT_RUN'}, {'gate': 'STATISTICAL_RELEASE', 'status': 'NOT_RUN'}], 'limitation_table': [{'code': 'ACTUAL_SOURCE_REVIEW', 'status': 'NOT_RUN'}, {'code': ...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_c.py:206: AssertionError
+______ test_prat_bound_general_report_is_count_free_despite_count_request ______
+
+    def test_prat_bound_general_report_is_count_free_despite_count_request():
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['dependencies']['prat_review']=finish('prat_review',p,p['records'],schemas=STORE)
+        r=build_public_report(p,schemas=STORE)
+        assert r['status']=='SYNTHETIC_READY'
+        public=next(a['public_report'] for a in r['audit'] if 'public_report' in a)
+        assert 'patient_count' not in public;assert 'count_table' not in public
+        assert {'code':'PRAT_COUNT_FREE_EXPORT','status':'ENFORCED'} in public['limitation_table']
+        prat=next(a['prat_summary'] for a in r['audit'] if 'prat_summary' in a)
+        assert 'record_count' not in prat
+>       assert 'P1' not in str(public);assert '001' not in str(public)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert '001' not in "{'classific...ted': False}"
+E         
+E         '001' is contained here:
+E           a0a939caf40013841b83c8198831db180ff'}, 'config_sha256': '489d551f1760799d6ce3e047d5d047c1180ac0a98187c24d026b3fda52b29c1a', 'actual_source_review': 'NOT_RUN', 'actual_statistical_review': 'NOT_RUN', 'gate_table': [{'gate': 'SYNTHETIC_SOFTWARE', 'status': 'SYNTHETIC_READY'}, {'gate': 'SOURCE_REVIEW', 'status': 'NOT_RUN'}, {'gate': 'INDEPENDENT_REVIEW', 'status': 'NOT_RUN'}, {'gate': 'ENVIRONMENT_VALIDATION', 'status': 'NOT_RUN'}, {'gate': 'STATISTICAL_RELEASE', 'status': 'NOT_RUN'}], 'limitation_table': [{'code': 'ACTUAL_SOURCE_REVIEW', 'status': 'NOT_RUN'}, {'code': ...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_c.py:476: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_suppresses_small_cells_and_exports_no_source_rows
+FAILED tests/a_dav_implementation/test_group_c.py::test_prat_bound_general_report_is_count_free_despite_count_request
+2 failed, 39 passed in 19.98s

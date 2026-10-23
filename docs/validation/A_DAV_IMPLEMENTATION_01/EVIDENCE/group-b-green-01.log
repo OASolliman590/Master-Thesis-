@@ -1,0 +1,27 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 15 items
+
+tests/a_dav_implementation/test_group_b_protocol.py .............F.      [100%]
+
+=================================== FAILURES ===================================
+__________ test_missing_locator_blocks_even_when_legacy_tables_equal ___________
+
+    def test_missing_locator_blocks_even_when_legacy_tables_equal() -> None:
+        p = prat(); r = p["config"]["prat_review"]["readers"][1]
+        r["assertions"][0]["source_locator"] = ""
+        r["seal_sha256"] = digest({k: v for k, v in r.items() if k != "seal_sha256"})
+        result = invoke("prat_review", "review_prat_packet", p)
+        assert result["status"] == "BLOCKED_UNKNOWN"
+>       assert result["reasons"] == ["ASSERTION_EVIDENCE_MISSING"]
+E       AssertionError: assert ['ASSERTION_D...ENCE_MISSING'] == ['ASSERTION_EVIDENCE_MISSING']
+E         
+E         At index 0 diff: 'ASSERTION_DISAGREEMENT_UNRESOLVED' != 'ASSERTION_EVIDENCE_MISSING'
+E         Left contains one more item: 'ASSERTION_EVIDENCE_MISSING'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_b_protocol.py:111: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_missing_locator_blocks_even_when_legacy_tables_equal
+======================== 1 failed, 14 passed in 32.92s =========================

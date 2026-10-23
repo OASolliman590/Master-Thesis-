@@ -1,0 +1,49 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_refreshing_same_output_ancestor_invalidates_descendants _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c884920>
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-340/test_refreshing_same_output_an0')
+
+    def test_refreshing_same_output_ancestor_invalidates_descendants(monkeypatch, tmp_path):
+        import pytest
+        from tools.a_dav import core, workflow
+        from tools.a_dav.release import freeze_bundle
+        packet = _connected_graph()
+        original = core._file_hash
+        monkeypatch.setattr(core, '_file_hash', lambda path: 'e' * 64 if path.name == 'endpoints.py' else original(path))
+        old = packet['dependencies']['endpoints']
+        fresh = workflow.map_endpoints(packet)
+        assert fresh['status'] == 'SYNTHETIC_READY'
+        assert fresh['records']['endpoint'] == old['records']['endpoint']
+        assert fresh['receipt_id'] != old['receipt_id']
+        packet['dependencies']['endpoints'] = fresh
+        for stage in ('admission', 'baseline'):
+>           with pytest.raises(core.DavError, match='DEPENDENCY_INVALID'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE DavError
+
+tests/a_dav_implementation/test_workflow.py:248: Failed
+________ test_legacy_runtime_and_demo_hash_changes_invalidate_receipts _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cbf0230>
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-340/test_legacy_runtime_and_demo_h0')
+
+    def test_legacy_runtime_and_demo_hash_changes_invalidate_receipts(monkeypatch, tmp_path):
+        import pytest
+        from tools.a_dav import core
+        from tools.a_dav.release import freeze_bundle, verify_bundle
+        packet = _connected_graph()
+        target = tmp_path / 'runtime'
+        frozen = freeze_bundle(packet, target)
+>       assert frozen['status'] == 'SYNTHETIC_READY'
+E       AssertionError: assert 'FAIL' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + FAIL
+
+tests/a_dav_implementation/test_workflow.py:268: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_refreshing_same_output_ancestor_invalidates_descendants
+FAILED tests/a_dav_implementation/test_workflow.py::test_legacy_runtime_and_demo_hash_changes_invalidate_receipts
+2 failed, 11 deselected in 37.57s

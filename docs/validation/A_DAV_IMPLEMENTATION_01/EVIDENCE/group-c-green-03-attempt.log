@@ -1,0 +1,99 @@
+..............FFFFF..                                                    [100%]
+=================================== FAILURES ===================================
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload0] ________
+
+payload = {'patient_uid': 'P1'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])),schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:197: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload1] ________
+
+payload = {'sidecars': ['/private/x']}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])),schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:197: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload2] ________
+
+payload = {'status': 'https://host?token=SECRET'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])),schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:197: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload3] ________
+
+payload = {'counts': {'P1': 1}}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])),schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:197: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload4] ________
+
+payload = {'notes': 'anything'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])),schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_c.py:197: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload0]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload1]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload2]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload3]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload4]
+5 failed, 16 passed in 8.02s

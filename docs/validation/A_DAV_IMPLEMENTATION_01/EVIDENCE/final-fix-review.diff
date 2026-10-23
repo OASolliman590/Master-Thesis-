@@ -1,0 +1,1357 @@
+# Final corrective wave diff F1–F4
+Before final-review-inputs.json versus actual current additions.
+--- before/docs/superpowers/plans/2026-10-23-shared-dav-implementation.md
++++ docs/superpowers/plans/2026-10-23-shared-dav-implementation.md
+@@ -14,17 +14,17 @@
+     "config": {"registries": {...}, "endpoints": {...}, ...},
+     "schema_hashes": SchemaStore().hashes,
+     "dependencies": {"stage_name": prior_result},
+ }
+ ```
+ 
+ Every new stage API is `function(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]`. It reads only its named config key and explicit normalized records. It returns `classification`, `stage`, `status` (`SYNTHETIC_READY`, `BLOCKED_UNKNOWN`, `FAIL`), `records`, `audit`, fixed `reasons`, `bindings`, `receipt_id` and four permanently false readiness/admission/release/analysis flags. `SYNTHETIC_READY` is software simulation, never a V0–V9 clinical pass or canonical admission.
+ 
+-The core owns schema validation, safe failures, deterministic canonical JSON/hash, dependency verification and result sealing. A dependency must name the expected stage, bind actual records/code/schema/config and have `SYNTHETIC_READY`; missing/stale/tampered/wrong-branch inputs cannot support a downstream included row. Frozen canonical schemas remain the only normalized record model. View table aliases (`baseline`, `timepoint`, `pair`, `endpoint`, `coverage`, `split`, `membership`) use the existing materialized-matrix schema. Some inherited record shapes require PRIVATE_PATIENT_LEVEL labels; top-level SYNTHETIC_ONLY means every value is invented. No real file reader or registry writer is added.
++The core owns schema validation, safe failures, deterministic canonical JSON/hash, dependency verification and result sealing. A dependency must name the expected stage, bind actual records/runtime-code/schema/config and declared upstream receipt identities, and have `SYNTHETIC_READY`; missing/stale/tampered/wrong-branch inputs cannot support a downstream included row. Frozen canonical schemas remain the only normalized record model. View table aliases (`baseline`, `timepoint`, `pair`, `endpoint`, `coverage`, `split`, `membership`) use the existing materialized-matrix schema. Some inherited record shapes require PRIVATE_PATIENT_LEVEL labels; top-level SYNTHETIC_ONLY means every value is invented. No real file reader or registry writer is added.
+ 
+ `core.py` public helpers: `SchemaStore(root=SCHEMA_ROOT, expected_hashes=None)` with `.hashes` and `.validate(table, record)`; `canonical_bytes(value)`, `digest(value)`, `require(condition, code)`, `check_packet(packet, schemas)`, `verify_result(result, stage=None, branch_id=None, schemas=None)`, `finish(stage, packet, records=None, *, status="SYNTHETIC_READY", reasons=(), audit=(), schemas=None)` and `public_summary(result, *, include_counts=True)`. Fixed failures use `DavError(code, *, blocked=False)` and `@stage_boundary(stage)`; boundary catches invalid input and returns fixed codes without caller text. Modules may add fixed reason codes. Never emit raw IDs/paths/locators in public summaries.
+ 
+ ## Tasks and ownership
+ 
+ | Task | Owner/files | APIs and required behavior |
+ |---|---|---|
+ | Core + T01–03 reuse | Parent: core.py; tests/a_dav_implementation/test_core.py and test_existing_seams.py | Test hash/schema/dependency/privacy boundaries. Exercise existing search_log, study_resolution and object_verification with invented packets and injected in-memory transport. Preserve existing modules and all prior receipts. No live/cached real-source tracer is a new acceptance claim. |
+@@ -34,17 +34,17 @@
+ | T07 assays | Group A: assays.py | `validate_assays`; explicit source object/header/specimen ties, small invented matrix config only, unit/transform/annotation/feature coverage/QC and replicate/missingness validation. Counts/TPM/FPKM/log/array/methylation lanes must be declared, never coerced; missing is not zero. Produce schema-valid coverage records. No score or biology. |
+ | T08 overlap | Group B: overlap.py; exposure.py | `validate_overlap`, `validate_exposure`; typed frozen edges and exposure records, same trial/publication/mirror aliases, transitive potential overlap, namespace-safe joins; unknown use cannot certify untouched; metadata-only versus molecular-outcome use distinguished, prior exposure lineage bound. |
+ | T09 admission | Group B: admission.py | `evaluate_admission`; verify registry/endpoint/timing/assay/overlap/exposure dependency seals and same branch/config; evaluate each frozen branch's explicit requirements, unknown/failure distinctions, required-source completeness, no parser self-admission. Output synthetic eligibility plus schema-valid canonical admission draft with BLOCKED_UNKNOWN, no approved branches/real V7 pass. Downstream can simulate using SYNTHETIC_READY only, with false real flags. |
+ | Prat procedure/checklist | Group B: prat_review.py | `review_prat_packet`; implement independent review findings P01–P08 with sealed same object/code/schema/questions/repeat-policy basis, distinct blind committed reader first passes, assertion/locator support beyond legacy hash equality, full disagreement/adjudication retention and stale-version invalidation. Validate exact invented object bytes from content_hex and actual complete hash, null authored version allowed with immutable capture basis; no listing/prefix/caller pass as custody. Missing actual evidence/authentication stays separate from synthetic protocol checks. Public Prat summary has only fixed enums/hashes/false flags, no counts/IDs/dates/free text. |
+ | T10–11 matrices | Group C: matrices.py | `build_baseline`, `build_longitudinal`; require sealed synthetic admission plus relevant stages. Select explicit outcome-blind baseline/assay rank config, no silent ID tie breaker; preserve all timepoints, repeated windows and missing-follow-up denominator/audit; same patient/episode/assay/lesion/platform guards, progression/regimen changes distinct. Schema-valid views + build draft; no biological calculation. Endpoint mutation cannot change specimen selection; row permutations invariant. |
+ | T12 split | Group C: release.py | `validate_split`; frozen permanent roles and nested fold roles; verify sealed overlap/exposure/admission, required-source completeness, patient/family/trial/related-specimen protection and lineage; no post-performance selection, unknown prior use blocks final-test simulation. Validate frozen split views. |
+ | T13 reporting | Group C: reporting.py | `build_public_report`; verify dependency seals then export only allowlisted aggregate software statuses/counts/hashes under explicit small-cell policy; private row pairs, raw IDs/paths, signed URLs/tokens/free text or extra sidecars fail closed. Prat narrow export policy is stricter and has no counts. |
+ | T14 freeze | Group C: release.py | `freeze_bundle(packet, destination: Path, *, schemas=None)` plus `verify_bundle(destination)`; bind exact inputs/code/config/schema/outputs/commands/environment and all required sources. Atomic directory publication, immutable collision protection, fresh/no-op resume, changed input/config/schema/descendant invalidation, reject symlinks/path traversal/overwrites. Only SYNTHETIC evidence with READY_FOR_REVIEW/BLOCKED frozen release draft and false real release flags. |
+-| Connected workflow | Parent: workflow.py; tests and synthetic fixture/demo | `run_workflow(packet)` invokes real stage functions, propagates current records and dependency receipts in topological order, exposes result for each ticket, produces connected synthetic baseline and longitudinal paths plus blocked Prat/evidence cases. No bypass with hand-made PASS dictionaries. |
++| Connected workflow | Parent: workflow.py; tests and synthetic fixture/demo | `run_workflow(packet)` invokes real stage functions, propagates current records and dependency receipts in topological order (split/exposure validation before matrix materialization), exposes result for each ticket, produces connected synthetic baseline and longitudinal paths plus blocked Prat/evidence cases. No bypass with hand-made PASS dictionaries. |
+ 
+ Groups own only their named NEW module files and `tests/a_dav_implementation/test_<group>*.py` plus their report/logs in this plan's workspace. Parent owns core/workflow/shared fixtures, public contract, cross-group integration and receipts. No worker commits, installs, network, remote, reads real objects, changes old/frozen files, spawns agents or reruns the full suite. Agent reports contain actual RED/GREEN and file/hash details. Parent alone commits exact named new files after review. No push.
+ 
+ ## TDD and verification
+ 
+ For each public API, write one observable adversarial tracer, observe RED, implement the minimal behavior, then add the next vertical slice. Tests use independent expected literals/worked examples and public results; no private helpers or self-fulfilling hash assertions. Keep focused RED/GREEN logs per group. Typecheck new modules regularly with pinned mypy when available; compile checks are not mislabeled typechecking. Parent runs the complete newly implemented synthetic DAV suite once after integration, plus appropriate existing synthetic regressions; real-source/cached-source tracers remain NOT_RUN. No unrelated biological workflow is invoked as a test.
+ 
+ Independent code-review runs Standards and Spec axes in separate agents on the exact new-file diff from the fixed base plus untracked additions. Review actual frozen schemas, the canonical ticket table and this plan. Fix confirmed findings with narrow retests. Final receipt lists all14 tickets individually, reused versus new software, actual tests, deferred real tracers/reviewer/environment gates and source evidence gaps. Do not label real production or scientific acceptance complete.
+--- before/docs/validation/A_DAV_IMPLEMENTATION_01/README.md
++++ docs/validation/A_DAV_IMPLEMENTATION_01/README.md
+@@ -9,34 +9,34 @@
+ From the repository root, with Python 3.12, `jsonschema` and `pytest` available:
+ 
+ ```sh
+ python -B -m tools.a_dav.demo
+ python -B -m tools.a_dav.demo --freeze /absolute/existing/parent/invented-release
+ python -B -m pytest tests/a_dav_implementation -q -p no:cacheprovider
+ ```
+ 
+-The example has no data-file input option. It constructs one invented patient and two invented specimens in memory. Every numeric value, time window and rule is an explicitly labelled example, not a Prat or scientific default. Complete invented object bytes are measured and parsed; a different matrix cannot reuse that object binding. The example produces baseline, long and paired views but calculates no molecular score, effect or prediction. An absent pre/follow-up is retained in the audit denominator; it is never fabricated as a pair row with a null side. The CLI prints a count-free status. The optional freeze directory is a **synthetic reproduction artifact**, containing invented records and protocol input; it is separate from the allowlisted public report.
++The example has no data-file input option. It constructs one invented patient and two invented specimens in memory. Every numeric value, time window and rule is an explicitly labelled example, not a Prat or scientific default. Complete invented object bytes are measured and parsed; a different matrix cannot reuse that object binding. The example validates the per-patient split and exposure ledger before materializing baseline, long and paired views. It calculates no molecular score, effect or prediction. An absent pre/follow-up is retained in the audit denominator; it is never fabricated as a pair row with a null side. The CLI prints a count-free status. The optional freeze directory is a **synthetic reproduction artifact**, containing invented records and protocol input; it is separate from the allowlisted public report.
+ 
+-The frozen source schemas remain authoritative. Canonical assertions and their raw lexical IDs are preserved. Derived views do not replace source records. Dependency receipts bind the current canonical snapshot, owned derived outputs, complete configuration, schemas and current module/core code. Hashes detect changes; they do not authenticate people or prove source truth. A changed object, config, code, schema or relevant upstream output invalidates dependent receipts. Existing freeze destinations are verified and never overwritten.
++The frozen source schemas remain authoritative. Canonical assertions and their raw lexical IDs are preserved. Derived views do not replace source records. Dependency receipts bind the current canonical snapshot, owned derived outputs, complete configuration, schemas, declared upstream receipt identities and current runtime code. Reproduction also binds the reused discovery/resolution/object modules and the demo command implementation. Hashes detect changes; they do not authenticate people or prove source truth. A changed object, config, code, schema or relevant upstream output invalidates dependent receipts. Existing freeze destinations are verified and never overwritten.
+ 
+ `SYNTHETIC_READY` means the invented software case is ready for its next simulated stage. The flags `analysis_ready`, `source_admission`, `statistical_release` and `biological_analysis_executed` remain false. Canonical admission and matrix-build drafts retain `BLOCKED_UNKNOWN`; actual review/test fields remain `NOT_RUN`. No parser or caller-supplied reviewer name grants V7, V8 or V9.
+ 
+ ## Software coverage and external acceptance
+ 
+ | Tickets | Software behavior exercised | External acceptance still required |
+ |---|---|---|
+ | T01–T03 | Existing discovery/resolution APIs, complete invented bytes, injected interrupted retrieval/resume, checksum/overwrite rejection | Current official catalogue tracers, source identity/object/version/terms and independent object review |
+ | T04 | Lexical IDs, aliases, repeats, lesions and foreign keys | Actual source crosswalk and independent identity review |
+ | T05 | Raw-preserving endpoint views and prohibited conversions | Source endpoint definitions, individual same-episode binding and clinical review |
+ | T06 | Explicit time/episode/component assertions and conflicts | Source chronology, regimen and policy evidence |
+ | T07 | Invented matrix structure/scale/annotation/coverage and missing-versus-zero checks | Source measurement methods, exact object/header links and assay-domain review |
+ | T08 | Typed overlap closure and lineage-bound prior-use distinctions | Actual overlap and repository-use review |
+-| T09 | Named branch criteria and blocked canonical admission drafts | Real V0–V7 evidence and authenticated source/integrator approval |
+-| T10–T11 | Explicit outcome-blind selection, repeat/window auditing, long/pair views and missing-follow-up audit denominators | Actual admitted source inputs, selection/window policies and matrix review |
++| T09 | Named branch criteria, rejection of known record/policy contradictions and blocked canonical admission drafts | Real V0–V7 evidence and authenticated source/integrator approval |
++| T10–T11 | Explicit outcome-blind eligible-specimen selection, sealed assay/endpoint/split consumption, long/pair views and missing-follow-up audit denominators | Actual admitted source inputs, selection/window policies and matrix review |
+ | T12 | Protected role/fold boundaries, ancestry/overlap and exposure checks | Reviewed lineage history, role decisions and authenticated split freeze |
+ | T13 | Allowlisted aggregate statuses/hashes, explicit count suppression and prohibited payload rejection | Authorized privacy review of actual release contents |
+ | T14 | Connected fresh/resume verification, exact bindings, atomic publication and immutable collision handling | Target-environment validation, whole-branch scientific review and real R9 release |
+ | Prat P01–P08 | Manifest/common-basis checks, sealed first passes, policy lock order, assertion disagreement retention and count-free summary | Actual complete source set/custody, independent readers, authenticated review and source-backed semantic adjudication |
+ 
+ ## Evidence remains open
+ 
+ The [existing evidence register](../../evidence/A_DAV_PRAT_BASELINE_BRIEF_01/EVIDENCE_REQUIREMENTS.tsv) remains the source of truth. E01–E08 are unresolved actual source, identity, treatment, selection, endpoint, assay, overlap and independent-review evidence. E09 named-method use remains deferred. E10 actual admission and releases remain unestablished. Software now checks the shape and consistency of supplied evidence; it supplies none of that missing evidence itself.
+--- before/tests/a_dav_implementation/test_core.py
++++ tests/a_dav_implementation/test_core.py
+@@ -144,8 +144,23 @@
+ def test_direct_finish_uses_safe_digest_for_malformed_config():
+     import hashlib
+     schemas = SchemaStore()
+     packet = {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+               "records": {}, "config": {"bad": {1, 2}}, "schema_hashes": schemas.hashes}
+     result = finish("core", packet, status="FAIL", reasons=["MALFORMED_INPUT"], schemas=schemas)
+     assert result["bindings"]["config_sha256"] == hashlib.sha256(b"null").hexdigest()
+     verify_result(result, stage="core", branch_id="A_BASELINE_BIO", schemas=schemas)
++
++
++def test_malformed_dependency_lineage_still_has_verifiable_safe_failure():
++    from tools.a_dav.workflow import run_existing_seams
++    schemas = SchemaStore()
++    for dependencies in ([], {'registries': {'receipt_id': b'not-json'}},
++                         {'registries': {'receipt_id': {'untrusted'}}}):
++        packet = {'classification': 'SYNTHETIC_ONLY', 'branch_id': 'A_BASELINE_BIO',
++                  'records': {}, 'config': {}, 'schema_hashes': schemas.hashes,
++                  'dependencies': dependencies}
++        result = run_existing_seams(packet, schemas=schemas)
++        assert result['status'] == 'FAIL'
++        assert result['records'] == {}
++        verify_result(result, stage='existing_seams', schemas=schemas)
++        assert result['bindings']['upstream_receipt_ids'] == {}
+--- before/tests/a_dav_implementation/test_group_c.py
++++ tests/a_dav_implementation/test_group_c.py
+@@ -82,28 +82,60 @@
+     p['config'] = {'baseline': rank, 'longitudinal': {**rank, 'assay_suitability':'LONGITUDINAL', 'windows':[
+         {'window_id':'W1','contrast_id':'C1','category':'EARLY_ON_TREATMENT','lower_day':1,'upper_day':30},
+         {'window_id':'W2','contrast_id':'C2','category':'POST_TREATMENT','lower_day':50,'upper_day':80}]}}
+     p['records']['coverage']=[{'row_type':'COVERAGE','schema_version':'1.1.0','study_id':'S1','assay_uid':a['assay_uid'],
+         'branch_id':p['branch_id'],'required_genes':['G1'],'present_genes':['G1'],'missing_genes':[],
+         'ambiguous_genes':[],'annotation_version':'invented-v1','expression_unit':'COUNTS',
+         'measurement_suitability':'PASS','scoring_suitability':'PASS','de_suitability':'PASS',
+         'final_test_suitability':'PASS','source_object_id':a['source_object_id']} for a in p['records']['assay_registry']]
++    p['records']['split'] = [{'row_type':'SPLIT','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
++        'patient_uid':'P1','study_id':'S1','independence_family_id':'FAM1','permanent_role':'DEVELOPMENT',
++        'prior_exposure_state':'UNKNOWN','exposure_decision_id':None,'split_version':'v1',
++        'reason':'PRESPECIFIED_METADATA','nested_assignments':[]}]
+     return seal(p)
+ 
+ 
+-def seal(p, stages=('registries','endpoints','timing','assays','overlap','exposure','admission')):
++def seal(p, stages=('registries','endpoints','timing','assays','overlap','exposure','admission','split')):
+     p['dependencies']={}
+-    p['dependencies'] = {stage: finish(stage,p,p['records'],schemas=STORE,audit=[{'kind':'admission_eligibility','study_id':'S1','branch_id':p['branch_id'],'eligibility':'SYNTHETIC_READY','criteria':{},'actual_source_review':'NOT_RUN'}]) for stage in stages}
+-    if 'timing' in stages:
+-        audit=[{'check':'TIMING_ASSERTION','specimen_uid':sp['specimen_uid'],'precision':'EXACT',
+-            'relative_day':sp['days_from_index_start'],'canonical_category':sp['canonical_timing_category'],
+-            'treatment_episode_id':'E1','binding_id':'bind'+sp['specimen_uid'],'role':'PRE_INDEX_BASELINE' if sp['days_from_index_start']<0 else 'ON_TREATMENT','interval':[None,None]} for sp in p['records'].get('specimen_registry',[])]
+-        p['dependencies']['timing']=finish('timing',{**p,'dependencies':{}},p['records'],audit=audit,schemas=STORE)
++    if 'split' in p['config']:
++        p['records']['split'] = copy.deepcopy(p['config']['split']['assignments'])
++    order = ('registries','endpoints','timing','assays','overlap','exposure','admission','split',
++             'baseline','longitudinal','prat_review','public_report')
++    for stage in order:
++        if stage not in stages: continue
++        audit = []
++        if stage == 'admission':
++            audit = [{'kind':'admission_eligibility','study_id':'S1','branch_id':p['branch_id'],
++                      'eligibility':'SYNTHETIC_READY','criteria':{},'actual_source_review':'NOT_RUN'}]
++        if stage == 'timing':
++            audit=[{'check':'TIMING_ASSERTION','specimen_uid':sp['specimen_uid'],'precision':'EXACT',
++                'relative_day':sp['days_from_index_start'],'canonical_category':sp['canonical_timing_category'],
++                'treatment_episode_id':'E1','binding_id':'bind'+sp['specimen_uid'],
++                'role':'PRE_INDEX_BASELINE' if sp['days_from_index_start']<0 else 'ON_TREATMENT',
++                'interval':[None,None]} for sp in p['records'].get('specimen_registry',[])]
++        if stage == 'split':
++            audit=[{'kind':'PATIENT_LEDGER','patient_uid':row['patient_uid'],
++                    'permanent_role':row['permanent_role'],'exposure_state':row['prior_exposure_state'],
++                    'actual_untouched_certified':False} for row in p['records'].get('split', [])]
++        p['dependencies'][stage] = finish(stage,p,p['records'],schemas=STORE,audit=audit)
+     return p
++
++
++def refresh_descendants(p, ancestor):
++    """Refresh invented fixture receipts after intentionally replacing one audit."""
++    from tools.a_dav.core import UPSTREAMS
++    changed = {ancestor}
++    for stage in ('registries','endpoints','timing','assays','overlap','exposure','admission','split',
++                  'baseline','longitudinal','public_report'):
++        if stage == ancestor or stage not in p['dependencies']: continue
++        if changed.intersection(UPSTREAMS[stage]):
++            old = p['dependencies'][stage]
++            p['dependencies'][stage] = finish(stage,p,p['records'],schemas=STORE,audit=old['audit'])
++            changed.add(stage)
+ 
+ 
+ def test_baseline_selects_rank_and_preserves_sources_and_outcome_blindness():
+     from tools.a_dav.matrices import build_baseline
+     p=material_packet(); original=copy.deepcopy(p['records'])
+     r=build_baseline(p,schemas=STORE)
+     assert r['status']=='SYNTHETIC_READY'
+     assert [(v['patient_uid'],v['specimen_uid'],v['assay_uid']) for v in r['records']['baseline']]==[('P1','B1','A1')]
+@@ -188,17 +220,17 @@
+ 
+ 
+ def report_packet():
+     p=split_packet()
+     p['config']['public_report']={'minimum_cell_count':3,'include_counts':True}
+     p['config']['freeze']={'commands':['python -B -m synthetic_dav'], 'environment':{'python':'invented'},
+                            'required_source_ids':['SRC1'],'source_universe_version':'synthetic-v1'}
+     p=seal(p)
+-    for stage in ('baseline','longitudinal','split'):
++    for stage in ('baseline','longitudinal'):
+         p['dependencies'][stage]=finish(stage,p,p['records'],schemas=STORE)
+     return p
+ 
+ 
+ def test_reporting_suppresses_small_cells_and_exports_no_source_rows():
+     from tools.a_dav.reporting import build_public_report
+     p=report_packet();r=build_public_report(p,schemas=STORE)
+     assert r['status']=='SYNTHETIC_READY'
+@@ -245,16 +277,17 @@
+     from tools.a_dav.matrices import build_longitudinal
+     p=material_packet()
+     audit=[{'check':'TIMING_ASSERTION','specimen_uid':sp['specimen_uid'],
+         'precision':'UNKNOWN' if sp['specimen_uid']=='F1' else 'EXACT',
+         'relative_day':None if sp['specimen_uid']=='F1' else sp['days_from_index_start'],
+         'canonical_category':sp['canonical_timing_category'],'treatment_episode_id':'E1',
+         'binding_id':'bind'+sp['specimen_uid'],'role':'PRE_INDEX_BASELINE' if sp['days_from_index_start']<0 else 'ON_TREATMENT','interval':[None,None]} for sp in p['records']['specimen_registry']]
+     p['dependencies']['timing']=finish('timing',p,p['records'],audit=audit,schemas=STORE)
++    refresh_descendants(p, 'timing')
+     r=build_longitudinal(p,schemas=STORE)
+     assert not any(v['inclusion_status']=='INCLUDED' and v['followup_specimen_uid']=='F1' for v in r['records']['pair'])
+     assert 'TIMING_UNKNOWN' in str(r['audit'])
+ 
+ 
+ def test_matrix_receipts_are_invariant_under_source_row_permutations():
+     from tools.a_dav.matrices import build_baseline,build_longitudinal
+     p=material_packet();other=copy.deepcopy(p)
+@@ -295,28 +328,30 @@
+     p=split_packet();other=copy.deepcopy(p['records']['patient_registry'][0]);other.update(patient_uid='P2',study_id='S2',source_patient_id='002')
+     p['records']['patient_registry'].append(other)
+     row=copy.deepcopy(p['config']['split']['assignments'][0]);row.update(patient_uid='P2',study_id='S2',independence_family_id='FAM2',permanent_role='A1_ONLY',nested_assignments=[])
+     p['config']['split']['assignments'].append(row);p=seal(p)
+     audit=[{'kind':'overlap_component','nodes':[{'node_type':'PATIENT','node_id':'P1'},
+         {'node_type':'SOURCE_OBJECT','node_id':'bridge'},{'node_type':'PATIENT','node_id':'P2'}],
+         'protection':'POTENTIAL_OR_UNKNOWN','independence_certified':False}]
+     p['dependencies']['overlap']=finish('overlap',p,p['records'],audit=audit,schemas=STORE)
++    refresh_descendants(p, 'overlap')
+     assert validate_split(p,schemas=STORE)['reasons']==['SPLIT_LEAKAGE']
+ 
+ 
+ def final_packet():
+     p=split_packet();p['config']['split']['assignments'][0].update(permanent_role='FINAL_TEST',
+         prior_exposure_state='ADJUDICATED_UNTOUCHED',exposure_decision_id='SIM-REVIEW',nested_assignments=[])
+     p['config']['split']['final_test_review']={'decision_id':'SIM-REVIEW','analysis_lineage_id':'L1',
+         'review_complete':True,'metadata_only_permitted':True,'covered_patient_uids':['P1'],'source_locators':['invented']}
+     p=seal(p)
+     p['dependencies']['exposure']=finish('exposure',p,p['records'],schemas=STORE,audit=[{
+         'kind':'exposure_decision','subject_type':'SOURCE_OBJECT','subject_id':'SRC1',
+         'analysis_lineage_id':'L1','state':'METADATA_ONLY','untouched_certified':False}])
++    refresh_descendants(p, 'exposure')
+     return p
+ 
+ 
+ def test_final_split_simulation_keeps_actual_certification_false():
+     from tools.a_dav.release import validate_split
+     r=validate_split(final_packet(),schemas=STORE)
+     assert r['status']=='SYNTHETIC_READY'
+     assert all(a['actual_untouched_certified'] is False for a in r['audit'])
+@@ -327,16 +362,17 @@
+     from tools.a_dav.release import validate_split
+     p=final_packet();p['records']['prior_exposure_record']=[{'schema_version':'1.1.0','exposure_id':'X0',
+         'subject_type':'SOURCE_OBJECT','subject_id':'SRC1','analysis_lineage_id':'OLDER-LINEAGE',
+         'fields_accessed':['expression','outcome'],'use':'FEATURE_SELECTION','occurred_utc':None,
+         'date_precision':'UNKNOWN','actor_role':'invented','independence_implication':'BLOCKS_UNTOUCHED_FOR_LINEAGE',
+         'source_locators':['invented']}]
+     old_audit=p['dependencies']['exposure']['audit'];p=seal(p)
+     p['dependencies']['exposure']=finish('exposure',p,p['records'],audit=old_audit,schemas=STORE)
++    refresh_descendants(p, 'exposure')
+     r=validate_split(p,schemas=STORE)
+     assert r['status']=='FAIL';assert r['reasons']==['PRIOR_MODEL_EXPOSURE']
+ 
+ 
+ def test_tied_candidates_remain_in_blocked_matrix_audit():
+     from tools.a_dav.matrices import build_baseline
+     p=material_packet();p['config']['baseline']['specimen_rank']['B2']=0
+     p['config']['baseline']['assay_rank']['A2']=0
+@@ -412,16 +448,17 @@
+ def test_adjudicated_endpoint_selection_uses_sealed_preferred_outcome():
+     from tools.a_dav.matrices import build_baseline
+     p=material_packet();second=copy.deepcopy(p['records']['endpoint'][0])
+     second.update(outcome_id='O2',endpoint_id='ORR2',raw_value='PD',canonical_category='PD',binary_value=0)
+     p['records']['endpoint'].append(second);p=seal(p)
+     p['dependencies']['endpoints']=finish('endpoints',p,p['records'],schemas=STORE,audit=[{
+         'check':'DISCREPANCY_RETAINED','patient_uid':'P1','treatment_episode_id':'E1',
+         'preferred_outcome_id':'O1','all_outcome_ids':['O1','O2']}])
++    refresh_descendants(p, 'endpoints')
+     r=build_baseline(p,schemas=STORE)
+     assert r['status']=='SYNTHETIC_READY';assert r['records']['baseline'][0]['orr']==1
+     assert len(r['records']['endpoint'])==2
+ 
+ 
+ def test_missing_pre_or_followup_only_emits_denominator_audit():
+     from tools.a_dav.matrices import build_longitudinal
+     p=material_packet();p['config']['longitudinal']['windows'][0].update(lower_day=30,upper_day=40)
+@@ -452,16 +489,17 @@
+     binding=copy.deepcopy(p['records']['episode_binding'][2]);binding.update(binding_id='reuseF1',treatment_episode_id='E2',role='PRE_INDEX_BASELINE')
+     p['records']['episode_binding'].append(binding)
+     p['config']['longitudinal']['index_episode_by_patient']={'P1':'E1'};p=seal(p)
+     audits=copy.deepcopy(p['dependencies']['timing']['audit'])
+     audits.append({'check':'TIMING_ASSERTION','specimen_uid':'F1','treatment_episode_id':'E2',
+         'binding_id':'reuseF1','role':'PRE_INDEX_BASELINE','canonical_category':'PRE_INDEX_BASELINE',
+         'precision':'EXACT','relative_day':-3,'interval':[None,None]})
+     p['dependencies']['timing']=finish('timing',p,p['records'],audit=audits,schemas=STORE)
++    refresh_descendants(p, 'timing')
+     r=build_longitudinal(p,schemas=STORE)
+     assert r['status']=='SYNTHETIC_READY'
+     contexts={(v['treatment_episode_id'],v['canonical_timing'],v['relative_day']) for v in r['records']['timepoint'] if v['specimen_uid']=='F1'}
+     assert contexts=={('E1','EARLY_ON_TREATMENT',10),('E2','PRE_INDEX_BASELINE',-3)}
+     assert r['records']['pair'][0]['followup_specimen_uid']=='F1'
+ 
+ 
+ def test_prat_bound_general_report_is_count_free_despite_count_request():
+@@ -478,8 +516,33 @@
+ 
+ 
+ def test_prat_bound_public_report_rejects_stale_prat_config():
+     from tools.a_dav.reporting import build_public_report
+     p=report_packet();stale=copy.deepcopy(p);stale['config']['public_report']['include_counts']=False
+     p['dependencies']['prat_review']=finish('prat_review',stale,stale['records'],schemas=STORE)
+     r=build_public_report(p,schemas=STORE)
+     assert r['status']=='FAIL';assert r['reasons']==['DEPENDENCY_INVALID']
++
++
++def test_direct_baseline_requires_applicable_frozen_patient_split():
++    from tools.a_dav.matrices import build_baseline
++    p = material_packet()
++    del p['dependencies']['split']
++    result = build_baseline(p, schemas=STORE)
++    assert result['status'] == 'BLOCKED_UNKNOWN'
++    assert result['reasons'] == ['DEPENDENCY_MISSING']
++    assert 'baseline' not in result['records']
++
++
++def test_unknown_branch_compartment_policy_does_not_default_to_tumour():
++    from tools.a_dav.matrices import build_baseline
++    p = material_packet()
++    p['branch_id'] = 'A1_ON_R_NR'
++    for row in p['records']['coverage']: row['branch_id'] = p['branch_id']
++    for row in p['records']['cohort_admission_receipt']: row.update(branch_id=p['branch_id'], blocked_branches=[p['branch_id']])
++    blocked = build_baseline(seal(p), schemas=STORE)
++    assert blocked['status'] == 'BLOCKED_UNKNOWN'
++    assert blocked['reasons'] == ['SPECIMEN_POLICY_UNKNOWN']
++    p['config']['baseline']['baseline_compartments'] = ['TUMOUR']
++    good = build_baseline(seal(p), schemas=STORE)
++    assert good['status'] == 'SYNTHETIC_READY'
++    assert good['records']['baseline'][0]['specimen_uid'] == 'B1'
+--- before/tests/a_dav_implementation/test_workflow.py
++++ tests/a_dav_implementation/test_workflow.py
+@@ -76,8 +76,281 @@
+     changed['records']['clinical_outcome'][0].update(raw_endpoint_label='invented-progressive',
+         canonical_category='PD', orr_mapping=False, dcr_mapping=False)
+     changed['config']['endpoints']['category_map'] = {'invented-progressive': 'PD'}
+     result = run_workflow(changed)
+     assert result['status'] == 'SYNTHETIC_READY'
+     assert result['records']['baseline'][0]['orr'] == 0
+     assert result['records']['baseline'][0]['specimen_uid'] == first['records']['baseline'][0]['specimen_uid']
+     assert result['records']['pair'][0]['followup_specimen_uid'] == first['records']['pair'][0]['followup_specimen_uid']
++
++
++def _evidence(**fields):
++    return {'policy_version': 'invented-v1', 'source_locators': ['invented'],
++            'rule': 'invented metadata rule',
++            'record_refs': [{'table': 'patient_registry', 'key': 'patient_uid', 'value': 'p1'}], **fields}
++
++
++def _admission_checks(result):
++    stage = next(row for row in result['audit'] if row['stage'] == 'admission')
++    return next(row['criteria'] for row in stage['checks'] if row['kind'] == 'admission_eligibility')
++
++
++def test_outer_validation_reconciles_current_lineage_training():
++    packet = synthetic_workflow_packet()
++    packet['branch_id'] = 'A_P2_OUTER_VALIDATION'
++    policy = deepcopy(packet['config']['admission']['branch_policies']['A_BASELINE_BIO'])
++    policy.update(originating_study_holdout=_evidence(held_out_study_ids=['s1'], training_study_ids=[]),
++                  lineage_no_training=_evidence(analysis_lineage_id='invented-lineage'))
++    packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
++    good = run_workflow(packet)
++    assert good['status'] == 'SYNTHETIC_READY', good['audit']
++    packet['records']['prior_exposure_record'][0].update(use='MODEL_TUNING', fields_accessed=['response'],
++        independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
++    bad = run_workflow(packet)
++    assert bad['status'] == 'FAIL'
++    assert _admission_checks(bad)['lineage_no_training'] == 'CONTRADICTED'
++
++
++def test_multiomics_reconciles_exact_specimens_times_and_assays():
++    packet = synthetic_workflow_packet()
++    packet['branch_id'] = 'PAIRED_MULTIOMICS'
++    policy = {'patient_link': _evidence(specimen_uids=['sp1', 'sp2']),
++              'same_time_specimen': _evidence(specimen_uids=['sp1', 'sp2'], same_time=True, same_specimen=True),
++              'modality_gates': _evidence(modalities=['RNA', 'METHYLATION'], assay_uids=['a1', 'a2'])}
++    packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
++    bad = run_workflow(packet)
++    assert bad['status'] == 'FAIL'
++    checks = _admission_checks(bad)
++    assert checks['same_time_specimen'] == checks['modality_gates'] == 'CONTRADICTED'
++    # Correct declarations preserve the actual different-time relationship; two RNA
++    # assays still cannot constitute the named paired multi-omics branch.
++    policy['same_time_specimen'].update(same_time=False, same_specimen=False)
++    checks = _admission_checks(run_workflow(packet))
++    assert checks['same_time_specimen'] == 'SUPPORTED'
++    assert checks['modality_gates'] == 'CONTRADICTED'
++
++
++def test_baseline_rejects_explicit_no_and_wrong_compartment_before_ranking():
++    for change, reason in [({'baseline_candidate_status': 'NO'}, 'BASELINE_INELIGIBLE'),
++                           ({'biological_compartment': 'BLOOD'}, 'COMPARTMENT_INELIGIBLE')]:
++        packet = synthetic_workflow_packet()
++        packet['records']['specimen_registry'][0].update(change)
++        packet['records']['specimen_registry'][1].update(canonical_timing_category='PRE_INDEX_BASELINE',
++            collection_date_or_day='-1', days_from_index_start=-1, baseline_candidate_status='YES')
++        for binding in packet['records']['episode_binding']:
++            if binding['subject_id'] == 'sp2': binding['role'] = 'PRE_INDEX_BASELINE'
++        packet['config']['timing']['specimens']['sp2'].update(relative_day=-1,
++            canonical_category='PRE_INDEX_BASELINE', window_id='invented-pre')
++        first = run_workflow(packet)
++        assert first['status'] == 'SYNTHETIC_READY', first['audit']
++        assert first['records']['baseline'][0]['specimen_uid'] == 'sp2'
++        baseline = next(row for row in first['audit'] if row['stage'] == 'baseline')
++        assert any(row.get('specimen_uid') == 'sp1' and row.get('reason') == reason for row in baseline['checks'])
++        for rows in packet['records'].values(): rows.reverse()
++        assert run_workflow(packet) == first
++
++
++def test_materialized_roles_and_exposure_follow_patient_ledgers():
++    packet = synthetic_workflow_packet()
++    packet['config']['split']['assignments'][0]['permanent_role'] = 'EXCLUDED'
++    result = run_workflow(packet)
++    assert result['status'] == 'SYNTHETIC_READY', result['audit']
++    row = result['records']['baseline'][0]
++    assert row['split_role'] == 'EXCLUDED'
++    assert row['inclusion_status'] == 'EXCLUDED'
++    assert row['exclusion_reason'] == 'PATIENT_EXCLUDED'
++    packet = synthetic_workflow_packet()
++    packet['records']['prior_exposure_record'][0].update(use='MODEL_TUNING', fields_accessed=['response'],
++        independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
++    result = run_workflow(packet)
++    assert result['status'] == 'SYNTHETIC_READY', result['audit']
++    assert result['records']['baseline'][0]['prior_exposure_status'] == 'RESPONSE_ASSOCIATED'
++    assert result['records']['split'][0]['prior_exposure_state'] == 'RESPONSE_ASSOCIATED'
++
++
++def test_mixed_patient_assignments_materialize_separately():
++    packet = synthetic_workflow_packet()
++    # A second invented patient shares the family, but is explicitly excluded.
++    mapping = {'p1': 'p2', 'sp1': 'sp3', 'sp2': 'sp4', 'a1': 'a3', 'a2': 'a4',
++               'e1': 'e2', 'o1': 'o2', 'x1': 'x2', 'bp1': 'bp2', 'bsp1': 'bsp3',
++               'bsp2': 'bsp4', 'bo1': 'bo2', 'bx1': 'bx2', 'sample-001': 'sample-003',
++               'sample-002': 'sample-004', '001': '002', '0001': '0002'}
++    def replace(value):
++        if isinstance(value, dict): return {mapping.get(k, k): replace(v) for k, v in value.items()}
++        if isinstance(value, list): return [replace(v) for v in value]
++        return mapping.get(value, value) if isinstance(value, str) else value
++    for table in ('patient_registry', 'specimen_registry', 'assay_registry', 'treatment_episode',
++                  'treatment_exposure', 'episode_binding', 'clinical_outcome'):
++        packet['records'][table] += replace(deepcopy(packet['records'][table]))
++    packet['config']['timing']['episode_order'].append('e2')
++    packet['config']['timing']['specimens'].update(replace(deepcopy(packet['config']['timing']['specimens'])))
++    packet['config']['endpoints']['source_priority'].append('o2')
++    matrix = packet['config']['assays']['matrices'][0]
++    matrix['headers'] += ['sample-003', 'sample-004']
++    for values in matrix['values']: values += list(values)
++    matrix['library_properties'].update(replace(deepcopy(matrix['library_properties'])))
++    for stage in ('baseline', 'longitudinal'):
++        for key in ('specimen_rank', 'assay_rank'):
++            packet['config'][stage][key].update(replace(deepcopy(packet['config'][stage][key])))
++    other = replace(deepcopy(packet['config']['split']['assignments'][0]))
++    other['permanent_role'] = 'EXCLUDED'
++    packet['config']['split']['assignments'].append(other)
++    exposure = deepcopy(packet['records']['prior_exposure_record'][0])
++    exposure.update(exposure_id='patient-use', subject_type='PATIENT_SET', subject_id='p2',
++                    use='MODEL_TUNING', fields_accessed=['response'],
++                    independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
++    packet['records']['prior_exposure_record'].append(exposure)
++    _refresh_invented_matrix_bytes(packet)
++    result = run_workflow(packet)
++    assert result['status'] == 'SYNTHETIC_READY', result['audit']
++    assert [(r['patient_uid'], r['split_role'], r['inclusion_status']) for r in
++            sorted(result['records']['baseline'], key=lambda r: r['patient_uid'])] == [
++                ('p1', 'DEVELOPMENT', 'INCLUDED'), ('p2', 'EXCLUDED', 'EXCLUDED')]
++    assert {r['patient_uid']: r['prior_exposure_status'] for r in result['records']['baseline']} == {
++        'p1': 'METADATA_ONLY', 'p2': 'RESPONSE_ASSOCIATED'}
++
++
++def _refresh_invented_matrix_bytes(packet):
++    import hashlib
++    from tools.a_dav.core import canonical_bytes
++    from tools.a_dav.workflow import MATRIX_PAYLOAD_FIELDS
++    for matrix in packet['config']['assays']['matrices']:
++        content = b'SYNTHETIC_ONLY\n' + canonical_bytes({'assay_matrix': {k: matrix[k] for k in MATRIX_PAYLOAD_FIELDS}})
++        sha = hashlib.sha256(content).hexdigest()
++        source = next(r for r in packet['records']['source_record'] if r['source_object_id'] == matrix['source_object_id'])
++        source.update(sha256=sha, byte_size=len(content))
++        matrix['source_sha256'] = sha
++        packet['config']['registries']['source_hashes'][matrix['source_object_id']] = sha
++        packet['config']['existing_seams']['source_payloads'][matrix['source_object_id']] = content.hex()
++
++
++def _connected_graph(packet=None, stop_after=None):
++    from tools.a_dav import workflow
++    packet = synthetic_workflow_packet() if packet is None else packet
++    functions = (workflow.run_existing_seams, workflow.build_registries, workflow.map_endpoints,
++                 workflow.validate_timing, workflow.validate_assays, workflow.validate_overlap,
++                 workflow.validate_exposure, workflow.evaluate_admission, workflow.validate_split,
++                 workflow.build_baseline, workflow.build_longitudinal, workflow.build_public_report)
++    for function in functions:
++        result = function(packet)
++        assert result['status'] == 'SYNTHETIC_READY', (result['stage'], result['reasons'])
++        packet['records'] = result['records']
++        packet['dependencies'][result['stage']] = result
++        if result['stage'] == stop_after: break
++    return packet
++
++
++def test_refreshing_same_output_ancestor_invalidates_descendants(monkeypatch, tmp_path):
++    import pytest
++    from tools.a_dav import core, workflow
++    from tools.a_dav.release import freeze_bundle
++    packet = _connected_graph()
++    original = core._file_hash
++    monkeypatch.setattr(core, '_file_hash', lambda path: 'e' * 64 if path.name == 'endpoints.py' else original(path))
++    old = packet['dependencies']['endpoints']
++    fresh = workflow.map_endpoints(packet)
++    assert fresh['status'] == 'SYNTHETIC_READY'
++    assert fresh['records']['endpoint'] == old['records']['endpoint']
++    assert fresh['receipt_id'] != old['receipt_id']
++    packet['dependencies']['endpoints'] = fresh
++    for stage in ('admission', 'baseline'):
++        with pytest.raises(core.DavError, match='DEPENDENCY_INVALID'):
++            core.dependency(packet, stage, core.SchemaStore())
++    assert workflow.build_public_report(packet)['status'] == 'FAIL'
++    assert freeze_bundle(packet, tmp_path / 'stale')['status'] == 'FAIL'
++    for function in (workflow.evaluate_admission, workflow.validate_split, workflow.build_baseline,
++                     workflow.build_longitudinal, workflow.build_public_report):
++        result = function(packet)
++        assert result['status'] == 'SYNTHETIC_READY', (result['stage'], result['reasons'])
++        packet['records'] = result['records']
++        packet['dependencies'][result['stage']] = result
++    assert freeze_bundle(packet, tmp_path / 'rebuilt')['status'] == 'SYNTHETIC_READY'
++
++
++def test_legacy_runtime_and_demo_hash_changes_invalidate_receipts(monkeypatch, tmp_path):
++    import pytest
++    from tools.a_dav import core
++    from tools.a_dav.release import freeze_bundle, verify_bundle
++    packet = _connected_graph()
++    target = tmp_path / 'runtime'
++    frozen = freeze_bundle(packet, target)
++    assert frozen['status'] == 'SYNTHETIC_READY'
++    original = core._file_hash
++    for filename in ('search_log.py', 'study_resolution.py', 'object_verification.py', 'demo.py'):
++        with monkeypatch.context() as patch:
++            patch.setattr(core, '_file_hash', lambda path, filename=filename: 'f' * 64 if path.name == filename else original(path))
++            with pytest.raises(core.DavError, match='CODE_BINDING_MISMATCH'):
++                core.verify_result(frozen)
++            with pytest.raises(core.DavError, match='CODE_BINDING_MISMATCH'):
++                verify_bundle(target)
++
++
++
++def test_compatible_same_specimen_multiomics_uses_actual_assay_gates():
++    packet = synthetic_workflow_packet()
++    packet['branch_id'] = 'PAIRED_MULTIOMICS'
++    source = deepcopy(packet['records']['source_record'][0])
++    source.update(source_object_id='obj2', exact_file_name='invented-methylation.tsv')
++    packet['records']['source_record'].append(source)
++    for publication in [packet['records']['publication_family'][0],
++                        packet['config']['existing_seams']['resolution_decision']['publications'][0]]:
++        publication['source_object_ids'] = ['obj1', 'obj2']
++    assay = deepcopy(packet['records']['assay_registry'][0])
++    assay.update(assay_uid='a3', source_object_id='obj2', modality='METHYLATION',
++                 measurement_unit='beta', branch_suitability=['METHYLATION'])
++    packet['records']['assay_registry'].append(assay)
++    matrix = deepcopy(packet['config']['assays']['matrices'][0])
++    matrix.update(source_object_id='obj2', headers=['sample-001'], values=[[0.2], [0.4]],
++                  modality='METHYLATION', unit='beta', lane='METHYLATION_BETA',
++                  genome_build='invented', detection_p_provenance='invented',
++                  probe_filter_policy='invented', snp_policy='invented',
++                  cross_reactive_policy='invented', sex_chromosome_policy='invented')
++    packet['config']['assays']['matrices'].append(matrix)
++    packet['config']['admission']['required_source_object_ids'].append('obj2')
++    _refresh_invented_matrix_bytes(packet)
++    packet['config']['admission']['branch_policies']['PAIRED_MULTIOMICS'] = {
++        'patient_link': _evidence(specimen_uids=['sp1', 'sp1']),
++        'same_time_specimen': _evidence(specimen_uids=['sp1', 'sp1'], same_time=True, same_specimen=True),
++        'modality_gates': _evidence(modalities=['RNA', 'METHYLATION'], assay_uids=['a1', 'a3'])}
++    graph = _connected_graph(packet, stop_after='admission')
++    admission = graph['dependencies']['admission']
++    assert admission['status'] == 'SYNTHETIC_READY'
++    assert admission['audit'][0]['criteria'] == {'patient_link': 'SUPPORTED',
++        'same_time_specimen': 'SUPPORTED', 'modality_gates': 'SUPPORTED'}
++    assert admission['source_admission'] is False
++    # Two RNA vocabulary aliases are still one modality, even when both exact
++    # assay declarations and source bytes use their corresponding alias.
++    packet['records']['assay_registry'][-1].update(modality='RNA_SEQ', measurement_unit='counts',
++                                                 branch_suitability=['BASELINE_DE'])
++    matrix.update(modality='RNA_SEQ', unit='counts', lane='COUNTS', values=[[2], [4]],
++                  library_properties={'sample-001': {'library_size': 6, 'source_locator': 'invented'}})
++    packet['config']['admission']['branch_policies']['PAIRED_MULTIOMICS']['modality_gates']['modalities'] = ['RNA', 'RNA_SEQ']
++    _refresh_invented_matrix_bytes(packet)
++    rejected = run_workflow(packet)
++    assert rejected['status'] == 'FAIL'
++    assert _admission_checks(rejected)['modality_gates'] == 'CONTRADICTED'
++
++
++def test_external_policy_fields_and_reference_do_not_certify_unknown_rule():
++    packet = synthetic_workflow_packet()
++    packet['branch_id'] = 'A1_RESPONSE_TIME_INTERACTION'
++    packet['config']['admission']['branch_policies'][packet['branch_id']] = {
++        'repeated_observations': _evidence(specimen_uids=['sp1', 'sp2']),
++        'response_groups': _evidence(endpoint_id='invented', group_definition='invented'),
++        'time_model': _evidence(model_id='invented', variables=['time']),
++        'missing_followup_audit': _evidence(candidate_specimen_uids=['sp1', 'sp2'], dispositions=['invented'])}
++    result = run_workflow(packet)
++    assert _admission_checks(result)['time_model'] == 'UNKNOWN'
++    assert result['status'] != 'SYNTHETIC_READY'
++
++
++def test_window_policy_cannot_override_sealed_timing_window():
++    packet = synthetic_workflow_packet()
++    packet['branch_id'] = 'A1_ON_R_NR'
++    policy = deepcopy(packet['config']['admission']['branch_policies']['A_BASELINE_BIO'])
++    policy.update(on_window=_evidence(baseline_specimen_uid='sp1', followup_specimen_uid='sp2',
++                                     window_id='invented-wrong'),
++                  no_treatment_change=_evidence(specimen_uids=['sp1', 'sp2']))
++    packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
++    result = run_workflow(packet)
++    assert result['status'] == 'FAIL'
++    assert _admission_checks(result)['on_window'] == 'CONTRADICTED'
+--- before/tools/a_dav/admission.py
++++ tools/a_dav/admission.py
+@@ -1,11 +1,12 @@
+ """Synthetic branch eligibility, always accompanied by blocked canonical drafts."""
+ from __future__ import annotations
+ from typing import Any
++from .exposure import patient_exposure_state
+ from .core import BRANCHES, SchemaStore, dependency, digest, finish, require, stage_boundary
+ 
+ REASON_CODES = frozenset({"ADMISSION_POLICY_UNKNOWN", "REQUIRED_SOURCE_MISSING", "REQUIRED_SOURCE_INCOMPLETE", "BRANCH_CRITERION_FAILED", "BRANCH_EVIDENCE_UNKNOWN", "ACTUAL_REVIEW_NOT_RUN", "ADMISSION_DRAFT_COLLISION"})
+ DEPENDENCIES = ("registries", "endpoints", "timing", "assays", "overlap", "exposure")
+ BRANCH_REQUIREMENTS: dict[str, tuple[str, ...]] = {
+  "A_BASELINE_BIO": ("baseline", "endpoint"),
+  "A_P2_DEVELOPMENT": ("baseline", "endpoint", "assay_compatibility", "class_representation", "development_freeze"),
+  "A_P2_OUTER_VALIDATION": ("baseline", "endpoint", "originating_study_holdout", "lineage_no_training"),
+@@ -62,17 +63,18 @@
+  "synthesis_policy": ("model_id", "effect_scale"),
+  "moderator_policy": ("moderator", "prespecified_version"),
+  "development_only_selection": ("development_study_ids", "selection_version"),
+  "full_effect_export": ("effect_fields", "export_policy_version"),
+  "handoff_policy": ("handoff_version", "claim_ceiling"),
+ }
+ 
+ 
+-def _criterion(name: str, evidence: dict[str, Any], records: dict[str, Any], study: dict[str, Any]) -> str:
++def _criterion(name: str, evidence: dict[str, Any], records: dict[str, Any], study: dict[str, Any],
++               deps: dict[str, Any], config: dict[str, Any]) -> str:
+     """Evidence is structured selectors/versions, never a caller PASS flag."""
+     if not isinstance(evidence, dict):
+         return "CONTRADICTED"
+     patient_ids = {r["patient_uid"] for r in records.get("patient_registry", []) if r["study_id"] == study["study_id"]}
+     # Validate supplied references before asking for absent policy assertions.
+     refs = evidence.get("record_refs", [])
+     if not isinstance(refs, list):
+         return "CONTRADICTED"
+@@ -85,16 +87,19 @@
+         matching = [r for r in records.get(table, []) if r.get(key) == value]
+         if not matching:
+             return "CONTRADICTED"
+         for row in matching:
+             if "study_id" in row and row["study_id"] != study["study_id"]:
+                 return "CONTRADICTED"
+             if "patient_uid" in row and row["patient_uid"] not in patient_ids:
+                 return "CONTRADICTED"
++            if 'specimen_uid' in row and not any(sp['specimen_uid'] == row['specimen_uid'] and
++                    sp['patient_uid'] in patient_ids for sp in records.get('specimen_registry', [])):
++                return 'CONTRADICTED' 
+     if not evidence.get("policy_version") or not evidence.get("source_locators"):
+         return "UNKNOWN"
+     if name == "baseline":
+         rows = [r for r in records.get("specimen_registry", []) if r["patient_uid"] in patient_ids]
+         return "SUPPORTED" if any(r["canonical_timing_category"] == "PRE_INDEX_BASELINE" and r["baseline_candidate_status"] == "YES" and r["biological_compartment"] == "TUMOUR" for r in rows) else "UNKNOWN"
+     if name == "endpoint":
+         rows = [r for r in records.get("clinical_outcome", []) if r["patient_uid"] in patient_ids]
+         endpoint = evidence.get("endpoint_class")
+@@ -124,20 +129,20 @@
+     if name in {"development_freeze", "prospective_freeze"}:
+         end = evidence.get("feature_selection_order" if name == "development_freeze" else "evaluation_order")
+         locked = evidence["locked_order"]
+         if type(locked) is not int or type(end) is not int or locked >= end:
+             return "CONTRADICTED"
+         if name == "development_freeze" and evidence["role"] != "DEVELOPMENT":
+             return "CONTRADICTED"
+     if name in {"assay_compatibility", "transport_assay"}:
+-        assays = [r for r in records.get("assay_registry", []) if any(sp["specimen_uid"] == r["specimen_uid"] and sp["patient_uid"] in patient_ids for sp in records.get("specimen_registry", []))]
+-        if not assays:
++        compatible_assays = [r for r in records.get("assay_registry", []) if any(sp["specimen_uid"] == r["specimen_uid"] and sp["patient_uid"] in patient_ids for sp in records.get("specimen_registry", []))]
++        if not compatible_assays:
+             return "UNKNOWN"
+-        if any(r["measurement_unit"] not in evidence["allowed_units"] or r["platform"] not in evidence["allowed_platforms"] for r in assays):
++        if any(r["measurement_unit"] not in evidence["allowed_units"] or r["platform"] not in evidence["allowed_platforms"] for r in compatible_assays):
+             return "CONTRADICTED"
+     if name == "originating_study_holdout":
+         if study["study_id"] not in evidence["held_out_study_ids"] or set(evidence["held_out_study_ids"]) & set(evidence["training_study_ids"]):
+             return "CONTRADICTED"
+     if name == "claim_ceiling" and evidence["claim"] != "MOLECULAR_TRANSPORT_ONLY":
+         return "CONTRADICTED"
+     if name == "independent_families":
+         minimum = evidence["minimum_families"]
+@@ -150,27 +155,172 @@
+             return "UNKNOWN"
+         if any(uid not in specimens for uid in evidence["specimen_uids"]):
+             return "CONTRADICTED"
+     if "baseline_specimen_uid" in evidence and "followup_specimen_uid" in evidence:
+         specimens = {r["specimen_uid"]: r for r in records.get("specimen_registry", []) if r["patient_uid"] in patient_ids}
+         baseline, follow = specimens.get(evidence["baseline_specimen_uid"]), specimens.get(evidence["followup_specimen_uid"])
+         if baseline is None or follow is None or baseline["patient_uid"] != follow["patient_uid"] or baseline["specimen_uid"] == follow["specimen_uid"]:
+             return "CONTRADICTED"
+-        if baseline["canonical_timing_category"] != "PRE_INDEX_BASELINE":
+-            return "CONTRADICTED"
+-        categories = {"on_window": {"EARLY_ON_TREATMENT", "LATE_ON_TREATMENT"}, "post_window": {"POST_TREATMENT", "POST_DISCONTINUATION"}, "progression_pair": {"PROGRESSION"}}
+-        if name in categories and follow["canonical_timing_category"] not in categories[name]:
+-            return "CONTRADICTED"
+-    # Remaining policies must enumerate exact, existing canonical evidence and a
+-    # concrete rule. The synthetic protocol checks references, not clinical truth.
+-    refs = evidence.get("record_refs")
+-    if not isinstance(refs, list) or not refs or not evidence.get("rule"):
+-        return "UNKNOWN"
+-    return "SUPPORTED"
++        baseline_times = {a['treatment_episode_id']: a for a in deps['timing']['audit']
++                          if a.get('check') == 'TIMING_ASSERTION' and a.get('specimen_uid') == baseline['specimen_uid']}
++        follow_times = {a['treatment_episode_id']: a for a in deps['timing']['audit']
++                        if a.get('check') == 'TIMING_ASSERTION' and a.get('specimen_uid') == follow['specimen_uid']}
++        contexts = set(baseline_times) & set(follow_times)
++        requested = evidence.get('treatment_episode_id')
++        if requested is not None:
++            if requested not in contexts: return 'CONTRADICTED'
++            contexts = {requested}
++        if not contexts: return 'CONTRADICTED' if baseline_times and follow_times else 'UNKNOWN'
++        if len(contexts) != 1: return 'UNKNOWN'
++        context = next(iter(contexts))
++        before, after = baseline_times[context], follow_times[context]
++        if before['canonical_category'] != 'PRE_INDEX_BASELINE': return 'CONTRADICTED'
++        categories = {'on_window': {'EARLY_ON_TREATMENT', 'LATE_ON_TREATMENT'},
++                      'post_window': {'POST_TREATMENT', 'POST_DISCONTINUATION'}, 'progression_pair': {'PROGRESSION'}}
++        if name in categories and after['canonical_category'] not in categories[name]: return 'CONTRADICTED'
++        if 'window_id' in evidence and after.get('window_id') != evidence['window_id']: return 'CONTRADICTED'
++        if before.get('relative_day') is not None and after.get('relative_day') is not None and before['relative_day'] >= after['relative_day']:
++            return 'CONTRADICTED'
++    specimens = {r['specimen_uid']: r for r in records.get('specimen_registry', [])
++                 if r['patient_uid'] in patient_ids}
++    assays = {r['assay_uid']: r for r in records.get('assay_registry', [])
++              if r['specimen_uid'] in specimens}
++    # Every selector is scoped before the policy can support a relationship.
++    if 'assay_uids' in evidence and (not isinstance(evidence['assay_uids'], list) or
++            not evidence['assay_uids'] or any(uid not in assays for uid in evidence['assay_uids'])):
++        return 'CONTRADICTED'
++    checked = {'class_representation', 'development_freeze', 'prospective_freeze',
++               'assay_compatibility', 'transport_assay', 'originating_study_holdout', 'claim_ceiling'}
++    if name in {'lineage_no_training', 'untouched_policy'}:
++        lineage = evidence['analysis_lineage_id']
++        if lineage != config.get('exposure', {}).get('analysis_lineage_id'):
++            return 'CONTRADICTED'
++        states = [patient_exposure_state(records, deps['exposure']['audit'], p, None if name == 'untouched_policy' else lineage)
++                  for p in records.get('patient_registry', []) if p['patient_uid'] in patient_ids]
++        if 'RESPONSE_ASSOCIATED' in states:
++            return 'CONTRADICTED'
++        if not states or 'UNKNOWN' in states:
++            return 'UNKNOWN'
++        if name == 'untouched_policy' and (evidence['metadata_only_permitted'] is not True or
++                                           any(state != 'METADATA_ONLY' for state in states)):
++            return 'CONTRADICTED'
++        checked.add(name)
++    if name in {'patient_link', 'same_time_specimen', 'repeated_observations', 'serial_sampling', 'no_treatment_change'}:
++        selected = [specimens[uid] for uid in evidence['specimen_uids']]
++        if len(selected) < 2 or len({r['patient_uid'] for r in selected}) != 1:
++            return 'CONTRADICTED'
++        if name == 'patient_link':
++            if any(p.get('patient_identity_confidence') != 'VERIFIED' for p in records.get('patient_registry', [])
++                   if p['patient_uid'] == selected[0]['patient_uid']):
++                return 'UNKNOWN'
++            checked.add(name)
++        if name == 'same_time_specimen':
++            if type(evidence['same_time']) is not bool or type(evidence['same_specimen']) is not bool:
++                return 'CONTRADICTED'
++            if evidence['same_specimen'] != (len({r['specimen_uid'] for r in selected}) == 1):
++                return 'CONTRADICTED'
++            specimen_contexts = [[a for a in deps['timing']['audit'] if a.get('check') == 'TIMING_ASSERTION'
++                         and a.get('specimen_uid') == r['specimen_uid']] for r in selected]
++            common = set.intersection(*[{a['treatment_episode_id'] for a in rows} for rows in specimen_contexts])
++            episode = evidence.get('treatment_episode_id')
++            if episode is not None:
++                if episode not in common: return 'CONTRADICTED'
++                common = {episode}
++            if len(common) != 1: return 'UNKNOWN'
++            episode = next(iter(common))
++            timing = [next(a for a in rows if a['treatment_episode_id'] == episode) for rows in specimen_contexts]
++            if any(a['precision'] != 'EXACT' or a.get('relative_day') is None for a in timing):
++                return 'UNKNOWN'
++            same = len({a['relative_day'] for a in timing}) == 1
++            if evidence['same_time'] != same: return 'CONTRADICTED'
++            if evidence['same_specimen'] and not same: return 'CONTRADICTED'
++            checked.add(name)
++        if name == 'no_treatment_change' and any(r['canonical_timing_category'] == 'AFTER_REGIMEN_CHANGE' for r in selected):
++            return 'CONTRADICTED'
++    if name == 'modality_gates':
++        selected_assays = [assays[uid] for uid in evidence['assay_uids']]
++        if not isinstance(evidence['modalities'], list) or len(set(evidence['modalities'])) < 2:
++            return 'CONTRADICTED'
++        if set(evidence['modalities']) != {r['modality'] for r in selected_assays}:
++            return 'CONTRADICTED'
++        modality_families = {'RNA' if r['modality'] in {'RNA', 'RNA_SEQ', 'BULK_RNA',
++                             'TRANSCRIPTOMICS', 'MICROARRAY', 'TARGETED_RNA'} else
++                             'METHYLATION' if r['modality'] in {'METHYLATION', 'DNA_METHYLATION'} else
++                             r['modality'] for r in selected_assays}
++        if len(modality_families) < 2: return 'CONTRADICTED'
++        relationship = config.get('admission', {}).get('branch_policies', {}).get('PAIRED_MULTIOMICS', {})
++        for criterion in ('patient_link', 'same_time_specimen'):
++            declared = relationship.get(criterion, {}).get('specimen_uids')
++            if declared is None: return 'UNKNOWN'
++            if set(declared) != {r['specimen_uid'] for r in selected_assays}: return 'CONTRADICTED'
++        for assay in selected_assays:
++            coverage = [r for r in deps['assays']['records'].get('coverage', []) if r['assay_uid'] == assay['assay_uid']]
++            if assay['qc_status'] == 'FAIL' or any(r['measurement_suitability'] == 'FAIL' for r in coverage):
++                return 'CONTRADICTED'
++            if assay['qc_status'] != 'PASS' or len(coverage) != 1 or coverage[0]['measurement_suitability'] != 'PASS':
++                return 'UNKNOWN'
++        checked.add(name)
++    if name == 'transport_specimen':
++        if any(r['biological_compartment'] not in evidence['allowed_compartments'] for r in specimens.values()):
++            return 'CONTRADICTED'
++        if not specimens: return 'UNKNOWN'
++        checked.add(name)
++    if name == 'mapping_freeze':
++        versions = {r['mapping_version'] for r in records.get('endpoint', []) if r['patient_uid'] in patient_ids}
++        if versions and versions != {evidence['mapping_version']}: return 'CONTRADICTED'
++        if not versions: return 'UNKNOWN'
++        checked.add(name)
++    if name == 'feature_coverage':
++        coverage = [r for r in deps['assays']['records'].get('coverage', []) if r['study_id'] == study['study_id']]
++        if any(not set(evidence['required_features']) <= set(r['present_genes']) or
++               r['final_test_suitability'] == 'FAIL' for r in coverage): return 'CONTRADICTED'
++        if not coverage or any(r['final_test_suitability'] != 'PASS' for r in coverage): return 'UNKNOWN'
++        checked.add(name)
++    if name == 'progression_distinction':
++        follow = specimens.get(evidence['followup_specimen_uid'])
++        if follow is None or follow['canonical_timing_category'] != evidence['declared_category']:
++            return 'CONTRADICTED'
++    if name == 'independent_families':
++        available = {r['publication_family_id'] for r in records.get('study_registry', [])}
++        if not set(evidence['publication_family_ids']) <= available: return 'CONTRADICTED'
++        for component in deps['overlap']['audit']:
++            families = {n['node_id'] for n in component.get('nodes', []) if n['node_type'] == 'PUBLICATION_FAMILY'}
++            if len(families & set(evidence['publication_family_ids'])) > 1: return 'CONTRADICTED'
++    episodes = {r['treatment_episode_id']: r for r in records.get('treatment_episode', []) if r['patient_uid'] in patient_ids}
++    for field in ('baseline_specimen_uid', 'followup_specimen_uid'):
++        if field in evidence and evidence[field] not in specimens: return 'CONTRADICTED'
++    for field, available_ids in (('candidate_specimen_uids', set(specimens)), ('episode_ids', set(episodes))):
++        if field in evidence and (not isinstance(evidence[field], list) or not set(evidence[field]) <= available_ids):
++            return 'CONTRADICTED'
++    if 'endpoint_id' in evidence and not any(r['patient_uid'] in patient_ids and
++            r['endpoint_id'] == evidence['endpoint_id'] for r in records.get('endpoint', [])):
++        return 'CONTRADICTED'
++    if 'timing_policy_version' in evidence:
++        times = [r for r in deps['timing']['audit'] if r.get('check') == 'TIMING_ASSERTION' and
++                 r.get('specimen_uid') in specimens]
++        if any(r.get('mapping_version') != evidence['timing_policy_version'] for r in times): return 'CONTRADICTED'
++    if 'episode_to_arm' in evidence:
++        assignments = evidence['episode_to_arm']
++        if not isinstance(assignments, dict) or not set(assignments) <= set(episodes): return 'CONTRADICTED'
++        if any(episodes[ep].get('arm_id') is not None and episodes[ep]['arm_id'] != arm for ep, arm in assignments.items()):
++            return 'CONTRADICTED'
++        if 'arm_ids' in evidence and (len(set(evidence['arm_ids'])) < 2 or set(assignments.values()) != set(evidence['arm_ids'])):
++            return 'CONTRADICTED'
++    if name == 'development_only_selection':
++        if study['study_id'] not in evidence['development_study_ids']: return 'CONTRADICTED'
++        if any(r['patient_uid'] in patient_ids and r['permanent_role'] != 'DEVELOPMENT'
++               for r in config.get('split', {}).get('assignments', [])): return 'CONTRADICTED'
++    # External model/contrast/clinical policies are not certified by an arbitrary
++    # existing reference. Their unresolved evidence remains UNKNOWN.
++    refs = evidence.get('record_refs')
++    if name not in checked or not isinstance(refs, list) or not refs or not evidence.get('rule'):
++        return 'UNKNOWN'
++    return 'SUPPORTED'
++
+ 
+ 
+ @stage_boundary("admission")
+ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+     store = schemas or SchemaStore()
+     for stage in DEPENDENCIES:
+         dependency(packet, stage, store)
+     records, config = packet["records"], packet["config"].get("admission", {})
+@@ -213,21 +363,17 @@
+         study_reasons = set(source_reasons.get(study["study_id"], set()))
+         if "ADMISSION_POLICY_UNKNOWN" in reasons:
+             study_reasons.add("ADMISSION_POLICY_UNKNOWN")
+         study_failed = "BRANCH_CRITERION_FAILED" in study_reasons
+         criteria: dict[str, str] = {}
+         if branch.startswith("A_P2") or branch == "A_BASELINE_BIO":
+             criteria["clinical_ici"] = "SUPPORTED" if study["study_class"] == "CLINICAL_ICI" else "CONTRADICTED"
+         for name in BRANCH_REQUIREMENTS[branch]:
+-            criteria[name] = _criterion(name, policy.get(name, {}), records, study)
+-        if branch == "A_P2_FINAL_TEST":
+-            decisions = packet["dependencies"]["exposure"]["audit"]
+-            if any(a.get("state") != "METADATA_ONLY" for a in decisions):
+-                criteria["untouched_policy"] = "CONTRADICTED"
++            criteria[name] = _criterion(name, policy.get(name, {}), records, study, packet["dependencies"], packet["config"])
+         if "CONTRADICTED" in criteria.values():
+             study_failed = True
+             study_reasons.add("BRANCH_CRITERION_FAILED")
+         if "UNKNOWN" in criteria.values():
+             study_reasons.add("BRANCH_EVIDENCE_UNKNOWN")
+         if not scoped:
+             study_reasons.add("REQUIRED_SOURCE_MISSING")
+         eligibility = "FAIL" if study_failed else "BLOCKED_UNKNOWN" if study_reasons else "SYNTHETIC_READY"
+--- before/tools/a_dav/core.py
++++ tools/a_dav/core.py
+@@ -25,16 +25,52 @@
+ })
+ MODULES = {
+     "core": "core", "existing_seams": "workflow", "registries": "registries",
+     "endpoints": "endpoints", "timing": "timing", "assays": "assays",
+     "overlap": "overlap", "exposure": "exposure", "admission": "admission",
+     "prat_review": "prat_review", "baseline": "matrices", "longitudinal": "matrices",
+     "split": "release", "public_report": "reporting", "freeze": "release", "workflow": "workflow",
+ }
++# Only direct stage prerequisites are sealed; incidental later receipts in a
++# resume packet must never introduce back-edges into the execution graph.
++UPSTREAMS: dict[str, tuple[str, ...]] = {
++    'core': (), 'existing_seams': (), 'registries': ('existing_seams',),
++    **{stage: ('registries',) for stage in ('endpoints', 'timing', 'assays', 'overlap', 'exposure')},
++    'admission': ('registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure'),
++    'split': ('admission', 'overlap', 'exposure'),
++    'baseline': ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure'),
++    'longitudinal': ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure'),
++    'prat_review': (), 'public_report': ('admission', 'baseline', 'longitudinal', 'split', 'prat_review'),
++    'freeze': ('existing_seams', 'public_report', 'admission', 'baseline', 'longitudinal', 'split',
++               'registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure', 'prat_review'),
++    'workflow': ('existing_seams', 'registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure',
++                 'admission', 'split', 'baseline', 'longitudinal', 'public_report', 'freeze'),
++}
++LEGACY_RUNTIME = ('__init__', 'search_log', 'study_resolution', 'object_verification')
++
++
++def runtime_hashes(stage: str) -> dict[str, str]:
++    names = {'core', MODULES[stage]}
++    if stage == 'existing_seams': names.update(LEGACY_RUNTIME)
++    if stage in {'workflow', 'freeze'}:
++        names.update(MODULES.values())
++        names.update((*LEGACY_RUNTIME, 'demo'))
++    return {name + '.py': _file_hash(Path(__file__).with_name(name + '.py')) for name in sorted(names)}
++
++
++def _upstream_receipts(stage: str, packet: Any) -> dict[str, str]:
++    dependencies = packet.get('dependencies') if isinstance(packet, dict) else None
++    if not isinstance(dependencies, dict): return {}
++    return {name: value['receipt_id'] for name in UPSTREAMS[stage]
++            if isinstance((value := dependencies.get(name)), dict)
++            and isinstance(value.get('receipt_id'), str)
++            and re.fullmatch(r'[a-f0-9]{64}', value['receipt_id'])}
++
++
+ VIEWS = frozenset({"baseline", "timepoint", "pair", "endpoint", "coverage", "split", "membership"})
+ ENTITY_TABLES = frozenset({"study_registry", "publication_family", "source_record", "patient_registry",
+     "specimen_registry", "assay_registry", "treatment_episode", "treatment_exposure", "clinical_outcome",
+     "episode_binding", "overlap_edge", "prior_exposure_record"})
+ DERIVED_TABLES = {"endpoints": ("endpoint",), "assays": ("coverage",),
+                   "admission": ("cohort_admission_receipt",), "baseline": ("baseline",),
+                   "longitudinal": ("timepoint", "pair"), "split": ("split",)}
+ REASON_CODES = frozenset({
+@@ -180,16 +216,18 @@
+     packet_branch = packet.get("branch_id") if isinstance(packet, dict) else None
+     result = {
+         "classification": "SYNTHETIC_ONLY", "stage": stage, "status": status,
+         "branch_id": packet_branch if type(packet_branch) is str and packet_branch in BRANCHES else None,
+         "records": out_records, "audit": out_audit, "reasons": codes,
+         "bindings": {"input_sha256": input_hash, "config_sha256": config_hash,
+                      "schemas_sha256": digest(store.hashes), "code_sha256": _file_hash(module_path),
+                      "core_sha256": _file_hash(Path(__file__)),
++                     "runtime_sha256": runtime_hashes(stage),
++                     "upstream_receipt_ids": _upstream_receipts(stage, packet),
+                      "output_sha256": digest({"records": out_records, "audit": out_audit})},
+         **dict.fromkeys(FLAGS, False),
+     }
+     result["receipt_id"] = digest(result)
+     return result
+ 
+ 
+ def verify_result(result: dict[str, Any], stage: str | None = None, branch_id: str | None = None,
+@@ -203,29 +241,51 @@
+     require(branch_id is None or result.get("branch_id") == branch_id, "DEPENDENCY_INVALID")
+     require(result.get("status") in {"SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"}, "DEPENDENCY_INVALID")
+     require(result.get("receipt_id") == digest({k: v for k, v in result.items() if k != "receipt_id"}), "RECEIPT_TAMPERED")
+     bindings = result["bindings"]
+     store = schemas or SchemaStore()
+     require(bindings.get("schemas_sha256") == digest(store.hashes), "SCHEMA_BINDING_MISMATCH")
+     require(bindings.get("code_sha256") == _file_hash(_module_path(cast(str, actual_stage))), "CODE_BINDING_MISMATCH")
+     require(bindings.get("core_sha256") == _file_hash(Path(__file__)), "CODE_BINDING_MISMATCH")
++    require(bindings.get('runtime_sha256') == runtime_hashes(cast(str, actual_stage)), 'CODE_BINDING_MISMATCH')
++    upstreams = bindings.get('upstream_receipt_ids')
++    require(isinstance(upstreams, dict) and set(upstreams) <= set(UPSTREAMS[cast(str, actual_stage)])
++            and all(isinstance(v, str) and re.fullmatch(r'[a-f0-9]{64}', v) for v in upstreams.values()),
++            'DEPENDENCY_INVALID')
+     require(bindings.get("output_sha256") == digest({"records": result.get("records"), "audit": result.get("audit")}), "RECEIPT_TAMPERED")
+ 
+ 
+ def dependency(packet: dict[str, Any], stage: str, schemas: SchemaStore) -> dict[str, Any]:
+-    value = packet.get("dependencies", {}).get(stage)
+-    require(type(value) is dict, "DEPENDENCY_MISSING", blocked=True)
+-    verify_result(value, stage=stage, branch_id=packet["branch_id"], schemas=schemas)
+-    require(value["status"] == "SYNTHETIC_READY", "DEPENDENCY_BLOCKED", blocked=True)
+-    require(value["bindings"]["config_sha256"] == digest(packet["config"]), "DEPENDENCY_INVALID")
+-    for table in ENTITY_TABLES | set(DERIVED_TABLES.get(stage, ())):
+-        require(sorted(packet["records"].get(table, []), key=canonical_bytes) ==
+-                sorted(value["records"].get(table, []), key=canonical_bytes), "DEPENDENCY_INVALID")
+-    return cast(dict[str, Any], value)
++    verified: dict[str, dict[str, Any]] = {}
++    visiting: set[str] = set()
++
++    def visit(name: str) -> dict[str, Any]:
++        if name in verified: return verified[name]
++        require(name not in visiting, 'DEPENDENCY_INVALID')
++        visiting.add(name)
++        value = packet.get('dependencies', {}).get(name)
++        require(type(value) is dict, 'DEPENDENCY_MISSING', blocked=True)
++        verify_result(value, stage=name, branch_id=packet['branch_id'], schemas=schemas)
++        require(value['status'] == 'SYNTHETIC_READY', 'DEPENDENCY_BLOCKED', blocked=True)
++        require(value['bindings']['config_sha256'] == digest(packet['config']), 'DEPENDENCY_INVALID')
++        for upstream, receipt_id in value['bindings']['upstream_receipt_ids'].items():
++            current = packet.get('dependencies', {}).get(upstream)
++            require(isinstance(current, dict), 'DEPENDENCY_MISSING', blocked=True)
++            require(current.get('receipt_id') == receipt_id, 'DEPENDENCY_INVALID')
++            visit(upstream)
++        for table in ENTITY_TABLES | set(DERIVED_TABLES.get(name, ())):
++            require(sorted(packet['records'].get(table, []), key=canonical_bytes) ==
++                    sorted(value['records'].get(table, []), key=canonical_bytes), 'DEPENDENCY_INVALID')
++        visiting.remove(name)
++        verified[name] = value
++        return cast(dict[str, Any], value)
++
++    return visit(stage)
++
+ 
+ 
+ def stage_boundary(stage: str) -> Callable[[StageFunction], StageFunction]:
+     def decorate(function: StageFunction) -> StageFunction:
+         @functools.wraps(function)
+         def wrapped(packet: dict[str, Any], *args: Any, schemas: SchemaStore | None = None,
+                     **kwargs: Any) -> dict[str, Any]:
+             store = schemas or SchemaStore()
+--- before/tools/a_dav/exposure.py
++++ tools/a_dav/exposure.py
+@@ -48,8 +48,34 @@
+         states = decisions.get(key, ["UNKNOWN"])
+         state = "RESPONSE_ASSOCIATED" if "RESPONSE_ASSOCIATED" in states else "UNKNOWN" if "UNKNOWN" in states else "CLINICAL_ONLY" if "CLINICAL_ONLY" in states else "METADATA_ONLY"
+         unknown |= state == "UNKNOWN"
+         audit.append({"kind": "exposure_decision", "subject_type": key[0], "subject_id": key[1],
+                       "analysis_lineage_id": config["analysis_lineage_id"], "state": state,
+                       "untouched_certified": False})
+     return finish("exposure", packet, records, status="BLOCKED_UNKNOWN" if unknown else "SYNTHETIC_READY",
+                   reasons=["EXPOSURE_REVIEW_REQUIRED"] if unknown else [], audit=audit, schemas=store)
++
++
++def patient_exposure_state(records: dict[str, Any], audit: list[dict[str, Any]],
++                           patient: dict[str, Any], lineage: str | None) -> str:
++    """Reconcile applicable ledger rows and sealed decisions for one patient."""
++    studies = {r['study_id']: r for r in records.get('study_registry', [])}
++    study = studies.get(patient['study_id'], {})
++    subjects = {('PATIENT_SET', patient['patient_uid']),
++                ('STUDY_FAMILY', study.get('publication_family_id'))}
++    subjects.update(('SPECIMEN_SET', r['specimen_uid']) for r in records.get('specimen_registry', [])
++                    if r['patient_uid'] == patient['patient_uid'])
++    specimen_ids = {uid for kind, uid in subjects if kind == 'SPECIMEN_SET'}
++    subjects.update(('SOURCE_OBJECT', r['source_object_id']) for r in records.get('assay_registry', [])
++                    if r['specimen_uid'] in specimen_ids)
++    states = [r['state'] for r in audit if r.get('kind') == 'exposure_decision'
++              and (lineage is None or r.get('analysis_lineage_id') == lineage)
++              and (r.get('subject_type'), r.get('subject_id')) in subjects]
++    for row in records.get('prior_exposure_record', []):
++        if (lineage is not None and row['analysis_lineage_id'] != lineage) or (row['subject_type'], row['subject_id']) not in subjects:
++            continue
++        states.append('RESPONSE_ASSOCIATED' if row['use'] in ASSOCIATED else
++                      'METADATA_ONLY' if row['use'] == 'METADATA_INSPECTION' and
++                      row['independence_implication'] == 'METADATA_ONLY_REVIEWED' else
++                      'CLINICAL_ONLY' if row['use'] in {'CLINICAL_ENDPOINT_CURATION', 'CLASS_COUNT_PLANNING'} else 'UNKNOWN')
++    return next((state for state in ('RESPONSE_ASSOCIATED', 'UNKNOWN', 'CLINICAL_ONLY', 'METADATA_ONLY')
++                 if state in states), 'UNKNOWN')
+--- before/tools/a_dav/matrices.py
++++ tools/a_dav/matrices.py
+@@ -5,22 +5,22 @@
+ from pathlib import Path
+ from typing import Any, cast
+ from .core import DavError, SchemaStore, canonical_bytes, dependency, digest, finish, require, stage_boundary
+ 
+ REASON_CODES = frozenset({'SELECTION_TIE', 'SELECTION_POLICY_UNKNOWN', 'NO_PRE_INDEX_SPECIMEN',
+     'NO_FOLLOWUP_IN_WINDOW', 'LESION_MISMATCH', 'PLATFORM_MISMATCH', 'MEASUREMENT_SCALE_INCOMPATIBLE',
+     'AFTER_REGIMEN_CHANGE', 'PROGRESSION_MIXED_WITH_SCHEDULED_ON', 'EPISODE_AMBIGUOUS',
+     'EPISODE_MISMATCH', 'ENDPOINT_UNKNOWN', 'SOURCE_NOT_ELIGIBLE', 'ASSAY_UNSUITABLE',
+-    'TIMING_UNKNOWN', 'LOWER_RANK', 'NOT_BASELINE', 'SYNTHETIC_BUILD_DRAFT', 'PATIENT_EXCLUDED', 'PATIENT_UNKNOWN','ASSAY_EVIDENCE_UNKNOWN','ASSAY_EVIDENCE_CONFLICT'})
++    'SPLIT_NOT_FROZEN', 'BASELINE_INELIGIBLE', 'BASELINE_ELIGIBILITY_UNKNOWN', 'COMPARTMENT_INELIGIBLE', 'SPECIMEN_POLICY_UNKNOWN', 'TIMING_UNKNOWN', 'LOWER_RANK', 'NOT_BASELINE', 'SYNTHETIC_BUILD_DRAFT', 'PATIENT_EXCLUDED', 'PATIENT_UNKNOWN','ASSAY_EVIDENCE_UNKNOWN','ASSAY_EVIDENCE_CONFLICT'})
+ 
+ 
+ def _prepare(packet: dict[str, Any], store: SchemaStore) -> tuple[dict[str, Any], dict[str, Any]]:
+     deps = {name: dependency(packet, name, store) for name in
+-            ('admission', 'registries', 'endpoints', 'timing', 'assays')}
++            ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure')}
+     for table in ('patient_registry','specimen_registry','assay_registry','treatment_episode','episode_binding'):
+         seen: set[str] = set()
+         key = {'patient_registry':'patient_uid','specimen_registry':'specimen_uid',
+                'assay_registry':'assay_uid','treatment_episode':'treatment_episode_id',
+                'episode_binding':'binding_id'}[table]
+         for row in packet['records'].get(table, []):
+             store.validate(table, row)
+             require(row[key] not in seen, 'DUPLICATE_ID'); seen.add(row[key])
+@@ -69,30 +69,36 @@
+     if cfg['assay_suitability'] in named_requirements:
+         require(cfg['coverage_suitability']==named_requirements[cfg['assay_suitability']],'SELECTION_POLICY_UNKNOWN')
+     endpoint_policy=cfg.get('endpoint_policy',{})
+     require(type(endpoint_policy.get('required')) is bool and endpoint_policy.get('discrepancy_policy')=='SEALED_PREFERRED_OUTCOME',
+             'SELECTION_POLICY_UNKNOWN',blocked=True)
+     require(endpoint_policy.get('endpoint_class') in {'ORR','DCR','DCB','PSA_RESPONSE','PATHOLOGICAL_RESPONSE','PFS','OS','SOURCE_BINARY_UNKNOWN','OTHER'}
+             if endpoint_policy['required'] else endpoint_policy.get('endpoint_class') is None,'SELECTION_POLICY_UNKNOWN',blocked=True)
+     require(stage!='baseline' or endpoint_policy['required'],'SELECTION_POLICY_UNKNOWN',blocked=True)
++    cfg['_baseline_compartments'] = (['TUMOUR'] if packet['branch_id'] in {'A_BASELINE_BIO',
++        'A_P2_DEVELOPMENT', 'A_P2_OUTER_VALIDATION', 'A_P2_FINAL_TEST'} else cfg.get('baseline_compartments'))
+     cfg['_eligible_sources']=_eligible_sources(deps,store)
+     contexts: dict[tuple[str,str],dict[str,Any]]={}
+     bindings={(b['subject_id'],b['treatment_episode_id']):b for b in packet['records'].get('episode_binding',[]) if b['subject_type']=='SPECIMEN'}
+     require(len(bindings)==sum(b['subject_type']=='SPECIMEN' for b in packet['records'].get('episode_binding',[])), 'EPISODE_AMBIGUOUS')
+     for row in deps['timing']['audit']:
+         if row.get('check')!='TIMING_ASSERTION':continue
+         key=(row['specimen_uid'],row['treatment_episode_id'])
+         require(key not in contexts and key in bindings,'EPISODE_AMBIGUOUS')
+         binding=bindings[key]
+         require(row.get('binding_id')==binding['binding_id'] and row.get('role')==binding['role'],'EPISODE_MISMATCH')
+         require(binding['binding_status']=='VERIFIED','TIMING_UNKNOWN',blocked=True)
+         contexts[key]=row
+     require(set(bindings)<=set(contexts),'TIMING_UNKNOWN',blocked=True)
+     cfg['_contexts']=contexts;cfg['_bindings']=bindings
++    cfg['_roles'] = {r['patient_uid']: r['permanent_role'] for r in deps['split']['records'].get('split', [])}
++    cfg['_exposure'] = {r['patient_uid']: r['exposure_state'] for r in deps['split']['audit'] if r.get('kind') == 'PATIENT_LEDGER'}
++    require(set(cfg['_roles']) == {r['patient_uid'] for r in packet['records'].get('patient_registry', [])}
++            and set(cfg['_exposure']) == set(cfg['_roles']), 'SPLIT_NOT_FROZEN', blocked=True)
+     coverage: dict[str,dict[str,Any]]={}
+     for row in deps['assays']['records'].get('coverage',[]):
+         store.validate('coverage',row)
+         if row['branch_id']!=packet['branch_id']:continue
+         require(row['assay_uid'] not in coverage,'DUPLICATE_ID')
+         coverage[row['assay_uid']]=row
+     cfg['_coverage']=coverage
+     return cfg
+@@ -105,22 +111,26 @@
+         if sp['patient_uid']!=patient['patient_uid']:continue
+         key=(sp['specimen_uid'],ep['treatment_episode_id']);binding=cfg['_bindings'].get(key)
+         timing=cfg['_contexts'].get(key)
+         if binding is not None:require(binding['patient_uid']==patient['patient_uid'],'EPISODE_MISMATCH')
+         assays=[a for a in records.get('assay_registry',[]) if a['specimen_uid']==sp['specimen_uid']]
+         for assay in assays or [None]:
+             reason=None
+             coverage=cfg['_coverage'].get(assay['assay_uid']) if assay else None
+-            if patient['inclusion_state']=='EXCLUDED':reason='PATIENT_EXCLUDED'
++            if patient['inclusion_state']=='EXCLUDED' or cfg['_roles'][patient['patient_uid']]=='EXCLUDED':reason='PATIENT_EXCLUDED'
+             elif patient['inclusion_state']=='BLOCKED_UNKNOWN':reason='PATIENT_UNKNOWN'
+             elif binding is None or timing is None:reason='EPISODE_MISMATCH'
+             elif assay is None:reason='ASSAY_UNSUITABLE'
+             elif (patient['study_id'],assay['source_object_id']) not in cfg['_eligible_sources']:reason='SOURCE_NOT_ELIGIBLE'
+             elif baseline and (timing['canonical_category']!='PRE_INDEX_BASELINE' or binding['role']!='PRE_INDEX_BASELINE'):reason='NOT_BASELINE'
++            elif baseline and sp['baseline_candidate_status']=='NO':reason='BASELINE_INELIGIBLE'
++            elif baseline and sp['baseline_candidate_status']!='YES':reason='BASELINE_ELIGIBILITY_UNKNOWN'
++            elif baseline and not cfg['_baseline_compartments']:reason='SPECIMEN_POLICY_UNKNOWN'
++            elif baseline and sp['biological_compartment'] not in cfg['_baseline_compartments']:reason='COMPARTMENT_INELIGIBLE'
+             elif assay['qc_status']!='PASS' or cfg['assay_suitability'] not in assay['branch_suitability']:reason='ASSAY_UNSUITABLE'
+             elif coverage is None:reason='ASSAY_EVIDENCE_UNKNOWN'
+             else:
+                 require(coverage['study_id']==patient['study_id'] and coverage['source_object_id']==assay['source_object_id']
+                         and coverage['expression_unit']==assay['measurement_unit'] and coverage['annotation_version']==assay.get('feature_annotation'), 'ASSAY_EVIDENCE_CONFLICT')
+                 state=coverage[cfg['coverage_suitability']]
+                 if state!='PASS':reason='ASSAY_UNSUITABLE' if state=='FAIL' else 'ASSAY_EVIDENCE_UNKNOWN'
+                 elif not assay.get('matrix_header') or not assay.get('feature_annotation'):reason='ASSAY_UNSUITABLE'
+@@ -192,37 +202,37 @@
+         ep=_episode(records,patient,cfg)
+         try:chosen=_choose(_candidates(records,patient,ep,cfg,baseline=True,audit=audit),cfg)
+         except DavError as exc:return _blocked_tie('baseline',packet,records,audit,exc,store)
+         endpoint=_endpoint(records,patient,ep,cfg,deps,store)
+         dcr=_endpoint(records,patient,ep,cfg,deps,store,endpoint_class='DCR',optional=True) if endpoint['endpoint_class']=='ORR' else {}
+         sp,assay=chosen if chosen else ({},{})
+         included=chosen is not None and endpoint['evaluability']=='EVALUABLE'
+         require(patient.get('cancer'),'MISSING_ASSERTION',blocked=True)
+-        require(cfg.get('split_role') and cfg.get('prior_exposure_status'),'SELECTION_POLICY_UNKNOWN',blocked=True)
+-        reason=None if included else 'PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if chosen is None else 'ENDPOINT_UNKNOWN'
++        reason=None if included else 'PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' or cfg['_roles'][patient['patient_uid']]=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if chosen is None else 'ENDPOINT_UNKNOWN'
+         row={'row_type':'BASELINE','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+             'patient_uid':patient['patient_uid'],'study_id':patient['study_id'],'cancer':patient['cancer'],'subtype':patient.get('subtype'),
+             'treatment_episode_id':ep['treatment_episode_id'],'regimen_id':ep['regimen_id'],'treatment_class':None,'prior_ici':ep['prior_ici'],
+             'prior_treatment':patient.get('prior_systemic_treatment'),'specimen_uid':sp.get('specimen_uid'),'assay_uid':assay.get('assay_uid'),
+             'expression_column':assay.get('matrix_header'),'biopsy_site':sp.get('lesion_site'),'raw_response':endpoint['raw_value'],
+             'response_system':endpoint['assessment_system'],'canonical_category':endpoint['canonical_category'],
+             'orr':endpoint['binary_value'] if endpoint['endpoint_class']=='ORR' else None,'dcr':dcr.get('binary_value'),
+             'endpoint_evaluability':endpoint['evaluability'],'inclusion_status':'INCLUDED' if included else 'EXCLUDED','exclusion_reason':reason,
+             'expression_unit':assay.get('measurement_unit'),'feature_annotation':assay.get('feature_annotation'),'branch_id':packet['branch_id'],
+-            'split_role':cfg['split_role'],'prior_exposure_status':cfg['prior_exposure_status'],'build_receipt_id':build_id}
++            'split_role':cfg['_roles'][patient['patient_uid']],'prior_exposure_status':cfg['_exposure'][patient['patient_uid']],'build_receipt_id':build_id}
+         store.validate('baseline',row);rows.append(row)
+         audit.append({'kind':'BASELINE_SELECTION','patient_uid':patient['patient_uid'],'specimen_uid':sp.get('specimen_uid'),
+                       'assay_uid':assay.get('assay_uid'),'endpoint_class':endpoint['endpoint_class'],'outcome_id':endpoint['outcome_id'],
+                       'reason':reason or 'SYNTHETIC_BUILD_DRAFT'})
+     records['baseline']=rows
+     records.setdefault('matrix_build_receipt',[]).append(_draft('baseline',packet,records,deps,cfg,store,build_id))
+-    unknown=any(a.get('reason') in {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN'} for a in audit)
++    unknown={str(a['reason']) for a in audit if a.get('reason') in
++             {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN','BASELINE_ELIGIBILITY_UNKNOWN','SPECIMEN_POLICY_UNKNOWN'}}
+     return finish('baseline',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'SYNTHETIC_READY',
+-                  reasons=['ASSAY_EVIDENCE_UNKNOWN'] if unknown else [],audit=audit,schemas=store)
++                  reasons=unknown,audit=audit,schemas=store)
+ 
+ 
+ @stage_boundary('longitudinal')
+ def build_longitudinal(packet: dict[str,Any], *, schemas: SchemaStore | None = None) -> dict[str,Any]:
+     store=schemas or SchemaStore();records,deps=_prepare(packet,store);cfg=_policy(packet,'longitudinal',deps,store)
+     raw_windows=cfg.get('windows');require(isinstance(raw_windows,list) and bool(raw_windows),'SELECTION_POLICY_UNKNOWN',blocked=True)
+     windows=cast(list[dict[str,Any]],raw_windows);window_ids: set[str]=set()
+     for w in windows:
+@@ -275,17 +285,17 @@
+                     'window_id':w['window_id'],'specimen_uid':sp['specimen_uid'],'assay_uid':assay['assay_uid'],'reason':reason or 'LOWER_RANK'})
+                 if reason is None:candidates.append((sp,assay))
+             try:follow=_choose(candidates,cfg)
+             except DavError as exc:return _blocked_tie('longitudinal',packet,records,audit,exc,store)
+             pre_sp,pre_a=pre if pre else ({},{})
+             sp,assay=follow if follow else ({},{})
+             pre_t=cfg['_contexts'].get((pre_sp.get('specimen_uid'),episode_id),{})
+             follow_t=cfg['_contexts'].get((sp.get('specimen_uid'),episode_id),{})
+-            reason='PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if pre is None else 'NO_FOLLOWUP_IN_WINDOW' if follow is None else None
++            reason='PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' or cfg['_roles'][patient['patient_uid']]=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if pre is None else 'NO_FOLLOWUP_IN_WINDOW' if follow is None else None
+             lesion=None if pre_sp.get('lesion_site') is None or sp.get('lesion_site') is None else pre_sp['lesion_site']==sp['lesion_site']
+             platform=None if not pre or not follow else pre_a['platform']==assay['platform']
+             if reason is None:
+                 if pre_sp['longitudinal_pair_status']!='PAIRABLE' or pre_t['precision']!='EXACT' or pre_t.get('relative_day') is None:reason='TIMING_UNKNOWN'
+                 elif lesion is not True:reason='LESION_MISMATCH'
+                 elif platform is not True:reason='PLATFORM_MISMATCH'
+                 elif (pre_a['measurement_unit'],pre_a.get('transform'),pre_a.get('feature_annotation'))!=(assay['measurement_unit'],assay.get('transform'),assay.get('feature_annotation')):reason='MEASUREMENT_SCALE_INCOMPATIBLE'
+                 elif pre_t['relative_day']>=follow_t['relative_day']:reason='TIMING_UNKNOWN'
+@@ -303,11 +313,12 @@
+                 'followup_day':follow_t.get('relative_day'),'followup_category':w['category'],'same_lesion':lesion,'same_platform':platform,
+                 'pair_quality':'VERIFIED' if reason is None else 'EXCLUDED','inclusion_status':'INCLUDED' if reason is None else 'EXCLUDED',
+                 'exclusion_reason':reason,'missing_followup_reason':None,'build_receipt_id':build_id}
+             store.validate('pair',row);pairs.append(row)
+             audit.append({'kind':'PAIR_SELECTION','patient_uid':patient['patient_uid'],'treatment_episode_id':episode_id,
+                           'window_id':w['window_id'],'reason':reason or 'SYNTHETIC_BUILD_DRAFT'})
+     records['pair']=pairs
+     records.setdefault('matrix_build_receipt',[]).append(_draft('longitudinal',packet,records,deps,cfg,store,build_id))
+-    unknown=any(a.get('reason') in {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN'} for a in audit)
++    unknown={str(a['reason']) for a in audit if a.get('reason') in
++             {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN','BASELINE_ELIGIBILITY_UNKNOWN','SPECIMEN_POLICY_UNKNOWN'}}
+     return finish('longitudinal',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'SYNTHETIC_READY',
+-                  reasons=['ASSAY_EVIDENCE_UNKNOWN'] if unknown else [],audit=audit,schemas=store)
++                  reasons=unknown,audit=audit,schemas=store)
+--- before/tools/a_dav/registries.py
++++ tools/a_dav/registries.py
+@@ -1,22 +1,24 @@
+ """Validate supplied, immutable invented registries and their lexical identities."""
+ from __future__ import annotations
+ 
+ from typing import Any
+ 
+-from .core import DavError, ENTITY_TABLES, SchemaStore, finish, require, stage_boundary
++from .core import DavError, ENTITY_TABLES, SchemaStore, dependency, finish, require, stage_boundary
+ 
+ REASON_CODES = frozenset({"AMBIGUOUS_ALIAS", "SOURCE_CONTEXT_UNKNOWN", "SOURCE_CONTEXT_CONFLICT", "IDENTITY_UNRESOLVED"})
+ _KEYS = {"study_registry": "study_id", "publication_family": "publication_id", "source_record": "source_object_id", "patient_registry": "patient_uid", "specimen_registry": "specimen_uid", "assay_registry": "assay_uid", "clinical_outcome": "outcome_id", "treatment_episode": "treatment_episode_id", "treatment_exposure": "treatment_exposure_id", "episode_binding": "binding_id", "overlap_edge": "overlap_edge_id", "prior_exposure_record": "exposure_id"}
+ 
+ 
+ @stage_boundary("registries")
+ def build_registries(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+     assert schemas is not None
++    if "existing_seams" in packet.get("dependencies", {}):
++        dependency(packet, "existing_seams", schemas)
+     records = packet["records"]
+     unknown_schema: DavError | None = None
+     for table in sorted(ENTITY_TABLES & records.keys()):
+         for row in records[table]:
+             try:
+                 schemas.validate(table, row)
+             except DavError as exc:
+                 if not exc.blocked:
+--- before/tools/a_dav/release.py
++++ tools/a_dav/release.py
+@@ -6,16 +6,17 @@
+ import sys
+ import hashlib
+ import json
+ import os
+ from pathlib import Path
+ import shutil
+ import tempfile
+ from typing import Any, cast
++from .exposure import patient_exposure_state
+ from .core import (FLAGS, DavError, SchemaStore, canonical_bytes, check_packet, dependency,
+                    digest, finish, require, stage_boundary, verify_result)
+ 
+ FREEZE_DEPENDENCIES = ('public_report','admission','baseline','longitudinal','split','registries','endpoints','timing','assays','overlap','exposure')
+ 
+ REASON_CODES = frozenset({'SPLIT_LEAKAGE','SPLIT_POLICY_UNKNOWN','FINAL_TEST_SELECTED_AFTER_PERFORMANCE',
+     'REQUIRED_SOURCE_MISSING','UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM','PRIOR_MODEL_EXPOSURE',
+     'BUNDLE_INVALID','BUNDLE_COLLISION','UNSAFE_DESTINATION','FREEZE_POLICY_UNKNOWN'})
+@@ -113,17 +114,26 @@
+                 and {m['patient_uid'] for m in members}<=set(review.get('covered_patient_uids',[]))
+                 and all(m['exposure_decision_id']==review.get('decision_id') for m in members),
+                 'UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+             # A potential/unknown component cannot certify final-test separation.
+             require(not any(c.get('protection')=='POTENTIAL_OR_UNKNOWN' and any((n['node_type'],n['node_id']) in nodes
+                 for n in c.get('nodes',[])) for c in deps['overlap']['audit']), 'UNKNOWN_EXPOSURE_FOR_UNTOUCHED_CLAIM',blocked=True)
+         audit.append({'kind':'SPLIT_COMPONENT','patient_count':len(members),'membership_sha256':digest(sorted(nodes)),
+                       'actual_untouched_certified':False})
+-    records['split']=copy.deepcopy(rows)
++    output_rows = copy.deepcopy(rows)
++    for row in output_rows:
++        state = patient_exposure_state(records, deps['exposure']['audit'], patients[row['patient_uid']], None)
++        if row['permanent_role'] != 'FINAL_TEST':
++            row['prior_exposure_state'] = state if state in {'METADATA_ONLY', 'RESPONSE_ASSOCIATED'} else 'UNKNOWN'
++        audit.append({'kind': 'PATIENT_LEDGER', 'patient_uid': row['patient_uid'],
++                      'permanent_role': row['permanent_role'], 'exposure_state': state,
++                      'actual_untouched_certified': False})
++        store.validate('split', row)
++    records['split']=output_rows
+     return finish('split',packet,records,audit=audit,schemas=store)
+ 
+ 
+ def _safe_destination(destination: Path) -> Path:
+     target=Path(destination)
+     require('..' not in target.parts,'UNSAFE_DESTINATION')
+     require(not any(path.is_symlink() for path in (target,*target.parents)),'UNSAFE_DESTINATION')
+     return target.absolute()
+--- before/tools/a_dav/workflow.py
++++ tools/a_dav/workflow.py
+@@ -93,27 +93,27 @@
+     Existing dependency claims are discarded. Every receipt used here comes from
+     an actual stage invocation in this run. Freeze writes only on explicit Path.
+     """
+     assert schemas is not None
+     current = copy.deepcopy(packet)
+     current["dependencies"] = {}
+     audit: list[dict[str, Any]] = []
+     functions = (run_existing_seams, build_registries, map_endpoints, validate_timing, validate_assays,
+-                 validate_overlap, validate_exposure, evaluate_admission, build_baseline,
+-                 build_longitudinal, validate_split, build_public_report)
++                 validate_overlap, validate_exposure, evaluate_admission, validate_split, build_baseline,
++                 build_longitudinal, build_public_report)
+     for function in functions:
+         result = function(current, schemas=schemas)
+         audit.append({"stage": result["stage"], "status": result["status"],
+                       "reasons": result["reasons"], "receipt_id": result["receipt_id"],
+                       "checks": result["audit"]})
+         current["records"] = result["records"]
+         if result["status"] != "SYNTHETIC_READY":
+-            return finish("workflow", packet, current["records"], status=result["status"],
++            return finish("workflow", current, current["records"], status=result["status"],
+                           reasons=result["reasons"], audit=audit, schemas=schemas)
+         current["dependencies"][result["stage"]] = result
+     if destination is not None:
+         result = freeze_bundle(current, destination, schemas=schemas)
+         audit.append({"stage": result["stage"], "status": result["status"],
+                       "reasons": result["reasons"], "receipt_id": result["receipt_id"]})
+-        return finish("workflow", packet, result["records"], status=result["status"],
++        return finish("workflow", current, result["records"], status=result["status"],
+                       reasons=result["reasons"], audit=audit, schemas=schemas)
+-    return finish("workflow", packet, current["records"], audit=audit, schemas=schemas)
++    return finish("workflow", current, current["records"], audit=audit, schemas=schemas)

@@ -1,0 +1,32 @@
+........................................F............................... [100%]
+=================================== FAILURES ===================================
+_____ test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant _____
+
+        assert result["reasons"] == [reason]
+    
+    
+    def test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant():
+        from tools.a_dav.timing import validate_timing
+        p = timing_config(packet()); evidence = p["config"]["timing"]["specimens"]["sp1"]
+        evidence.update(precision="BOUNDED_INTERVAL", interval=[-3, -1]); evidence.pop("relative_day")
+        p["records"]["specimen_registry"][0]["days_from_index_start"] = None
+        p["records"]["specimen_registry"][0]["collection_date_or_day"] = None
+        first = validate_timing(with_registries(p), schemas=SCHEMAS)
+        assert first["status"] == "SYNTHETIC_READY"
+        assert first["audit"][0]["precision"] == "BOUNDED_INTERVAL"
+        assert first["audit"][0]["relative_day"] is None
+>       for rows in p["records"].values():
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert {'classificat...INE_BIO', ...} == {'classificat...INE_BIO', ...}
+E         
+E         Omitting 11 identical items, use -vv to show
+E         Differing items:
+E         {'bindings': {'input_sha256': 'c61f93408bef5634afa938d3b87755854a1bb1fb74d80731b861e343708914dd', 'config_sha256': '65...71fa3b4b87dc6532f97cc8954e6b', 'code_sha256': '53e14fe1a9829f44f4690b18803e429caf59db1f3421e0ffd7c4fe0ce6586e30', ...}} != {'bindings': {'input_sha256': '5f74730d544bcce9df39dea095f4d66964b80a9b02dd6f7fed6bb3bcd32cf49a', 'config_sha256': '65...71fa3b4b87dc6532f97cc8954e6b', 'code_sha256': '53e14fe1a9829f44f4690b18803e429caf59db1f3421e0ffd7c4fe0ce6586e30', ...}}
+E         {'receipt_id': 'fecce40c75bd192c...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/a_dav_implementation/test_group_a.py:261: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant
+1 failed, 71 passed in 222.96s (0:03:42)

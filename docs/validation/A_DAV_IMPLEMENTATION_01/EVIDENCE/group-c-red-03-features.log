@@ -1,0 +1,241 @@
+....FFFFFFFFFFFFFFF                                                      [100%]
+=================================== FAILURES ===================================
+____ test_baseline_selects_rank_and_preserves_sources_and_outcome_blindness ____
+
+    def test_baseline_selects_rank_and_preserves_sources_and_outcome_blindness():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet(); original=copy.deepcopy(p['records'])
+        r=build_baseline(p)
+        assert r['status']=='SYNTHETIC_READY'
+>       assert [(v['patient_uid'],v['specimen_uid'],v['assay_uid']) for v in r['records']['baseline']]==[('P1','B1','A1')]
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'baseline'
+
+tests/a_dav_implementation/test_group_c.py:86: KeyError
+_____________ test_baseline_tie_blocks_without_identifier_tiebreak _____________
+
+    def test_baseline_tie_blocks_without_identifier_tiebreak():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet();p['config']['baseline']['specimen_rank']['B2']=0
+        p['config']['baseline']['assay_rank']['A2']=0
+        r=build_baseline(seal(p))
+>       assert r['status']=='BLOCKED_UNKNOWN'; assert 'SELECTION_TIE' in r['reasons']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:101: AssertionError
+___________ test_longitudinal_keeps_repeats_and_missing_denominator ____________
+
+    def test_longitudinal_keeps_repeats_and_missing_denominator():
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();r=build_longitudinal(p)
+        assert r['status']=='SYNTHETIC_READY'
+>       assert len(r['records']['timepoint'])==4
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'timepoint'
+
+tests/a_dav_implementation/test_group_c.py:108: KeyError
+_ test_longitudinal_does_not_silently_qualify_mismatches[lesion_site-L2-LESION_MISMATCH] _
+
+field = 'lesion_site', value = 'L2', reason = 'LESION_MISMATCH'
+
+    @pytest.mark.parametrize('field,value,reason', [('lesion_site','L2','LESION_MISMATCH'),
+        ('canonical_timing_category','AFTER_REGIMEN_CHANGE','AFTER_REGIMEN_CHANGE')])
+    def test_longitudinal_does_not_silently_qualify_mismatches(field,value,reason):
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();p['records']['specimen_registry'][2][field]=value
+        r=build_longitudinal(seal(p));assert r['status'] in ('SYNTHETIC_READY','FAIL','BLOCKED_UNKNOWN')
+>       assert reason in str(r['audit']) or reason in r['reasons']
+E       AssertionError: assert ('LESION_MISMATCH' in '[]' or 'LESION_MISMATCH' in [])
+E        +  where '[]' = str([])
+
+tests/a_dav_implementation/test_group_c.py:125: AssertionError
+_ test_longitudinal_does_not_silently_qualify_mismatches[canonical_timing_category-AFTER_REGIMEN_CHANGE-AFTER_REGIMEN_CHANGE] _
+
+field = 'canonical_timing_category', value = 'AFTER_REGIMEN_CHANGE'
+reason = 'AFTER_REGIMEN_CHANGE'
+
+    @pytest.mark.parametrize('field,value,reason', [('lesion_site','L2','LESION_MISMATCH'),
+        ('canonical_timing_category','AFTER_REGIMEN_CHANGE','AFTER_REGIMEN_CHANGE')])
+    def test_longitudinal_does_not_silently_qualify_mismatches(field,value,reason):
+        from tools.a_dav.matrices import build_longitudinal
+        p=material_packet();p['records']['specimen_registry'][2][field]=value
+        r=build_longitudinal(seal(p));assert r['status'] in ('SYNTHETIC_READY','FAIL','BLOCKED_UNKNOWN')
+>       assert reason in str(r['audit']) or reason in r['reasons']
+E       AssertionError: assert ('AFTER_REGIMEN_CHANGE' in '[]' or 'AFTER_REGIMEN_CHANGE' in [])
+E        +  where '[]' = str([])
+
+tests/a_dav_implementation/test_group_c.py:125: AssertionError
+_________ test_split_emits_valid_rows_and_rejects_patient_cross_roles __________
+
+    def test_split_emits_valid_rows_and_rejects_patient_cross_roles():
+        from tools.a_dav.release import validate_split
+        p=split_packet();r=validate_split(p)
+        assert r['status']=='SYNTHETIC_READY'
+>       assert r['records']['split'][0]['permanent_role']=='DEVELOPMENT'
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'split'
+
+tests/a_dav_implementation/test_group_c.py:144: KeyError
+_________ test_split_requires_complete_sources_and_prespecified_policy _________
+
+    def test_split_requires_complete_sources_and_prespecified_policy():
+        from tools.a_dav.release import validate_split
+        p=split_packet();p['config']['split']['required_source_ids'].append('MISSING')
+>       assert validate_split(seal(p))['status']=='BLOCKED_UNKNOWN'
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:155: AssertionError
+_____________ test_split_unknown_final_exposure_cannot_be_promoted _____________
+
+    def test_split_unknown_final_exposure_cannot_be_promoted():
+        from tools.a_dav.release import validate_split
+        p=split_packet();p['config']['split']['assignments'][0].update(permanent_role='FINAL_TEST',
+            prior_exposure_state='ADJUDICATED_UNTOUCHED', exposure_decision_id='CLAIM',nested_assignments=[])
+>       assert validate_split(seal(p))['status']=='BLOCKED_UNKNOWN'
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:164: AssertionError
+_______ test_reporting_suppresses_small_cells_and_exports_no_source_rows _______
+
+    def test_reporting_suppresses_small_cells_and_exports_no_source_rows():
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();r=build_public_report(p)
+        assert r['status']=='SYNTHETIC_READY'
+>       public=next(v['public_report'] for v in r['audit'] if 'public_report' in v)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/a_dav_implementation/test_group_c.py:182: StopIteration
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload0] ________
+
+payload = {'patient_uid': 'P1'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])))
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:194: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload1] ________
+
+payload = {'sidecars': ['/private/x']}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])))
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:194: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload2] ________
+
+payload = {'status': 'https://host?token=SECRET'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])))
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:194: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload3] ________
+
+payload = {'counts': {'P1': 1}}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])))
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:194: AssertionError
+_______ test_reporting_rejects_non_allowlisted_export_payload[payload4] ________
+
+payload = {'notes': 'anything'}
+
+    @pytest.mark.parametrize('payload', [{'patient_uid':'P1'},{'sidecars':['/private/x']},
+        {'status':'https://host?token=SECRET'}, {'counts':{'P1':1}}, {'notes':'anything'}])
+    def test_reporting_rejects_non_allowlisted_export_payload(payload):
+        from tools.a_dav.reporting import build_public_report
+        p=report_packet();p['config']['public_report']['payload']=payload
+        r=build_public_report(seal(p,tuple(p['dependencies'])))
+>       assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:194: AssertionError
+________________ test_freeze_fresh_resume_tamper_and_collision _________________
+
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-321/test_freeze_fresh_resume_tampe0')
+
+        assert r['status']=='FAIL';assert r['reasons']==['PUBLIC_PAYLOAD_REJECTED']
+    
+    
+    def test_freeze_fresh_resume_tamper_and_collision(tmp_path):
+        from tools.a_dav.reporting import build_public_report
+>       from tools.a_dav.release import freeze_bundle, verify_bundle
+                                              ^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert False
+E        +  where False = is_dir()
+E        +    where is_dir = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-321/test_freeze_fresh_resume_tampe0/bundle').is_dir
+
+tests/a_dav_implementation/test_group_c.py:202: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_baseline_selects_rank_and_preserves_sources_and_outcome_blindness
+FAILED tests/a_dav_implementation/test_group_c.py::test_baseline_tie_blocks_without_identifier_tiebreak
+FAILED tests/a_dav_implementation/test_group_c.py::test_longitudinal_keeps_repeats_and_missing_denominator
+FAILED tests/a_dav_implementation/test_group_c.py::test_longitudinal_does_not_silently_qualify_mismatches[lesion_site-L2-LESION_MISMATCH]
+FAILED tests/a_dav_implementation/test_group_c.py::test_longitudinal_does_not_silently_qualify_mismatches[canonical_timing_category-AFTER_REGIMEN_CHANGE-AFTER_REGIMEN_CHANGE]
+FAILED tests/a_dav_implementation/test_group_c.py::test_split_emits_valid_rows_and_rejects_patient_cross_roles
+FAILED tests/a_dav_implementation/test_group_c.py::test_split_requires_complete_sources_and_prespecified_policy
+FAILED tests/a_dav_implementation/test_group_c.py::test_split_unknown_final_exposure_cannot_be_promoted
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_suppresses_small_cells_and_exports_no_source_rows
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload0]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload1]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload2]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload3]
+FAILED tests/a_dav_implementation/test_group_c.py::test_reporting_rejects_non_allowlisted_export_payload[payload4]
+FAILED tests/a_dav_implementation/test_group_c.py::test_freeze_fresh_resume_tamper_and_collision
+15 failed, 4 passed, 2 deselected in 339.57s (0:05:39)

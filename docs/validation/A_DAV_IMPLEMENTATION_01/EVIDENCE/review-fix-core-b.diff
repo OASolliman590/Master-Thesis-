@@ -1,0 +1,135 @@
+# Core/B review fix package
+Findings core failure receipt; B per-study audit and required source authority.
+--- before/admission.py
++++ tools/a_dav/admission.py
+@@ -178,54 +178,66 @@
+     for table in ("study_registry", "source_record", "patient_registry", "specimen_registry", "clinical_outcome"):
+         for row in records.get(table, []):
+             store.validate(table, row)
+     studies = records.get("study_registry", [])
+     require(bool(studies), "BRANCH_EVIDENCE_UNKNOWN", blocked=True)
+     sources = {r["source_object_id"]: r for r in records.get("source_record", [])}
+     required = config.get("required_source_object_ids", [])
+     reasons: set[str] = set()
+-    failed = any(r.get("validation_status") == "FAIL" for r in sources.values())
++    source_reasons: dict[str, set[str]] = {}
++    for source in sources.values():
++        if source.get("validation_status") == "FAIL":
++            source_reasons.setdefault(source["study_id"], set()).add("BRANCH_CRITERION_FAILED")
++    failed = bool(source_reasons)
+     if failed:
+         reasons.add("BRANCH_CRITERION_FAILED")
+     if not isinstance(required, list) or not required:
+         reasons.add("ADMISSION_POLICY_UNKNOWN")
+         required = []
+     for source_id in required:
+         if source_id not in sources:
+             reasons.add("REQUIRED_SOURCE_MISSING")
+         else:
+             source = sources[source_id]
+             if source.get("retrieval_status") != "RETRIEVED" or source.get("hash_scope") != "FULL_OBJECT" or not source.get("sha256") or not (source.get("validation_status") == "PASS" or
+                     source.get("validation_status") == "STRUCTURAL_ONLY" and
+                     any(c.get("source_object_id") == source_id and c.get("measurement_suitability") == "PASS"
+                         for c in packet["dependencies"]["assays"]["records"].get("coverage", []))):
+                 reasons.add("REQUIRED_SOURCE_INCOMPLETE")
++                source_reasons.setdefault(source["study_id"], set()).add("REQUIRED_SOURCE_INCOMPLETE")
+     branch = packet["branch_id"]
+     policy = config.get("branch_policies", {}).get(branch, {})
+     audit: list[dict[str, Any]] = []
+     drafts: list[dict[str, Any]] = []
+     for study in studies:
+         scoped = [r for r in sources.values() if r["study_id"] == study["study_id"]]
++        study_reasons = set(source_reasons.get(study["study_id"], set()))
++        if "ADMISSION_POLICY_UNKNOWN" in reasons:
++            study_reasons.add("ADMISSION_POLICY_UNKNOWN")
++        study_failed = "BRANCH_CRITERION_FAILED" in study_reasons
+         criteria: dict[str, str] = {}
+         if branch.startswith("A_P2") or branch == "A_BASELINE_BIO":
+             criteria["clinical_ici"] = "SUPPORTED" if study["study_class"] == "CLINICAL_ICI" else "CONTRADICTED"
+         for name in BRANCH_REQUIREMENTS[branch]:
+             criteria[name] = _criterion(name, policy.get(name, {}), records, study)
+         if branch == "A_P2_FINAL_TEST":
+             decisions = packet["dependencies"]["exposure"]["audit"]
+             if any(a.get("state") != "METADATA_ONLY" for a in decisions):
+                 criteria["untouched_policy"] = "CONTRADICTED"
+         if "CONTRADICTED" in criteria.values():
+-            failed = True; reasons.add("BRANCH_CRITERION_FAILED")
++            study_failed = True
++            study_reasons.add("BRANCH_CRITERION_FAILED")
+         if "UNKNOWN" in criteria.values():
+-            reasons.add("BRANCH_EVIDENCE_UNKNOWN")
++            study_reasons.add("BRANCH_EVIDENCE_UNKNOWN")
+         if not scoped:
+-            reasons.add("REQUIRED_SOURCE_MISSING")
+-        eligibility = "FAIL" if "CONTRADICTED" in criteria.values() else "BLOCKED_UNKNOWN" if reasons else "SYNTHETIC_READY"
++            study_reasons.add("REQUIRED_SOURCE_MISSING")
++        eligibility = "FAIL" if study_failed else "BLOCKED_UNKNOWN" if study_reasons else "SYNTHETIC_READY"
++        failed |= study_failed
++        reasons.update(study_reasons)
+         audit.append({"kind": "admission_eligibility", "study_id": study["study_id"], "branch_id": branch,
+                       "eligibility": eligibility, "criteria": criteria, "actual_source_review": "NOT_RUN"})
+         if scoped:
+             draft = {"admission_receipt_id": "synthetic-draft-" + digest([study["study_id"], branch, config])[:20],
+                      "study_id": study["study_id"], "publication_family_id": study["publication_family_id"],
+                      "branch_id": branch, "admission_version": str(config.get("admission_version", "synthetic-draft-v1")),
+                      "source_object_ids": sorted(r["source_object_id"] for r in scoped),
+                      "source_object_hashes": sorted(r["sha256"] for r in scoped if r.get("sha256")),
+--- before/prat_review.py
++++ tools/a_dav/prat_review.py
+@@ -28,34 +28,36 @@
+         require(binding["patient_uid"] in patients and ep is not None and subject is not None,
+                 "FOREIGN_KEY_UNRESOLVED")
+         require(cast(dict[str, Any], ep)["patient_uid"] == binding["patient_uid"] == cast(dict[str, Any], subject)["patient_uid"], "FOREIGN_KEY_UNRESOLVED")
+     c = packet["config"].get("prat_review", {})
+     require(not c.get("extra_artifacts") and c.get("export_schema_version") == "prat-narrow-v1", "PRAT_EXPORT_PROHIBITED")
+     manifest = c.get("manifest", [])
+     require(isinstance(manifest, list) and bool(manifest), "OBJECT_MANIFEST_INCOMPLETE", blocked=True)
+     object_ids: set[str] = set()
++    available_verified_ids: set[str] = set()
+     auth_missing = False
+     incomplete = False
+     for obj in manifest:
+         require(isinstance(obj, dict) and isinstance(obj.get("object_id"), str), "MALFORMED_INPUT")
+         require(obj["object_id"] not in object_ids, "DUPLICATE_ID")
+         object_ids.add(obj["object_id"])
+         require(obj.get("state") in {"AVAILABLE", "MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"}, "MALFORMED_INPUT")
+         if obj.get("state") != "AVAILABLE":
+             incomplete |= obj.get("required") is not False
+             continue
+         raw = bytes.fromhex(obj.get("content_hex", ""))
+         require(obj.get("hash_scope") == "FULL_OBJECT" and obj.get("byte_size") == len(raw) and
+                 obj.get("sha256") == hashlib.sha256(raw).hexdigest(), "OBJECT_BYTES_MISMATCH")
++        available_verified_ids.add(obj["object_id"])
+         require(bool(obj.get("authored_version")) or bool(obj.get("immutable_capture_id")), "REVIEW_BASIS_MISMATCH")
+         if not all(obj.get(k) for k in ("origin", "retrieval_utc", "terms", "custody_reference")):
+             incomplete = True
+     required_ids = c.get("required_object_ids", [])
+-    incomplete |= not isinstance(required_ids, list) or not required_ids or not set(required_ids).issubset(object_ids)
++    incomplete |= not isinstance(required_ids, list) or not required_ids or not set(required_ids).issubset(available_verified_ids)
+     basis, questions, policy = c.get("basis", {}), c.get("questions", []), c.get("repeat_policy", {})
+     require(isinstance(basis, dict) and isinstance(questions, list) and bool(questions) and len(set(questions)) == len(questions), "REVIEW_POLICY_UNKNOWN", blocked=True)
+     require(packet["branch_id"] == "A_BASELINE_BIO" and set(questions) == CURRENT_QUESTIONS, "CURRENT_BRANCH_CHECKLIST_MISSING", blocked=True)
+     require(basis.get("required_object_ids_sha256") == digest(sorted(required_ids)), "REVIEW_BASIS_MISMATCH")
+     require(basis.get("inventory_scope_sha256") == digest(c.get("inventory_scope")), "REVIEW_BASIS_MISMATCH")
+     require(basis.get("manifest_sha256") == digest(manifest) and basis.get("branch_id") == packet["branch_id"] and
+             basis.get("schema_sha256") == digest(store.hashes) and basis.get("questions_sha256") == digest(questions) and
+             basis.get("repeat_policy_sha256") == digest(policy), "REVIEW_BASIS_MISMATCH")
+@@ -86,17 +88,17 @@
+         unresolved.add("OBJECT_MANIFEST_INCOMPLETE")
+     assertions: list[dict[str, dict[str, Any]]] = []
+     for reader in readers:
+         mapping: dict[str, dict[str, Any]] = {}
+         for assertion in reader.get("assertions", []):
+             question = assertion.get("question_id")
+             require(question in questions and question not in mapping, "REVIEW_BASIS_MISMATCH")
+             mapping[question] = assertion
+-            if assertion.get("authority_object_id") not in object_ids or not assertion.get("source_locator") or not assertion.get("rule_locator") or "value" not in assertion:
++            if assertion.get("authority_object_id") not in available_verified_ids or not assertion.get("source_locator") or not assertion.get("rule_locator") or "value" not in assertion:
+                 unresolved.add("ASSERTION_EVIDENCE_MISSING")
+         if set(mapping) != set(questions):
+             unresolved.add("ASSERTION_EVIDENCE_MISSING")
+         assertions.append(mapping)
+     adjudications = c.get("adjudications", [])
+     require(isinstance(adjudications, list), "ADJUDICATION_INVALID")
+     by_question: dict[str, dict[str, Any]] = {}
+     seals = sorted(r["seal_sha256"] for r in readers)

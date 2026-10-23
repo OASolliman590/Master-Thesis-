@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 49 items / 47 deselected / 2 selected
+
+tests/a_dav_implementation/test_group_b_protocol.py FF                   [100%]
+
+=================================== FAILURES ===================================
+_______ test_prat_legacy_questions_cannot_omit_current_canonical_grains ________
+
+    def test_prat_legacy_questions_cannot_omit_current_canonical_grains() -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        c["questions"] = ["identity", "endpoint"]
+        c["basis"]["questions_sha256"] = digest(c["questions"])
+        for r in c["readers"]:
+            r["basis"] = copy.deepcopy(c["basis"])
+            r["assertions"] = [a for a in r["assertions"] if a["question_id"] in c["questions"]]
+            r["seal_sha256"] = digest({k: v for k, v in r.items() if k != "seal_sha256"})
+        r = invoke("prat_review", "review_prat_packet", p)
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:132: AssertionError
+________ test_prat_scoped_object_inventory_must_include_required_object ________
+
+    def test_prat_scoped_object_inventory_must_include_required_object() -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        c["required_object_ids"] = ["invented-object", "missing-object"]
+        r = invoke("prat_review", "review_prat_packet", p)
+>       assert r["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_b_protocol.py:140: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_legacy_questions_cannot_omit_current_canonical_grains
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_scoped_object_inventory_must_include_required_object
+======================= 2 failed, 47 deselected in 5.13s =======================

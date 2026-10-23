@@ -1,0 +1,53 @@
+{
+  "scope": "COPIED_NAMED_RUNTIME_AND_FROZEN_SCHEMAS_ONLY",
+  "classification": "SYNTHETIC_ONLY",
+  "runs": [
+    {
+      "attempt": "fresh",
+      "exit_code": 0,
+      "summary": {
+        "analysis_ready": false,
+        "bindings": {
+          "code_sha256": "2afea0b4e0f99e6932f07d55b89d262cbdff8f3b14cd972d87a2b17a8b8adf65",
+          "config_sha256": "7d1d315a1edad044bff55620d23351d1ee3ffcc12151c0f91a0292346ced2fef",
+          "core_sha256": "49afc1fb9454eb97182454dd68b61c701423bb9431e3aaac4ed734245bedbe6c",
+          "input_sha256": "dab145827a771c87d724179b1aada4ffb55097dc78685e42bed95aa0c661191d",
+          "output_sha256": "a0537048064fa1f3bc76f6d748a349caf4e24023cb5b0a74d84fcf604f646b7c",
+          "schemas_sha256": "351511edfd10668ebfb92646c0fa6e57ab8c71fa3b4b87dc6532f97cc8954e6b"
+        },
+        "biological_analysis_executed": false,
+        "classification": "SYNTHETIC_ONLY",
+        "reasons": [],
+        "source_admission": false,
+        "stage": "workflow",
+        "statistical_release": false,
+        "status": "SYNTHETIC_READY"
+      }
+    },
+    {
+      "attempt": "resume",
+      "exit_code": 0,
+      "summary": {
+        "analysis_ready": false,
+        "bindings": {
+          "code_sha256": "2afea0b4e0f99e6932f07d55b89d262cbdff8f3b14cd972d87a2b17a8b8adf65",
+          "config_sha256": "7d1d315a1edad044bff55620d23351d1ee3ffcc12151c0f91a0292346ced2fef",
+          "core_sha256": "49afc1fb9454eb97182454dd68b61c701423bb9431e3aaac4ed734245bedbe6c",
+          "input_sha256": "dab145827a771c87d724179b1aada4ffb55097dc78685e42bed95aa0c661191d",
+          "output_sha256": "a0537048064fa1f3bc76f6d748a349caf4e24023cb5b0a74d84fcf604f646b7c",
+          "schemas_sha256": "351511edfd10668ebfb92646c0fa6e57ab8c71fa3b4b87dc6532f97cc8954e6b"
+        },
+        "biological_analysis_executed": false,
+        "classification": "SYNTHETIC_ONLY",
+        "reasons": [],
+        "source_admission": false,
+        "stage": "workflow",
+        "statistical_release": false,
+        "status": "SYNTHETIC_READY"
+      }
+    }
+  ],
+  "fresh_resume_match": true,
+  "real_source_data_used": false,
+  "biological_analysis_executed": false
+}

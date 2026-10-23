@@ -1,0 +1,62 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_materialized_roles_and_exposure_follow_patient_ledgers __________
+
+    def test_materialized_roles_and_exposure_follow_patient_ledgers():
+        packet = synthetic_workflow_packet()
+        packet['config']['split']['assignments'][0]['permanent_role'] = 'EXCLUDED'
+        result = run_workflow(packet)
+        assert result['status'] == 'SYNTHETIC_READY', result['audit']
+        row = result['records']['baseline'][0]
+>       assert row['split_role'] == 'EXCLUDED'
+E       AssertionError: assert 'DEVELOPMENT' == 'EXCLUDED'
+E         
+E         - EXCLUDED
+E         + DEVELOPMENT
+
+tests/a_dav_implementation/test_workflow.py:158: AssertionError
+____________ test_mixed_patient_assignments_materialize_separately _____________
+
+    def test_mixed_patient_assignments_materialize_separately():
+        packet = synthetic_workflow_packet()
+        # A second invented patient shares the family, but is explicitly excluded.
+        mapping = {'p1': 'p2', 'sp1': 'sp3', 'sp2': 'sp4', 'a1': 'a3', 'a2': 'a4',
+                   'e1': 'e2', 'o1': 'o2', 'x1': 'x2', 'bp1': 'bp2', 'bsp1': 'bsp3',
+                   'bsp2': 'bsp4', 'bo1': 'bo2', 'bx1': 'bx2', 'sample-001': 'sample-003',
+                   'sample-002': 'sample-004', '001': '002', '0001': '0002'}
+        def replace(value):
+            if isinstance(value, dict): return {mapping.get(k, k): replace(v) for k, v in value.items()}
+            if isinstance(value, list): return [replace(v) for v in value]
+            return mapping.get(value, value) if isinstance(value, str) else value
+        for table in ('patient_registry', 'specimen_registry', 'assay_registry', 'treatment_episode',
+                      'treatment_exposure', 'episode_binding', 'clinical_outcome'):
+            packet['records'][table] += replace(deepcopy(packet['records'][table]))
+        packet['config']['timing']['episode_order'].append('e2')
+        packet['config']['timing']['specimens'].update(replace(deepcopy(packet['config']['timing']['specimens'])))
+        packet['config']['endpoints']['source_priority'].append('o2')
+        matrix = packet['config']['assays']['matrices'][0]
+        matrix['headers'] += ['sample-003', 'sample-004']
+        for values in matrix['values']: values += list(values)
+        matrix['library_properties'].update(replace(deepcopy(matrix['library_properties'])))
+        for stage in ('baseline', 'longitudinal'):
+            for key in ('specimen_rank', 'assay_rank'):
+                packet['config'][stage][key].update(replace(deepcopy(packet['config'][stage][key])))
+        other = replace(deepcopy(packet['config']['split']['assignments'][0]))
+        other['permanent_role'] = 'EXCLUDED'
+        packet['config']['split']['assignments'].append(other)
+        _refresh_invented_matrix_bytes(packet)
+        result = run_workflow(packet)
+        assert result['status'] == 'SYNTHETIC_READY', result['audit']
+>       assert [(r['patient_uid'], r['split_role'], r['inclusion_status']) for r in
+                sorted(result['records']['baseline'], key=lambda r: r['patient_uid'])] == [
+                    ('p1', 'DEVELOPMENT', 'INCLUDED'), ('p2', 'EXCLUDED', 'EXCLUDED')]
+E       AssertionError: assert [('p1', 'DEVE..., 'INCLUDED')] == [('p1', 'DEVE..., 'EXCLUDED')]
+E         
+E         At index 1 diff: ('p2', 'DEVELOPMENT', 'INCLUDED') != ('p2', 'EXCLUDED', 'EXCLUDED')
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_workflow.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_materialized_roles_and_exposure_follow_patient_ledgers
+FAILED tests/a_dav_implementation/test_workflow.py::test_mixed_patient_assignments_materialize_separately
+2 failed, 9 deselected in 8.33s

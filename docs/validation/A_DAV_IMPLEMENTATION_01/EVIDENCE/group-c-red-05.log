@@ -1,0 +1,45 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_uncovered_prior_exposure_cannot_hide_behind_metadata_decision ______
+
+    def test_uncovered_prior_exposure_cannot_hide_behind_metadata_decision():
+        from tools.a_dav.release import validate_split
+        p=final_packet();p['records']['prior_exposure_record']=[{'schema_version':'1.1.0','exposure_id':'X0',
+            'subject_type':'SOURCE_OBJECT','subject_id':'SRC1','analysis_lineage_id':'OLDER-LINEAGE',
+            'fields_accessed':['expression','outcome'],'use':'FEATURE_SELECTION','occurred_utc':None,
+            'date_precision':'UNKNOWN','actor_role':'invented','independence_implication':'BLOCKS_UNTOUCHED_FOR_LINEAGE',
+            'source_locators':['invented']}]
+        old_audit=p['dependencies']['exposure']['audit'];p=seal(p)
+        p['dependencies']['exposure']=finish('exposure',p,p['records'],audit=old_audit,schemas=STORE)
+        r=validate_split(p,schemas=STORE)
+>       assert r['status']=='FAIL';assert r['reasons']==['PRIOR_MODEL_EXPOSURE']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_c.py:322: AssertionError
+_____________ test_tied_candidates_remain_in_blocked_matrix_audit ______________
+
+    def test_tied_candidates_remain_in_blocked_matrix_audit():
+        from tools.a_dav.matrices import build_baseline
+        p=material_packet();p['config']['baseline']['specimen_rank']['B2']=0
+        p['config']['baseline']['assay_rank']['A2']=0
+        r=build_baseline(seal(p),schemas=STORE)
+        assert r['status']=='BLOCKED_UNKNOWN'
+>       assert {a['specimen_uid'] for a in r['audit'] if a.get('kind')=='CANDIDATE'}=={'B1','B2','F1','F2'}
+E       AssertionError: assert set() == {'B1', 'B2', 'F1', 'F2'}
+E         
+E         Extra items in the right set:
+E         'B1'
+E         'F2'
+E         'F1'
+E         'B2'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_group_c.py:331: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_uncovered_prior_exposure_cannot_hide_behind_metadata_decision
+FAILED tests/a_dav_implementation/test_group_c.py::test_tied_candidates_remain_in_blocked_matrix_audit
+2 failed, 1 passed, 26 deselected in 1.39s

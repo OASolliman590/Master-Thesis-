@@ -1,0 +1,2 @@
+tools/a_dav/timing.py:151: error: "None" object is not iterable  [misc]
+Found 1 error in 1 file (checked 4 source files)

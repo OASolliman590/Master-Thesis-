@@ -1,0 +1,32 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 33 items / 32 deselected / 1 selected
+
+tests/a_dav_implementation/test_group_b_graph_admission.py F             [100%]
+
+=================================== FAILURES ===================================
+_ test_structural_source_can_simulate_only_after_actual_assay_api_verifies_it __
+
+    def test_structural_source_can_simulate_only_after_actual_assay_api_verifies_it() -> None:
+        from tools.a_dav.registries import build_registries
+        from tools.a_dav.endpoints import map_endpoints
+        from tools.a_dav.timing import validate_timing
+        from tools.a_dav.assays import validate_assays
+        from test_group_a import endpoint_config, timing_config, assay_config
+        p = assay_config(timing_config(endpoint_config(packet())))
+        p["records"]["source_record"][0]["validation_status"] = "STRUCTURAL_ONLY"
+        p["dependencies"] = {}
+        for stage, function in [("registries", build_registries), ("endpoints", map_endpoints), ("timing", validate_timing), ("assays", validate_assays), ("overlap", validate_overlap), ("exposure", validate_exposure)]:
+            r = function(p, schemas=STORE)
+>           assert r["status"] == "SYNTHETIC_READY", (stage, r["reasons"])
+E           AssertionError: ('registries', ['SOURCE_CONTEXT_UNKNOWN'])
+E           assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E             
+E             - SYNTHETIC_READY
+E             + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_group_b_graph_admission.py:181: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_graph_admission.py::test_structural_source_can_simulate_only_after_actual_assay_api_verifies_it
+======================= 1 failed, 32 deselected in 2.54s =======================

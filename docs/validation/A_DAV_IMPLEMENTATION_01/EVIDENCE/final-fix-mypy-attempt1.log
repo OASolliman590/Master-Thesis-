@@ -1,0 +1,4 @@
+tools/a_dav/core.py:249: error: Argument 1 to "runtime_hashes" has incompatible type "Any | None"; expected "str"  [arg-type]
+tools/a_dav/core.py:251: error: Invalid index type "Any | None" for "dict[str, tuple[str, ...]]"; expected type "str"  [index]
+tools/a_dav/admission.py:167: error: Incompatible types in assignment (expression has type "dict[Any, Any]", variable has type "list[Any]")  [assignment]
+Found 3 errors in 2 files (checked 7 source files)

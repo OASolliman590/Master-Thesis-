@@ -1,0 +1,637 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 15 items
+
+tests/a_dav_implementation/test_group_b_protocol.py FFFFFFFFFFFFFFF      [100%]
+
+=================================== FAILURES ===================================
+___________ test_all_three_dependency_stages_block_without_upstream ____________
+
+    def test_all_three_dependency_stages_block_without_upstream() -> None:
+        for module, function in [("overlap", "validate_overlap"), ("exposure", "validate_exposure"), ("admission", "evaluate_admission")]:
+>           result = invoke(module, function, packet())
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.overlap', import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.overlap'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+___ test_complete_invented_prat_protocol_never_authenticates_actual_evidence ___
+
+    def test_complete_invented_prat_protocol_never_authenticates_actual_evidence() -> None:
+        p = prat()
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_prat_adversaries[prefix-OBJECT_BYTES_MISMATCH] ______________
+
+change = 'prefix', reason = 'OBJECT_BYTES_MISMATCH'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_prat_adversaries[size-OBJECT_BYTES_MISMATCH] _______________
+
+change = 'size', reason = 'OBJECT_BYTES_MISMATCH'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+___________ test_prat_adversaries[stale_basis-REVIEW_BASIS_MISMATCH] ___________
+
+change = 'stale_basis', reason = 'REVIEW_BASIS_MISMATCH'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______________ test_prat_adversaries[seal-FIRST_PASS_TAMPERED] ________________
+
+change = 'seal', reason = 'FIRST_PASS_TAMPERED'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________ test_prat_adversaries[single_reader-TWO_READERS_REQUIRED] ___________
+
+change = 'single_reader', reason = 'TWO_READERS_REQUIRED'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_prat_adversaries[copy_reader-READER_INDEPENDENCE_REQUIRED] ________
+
+change = 'copy_reader', reason = 'READER_INDEPENDENCE_REQUIRED'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________ test_prat_adversaries[early_compare-FIRST_PASS_ORDER_INVALID] _________
+
+change = 'early_compare', reason = 'FIRST_PASS_ORDER_INVALID'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+____ test_prat_adversaries[outcome_selection-OUTCOME_SELECTION_PROHIBITED] _____
+
+change = 'outcome_selection', reason = 'OUTCOME_SELECTION_PROHIBITED'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_________ test_prat_adversaries[late_policy-POLICY_LOCK_ORDER_INVALID] _________
+
+change = 'late_policy', reason = 'POLICY_LOCK_ORDER_INVALID'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_________ test_prat_adversaries[export_sidecar-PRAT_EXPORT_PROHIBITED] _________
+
+change = 'export_sidecar', reason = 'PRAT_EXPORT_PROHIBITED'
+
+    @pytest.mark.parametrize("change,reason", [
+        ("prefix", "OBJECT_BYTES_MISMATCH"), ("size", "OBJECT_BYTES_MISMATCH"),
+        ("stale_basis", "REVIEW_BASIS_MISMATCH"), ("seal", "FIRST_PASS_TAMPERED"),
+        ("single_reader", "TWO_READERS_REQUIRED"), ("copy_reader", "READER_INDEPENDENCE_REQUIRED"),
+        ("early_compare", "FIRST_PASS_ORDER_INVALID"), ("outcome_selection", "OUTCOME_SELECTION_PROHIBITED"),
+        ("late_policy", "POLICY_LOCK_ORDER_INVALID"), ("export_sidecar", "PRAT_EXPORT_PROHIBITED"),
+    ])
+    def test_prat_adversaries(change: str, reason: str) -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        if change == "prefix": c["manifest"][0]["hash_scope"] = "HEADER_ONLY"
+        if change == "size": c["manifest"][0]["byte_size"] = 4
+        if change == "stale_basis": c["basis"]["manifest_version"] = "v2"
+        if change == "seal": c["readers"][0]["assertions"][0]["value"] = "tampered"
+        if change == "single_reader": c["readers"].pop()
+        if change == "copy_reader": c["readers"][1] = copy.deepcopy(c["readers"][0])
+        if change == "early_compare": c["comparison_order"] = 3
+        if change == "outcome_selection": c["selection_inputs"].append("orr")
+        if change == "late_policy": c["policy_locked_order"] = 3
+        if change == "export_sidecar": c["extra_artifacts"] = [{"patient_id": "private"}]
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_________ test_equal_legacy_hashes_cannot_hide_assertion_disagreement __________
+
+    def test_equal_legacy_hashes_cannot_hide_assertion_disagreement() -> None:
+        p = prat(); c = p["config"]["prat_review"]
+        c["readers"][1]["assertions"][0]["value"] = "conflicting"
+        r = c["readers"][1]; r["seal_sha256"] = digest({k: v for k, v in r.items() if k != "seal_sha256"})
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________ test_missing_locator_blocks_even_when_legacy_tables_equal ___________
+
+    def test_missing_locator_blocks_even_when_legacy_tables_equal() -> None:
+        p = prat(); r = p["config"]["prat_review"]["readers"][1]
+        r["assertions"][0]["source_locator"] = ""
+        r["seal_sha256"] = digest({k: v for k, v in r.items() if k != "seal_sha256"})
+>       result = invoke("prat_review", "review_prat_packet", p)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________ test_prat_public_summary_has_no_private_channels_or_counts __________
+
+    def test_prat_public_summary_has_no_private_channels_or_counts() -> None:
+>       result = invoke("prat_review", "review_prat_packet", prat())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_b_protocol.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/a_dav_implementation/test_group_b_protocol.py:17: in invoke
+    return getattr(importlib.import_module("tools.a_dav." + module), function)(value)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.prat_review'
+import_ = <function _gcd_import at 0x1050b40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.prat_review'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_all_three_dependency_stages_block_without_upstream
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_complete_invented_prat_protocol_never_authenticates_actual_evidence
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[prefix-OBJECT_BYTES_MISMATCH]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[size-OBJECT_BYTES_MISMATCH]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[stale_basis-REVIEW_BASIS_MISMATCH]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[seal-FIRST_PASS_TAMPERED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[single_reader-TWO_READERS_REQUIRED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[copy_reader-READER_INDEPENDENCE_REQUIRED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[early_compare-FIRST_PASS_ORDER_INVALID]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[outcome_selection-OUTCOME_SELECTION_PROHIBITED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[late_policy-POLICY_LOCK_ORDER_INVALID]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_adversaries[export_sidecar-PRAT_EXPORT_PROHIBITED]
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_equal_legacy_hashes_cannot_hide_assertion_disagreement
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_missing_locator_blocks_even_when_legacy_tables_equal
+FAILED tests/a_dav_implementation/test_group_b_protocol.py::test_prat_public_summary_has_no_private_channels_or_counts
+============================= 15 failed in 15.94s ==============================

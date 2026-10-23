@@ -1,0 +1,55 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_compatible_same_specimen_multiomics_uses_actual_assay_gates _______
+
+    def test_compatible_same_specimen_multiomics_uses_actual_assay_gates():
+        packet = synthetic_workflow_packet()
+        packet['branch_id'] = 'PAIRED_MULTIOMICS'
+        source = deepcopy(packet['records']['source_record'][0])
+        source.update(source_object_id='obj2', exact_file_name='invented-methylation.tsv')
+        packet['records']['source_record'].append(source)
+        for publication in [packet['records']['publication_family'][0],
+                            packet['config']['existing_seams']['resolution_decision']['publications'][0]]:
+            publication['source_object_ids'] = ['obj1', 'obj2']
+        assay = deepcopy(packet['records']['assay_registry'][0])
+        assay.update(assay_uid='a3', source_object_id='obj2', modality='METHYLATION',
+                     measurement_unit='beta', branch_suitability=['METHYLATION'])
+        packet['records']['assay_registry'].append(assay)
+        matrix = deepcopy(packet['config']['assays']['matrices'][0])
+        matrix.update(source_object_id='obj2', headers=['sample-001'], values=[[0.2], [0.4]],
+                      modality='METHYLATION', unit='beta', lane='METHYLATION_BETA',
+                      genome_build='invented', detection_p_provenance='invented',
+                      probe_filter_policy='invented', snp_policy='invented',
+                      cross_reactive_policy='invented', sex_chromosome_policy='invented')
+        packet['config']['assays']['matrices'].append(matrix)
+        packet['config']['admission']['required_source_object_ids'].append('obj2')
+        _refresh_invented_matrix_bytes(packet)
+        packet['config']['admission']['branch_policies']['PAIRED_MULTIOMICS'] = {
+            'patient_link': _evidence(specimen_uids=['sp1', 'sp1']),
+            'same_time_specimen': _evidence(specimen_uids=['sp1', 'sp1'], same_time=True, same_specimen=True),
+            'modality_gates': _evidence(modalities=['RNA', 'METHYLATION'], assay_uids=['a1', 'a3'])}
+        graph = _connected_graph(packet, stop_after='admission')
+        admission = graph['dependencies']['admission']
+        assert admission['status'] == 'SYNTHETIC_READY'
+        assert admission['audit'][0]['criteria'] == {'patient_link': 'SUPPORTED',
+            'same_time_specimen': 'SUPPORTED', 'modality_gates': 'SUPPORTED'}
+        assert admission['source_admission'] is False
+        # Two RNA vocabulary aliases are still one modality, even when both exact
+        # assay declarations and source bytes use their corresponding alias.
+        packet['records']['assay_registry'][-1].update(modality='RNA_SEQ', measurement_unit='counts',
+                                                     branch_suitability=['BASELINE_DE'])
+        matrix.update(modality='RNA_SEQ', unit='counts', lane='COUNTS', values=[[2], [4]],
+                      library_properties={'sample-001': {'library_size': 6, 'source_locator': 'invented'}})
+        packet['config']['admission']['branch_policies']['PAIRED_MULTIOMICS']['modality_gates']['modalities'] = ['RNA', 'RNA_SEQ']
+        _refresh_invented_matrix_bytes(packet)
+        rejected = run_workflow(packet)
+>       assert rejected['status'] == 'FAIL'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'FAIL'
+E         
+E         - FAIL
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_workflow.py:329: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_compatible_same_specimen_multiomics_uses_actual_assay_gates
+1 failed, 15 deselected in 14.15s

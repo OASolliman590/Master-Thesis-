@@ -1,0 +1,33 @@
+F.F.....                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_connected_workflow_includes_baseline_and_longitudinal_without_admission _
+
+    def test_connected_workflow_includes_baseline_and_longitudinal_without_admission():
+        packet = synthetic_workflow_packet()
+        before = deepcopy(packet)
+        result = run_workflow(packet)
+>       assert result['status'] == 'SYNTHETIC_READY', [(x['stage'], x['status'], x['reasons']) for x in result['audit']]
+E       AssertionError: [('admission', 'BLOCKED_UNKNOWN', ['REQUIRED_SOURCE_INCOMPLETE']), ('exposure', 'SYNTHETIC_READY', []), ('timing', 'SY...overlap', 'SYNTHETIC_READY', []), ('existing_seams', 'SYNTHETIC_READY', []), ('endpoints', 'SYNTHETIC_READY', []), ...]
+E       assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_workflow.py:12: AssertionError
+__________________ test_missing_followup_stays_in_denominator __________________
+
+    def test_missing_followup_stays_in_denominator():
+        packet = synthetic_workflow_packet()
+        packet['config']['longitudinal']['windows'][0].update(lower_day=11, upper_day=20)
+        result = run_workflow(packet)
+>       assert result['status'] == 'SYNTHETIC_READY'
+E       AssertionError: assert 'BLOCKED_UNKNOWN' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + BLOCKED_UNKNOWN
+
+tests/a_dav_implementation/test_workflow.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_connected_workflow_includes_baseline_and_longitudinal_without_admission
+FAILED tests/a_dav_implementation/test_workflow.py::test_missing_followup_stays_in_denominator
+2 failed, 6 passed in 11.14s

@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________________ test_missing_followup_stays_in_denominator __________________
+
+    def test_missing_followup_stays_in_denominator():
+        packet = synthetic_workflow_packet()
+        packet['config']['longitudinal']['windows'][0].update(lower_day=11, upper_day=20)
+        result = run_workflow(packet)
+        assert result['status'] == 'SYNTHETIC_READY'
+>       assert result['records']['pair'] == []
+E       AssertionError: assert [{'row_type':...': 'p1', ...}] == []
+E         
+E         Left contains one more item: {'row_type': 'PAIR', 'schema_version': '1.1.0', 'data_classification': 'SYNTHETIC_ONLY', 'patient_uid': 'p1', ...}
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_workflow.py:47: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_workflow.py::test_missing_followup_stays_in_denominator
+1 failed in 3.01s

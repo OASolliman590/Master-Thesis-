@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_endpoint_ne_cannot_carry_evaluable_source_assertion ___________
+
+    def test_endpoint_ne_cannot_carry_evaluable_source_assertion():
+        from tools.a_dav.endpoints import map_endpoints
+        p = endpoint_config(packet()); o = p["records"]["clinical_outcome"][0]
+        o.update(canonical_category="NE", orr_mapping=None, dcr_mapping=None)
+        p["config"]["endpoints"]["category_map"][o["raw_endpoint_label"]] = "NE"
+>       assert map_endpoints(with_registries(p), schemas=SCHEMAS)["status"] == "FAIL"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'FAIL'
+E         
+E         - FAIL
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:470: AssertionError
+___________ test_assay_estimated_counts_require_quantifier_structure ___________
+
+    def test_assay_estimated_counts_require_quantifier_structure():
+        from tools.a_dav.assays import validate_assays
+        p = assay_config(packet()); m = p["config"]["assays"]["matrices"][0]
+        m["unit"] = p["records"]["assay_registry"][0]["measurement_unit"] = "estimated_counts"
+>       assert validate_assays(with_registries(p), schemas=SCHEMAS)["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'SYNTHETIC_READY' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + SYNTHETIC_READY
+
+tests/a_dav_implementation/test_group_a.py:477: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_endpoint_ne_cannot_carry_evaluable_source_assertion
+FAILED tests/a_dav_implementation/test_group_a.py::test_assay_estimated_counts_require_quantifier_structure
+2 failed, 85 deselected in 1.03s

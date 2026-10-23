@@ -1,0 +1,26 @@
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+_______ test_dependency_binds_added_canonical_entities_and_derived_views _______
+
+    def test_dependency_binds_added_canonical_entities_and_derived_views():
+        import copy
+        import pytest
+        from tools.a_dav.core import DavError, dependency
+        schemas = SchemaStore()
+        base = {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+                "records": {"endpoint": [{"binary_value": 1}]}, "config": {},
+                "schema_hashes": schemas.hashes, "dependencies": {}}
+        upstream = finish("endpoints", base, base["records"], schemas=schemas)
+        for table, rows in [("patient_registry", [{"patient_uid": "added"}]),
+                            ("endpoint", [{"binary_value": 0}])]:
+            changed = copy.deepcopy(base)
+            changed["dependencies"]["endpoints"] = upstream
+            changed["records"][table] = rows
+>           with pytest.raises(DavError, match="DEPENDENCY_INVALID"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE DavError
+
+tests/a_dav_implementation/test_core.py:94: Failed
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_core.py::test_dependency_binds_added_canonical_entities_and_derived_views
+1 failed, 5 passed in 5.28s

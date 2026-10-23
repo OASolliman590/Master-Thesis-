@@ -1,0 +1,32 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_timing_shared_specimen_keeps_separate_evidenced_episode_contexts _____
+
+    def test_timing_shared_specimen_keeps_separate_evidenced_episode_contexts():
+        from tools.a_dav.timing import validate_timing
+        p = timing_shared_specimen_context_packet(); before = deepcopy(p["records"]["specimen_registry"])
+        first = validate_timing(with_registries(p), schemas=SCHEMAS)
+>       assert first["status"] == "SYNTHETIC_READY"
+E       AssertionError: assert 'FAIL' == 'SYNTHETIC_READY'
+E         
+E         - SYNTHETIC_READY
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:524: AssertionError
+_________ test_timing_shared_specimen_missing_context_evidence_blocks __________
+
+    def test_timing_shared_specimen_missing_context_evidence_blocks():
+        from tools.a_dav.timing import validate_timing
+        p = timing_shared_specimen_context_packet()
+        p["config"]["timing"]["specimens"]["sp1"]["contexts"].pop("e2")
+>       assert validate_timing(with_registries(p), schemas=SCHEMAS)["status"] == "BLOCKED_UNKNOWN"
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_group_a.py:537: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_shared_specimen_keeps_separate_evidenced_episode_contexts
+FAILED tests/a_dav_implementation/test_group_a.py::test_timing_shared_specimen_missing_context_evidence_blocks
+2 failed, 1 passed, 94 deselected in 2.01s

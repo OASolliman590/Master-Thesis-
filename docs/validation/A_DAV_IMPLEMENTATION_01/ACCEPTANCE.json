@@ -1,0 +1,237 @@
+{
+  "packet": "A_DAV_IMPLEMENTATION_01",
+  "classification": "SYNTHETIC_ONLY",
+  "status": "ACCEPTED_SYNTHETIC_SOFTWARE_CHECKPOINT",
+  "base_commit": "9da3b1afaeba04aa9a8a29095c01574e8c87579c",
+  "completion_commit": "Git commit containing this receipt",
+  "branch": "codex/a-dav-01",
+  "tickets": [
+    {
+      "ticket": "DAV-T01",
+      "objective": "Search and candidate registry",
+      "implementation": "REUSED_UNCHANGED",
+      "owned_module": "search_log.py",
+      "focused_test_file": "tests/a_dav_implementation/test_existing_seams.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T02",
+      "objective": "Study and publication-family resolution",
+      "implementation": "REUSED_UNCHANGED",
+      "owned_module": "study_resolution.py",
+      "focused_test_file": "tests/a_dav_implementation/test_existing_seams.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T03",
+      "objective": "Source-object verification",
+      "implementation": "REUSED_UNCHANGED",
+      "owned_module": "object_verification.py",
+      "focused_test_file": "tests/a_dav_implementation/test_existing_seams.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T04",
+      "objective": "Patient and specimen registry",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "registries.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_a.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T05",
+      "objective": "Endpoint ontology",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "endpoints.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_a.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T06",
+      "objective": "Treatment and timepoint ontology",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "timing.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_a.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T07",
+      "objective": "Assay validator",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "assays.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_a.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T08",
+      "objective": "Overlap and exposure ledgers",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "overlap.py;exposure.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_b_graph_admission.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T09",
+      "objective": "Cohort-admission engine",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "admission.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_b_graph_admission.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T10",
+      "objective": "Baseline matrix builder",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "matrices.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_c.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T11",
+      "objective": "Longitudinal long and pair builders",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "matrices.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_c.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T12",
+      "objective": "Split and independence validator",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "release.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_c.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T13",
+      "objective": "Validation and privacy report builder",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "reporting.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_c.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    },
+    {
+      "ticket": "DAV-T14",
+      "objective": "Reproduction and freeze bundle",
+      "implementation": "NEW_SYNTHETIC_SOFTWARE",
+      "owned_module": "release.py",
+      "focused_test_file": "tests/a_dav_implementation/test_group_c.py",
+      "connected_test_file": "tests/a_dav_implementation/test_workflow.py",
+      "software_status": "ACCEPTED_SYNTHETIC_CHECKPOINT",
+      "actual_source_acceptance": "NOT_RUN"
+    }
+  ],
+  "prat_review": {
+    "documentation": "P01-P08 independently reviewed",
+    "protocol": "IMPLEMENTED_SYNTHETIC_ONLY",
+    "actual_source_evidence": "NOT_RUN",
+    "actual_reader_authentication": "NOT_RUN"
+  },
+  "tests": {
+    "command": [
+      "/private/tmp/thesis-adav05-20261020/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "tests/a_dav_implementation",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "scope": "ALL_NEW_SYNTHETIC_DAV_TESTS_POST_FINAL_FIX",
+    "exit_code": 0,
+    "wall_seconds": 242.424,
+    "real_source_tracers": "NOT_RUN",
+    "biological_analysis_executed": false,
+    "passed": 255,
+    "failed": 0,
+    "skipped": 0,
+    "log": "EVIDENCE/full-synthetic-suite.log",
+    "scope_note": "All seven new synthetic DAV test files; unrelated repository and real-source tracer suites NOT_RUN."
+  },
+  "typecheck": {
+    "exit_code": 0,
+    "new_modules": 14,
+    "log": "EVIDENCE/typecheck-all.log",
+    "mode": "mypy1.18.2 strict explicit-package-bases; preserved untyped modules excluded"
+  },
+  "copied_runtime_cli": {
+    "exit_code": 0,
+    "fresh_resume_match": true,
+    "log": "EVIDENCE/self-contained-cli-final.log"
+  },
+  "reviews": {
+    "standards": {
+      "initial_findings": 4,
+      "outstanding": 0,
+      "closure": "REVIEW_STANDARDS_FIX1.md"
+    },
+    "spec": {
+      "initial_findings": 7,
+      "outstanding": 0,
+      "closure": "REVIEW_SPEC_FIX1.md"
+    },
+    "whole_slice": {
+      "initial_findings": 4,
+      "outstanding": 0,
+      "new_corrective_findings": 0,
+      "closure": "REVIEW_FINAL_FIX.md"
+    }
+  },
+  "external_evidence": {
+    "E01-E08": "UNRESOLVED_ACTUAL_SOURCE_AND_REVIEW_EVIDENCE",
+    "E09": "DEFERRED_NAMED_METHOD_USE",
+    "E10": "ACTUAL_ADMISSION_AND_RELEASE_NOT_ESTABLISHED",
+    "external_model_contrast_clinical_judgments": "UNKNOWN_UNTIL_REVIEWED_EVIDENCE"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "jsonschema": "4.26.0",
+    "pytest": "9.1.1",
+    "target_environment_acceptance": "NOT_RUN"
+  },
+  "analysis_ready": false,
+  "source_admission": false,
+  "statistical_release": false,
+  "biological_analysis_executed": false,
+  "real_source_data_used": false,
+  "frozen_specs_changed": false,
+  "authenticated_source_review": "NOT_RUN",
+  "real_source_tracers": "NOT_RUN",
+  "pushed": false,
+  "whitespace_check": {
+    "exit_code": 2,
+    "status": "NONFUNCTIONAL_FORMATTING_WARNING",
+    "raw_evidence_preserved_exactly": true,
+    "reviewed_source_warning": [
+      "tools/a_dav/admission.py:97: trailing whitespace."
+    ],
+    "note": "Raw pytest/diff transcript whitespace and one trailing source space retained to preserve exact reviewed/tested bytes. No repository formatting gate is configured."
+  }
+}

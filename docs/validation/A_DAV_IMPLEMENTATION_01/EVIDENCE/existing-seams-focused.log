@@ -1,0 +1,24 @@
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_____________ test_bad_source_checksum_never_publishes_destination _____________
+
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-320/test_bad_source_checksum_never0')
+
+    def test_bad_source_checksum_never_publishes_destination(tmp_path):
+        from tools.a_dav.object_verification import atomic_retrieve
+        target = tmp_path / 'invented-object.bin'
+        with pytest.raises(ValueError, match='SHA-256'):
+            atomic_retrieve('https://raw.githubusercontent.com/synthetic/example/invented.bin',
+                            target, 'SYN-OBJECT', lambda *_: {'status': 200,
+                            'headers': {'Content-Length': '3'}, 'body': b'bad'},
+                            lambda: 1792713600, expected_sha256='a' * 64)
+        assert not target.exists()
+        assert not list(tmp_path.iterdir())
+>       assert result['records']['source_record'][0]['sha256'] == packet['records']['source_record'][0]['sha256']
+               ^^^^^^
+E       NameError: name 'result' is not defined
+
+tests/a_dav_implementation/test_existing_seams.py:60: NameError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_existing_seams.py::test_bad_source_checksum_never_publishes_destination
+1 failed, 4 passed in 7.00s

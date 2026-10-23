@@ -1,0 +1,18 @@
+..F                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_incomplete_search_does_not_become_a_source_pass _____________
+
+    def test_incomplete_search_does_not_become_a_source_pass():
+        packet = synthetic_context()
+        packet['config']['existing_seams']['search_runs'][0]['completion_status'] = 'INCOMPLETE'
+        result = run_existing_seams(packet)
+>       assert result['status'] == 'BLOCKED_UNKNOWN'
+E       AssertionError: assert 'FAIL' == 'BLOCKED_UNKNOWN'
+E         
+E         - BLOCKED_UNKNOWN
+E         + FAIL
+
+tests/a_dav_implementation/test_existing_seams.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_existing_seams.py::test_incomplete_search_does_not_become_a_source_pass
+1 failed, 2 passed in 7.53s

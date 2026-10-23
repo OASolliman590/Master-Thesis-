@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/private/tmp/thesis-adav05-20261020/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/a_dav_implementation",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "scope": "ALL_NEW_SYNTHETIC_DAV_TESTS",
+  "exit_code": 0,
+  "wall_seconds": 77.338,
+  "real_source_tracers": "NOT_RUN",
+  "biological_analysis_executed": false
+}

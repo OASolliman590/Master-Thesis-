@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.14, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01
+collected 17 items
+
+tests/a_dav_implementation/test_group_b_protocol.py .................    [100%]
+
+============================= 17 passed in 45.09s ==============================

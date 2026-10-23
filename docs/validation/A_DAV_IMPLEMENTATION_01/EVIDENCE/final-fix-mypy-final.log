@@ -1,0 +1,2 @@
+tools/a_dav/admission.py:221: error: Incompatible types in assignment (expression has type "list[list[Any]]", variable has type "set[Any]")  [assignment]
+Found 1 error in 1 file (checked 7 source files)

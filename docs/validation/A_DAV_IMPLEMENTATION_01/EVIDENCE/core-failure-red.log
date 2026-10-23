@@ -1,0 +1,126 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________ test_public_stage_seals_malformed_configs_without_echoing_them ________
+
+    def test_public_stage_seals_malformed_configs_without_echoing_them():
+        from tools.a_dav.workflow import run_existing_seams
+        schemas = SchemaStore()
+        for value in (float("nan"), {"not": "json"}, b"not-json"):
+            packet = {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+                      "records": {"study_registry": [{"study_id": "safe"}]},
+                      "config": {"existing_seams": value}, "schema_hashes": schemas.hashes}
+>           result = run_existing_seams(packet, schemas=schemas)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_core.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/a_dav/core.py:231: in wrapped
+    return finish(stage, packet, records=packet["records"] if checked else None,
+tools/a_dav/core.py:178: in finish
+    "bindings": {"input_sha256": input_hash, "config_sha256": digest(packet.get("config", {}) if isinstance(packet, dict) else {}),
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/a_dav/core.py:71: in digest
+    return hashlib.sha256(canonical_bytes(value)).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'existing_seams': nan}
+
+    def canonical_bytes(value: Any) -> bytes:
+        try:
+            return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                              allow_nan=False).encode("utf-8")
+        except (TypeError, ValueError, OverflowError):
+>           raise DavError("MALFORMED_INPUT") from None
+E           tools.a_dav.core.DavError: MALFORMED_INPUT
+
+tools/a_dav/core.py:67: DavError
+_______ test_public_stage_seals_cyclic_config_with_safe_digest_fallback ________
+
+    def test_public_stage_seals_cyclic_config_with_safe_digest_fallback():
+        import hashlib
+        from tools.a_dav.workflow import run_existing_seams
+        schemas = SchemaStore()
+        cyclic: dict[str, object] = {}
+        cyclic["self"] = cyclic
+        packet = {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+                  "records": {}, "config": {"existing_seams": cyclic}, "schema_hashes": schemas.hashes}
+>       result = run_existing_seams(packet, schemas=schemas)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_core.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/a_dav/core.py:231: in wrapped
+    return finish(stage, packet, records=packet["records"] if checked else None,
+tools/a_dav/core.py:178: in finish
+    "bindings": {"input_sha256": input_hash, "config_sha256": digest(packet.get("config", {}) if isinstance(packet, dict) else {}),
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/a_dav/core.py:71: in digest
+    return hashlib.sha256(canonical_bytes(value)).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'existing_seams': {'self': {'self': {'self': {'self': {'self': {...}}}}}}}
+
+    def canonical_bytes(value: Any) -> bytes:
+        try:
+            return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                              allow_nan=False).encode("utf-8")
+        except (TypeError, ValueError, OverflowError):
+>           raise DavError("MALFORMED_INPUT") from None
+E           tools.a_dav.core.DavError: MALFORMED_INPUT
+
+tools/a_dav/core.py:67: DavError
+_________ test_invalid_branch_is_normalized_to_none_in_sealed_failure __________
+
+    def test_invalid_branch_is_normalized_to_none_in_sealed_failure():
+        from tools.a_dav.workflow import run_existing_seams
+        schemas = SchemaStore()
+        packet = {"classification": "SYNTHETIC_ONLY", "branch_id": ["untrusted"],
+                  "records": {}, "config": {}, "schema_hashes": schemas.hashes}
+        result = run_existing_seams(packet, schemas=schemas)
+        assert result["status"] == "FAIL"
+>       assert result["reasons"] == ["UNSUPPORTED_BRANCH"]
+E       AssertionError: assert ['MALFORMED_INPUT'] == ['UNSUPPORTED_BRANCH']
+E         
+E         At index 0 diff: 'MALFORMED_INPUT' != 'UNSUPPORTED_BRANCH'
+E         Use -v to get more diff
+
+tests/a_dav_implementation/test_core.py:139: AssertionError
+___________ test_direct_finish_uses_safe_digest_for_malformed_config ___________
+
+    def test_direct_finish_uses_safe_digest_for_malformed_config():
+        import hashlib
+        schemas = SchemaStore()
+        packet = {"classification": "SYNTHETIC_ONLY", "branch_id": "A_BASELINE_BIO",
+                  "records": {}, "config": {"bad": {1, 2}}, "schema_hashes": schemas.hashes}
+>       result = finish("core", packet, status="FAIL", reasons=["MALFORMED_INPUT"], schemas=schemas)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_core.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/a_dav/core.py:178: in finish
+    "bindings": {"input_sha256": input_hash, "config_sha256": digest(packet.get("config", {}) if isinstance(packet, dict) else {}),
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tools/a_dav/core.py:71: in digest
+    return hashlib.sha256(canonical_bytes(value)).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'bad': {1, 2}}
+
+    def canonical_bytes(value: Any) -> bytes:
+        try:
+            return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                              allow_nan=False).encode("utf-8")
+        except (TypeError, ValueError, OverflowError):
+>           raise DavError("MALFORMED_INPUT") from None
+E           tools.a_dav.core.DavError: MALFORMED_INPUT
+
+tools/a_dav/core.py:67: DavError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_core.py::test_public_stage_seals_malformed_configs_without_echoing_them
+FAILED tests/a_dav_implementation/test_core.py::test_public_stage_seals_cyclic_config_with_safe_digest_fallback
+FAILED tests/a_dav_implementation/test_core.py::test_invalid_branch_is_normalized_to_none_in_sealed_failure
+FAILED tests/a_dav_implementation/test_core.py::test_direct_finish_uses_safe_digest_for_malformed_config
+4 failed, 6 deselected in 4.89s

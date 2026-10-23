@@ -1,0 +1,29 @@
+Isolated software copy: /private/tmp/dav-f4-before-kujygypj
+Core from pre-final-fix snapshot; all other copied software current F3 state.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_legacy_runtime_and_demo_hash_changes_invalidate_receipts _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x111a79280>
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-343/test_legacy_runtime_and_demo_h0')
+
+    def test_legacy_runtime_and_demo_hash_changes_invalidate_receipts(monkeypatch, tmp_path):
+        import pytest
+        from tools.a_dav import core
+        from tools.a_dav.release import freeze_bundle, verify_bundle
+        packet = _connected_graph()
+        target = tmp_path / 'runtime'
+        frozen = freeze_bundle(packet, target)
+        assert frozen['status'] == 'SYNTHETIC_READY'
+        original = core._file_hash
+        for filename in ('search_log.py', 'study_resolution.py', 'object_verification.py', 'demo.py'):
+            with monkeypatch.context() as patch:
+                patch.setattr(core, '_file_hash', lambda path, filename=filename: 'f' * 64 if path.name == filename else original(path))
+>               with pytest.raises(core.DavError, match='CODE_BINDING_MISMATCH'):
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               Failed: DID NOT RAISE DavError
+
+test_workflow.py:274: Failed
+=========================== short test summary info ============================
+FAILED test_workflow.py::test_legacy_runtime_and_demo_hash_changes_invalidate_receipts
+1 failed, 14 deselected in 20.48s

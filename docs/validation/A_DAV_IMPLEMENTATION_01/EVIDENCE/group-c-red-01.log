@@ -1,0 +1,126 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_missing_dependency_is_blocked[matrices-build_baseline] __________
+
+module = 'matrices', name = 'build_baseline'
+
+    @pytest.mark.parametrize('module,name', [('matrices','build_baseline'), ('matrices','build_longitudinal'),
+                                             ('release','validate_split'), ('reporting','build_public_report')])
+    def test_missing_dependency_is_blocked(module, name):
+>       api = getattr(importlib.import_module('tools.a_dav.' + module), name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_c.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.matrices', import_ = <function _gcd_import at 0x1048140e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.matrices'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_missing_dependency_is_blocked[matrices-build_longitudinal] ________
+
+module = 'matrices', name = 'build_longitudinal'
+
+    @pytest.mark.parametrize('module,name', [('matrices','build_baseline'), ('matrices','build_longitudinal'),
+                                             ('release','validate_split'), ('reporting','build_public_report')])
+    def test_missing_dependency_is_blocked(module, name):
+>       api = getattr(importlib.import_module('tools.a_dav.' + module), name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_c.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.matrices', import_ = <function _gcd_import at 0x1048140e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.matrices'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________ test_missing_dependency_is_blocked[release-validate_split] __________
+
+module = 'release', name = 'validate_split'
+
+    @pytest.mark.parametrize('module,name', [('matrices','build_baseline'), ('matrices','build_longitudinal'),
+                                             ('release','validate_split'), ('reporting','build_public_report')])
+    def test_missing_dependency_is_blocked(module, name):
+>       api = getattr(importlib.import_module('tools.a_dav.' + module), name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_c.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.release', import_ = <function _gcd_import at 0x1048140e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.release'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_missing_dependency_is_blocked[reporting-build_public_report] _______
+
+module = 'reporting', name = 'build_public_report'
+
+    @pytest.mark.parametrize('module,name', [('matrices','build_baseline'), ('matrices','build_longitudinal'),
+                                             ('release','validate_split'), ('reporting','build_public_report')])
+    def test_missing_dependency_is_blocked(module, name):
+>       api = getattr(importlib.import_module('tools.a_dav.' + module), name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/a_dav_implementation/test_group_c.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tools.a_dav.reporting', import_ = <function _gcd_import at 0x1048140e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tools.a_dav.reporting'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________________ test_freeze_missing_dependency_is_blocked ___________________
+
+tmp_path = PosixPath('/private/var/folders/94/fy64sdws3rl4tv96_nf4hl5c0000gp/T/pytest-of-megastore/pytest-315/test_freeze_missing_dependency0')
+
+    def test_freeze_missing_dependency_is_blocked(tmp_path):
+>       from tools.a_dav.release import freeze_bundle
+E       ModuleNotFoundError: No module named 'tools.a_dav.release'
+
+tests/a_dav_implementation/test_group_c.py:27: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/a_dav_implementation/test_group_c.py::test_missing_dependency_is_blocked[matrices-build_baseline]
+FAILED tests/a_dav_implementation/test_group_c.py::test_missing_dependency_is_blocked[matrices-build_longitudinal]
+FAILED tests/a_dav_implementation/test_group_c.py::test_missing_dependency_is_blocked[release-validate_split]
+FAILED tests/a_dav_implementation/test_group_c.py::test_missing_dependency_is_blocked[reporting-build_public_report]
+FAILED tests/a_dav_implementation/test_group_c.py::test_freeze_missing_dependency_is_blocked
+5 failed in 0.42s

@@ -1,0 +1,147 @@
+[
+  {
+    "path": "docs/superpowers/plans/2026-10-23-shared-dav-implementation.md",
+    "bytes": 10818,
+    "sha256": "1534f5cef39c8e58aa554344320ff12e0f059b1005f0c6da80177318a544aaae"
+  },
+  {
+    "path": "docs/validation/A_DAV_IMPLEMENTATION_01/README.md",
+    "bytes": 6743,
+    "sha256": "a24fe40fc7bb566fce0927da69c8868b282b02948ca828af23a2a42d3a70f1cb"
+  },
+  {
+    "path": "docs/validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md",
+    "bytes": 23846,
+    "sha256": "81c684e2368d660168dacd3e96eb6ca3001cb5437b58259f1d666a0f968602f6"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_core.py",
+    "bytes": 8429,
+    "sha256": "7f8cb6cca5cd13f22db52939d065c337bf174416cb99424693c3febc201682a9"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_existing_seams.py",
+    "bytes": 3620,
+    "sha256": "eb8aeee1759cf0349338dca8f0d5ca22723838b2929db41091855d6868c670fb"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_group_a.py",
+    "bytes": 40958,
+    "sha256": "cf064145a9a928cc4d4f752a292e59f8bb406f52695fa6d097199b1742d97d64"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_group_b_graph_admission.py",
+    "bytes": 15605,
+    "sha256": "d56405e72084c8bd6c6ae50ad40ca863e138ab35feb5f57fe391c8e49376cff6"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_group_b_protocol.py",
+    "bytes": 13855,
+    "sha256": "db2baebe3c893c38ad5f82b8ba2a3e9619e25442814f61cb3958e9fd94af58b1"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_group_c.py",
+    "bytes": 32998,
+    "sha256": "8a9804c34b20aaaa69ba37dbb6109022136139fa601a94a278e5866b9cd4bbfc"
+  },
+  {
+    "path": "tests/a_dav_implementation/test_workflow.py",
+    "bytes": 20321,
+    "sha256": "d6d8bf383c65fb5315792d28fff7f53111cb37f625dd426fe8a150ac00ccf974"
+  },
+  {
+    "path": "tools/a_dav/__init__.py",
+    "bytes": 56,
+    "sha256": "cc6ec322d5373127080b2de0002e2004bb0850122cc06c405c438db4bbe9fa57"
+  },
+  {
+    "path": "tools/a_dav/admission.py",
+    "bytes": 27557,
+    "sha256": "ae57181dd1ced267e34f6d0728e9056dd9a4191afede2d3a08db460ff1c2b1a8"
+  },
+  {
+    "path": "tools/a_dav/assays.py",
+    "bytes": 11254,
+    "sha256": "c8e0376d9de869ca69ae349eb35489348db91b63cde5a6ab66fd285ec7a2682f"
+  },
+  {
+    "path": "tools/a_dav/core.py",
+    "bytes": 16865,
+    "sha256": "0bef3e9fe31bc8a962caa312f7dda4e4ebfe84d647c251498791097ec8e37642"
+  },
+  {
+    "path": "tools/a_dav/demo.py",
+    "bytes": 15093,
+    "sha256": "51ee82c7e1a375811f4a7c29fd8f1f938764e80fa94106e3b9b4e1eae2765e0a"
+  },
+  {
+    "path": "tools/a_dav/endpoints.py",
+    "bytes": 10357,
+    "sha256": "3bfe5786674bcb5e4a5692fa31af96a55d1d3fbaf9297512b061abb4a5f4dad2"
+  },
+  {
+    "path": "tools/a_dav/exposure.py",
+    "bytes": 6060,
+    "sha256": "5c94d89cb48d698162d0a3dede02a112b4c007240f5c9acb3aaeb973c2847f0f"
+  },
+  {
+    "path": "tools/a_dav/matrices.py",
+    "bytes": 26381,
+    "sha256": "81fe81908d9b7e8f8207a9e9771341b7b9d74d257013fab36d0e43f9b674bd5e"
+  },
+  {
+    "path": "tools/a_dav/object_verification.py",
+    "bytes": 88875,
+    "sha256": "cd84ee094fa9efe2f306c28ed0b83a70f5d53cca529378aaa1197aaba68885a9"
+  },
+  {
+    "path": "tools/a_dav/overlap.py",
+    "bytes": 6043,
+    "sha256": "9d02db5c0453812e9ab0947799f319a9a0b2cc8629394c1bf41206a9b325d6ba"
+  },
+  {
+    "path": "tools/a_dav/prat_review.py",
+    "bytes": 11021,
+    "sha256": "28938f74b953920823f784ab781834115cf62d30890499d577f0d2b244b2a181"
+  },
+  {
+    "path": "tools/a_dav/registries.py",
+    "bytes": 6523,
+    "sha256": "ca0aa09d28c121a7a2c5b48338ecb803739b744f82dfd07160d4cf62821dd103"
+  },
+  {
+    "path": "tools/a_dav/release.py",
+    "bytes": 16745,
+    "sha256": "2dbd66eb25dbbf155f380d2f70b77fbab391c90db49c2e94e0b92191fcb826de"
+  },
+  {
+    "path": "tools/a_dav/reporting.py",
+    "bytes": 3174,
+    "sha256": "d5f390ef192339f83db2c5c04d339736b28efff94e55be65b343685f79079c41"
+  },
+  {
+    "path": "tools/a_dav/requirements-synthetic.txt",
+    "bytes": 126,
+    "sha256": "0bda19369fb8c8b46fa8732a254cd9fe3f7c9d903d8edf66fa4026fe8cc07d7b"
+  },
+  {
+    "path": "tools/a_dav/search_log.py",
+    "bytes": 24876,
+    "sha256": "5f1f5c3787445e2866192808cc07079746ec950839210e90ea7e371bf14f7650"
+  },
+  {
+    "path": "tools/a_dav/study_resolution.py",
+    "bytes": 48936,
+    "sha256": "b14a0e173651c51a59a8f36d07d2b27093e229cb190e7088408abd80fb56d40f"
+  },
+  {
+    "path": "tools/a_dav/timing.py",
+    "bytes": 14753,
+    "sha256": "ab8d588e0610371cebd647c3e92fc5f305dda8a21cf673124adba355bb5678a7"
+  },
+  {
+    "path": "tools/a_dav/workflow.py",
+    "bytes": 7290,
+    "sha256": "8f6ae141f8b46336f54218b4e4b380da16fc26c0dd2b06acd4c6d26f2a248cb0"
+  }
+]

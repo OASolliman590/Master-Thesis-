@@ -1,0 +1,139 @@
+"""P01–P08 invented two-reader protocol checks, never actual authentication."""
+from __future__ import annotations
+import hashlib
+import re
+from typing import Any, cast
+from .core import ENTITY_TABLES, SchemaStore, digest, finish, public_summary, require, stage_boundary
+
+REASON_CODES = frozenset({"OBJECT_BYTES_MISMATCH", "OBJECT_MANIFEST_INCOMPLETE", "REVIEW_BASIS_MISMATCH", "FIRST_PASS_TAMPERED", "FIRST_PASS_MISSING", "TWO_READERS_REQUIRED", "READER_INDEPENDENCE_REQUIRED", "FIRST_PASS_ORDER_INVALID", "OUTCOME_SELECTION_PROHIBITED", "POLICY_LOCK_ORDER_INVALID", "PRAT_EXPORT_PROHIBITED", "ASSERTION_EVIDENCE_MISSING", "ASSERTION_DISAGREEMENT_UNRESOLVED", "ADJUDICATION_INVALID", "ACTUAL_REVIEW_NOT_RUN", "REVIEW_POLICY_UNKNOWN", "CURRENT_BRANCH_CHECKLIST_MISSING", "READER_AUTHENTICATION_REFERENCE_MISSING"})
+CURRENT_QUESTIONS = frozenset({"identity", "patient_specimen_assay", "episode_bindings", "baseline_repeat_policy", "endpoint", "assay", "overlap_exposure"})
+PUBLIC_KEYS = frozenset({"classification", "stage", "status", "reasons", "bindings", "analysis_ready", "source_admission", "statistical_release", "biological_analysis_executed"})
+
+
+@stage_boundary("prat_review")
+def review_prat_packet(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+    store = schemas or SchemaStore()
+    records = packet["records"]
+    for table in ENTITY_TABLES & records.keys():
+        for record in records[table]:
+            store.validate(table, record)
+    patients = {r["patient_uid"]: r for r in records.get("patient_registry", [])}
+    episodes = {r["treatment_episode_id"]: r for r in records.get("treatment_episode", [])}
+    subjects = {"SPECIMEN": {r["specimen_uid"]: r for r in records.get("specimen_registry", [])},
+                "CLINICAL_OUTCOME": {r["outcome_id"]: r for r in records.get("clinical_outcome", [])},
+                "TREATMENT_EXPOSURE": {r["treatment_exposure_id"]: r for r in records.get("treatment_exposure", [])}}
+    for binding in records.get("episode_binding", []):
+        ep = episodes.get(binding["treatment_episode_id"])
+        subject = subjects.get(binding["subject_type"], {}).get(binding["subject_id"])
+        require(binding["patient_uid"] in patients and ep is not None and subject is not None,
+                "FOREIGN_KEY_UNRESOLVED")
+        require(cast(dict[str, Any], ep)["patient_uid"] == binding["patient_uid"] == cast(dict[str, Any], subject)["patient_uid"], "FOREIGN_KEY_UNRESOLVED")
+    c = packet["config"].get("prat_review", {})
+    require(not c.get("extra_artifacts") and c.get("export_schema_version") == "prat-narrow-v1", "PRAT_EXPORT_PROHIBITED")
+    manifest = c.get("manifest", [])
+    require(isinstance(manifest, list) and bool(manifest), "OBJECT_MANIFEST_INCOMPLETE", blocked=True)
+    object_ids: set[str] = set()
+    available_verified_ids: set[str] = set()
+    auth_missing = False
+    incomplete = False
+    for obj in manifest:
+        require(isinstance(obj, dict) and isinstance(obj.get("object_id"), str), "MALFORMED_INPUT")
+        require(obj["object_id"] not in object_ids, "DUPLICATE_ID")
+        object_ids.add(obj["object_id"])
+        require(obj.get("state") in {"AVAILABLE", "MISSING", "UNAVAILABLE", "UNINSPECTED", "SUPERSEDED"}, "MALFORMED_INPUT")
+        if obj.get("state") != "AVAILABLE":
+            incomplete |= obj.get("required") is not False
+            continue
+        raw = bytes.fromhex(obj.get("content_hex", ""))
+        require(obj.get("hash_scope") == "FULL_OBJECT" and obj.get("byte_size") == len(raw) and
+                obj.get("sha256") == hashlib.sha256(raw).hexdigest(), "OBJECT_BYTES_MISMATCH")
+        available_verified_ids.add(obj["object_id"])
+        require(bool(obj.get("authored_version")) or bool(obj.get("immutable_capture_id")), "REVIEW_BASIS_MISMATCH")
+        if not all(obj.get(k) for k in ("origin", "retrieval_utc", "terms", "custody_reference")):
+            incomplete = True
+    required_ids = c.get("required_object_ids", [])
+    incomplete |= not isinstance(required_ids, list) or not required_ids or not set(required_ids).issubset(available_verified_ids)
+    basis, questions, policy = c.get("basis", {}), c.get("questions", []), c.get("repeat_policy", {})
+    require(isinstance(basis, dict) and isinstance(questions, list) and bool(questions) and len(set(questions)) == len(questions), "REVIEW_POLICY_UNKNOWN", blocked=True)
+    require(packet["branch_id"] == "A_BASELINE_BIO" and set(questions) == CURRENT_QUESTIONS, "CURRENT_BRANCH_CHECKLIST_MISSING", blocked=True)
+    require(basis.get("required_object_ids_sha256") == digest(sorted(required_ids)), "REVIEW_BASIS_MISMATCH")
+    require(basis.get("inventory_scope_sha256") == digest(c.get("inventory_scope")), "REVIEW_BASIS_MISMATCH")
+    require(basis.get("manifest_sha256") == digest(manifest) and basis.get("branch_id") == packet["branch_id"] and
+            basis.get("schema_sha256") == digest(store.hashes) and basis.get("questions_sha256") == digest(questions) and
+            basis.get("repeat_policy_sha256") == digest(policy), "REVIEW_BASIS_MISMATCH")
+    require(all(basis.get(k) for k in ("manifest_version", "executor_sha256", "auditor_sha256", "rule_language_version")) and policy.get("version"), "REVIEW_POLICY_UNKNOWN", blocked=True)
+    require(all(isinstance(basis[k], str) and re.fullmatch(r"[a-f0-9]{64}", basis[k]) for k in ("executor_sha256", "auditor_sha256")), "REVIEW_BASIS_MISMATCH")
+    allowed_inputs = {"timing", "qc", "lesion", "assay", "specimen"}
+    require(isinstance(c.get("selection_inputs"), list) and set(c["selection_inputs"]) <= allowed_inputs, "OUTCOME_SELECTION_PROHIBITED")
+    readers = c.get("readers", [])
+    require(isinstance(readers, list) and len(readers) == 2, "TWO_READERS_REQUIRED", blocked=len(readers) < 2)
+    first, second = readers
+    require(first.get("reader_id") and second.get("reader_id") and first["reader_id"] != second["reader_id"], "READER_INDEPENDENCE_REQUIRED")
+    for reader in readers:
+        require(reader.get("seal_sha256"), "FIRST_PASS_MISSING", blocked=True)
+        require(reader.get("seal_sha256") == digest({k: v for k, v in reader.items() if k != "seal_sha256"}), "FIRST_PASS_TAMPERED")
+        require(reader.get("basis") == basis, "REVIEW_BASIS_MISMATCH")
+        require(reader.get("peer_access_before_seal") is False and reader.get("independence_attested") is True, "READER_INDEPENDENCE_REQUIRED")
+        require(isinstance(reader.get("sealed_order"), int) and isinstance(reader.get("read_started_order"), int) and isinstance(c.get("comparison_order"), int) and
+                reader["read_started_order"] < reader["sealed_order"] < c["comparison_order"], "FIRST_PASS_ORDER_INVALID")
+        require(isinstance(c.get("policy_locked_order"), int) and c["policy_locked_order"] < reader["read_started_order"], "POLICY_LOCK_ORDER_INVALID")
+        if not all(reader.get(k) for k in ("authored_contract_version", "authored_contract_sha256", "outcome_exposure")):
+            incomplete = True
+        auth_missing |= not bool(reader.get("authentication_reference"))
+    audit: list[dict[str, Any]] = []
+    unresolved: set[str] = set()
+    if auth_missing:
+        unresolved.add("READER_AUTHENTICATION_REFERENCE_MISSING")
+    if incomplete:
+        unresolved.add("OBJECT_MANIFEST_INCOMPLETE")
+    assertions: list[dict[str, dict[str, Any]]] = []
+    for reader in readers:
+        mapping: dict[str, dict[str, Any]] = {}
+        for assertion in reader.get("assertions", []):
+            question = assertion.get("question_id")
+            require(question in questions and question not in mapping, "REVIEW_BASIS_MISMATCH")
+            mapping[question] = assertion
+            if assertion.get("authority_object_id") not in available_verified_ids or not assertion.get("source_locator") or not assertion.get("rule_locator") or "value" not in assertion:
+                unresolved.add("ASSERTION_EVIDENCE_MISSING")
+        if set(mapping) != set(questions):
+            unresolved.add("ASSERTION_EVIDENCE_MISSING")
+        assertions.append(mapping)
+    adjudications = c.get("adjudications", [])
+    require(isinstance(adjudications, list), "ADJUDICATION_INVALID")
+    by_question: dict[str, dict[str, Any]] = {}
+    seals = sorted(r["seal_sha256"] for r in readers)
+    for adjudication in adjudications:
+        question = adjudication.get("question_id")
+        require(question in questions and question not in by_question and adjudication.get("basis_sha256") == digest(basis) and
+                sorted(adjudication.get("first_pass_sha256", [])) == seals and
+                adjudication.get("final_contract_sha256") == c.get("current_contract_sha256") and
+                all(adjudication.get(k) for k in ("rationale", "adjudicator_id", "adjudication_date", "authentication_reference", "source_locator")), "ADJUDICATION_INVALID")
+        require(adjudication.get("disposition") in {"RESOLVED_FIRST", "RESOLVED_SECOND", "SOURCE_BACKED_EQUIVALENT", "UNRESOLVED", "ADDITIONAL_OBJECTS_REQUIRED"}, "ADJUDICATION_INVALID")
+        by_question[question] = adjudication
+    for question in questions:
+        a, b = assertions[0].get(question), assertions[1].get(question)
+        if a is None or b is None:
+            continue
+        if a != b:
+            adj = by_question.get(question)
+            if adj is None or adj["disposition"] in {"UNRESOLVED", "ADDITIONAL_OBJECTS_REQUIRED"}:
+                unresolved.add("ASSERTION_DISAGREEMENT_UNRESOLVED")
+            audit.append({"kind": "assertion_disagreement", "question_id": question, "first_assertion": a, "second_assertion": b,
+                          "first_pass_sha256": seals, "adjudication": adj, "basis_sha256": digest(basis)})
+        else:
+            require(question not in by_question, "ADJUDICATION_INVALID")
+    require(bool(c.get("current_contract_sha256")), "REVIEW_POLICY_UNKNOWN", blocked=True)
+    audit.append({"kind": "prat_protocol", "software_protocol": "BLOCKED_UNKNOWN" if unresolved else "SYNTHETIC_READY",
+                  "actual_source_evidence": "NOT_RUN", "actual_reader_authentication": "NOT_RUN", "canonical_admission": "BLOCKED_UNKNOWN",
+                  "legacy_reconstruction_equal": bool(first.get("legacy_table_hashes")) and first.get("legacy_table_hashes") == second.get("legacy_table_hashes"),
+                  "basis_sha256": digest(basis), "first_pass_sha256": seals, "checklist": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"]})
+    return finish("prat_review", packet, packet["records"], status="BLOCKED_UNKNOWN" if unresolved else "SYNTHETIC_READY",
+                  reasons=unresolved, audit=audit, schemas=store)
+
+
+def public_prat_summary(result: dict[str, Any]) -> dict[str, Any]:
+    """The fixed aggregate-free export; private protocol assertions stay sealed."""
+    require(result.get("stage") == "prat_review", "PRAT_EXPORT_PROHIBITED")
+    summary = public_summary(result, include_counts=False)
+    require(set(summary) == PUBLIC_KEYS, "PRAT_EXPORT_PROHIBITED")
+    return summary

@@ -1,0 +1,321 @@
+"""Shared boundaries for invented-data DAV software, never clinical admission."""
+from __future__ import annotations
+
+import copy
+import functools
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any, Callable, Iterable, Literal, cast
+
+from jsonschema import Draft202012Validator
+
+SCHEMA_ROOT = Path(__file__).resolve().parents[2] / "specs/A_DATA_ACQUISITION_VALIDATION/schemas"
+Status = Literal["SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"]
+RecordSet = dict[str, list[dict[str, Any]]]
+StageFunction = Callable[..., dict[str, Any]]
+FLAGS = ("analysis_ready", "source_admission", "statistical_release", "biological_analysis_executed")
+BRANCHES = frozenset({
+    "A_BASELINE_BIO", "A_P2_DEVELOPMENT", "A_P2_OUTER_VALIDATION", "A_P2_FINAL_TEST",
+    "A_P1_ENDPOINT_SENSITIVITY", "A1_ON_R_NR", "A1_POST_R_NR", "A1_RESPONSE_TIME_INTERACTION",
+    "A1_PROGRESSION", "A1_ARM_TIME_INTERACTION", "PAIRED_MULTIOMICS", "PROSTATE_TRANSPORT",
+    "A1_PAIRED_CHANGE", "A1_SYNTHESIS", "A1_MODERATOR", "A_TO_BC",
+})
+MODULES = {
+    "core": "core", "existing_seams": "workflow", "registries": "registries",
+    "endpoints": "endpoints", "timing": "timing", "assays": "assays",
+    "overlap": "overlap", "exposure": "exposure", "admission": "admission",
+    "prat_review": "prat_review", "baseline": "matrices", "longitudinal": "matrices",
+    "split": "release", "public_report": "reporting", "freeze": "release", "workflow": "workflow",
+}
+# Only direct stage prerequisites are sealed; incidental later receipts in a
+# resume packet must never introduce back-edges into the execution graph.
+UPSTREAMS: dict[str, tuple[str, ...]] = {
+    'core': (), 'existing_seams': (), 'registries': ('existing_seams',),
+    **{stage: ('registries',) for stage in ('endpoints', 'timing', 'assays', 'overlap', 'exposure')},
+    'admission': ('registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure'),
+    'split': ('admission', 'overlap', 'exposure'),
+    'baseline': ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure'),
+    'longitudinal': ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure'),
+    'prat_review': (), 'public_report': ('admission', 'baseline', 'longitudinal', 'split', 'prat_review'),
+    'freeze': ('existing_seams', 'public_report', 'admission', 'baseline', 'longitudinal', 'split',
+               'registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure', 'prat_review'),
+    'workflow': ('existing_seams', 'registries', 'endpoints', 'timing', 'assays', 'overlap', 'exposure',
+                 'admission', 'split', 'baseline', 'longitudinal', 'public_report', 'freeze'),
+}
+LEGACY_RUNTIME = ('__init__', 'search_log', 'study_resolution', 'object_verification')
+
+
+def runtime_hashes(stage: str) -> dict[str, str]:
+    names = {'core', MODULES[stage]}
+    if stage == 'existing_seams': names.update(LEGACY_RUNTIME)
+    if stage in {'workflow', 'freeze'}:
+        names.update(MODULES.values())
+        names.update((*LEGACY_RUNTIME, 'demo'))
+    return {name + '.py': _file_hash(Path(__file__).with_name(name + '.py')) for name in sorted(names)}
+
+
+def _upstream_receipts(stage: str, packet: Any) -> dict[str, str]:
+    dependencies = packet.get('dependencies') if isinstance(packet, dict) else None
+    if not isinstance(dependencies, dict): return {}
+    return {name: value['receipt_id'] for name in UPSTREAMS[stage]
+            if isinstance((value := dependencies.get(name)), dict)
+            and isinstance(value.get('receipt_id'), str)
+            and re.fullmatch(r'[a-f0-9]{64}', value['receipt_id'])}
+
+
+VIEWS = frozenset({"baseline", "timepoint", "pair", "endpoint", "coverage", "split", "membership"})
+ENTITY_TABLES = frozenset({"study_registry", "publication_family", "source_record", "patient_registry",
+    "specimen_registry", "assay_registry", "treatment_episode", "treatment_exposure", "clinical_outcome",
+    "episode_binding", "overlap_edge", "prior_exposure_record"})
+DERIVED_TABLES = {"endpoints": ("endpoint",), "assays": ("coverage",),
+                  "admission": ("cohort_admission_receipt",), "baseline": ("baseline",),
+                  "longitudinal": ("timepoint", "pair"), "split": ("split",)}
+REASON_CODES = frozenset({
+    "MALFORMED_INPUT", "SYNTHETIC_ONLY_REQUIRED", "UNSUPPORTED_BRANCH", "SCHEMA_BINDING_MISMATCH",
+    "SCHEMA_INVALID", "MISSING_ASSERTION", "DUPLICATE_ID", "FOREIGN_KEY_UNRESOLVED",
+    "DEPENDENCY_MISSING", "DEPENDENCY_INVALID", "DEPENDENCY_BLOCKED", "RECEIPT_TAMPERED",
+    "CODE_BINDING_MISMATCH", "SOFTWARE_UNAVAILABLE", "UNCLASSIFIED_REASON",
+})
+
+
+class DavError(ValueError):
+    """A fixed, export-safe code; no caller-supplied diagnostic text."""
+
+    def __init__(self, code: str, *, blocked: bool = False):
+        self.code = code
+        self.blocked = blocked
+        super().__init__(code)
+
+
+def require(condition: object, code: str, *, blocked: bool = False) -> None:
+    if not condition:
+        raise DavError(code, blocked=blocked)
+
+
+def canonical_bytes(value: Any) -> bytes:
+    try:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+                          allow_nan=False).encode("utf-8")
+    except (TypeError, ValueError, OverflowError):
+        raise DavError("MALFORMED_INPUT") from None
+
+
+def digest(value: Any) -> str:
+    return hashlib.sha256(canonical_bytes(value)).hexdigest()
+
+
+def _file_hash(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+class SchemaStore:
+    """Load only the existing local frozen schemas; never retrieve a reference."""
+
+    def __init__(self, root: Path = SCHEMA_ROOT,
+                 expected_hashes: dict[str, str] | None = None):
+        self.root = Path(root)
+        self._schemas: dict[str, dict[str, Any]] = {}
+        self._hashes: dict[str, str] = {}
+        for path in sorted(self.root.glob("*.schema.json")):
+            name = path.name.removesuffix(".schema.json")
+            raw = path.read_bytes()
+            doc = json.loads(raw)
+            self._local_references(doc)
+            Draft202012Validator.check_schema(doc)
+            self._schemas[name] = doc
+            self._hashes[name] = hashlib.sha256(raw).hexdigest()
+        require(bool(self._schemas), "SOFTWARE_UNAVAILABLE")
+        if self.root.resolve() != SCHEMA_ROOT.resolve():
+            authoritative = {path.name.removesuffix(".schema.json"): _file_hash(path)
+                             for path in SCHEMA_ROOT.glob("*.schema.json")}
+            require(self._hashes == authoritative, "SCHEMA_BINDING_MISMATCH")
+        if expected_hashes is not None:
+            require(expected_hashes == self._hashes, "SCHEMA_BINDING_MISMATCH")
+
+    @staticmethod
+    def _local_references(value: Any) -> None:
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key in {"$ref", "$dynamicRef"}:
+                    require(isinstance(item, str) and item.startswith("#"), "SCHEMA_INVALID")
+                SchemaStore._local_references(item)
+        elif isinstance(value, list):
+            for item in value:
+                SchemaStore._local_references(item)
+
+    @property
+    def hashes(self) -> dict[str, str]:
+        return dict(self._hashes)
+
+    def validate(self, table: str, record: dict[str, Any]) -> None:
+        name = "materialized_matrix" if table in VIEWS else table
+        require(name in self._schemas, "SCHEMA_INVALID")
+        if table in VIEWS:
+            require(record.get("row_type") == table.upper(), "SCHEMA_INVALID")
+        errors = list(Draft202012Validator(self._schemas[name]).iter_errors(record))
+        if errors:
+            # Invalid present values take precedence over absent assertions.
+            if any(error.validator != "required" for error in errors):
+                raise DavError("SCHEMA_INVALID")
+            raise DavError("MISSING_ASSERTION", blocked=True)
+
+
+def _stable_records(records: RecordSet) -> RecordSet:
+    return {table: sorted(copy.deepcopy(rows), key=canonical_bytes)
+            for table, rows in sorted(records.items())}
+
+
+def _stable_packet(packet: dict[str, Any]) -> dict[str, Any]:
+    out = copy.deepcopy(packet)
+    if isinstance(out.get("records"), dict):
+        out["records"] = _stable_records(out["records"])
+    return out
+
+
+def check_packet(packet: dict[str, Any], schemas: SchemaStore) -> None:
+    require(type(packet) is dict, "MALFORMED_INPUT")
+    require(packet.get("classification") == "SYNTHETIC_ONLY", "SYNTHETIC_ONLY_REQUIRED")
+    branch_id = packet.get("branch_id")
+    require(type(branch_id) is str and branch_id in BRANCHES, "UNSUPPORTED_BRANCH")
+    require(packet.get("schema_hashes") == schemas.hashes, "SCHEMA_BINDING_MISMATCH")
+    require(type(packet.get("records")) is dict and type(packet.get("config")) is dict, "MALFORMED_INPUT")
+    require(type(packet.get("dependencies", {})) is dict, "MALFORMED_INPUT")
+    require(all(packet.get(key, False) is False for key in FLAGS), "SYNTHETIC_ONLY_REQUIRED")
+    for rows in packet["records"].values():
+        require(type(rows) is list and all(type(row) is dict for row in rows), "MALFORMED_INPUT")
+    canonical_bytes(packet)
+
+
+def _module_path(stage: str) -> Path:
+    require(stage in MODULES, "MALFORMED_INPUT")
+    return Path(__file__).with_name(MODULES[stage] + ".py")
+
+
+def finish(stage: str, packet: dict[str, Any], records: RecordSet | None = None, *,
+           status: Status = "SYNTHETIC_READY", reasons: Iterable[str] = (),
+           audit: Iterable[dict[str, Any]] = (), schemas: SchemaStore | None = None) -> dict[str, Any]:
+    store = schemas or SchemaStore()
+    require(status in {"SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"}, "MALFORMED_INPUT")
+    out_records = _stable_records(records or {})
+    out_audit = sorted(copy.deepcopy(list(audit)), key=canonical_bytes)
+    codes = sorted(set(reasons))
+    require(all(type(code) is str and re.fullmatch(r"[A-Z][A-Z0-9_]{0,63}", code) for code in codes), "MALFORMED_INPUT")
+    safe_digest = digest(None)
+    try:
+        input_hash = digest(_stable_packet(packet))
+    except (DavError, TypeError, AttributeError):
+        input_hash = safe_digest
+    try:
+        config_hash = digest(packet.get("config", {}) if isinstance(packet, dict) else {})
+    except DavError:
+        config_hash = safe_digest
+    module_path = _module_path(stage)
+    packet_branch = packet.get("branch_id") if isinstance(packet, dict) else None
+    result = {
+        "classification": "SYNTHETIC_ONLY", "stage": stage, "status": status,
+        "branch_id": packet_branch if type(packet_branch) is str and packet_branch in BRANCHES else None,
+        "records": out_records, "audit": out_audit, "reasons": codes,
+        "bindings": {"input_sha256": input_hash, "config_sha256": config_hash,
+                     "schemas_sha256": digest(store.hashes), "code_sha256": _file_hash(module_path),
+                     "core_sha256": _file_hash(Path(__file__)),
+                     "runtime_sha256": runtime_hashes(stage),
+                     "upstream_receipt_ids": _upstream_receipts(stage, packet),
+                     "output_sha256": digest({"records": out_records, "audit": out_audit})},
+        **dict.fromkeys(FLAGS, False),
+    }
+    result["receipt_id"] = digest(result)
+    return result
+
+
+def verify_result(result: dict[str, Any], stage: str | None = None, branch_id: str | None = None,
+                  schemas: SchemaStore | None = None) -> None:
+    require(type(result) is dict and isinstance(result.get("bindings"), dict), "DEPENDENCY_INVALID")
+    require(result.get("classification") == "SYNTHETIC_ONLY", "SYNTHETIC_ONLY_REQUIRED")
+    require(all(result.get(key) is False for key in FLAGS), "DEPENDENCY_INVALID")
+    actual_stage = result.get("stage")
+    require(isinstance(actual_stage, str) and actual_stage in MODULES, "DEPENDENCY_INVALID")
+    require(stage is None or actual_stage == stage, "DEPENDENCY_INVALID")
+    require(branch_id is None or result.get("branch_id") == branch_id, "DEPENDENCY_INVALID")
+    require(result.get("status") in {"SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"}, "DEPENDENCY_INVALID")
+    require(result.get("receipt_id") == digest({k: v for k, v in result.items() if k != "receipt_id"}), "RECEIPT_TAMPERED")
+    bindings = result["bindings"]
+    store = schemas or SchemaStore()
+    require(bindings.get("schemas_sha256") == digest(store.hashes), "SCHEMA_BINDING_MISMATCH")
+    require(bindings.get("code_sha256") == _file_hash(_module_path(cast(str, actual_stage))), "CODE_BINDING_MISMATCH")
+    require(bindings.get("core_sha256") == _file_hash(Path(__file__)), "CODE_BINDING_MISMATCH")
+    require(bindings.get('runtime_sha256') == runtime_hashes(cast(str, actual_stage)), 'CODE_BINDING_MISMATCH')
+    upstreams = bindings.get('upstream_receipt_ids')
+    require(isinstance(upstreams, dict) and set(upstreams) <= set(UPSTREAMS[cast(str, actual_stage)])
+            and all(isinstance(v, str) and re.fullmatch(r'[a-f0-9]{64}', v) for v in upstreams.values()),
+            'DEPENDENCY_INVALID')
+    require(bindings.get("output_sha256") == digest({"records": result.get("records"), "audit": result.get("audit")}), "RECEIPT_TAMPERED")
+
+
+def dependency(packet: dict[str, Any], stage: str, schemas: SchemaStore) -> dict[str, Any]:
+    verified: dict[str, dict[str, Any]] = {}
+    visiting: set[str] = set()
+
+    def visit(name: str) -> dict[str, Any]:
+        if name in verified: return verified[name]
+        require(name not in visiting, 'DEPENDENCY_INVALID')
+        visiting.add(name)
+        value = packet.get('dependencies', {}).get(name)
+        require(type(value) is dict, 'DEPENDENCY_MISSING', blocked=True)
+        verify_result(value, stage=name, branch_id=packet['branch_id'], schemas=schemas)
+        require(value['status'] == 'SYNTHETIC_READY', 'DEPENDENCY_BLOCKED', blocked=True)
+        require(value['bindings']['config_sha256'] == digest(packet['config']), 'DEPENDENCY_INVALID')
+        for upstream, receipt_id in value['bindings']['upstream_receipt_ids'].items():
+            current = packet.get('dependencies', {}).get(upstream)
+            require(isinstance(current, dict), 'DEPENDENCY_MISSING', blocked=True)
+            require(current.get('receipt_id') == receipt_id, 'DEPENDENCY_INVALID')
+            visit(upstream)
+        for table in ENTITY_TABLES | set(DERIVED_TABLES.get(name, ())):
+            require(sorted(packet['records'].get(table, []), key=canonical_bytes) ==
+                    sorted(value['records'].get(table, []), key=canonical_bytes), 'DEPENDENCY_INVALID')
+        visiting.remove(name)
+        verified[name] = value
+        return cast(dict[str, Any], value)
+
+    return visit(stage)
+
+
+
+def stage_boundary(stage: str) -> Callable[[StageFunction], StageFunction]:
+    def decorate(function: StageFunction) -> StageFunction:
+        @functools.wraps(function)
+        def wrapped(packet: dict[str, Any], *args: Any, schemas: SchemaStore | None = None,
+                    **kwargs: Any) -> dict[str, Any]:
+            store = schemas or SchemaStore()
+            checked = False
+            try:
+                check_packet(packet, store)
+                checked = True
+                return function(packet, *args, schemas=store, **kwargs)
+            except DavError as exc:
+                return finish(stage, packet, records=packet["records"] if checked else None,
+                              status="BLOCKED_UNKNOWN" if exc.blocked else "FAIL",
+                              reasons=[exc.code], schemas=store)
+            except (KeyError, TypeError, ValueError, AttributeError, OverflowError):
+                return finish(stage, packet, records=packet["records"] if checked else None,
+                              status="FAIL", reasons=["MALFORMED_INPUT"], schemas=store)
+        return wrapped
+    return decorate
+
+
+def public_summary(result: dict[str, Any], *, include_counts: bool = True) -> dict[str, Any]:
+    verify_result(result)
+    module = sys.modules.get("tools.a_dav." + MODULES[result["stage"]])
+    allowed = REASON_CODES | frozenset(getattr(module, "REASON_CODES", ()))
+    reasons = sorted({code if code in allowed else "UNCLASSIFIED_REASON" for code in result["reasons"]})
+    summary = {"classification": "SYNTHETIC_ONLY", "stage": result["stage"],
+               "status": result["status"], "reasons": reasons,
+               "bindings": {key: value for key, value in result["bindings"].items()
+                            if key in {"input_sha256", "config_sha256", "schemas_sha256", "code_sha256", "core_sha256", "output_sha256"}
+                            and isinstance(value, str) and re.fullmatch(r"[a-f0-9]{64}", value)},
+               **dict.fromkeys(FLAGS, False)}
+    if include_counts:
+        summary["record_count"] = sum(len(rows) for rows in result["records"].values())
+    return summary
