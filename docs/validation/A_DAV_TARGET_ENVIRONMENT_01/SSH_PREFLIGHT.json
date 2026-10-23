@@ -1,0 +1,9 @@
+{
+  "alias": "omics",
+  "elapsed_seconds": 0.088,
+  "exit_code": 255,
+  "stdout": "",
+  "stderr": "ssh: Could not resolve hostname omics: nodename nor servname provided, or not known\n",
+  "remote_job_started": false,
+  "real_source_data_used": false
+}

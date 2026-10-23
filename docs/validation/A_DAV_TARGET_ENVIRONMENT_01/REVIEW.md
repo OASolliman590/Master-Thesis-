@@ -1,0 +1,15 @@
+# Independent parent review
+
+Scope: new target-validation packet against `f53d2222d7d82e6dfdf4af381d71946cd247a89d`. The shared runtime, frozen specs, old receipts and real-source evidence are outside the change. The requirements are the user constraints, this packet's BRIEF and the frozen reproduction/readiness contract.
+
+The parent inspected the full runner and boundary tests before transfer. Four findings were accepted and fixed by Luna: thread limits were absent; missing dependencies were labelled `FAILED` instead of `BLOCKED`; installed runtime dependency versions were observed but not enforced; bundle members could be symlinks. Added tests covered these boundaries and count/identifier summary rejection. The parent reran all 14 boundary tests successfully. Runner bytes were then fixed in the transfer manifest before execution.
+
+The parent verified the 45-member archive before transfer, used an existing trusted host key and identity, and created a new private environment. The initial failed alias and sandbox network checks are retained as preflight history. They do not describe the later successful direct SSH connection. The setup's two commands exited 0; the public dependency install report retains exact downloaded artifact hashes.
+
+The parent retrieved the completed worker receipts independently. All three child commands exited 0; the full suite reported 255 passed. The public fresh/resume summaries match, contain only permitted status and hash fields, and retain false actual flags. The four bundle hashes match the manifest. The parent separately ran strict mypy on the actual AIU copy, tested local filesystem behavior and executed a third resume-only command. That command exited 0, returned the same summary and changed no output bytes. Remote payload hashes matched every transferred file after these checks.
+
+An initial parent verifier assumption that the release draft should say `BLOCKED_UNKNOWN` was rejected against the actual code and frozen schema. The release contract uses `READY_FOR_REVIEW` for this synthetic software draft, while its source/statistical gates stay `NOT_RUN` and admitted sources stay empty. The verifier checks that actual contract. No product or spec change was needed.
+
+Missing source evidence remains separate from software fixes. This review does not authenticate readers, inspect source objects, admit sources or approve scientific/statistical release. It gives no biological conclusion. The fixture's declared environment is invented content; actual AIU environment provenance is in the target receipt. Protected inputs and the prior implementation packet are checked against the 2,142-file baseline.
+
+Two separate read-only review agents then checked Standards and Spec conformance. [Standards](REVIEW_STANDARDS.md): zero documented-rule breaches and zero actionable smell findings. [Spec](REVIEW_SPEC.md): zero actionable findings. The parent removed one extra final blank line in the boundary test file and reran its 14 tests on the final bytes; the target runner and transferred payload were unchanged.

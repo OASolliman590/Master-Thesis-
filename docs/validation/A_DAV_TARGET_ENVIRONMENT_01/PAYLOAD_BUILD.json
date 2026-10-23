@@ -1,0 +1,15 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "base_commit": "f53d2222d7d82e6dfdf4af381d71946cd247a89d",
+  "created_utc": "2026-10-23T21:23:39.873709+00:00",
+  "staging_path": "/private/tmp/dav-aiu-20261024-iruzgozp",
+  "payload_path": "/private/tmp/dav-aiu-20261024-iruzgozp/payload",
+  "archive_path": "/private/tmp/dav-aiu-20261024-iruzgozp/dav-synthetic-payload.tar",
+  "archive_sha256": "ac5bf7b9e9c746570e3fef9c29d1e5332bf5bcc75f1fb9969b6cd15032e2bc30",
+  "archive_bytes": 614400,
+  "manifest_sha256": "28d2e31993eebf1e197667b7291a23c125c12b4e90d4d6ca138413412e2567b5",
+  "member_count": 45,
+  "protected_files_checked": 2142,
+  "protected_files_changed": [],
+  "real_source_data_used": false
+}

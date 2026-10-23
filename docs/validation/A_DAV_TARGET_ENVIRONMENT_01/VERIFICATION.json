@@ -1,0 +1,18 @@
+{
+  "aiu_synthetic_tests_passed": 255,
+  "analysis_ready": false,
+  "base_commit": "f53d2222d7d82e6dfdf4af381d71946cd247a89d",
+  "biological_analysis_executed": false,
+  "classification": "SYNTHETIC_ONLY",
+  "frozen_specs_changed": false,
+  "parent_resume_unchanged": true,
+  "parent_target_typecheck_sources": 15,
+  "payload_files_checked": 45,
+  "preserved_files_changed": 0,
+  "preserved_files_checked": 2142,
+  "real_source_data_used": false,
+  "source_admission": false,
+  "statistical_release": false,
+  "status": "PASSED",
+  "target_environment_software_acceptance": true
+}

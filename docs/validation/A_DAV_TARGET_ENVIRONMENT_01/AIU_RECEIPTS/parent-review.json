@@ -1,0 +1,42 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "command": [
+    "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/venv/bin/python",
+    "-B",
+    "-m",
+    "mypy",
+    "--strict",
+    "--explicit-package-bases",
+    "--ignore-missing-imports",
+    "--follow-imports=silent",
+    "--no-incremental",
+    "--cache-dir",
+    "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/review-mypy-cache",
+    "tools/a_dav/core.py",
+    "tools/a_dav/registries.py",
+    "tools/a_dav/endpoints.py",
+    "tools/a_dav/timing.py",
+    "tools/a_dav/assays.py",
+    "tools/a_dav/overlap.py",
+    "tools/a_dav/exposure.py",
+    "tools/a_dav/admission.py",
+    "tools/a_dav/prat_review.py",
+    "tools/a_dav/matrices.py",
+    "tools/a_dav/release.py",
+    "tools/a_dav/reporting.py",
+    "tools/a_dav/workflow.py",
+    "tools/a_dav/demo.py",
+    "runner.py"
+  ],
+  "cwd": "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload",
+  "exit_code": 0,
+  "filesystem_probe": {
+    "case_sensitive": true,
+    "symlink_supported": true,
+    "device": 66305,
+    "filesystem_block_size": 4096,
+    "filesystem_name_max": 255
+  },
+  "real_source_data_used": false,
+  "shared_environment_modified": false
+}

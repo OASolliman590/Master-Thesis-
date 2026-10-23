@@ -1,0 +1,10 @@
+{
+  "date_utc": "2026-10-23T21:21:54.398277+00:00",
+  "target": "10.55.205.205",
+  "port": 22,
+  "remote_job_started": false,
+  "real_source_data_used": false,
+  "tcp_status": "UNREACHABLE",
+  "error_category": "PermissionError",
+  "elapsed_seconds": 0.01
+}

@@ -1,0 +1,28 @@
+{
+  "target_root": "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82",
+  "payload": "payload",
+  "output": "result",
+  "launch_command": [
+    "ssh",
+    "-i",
+    "/Users/megastore/.ssh/aiu_omics_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "UserKnownHostsFile=/Users/megastore/.ssh/aiu_known_hosts",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "omics@10.55.205.205",
+    "set -eu; root=/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82; cd \"$root\"; test -d payload; test -x venv/bin/python; test ! -e runner.pid; nohup \"$root/venv/bin/python\" -B \"$root/payload/runner.py\" --root \"$root/payload\" --output \"$root/result\" > \"$root/runner.stdout.log\" 2> \"$root/runner.stderr.log\" < /dev/null & pid=$!; printf \"%s\\n\" \"$pid\" > \"$root/runner.pid\"; cat \"$root/runner.pid\""
+  ],
+  "launch_stdout": "2760066",
+  "launch_stdout_newline_terminated": true,
+  "pid": 2760066,
+  "pid_log": "worker-remote-pid.log",
+  "terminal_status": "PASSED",
+  "terminal_status_log": "worker-remote-status.json"
+}

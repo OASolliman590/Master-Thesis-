@@ -1,0 +1,53 @@
+Collecting jsonschema==4.26.0 (from -r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 2))
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest==9.1.1 (from -r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 3))
+  Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting mypy==1.18.2 (from -r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 4))
+  Downloading mypy-1.18.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+Collecting attrs>=22.2.0 (from jsonschema==4.26.0->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 2))
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema==4.26.0->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 2))
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema==4.26.0->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 2))
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.25.0 (from jsonschema==4.26.0->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 2))
+  Downloading rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+Collecting iniconfig>=1.0.1 (from pytest==9.1.1->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 3))
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting packaging>=22 (from pytest==9.1.1->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 3))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest==9.1.1->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 3))
+  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting pygments>=2.7.2 (from pytest==9.1.1->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 3))
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting typing_extensions>=4.6.0 (from mypy==1.18.2->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 4))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting mypy_extensions>=1.0.0 (from mypy==1.18.2->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 4))
+  Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+Collecting pathspec>=0.9.0 (from mypy==1.18.2->-r /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt (line 4))
+  Downloading pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 1.7 MB/s eta 0:00:00
+Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.5/386.5 kB 4.1 MB/s eta 0:00:00
+Downloading mypy-1.18.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (13.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.2/13.2 MB 18.1 MB/s eta 0:00:00
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.5/67.5 kB 28.2 MB/s eta 0:00:00
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 25.2 MB/s eta 0:00:00
+Downloading pathspec-1.1.1-py3-none-any.whl (57 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.3/57.3 kB 96.9 MB/s eta 0:00:00
+Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 20.7 MB/s eta 0:00:00
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (375 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 375.4/375.4 kB 23.5 MB/s eta 0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 138.2 MB/s eta 0:00:00
+Installing collected packages: typing_extensions, rpds-py, pygments, pluggy, pathspec, packaging, mypy_extensions, iniconfig, attrs, referencing, pytest, mypy, jsonschema-specifications, jsonschema
+Successfully installed attrs-26.1.0 iniconfig-2.3.1 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 mypy-1.18.2 mypy_extensions-1.1.0 packaging-26.3 pathspec-1.1.1 pluggy-1.7.0 pygments-2.21.0 pytest-9.1.1 referencing-0.37.0 rpds-py-2026.9.1 typing_extensions-4.16.0

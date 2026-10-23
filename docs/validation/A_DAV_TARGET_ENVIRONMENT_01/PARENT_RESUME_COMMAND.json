@@ -1,0 +1,21 @@
+{
+  "command": [
+    "ssh",
+    "-i",
+    "/Users/megastore/.ssh/aiu_omics_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "UserKnownHostsFile=/Users/megastore/.ssh/aiu_known_hosts",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "omics@10.55.205.205",
+    "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/venv/bin/python -B - /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82"
+  ],
+  "probe_source": "from pathlib import Path\nimport json,hashlib,sys,subprocess,os\nr=Path(sys.argv[1]);p=r/\"payload\";bundle=r/\"result/synthetic-bundle\"\ndef hashes():return {x.name:hashlib.sha256(x.read_bytes()).hexdigest() for x in bundle.iterdir()}\nbefore=hashes();command=[str(r/\"venv/bin/python\"),\"-B\",\"-m\",\"tools.a_dav.demo\",\"--freeze\",str(bundle)]\nx=subprocess.run(command,cwd=p,env={\"PYTHONDONTWRITEBYTECODE\":\"1\",\"PYTEST_DISABLE_PLUGIN_AUTOLOAD\":\"1\",\"OPENBLAS_NUM_THREADS\":\"1\",\"OMP_NUM_THREADS\":\"1\",\"MKL_NUM_THREADS\":\"1\",\"NUMEXPR_NUM_THREADS\":\"1\",\"VECLIB_MAXIMUM_THREADS\":\"1\",\"BLIS_NUM_THREADS\":\"1\",\"TZ\":\"UTC\"},capture_output=True,text=True,timeout=120)\n(r/\"parent-resume.stdout.log\").write_text(x.stdout);(r/\"parent-resume.stderr.log\").write_text(x.stderr)\nfiles={}\nfor path in p.rglob(\"*\"):\n assert not path.is_symlink()\n if path.is_file():files[path.relative_to(p).as_posix()]=hashlib.sha256(path.read_bytes()).hexdigest()\nresult={\"classification\":\"SYNTHETIC_ONLY\",\"command\":command,\"exit_code\":x.returncode,\"before_sha256\":before,\"after_sha256\":hashes(),\"payload_sha256\":files,\"real_source_data_used\":False}\n(r/\"parent-resume.json\").write_text(json.dumps(result,indent=2)+\"\\n\")\nprint(json.dumps({\"receipt\":result,\"stdout\":x.stdout,\"stderr\":x.stderr}))\n",
+  "ssh_exit_code": 0
+}

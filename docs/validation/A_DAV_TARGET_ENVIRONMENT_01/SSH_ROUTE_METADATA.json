@@ -1,0 +1,14 @@
+{
+  "matching_target_aliases": [
+    {
+      "alias": "omics",
+      "hostname": "omics",
+      "user": "megastore",
+      "port": "22",
+      "proxy_configured": false,
+      "exit_code": 0
+    }
+  ],
+  "config_file_count": 3,
+  "credentials_or_key_material_read": false
+}

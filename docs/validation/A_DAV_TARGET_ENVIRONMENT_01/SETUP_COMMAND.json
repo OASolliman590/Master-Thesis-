@@ -1,0 +1,22 @@
+{
+  "command": [
+    "ssh",
+    "-i",
+    "/Users/megastore/.ssh/aiu_omics_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "UserKnownHostsFile=/Users/megastore/.ssh/aiu_known_hosts",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "omics@10.55.205.205",
+    "/home/omics/miniforge3/envs/omics-py/bin/python -B - /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82 ac5bf7b9e9c746570e3fef9c29d1e5332bf5bcc75f1fb9969b6cd15032e2bc30 28d2e31993eebf1e197667b7291a23c125c12b4e90d4d6ca138413412e2567b5"
+  ],
+  "exit_code": 0,
+  "stdout_log": "setup-command.stdout.log",
+  "stderr_log": "setup-command.stderr.log"
+}

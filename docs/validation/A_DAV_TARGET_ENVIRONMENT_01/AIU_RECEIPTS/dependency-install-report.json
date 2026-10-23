@@ -1,0 +1,836 @@
+{
+  "version": "1",
+  "pip_version": "24.0",
+  "install": [
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+          "hashes": {
+            "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "jsonschema",
+        "version": "4.26.0",
+        "summary": "An implementation of JSON Schema validation for Python",
+        "description": "==========\njsonschema\n==========\n\n|PyPI| |Pythons| |CI| |ReadTheDocs| |Precommit| |Zenodo|\n\n.. |PyPI| image:: https://img.shields.io/pypi/v/jsonschema.svg\n   :alt: PyPI version\n   :target: https://pypi.org/project/jsonschema/\n\n.. |Pythons| image:: https://img.shields.io/pypi/pyversions/jsonschema.svg\n   :alt: Supported Python versions\n   :target: https://pypi.org/project/jsonschema/\n\n.. |CI| image:: https://github.com/python-jsonschema/jsonschema/workflows/CI/badge.svg\n  :alt: Build status\n  :target: https://github.com/python-jsonschema/jsonschema/actions?query=workflow%3ACI\n\n.. |ReadTheDocs| image:: https://readthedocs.org/projects/python-jsonschema/badge/?version=stable&style=flat\n   :alt: ReadTheDocs status\n   :target: https://python-jsonschema.readthedocs.io/en/stable/\n\n.. |Precommit| image:: https://results.pre-commit.ci/badge/github/python-jsonschema/jsonschema/main.svg\n   :alt: pre-commit.ci status\n   :target: https://results.pre-commit.ci/latest/github/python-jsonschema/jsonschema/main\n\n.. |Zenodo| image:: https://zenodo.org/badge/3072629.svg\n   :alt: Zenodo DOI\n   :target: https://zenodo.org/badge/latestdoi/3072629\n\n\n``jsonschema`` is an implementation of the `JSON Schema <https://json-schema.org>`_ specification for Python.\n\n.. code:: python\n\n    >>> from jsonschema import validate\n\n    >>> # A sample schema, like what we'd get from json.load()\n    >>> schema = {\n    ...     \"type\" : \"object\",\n    ...     \"properties\" : {\n    ...         \"price\" : {\"type\" : \"number\"},\n    ...         \"name\" : {\"type\" : \"string\"},\n    ...     },\n    ... }\n\n    >>> # If no exception is raised by validate(), the instance is valid.\n    >>> validate(instance={\"name\" : \"Eggs\", \"price\" : 34.99}, schema=schema)\n\n    >>> validate(\n    ...     instance={\"name\" : \"Eggs\", \"price\" : \"Invalid\"}, schema=schema,\n    ... )                                   # doctest: +IGNORE_EXCEPTION_DETAIL\n    Traceback (most recent call last):\n        ...\n    ValidationError: 'Invalid' is not of type 'number'\n\nIt can also be used from the command line by installing `check-jsonschema <https://github.com/python-jsonschema/check-jsonschema>`_.\n\nFeatures\n--------\n\n* Full support for `Draft 2020-12 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft202012Validator>`_, `Draft 2019-09 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft201909Validator>`_, `Draft 7 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft7Validator>`_, `Draft 6 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft6Validator>`_, `Draft 4 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft4Validator>`_ and `Draft 3 <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/validators/#jsonschema.validators.Draft3Validator>`_\n\n* `Lazy validation <https://python-jsonschema.readthedocs.io/en/latest/api/jsonschema/protocols/#jsonschema.protocols.Validator.iter_errors>`_ that can iteratively report *all* validation errors.\n\n* `Programmatic querying <https://python-jsonschema.readthedocs.io/en/latest/errors/>`_ of which properties or items failed validation.\n\n\nInstallation\n------------\n\n``jsonschema`` is available on `PyPI <https://pypi.org/project/jsonschema/>`_. You can install using `pip <https://pip.pypa.io/en/stable/>`_:\n\n.. code:: bash\n\n    $ pip install jsonschema\n\n\nExtras\n======\n\nTwo extras are available when installing the package, both currently related to ``format`` validation:\n\n    * ``format``\n    * ``format-nongpl``\n\nThey can be used when installing in order to include additional dependencies, e.g.:\n\n.. code:: bash\n\n    $ pip install jsonschema'[format]'\n\nBe aware that the mere presence of these dependencies – or even the specification of ``format`` checks in a schema – do *not* activate format checks (as per the specification).\nPlease read the `format validation documentation <https://python-jsonschema.readthedocs.io/en/latest/validate/#validating-formats>`_ for further details.\n\nAbout\n-----\n\nI'm Julian Berman.\n\n``jsonschema`` is on `GitHub <https://github.com/python-jsonschema/jsonschema>`_.\n\nGet in touch, via GitHub or otherwise, if you've got something to contribute, it'd be most welcome!\n\nIf you feel overwhelmingly grateful, you can also `sponsor me <https://github.com/sponsors/Julian/>`_.\n\nAnd for companies who appreciate ``jsonschema`` and its continued support and growth, ``jsonschema`` is also now supportable via `TideLift <https://tidelift.com/subscription/pkg/pypi-jsonschema?utm_source=pypi-jsonschema&utm_medium=referral&utm_campaign=readme>`_.\n\n\nRelease Information\n-------------------\n\nv4.26.0\n=======\n\n* Decrease import time by delaying importing of ``urllib.request`` (#1416).\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "data validation",
+          "json",
+          "json schema",
+          "jsonschema",
+          "validation"
+        ],
+        "author_email": "Julian Berman <Julian+jsonschema@GrayVines.com>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: File Formats :: JSON",
+          "Topic :: File Formats :: JSON :: JSON Schema"
+        ],
+        "requires_dist": [
+          "attrs>=22.2.0",
+          "jsonschema-specifications>=2023.03.6",
+          "referencing>=0.28.4",
+          "rpds-py>=0.25.0",
+          "fqdn; extra == 'format'",
+          "idna; extra == 'format'",
+          "isoduration; extra == 'format'",
+          "jsonpointer>1.13; extra == 'format'",
+          "rfc3339-validator; extra == 'format'",
+          "rfc3987; extra == 'format'",
+          "uri-template; extra == 'format'",
+          "webcolors>=1.11; extra == 'format'",
+          "fqdn; extra == 'format-nongpl'",
+          "idna; extra == 'format-nongpl'",
+          "isoduration; extra == 'format-nongpl'",
+          "jsonpointer>1.13; extra == 'format-nongpl'",
+          "rfc3339-validator; extra == 'format-nongpl'",
+          "rfc3986-validator>0.1.0; extra == 'format-nongpl'",
+          "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'",
+          "uri-template; extra == 'format-nongpl'",
+          "webcolors>=24.6.0; extra == 'format-nongpl'"
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Homepage, https://github.com/python-jsonschema/jsonschema",
+          "Documentation, https://python-jsonschema.readthedocs.io/",
+          "Issues, https://github.com/python-jsonschema/jsonschema/issues/",
+          "Funding, https://github.com/sponsors/Julian",
+          "Tidelift, https://tidelift.com/subscription/pkg/pypi-jsonschema?utm_source=pypi-jsonschema&utm_medium=referral&utm_campaign=pypi-link",
+          "Changelog, https://github.com/python-jsonschema/jsonschema/blob/main/CHANGELOG.rst",
+          "Source, https://github.com/python-jsonschema/jsonschema"
+        ],
+        "provides_extra": [
+          "format",
+          "format-nongpl"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/24/25/1de2678b631f5a49215c6c96fff41ba892b0a34df68d6d80292b1b48aa7f/pytest-9.1.1-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "hashes": {
+            "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "pytest",
+        "version": "9.1.1",
+        "dynamic": [
+          "license-file"
+        ],
+        "summary": "pytest: simple powerful testing with Python",
+        "description": ".. image:: https://github.com/pytest-dev/pytest/raw/main/doc/en/img/pytest_logo_curves.svg\n   :target: https://docs.pytest.org/en/stable/\n   :align: center\n   :height: 200\n   :alt: pytest\n\n\n------\n\n.. image:: https://img.shields.io/pypi/v/pytest.svg\n    :target: https://pypi.org/project/pytest/\n\n.. image:: https://img.shields.io/conda/vn/conda-forge/pytest.svg\n    :target: https://anaconda.org/conda-forge/pytest\n\n.. image:: https://img.shields.io/pypi/pyversions/pytest.svg\n    :target: https://pypi.org/project/pytest/\n\n.. image:: https://codecov.io/gh/pytest-dev/pytest/branch/main/graph/badge.svg\n    :target: https://codecov.io/gh/pytest-dev/pytest\n    :alt: Code coverage Status\n\n.. image:: https://github.com/pytest-dev/pytest/actions/workflows/test.yml/badge.svg\n    :target: https://github.com/pytest-dev/pytest/actions?query=workflow%3Atest\n\n.. image:: https://results.pre-commit.ci/badge/github/pytest-dev/pytest/main.svg\n   :target: https://results.pre-commit.ci/latest/github/pytest-dev/pytest/main\n   :alt: pre-commit.ci status\n\n.. image:: https://www.codetriage.com/pytest-dev/pytest/badges/users.svg\n    :target: https://www.codetriage.com/pytest-dev/pytest\n\n.. image:: https://readthedocs.org/projects/pytest/badge/?version=latest\n    :target: https://pytest.readthedocs.io/en/latest/?badge=latest\n    :alt: Documentation Status\n\n.. image:: https://img.shields.io/badge/Discord-pytest--dev-blue\n    :target: https://discord.com/invite/pytest-dev\n    :alt: Discord\n\n.. image:: https://img.shields.io/badge/Libera%20chat-%23pytest-orange\n    :target: https://web.libera.chat/#pytest\n    :alt: Libera chat\n\n\nThe ``pytest`` framework makes it easy to write small tests, yet\nscales to support complex functional testing for applications and libraries.\n\nAn example of a simple test:\n\n.. code-block:: python\n\n    # content of test_sample.py\n    def inc(x):\n        return x + 1\n\n\n    def test_answer():\n        assert inc(3) == 5\n\n\nTo execute it::\n\n    $ pytest\n    ============================= test session starts =============================\n    collected 1 items\n\n    test_sample.py F\n\n    ================================== FAILURES ===================================\n    _________________________________ test_answer _________________________________\n\n        def test_answer():\n    >       assert inc(3) == 5\n    E       assert 4 == 5\n    E        +  where 4 = inc(3)\n\n    test_sample.py:5: AssertionError\n    ========================== 1 failed in 0.04 seconds ===========================\n\n\nThanks to ``pytest``'s detailed assertion introspection, you can simply use plain ``assert`` statements. See `getting-started <https://docs.pytest.org/en/stable/getting-started.html#our-first-test-run>`_ for more examples.\n\n\nFeatures\n--------\n\n- Detailed info on failing `assert statements <https://docs.pytest.org/en/stable/how-to/assert.html>`_ (no need to remember ``self.assert*`` names)\n\n- `Auto-discovery\n  <https://docs.pytest.org/en/stable/explanation/goodpractices.html#python-test-discovery>`_\n  of test modules and functions\n\n- `Modular fixtures <https://docs.pytest.org/en/stable/explanation/fixtures.html>`_ for\n  managing small or parametrized long-lived test resources\n\n- Can run `unittest <https://docs.pytest.org/en/stable/how-to/unittest.html>`_ (or trial)\n  test suites out of the box\n\n- Python 3.10+ or PyPy3\n\n- Rich plugin architecture, with over 1300+ `external plugins <https://docs.pytest.org/en/latest/reference/plugin_list.html>`_ and thriving community\n\n\nDocumentation\n-------------\n\nFor full documentation, including installation, tutorials and PDF documents, please see https://docs.pytest.org/en/stable/.\n\n\nBugs/Requests\n-------------\n\nPlease use the `GitHub issue tracker <https://github.com/pytest-dev/pytest/issues>`_ to submit bugs or request features.\n\n\nChangelog\n---------\n\nConsult the `Changelog <https://docs.pytest.org/en/stable/changelog.html>`__ page for fixes and enhancements of each version.\n\n\nSupport pytest\n--------------\n\n`Open Collective`_ is an online funding platform for open and transparent communities.\nIt provides tools to raise money and share your finances in full transparency.\n\nIt is the platform of choice for individuals and companies that want to make one-time or\nmonthly donations directly to the project.\n\nSee more details in the `pytest collective`_.\n\n.. _Open Collective: https://opencollective.com\n.. _pytest collective: https://opencollective.com/pytest\n\n\npytest for enterprise\n---------------------\n\nAvailable as part of the Tidelift Subscription.\n\nThe maintainers of pytest and thousands of other packages are working with Tidelift to deliver commercial support and\nmaintenance for the open source dependencies you use to build your applications.\nSave time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use.\n\n`Learn more. <https://tidelift.com/subscription/pkg/pypi-pytest?utm_source=pypi-pytest&utm_medium=referral&utm_campaign=enterprise&utm_term=repo>`_\n\nSecurity\n^^^^^^^^\n\nIf you have found an issue that you believe is a security vulnerability, please do not create an issue -- instead, report it via a `new security advisory <https://github.com/pytest-dev/pytest/security/advisories/new>`__.\n\n\nLicense\n-------\n\nCopyright Holger Krekel and others, 2004.\n\nDistributed under the terms of the `MIT`_ license, pytest is free and open source software.\n\n.. _`MIT`: https://github.com/pytest-dev/pytest/blob/main/LICENSE\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "test",
+          "unittest"
+        ],
+        "author": "Brianna Laugher, Bruno Oliveira, Floris Bruynooghe, Freya Bruhin, Holger Krekel, Others (See AUTHORS), Ronny Pfannschmidt",
+        "classifier": [
+          "Development Status :: 6 - Mature",
+          "Intended Audience :: Developers",
+          "Operating System :: MacOS",
+          "Operating System :: Microsoft :: Windows",
+          "Operating System :: POSIX",
+          "Operating System :: Unix",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Topic :: Software Development :: Libraries",
+          "Topic :: Software Development :: Testing",
+          "Topic :: Utilities"
+        ],
+        "requires_dist": [
+          "colorama>=0.4; sys_platform == \"win32\"",
+          "exceptiongroup>=1; python_version < \"3.11\"",
+          "iniconfig>=1.0.1",
+          "packaging>=22",
+          "pluggy<2,>=1.5",
+          "pygments>=2.7.2",
+          "tomli>=1; python_version < \"3.11\"",
+          "argcomplete; extra == \"dev\"",
+          "attrs>=19.2; extra == \"dev\"",
+          "hypothesis>=3.56; extra == \"dev\"",
+          "mock; extra == \"dev\"",
+          "requests; extra == \"dev\"",
+          "setuptools; extra == \"dev\"",
+          "xmlschema; extra == \"dev\""
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Changelog, https://docs.pytest.org/en/stable/changelog.html",
+          "Contact, https://docs.pytest.org/en/stable/contact.html",
+          "Funding, https://docs.pytest.org/en/stable/sponsor.html",
+          "Homepage, https://docs.pytest.org/en/latest/",
+          "Source, https://github.com/pytest-dev/pytest",
+          "Tracker, https://github.com/pytest-dev/pytest/issues"
+        ],
+        "provides_extra": [
+          "dev"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/1a/52/ec4a061dd599eb8179d5411d99775bec2a20542505988f40fc2fee781068/mypy-1.18.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "archive_info": {
+          "hash": "sha256=1331eb7fd110d60c24999893320967594ff84c38ac6d19e0a76c5fd809a84c86",
+          "hashes": {
+            "sha256": "1331eb7fd110d60c24999893320967594ff84c38ac6d19e0a76c5fd809a84c86"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "mypy",
+        "version": "1.18.2",
+        "dynamic": [
+          "license-file"
+        ],
+        "summary": "Optional static typing for Python",
+        "description": "Mypy -- Optional Static Typing for Python\n=========================================\n\nAdd type annotations to your Python programs, and use mypy to type\ncheck them.  Mypy is essentially a Python linter on steroids, and it\ncan catch many programming errors by analyzing your program, without\nactually having to run it.  Mypy has a powerful type system with\nfeatures such as type inference, gradual typing, generics and union\ntypes.\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "Jukka Lehtosalo <jukka.lehtosalo@iki.fi>",
+        "license": "MIT",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Topic :: Software Development",
+          "Typing :: Typed"
+        ],
+        "requires_dist": [
+          "typing_extensions>=4.6.0",
+          "mypy_extensions>=1.0.0",
+          "pathspec>=0.9.0",
+          "tomli>=1.1.0; python_version < \"3.11\"",
+          "psutil>=4.0; extra == \"dmypy\"",
+          "setuptools>=50; extra == \"mypyc\"",
+          "lxml; extra == \"reports\"",
+          "pip; extra == \"install-types\"",
+          "orjson; extra == \"faster-cache\""
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Homepage, https://www.mypy-lang.org/",
+          "Documentation, https://mypy.readthedocs.io/en/stable/index.html",
+          "Repository, https://github.com/python/mypy",
+          "Changelog, https://github.com/python/mypy/blob/master/CHANGELOG.md",
+          "Issues, https://github.com/python/mypy/issues"
+        ],
+        "provides_extra": [
+          "dmypy",
+          "mypyc",
+          "python2",
+          "reports",
+          "install-types",
+          "faster-cache"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+          "hashes": {
+            "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "attrs",
+        "version": "26.1.0",
+        "summary": "Classes Without Boilerplate",
+        "description": "<p align=\"center\">\n  <a href=\"https://www.attrs.org/\">\n    <img src=\"https://raw.githubusercontent.com/python-attrs/attrs/main/docs/_static/attrs_logo.svg\" width=\"35%\" alt=\"attrs\" />\n  </a>\n</p>\n\n\n*attrs* is the Python package that will bring back the **joy** of **writing classes** by relieving you from the drudgery of implementing object protocols (aka [dunder methods](https://www.attrs.org/en/latest/glossary.html#term-dunder-methods)).\nTrusted by NASA for [Mars missions since 2020](https://github.com/readme/featured/nasa-ingenuity-helicopter)!\n\nIts main goal is to help you to write **concise** and **correct** software without slowing down your code.\n\n\n## Sponsors\n\n*attrs* would not be possible without our [amazing sponsors](https://github.com/sponsors/hynek).\nEspecially those generously supporting us at the *The Organization* tier and higher:\n\n<!-- sponsor-break-begin -->\n\n<p align=\"center\">\n\n<!-- [[[cog\nimport pathlib, tomllib\n\nfor sponsor in tomllib.loads(pathlib.Path(\"pyproject.toml\").read_text())[\"tool\"][\"sponcon\"][\"sponsors\"]:\n      print(f'<a href=\"{sponsor[\"url\"]}\"><img title=\"{sponsor[\"title\"]}\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/{sponsor[\"img\"]}\" width=\"190\" /></a>')\n]]] -->\n<a href=\"https://www.variomedia.de/\"><img title=\"Variomedia AG\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/Variomedia.svg\" width=\"190\" /></a>\n<a href=\"https://tidelift.com/?utm_source=lifter&utm_medium=referral&utm_campaign=hynek\"><img title=\"Tidelift\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/Tidelift.svg\" width=\"190\" /></a>\n<a href=\"https://kraken.tech/\"><img title=\"Kraken Tech\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/Kraken.svg\" width=\"190\" /></a>\n<a href=\"https://privacy-solutions.org/\"><img title=\"Privacy Solutions\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/Privacy-Solutions.svg\" width=\"190\" /></a>\n<a href=\"https://filepreviews.io/\"><img title=\"FilePreviews\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/FilePreviews.svg\" width=\"190\" /></a>\n<a href=\"https://www.testmuai.com/?utm_medium=sponsor&utm_source=structlog\"><img title=\"TestMu AI\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/TestMu-AI.svg\" width=\"190\" /></a>\n<a href=\"https://polar.sh/\"><img title=\"Polar\" src=\"https://www.attrs.org/en/26.1.0/_static/sponsors/Polar.svg\" width=\"190\" /></a>\n<!-- [[[end]]] -->\n\n</p>\n\n<!-- sponsor-break-end -->\n\n<p align=\"center\">\n   <strong>Please consider <a href=\"https://github.com/sponsors/hynek\">joining them</a> to help make <em>attrs</em>’s maintenance more sustainable!</strong>\n</p>\n\n<!-- teaser-end -->\n\n## Example\n\n*attrs* gives you a class decorator and a way to declaratively define the attributes on that class:\n\n<!-- code-begin -->\n\n```pycon\n>>> from attrs import asdict, define, make_class, Factory\n\n>>> @define\n... class SomeClass:\n...     a_number: int = 42\n...     list_of_numbers: list[int] = Factory(list)\n...\n...     def hard_math(self, another_number):\n...         return self.a_number + sum(self.list_of_numbers) * another_number\n\n\n>>> sc = SomeClass(1, [1, 2, 3])\n>>> sc\nSomeClass(a_number=1, list_of_numbers=[1, 2, 3])\n\n>>> sc.hard_math(3)\n19\n>>> sc == SomeClass(1, [1, 2, 3])\nTrue\n>>> sc != SomeClass(2, [3, 2, 1])\nTrue\n\n>>> asdict(sc)\n{'a_number': 1, 'list_of_numbers': [1, 2, 3]}\n\n>>> SomeClass()\nSomeClass(a_number=42, list_of_numbers=[])\n\n>>> C = make_class(\"C\", [\"a\", \"b\"])\n>>> C(\"foo\", \"bar\")\nC(a='foo', b='bar')\n```\n\nAfter *declaring* your attributes, *attrs* gives you:\n\n- a concise and explicit overview of the class's attributes,\n- a nice human-readable `__repr__`,\n- equality-checking methods,\n- an initializer,\n- and much more,\n\n*without* writing dull boilerplate code again and again and *without* runtime performance penalties.\n\n---\n\nThis example uses *attrs*'s modern APIs that have been introduced in version 20.1.0, and the *attrs* package import name that has been added in version 21.3.0.\nThe classic APIs (`@attr.s`, `attr.ib`, plus their serious-business aliases) and the `attr` package import name will remain **indefinitely**.\n\nCheck out [*On The Core API Names*](https://www.attrs.org/en/latest/names.html) for an in-depth explanation!\n\n\n### Hate Type Annotations!?\n\nNo problem!\nTypes are entirely **optional** with *attrs*.\nSimply assign `attrs.field()` to the attributes instead of annotating them with types:\n\n```python\nfrom attrs import define, field\n\n@define\nclass SomeClass:\n    a_number = field(default=42)\n    list_of_numbers = field(factory=list)\n```\n\n\n## Data Classes\n\nOn the tin, *attrs* might remind you of `dataclasses` (and indeed, `dataclasses` [are a descendant](https://hynek.me/articles/import-attrs/) of *attrs*).\nIn practice it does a lot more and is more flexible.\nFor instance, it allows you to define [special handling of NumPy arrays for equality checks](https://www.attrs.org/en/stable/comparison.html#customization), allows more ways to [plug into the initialization process](https://www.attrs.org/en/stable/init.html#hooking-yourself-into-initialization), has a replacement for `__init_subclass__`, and allows for stepping through the generated methods using a debugger.\n\nFor more details, please refer to our [comparison page](https://www.attrs.org/en/stable/why.html#data-classes), but generally speaking, we are more likely to commit crimes against nature to make things work that one would expect to work, but that are quite complicated in practice.\n\n\n## Project Information\n\n- [**Changelog**](https://www.attrs.org/en/stable/changelog.html)\n- [**Documentation**](https://www.attrs.org/)\n- [**PyPI**](https://pypi.org/project/attrs/)\n- [**Source Code**](https://github.com/python-attrs/attrs)\n- [**Contributing**](https://github.com/python-attrs/attrs/blob/main/.github/CONTRIBUTING.md)\n- [**Third-party Extensions**](https://github.com/python-attrs/attrs/wiki/Extensions-to-attrs)\n- **Get Help**: use the `python-attrs` tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/python-attrs)\n\n\n### *attrs* for Enterprise\n\nAvailable as part of the [Tidelift Subscription](https://tidelift.com/?utm_source=lifter&utm_medium=referral&utm_campaign=hynek).\n\nThe maintainers of *attrs* and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications.\nSave time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use.\n\n## Release Information\n\n### Backwards-incompatible Changes\n\n- Field aliases are now resolved *before* calling `field_transformer`, so transformers receive fully populated `Attribute` objects with usable `alias` values instead of `None`.\n  The new `Attribute.alias_is_default` flag indicates whether the alias was auto-generated (`True`) or explicitly set by the user (`False`).\n  [#1509](https://github.com/python-attrs/attrs/issues/1509)\n\n\n### Changes\n\n- Fix type annotations for `attrs.validators.optional()`, so it no longer rejects tuples with more than one validator.\n  [#1496](https://github.com/python-attrs/attrs/issues/1496)\n- The `attrs.validators.disabled()` contextmanager can now be nested.\n  [#1513](https://github.com/python-attrs/attrs/issues/1513)\n- Frozen classes can set `on_setattr=attrs.setters.NO_OP` in addition to `None`.\n  [#1515](https://github.com/python-attrs/attrs/issues/1515)\n- It's now possible to pass *attrs* **instances** in addition to *attrs* **classes** to `attrs.fields()`.\n  [#1529](https://github.com/python-attrs/attrs/issues/1529)\n\n\n\n---\n\n[Full changelog →](https://www.attrs.org/en/stable/changelog.html)\n",
+        "description_content_type": "text/markdown",
+        "keywords": [
+          "attribute",
+          "boilerplate",
+          "class"
+        ],
+        "author_email": "Hynek Schlawack <hs@ox.cx>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Typing :: Typed"
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Documentation, https://www.attrs.org/",
+          "Changelog, https://www.attrs.org/en/stable/changelog.html",
+          "GitHub, https://github.com/python-attrs/attrs",
+          "Funding, https://github.com/sponsors/hynek",
+          "Tidelift, https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&utm_medium=pypi"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/56/43/4ca9e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/iniconfig-2.3.1-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7",
+          "hashes": {
+            "sha256": "9121e2c1fdb355232495be3194c8dfe87ccc2d5dee45947b78e68f499790d7a7"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "iniconfig",
+        "version": "2.3.1",
+        "dynamic": [
+          "license-file"
+        ],
+        "summary": "brain-dead simple config-ini parsing",
+        "description": "iniconfig: brain-dead simple parsing of ini files\n=======================================================\n\niniconfig is a small and simple INI-file parser module\nhaving a unique set of features:\n\n* maintains order of sections and entries\n* supports multi-line values with or without line-continuations\n* supports \"#\" comments everywhere\n* raises errors with proper line-numbers\n* no bells and whistles like automatic substitutions\n* iniconfig raises an Error if two sections have the same name.\n\nIf you encounter issues or have feature wishes please report them to:\n\n    https://github.com/pytest-dev/iniconfig/issues\n\nBasic Example\n===================================\n\nIf you have an ini file like this:\n\n.. code-block:: ini\n\n    # content of example.ini\n    [section1] # comment\n    name1=value1  # comment\n    name1b=value1,value2  # comment\n\n    [section2]\n    name2=\n        line1\n        line2\n\nuse ``IniConfig.parse()`` to strip inline comments from values:\n\n.. code-block:: pycon\n\n    >>> import iniconfig\n    >>> ini = iniconfig.IniConfig.parse(\"example.ini\")\n    >>> ini['section1']['name1'] # raises KeyError if not exists\n    'value1'\n    >>> ini.get('section1', 'name1b', [], lambda x: x.split(\",\"))\n    ['value1', 'value2']\n    >>> ini.get('section1', 'notexist', [], lambda x: x.split(\",\"))\n    []\n    >>> [x.name for x in list(ini)]\n    ['section1', 'section2']\n    >>> list(list(ini)[0].items())\n    [('name1', 'value1'), ('name1b', 'value1,value2')]\n    >>> 'section1' in ini\n    True\n    >>> 'inexistendsection' in ini\n    False\n\nThe ``IniConfig()`` constructor preserves inline comments in values for backward\ncompatibility. Use ``IniConfig.parse(..., strip_inline_comments=False)`` to\npreserve them when using the parsing method.\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "Ronny Pfannschmidt <opensource@ronnypfannschmidt.de>, Holger Krekel <holger.krekel@gmail.com>",
+        "classifier": [
+          "Development Status :: 4 - Beta",
+          "Intended Audience :: Developers",
+          "Operating System :: MacOS :: MacOS X",
+          "Operating System :: Microsoft :: Windows",
+          "Operating System :: POSIX",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Topic :: Software Development :: Libraries",
+          "Topic :: Utilities"
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Homepage, https://github.com/pytest-dev/iniconfig"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+          "hashes": {
+            "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1",
+        "summary": "The JSON Schema meta-schemas and vocabularies, exposed as a Registry",
+        "description": "=============================\n``jsonschema-specifications``\n=============================\n\n|PyPI| |Pythons| |CI| |ReadTheDocs|\n\nJSON support files from the `JSON Schema Specifications <https://json-schema.org/specification.html>`_ (metaschemas, vocabularies, etc.), packaged for runtime access from Python as a `referencing-based Schema Registry <https://referencing.readthedocs.io/en/stable/api/#referencing.Registry>`_.\n\n.. |PyPI| image:: https://img.shields.io/pypi/v/jsonschema-specifications.svg\n  :alt: PyPI version\n  :target: https://pypi.org/project/jsonschema-specifications/\n\n.. |Pythons| image:: https://img.shields.io/pypi/pyversions/jsonschema-specifications.svg\n  :alt: Supported Python versions\n  :target: https://pypi.org/project/jsonschema-specifications/\n\n.. |CI| image:: https://github.com/python-jsonschema/jsonschema-specifications/workflows/CI/badge.svg\n  :alt: Build status\n  :target: https://github.com/python-jsonschema/jsonschema-specifications/actions?query=workflow%3ACI\n\n.. |ReadTheDocs| image:: https://readthedocs.org/projects/jsonschema-specifications/badge/?version=stable&style=flat\n  :alt: ReadTheDocs status\n  :target: https://jsonschema-specifications.readthedocs.io/en/stable/\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "data validation",
+          "json",
+          "json schema",
+          "jsonschema",
+          "validation"
+        ],
+        "author_email": "Julian Berman <Julian+jsonschema-specifications@GrayVines.com>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: File Formats :: JSON",
+          "Topic :: File Formats :: JSON :: JSON Schema"
+        ],
+        "requires_dist": [
+          "referencing>=0.31.0"
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Documentation, https://jsonschema-specifications.readthedocs.io/",
+          "Homepage, https://github.com/python-jsonschema/jsonschema-specifications",
+          "Issues, https://github.com/python-jsonschema/jsonschema-specifications/issues/",
+          "Funding, https://github.com/sponsors/Julian",
+          "Tidelift, https://tidelift.com/subscription/pkg/pypi-jsonschema-specifications?utm_source=pypi-jsonschema-specifications&utm_medium=referral&utm_campaign=pypi-link",
+          "Source, https://github.com/python-jsonschema/jsonschema-specifications"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+          "hashes": {
+            "sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "mypy_extensions",
+        "version": "1.1.0",
+        "summary": "Type system extensions for programs checked with the mypy type checker.",
+        "description": "Mypy Extensions\n===============\n\nThe `mypy_extensions` module defines extensions to the Python standard\nlibrary `typing` module that are supported by the mypy type checker and\nthe mypyc compiler.\n\n",
+        "description_content_type": "text/markdown",
+        "author_email": "The mypy developers <jukka.lehtosalo@iki.fi>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Topic :: Software Development"
+        ],
+        "requires_python": ">=3.8",
+        "project_url": [
+          "Homepage, https://github.com/python/mypy_extensions"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+          "hashes": {
+            "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "packaging",
+        "version": "26.3",
+        "summary": "Core utilities for Python packages",
+        "description": "packaging\n=========\n\n.. start-intro\n\nReusable core utilities for various Python Packaging\n`interoperability specifications <https://packaging.python.org/specifications/>`_.\n\nThis library provides utilities that implement the interoperability\nspecifications which have clearly one correct behaviour (eg: :pep:`440`)\nor benefit greatly from having a single shared implementation (eg: :pep:`425`).\n\n.. end-intro\n\nThe ``packaging`` project includes the following: version handling, specifiers,\nmarkers, requirements, tags, metadata, lockfiles, utilities.\n\nDocumentation\n-------------\n\nThe `documentation`_ provides information and the API for the following:\n\n- Version Handling\n- Specifiers\n- Markers\n- Licenses\n- Requirements\n- Metadata\n- Tags\n- Lockfiles (pylock)\n- Direct URL helpers\n- Dependency groups\n- Errors\n- Utilities\n\nInstallation\n------------\n\nUse ``pip`` to install these utilities::\n\n    pip install packaging\n\nThe ``packaging`` library uses calendar-based versioning (``YY.N``).\n\nDiscussion\n----------\n\nIf you run into bugs, you can file them in our `issue tracker`_.\n\nYou can also join discussions on `GitHub Discussions`_ to ask questions or get involved.\n\n.. _`documentation`: https://packaging.pypa.io/\n.. _`issue tracker`: https://github.com/pypa/packaging/issues\n.. _`GitHub Discussions`: https://github.com/pypa/packaging/discussions\n\n\nCode of Conduct\n---------------\n\nEveryone interacting in the packaging project's codebases, issue trackers, chat\nrooms, and mailing lists is expected to follow the `PSF Code of Conduct`_.\n\n.. _PSF Code of Conduct: https://github.com/pypa/.github/blob/main/CODE_OF_CONDUCT.md\n\nContributing\n------------\n\nThe ``CONTRIBUTING.rst`` file outlines how to contribute to this project as\nwell as how to report a potential security issue. The documentation for this\nproject also covers information about `project development`_ and `security`_.\n\n.. _`project development`: https://packaging.pypa.io/en/latest/development/\n.. _`security`: https://packaging.pypa.io/en/latest/security/\n\nProject History\n---------------\n\nPlease review the ``CHANGELOG.rst`` file or the `Changelog documentation`_ for\nrecent changes and project history.\n\n.. _`Changelog documentation`: https://packaging.pypa.io/en/latest/changelog/\n\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "Donald Stufft <donald@stufft.io>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Programming Language :: Python :: Free Threading :: 4 - Resilient",
+          "Typing :: Typed"
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Documentation, https://packaging.pypa.io/",
+          "Source, https://github.com/pypa/packaging"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+          "hashes": {
+            "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "pathspec",
+        "version": "1.1.1",
+        "summary": "Utility library for gitignore style pattern matching of file paths.",
+        "description": "\nPathSpec\n========\n\n*pathspec* is a utility library for pattern matching of file paths. So far this\nonly includes Git's `gitignore`_ pattern matching.\n\n.. _`gitignore`: http://git-scm.com/docs/gitignore\n\n\nTutorial\n--------\n\nSay you have a \"Projects\" directory and you want to back it up, but only\ncertain files, and ignore others depending on certain conditions::\n\n\t>>> from pathspec import PathSpec\n\t>>> # The gitignore-style patterns for files to select, but we're including\n\t>>> # instead of ignoring.\n\t>>> spec_text = \"\"\"\n\t...\n\t... # This is a comment because the line begins with a hash: \"#\"\n\t...\n\t... # Include several project directories (and all descendants) relative to\n\t... # the current directory. To reference only a directory you must end with a\n\t... # slash: \"/\"\n\t... /project-a/\n\t... /project-b/\n\t... /project-c/\n\t...\n\t... # Patterns can be negated by prefixing with exclamation mark: \"!\"\n\t...\n\t... # Ignore temporary files beginning or ending with \"~\" and ending with\n\t... # \".swp\".\n\t... !~*\n\t... !*~\n\t... !*.swp\n\t...\n\t... # These are python projects so ignore compiled python files from\n\t... # testing.\n\t... !*.pyc\n\t...\n\t... # Ignore the build directories but only directly under the project\n\t... # directories.\n\t... !/*/build/\n\t...\n\t... \"\"\"\n\nThe ``PathSpec`` class provides an abstraction around pattern implementations,\nand we want to compile our patterns as \"gitignore\" patterns. You could call it a\nwrapper for a list of compiled patterns::\n\n\t>>> spec = PathSpec.from_lines('gitignore', spec_text.splitlines())\n\nIf we wanted to manually compile the patterns, we can use the ``GitIgnoreBasicPattern``\nclass directly. It is used in the background for \"gitignore\" which internally\nconverts patterns to regular expressions::\n\n\t>>> from pathspec.patterns.gitignore.basic import GitIgnoreBasicPattern\n\t>>> patterns = map(GitIgnoreBasicPattern, spec_text.splitlines())\n\t>>> spec = PathSpec(patterns)\n\n``PathSpec.from_lines()`` is a class method which simplifies that.\n\nIf you want to load the patterns from file, you can pass the file object\ndirectly as well::\n\n\t>>> with open('patterns.list', 'r') as fh:\n\t>>>     spec = PathSpec.from_lines('gitignore', fh)\n\nYou can perform matching on a whole directory tree with::\n\n\t>>> matches = set(spec.match_tree_files('path/to/directory'))\n\nOr you can perform matching on a specific set of file paths with::\n\n\t>>> matches = set(spec.match_files(file_paths))\n\nOr check to see if an individual file matches::\n\n\t>>> is_matched = spec.match_file(file_path)\n\nThere's actually two implementations of \"gitignore\". The basic implementation is\nused by ``PathSpec`` and follows patterns as documented by `gitignore`_.\nHowever, Git's behavior differs from the documented patterns. There's some\nedge-cases, and in particular, Git allows including files from excluded\ndirectories which appears to contradict the documentation. ``GitIgnoreSpec``\nhandles these cases to more closely replicate Git's behavior::\n\n\t>>> from pathspec import GitIgnoreSpec\n\t>>> spec = GitIgnoreSpec.from_lines(spec_text.splitlines())\n\nYou do not specify the style of pattern for ``GitIgnoreSpec`` because it should\nalways use ``GitIgnoreSpecPattern`` internally.\n\n\nPerformance\n-----------\n\nRunning lots of regular expression matches against thousands of files in Python\nis slow. Alternate regular expression backends can be used to improve\nperformance. ``PathSpec`` and ``GitIgnoreSpec`` both accept a ``backend``\nparameter to control the backend. The default is \"best\" to automatically choose\nthe best available backend. There are currently 3 backends.\n\nThe \"simple\" backend is the default and it simply uses Python's ``re.Pattern``\nobjects that are normally created. This can be the fastest when there's only 1\nor 2 patterns.\n\nThe \"hyperscan\" backend uses the `hyperscan`_ library. Hyperscan tends to be at\nleast 2 times faster than \"simple\", and generally slower than \"re2\". This can be\nfaster than \"re2\" under the right conditions with pattern counts of 1-25.\n\nThe \"re2\" backend uses the `google-re2`_ library (not to be confused with the\n*re2* library on PyPI which is unrelated and abandoned). Google's re2 tends to\nbe significantly faster than \"simple\", and 3 times faster than \"hyperscan\" at\nhigh pattern counts.\n\nSee `benchmarks_backends.md`_ for comparisons between native Python regular\nexpressions and the optional backends.\n\n\n.. _`benchmarks_backends.md`: https://github.com/cpburnz/python-pathspec/blob/master/benchmarks_backends.md\n.. _`google-re2`: https://pypi.org/project/google-re2/\n.. _`hyperscan`: https://pypi.org/project/hyperscan/\n\n\nFAQ\n---\n\n\n1. How do I ignore files like *.gitignore*?\n+++++++++++++++++++++++++++++++++++++++++++\n\n``GitIgnoreSpec`` (and ``PathSpec``) positively match files by default. To find\nthe files to keep, and exclude files like *.gitignore*, you need to set\n``negate=True`` to flip the results::\n\n\t>>> from pathspec import GitIgnoreSpec\n\t>>> spec = GitIgnoreSpec.from_lines([...])\n\t>>> keep_files = set(spec.match_tree_files('path/to/directory', negate=True))\n\t>>> ignore_files = set(spec.match_tree_files('path/to/directory'))\n\n\nLicense\n-------\n\n*pathspec* is licensed under the `Mozilla Public License Version 2.0`_. See\n`LICENSE`_ or the `FAQ`_ for more information.\n\nIn summary, you may use *pathspec* with any closed or open source project\nwithout affecting the license of the larger work so long as you:\n\n- give credit where credit is due,\n\n- and release any custom changes made to *pathspec*.\n\n.. _`Mozilla Public License Version 2.0`: http://www.mozilla.org/MPL/2.0\n.. _`LICENSE`: LICENSE\n.. _`FAQ`: http://www.mozilla.org/MPL/2.0/FAQ.html\n\n\nSource\n------\n\nThe source code for *pathspec* is available from the GitHub repo\n`cpburnz/python-pathspec`_.\n\n.. _`cpburnz/python-pathspec`: https://github.com/cpburnz/python-pathspec\n\n\nInstallation\n------------\n\n*pathspec* is available for install through `PyPI`_::\n\n\tpip install pathspec\n\n*pathspec* can also be built from source. The following packages will be\nrequired:\n\n- `build`_ (>=0.6.0)\n\n*pathspec* can then be built and installed with::\n\n\tpython -m build\n\tpip install dist/pathspec-*-py3-none-any.whl\n\nThe following optional dependencies can be installed:\n\n- `google-re2`_: Enables optional \"re2\" backend.\n- `hyperscan`_: Enables optional \"hyperscan\" backend.\n- `typing-extensions`_: Improves some type hints.\n\n.. _`PyPI`: http://pypi.python.org/pypi/pathspec\n.. _`build`: https://pypi.org/project/build/\n.. _`typing-extensions`: https://pypi.org/project/typing-extensions/\n\n\nDocumentation\n-------------\n\nDocumentation for *pathspec* is available on `Read the Docs`_.\n\nThe full change history can be found in `CHANGES.rst`_ and `Change History`_.\n\nAn upgrade guide is available in `UPGRADING.rst`_ and `Upgrade Guide`_.\n\n.. _`CHANGES.rst`: https://github.com/cpburnz/python-pathspec/blob/master/CHANGES.rst\n.. _`Change History`: https://python-path-specification.readthedocs.io/en/stable/changes.html\n.. _`Read the Docs`: https://python-path-specification.readthedocs.io\n.. _`UPGRADING.rst`: https://github.com/cpburnz/python-pathspec/blob/master/UPGRADING.rst\n.. _`Upgrade Guide`: https://python-path-specification.readthedocs.io/en/stable/upgrading.html\n\n\nOther Languages\n---------------\n\nThe related project `pathspec-ruby`_ (by *highb*) provides a similar library as\na `Ruby gem`_.\n\n.. _`pathspec-ruby`: https://github.com/highb/pathspec-ruby\n.. _`Ruby gem`: https://rubygems.org/gems/pathspec\n\n\nChange History\n==============\n\n\n1.1.1 (2026-04-26)\n------------------\n\nImprovements:\n\n- Improved type checking with mypy and pyright.\n\nBug fixes:\n\n- Fixed typing on `PathSpec[TPattern]` to `PathSpec[TPattern_co]`.\n- Added missing variant type-hint `type[Pattern]` to `PathSpec.from_lines()` parameter `pattern_factory`.\n- Fixed possible type error when using `+` and `+=` operators on `PathSpec`.\n\n\n1.1.0 (2026-04-22)\n------------------\n\nNew features:\n\n- `Issue #108`_: Specialize pattern type for `PathSpec` as `PathSpec[TPattern]` for better debugging of `PathSpec().patterns`.\n\nBug fixes:\n\n- `Issue #93`_: Git discards invalid range notation. `GitIgnoreSpecPattern` now discards patterns with invalid range notation like Git.\n- `Pull #106`_: Fix escape() not escaping backslash characters.\n\nImprovements:\n\n- `Pull #110`_: Nicer debug print outs (and str for regex pattern).\n\n\n.. _`Pull #106`: https://github.com/cpburnz/python-pathspec/pull/106\n.. _`Issue #108`: https://github.com/cpburnz/python-pathspec/issues/108\n.. _`Pull #110`: https://github.com/cpburnz/python-pathspec/pull/110\n\n\n1.0.4 (2026-01-26)\n------------------\n\nBug fixes:\n\n- `Issue #103`_: Using re2 fails if pyre2 is also installed.\n\n.. _`Issue #103`: https://github.com/cpburnz/python-pathspec/issues/103\n\n\n1.0.3 (2026-01-09)\n------------------\n\nBug fixes:\n\n- `Issue #101`_: pyright strict errors with pathspec >= 1.0.0.\n- `Issue #102`_: No module named 'tomllib'.\n\n\n.. _`Issue #101`: https://github.com/cpburnz/python-pathspec/issues/101\n.. _`Issue #102`: https://github.com/cpburnz/python-pathspec/issues/102\n\n\n1.0.2 (2026-01-07)\n------------------\n\nBug fixes:\n\n- Type hint `collections.abc.Callable` does not properly replace `typing.Callable` until Python 3.9.2.\n\n\n1.0.1 (2026-01-06)\n------------------\n\nBug fixes:\n\n- `Issue #100`_: ValueError(f\"{patterns=!r} cannot be empty.\") when using black.\n\n\n.. _`Issue #100`: https://github.com/cpburnz/python-pathspec/issues/100\n\n\n1.0.0 (2026-01-05)\n------------------\n\nMajor changes:\n\n- `Issue #91`_: Dropped support of EoL Python 3.8.\n- Added concept of backends to allow for faster regular expression matching. The backend can be controlled using the `backend` argument to `PathSpec()`, `PathSpec.from_lines()`, `GitIgnoreSpec()`, and `GitIgnoreSpec.from_lines()`.\n- Renamed \"gitwildmatch\" pattern back to \"gitignore\". The \"gitignore\" pattern behaves slightly differently when used with `PathSpec` (*gitignore* as documented) than with `GitIgnoreSpec` (replicates *Git*'s edge cases).\n\nAPI changes:\n\n- Breaking: protected method `pathspec.pathspec.PathSpec._match_file()` (with a leading underscore) has been removed and replaced by backends. This does not affect normal usage of `PathSpec` or `GitIgnoreSpec`. Only custom subclasses will be affected. If this breaks your usage, let me know by `opening an issue <https://github.com/cpburnz/python-pathspec/issues>`_.\n- Deprecated: \"gitwildmatch\" is now an alias for \"gitignore\".\n- Deprecated: `pathspec.patterns.GitWildMatchPattern` is now an alias for `pathspec.patterns.gitignore.spec.GitIgnoreSpecPattern`.\n- Deprecated: `pathspec.patterns.gitwildmatch` module has been replaced by the `pathspec.patterns.gitignore` package.\n- Deprecated: `pathspec.patterns.gitwildmatch.GitWildMatchPattern` is now an alias for `pathspec.patterns.gitignore.spec.GitIgnoreSpecPattern`.\n- Deprecated: `pathspec.patterns.gitwildmatch.GitWildMatchPatternError` is now an alias for `pathspec.patterns.gitignore.GitIgnorePatternError`.\n- Removed: `pathspec.patterns.gitwildmatch.GitIgnorePattern` has been deprecated since v0.4 (2016-07-15).\n- Signature of method `pathspec.pattern.RegexPattern.match_file()` has been changed from `def match_file(self, file: str) -> RegexMatchResult | None` to `def match_file(self, file: AnyStr) -> RegexMatchResult | None` to reflect usage.\n- Signature of class method `pathspec.pattern.RegexPattern.pattern_to_regex()` has been changed from `def pattern_to_regex(cls, pattern: str) -> tuple[str, bool]` to `def pattern_to_regex(cls, pattern: AnyStr) -> tuple[AnyStr | None, bool | None]` to reflect usage and documentation.\n\nNew features:\n\n- Added optional \"hyperscan\" backend using `hyperscan`_ library. It will automatically be used when installed. This dependency can be installed with ``pip install 'pathspec[hyperscan]'``.\n- Added optional \"re2\" backend using the `google-re2`_ library. It will automatically be used when installed. This dependency can be installed with ``pip install 'pathspec[re2]'``.\n- Added optional dependency on `typing-extensions`_ library to improve some type hints.\n\nBug fixes:\n\n- `Issue #93`_: Do not remove leading spaces.\n- `Issue #95`_: Matching for files inside folder does not seem to behave like .gitignore's.\n- `Issue #98`_: UnboundLocalError in RegexPattern when initialized with `pattern=None`.\n- Type hint on return value of `pathspec.pattern.RegexPattern.match_file()` to match documentation.\n\nImprovements:\n\n- Mark Python 3.13 and 3.14 as supported.\n- No-op patterns are now filtered out when matching files, slightly improving performance.\n- Fix performance regression in `iter_tree_files()` from v0.10.\n\n\n.. _`Issue #38`: https://github.com/cpburnz/python-pathspec/issues/38\n.. _`Issue #91`: https://github.com/cpburnz/python-pathspec/issues/91\n.. _`Issue #93`: https://github.com/cpburnz/python-pathspec/issues/93\n.. _`Issue #95`: https://github.com/cpburnz/python-pathspec/issues/95\n.. _`Issue #98`: https://github.com/cpburnz/python-pathspec/issues/98\n.. _`google-re2`: https://pypi.org/project/google-re2/\n.. _`hyperscan`: https://pypi.org/project/hyperscan/\n.. _`typing-extensions`: https://pypi.org/project/typing-extensions/\n\n",
+        "description_content_type": "text/x-rst",
+        "author_email": "\"Caleb P. Burns\" <cpburnz@gmail.com>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Software Development :: Libraries :: Python Modules",
+          "Topic :: Utilities"
+        ],
+        "requires_dist": [
+          "hyperscan >=0.7 ; extra == \"hyperscan\"",
+          "typing-extensions >=4 ; extra == \"optional\"",
+          "google-re2 >=1.1 ; extra == \"re2\""
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Change Log, https://python-path-specification.readthedocs.io/en/latest/changes.html",
+          "Documentation, https://python-path-specification.readthedocs.io/en/latest/index.html",
+          "Issue Tracker, https://github.com/cpburnz/python-pathspec/issues",
+          "Source Code, https://github.com/cpburnz/python-pathspec"
+        ],
+        "provides_extra": [
+          "hyperscan",
+          "optional",
+          "re2"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec",
+          "hashes": {
+            "sha256": "7dd7b0d8832ba3cb632c306926ded123429211b83641b35dc5c41ad2d34f9bec"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "pluggy",
+        "version": "1.7.0",
+        "dynamic": [
+          "license-file"
+        ],
+        "summary": "plugin and hook calling mechanisms for python",
+        "description": "====================================================\npluggy - A minimalist production ready plugin system\n====================================================\n\n|pypi| |conda-forge| |versions| |github-actions| |gitter| |black| |codecov|\n\nThis is the core framework used by the `pytest`_, `tox`_, and `devpi`_ projects.\n\nPlease `read the docs`_ to learn more!\n\nA definitive example\n====================\n.. code-block:: python\n\n    import pluggy\n\n    hookspec = pluggy.HookspecMarker(\"myproject\")\n    hookimpl = pluggy.HookimplMarker(\"myproject\")\n\n\n    class MySpec:\n        \"\"\"A hook specification namespace.\"\"\"\n\n        @hookspec\n        def myhook(self, arg1, arg2):\n            \"\"\"My special little hook that you can customize.\"\"\"\n\n\n    class Plugin_1:\n        \"\"\"A hook implementation namespace.\"\"\"\n\n        @hookimpl\n        def myhook(self, arg1, arg2):\n            print(\"inside Plugin_1.myhook()\")\n            return arg1 + arg2\n\n\n    class Plugin_2:\n        \"\"\"A 2nd hook implementation namespace.\"\"\"\n\n        @hookimpl\n        def myhook(self, arg1, arg2):\n            print(\"inside Plugin_2.myhook()\")\n            return arg1 - arg2\n\n\n    # create a manager and add the spec\n    pm = pluggy.PluginManager(\"myproject\")\n    pm.add_hookspecs(MySpec)\n\n    # register plugins\n    pm.register(Plugin_1())\n    pm.register(Plugin_2())\n\n    # call our ``myhook`` hook\n    results = pm.hook.myhook(arg1=1, arg2=2)\n    print(results)\n\n\nRunning this directly gets us::\n\n    $ python docs/examples/toy-example.py\n    inside Plugin_2.myhook()\n    inside Plugin_1.myhook()\n    [-1, 3]\n\n\n.. badges\n\n.. |pypi| image:: https://img.shields.io/pypi/v/pluggy.svg\n    :target: https://pypi.org/pypi/pluggy\n\n.. |versions| image:: https://img.shields.io/pypi/pyversions/pluggy.svg\n    :target: https://pypi.org/pypi/pluggy\n\n.. |github-actions| image:: https://github.com/pytest-dev/pluggy/workflows/test/badge.svg\n    :target: https://github.com/pytest-dev/pluggy/actions\n\n.. |conda-forge| image:: https://img.shields.io/conda/vn/conda-forge/pluggy.svg\n    :target: https://anaconda.org/conda-forge/pytest\n\n.. |gitter| image:: https://badges.gitter.im/pytest-dev/pluggy.svg\n    :alt: Join the chat at https://gitter.im/pytest-dev/pluggy\n    :target: https://gitter.im/pytest-dev/pluggy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge\n\n.. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg\n    :target: https://github.com/psf/black\n\n.. |codecov| image:: https://codecov.io/gh/pytest-dev/pluggy/branch/main/graph/badge.svg\n    :target: https://codecov.io/gh/pytest-dev/pluggy\n    :alt: Code coverage Status\n\n.. links\n.. _pytest:\n    https://pytest.org\n.. _tox:\n    https://tox.wiki/\n.. _devpi:\n    https://doc.devpi.net\n.. _read the docs:\n   https://pluggy.readthedocs.io/en/latest/\n\n\nSupport pluggy\n--------------\n\n`Open Collective`_ is an online funding platform for open and transparent communities.\nIt provides tools to raise money and share your finances in full transparency.\n\nIt is the platform of choice for individuals and companies that want to make one-time or\nmonthly donations directly to the project.\n\n``pluggy`` is part of the ``pytest-dev`` project, see more details in the `pytest collective`_.\n\n.. _Open Collective: https://opencollective.com\n.. _pytest collective: https://opencollective.com/pytest\n",
+        "description_content_type": "text/x-rst",
+        "author": "Holger Krekel",
+        "maintainer_email": "pytest core team <core@pytest.org>",
+        "license": "MIT",
+        "classifier": [
+          "Development Status :: 6 - Mature",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "Operating System :: POSIX",
+          "Operating System :: Microsoft :: Windows",
+          "Operating System :: MacOS :: MacOS X",
+          "Topic :: Software Development :: Testing",
+          "Topic :: Software Development :: Libraries",
+          "Topic :: Utilities",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14"
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Homepage, https://github.com/pytest-dev/pluggy",
+          "Documentation, https://pluggy.readthedocs.io/",
+          "Changelog, https://pluggy.readthedocs.io/en/latest/changelog.html",
+          "Repository, https://github.com/pytest-dev/pluggy",
+          "Issues, https://github.com/pytest-dev/pluggy/issues",
+          "Funding, https://tidelift.com/subscription/pkg/pypi-pluggy"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+          "hashes": {
+            "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.5",
+        "name": "Pygments",
+        "version": "2.21.0",
+        "summary": "Pygments is a syntax highlighting package written in Python.",
+        "description": "Pygments\n~~~~~~~~\n\nPygments is a syntax highlighting package written in Python.\n\nIt is a generic syntax highlighter suitable for use in code hosting, forums,\nwikis or other applications that need to prettify source code.  Highlights\nare:\n\n* a wide range of over 500 languages and other text formats is supported\n* special attention is paid to details, increasing quality by a fair amount\n* support for new languages and formats are added easily\n* a number of output formats, presently HTML, LaTeX, RTF, SVG, all image\n  formats that PIL supports and ANSI sequences\n* it is usable as a command-line tool and as a library\n\nCopyright 2006-present by the Pygments team, see ``AUTHORS``.\nLicensed under the BSD, see ``LICENSE`` for details.\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "syntax",
+          "highlighting"
+        ],
+        "author_email": "Georg Brandl <georg@python.org>",
+        "maintainer": "Matthäus G. Chajdas",
+        "maintainer_email": "Georg Brandl <georg@python.org>, Jean Abou Samra <jean@abou-samra.fr>",
+        "classifier": [
+          "Development Status :: 6 - Mature",
+          "Intended Audience :: Developers",
+          "Intended Audience :: End Users/Desktop",
+          "Intended Audience :: System Administrators",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Text Processing :: Filters",
+          "Topic :: Utilities"
+        ],
+        "requires_dist": [
+          "colorama>=0.4.6; extra == 'windows-terminal'"
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Homepage, https://pygments.org",
+          "Documentation, https://pygments.org/docs",
+          "Source, https://github.com/pygments/pygments",
+          "Bug Tracker, https://github.com/pygments/pygments/issues",
+          "Changelog, https://github.com/pygments/pygments/blob/master/CHANGES"
+        ],
+        "provides_extra": [
+          "plugins",
+          "windows-terminal"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+          "hashes": {
+            "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "referencing",
+        "version": "0.37.0",
+        "summary": "JSON Referencing + Python",
+        "description": "===============\n``referencing``\n===============\n\n|PyPI| |Pythons| |CI| |ReadTheDocs| |pre-commit|\n\n.. |PyPI| image:: https://img.shields.io/pypi/v/referencing.svg\n  :alt: PyPI version\n  :target: https://pypi.org/project/referencing/\n\n.. |Pythons| image:: https://img.shields.io/pypi/pyversions/referencing.svg\n  :alt: Supported Python versions\n  :target: https://pypi.org/project/referencing/\n\n.. |CI| image:: https://github.com/python-jsonschema/referencing/workflows/CI/badge.svg\n  :alt: Build status\n  :target: https://github.com/python-jsonschema/referencing/actions?query=workflow%3ACI\n\n.. |ReadTheDocs| image:: https://readthedocs.org/projects/referencing/badge/?version=stable&style=flat\n   :alt: ReadTheDocs status\n   :target: https://referencing.readthedocs.io/en/stable/\n\n.. |pre-commit| image:: https://results.pre-commit.ci/badge/github/python-jsonschema/referencing/main.svg\n  :alt: pre-commit.ci status\n  :target: https://results.pre-commit.ci/latest/github/python-jsonschema/referencing/main\n\n\nAn implementation-agnostic implementation of JSON reference resolution.\n\nSee `the documentation <https://referencing.readthedocs.io/>`_ for more details.\n",
+        "description_content_type": "text/x-rst",
+        "keywords": [
+          "asyncapi",
+          "json",
+          "jsonschema",
+          "openapi",
+          "referencing"
+        ],
+        "author_email": "Julian Berman <Julian+referencing@GrayVines.com>",
+        "classifier": [
+          "Development Status :: 3 - Alpha",
+          "Intended Audience :: Developers",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: File Formats :: JSON",
+          "Topic :: File Formats :: JSON :: JSON Schema"
+        ],
+        "requires_dist": [
+          "attrs>=22.2.0",
+          "rpds-py>=0.7.0",
+          "typing-extensions>=4.4.0; python_version < '3.13'"
+        ],
+        "requires_python": ">=3.10",
+        "project_url": [
+          "Documentation, https://referencing.readthedocs.io/",
+          "Homepage, https://github.com/python-jsonschema/referencing",
+          "Issues, https://github.com/python-jsonschema/referencing/issues/",
+          "Funding, https://github.com/sponsors/Julian",
+          "Tidelift, https://tidelift.com/subscription/pkg/pypi-referencing?utm_source=pypi-referencing&utm_medium=referral&utm_campaign=pypi-link",
+          "Changelog, https://referencing.readthedocs.io/en/stable/changes/",
+          "Source, https://github.com/python-jsonschema/referencing"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "archive_info": {
+          "hash": "sha256=136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+          "hashes": {
+            "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "rpds-py",
+        "version": "2026.9.1",
+        "summary": "Python bindings to Rust's persistent data structures (rpds)",
+        "description": "===========\n``rpds.py``\n===========\n\n|PyPI| |Pythons| |CI|\n\n.. |PyPI| image:: https://img.shields.io/pypi/v/rpds-py.svg\n  :alt: PyPI version\n  :target: https://pypi.org/project/rpds-py/\n\n.. |Pythons| image:: https://img.shields.io/pypi/pyversions/rpds-py.svg\n  :alt: Supported Python versions\n  :target: https://pypi.org/project/rpds-py/\n\n.. |CI| image:: https://github.com/crate-py/rpds/workflows/CI/badge.svg\n  :alt: Build status\n  :target: https://github.com/crate-py/rpds/actions?query=workflow%3ACI\n\n.. |ReadTheDocs| image:: https://readthedocs.org/projects/referencing/badge/?version=stable&style=flat\n   :alt: ReadTheDocs status\n   :target: https://referencing.readthedocs.io/en/stable/\n\n\nPython bindings to the `Rust rpds crate <https://docs.rs/rpds/>`_ for persistent data structures.\n\nWhat's here is quite minimal (in transparency, it was written initially to support replacing ``pyrsistent`` in the `referencing library <https://github.com/python-jsonschema/referencing>`_).\nIf you see something missing (which is very likely), a PR is definitely welcome to add it.\n\nInstallation\n------------\n\nThe distribution on PyPI is named ``rpds.py`` (equivalently ``rpds-py``), and thus can be installed via e.g.:\n\n.. code:: sh\n\n    $ pip install rpds-py\n\nNote that if you install ``rpds-py`` from source, you will need a Rust toolchain installed, as it is a build-time dependency.\nAn example of how to do so in a ``Dockerfile`` can be found `here <https://github.com/bowtie-json-schema/bowtie/blob/e77fd93598cb6e7dc1b8b1f53c00e5aa410c201a/implementations/python-jsonschema/Dockerfile#L1-L8>`_.\n\nIf you believe you are on a common platform which should have wheels built (i.e. and not need to compile from source), feel free to file an issue or pull request modifying the GitHub action used here to build wheels via ``maturin``.\n\nUsage\n-----\n\nMethods in general are named similarly to their ``rpds`` counterparts (rather than ``pyrsistent``\\ 's conventions, though probably a full drop-in ``pyrsistent``\\ -compatible wrapper module is a good addition at some point).\n\n.. code:: python\n\n    >>> from rpds import HashTrieMap, HashTrieSet, List\n\n    >>> m = HashTrieMap({\"foo\": \"bar\", \"baz\": \"quux\"})\n    >>> m.insert(\"spam\", 37) == HashTrieMap({\"foo\": \"bar\", \"baz\": \"quux\", \"spam\": 37})\n    True\n    >>> m.remove(\"foo\") == HashTrieMap({\"baz\": \"quux\"})\n    True\n\n    >>> s = HashTrieSet({\"foo\", \"bar\", \"baz\", \"quux\"})\n    >>> s.insert(\"spam\") == HashTrieSet({\"foo\", \"bar\", \"baz\", \"quux\", \"spam\"})\n    True\n    >>> s.remove(\"foo\") == HashTrieSet({\"bar\", \"baz\", \"quux\"})\n    True\n\n    >>> L = List([1, 3, 5])\n    >>> L.push_front(-1) == List([-1, 1, 3, 5])\n    True\n    >>> L.rest == List([3, 5])\n    True\n\n",
+        "description_content_type": "text/x-rst; charset=UTF-8",
+        "keywords": [
+          "data structures",
+          "rust",
+          "persistent"
+        ],
+        "author_email": "Julian Berman <Julian+rpds@GrayVines.com>",
+        "classifier": [
+          "Development Status :: 3 - Alpha",
+          "Intended Audience :: Developers",
+          "Operating System :: OS Independent",
+          "Programming Language :: Rust",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy"
+        ],
+        "requires_python": ">=3.11",
+        "project_url": [
+          "Documentation, https://rpds.readthedocs.io/",
+          "Funding, https://github.com/sponsors/Julian",
+          "Homepage, https://github.com/crate-py/rpds",
+          "Issues, https://github.com/crate-py/rpds/issues/",
+          "Source, https://github.com/crate-py/rpds",
+          "Tidelift, https://tidelift.com/subscription/pkg/pypi-rpds-py?utm_source=pypi-rpds-py&utm_medium=referral&utm_campaign=pypi-link",
+          "Upstream, https://github.com/orium/rpds"
+        ]
+      }
+    },
+    {
+      "download_info": {
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "archive_info": {
+          "hash": "sha256=481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "hashes": {
+            "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+          }
+        }
+      },
+      "is_direct": false,
+      "is_yanked": false,
+      "requested": false,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "typing_extensions",
+        "version": "4.16.0",
+        "summary": "Backported and Experimental Type Hints for Python 3.9+",
+        "description": "# Typing Extensions\n\n[![Chat at https://gitter.im/python/typing](https://badges.gitter.im/python/typing.svg)](https://gitter.im/python/typing)\n\n[Documentation](https://typing-extensions.readthedocs.io/en/latest/#) –\n[PyPI](https://pypi.org/project/typing-extensions/)\n\n## Overview\n\nThe `typing_extensions` module serves two related purposes:\n\n- Enable use of new type system features on older Python versions. For example,\n  `typing.TypeGuard` is new in Python 3.10, but `typing_extensions` allows\n  users on previous Python versions to use it too.\n- Enable experimentation with new type system PEPs before they are accepted and\n  added to the `typing` module.\n\n`typing_extensions` is treated specially by static type checkers such as\nmypy and pyright. Objects defined in `typing_extensions` are treated the same\nway as equivalent forms in `typing`.\n\n`typing_extensions` uses\n[Semantic Versioning](https://semver.org/). The\nmajor version will be incremented only for backwards-incompatible changes.\nTherefore, it's safe to depend\non `typing_extensions` like this: `typing_extensions ~=x.y`,\nwhere `x.y` is the first version that includes all features you need.\n[This](https://packaging.python.org/en/latest/specifications/version-specifiers/#compatible-release)\nis equivalent to `typing_extensions >=x.y, <(x+1)`. Do not depend on `~= x.y.z`\nunless you really know what you're doing; that defeats the purpose of\nsemantic versioning.\n\n## Included items\n\nSee [the documentation](https://typing-extensions.readthedocs.io/en/latest/#) for a\ncomplete listing of module contents.\n\n## Contributing\n\nSee [CONTRIBUTING.md](https://github.com/python/typing_extensions/blob/main/CONTRIBUTING.md)\nfor how to contribute to `typing_extensions`.\n\n",
+        "description_content_type": "text/markdown",
+        "keywords": [
+          "annotations",
+          "backport",
+          "checker",
+          "checking",
+          "function",
+          "hinting",
+          "hints",
+          "type",
+          "typechecking",
+          "typehinting",
+          "typehints",
+          "typing"
+        ],
+        "author_email": "\"Guido van Rossum, Jukka Lehtosalo, Łukasz Langa, Michael Lee\" <levkivskyi@gmail.com>",
+        "classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: 3.15",
+          "Topic :: Software Development"
+        ],
+        "requires_python": ">=3.9",
+        "project_url": [
+          "Bug Tracker, https://github.com/python/typing_extensions/issues",
+          "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+          "Documentation, https://typing-extensions.readthedocs.io/",
+          "Home, https://github.com/python/typing_extensions",
+          "Q & A, https://github.com/python/typing/discussions",
+          "Repository, https://github.com/python/typing_extensions"
+        ]
+      }
+    }
+  ],
+  "environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.11.16",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_release": "5.15.0-191-generic",
+    "platform_system": "Linux",
+    "platform_version": "#201-Ubuntu SMP Fri Aug 7 18:39:04 UTC 2026",
+    "python_full_version": "3.11.16",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.11",
+    "sys_platform": "linux"
+  }
+}

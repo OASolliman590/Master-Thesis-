@@ -1,0 +1,10 @@
+{
+  "documented_target_ip": "10.55.205.205",
+  "port": 22,
+  "status": "TCP_UNREACHABLE",
+  "error_type": "TimeoutError",
+  "elapsed_seconds": 15.008,
+  "ssh_authentication_attempted": false,
+  "remote_command_executed": false,
+  "remote_job_started": false
+}

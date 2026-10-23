@@ -1,0 +1,28 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "date_utc": "2026-10-23T21:24:02.675312+00:00",
+  "target": "omics@10.55.205.205",
+  "port": 22,
+  "host_key_check": "STRICT_EXISTING_DEDICATED_KNOWN_HOSTS",
+  "host_key_fingerprint": "SHA256:/HSKz88/R85RGq3QAeBtErjn3JZio5R5u9z2KOjGFe4",
+  "identity_content_read_or_copied": false,
+  "ssh_access": "PASSED",
+  "ssh_exit_code": 0,
+  "ssh_stdout": "DAV_SSH_OK\n",
+  "remote_job_started": false,
+  "remote_parent": "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82",
+  "preflight": {
+    "python_executable": "/home/omics/miniforge3/envs/omics-py/bin/python",
+    "python_version": "3.11.16",
+    "os": "Linux",
+    "machine": "x86_64",
+    "uid": 1019,
+    "packages": {
+      "jsonschema": "4.26.0",
+      "mypy": null,
+      "pip": "26.2.1",
+      "pytest": null
+    }
+  },
+  "shared_environment_modified": false
+}

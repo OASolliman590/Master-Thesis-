@@ -1,0 +1,53 @@
+{
+  "date_utc": "2026-10-23T21:24:22.661406+00:00",
+  "remote_parent": "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82",
+  "archive_sha256": "ac5bf7b9e9c746570e3fef9c29d1e5332bf5bcc75f1fb9969b6cd15032e2bc30",
+  "stages": [
+    {
+      "command": [
+        "ssh",
+        "-i",
+        "/Users/megastore/.ssh/aiu_omics_ed25519",
+        "-o",
+        "IdentitiesOnly=yes",
+        "-o",
+        "UserKnownHostsFile=/Users/megastore/.ssh/aiu_known_hosts",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=15",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "omics@10.55.205.205",
+        "umask 077; mkdir -p /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24 && mkdir /home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 2.19
+    },
+    {
+      "command": [
+        "scp",
+        "-i",
+        "/Users/megastore/.ssh/aiu_omics_ed25519",
+        "-o",
+        "IdentitiesOnly=yes",
+        "-o",
+        "UserKnownHostsFile=/Users/megastore/.ssh/aiu_known_hosts",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=15",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "/private/tmp/dav-aiu-20261024-iruzgozp/dav-synthetic-payload.tar",
+        "omics@10.55.205.205:/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload.tar"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 4.44
+    }
+  ]
+}

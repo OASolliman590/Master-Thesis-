@@ -1,0 +1,41 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "archive_sha256": "ac5bf7b9e9c746570e3fef9c29d1e5332bf5bcc75f1fb9969b6cd15032e2bc30",
+  "manifest_sha256": "28d2e31993eebf1e197667b7291a23c125c12b4e90d4d6ca138413412e2567b5",
+  "payload_files_verified": 45,
+  "shared_environment_modified": false,
+  "real_source_data_used": false,
+  "status": "PASSED",
+  "pid": 2759364,
+  "stages": [
+    {
+      "command": [
+        "/home/omics/miniforge3/envs/omics-py/bin/python",
+        "-B",
+        "-m",
+        "venv",
+        "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/venv"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/venv/bin/python",
+        "-B",
+        "-m",
+        "pip",
+        "--isolated",
+        "install",
+        "--disable-pip-version-check",
+        "--no-cache-dir",
+        "--index-url",
+        "https://pypi.org/simple",
+        "--report",
+        "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/dependency-install-report.json",
+        "-r",
+        "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82/payload/tools/a_dav/requirements-synthetic.txt"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

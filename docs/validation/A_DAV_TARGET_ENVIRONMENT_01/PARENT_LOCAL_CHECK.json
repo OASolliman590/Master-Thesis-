@@ -1,0 +1,20 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "command": [
+    "/private/tmp/thesis-adav05-20261020/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "docs/validation/A_DAV_TARGET_ENVIRONMENT_01/test_runner.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 0,
+  "stdout": "..............                                                           [100%]\n14 passed in 0.67s\n",
+  "stderr": "",
+  "scope": "independent parent local boundary verification on final test bytes; not AIU acceptance",
+  "test_file_sha256": "04c3476f53dc68822e1394d3c5d2599b4dda86443ebf5b6b274658cf09f74c37",
+  "actual_subprocesses_in_tests": "injected synthetic stubs",
+  "real_source_data_used": false
+}

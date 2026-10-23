@@ -1,0 +1,10 @@
+{
+  "date_utc": "2026-10-23T21:20:02.194938+00:00",
+  "alias": "omics",
+  "elapsed_seconds": 5.04,
+  "exit_code": 255,
+  "stdout": "",
+  "stderr": "ssh: Could not resolve hostname omics: nodename nor servname provided, or not known\n",
+  "remote_job_started": false,
+  "real_source_data_used": false
+}

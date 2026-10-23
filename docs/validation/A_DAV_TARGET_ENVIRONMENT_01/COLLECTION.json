@@ -1,0 +1,122 @@
+{
+  "remote_parent": "/home/omics/projects/ici_thesis_pipeline/planning/2026-10-24/A_DAV_TARGET_ENV_01_f53d222_7bf7164cde82",
+  "ssh_exit_code": 0,
+  "collector_source": "from pathlib import Path\nimport json,sys,base64,hashlib\nr=Path(sys.argv[1]);names=[\"runner.pid\",\"runner.stdout.log\",\"runner.stderr.log\",\"setup-status.json\",\"setup-0.stdout.log\",\"setup-0.stderr.log\",\"setup-1.stdout.log\",\"setup-1.stderr.log\",\"dependency-install-report.json\",\"parent-review.json\",\"parent-mypy.stdout.log\",\"parent-mypy.stderr.log\",\"result/status.json\",\"result/process-tests.stdout.log\",\"result/process-tests.stderr.log\",\"result/process-fresh.stdout.log\",\"result/process-fresh.stderr.log\",\"result/process-resume.stdout.log\",\"result/process-resume.stderr.log\"]+[\"result/synthetic-bundle/\"+x for x in (\"manifest.json\",\"packet.json\",\"release_draft.json\",\"result.json\")]\nfiles={}\nfor name in names:\n p=r/name\n if p.exists():\n  assert p.is_file() and not p.is_symlink() and p.stat().st_size<2000000\n  raw=p.read_bytes();files[name]={\"sha256\":hashlib.sha256(raw).hexdigest(),\"size\":len(raw),\"base64\":base64.b64encode(raw).decode()}\nprint(json.dumps(files))\n",
+  "files": [
+    {
+      "path": "runner.pid",
+      "sha256": "bf882216f6df21d6187824dfe91f4a4323376dccdac66bd310dd6078d4cae051",
+      "size": 8
+    },
+    {
+      "path": "runner.stdout.log",
+      "sha256": "3d760c15de21107131375a3d142f43c5fc87bb3980fd8a5c6ee4052658b1415c",
+      "size": 10397
+    },
+    {
+      "path": "runner.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "setup-status.json",
+      "sha256": "3a5b7e6b9edbf95550336213444c746cced88cb51d2b065d9261290512ae1427",
+      "size": 1399
+    },
+    {
+      "path": "setup-0.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "setup-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "setup-1.stdout.log",
+      "sha256": "a9bb8a03990d1812c9ae6ba12ef4c0b89df29da2a3abfdfa914bc3f455ad2ce4",
+      "size": 6772
+    },
+    {
+      "path": "setup-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "dependency-install-report.json",
+      "sha256": "0dadb4a49e10e3792711051b0502dd7da74d4290a02cb4ecf8e6f6cd5595e53d",
+      "size": 82510
+    },
+    {
+      "path": "parent-review.json",
+      "sha256": "305e5ef4d38a7d843de9bc679047887bea09e27e22a5d678a7b1fbbac78b7046",
+      "size": 1332
+    },
+    {
+      "path": "parent-mypy.stdout.log",
+      "sha256": "fc409d91e6c781eb25a1ec1310b7fcb0086b74ed3aa2c415bcd73f884f23f07a",
+      "size": 44
+    },
+    {
+      "path": "parent-mypy.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "result/status.json",
+      "sha256": "0fe4216a49add618bf138a8532492dd70692259e650a1eb5134f40de2b3f3ff4",
+      "size": 11207
+    },
+    {
+      "path": "result/process-tests.stdout.log",
+      "sha256": "2a4bfe7afa0722d8b0eafa769b7b63d5b8f0a608854bb8a420698dc88d155cd4",
+      "size": 341
+    },
+    {
+      "path": "result/process-tests.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "result/process-fresh.stdout.log",
+      "sha256": "9e51c76288b552eb89c317524d5fab0d3673d588d810ef19f66893fdb7780a44",
+      "size": 743
+    },
+    {
+      "path": "result/process-fresh.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "result/process-resume.stdout.log",
+      "sha256": "9e51c76288b552eb89c317524d5fab0d3673d588d810ef19f66893fdb7780a44",
+      "size": 743
+    },
+    {
+      "path": "result/process-resume.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "result/synthetic-bundle/manifest.json",
+      "sha256": "d94940dda7dc49d6ad0efd248b60fbb17075cfce32d48073e8c9d4b86e0dc6d6",
+      "size": 1984
+    },
+    {
+      "path": "result/synthetic-bundle/packet.json",
+      "sha256": "bf96143cd8ccedbf91a9ce7f4a6df8e7f5b0b88e36afe72cc658545f499899e6",
+      "size": 164745
+    },
+    {
+      "path": "result/synthetic-bundle/release_draft.json",
+      "sha256": "2ecc188f5d14eb8809269bb81443cebe2489eb13d2e12239ff0476e458a8540f",
+      "size": 873
+    },
+    {
+      "path": "result/synthetic-bundle/result.json",
+      "sha256": "fb27f833c91e97e5fe6a49270c731bdc7df6350967080e1ae05c9753d4720df1",
+      "size": 18813
+    }
+  ]
+}
