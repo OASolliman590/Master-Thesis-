@@ -1,0 +1,9 @@
+# Review of the inventory and two-reader plan
+
+The parent compared this plan with the existing E01–E10 evidence brief, P01–P08 procedure review, normalized DAV contracts and the accepted synthetic implementation/AIU checkpoints. The expected inventory roles are evidence requirements, not claims about actual objects. The seven review question IDs match the existing Prat procedure. Source facts, authenticated review and V7/V8/V9 acceptance remain unestablished.
+
+A separate methods-research agent verified primary methodological guidance and then reviewed SOURCE_OBJECT_CHECKLIST.md and TWO_READER_PLAN.md. It found one minor planning gap: S2 did not explicitly place documented form/question usability work, coding-instruction clarification and reader familiarization before S3. The parent added an invented-example walkthrough before final basis lock, with retained revisions and an explicit limit: it does not certify a real-report pilot. The walkthrough itself is NOT_RUN. This closes a plan-detail finding, not a source-evidence item or software defect.
+
+The separate review found no other substantive P01–P08 omission in those documents. The parent confirmed that first-pass separation differs from outcome masking, hashes do not authenticate reviewers or establish semantic equivalence, actual review exports remain private by default and no real-source execution route is granted. The fixed source-priority and branch rules remain authoritative; no timing threshold, endpoint conversion, method, role or eligibility count was introduced.
+
+Local document verification checks requirement/question/gap coverage, links, artifact hashes and preservation of 2,212 existing files. It is not a test of real objects or people. No existing runtime tests or source tracers were run in this planning task. No new software failure was established. Actual custody, appointments, source-object verification, two first passes, adjudication and export remain pending.

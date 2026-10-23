@@ -1,0 +1,3 @@
+# Source-object inventory and two-reader review plan
+
+Requested 24 October 2026. Scope remains Prat–GSE93157 × A_BASELINE_BIO from the existing evidence brief. Prepare planning documents only: expected object/evidence roles, private inventory field requirements, fixed review questions, independent first-pass and adjudication sequence, and evidence-versus-software routing. No source objects or real records may be opened, retrieved, copied or analysed. No biological analysis, SSH job, runtime change or frozen specification edit is authorized by this planning task. Actual reader appointments, source access, custody and authentication remain unresolved. Existing synthetic AIU acceptance remains a separate software checkpoint.

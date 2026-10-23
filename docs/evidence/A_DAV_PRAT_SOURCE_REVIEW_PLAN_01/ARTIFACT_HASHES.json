@@ -1,0 +1,65 @@
+{
+  "classification": "PLANNING_ONLY",
+  "files": [
+    {
+      "path": "BINDINGS.json",
+      "bytes": 20829,
+      "sha256": "ec5ceccf1d67a668fa81936c7ebc8b205aa765f89631ec3e1d18ca84044d866a"
+    },
+    {
+      "path": "EVIDENCE_SOFTWARE_DISPOSITION.tsv",
+      "bytes": 3524,
+      "sha256": "216611a519031fa69206db386021f7615fc122c90a064fd12373d3626bf6a8f8"
+    },
+    {
+      "path": "INVENTORY_REQUIREMENTS.tsv",
+      "bytes": 3341,
+      "sha256": "b7fa01d753177413bf9a592e342ce08111855701cd2c27e4b25758e4f41292d6"
+    },
+    {
+      "path": "METHODS_NOTE.md",
+      "bytes": 3709,
+      "sha256": "3e89eceb1de450d0fd4506396e49f56c503cc0bf28dc94cd25efb6ab5fb92d26"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4991,
+      "sha256": "11e78e2d09e9a57ad0087ad6ec0d08b5f66df292f4f29604f51fe01f06504490"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 1967,
+      "sha256": "31b6b24fe498a45e7c093e90bfa85e3f21302f11d1c261f196feb1d5f4d43a18"
+    },
+    {
+      "path": "REVIEW_QUESTIONS.tsv",
+      "bytes": 2728,
+      "sha256": "43a2a286991aaeae6d09dfee865ed13b2dea2bf6dc371a36a747e6c6c93054f8"
+    },
+    {
+      "path": "SOURCE_OBJECT_CHECKLIST.md",
+      "bytes": 5853,
+      "sha256": "dcc9c59b843d891740eb1d1a490082b380ab7bdb2938348c464cf7eaaa9f13a1"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 1518,
+      "sha256": "58a162e6a079b6130541e24d0bd9f972c2ba0b4fe1c14c8179fe523a7e92db2a"
+    },
+    {
+      "path": "TASK.md",
+      "bytes": 735,
+      "sha256": "c13fb4e387c1af9c87ee049c913754495d3d048d127c24b17ad828eec0b53508"
+    },
+    {
+      "path": "TWO_READER_PLAN.md",
+      "bytes": 10641,
+      "sha256": "b00d1f0a6516793b5f80e112d30fd931bc14faa1d12c011dee1f619e058882b9"
+    },
+    {
+      "path": "VERIFY.py",
+      "bytes": 6309,
+      "sha256": "2d931a79be9524847d394f0bc9930e6a8356a4deea77ff4264c1177273f673a5"
+    }
+  ]
+}
