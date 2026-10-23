@@ -1,0 +1,16 @@
+{
+  "approval_authentication": "NOT_RUN",
+  "biological_analysis_executed": false,
+  "frozen_specs_changed": false,
+  "local_links_checked": 23,
+  "new_software_defects_established": [],
+  "preserved_files_changed": 0,
+  "preserved_files_checked": 2226,
+  "readiness_requirements_checked": 13,
+  "real_source_data_used": false,
+  "remote_job_started": false,
+  "source_admission": false,
+  "source_review_readiness": "BLOCKED_UNKNOWN",
+  "statistical_release": false,
+  "status": "PASS_DOCUMENT_AND_PRESERVATION_CHECKS_ONLY"
+}

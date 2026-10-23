@@ -1,0 +1,3 @@
+# Prat custody and reader-readiness check
+
+Check current approval and reader-readiness evidence for Prat–GSE93157 × A_BASELINE_BIO using planning, contract and authorization metadata only. Separate missing approvals, missing operational evidence and software fixes. Frozen specs, prior packets and runtime remain unchanged. Do not open source objects, patient data, headers or values; do not perform biological analysis, SSH operations, source retrieval, appointments, approval requests or messages to other people. This instruction authorizes the readiness check, not actual source review. Record the scope and limitations of the evidence search; absence from searched records is not global absence.

@@ -1,0 +1,50 @@
+{
+  "classification": "DOCUMENT_METADATA_CHECK_ONLY",
+  "files": [
+    {
+      "path": "BINDINGS.json",
+      "bytes": 6796,
+      "sha256": "7023e8040f59fa7a6d95e056010982d18563889d055427206bdf538c0785f820"
+    },
+    {
+      "path": "CLOSURE_REQUEST.md",
+      "bytes": 2428,
+      "sha256": "e16e8f0c2352e06b29325eff256f0b9dca6e2bed549dda572f66e9e31f01f7d3"
+    },
+    {
+      "path": "READINESS_CHECKLIST.tsv",
+      "bytes": 3536,
+      "sha256": "83aba5a726c0f1e6446127a6904f3ffd9c9b24bd8e07dacbfc8ec168b263ec0a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6235,
+      "sha256": "eea32b8b0e4a12bb6ce0a4b5351304683c985685e261645d949018a8387053a4"
+    },
+    {
+      "path": "REQUIREMENTS_REVIEW.md",
+      "bytes": 5050,
+      "sha256": "dcc1a837fb65cf9ea6ab9473859daa0eb1036be4cef8d956b80c3b5f0c8e3f0c"
+    },
+    {
+      "path": "SEARCH_SCOPE.json",
+      "bytes": 2072,
+      "sha256": "37f47a942649f5ae66248166b35fe54cc2ade70cd362eb32048978e0525e5b05"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 1439,
+      "sha256": "3a4664b2b9e5605541373da0152e336315d38d276491cf81f092ba584f5e34d0"
+    },
+    {
+      "path": "TASK.md",
+      "bytes": 704,
+      "sha256": "249abfaf663996e62cdd5624d2d939a11642bd2bc242b0156c1d978ba56d528f"
+    },
+    {
+      "path": "VERIFY.py",
+      "bytes": 4943,
+      "sha256": "197ba4d3e61489d9252f33f1d9e1928eb62424c6c33e622ced344aa66e42475b"
+    }
+  ]
+}

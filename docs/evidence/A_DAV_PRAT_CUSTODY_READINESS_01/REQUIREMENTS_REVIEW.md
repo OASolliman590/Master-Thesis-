@@ -1,0 +1,25 @@
+# Custody and reader-readiness requirements
+
+This is a local document review under [TASK.md](TASK.md), not source access or an approval. No approval instrument was examined. The checked [prior status](../A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/STATUS.json) records custody authorization `NOT_ESTABLISHED`, reader appointments `UNASSIGNED`, authentication and walkthrough `NOT_RUN`. These are findings about checked records, not proof that approvals or readers do not exist elsewhere.
+
+## Evidence needed before actual review
+
+| Requirement | Evidence to verify in approved custody |
+|---|---|
+| Applicable access route | Object-level public/controlled classification and processing/reporting/redistribution terms; authoritative permission record and its scope/validity. The route for the actual Prat objects is unestablished here. |
+| Custody authority | Authorized custodian, permitted location and retention arrangement, retrieval/custody history and allowed activities/users; verify that the permission covers the proposed review and any agent processing. |
+| Reader appointments | Two distinct authorized people, or agents where permitted, with assigned evidence responsibilities, relevant qualifications and verified identities/access. Different model names or two launched agents establish none of these facts. |
+| Authentication | References to actual appointment/access/review records; verify identity, actual dates and referenced evidence in the authorized review system. No specific signature technology is selected. A reviewer string, digest or plan author/date is insufficient. |
+| Confidentiality and independence | Applicable confidentiality/handling obligations; separate first-pass records and peer-answer restrictions; truthful records of shared assistance/hints, prior source access and outcome exposure. Preserve the later first-pass originals and authenticated adjudication. |
+
+The access-route and custody requirements follow [Access policy, “Controlled access” and “Redistribution”](../../../specs/A_DATA_ACQUISITION_VALIDATION/ACCESS_PRIVACY_AND_REDISTRIBUTION.md), the [object checklist, “Required private record and checks”](../A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/SOURCE_OBJECT_CHECKLIST.md), and [two-reader plan, “Roles and private working record”/S0](../A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/TWO_READER_PLAN.md). Authentication follows [Relational invariants, “Receipts and cardinality”](../../../specs/A_DATA_ACQUISITION_VALIDATION/RELATIONAL_INVARIANTS.md).
+
+For a controlled source, the frozen policy requires an approved application, named authorized users, local institutional authorization, source-specific terms, permitted storage/retention, expiry handling and release review. It does not impose a controlled-access application or an IRB approval on every Prat object. Public accessibility still does not establish redistribution permission. Applicable terms and institutional obligations require evidence; neither route is certified here. [Access policy, “Controlled access”/“Redistribution”](../../../specs/A_DATA_ACQUISITION_VALIDATION/ACCESS_PRIVACY_AND_REDISTRIBUTION.md).
+
+## Authority, preparation and software are separate
+
+S0 requires authority to undertake later work; it does not certify the object set or first passes. S1 requires verified objects and a sealed manifest. S2 requires the documented invented-example walkthrough/familiarization, clarified instructions and locked common basis/policy before S3. No walkthrough, seal or outcome-blinding claim is established by this check. Peer-answer independence and outcome masking remain distinct. [Two-reader plan, S0–S4 and walkthrough paragraph](../A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/TWO_READER_PLAN.md).
+
+Missing approvals, appointments and actual operational records require authorized disposition/evidence, not code changes. Historical server connectivity, a software pass or a proposed procedure cannot supply permission. P01–P08 concern explicit procedure/evidence gaps; they do not establish a current executable defect. Synthetic acceptance cannot become clinical admission. [Prior independent review, “Scope and authority”, P01/P02/P06 and “Review disposition”](../../validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md); [Relational invariants, “Test evidence classes”](../../../specs/A_DATA_ACQUISITION_VALIDATION/RELATIONAL_INVARIANTS.md).
+
+Populated custody/reader records remain private. The existing narrower Prat boundary permits only separately approved status/reason enums, approved whole-artifact hashes and fixed flags locally; it excludes identities, dates, locators, counts, private paths and patient information. Generic public-metadata/aggregate permissions do not widen it. A real export route remains separately reviewable; this check authorizes no export or admission. [Two-reader plan, “Narrow local export and later work”](../A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/TWO_READER_PLAN.md); [prior review, P08](../../validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md).

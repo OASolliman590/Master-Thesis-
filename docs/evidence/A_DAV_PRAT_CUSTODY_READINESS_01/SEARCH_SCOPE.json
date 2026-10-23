@@ -1,0 +1,58 @@
+{
+  "classification": "DOCUMENT_METADATA_CHECK_ONLY",
+  "scope": "Prat-GSE93157 x A_BASELINE_BIO; approval/readiness references only",
+  "local_search": {
+    "roots": [
+      "docs/execution",
+      "docs/evidence",
+      "docs/decisions",
+      "docs/validation/A_DAV_PRAT_PROCEDURE_01",
+      "docs/validation/A_DAV_IMPLEMENTATION_01"
+    ],
+    "terms": [
+      "Prat",
+      "GSE93157",
+      "custody",
+      "reader appointment",
+      "authorized review"
+    ],
+    "format": "planning/contracts and approval metadata; source objects and populated receipt records excluded",
+    "result": "No current authenticated Prat custody/reader approval established; prior status explicitly unassigned/not established"
+  },
+  "connected_searches": [
+    {
+      "provider": "Notion",
+      "query": "Prat custody approval",
+      "mode": "metadata only; highlights disabled",
+      "result": "Broad candidate planning pages; no approval instrument examined"
+    },
+    {
+      "provider": "Notion",
+      "query": "Prat reader appointment",
+      "mode": "metadata only; highlights disabled",
+      "result": "Broad candidate planning pages; no appointment instrument examined"
+    },
+    {
+      "provider": "Notion",
+      "query": "Prat",
+      "mode": "title-only, scoped to thesis project page; highlights disabled",
+      "result": "No matching result in this scoped search"
+    },
+    {
+      "provider": "GitHub issues",
+      "query": "repo:OASolliman590/Master-Thesis- is:issue Prat custody",
+      "mode": "read-only issue search",
+      "result": "No matching issue returned"
+    }
+  ],
+  "user_reference_status": "UNKNOWN_TO_USER; no approval or appointment reference supplied",
+  "limits": [
+    "No global absence claim",
+    "Candidate page bodies and private authorization systems not inspected",
+    "No messages or source/patient records inspected",
+    "No source-specific terms/access route resolved",
+    "Metadata search results do not authenticate approvals"
+  ],
+  "source_objects_opened": false,
+  "private_authorization_records_exported": false
+}
