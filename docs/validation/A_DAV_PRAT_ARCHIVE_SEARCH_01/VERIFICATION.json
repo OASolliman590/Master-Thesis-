@@ -1,0 +1,32 @@
+{
+  "status": "PASSED",
+  "base_commit": "cc26a7922b8be56a8d9e3d0d77062b9de6e752d0",
+  "protected_prior_files_unchanged": 2321,
+  "new_research_documents": 2,
+  "independent_review": "NO_ACTIONABLE_FINDINGS",
+  "local_links_and_patient_free_export_scan": "PASSED_WITHIN_NEW_FILES",
+  "captured_article_status": 200,
+  "captured_article_memento_datetime": "2017-07-06T12:37:33Z",
+  "captured_article_identity_and_response_metadata": "CHECKED_BY_PARENT",
+  "file_level_attachment_link_in_captured_page": "NOT_IDENTIFIED",
+  "original_2017_attachment_bytes_retrieved": false,
+  "publisher_platform_history": "2021_AGREEMENT_AND_FEBRUARY_2022_TRANSITION_DOCUMENTED",
+  "table_s1_specific_migration_history": "NOT_ESTABLISHED",
+  "2017_to_current_byte_continuity": "NOT_ESTABLISHED",
+  "archive_coverage": "INCOMPLETE_ERRORS_RATE_LIMIT_AND_UNTESTED_ROUTES",
+  "private_capture_permissions": "CHECKED",
+  "raw_source_or_populated_inventory_exported": false,
+  "frozen_specs_changed": false,
+  "runtime_changed": false,
+  "source_admission": false,
+  "statistical_release": false,
+  "biological_analysis_executed": false,
+  "runtime_tests": "NOT_RERUN_RESEARCH_ONLY",
+  "publisher_or_author_contacted": false,
+  "pushed": false,
+  "limitations": [
+    "Archived article footnote does not identify the original attachment",
+    "Publisher platform dates do not establish supplement migration or byte identity",
+    "Archive service failures are not absence evidence; completed empty queries apply only to their exact scope"
+  ]
+}

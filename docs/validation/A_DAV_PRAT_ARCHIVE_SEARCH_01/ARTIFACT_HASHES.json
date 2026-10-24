@@ -1,0 +1,34 @@
+{
+  "scope": "NEW_PATIENT_FREE_RESEARCH_ARTIFACTS_ONLY",
+  "files": [
+    {
+      "path": "work/a-dav-01/docs/research/A_DAV_PRAT_2017_ARCHIVE_SEARCH_01.md",
+      "bytes": 7151,
+      "sha256": "615c00b858db1138dbfdfd21aec835155d42cf0098ae604c4844f561d08e50c9"
+    },
+    {
+      "path": "work/a-dav-01/docs/research/A_DAV_PRAT_PUBLISHER_HISTORY_01.md",
+      "bytes": 5521,
+      "sha256": "8e66e72e696ffcbfc074a19d2de3b1cf72b81f48be09a47f07c22550bbaed975"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ARCHIVE_SEARCH_01/README.md",
+      "bytes": 2944,
+      "sha256": "10a50e2671f5a1cb5de66bdd1cc22374787a308dbac09cec45292c93eed83a47"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ARCHIVE_SEARCH_01/REVIEW.md",
+      "bytes": 1905,
+      "sha256": "9c289bc575699d1ba94e2e06ed203b2c1a0df1dd218ec771cd81da508e214d54"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ARCHIVE_SEARCH_01/VERIFICATION.json",
+      "bytes": 1522,
+      "sha256": "c82115f223e9b09b91f5f4f1fb9505b21f38d022cc3dec3e4b74d399c5a2f614"
+    }
+  ],
+  "excluded": [
+    "ARTIFACT_HASHES.json"
+  ],
+  "private_capture_manifest_included": false
+}
