@@ -1,0 +1,31 @@
+{
+  "status": "PASSED",
+  "base_commit": "a80341e9846d3f12567e0a6ef92c2ceea9867afb",
+  "protected_prior_files_unchanged": 2315,
+  "frozen_specs_changed": false,
+  "runtime_changed": false,
+  "public_versions_endpoint": "HTTP_200_ONE_ENTRY_VERSION_1",
+  "current_and_version1_metadata": "AGREE_ON_FILE_IDENTITY_AND_DATES",
+  "prior_retained_file_matches_current_repository_size_digest": true,
+  "historical_2017_byte_continuity": "NOT_ESTABLISHED",
+  "bounded_archive_candidate_routes": "TWO_EMPTY_RESPONSES_NOT_EXHAUSTIVE",
+  "public_reuse_primary_pages": "HTTP_200_ACCESSION_PRESENT_TWO_EXAMPLES_NOT_CENSUS",
+  "publication_biopsy_timing_and_assay_passages": "REPRODUCED_INDEXED_PRIMARY_TEXT_NOT_POLICY_APPROVAL",
+  "independent_response_method_passage_recheck": "NOT_REPRODUCED_PRIOR_CANDIDATE_NOT_RETRACTED",
+  "initial_review_findings": 1,
+  "review_findings_closed": 1,
+  "outstanding_review_findings": 0,
+  "local_links_and_export_scan": "PASSED_WITHIN_NEW_FILES",
+  "raw_source_or_populated_inventory_exported": false,
+  "actual_reader_authentication": "NOT_RUN",
+  "source_admission": false,
+  "statistical_release": false,
+  "biological_analysis_executed": false,
+  "runtime_tests": "NOT_RERUN_RESEARCH_ONLY",
+  "pushed": false,
+  "limitations": [
+    "Public version list does not prove pre-Figshare history or absence of unrecorded replacement",
+    "Metadata modification timestamp does not identify file changes",
+    "Public records do not establish project appointments, custody, individual assertions or independent source sign-off"
+  ]
+}
