@@ -1,0 +1,14 @@
+{
+  "status": "PASSED",
+  "classification": "SYNTHETIC_ONLY",
+  "training_boundary_cases_passed": 8,
+  "protected_prior_files_unchanged": 2280,
+  "bound_input_documents": 13,
+  "current_packet_files_hash_checked": 10,
+  "original_seven_question_texts_unchanged": true,
+  "actual_source_review": "NOT_RUN",
+  "actual_use_authorized": false,
+  "runtime_tests_current": "NOT_RERUN_RUNTIME_UNCHANGED",
+  "real_source_data_used": false,
+  "biological_analysis_run": false
+}

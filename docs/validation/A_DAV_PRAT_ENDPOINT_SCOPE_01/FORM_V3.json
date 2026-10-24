@@ -1,0 +1,130 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "dispositions": {
+    "CONFLICTING": "For non-endpoint questions, retain incompatible assertions/proposals with their kinds and unequal authority. For the endpoint label apply endpoint_rule component scope; retain every episode conflict separately regardless of that label.",
+    "NOT_IN_INSPECTED_OBJECTS": "The casebook supplies no substantive evidence for this domain. Scope absence to this case, and cite explicit omission statements when available; do not infer global absence.",
+    "SUPPORTED": "The stated narrow toy proposition is supported. State its exact scope and separately list missing parts of the full question. This never certifies question completeness, branch eligibility or admission.",
+    "UNRESOLVED": "A requested material join, meaning or choice lacks toy support. Preserve supported subclaims and state the gap; hypothetical alternatives alone do not establish a conflict between authenticated sources or readers."
+  },
+  "endpoint_rule": {
+    "actual_use_authorized": false,
+    "allowed_component_dispositions": [
+      "CONFLICTING",
+      "NOT_IN_INSPECTED_OBJECTS",
+      "SUPPORTED",
+      "UNRESOLVED"
+    ],
+    "applies_to": "endpoint question only; all original seven question texts remain authoritative within the form",
+    "assessment_evidence": "Individual assessment, source criteria/system/version, evaluability, assessment date/day and window; preserve documented missingness and gaps without timing defaults.",
+    "episode_question_reference": "episode_bindings",
+    "episode_rule": "Episode matching is reported in episode_link_disposition and episode_bindings, with explicit same-patient/same-episode source locators retained. An episode-only conflict does not replace the meaning/assessment summary label. Scope this status to the proposed specimen/outcome use; do not globally invalidate distinct native episodes.",
+    "field_placement": "For the endpoint assertion add endpoint_components with exactly the listed fields. Other grouped assertions keep the v2 fields.",
+    "provenance_rule": "Retain all raw values, unsupported proposals, alternatives, source locators, gaps and conflicts. Existing frozen source-priority and no-conversion rules remain unchanged.",
+    "required_endpoint_fields": [
+      "summary_scope",
+      "meaning_disposition",
+      "assessment_disposition",
+      "episode_link_disposition",
+      "episode_question_reference",
+      "actual_use_authorized"
+    ],
+    "rule_id": "training-endpoint-scope-v1",
+    "summary_rule_order": [
+      "If meaning or assessment is CONFLICTING, endpoint disposition=CONFLICTING. The conflict must concern supported endpoint assertions under the existing source-priority rule, not an unsupported proposal acquiring authority.",
+      "Otherwise if meaning and assessment are both SUPPORTED, endpoint disposition=SUPPORTED for those components only.",
+      "Otherwise if neither domain is addressed (both NOT_IN_INSPECTED_OBJECTS), endpoint disposition=NOT_IN_INSPECTED_OBJECTS.",
+      "Otherwise endpoint disposition=UNRESOLVED; a missing required component cannot pass."
+    ],
+    "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+    "use_rule": "The full endpoint question still requires the same-episode individual assessment. SUPPORTED summary is not full-question completion. Any missing/conflicting meaning, assessment or episode match withholds use; actual_use_authorized remains false for every synthetic example and creates no real approval."
+  },
+  "instructions": [
+    "Fill all seven question IDs for every case. Use only supplied toy lines, never prior reader answers or real Prat facts.",
+    "Separate supported facts, unsupported legacy proposals, hypothetical alternatives, gaps and scoped absence into subclaims using the listed kinds. Each subclaim preserves its provenance; a proposal is never a CASE_FACT.",
+    "support_scope states exactly which proposition is supported or unresolved. remaining_gaps lists unestablished parts of the full question even if a limited proposition is SUPPORTED. A named specimen/assay link does not prove exact header/object linkage or branch eligibility.",
+    "For a conflict, retain every incompatible assertion with its kind, locator and unequal support. Never grant an unsupported proposal authority or transfer an outcome across episodes.",
+    "Hypothetical X/Y alternatives in a case are not the exercise readers' answers. If no toy rule selects between them, retain the unresolved choice. Equal legacy bytes cannot select an interpretation.",
+    "Every line reference must exist in the same toy object. NOT_IN_INSPECTED_OBJECTS may cite explicit omission text; cite it when supplied. Empty line lists are allowed only when the domain is simply not addressed and there is no explicit omission locator. Explain the case-limited scope.",
+    "Do not infer alias merges, episode joins, endpoint conversions, measurement scale, roles, eligibility or permissions. Every statement is invented training content.",
+    "real_source_data_used=false. actual_source_approval=PENDING_NOT_ESTABLISHED and actual_reader_authentication=NOT_RUN. This rehearsal neither appoints readers nor grants access.",
+    "peer_material_seen must be truthful. It is a process self-report, not authenticated independence. Do not read any earlier or current peer pass.",
+    "usability_notes records any remaining ambiguity; do not invent either agreement or disagreement. These form fields are training annotations, not frozen schema extensions.",
+    "For endpoint only, place the required endpoint_components object beside the existing assertion fields. Follow endpoint_rule for disposition. This local training summary is not a new clinical endpoint or a production eligibility predicate.",
+    "Do not delete an episode conflict to obtain an endpoint summary. Cross-reference the episode_bindings assertion, preserve the conflicting proposal/subclaim and keep actual_use_authorized=false.",
+    "Meaning and assessment summaries cannot stand in for complete endpoint or branch eligibility; missing same-episode evidence remains blocking even when both summary components are supported.",
+    "Assessment support requires the source assessment system/version, evaluability, date/day and window, or explicit gaps, under the frozen ontology. Select no new timing default. episode_link_disposition refers to the proposed case-specific use, not a global invalidation of other native episodes."
+  ],
+  "questions": [
+    {
+      "question": "Which lexical aliases refer to each originating person and what supports each canonical link?",
+      "question_id": "identity"
+    },
+    {
+      "question": "How does each person relate to distinct specimens, assays and exact headers/objects?",
+      "question_id": "patient_specimen_assay"
+    },
+    {
+      "question": "Which index episode and components support each selected exposure, specimen and outcome?",
+      "question_id": "episode_bindings"
+    },
+    {
+      "question": "What source-supported pre-index/archival/repeat/lesion/assay policy was fixed before outcome-based selection?",
+      "question_id": "baseline_repeat_policy"
+    },
+    {
+      "question": "What exactly does the native endpoint mean and which same-episode individual assessment supports it?",
+      "question_id": "endpoint"
+    },
+    {
+      "question": "What exact measurement and processing contract supports this object and proposed branch use?",
+      "question_id": "assay"
+    },
+    {
+      "question": "What originating-family overlap and actual prior use affect protection for this review?",
+      "question_id": "overlap_exposure"
+    }
+  ],
+  "required_case": [
+    "case_id",
+    "assertions"
+  ],
+  "required_per_assertion": [
+    "question_id",
+    "disposition",
+    "assertion",
+    "object_id",
+    "line_ids",
+    "reason",
+    "support_scope",
+    "remaining_gaps",
+    "subclaims"
+  ],
+  "required_top_level": [
+    "classification",
+    "reader_label",
+    "casebook_sha256",
+    "form_sha256",
+    "policy_sha256",
+    "peer_material_seen",
+    "real_source_data_used",
+    "cases",
+    "usability_notes",
+    "actual_source_approval",
+    "actual_reader_authentication"
+  ],
+  "revises": "form-v2",
+  "scope": "SYNTHETIC_TRAINING_ONLY_ENDPOINT_COMPONENT_SUMMARY_NOT_CANONICAL_DAV_SCHEMA",
+  "subclaim_fields": [
+    "kind",
+    "text",
+    "line_ids"
+  ],
+  "subclaim_kinds": [
+    "CASE_FACT",
+    "UNSUPPORTED_PROPOSAL",
+    "HYPOTHETICAL_ALTERNATIVE",
+    "UNRESOLVED_GAP",
+    "SCOPED_ABSENCE"
+  ],
+  "version": "form-v3"
+}

@@ -1,0 +1,79 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "scope": "Symbolic component states only; none are actual source assessments or biological measurements",
+  "expected_actual_use_authorized": false,
+  "cases": [
+    {
+      "case_id": "SCOPE-C02-RETAINED",
+      "basis": "Existing invented INV-C02 B3-B5: native BETA-only value, undefined meaning/assessment and unsupported ALPHA use.",
+      "meaning_disposition": "UNRESOLVED",
+      "assessment_disposition": "UNRESOLVED",
+      "episode_link_disposition": "CONFLICTING",
+      "expected_summary": "UNRESOLVED",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-MEANING-CONFLICT",
+      "basis": "Invented component state only: incompatible supported native endpoint definitions remain unresolved under the existing source-priority process; the episode link itself is supported.",
+      "meaning_disposition": "CONFLICTING",
+      "assessment_disposition": "SUPPORTED",
+      "episode_link_disposition": "SUPPORTED",
+      "expected_summary": "CONFLICTING",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-UNKNOWN-EPISODE",
+      "basis": "Invented component state only: definition and complete assessment evidence are supported, but the proposed episode link is unknown.",
+      "meaning_disposition": "SUPPORTED",
+      "assessment_disposition": "SUPPORTED",
+      "episode_link_disposition": "UNRESOLVED",
+      "expected_summary": "SUPPORTED",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-CONFLICTING-EPISODE",
+      "basis": "Invented component state only: definition and assessment evidence are supported, but the proposed episode use is conflicting.",
+      "meaning_disposition": "SUPPORTED",
+      "assessment_disposition": "SUPPORTED",
+      "episode_link_disposition": "CONFLICTING",
+      "expected_summary": "SUPPORTED",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-NO-ENDPOINT",
+      "basis": "Invented component state only: neither endpoint domain nor the proposed episode link is addressed.",
+      "meaning_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "assessment_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "episode_link_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "expected_summary": "NOT_IN_INSPECTED_OBJECTS",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-ALL-COMPONENTS",
+      "basis": "Invented component state only: all three component states are supported. This still establishes no actual source authority or approval.",
+      "meaning_disposition": "SUPPORTED",
+      "assessment_disposition": "SUPPORTED",
+      "episode_link_disposition": "SUPPORTED",
+      "expected_summary": "SUPPORTED",
+      "expected_components_supported": true
+    },
+    {
+      "case_id": "SCOPE-MISSING-ASSESSMENT",
+      "basis": "Invented component state only: a known definition cannot replace absent individual assessment, timing/window or evaluability evidence.",
+      "meaning_disposition": "SUPPORTED",
+      "assessment_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "episode_link_disposition": "SUPPORTED",
+      "expected_summary": "UNRESOLVED",
+      "expected_components_supported": false
+    },
+    {
+      "case_id": "SCOPE-ASSESSMENT-CONFLICT",
+      "basis": "Invented component state only: an unresolved definition does not hide a supported contradiction in assessment evidence.",
+      "meaning_disposition": "UNRESOLVED",
+      "assessment_disposition": "CONFLICTING",
+      "episode_link_disposition": "SUPPORTED",
+      "expected_summary": "CONFLICTING",
+      "expected_components_supported": false
+    }
+  ]
+}

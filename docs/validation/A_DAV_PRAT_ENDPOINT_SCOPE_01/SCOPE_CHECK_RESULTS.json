@@ -1,0 +1,122 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "scope": "LOCAL_TRAINING_COMPONENT_RULE_ONLY",
+  "cases_passed": 8,
+  "actual_use_authorized": false,
+  "real_source_data_used": false,
+  "biological_analysis_run": false,
+  "cases": [
+    {
+      "case_id": "SCOPE-C02-RETAINED",
+      "endpoint_disposition": "UNRESOLVED",
+      "endpoint_components": {
+        "meaning_disposition": "UNRESOLVED",
+        "assessment_disposition": "UNRESOLVED",
+        "episode_link_disposition": "CONFLICTING",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-MEANING-CONFLICT",
+      "endpoint_disposition": "CONFLICTING",
+      "endpoint_components": {
+        "meaning_disposition": "CONFLICTING",
+        "assessment_disposition": "SUPPORTED",
+        "episode_link_disposition": "SUPPORTED",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-UNKNOWN-EPISODE",
+      "endpoint_disposition": "SUPPORTED",
+      "endpoint_components": {
+        "meaning_disposition": "SUPPORTED",
+        "assessment_disposition": "SUPPORTED",
+        "episode_link_disposition": "UNRESOLVED",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-CONFLICTING-EPISODE",
+      "endpoint_disposition": "SUPPORTED",
+      "endpoint_components": {
+        "meaning_disposition": "SUPPORTED",
+        "assessment_disposition": "SUPPORTED",
+        "episode_link_disposition": "CONFLICTING",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-NO-ENDPOINT",
+      "endpoint_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "endpoint_components": {
+        "meaning_disposition": "NOT_IN_INSPECTED_OBJECTS",
+        "assessment_disposition": "NOT_IN_INSPECTED_OBJECTS",
+        "episode_link_disposition": "NOT_IN_INSPECTED_OBJECTS",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-ALL-COMPONENTS",
+      "endpoint_disposition": "SUPPORTED",
+      "endpoint_components": {
+        "meaning_disposition": "SUPPORTED",
+        "assessment_disposition": "SUPPORTED",
+        "episode_link_disposition": "SUPPORTED",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": true,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-MISSING-ASSESSMENT",
+      "endpoint_disposition": "UNRESOLVED",
+      "endpoint_components": {
+        "meaning_disposition": "SUPPORTED",
+        "assessment_disposition": "NOT_IN_INSPECTED_OBJECTS",
+        "episode_link_disposition": "SUPPORTED",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    },
+    {
+      "case_id": "SCOPE-ASSESSMENT-CONFLICT",
+      "endpoint_disposition": "CONFLICTING",
+      "endpoint_components": {
+        "meaning_disposition": "UNRESOLVED",
+        "assessment_disposition": "CONFLICTING",
+        "episode_link_disposition": "SUPPORTED",
+        "summary_scope": "NATIVE_ENDPOINT_MEANING_AND_ASSESSMENT",
+        "episode_question_reference": "episode_bindings",
+        "actual_use_authorized": false
+      },
+      "all_three_training_components_supported": false,
+      "check": "PASSED"
+    }
+  ]
+}
