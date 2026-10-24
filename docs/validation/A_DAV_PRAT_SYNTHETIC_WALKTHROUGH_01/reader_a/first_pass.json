@@ -1,0 +1,231 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "reader_label": "SYN-READER-A",
+  "casebook_sha256": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73",
+  "form_sha256": "58ebf84e9f5e1cc9d4e427d8dfb2fb0de2616eaf493bb5a91444e92baa2b9ab3",
+  "policy_sha256": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9",
+  "peer_material_seen": false,
+  "real_source_data_used": false,
+  "cases": [
+    {
+      "case_id": "INV-C01",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "UNRESOLVED",
+          "assertion": "INV-P-A and INV-P-B are distinct. INV-01 is the lexical alias of INV-P-A and INV-001 is the lexical alias of INV-P-B; neither aliases the other. INV-1 has no supplied canonical person link, and dropping leading zeros provides no authority to merge these labels.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "reason": "The two explicit alias links are supported, but the assay label INV-1 remains unmapped; normalization cannot resolve it."
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "UNRESOLVED",
+          "assertion": "INV-ASSAY-A references INV-1 only. No mapping from INV-1 to either person or a specimen is supplied for INV-OBJECT-ALIAS.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A3"
+          ],
+          "reason": "The person/specimen/assay join is missing; the assay reference alone does not establish one."
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No treatment episode or selected exposure, specimen, or outcome episode components are addressed in this case.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C01 only; the case supplies no treatment episode evidence."
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No source-supported pre-index, archival, repeat, lesion, or assay selection policy fixed before outcome selection is addressed.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [],
+          "reason": "Scoped absence in the supplied toy case only; no timing or selection policy can be inferred."
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No native endpoint meaning or same-episode individual assessment is addressed.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C01 only; this does not establish that such evidence is absent elsewhere."
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No exact measurement scale, processing contract, or proposed branch-use support is addressed.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [],
+          "reason": "Scoped absence in the toy case only; the assay name does not supply a measurement or processing contract."
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No originating-family overlap or actual prior-use evidence is addressed.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C01 only; no untouched status or protection decision follows."
+        }
+      ]
+    },
+    {
+      "case_id": "INV-C02",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "SUPPORTED",
+          "assertion": "The invented register identifies one person, INV-P-C. No additional lexical aliases or alias normalization links are supplied.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B1"
+          ],
+          "reason": "The registered person is explicit; this assertion makes no additional alias claim."
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "SUPPORTED",
+          "assertion": "INV-SPECIMEN-C belongs to INV-P-C, and INV-ASSAY-C belongs to INV-SPECIMEN-C in INV-OBJECT-EPISODE. The specimen is explicitly bound to INV-E-ALPHA.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B1",
+            "B2"
+          ],
+          "reason": "These person, specimen, assay, and specimen-episode relations are explicit; no outcome join or additional header is inferred."
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "CONFLICTING",
+          "assertion": "INV-P-C has distinct episodes INV-E-ALPHA and INV-E-BETA. INV-SPECIMEN-C and its assay are bound through the specimen to INV-E-ALPHA. INV-POSITIVE is explicitly bound to INV-E-BETA only, whereas a proposed legacy row attaches it to INV-E-ALPHA without supporting source authority. Preserve the conflicting proposed assignment and explicit source binding; no selected same-episode specimen/outcome combination or index exposure is established.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ],
+          "reason": "The proposed ALPHA outcome attachment conflicts with the explicit BETA-only binding. Shared person identity does not authorize transfer; missing timing and selection evidence also prevents selecting an index exposure."
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No source-supported pre-index, archival, repeat, lesion, or assay selection policy fixed before outcome-based selection is supplied.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C02 only; explicit specimen ownership and episode binding do not establish timing or selection policy."
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "UNRESOLVED",
+          "assertion": "INV-POSITIVE is a native invented outcome value bound to INV-P-C and INV-E-BETA only. Its response-category meaning is undefined; no ORR, DCR, or DCB conversion or same-episode individual assessment linking it to the ALPHA specimen is supported.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B2",
+            "B3",
+            "B4",
+            "B5"
+          ],
+          "reason": "The outcome value and BETA binding are explicit, but endpoint semantics and an assessment supporting the proposed ALPHA use are missing."
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No exact measurement scale, processing contract, or proposed branch-use support is supplied.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C02 only; naming INV-ASSAY-C and its specimen does not supply this contract."
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No originating-family overlap or actual prior-use evidence is supplied.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C02 only; no untouched status or protection determination is established."
+        }
+      ]
+    },
+    {
+      "case_id": "INV-C03",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No originating person or lexical alias-to-person canonical link is addressed.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C03 only; the alternative episode labels do not identify people."
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No person/specimen/assay crosswalk or exact-header relation is supplied for INV-OBJECT-LEGACY.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [],
+          "reason": "Scoped absence in the toy case only; the table content does not establish these joins."
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "UNRESOLVED",
+          "assertion": "Hypothetical interpretation X assigns an invented outcome to INV-E-X; interpretation Y assigns it to INV-E-Y. The supplied toy source identifies neither outcome episode and supplies no rule selecting either interpretation. The equal exported bytes omit the episode field and cannot establish semantic agreement or an index episode.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C1",
+            "C2",
+            "C3"
+          ],
+          "reason": "The alternatives remain unresolved; they are hypothetical legacy interpretations, not findings or agreements of the exercise readers."
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No pre-index, archival, repeat, lesion, or assay selection policy fixed before outcome selection is supplied.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C03 only; equal legacy exports provide no selection policy."
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "UNRESOLVED",
+          "assertion": "An invented outcome is mentioned only through alternative episode assignments. Its native endpoint meaning and a same-episode individual assessment are not supplied; neither X nor Y is selected by the toy source.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "reason": "Both endpoint definition and outcome episode support remain missing; equal table bytes cannot resolve them."
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No exact measurement scale, processing contract, or proposed branch-use support is supplied.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C03 only; a byte-identical legacy report is not a measurement contract."
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "No originating-family overlap or actual prior-use evidence is supplied.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [],
+          "reason": "Scoped absence in INV-C03 only; equal exports do not establish untouched status or permission."
+        }
+      ]
+    }
+  ],
+  "usability_notes": [
+    "The boundary between CONFLICTING and UNRESOLVED is ambiguous when an explicitly unsupported legacy proposal contradicts an explicit source binding. For INV-C02 episode_bindings I used CONFLICTING to retain the two assertions and their unequal stated support; this does not authenticate the proposal or select it.",
+    "The identity question requests aliases, but INV-C02 supplies only one explicitly registered person. I used SUPPORTED for that limited identity proposition and expressly recorded that no additional alias links are supplied.",
+    "For NOT_IN_INSPECTED_OBJECTS the required empty line list means the form cannot cite a line explicitly declaring absence. Reasons therefore describe the casebook-only scope without line citations.",
+    "Grouped questions combine supported subclaims and missing material relations. I used UNRESOLVED where the overall requested join or interpretation remains missing and retained the supported subclaims in the assertion."
+  ]
+}

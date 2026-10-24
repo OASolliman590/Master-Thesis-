@@ -1,0 +1,7 @@
+# Synthetic reader instructions
+
+Read only CASEBOOK_V1.json, FORM_V1.json, POLICY_V1.json and BASIS_LOCK.json in this packet. All case facts are invented; the Prat label is context only. Do not read other readers' files, parent notes, prior actual source documents, real data, network sources or runtime tests. Do not browse sibling directories.
+
+Independently fill the form for all cases/questions. Follow the locked policy. Do not seek a peer answer or a preferred result. Write your first pass only to your assigned directory/first_pass.json, with casebook_sha256/form_sha256/policy_sha256 taken from the verified lock. Use your assigned synthetic reader label, classification SYNTHETIC_ONLY, real_source_data_used=false and a truthful peer_material_seen declaration. You may use the stdlib to parse these inputs/write JSON. No other tool/environment or dependency is required.
+
+After writing, create your directory/seal.json containing classification SYNTHETIC_ONLY, the relative first_pass path, its actual SHA256 and byte size, your assigned reader label, and seal_kind=INVENTED_FORM_PILOT_NOT_AUTHENTICATED_SOURCE_REVIEW. Do not edit the first pass after sealing. Report only completion and hash to the parent. Do not read or write any peer material. Both sealed first passes will be retained before parent comparison. This exercise appoints no actual source reader and grants no real-data access.

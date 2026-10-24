@@ -1,0 +1,127 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "base_commit": "6134dabd0b43a5075de2d8eb02fd7098d8f8e0d5",
+  "prior_readiness_bindings": {
+    "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/BINDINGS.json",
+    "bytes": 6796,
+    "sha256": "7023e8040f59fa7a6d95e056010982d18563889d055427206bdf538c0785f820"
+  },
+  "additional_protected_files": [
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/ARTIFACT_HASHES.json",
+      "bytes": 1415,
+      "sha256": "96e871c2160fec780818f9a885190253b8e60b982dd897b3563042a4adf9b9db"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/BINDINGS.json",
+      "bytes": 6796,
+      "sha256": "7023e8040f59fa7a6d95e056010982d18563889d055427206bdf538c0785f820"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/CLOSURE_REQUEST.md",
+      "bytes": 2428,
+      "sha256": "e16e8f0c2352e06b29325eff256f0b9dca6e2bed549dda572f66e9e31f01f7d3"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/READINESS_CHECKLIST.tsv",
+      "bytes": 3536,
+      "sha256": "83aba5a726c0f1e6446127a6904f3ffd9c9b24bd8e07dacbfc8ec168b263ec0a"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/README.md",
+      "bytes": 6235,
+      "sha256": "eea32b8b0e4a12bb6ce0a4b5351304683c985685e261645d949018a8387053a4"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/REQUIREMENTS_REVIEW.md",
+      "bytes": 5050,
+      "sha256": "dcc1a837fb65cf9ea6ab9473859daa0eb1036be4cef8d956b80c3b5f0c8e3f0c"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/SEARCH_SCOPE.json",
+      "bytes": 2072,
+      "sha256": "37f47a942649f5ae66248166b35fe54cc2ade70cd362eb32048978e0525e5b05"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/STATUS.json",
+      "bytes": 1439,
+      "sha256": "3a4664b2b9e5605541373da0152e336315d38d276491cf81f092ba584f5e34d0"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/TASK.md",
+      "bytes": 704,
+      "sha256": "249abfaf663996e62cdd5624d2d939a11642bd2bc242b0156c1d978ba56d528f"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/VERIFICATION.json",
+      "bytes": 527,
+      "sha256": "be85c6b3f1cbe99b7dc7b1a57f8eb70154406f986cd714fd4b4d367e7833a2c3"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/VERIFY.py",
+      "bytes": 4943,
+      "sha256": "197ba4d3e61489d9252f33f1d9e1928eb62424c6c33e622ced344aa66e42475b"
+    }
+  ],
+  "input_documents": [
+    {
+      "path": "work/a-dav-01/AGENTS.md",
+      "bytes": 1133,
+      "sha256": "8219fc951dbce88f36e1bb8af2da6bec6b12f9ba77aa73a7ae40d7fa53a0df46"
+    },
+    {
+      "path": "work/a-dav-01/CONTEXT.md",
+      "bytes": 5083,
+      "sha256": "ec5e2a83e39b12bb637f1231d5b387464da3642c4905cb5cdcdc7cafa78526e4"
+    },
+    {
+      "path": "work/a-dav-01/docs/decisions/A_A1_INTEGRATED_SPEC_20261015.md",
+      "bytes": 3828,
+      "sha256": "9cd75a79ac7d204c76a2d77de84e6e447642af3cf2c76d82c9448580668431c5"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/REVIEW_QUESTIONS.tsv",
+      "bytes": 2728,
+      "sha256": "43a2a286991aaeae6d09dfee865ed13b2dea2bf6dc371a36a747e6c6c93054f8"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/TWO_READER_PLAN.md",
+      "bytes": 10641,
+      "sha256": "b00d1f0a6516793b5f80e112d30fd931bc14faa1d12c011dee1f619e058882b9"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/METHODS_NOTE.md",
+      "bytes": 3709,
+      "sha256": "3e89eceb1de450d0fd4506396e49f56c503cc0bf28dc94cd25efb6ab5fb92d26"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/STATUS.json",
+      "bytes": 1439,
+      "sha256": "3a4664b2b9e5605541373da0152e336315d38d276491cf81f092ba584f5e34d0"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PROCEDURE_01/INDEPENDENT_PROCEDURE_REVIEW.md",
+      "bytes": 23846,
+      "sha256": "81c684e2368d660168dacd3e96eb6ca3001cb5437b58259f1d666a0f968602f6"
+    },
+    {
+      "path": "work/a-dav-01/tools/a_dav/prat_review.py",
+      "bytes": 11021,
+      "sha256": "28938f74b953920823f784ab781834115cf62d30890499d577f0d2b244b2a181"
+    },
+    {
+      "path": "work/a-dav-01/tests/a_dav_implementation/test_group_b_protocol.py",
+      "bytes": 13855,
+      "sha256": "db2baebe3c893c38ad5f82b8ba2a3e9619e25442814f61cb3958e9fd94af58b1"
+    },
+    {
+      "path": "work/a-dav-01/tools/a_dav/requirements-synthetic.txt",
+      "bytes": 126,
+      "sha256": "0bda19369fb8c8b46fa8732a254cd9fe3f7c9d903d8edf66fa4026fe8cc07d7b"
+    }
+  ],
+  "policy_locked_before_dispatch": true,
+  "real_source_data_used": false,
+  "runtime_changed": false,
+  "frozen_specs_changed": false
+}

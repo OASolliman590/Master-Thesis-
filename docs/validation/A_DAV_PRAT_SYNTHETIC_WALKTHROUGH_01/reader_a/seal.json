@@ -1,0 +1,8 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "first_pass_path": "reader_a/first_pass.json",
+  "sha256": "da468b36b048375913cecd4962f61b8658a924b09a70f1d573f996eec52628a0",
+  "byte_size": 12317,
+  "reader_label": "SYN-READER-A",
+  "seal_kind": "INVENTED_FORM_PILOT_NOT_AUTHENTICATED_SOURCE_REVIEW"
+}

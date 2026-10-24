@@ -1,0 +1,14 @@
+{
+  "actual_reader_appointments": "PENDING_NOT_ESTABLISHED",
+  "actual_source_approvals": "PENDING_NOT_ESTABLISHED",
+  "base_commit": "6134dabd0b43a5075de2d8eb02fd7098d8f8e0d5",
+  "classification": "SYNTHETIC_ONLY",
+  "created_utc": "2026-10-24T08:03:55.287842+00:00",
+  "files_sha256": {
+    "CASEBOOK_V1.json": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73",
+    "FORM_V1.json": "58ebf84e9f5e1cc9d4e427d8dfb2fb0de2616eaf493bb5a91444e92baa2b9ab3",
+    "POLICY_V1.json": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9"
+  },
+  "policy_locked_before_reader_dispatch": true,
+  "sequence": 1
+}

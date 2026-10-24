@@ -1,0 +1,20 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "sequence": 4,
+  "comparison_opened_utc": "2026-10-24T08:06:18.319077+00:00",
+  "both_seals_present_before_parent_read": true,
+  "passes": [
+    {
+      "path": "reader_a/first_pass.json",
+      "sha256": "da468b36b048375913cecd4962f61b8658a924b09a70f1d573f996eec52628a0",
+      "bytes": 12317,
+      "seal_path": "reader_a/seal.json"
+    },
+    {
+      "path": "reader_b/first_pass.json",
+      "sha256": "37b6835a12c2bf8adeca1944f8eaca2c2ad5070fb8aba7178564fdf26dadb277",
+      "bytes": 12384,
+      "seal_path": "reader_b/seal.json"
+    }
+  ]
+}

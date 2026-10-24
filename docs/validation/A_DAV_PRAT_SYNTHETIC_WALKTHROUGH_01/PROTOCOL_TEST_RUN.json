@@ -1,0 +1,21 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "command": [
+    "/private/tmp/thesis-adav05-20261020/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "tests/a_dav_implementation/test_group_b_protocol.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "/Users/megastore/Documents/ChatGPT/MyThesis_Epigentics_Project/work/a-dav-01",
+  "exit_code": 0,
+  "stdout_log": "protocol-tests.stdout.log",
+  "stderr_log": "protocol-tests.stderr.log",
+  "scope": "Existing invented Prat protocol software tests, separate from the independently authored form exercise",
+  "actual_source_review": "NOT_RUN",
+  "real_source_data_used": false,
+  "biological_analysis_executed": false
+}

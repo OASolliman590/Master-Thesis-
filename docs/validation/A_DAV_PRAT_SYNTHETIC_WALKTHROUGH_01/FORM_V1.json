@@ -1,0 +1,73 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "dispositions": {
+    "CONFLICTING": "The supplied toy assertions conflict; preserve both without inventing a resolution.",
+    "NOT_IN_INSPECTED_OBJECTS": "The toy case text does not address this question. This is scoped absence in the casebook only.",
+    "SUPPORTED": "The stated toy proposition is supported, with no unresolved material relation within that proposition. This is not branch eligibility.",
+    "UNRESOLVED": "A material toy link or interpretation remains unknown or unsupported; retain the missing fact."
+  },
+  "instructions": [
+    "Fill exactly one grouped assertion for each of the seven questions for each case; retain multiple relevant subclaims in its assertion text.",
+    "Only supplied line IDs can support findings. List line_ids=[] for NOT_IN_INSPECTED_OBJECTS and explain scoped absence.",
+    "For any other disposition cite the lines that support the statement or expose the missing/contradictory link.",
+    "Do not infer patient joins, episode transfer, endpoint conversion, eligibility, untouched status, scale or permission.",
+    "Unsupported evidence does not become a software defect. Do not mark any actual source or reader approval as passed.",
+    "Write peer_material_seen=false only if true; it is a synthetic-process self-report, not authenticated independence.",
+    "usability_notes should record ambiguities or difficulty in this form; an empty list is permitted."
+  ],
+  "questions": [
+    {
+      "question": "Which lexical aliases refer to each originating person and what supports each canonical link?",
+      "question_id": "identity"
+    },
+    {
+      "question": "How does each person relate to distinct specimens, assays and exact headers/objects?",
+      "question_id": "patient_specimen_assay"
+    },
+    {
+      "question": "Which index episode and components support each selected exposure, specimen and outcome?",
+      "question_id": "episode_bindings"
+    },
+    {
+      "question": "What source-supported pre-index/archival/repeat/lesion/assay policy was fixed before outcome-based selection?",
+      "question_id": "baseline_repeat_policy"
+    },
+    {
+      "question": "What exactly does the native endpoint mean and which same-episode individual assessment supports it?",
+      "question_id": "endpoint"
+    },
+    {
+      "question": "What exact measurement and processing contract supports this object and proposed branch use?",
+      "question_id": "assay"
+    },
+    {
+      "question": "What originating-family overlap and actual prior use affect protection for this review?",
+      "question_id": "overlap_exposure"
+    }
+  ],
+  "required_case": [
+    "case_id",
+    "assertions"
+  ],
+  "required_per_assertion": [
+    "question_id",
+    "disposition",
+    "assertion",
+    "object_id",
+    "line_ids",
+    "reason"
+  ],
+  "required_top_level": [
+    "classification",
+    "reader_label",
+    "casebook_sha256",
+    "form_sha256",
+    "policy_sha256",
+    "peer_material_seen",
+    "real_source_data_used",
+    "cases",
+    "usability_notes"
+  ],
+  "scope": "INVENTED_CASEBOOK_ONLY",
+  "version": "form-v1"
+}

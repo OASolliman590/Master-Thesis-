@@ -1,0 +1,23 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "policy_lock_sequence": 1,
+  "reader_dispatches": [
+    {
+      "sequence": 2,
+      "reader_label": "SYN-READER-A",
+      "agent_task": "/root/prat_synthetic_reader_a",
+      "fork_turns": "none",
+      "assigned_directory": "reader_a"
+    },
+    {
+      "sequence": 3,
+      "reader_label": "SYN-READER-B",
+      "agent_task": "/root/prat_synthetic_reader_b",
+      "fork_turns": "none",
+      "assigned_directory": "reader_b"
+    }
+  ],
+  "comparison_started": false,
+  "actual_reader_authentication": "NOT_RUN",
+  "process_claim_limit": "Separate dispatch and peer-access self-reports are not authenticated actual reader independence."
+}

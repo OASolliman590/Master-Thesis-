@@ -1,0 +1,260 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "sequence": 5,
+  "first_pass_bindings": [
+    {
+      "path": "reader_a/first_pass.json",
+      "sha256": "da468b36b048375913cecd4962f61b8658a924b09a70f1d573f996eec52628a0",
+      "bytes": 12317,
+      "seal_path": "reader_a/seal.json"
+    },
+    {
+      "path": "reader_b/first_pass.json",
+      "sha256": "37b6835a12c2bf8adeca1944f8eaca2c2ad5070fb8aba7178564fdf26dadb277",
+      "bytes": 12384,
+      "seal_path": "reader_b/seal.json"
+    }
+  ],
+  "paired_question_assessments": 21,
+  "same_disposition_assessments": 21,
+  "substantive_toy_disagreements_found_by_parent": 0,
+  "rows": [
+    {
+      "case_id": "INV-C01",
+      "question_id": "identity",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "The two explicit lexical alias links remain distinct; INV-1 has no person mapping. No merge is supported (A1-A4).",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": false,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "The assay reference is present but person/specimen linkage is missing (A3); different citation scope does not supply a join.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "endpoint",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "identity",
+      "reader_a_disposition": "SUPPORTED",
+      "reader_b_disposition": "SUPPORTED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both support only the explicit invented person identity (B1); neither supplies additional alias equivalence.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "SUPPORTED",
+      "reader_b_disposition": "SUPPORTED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "B2 supports the stated person/specimen/assay relations only. Exact header/object qualification and branch eligibility remain unestablished; SUPPORTED is limited to that proposition.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "CONFLICTING",
+      "reader_b_disposition": "CONFLICTING",
+      "exact_assertion_equal": false,
+      "source_locators_equal": false,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "B2-B4 distinguish the explicit BETA-only outcome from the unsupported ALPHA proposal. Retain both with unequal source authority; no cross-episode transfer or index selection is accepted.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "endpoint",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "B3 gives an invented native value and BETA binding, while B5 withholds its meaning; no ORR/DCR/DCB conversion or ALPHA endpoint is supported.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "identity",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "C1-C3 give equal exported bytes but omit the episode and any rule selecting X or Y. Alternatives remain unresolved; they are not the current readers' answers.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "endpoint",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "C2-C4 mention an outcome but supply neither meaning nor a supported episode. Agreement on UNRESOLVED grants no endpoint interpretation.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "exact_assertion_equal": false,
+      "source_locators_equal": true,
+      "parent_toy_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both report scoped absence in the supplied toy object. The casebook absence statement (A5, B5 or C4 as applicable) supplies no positive evidence, default or global absence claim.",
+      "actual_source_adjudication": "NOT_RUN"
+    }
+  ],
+  "limits": [
+    "Same status codes are not semantic proof; parent reviewed each assertion against the invented lines.",
+    "Original prose, citations, unknowns, unsupported alternatives and both seals are retained.",
+    "No exercise reader disagreement was manufactured; X/Y are only casebook alternatives.",
+    "This is not authenticated actual source adjudication or actual reader appointment."
+  ]
+}
