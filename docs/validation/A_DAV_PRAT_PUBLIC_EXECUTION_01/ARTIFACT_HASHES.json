@@ -1,0 +1,115 @@
+{
+  "scope": "NEW_PATIENT_FREE_ARTIFACTS_ONLY",
+  "files": [
+    {
+      "path": "work/a-dav-01/docs/research/A_DAV_PRAT_REMAINING_EXECUTION_01.md",
+      "bytes": 11732,
+      "sha256": "7d28a1288c0992ddeb5f13b31089fbe2f2b1b6fb95e7ff0984050def3bcab2ba"
+    },
+    {
+      "path": "work/a-dav-01/docs/research/A_DAV_PRAT_PUBLIC_SOURCE_INSPECTION_01.md",
+      "bytes": 5662,
+      "sha256": "373a53d45ea8a27b3a9e0fa39bcac94c0e9fe9303c21755abd1a5db5e6fc3d36"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_PUBLIC_INVENTORY_01/RETRIEVAL_NOTES.md",
+      "bytes": 5991,
+      "sha256": "03ef56bb1ba6bc9c8e79d15c3dcc69dacbda65abe4b6adcc4a54480f816ce1e2"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/BINDINGS.json",
+      "bytes": 2993,
+      "sha256": "8aaa342c0811cf0bd35ff4aee8996642ce056170cb859597645c3a354e1dcfd0"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/environment.json",
+      "bytes": 412,
+      "sha256": "b545dc2651925046a9deea9b018b9450b7c973dab278bead514ac3f6da33ee58"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/focused-protocol.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/focused-protocol.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/focused-protocol.stdout.log",
+      "bytes": 99,
+      "sha256": "2101c2c1ae1814d48ed15abf66fb99f40aba3535f9644edf20561c21880e5ec3"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/full-suite.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/full-suite.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/full-suite.stdout.log",
+      "bytes": 352,
+      "sha256": "bd49b32fc2fd0aa6894e65fdf41c6a63d0091cfe81a807a255d52dae459871a8"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/mypy.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/mypy.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/EVIDENCE/mypy.stdout.log",
+      "bytes": 44,
+      "sha256": "fc409d91e6c781eb25a1ec1310b7fcb0086b74ed3aa2c415bcd73f884f23f07a"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/PUBLIC_CAPTURE_CHECK.json",
+      "bytes": 650,
+      "sha256": "f0a44e99df229ba10fc86001a83b3e85a435989d7ddba145208930f39fadce5b"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/README.md",
+      "bytes": 6183,
+      "sha256": "b994fb5aa0d2d7634937a0434c62d2bcee70fb6ba0a3fc2ced9ee1b3f1d37e16"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/REVIEW_SPEC.md",
+      "bytes": 1924,
+      "sha256": "fa64076659b3fe7434b44fb73068cd04861eac9b352cc1a651ce354f802a1922"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/REVIEW_STANDARDS.md",
+      "bytes": 2710,
+      "sha256": "6912806b14f99b4441960376bb35c02e9fa27f6f095c6d4aec60531e1d81b1b1"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/SOFTWARE_VERIFICATION.json",
+      "bytes": 6284,
+      "sha256": "e9ffd7de2b38d4827666177fc4301a269c3f44fca1c47c12fa5923a140cf52dc"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/STATUS.json",
+      "bytes": 1869,
+      "sha256": "b0103f4d5192463f43c8934d938e992576ff472c6067536e439a4b96028ed925"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_PUBLIC_EXECUTION_01/TASK.md",
+      "bytes": 2283,
+      "sha256": "ac01674c16a65d0a0a36c561e96f7234a8d7046cb433224432351f4d84316ad1"
+    }
+  ],
+  "excluded": [
+    "ARTIFACT_HASHES.json",
+    "VERIFICATION.json"
+  ],
+  "private_source_manifest_included": false
+}

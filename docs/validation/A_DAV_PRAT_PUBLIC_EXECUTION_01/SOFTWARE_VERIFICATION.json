@@ -1,0 +1,105 @@
+{
+  "packet": "A_DAV_PRAT_PUBLIC_EXECUTION_01",
+  "classification": "SYNTHETIC_ONLY",
+  "scope": "Local software verification only; no source objects or biological data accessed.",
+  "environment": {
+    "python_executable": "/private/tmp/thesis-adav05-20261020/bin/python",
+    "python_version": "3.12.14",
+    "platform": "macOS-26.7.1-x86_64-i386-64bit",
+    "machine": "x86_64",
+    "locale": "C.UTF-8",
+    "timezone": [
+      "EET",
+      "EEST"
+    ],
+    "installed_distributions": {
+      "pytest": "9.1.1",
+      "jsonschema": "4.26.0"
+    },
+    "mypy_version": "mypy 1.18.2 (compiled: yes; invoked via offline uv tool run)"
+  },
+  "checks": {
+    "focused_prat_protocol": {
+      "command": "/private/tmp/thesis-adav05-20261020/bin/python -B -m pytest tests/a_dav_implementation/test_group_b_protocol.py -q -p no:cacheprovider",
+      "exit_code": 0,
+      "stdout_log": "EVIDENCE/focused-protocol.stdout.log",
+      "stderr_log": "EVIDENCE/focused-protocol.stderr.log",
+      "result": "33 passed"
+    },
+    "strict_mypy_15_sources": {
+      "command": "UV_CACHE_DIR=/private/tmp/dav-uv-cache UV_TOOL_DIR=/private/tmp/dav-uv-tools uv tool run --offline --from mypy==1.18.2 mypy --strict --explicit-package-bases --ignore-missing-imports --follow-imports=silent tools/a_dav/core.py tools/a_dav/registries.py tools/a_dav/endpoints.py tools/a_dav/timing.py tools/a_dav/assays.py tools/a_dav/overlap.py tools/a_dav/exposure.py tools/a_dav/admission.py tools/a_dav/prat_review.py tools/a_dav/matrices.py tools/a_dav/release.py tools/a_dav/reporting.py tools/a_dav/workflow.py tools/a_dav/demo.py docs/validation/A_DAV_TARGET_ENVIRONMENT_01/runner.py",
+      "exit_code": 0,
+      "stdout_log": "EVIDENCE/mypy.stdout.log",
+      "stderr_log": "EVIDENCE/mypy.stderr.log",
+      "source_count": 15,
+      "result": "Success: no issues found in 15 source files",
+      "sources": [
+        "tools/a_dav/core.py",
+        "tools/a_dav/registries.py",
+        "tools/a_dav/endpoints.py",
+        "tools/a_dav/timing.py",
+        "tools/a_dav/assays.py",
+        "tools/a_dav/overlap.py",
+        "tools/a_dav/exposure.py",
+        "tools/a_dav/admission.py",
+        "tools/a_dav/prat_review.py",
+        "tools/a_dav/matrices.py",
+        "tools/a_dav/release.py",
+        "tools/a_dav/reporting.py",
+        "tools/a_dav/workflow.py",
+        "tools/a_dav/demo.py",
+        "docs/validation/A_DAV_TARGET_ENVIRONMENT_01/runner.py"
+      ]
+    },
+    "full_shared_dav_suite": {
+      "command": "/private/tmp/thesis-adav05-20261020/bin/python -B -m pytest tests/a_dav_implementation -q -p no:cacheprovider",
+      "exit_code": 0,
+      "stdout_log": "EVIDENCE/full-suite.stdout.log",
+      "stderr_log": "EVIDENCE/full-suite.stderr.log",
+      "result": "255 passed in 208.71s; 0 failures; 0 skips",
+      "scope_note": "Shared tests/a_dav_implementation suite only; this is not a full repository test suite."
+    }
+  },
+  "limitations": {
+    "aiu_or_remote_validation": "NOT_RUN",
+    "real_source_data_used": false,
+    "biological_analysis_executed": false
+  },
+  "flags": {
+    "analysis_ready": false,
+    "source_admission": false,
+    "statistical_release": false,
+    "biological_analysis_executed": false,
+    "frozen_specs_changed": false
+  },
+  "exploratory_typecheck_attempts": [
+    {
+      "purpose": "Module-set selection probe; not an acceptance check.",
+      "command": "UV_CACHE_DIR=/private/tmp/dav-uv-cache UV_TOOL_DIR=/private/tmp/dav-uv-tools uv tool run --offline --from mypy==1.18.2 mypy --strict --explicit-package-bases --ignore-missing-imports --follow-imports=silent tools/a_dav/core.py tools/a_dav/registries.py tools/a_dav/endpoints.py tools/a_dav/timing.py tools/a_dav/assays.py tools/a_dav/overlap.py tools/a_dav/exposure.py tools/a_dav/admission.py tools/a_dav/matrices.py tools/a_dav/release.py tools/a_dav/reporting.py tools/a_dav/prat_review.py tools/a_dav/workflow.py tools/a_dav/demo.py tools/a_dav/object_verification.py",
+      "exit_code": 1,
+      "transcript_result": "Found 250 errors in object_verification.py; complete stdout/stderr log was not retained as a file.",
+      "reason": "object_verification.py is a pre-existing untyped module and outside the accepted typed-runtime set."
+    },
+    {
+      "purpose": "Module-set selection probe; not an acceptance check.",
+      "command": "UV_CACHE_DIR=/private/tmp/dav-uv-cache UV_TOOL_DIR=/private/tmp/dav-uv-tools uv tool run --offline --from mypy==1.18.2 mypy --strict --explicit-package-bases --ignore-missing-imports --follow-imports=silent tools/a_dav/core.py tools/a_dav/registries.py tools/a_dav/endpoints.py tools/a_dav/timing.py tools/a_dav/assays.py tools/a_dav/overlap.py tools/a_dav/exposure.py tools/a_dav/admission.py tools/a_dav/matrices.py tools/a_dav/release.py tools/a_dav/reporting.py tools/a_dav/prat_review.py tools/a_dav/workflow.py tools/a_dav/demo.py tools/a_dav/search_log.py",
+      "exit_code": 1,
+      "transcript_result": "Found 24 errors in search_log.py; complete stdout/stderr log was not retained as a file.",
+      "reason": "search_log.py is a pre-existing untyped module and outside the accepted typed-runtime set."
+    },
+    {
+      "purpose": "Module-set selection probe; not an acceptance check.",
+      "command": "UV_CACHE_DIR=/private/tmp/dav-uv-cache UV_TOOL_DIR=/private/tmp/dav-uv-tools uv tool run --offline --from mypy==1.18.2 mypy --strict --explicit-package-bases --ignore-missing-imports --follow-imports=silent tools/a_dav/legacy_bridge.py",
+      "exit_code": 1,
+      "transcript_result": "Found 70 errors in legacy_bridge.py; full output was truncated in the tool transcript and no log file was retained.",
+      "reason": "legacy_bridge.py is outside the accepted typed-runtime set."
+    }
+  ],
+  "typecheck_scope_note": "The successful strict_mypy_15_sources check is the authoritative accepted check and supersedes the exploratory probes only for its explicitly listed 15-source scope; it does not certify the excluded pre-existing modules.",
+  "mypy_cache": {
+    "uv_cache_dir": "/private/tmp/dav-uv-cache",
+    "uv_tool_dir": "/private/tmp/dav-uv-tools",
+    "mypy_default_cache_observed": ".mypy_cache (ignored and absent from git index; located in worktree)",
+    "tracked_files_modified_by_verification": false
+  }
+}

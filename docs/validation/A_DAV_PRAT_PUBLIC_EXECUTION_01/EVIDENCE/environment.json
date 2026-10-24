@@ -1,0 +1,16 @@
+{
+  "python_executable": "/private/tmp/thesis-adav05-20261020/bin/python",
+  "python_version": "3.12.14",
+  "platform": "macOS-26.7.1-x86_64-i386-64bit",
+  "machine": "x86_64",
+  "locale": "C.UTF-8",
+  "timezone": [
+    "EET",
+    "EEST"
+  ],
+  "installed_distributions": {
+    "pytest": "9.1.1",
+    "jsonschema": "4.26.0"
+  },
+  "mypy_version": "mypy 1.18.2 (compiled: yes; invoked via offline uv tool run)"
+}

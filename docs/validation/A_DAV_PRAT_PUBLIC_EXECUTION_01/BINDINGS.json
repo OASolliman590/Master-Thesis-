@@ -1,0 +1,74 @@
+{
+  "base_commit": "817a934e1417b7e6eaa96ab9801ad497e549fbba",
+  "scope": "PUBLIC_SOURCE_INSPECTION_AND_SYNTHETIC_SOFTWARE_VERIFICATION",
+  "prior_walkthrough_bindings": {
+    "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/BINDINGS.json",
+    "bytes": 7459,
+    "sha256": "b0f277e89e233df793d22e7b3e0a842a609e28dad109718056778eacbec1f8e2"
+  },
+  "additional_protected_files": [
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/ARTIFACT_HASHES.json",
+      "bytes": 2208,
+      "sha256": "a9827f622a177aab0f17d7894fcc0415a3c0e0983fa8dcf8d2d2f3c505774762"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/BINDINGS.json",
+      "bytes": 7459,
+      "sha256": "b0f277e89e233df793d22e7b3e0a842a609e28dad109718056778eacbec1f8e2"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/DECISION.md",
+      "bytes": 4146,
+      "sha256": "8d2624d9b5934598c6cf72e6100eec5f4f036ca225dd018ccef95514358db790"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/FORM_V3.json",
+      "bytes": 8590,
+      "sha256": "db9b79980b5ee37279d328c7201779f1e28013a9edcaefe7206050c3a58ac66e"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/README.md",
+      "bytes": 3181,
+      "sha256": "9aebdc48428b212ea0e7e757f74d89ccc3783f41c4f07572d0ca259873bd8134"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/REMAINING_STEPS.md",
+      "bytes": 3921,
+      "sha256": "4e6c35fb55b31b8b4a54419455968bfd0aab068d4b3a69a35d42d60b3bce5fd5"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/REVIEW.md",
+      "bytes": 3763,
+      "sha256": "28b122c9f3338298488eceeaaf55a986e170573f16952ee43647522d9b058028"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/SCOPE_CHECK_RESULTS.json",
+      "bytes": 4504,
+      "sha256": "ece51ca2978147a48c20ea748e5618a7afd3e7edaebd17171fe42a41855c3be8"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/STATUS.json",
+      "bytes": 964,
+      "sha256": "2b0b493638be4397bbdf53ad04a3688c07d4110941ef7f870bec8558a1453149"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/TRAINING_EXAMPLES.json",
+      "bytes": 3676,
+      "sha256": "4e573f92e40cd2eae8dff93f2aad1f601e03a28ca5920e41ef3c1d799a9bf7b9"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/VERIFICATION.json",
+      "bytes": 469,
+      "sha256": "6aa231c25fa3b1316514031aa427f1cd19c13d48e844a5cb5b5e8b7213d0b1b6"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_ENDPOINT_SCOPE_01/VERIFY.py",
+      "bytes": 6207,
+      "sha256": "a33bc570d67f3e7470c00ea94f8df5e725157e38a23c707652a355e95f8f222a"
+    }
+  ],
+  "protected_count": 2292,
+  "frozen_specs_changed": false,
+  "runtime_changed": false
+}

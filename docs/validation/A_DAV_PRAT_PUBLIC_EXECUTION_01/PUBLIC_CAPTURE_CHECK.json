@@ -1,0 +1,15 @@
+{
+  "classification": "PUBLIC_SOURCE_INSPECTION_METADATA_ONLY",
+  "parent_retained_byte_checks": "PASSED",
+  "private_capture_permissions": "PASSED",
+  "raw_bytes_or_populated_manifest_exported": false,
+  "institutional_custody_verified": false,
+  "reader_authentication": "NOT_RUN",
+  "source_family_completeness": "NOT_ESTABLISHED",
+  "source_admission": false,
+  "biological_analysis_executed": false,
+  "publisher_supplement_retained_byte_check": "PASSED",
+  "publisher_supplement_container_signature": "PASSED_OLE_XLS",
+  "publisher_supplement_workbook_rows_inspected": false,
+  "publisher_supplement_historical_continuity": "NOT_ESTABLISHED"
+}

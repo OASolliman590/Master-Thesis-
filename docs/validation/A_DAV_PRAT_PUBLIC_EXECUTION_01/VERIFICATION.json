@@ -1,0 +1,22 @@
+{
+  "status": "PASSED",
+  "protected_prior_files_unchanged": 2292,
+  "new_patient_free_artifacts_checked": 21,
+  "local_markdown_links": "PASSED",
+  "credential_signed_url_sample_id_and_private_capture_path_scan": "PASSED_WITHIN_NEW_FILES",
+  "software_receipt_log_consistency": "PASSED",
+  "source_captures_byte_checked_separately_outside_git": true,
+  "source_content_or_populated_inventory_exported": false,
+  "review_standards_actionable_findings": 0,
+  "review_spec_actionable_findings": 0,
+  "runtime_changed": false,
+  "frozen_specs_changed": false,
+  "full_source_workflow_complete": false,
+  "source_admission": false,
+  "biological_analysis_executed": false,
+  "limitations": [
+    "No semantic individual source review or reader authentication performed",
+    "Temporary captures do not establish approved custody",
+    "Hashes and regex scans do not prove source truth or global privacy completeness"
+  ]
+}
