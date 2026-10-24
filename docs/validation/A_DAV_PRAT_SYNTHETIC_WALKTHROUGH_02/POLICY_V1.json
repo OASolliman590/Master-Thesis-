@@ -1,0 +1,16 @@
+{
+  "branch_context": "A_BASELINE_BIO",
+  "classification": "SYNTHETIC_ONLY",
+  "rules": [
+    "Preserve lexical aliases; never merge people by normalized labels.",
+    "Retain each specimen, assay and episode as distinct grains; require explicit toy authority for joins.",
+    "Never transfer an outcome across episodes or infer ORR/DCR/DCB from an invented binary.",
+    "Do not turn equal legacy table hashes into semantic agreement.",
+    "Keep missing and conflicting assertions unresolved; absence is limited to supplied toy text.",
+    "No actual appointment, custody, source admission, statistical release or biological analysis is granted.",
+    "All cases and policies here are pedagogic examples, not source-specific scientific defaults."
+  ],
+  "scope": "Invented training only; no Prat source facts or actual object IDs",
+  "source_candidate_context": "Prat-GSE93157",
+  "version": "policy-v1"
+}

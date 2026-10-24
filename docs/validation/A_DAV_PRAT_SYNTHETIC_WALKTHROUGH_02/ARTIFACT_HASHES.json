@@ -1,0 +1,95 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "files": [
+    {
+      "path": "BASIS_LOCK.json",
+      "bytes": 680,
+      "sha256": "32074e09f87329550ee577959b083b851c760c24127c98c6d19f7bf823607074"
+    },
+    {
+      "path": "BINDINGS.json",
+      "bytes": 8483,
+      "sha256": "0cd105656f8cc0eda09c42b1f3f5a99e40a09d774225bce4de3bab47ed6f6646"
+    },
+    {
+      "path": "CASEBOOK_V1.json",
+      "bytes": 3456,
+      "sha256": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73"
+    },
+    {
+      "path": "COMPARISON.json",
+      "bytes": 14393,
+      "sha256": "e8a839bf147ddd4fb5b56e895ed152f6660e7db35d187a9038864e101f908101"
+    },
+    {
+      "path": "COMPARISON_OPEN.json",
+      "bytes": 579,
+      "sha256": "201c696625a825cecea6fd21ffc5dfe5feb59df73ac5fee922c1ed07d5a2bb49"
+    },
+    {
+      "path": "DISPATCH.json",
+      "bytes": 597,
+      "sha256": "1cb1d91540bb3b88825bb47caa30e7b8c9d581e499a0b8a9c4ad5a3c3dfdc644"
+    },
+    {
+      "path": "FORM_CHANGELOG.md",
+      "bytes": 1844,
+      "sha256": "a8d5541643405f72c174cb46cc9d186aa0b1d9762508b988dec6c501f38a3f4b"
+    },
+    {
+      "path": "FORM_V2.json",
+      "bytes": 5023,
+      "sha256": "adef27de3027c54679c3129cd138a51bf7aafe06df154d4e73caf4142da0b9da"
+    },
+    {
+      "path": "POLICY_V1.json",
+      "bytes": 909,
+      "sha256": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9"
+    },
+    {
+      "path": "READER_INSTRUCTIONS.md",
+      "bytes": 1530,
+      "sha256": "b347a76543b07e41c4401f5db4c095f91e9171b23d19fe088fad04d315f8644a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5248,
+      "sha256": "3dbde0dee708451b6991548e42b740049fc367bbd7b9bcfc792d13600089dcb8"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 2162,
+      "sha256": "92a6c2f2af7f218d639a8ce8e18913fd37e0ab15e723ee6aff883e019f5149e0"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 1433,
+      "sha256": "f5cf4da09e554e1471785e71e2e78fe646c01bb8e4539439da867db8e0d06909"
+    },
+    {
+      "path": "VERIFY.py",
+      "bytes": 9958,
+      "sha256": "420493252838b738eac28251d1c3c758fba3109c95464ed375269a91bca924ca"
+    },
+    {
+      "path": "reader_a/first_pass.json",
+      "bytes": 27675,
+      "sha256": "43cbed72f27bb14fc2c308d3b8a27cba45c90d04ca90af7a09cd0347390b0a78"
+    },
+    {
+      "path": "reader_a/seal.json",
+      "bytes": 297,
+      "sha256": "bedead9f509641809224020f1a1d787dd42014621484511b2e037a3441dd7e56"
+    },
+    {
+      "path": "reader_b/first_pass.json",
+      "bytes": 26637,
+      "sha256": "3006e225d34e7b3902c018238084ac81ddd001959a1d15827b77363c6a48d919"
+    },
+    {
+      "path": "reader_b/seal.json",
+      "bytes": 297,
+      "sha256": "2af2e73964e10ccd1e1ed924e4215c345f81c41b86f0d24d6d55aaad60a3f93f"
+    }
+  ]
+}

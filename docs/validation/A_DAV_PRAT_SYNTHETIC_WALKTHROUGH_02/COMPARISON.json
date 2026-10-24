@@ -1,0 +1,304 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "sequence": 5,
+  "first_pass_bindings": [
+    {
+      "path": "reader_a/first_pass.json",
+      "sha256": "43cbed72f27bb14fc2c308d3b8a27cba45c90d04ca90af7a09cd0347390b0a78",
+      "bytes": 27675,
+      "seal_path": "reader_a/seal.json"
+    },
+    {
+      "path": "reader_b/first_pass.json",
+      "sha256": "3006e225d34e7b3902c018238084ac81ddd001959a1d15827b77363c6a48d919",
+      "bytes": 26637,
+      "seal_path": "reader_b/seal.json"
+    }
+  ],
+  "paired_questions": 21,
+  "same_disposition_pairs": 20,
+  "different_disposition_pairs": 1,
+  "rows": [
+    {
+      "case_id": "INV-C01",
+      "question_id": "identity",
+      "reader_a_disposition": "CONFLICTING",
+      "reader_b_disposition": "CONFLICTING",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both preserve explicit alias distinctions and label the incompatible merge as UNSUPPORTED_PROPOSAL; the unknown assay alias is retained separately.",
+      "parent_training_summary": "CONFLICTING_PROPOSAL_RETAINED; no merge authorized",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Parent reviewed the grouped assertion, typed subclaims, cited toy lines and remaining gaps. Both preserve limited support and unknown relations without authorizing eligibility.",
+      "parent_training_summary": "LIMITED_TO_INVENTED_CASE_AND_RETAINED_GAPS",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "endpoint",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C01",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "identity",
+      "reader_a_disposition": "SUPPORTED",
+      "reader_b_disposition": "SUPPORTED",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Parent reviewed the grouped assertion, typed subclaims, cited toy lines and remaining gaps. Both preserve limited support and unknown relations without authorizing eligibility.",
+      "parent_training_summary": "LIMITED_TO_INVENTED_CASE_AND_RETAINED_GAPS",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "SUPPORTED",
+      "reader_b_disposition": "SUPPORTED",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both support only explicit membership facts and separately list missing exact header/object linkage and eligibility. Partial support is not question completion.",
+      "parent_training_summary": "SUPPORTED_MEMBERSHIP_ONLY; QUESTION_INCOMPLETE",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "CONFLICTING",
+      "reader_b_disposition": "CONFLICTING",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both retain native specimen-ALPHA and outcome-BETA bindings as facts and the ALPHA transfer as an unsupported proposal. No same-episode pair is created.",
+      "parent_training_summary": "CONFLICTING_PROPOSAL_RETAINED; no transfer authorized",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "endpoint",
+      "reader_a_disposition": "CONFLICTING",
+      "reader_b_disposition": "UNRESOLVED",
+      "same_disposition": false,
+      "exact_record_equal": false,
+      "parent_review": "CODING_SCOPE_DIFFERENCE_RETAINED",
+      "parent_rationale": "Reader A groups the unsupported ALPHA assignment with endpoint interpretation; reader B focuses the endpoint label on the missing native meaning. Both preserve the BETA-only value, missing definition/assessment and blocked conversion. This is a retained coding-scope difference.",
+      "parent_training_summary": "UNRESOLVED_ENDPOINT_MEANING; retain episode proposal conflict in its separate question",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C02",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "identity",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "patient_specimen_assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "episode_bindings",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both label X/Y as HYPOTHETICAL_ALTERNATIVE, preserve the absent selecting rule/meaning and make no peer-disagreement claim from those alternatives.",
+      "parent_training_summary": "UNRESOLVED; equal bytes cannot select a meaning",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "baseline_repeat_policy",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "endpoint",
+      "reader_a_disposition": "UNRESOLVED",
+      "reader_b_disposition": "UNRESOLVED",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both label X/Y as HYPOTHETICAL_ALTERNATIVE, preserve the absent selecting rule/meaning and make no peer-disagreement claim from those alternatives.",
+      "parent_training_summary": "UNRESOLVED; equal bytes cannot select a meaning",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "assay",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    },
+    {
+      "case_id": "INV-C03",
+      "question_id": "overlap_exposure",
+      "reader_a_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "reader_b_disposition": "NOT_IN_INSPECTED_OBJECTS",
+      "same_disposition": true,
+      "exact_record_equal": false,
+      "parent_review": "CONSISTENT_SCOPED_FINDINGS",
+      "parent_rationale": "Both cite the explicit case-limited omission statement and retain missing evidence; no global absence inference.",
+      "parent_training_summary": "SCOPED_ABSENCE_ONLY",
+      "actual_source_adjudication": "NOT_RUN"
+    }
+  ],
+  "clarification_checks": [
+    {
+      "clarification_id": "F1",
+      "result": "OBSERVED_IN_BOTH_PASSES",
+      "basis": "C01 identity and C02 episode_bindings retain CASE_FACT and UNSUPPORTED_PROPOSAL separately; typed subclaims do not elevate the proposals."
+    },
+    {
+      "clarification_id": "F2",
+      "result": "OBSERVED_IN_BOTH_PASSES",
+      "basis": "Every grouped assertion states support_scope and remaining_gaps; C02 patient_specimen_assay explicitly withholds headers/object linkage and eligibility."
+    },
+    {
+      "clarification_id": "F3",
+      "result": "OBSERVED_IN_BOTH_PASSES",
+      "basis": "All 26 scoped-absence assessments cite A5, B5 or C4 as appropriate rather than losing the locator."
+    },
+    {
+      "clarification_id": "F4",
+      "result": "OBSERVED_IN_BOTH_PASSES",
+      "basis": "C03 alternatives are labelled hypothetical and the choice remains unresolved; the distinct C02 endpoint coding difference is retained as an observed exercise difference."
+    }
+  ],
+  "limitations": [
+    "Small reused toy casebook, not an unseen source-validation set.",
+    "Matching categories are not semantic proof; parent inspected both texts and citations.",
+    "The endpoint coding-scope difference remains in the original passes; no source truth or universal enum precedence is selected.",
+    "Peer separation is an instruction and self-report, not authenticated independence.",
+    "No real approvals, source facts or reader appointments are established."
+  ]
+}

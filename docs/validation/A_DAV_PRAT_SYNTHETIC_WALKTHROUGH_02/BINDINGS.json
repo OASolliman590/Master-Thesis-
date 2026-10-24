@@ -1,0 +1,202 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "base_commit": "18d19c567c9bd324977f9a44b784f845714a7791",
+  "prior_walkthrough_bindings": {
+    "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/BINDINGS.json",
+    "bytes": 4983,
+    "sha256": "639d545bb9cb52d6fe6e04b24a65d69045dbf3770dd195693387bcd8a19e7c3e"
+  },
+  "additional_protected_files": [
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/ARTIFACT_HASHES.json",
+      "bytes": 3240,
+      "sha256": "c7ca3aaa38b66d5d761596d4688a702e182c02bda988dba5b9b6f384c3d3f521"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/BASIS_LOCK.json",
+      "bytes": 629,
+      "sha256": "7fd2e9cb695f02ac359533e099a43850bb165464724296d66754b7d0d8f946d8"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/BINDINGS.json",
+      "bytes": 4983,
+      "sha256": "639d545bb9cb52d6fe6e04b24a65d69045dbf3770dd195693387bcd8a19e7c3e"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/CASEBOOK_V1.json",
+      "bytes": 3456,
+      "sha256": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/COMPARISON.json",
+      "bytes": 12760,
+      "sha256": "8fced2756fe7bc6cd3100742ea8c7874252d238ed6bfe422d42fd174f6828c78"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/COMPARISON_OPEN.json",
+      "bytes": 590,
+      "sha256": "049fb450fd50c6acc2c9d4a5a37ed3c4175442b727c6dcd4f2348ee5ac4b2ea5"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/DISPATCH.json",
+      "bytes": 684,
+      "sha256": "2c166d3eaaf6e796734d089ff82add797e4bc1bfc8695bbea0e2833e55cc8911"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/FORM_CLARIFICATIONS.md",
+      "bytes": 2515,
+      "sha256": "e62051e2b3e60e3d6637a366d2dd81c0802e8b3b0de1fc99f1ae8de5beffb8a6"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/FORM_V1.json",
+      "bytes": 3128,
+      "sha256": "58ebf84e9f5e1cc9d4e427d8dfb2fb0de2616eaf493bb5a91444e92baa2b9ab3"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/POLICY_V1.json",
+      "bytes": 909,
+      "sha256": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/PROTOCOL_TEST_RUN.json",
+      "bytes": 677,
+      "sha256": "8cf8a603b1aee0d5e847b9119779dd7497f82dc026abd74639cbdf2523e4311c"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/READER_INSTRUCTIONS.md",
+      "bytes": 1405,
+      "sha256": "a63db030edbbe7296432d2131dd9ab845bf8f40cf469577a51fc53db3ac33a3e"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/README.md",
+      "bytes": 5195,
+      "sha256": "7cef4a7ccf6b450039a1a30c1fd87ab678ce5c59086ac8fa99ccd0ab2b2ea55a"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/REVIEW.md",
+      "bytes": 2184,
+      "sha256": "40829d45ea0e3c2d3cbfdc281b9c73b161ee7100b456c7997401623e09bbe69e"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/STATUS.json",
+      "bytes": 1300,
+      "sha256": "6a96395bdcb1fee61dcbef98c41b0bd9f28042779b038cb7000710f3c63c13c7"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/VERIFICATION.json",
+      "bytes": 595,
+      "sha256": "d66fe91a1af16e4d9f655ca6800697339af19e239ca2042e31f75a41227bdc98"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/VERIFY.py",
+      "bytes": 7802,
+      "sha256": "6c0c5ef1a9d962e3c8f878f4af6175b7fd8303222a46c43a02da5fb53ee9b435"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/protocol-tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/protocol-tests.stdout.log",
+      "bytes": 99,
+      "sha256": "583e50995e560696a5ad07d5a6103aa9fdb547af24329cb0480670b63ddb6cde"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/reader_a/first_pass.json",
+      "bytes": 12317,
+      "sha256": "da468b36b048375913cecd4962f61b8658a924b09a70f1d573f996eec52628a0"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/reader_a/seal.json",
+      "bytes": 296,
+      "sha256": "f83658c788dfb0f5d6e6a837129b5d5a0475afba92ed95f2c0ee8e7f7a4a7b2c"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/reader_b/first_pass.json",
+      "bytes": 12384,
+      "sha256": "37b6835a12c2bf8adeca1944f8eaca2c2ad5070fb8aba7178564fdf26dadb277"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/reader_b/seal.json",
+      "bytes": 296,
+      "sha256": "67d4d85d4c43ed5f95fbf65420119877a669d686410622189e83920618dbd076"
+    }
+  ],
+  "input_documents": [
+    {
+      "path": "work/a-dav-01/AGENTS.md",
+      "bytes": 1133,
+      "sha256": "8219fc951dbce88f36e1bb8af2da6bec6b12f9ba77aa73a7ae40d7fa53a0df46"
+    },
+    {
+      "path": "work/a-dav-01/CONTEXT.md",
+      "bytes": 5083,
+      "sha256": "ec5e2a83e39b12bb637f1231d5b387464da3642c4905cb5cdcdc7cafa78526e4"
+    },
+    {
+      "path": "work/a-dav-01/docs/decisions/A_A1_INTEGRATED_SPEC_20261015.md",
+      "bytes": 3828,
+      "sha256": "9cd75a79ac7d204c76a2d77de84e6e447642af3cf2c76d82c9448580668431c5"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_SOURCE_REVIEW_PLAN_01/REVIEW_QUESTIONS.tsv",
+      "bytes": 2728,
+      "sha256": "43a2a286991aaeae6d09dfee865ed13b2dea2bf6dc371a36a747e6c6c93054f8"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/STATUS.json",
+      "bytes": 1439,
+      "sha256": "3a4664b2b9e5605541373da0152e336315d38d276491cf81f092ba584f5e34d0"
+    },
+    {
+      "path": "work/a-dav-01/docs/evidence/A_DAV_PRAT_CUSTODY_READINESS_01/README.md",
+      "bytes": 6235,
+      "sha256": "eea32b8b0e4a12bb6ce0a4b5351304683c985685e261645d949018a8387053a4"
+    },
+    {
+      "path": "work/a-dav-01/specs/A_DATA_ACQUISITION_VALIDATION/RELATIONAL_INVARIANTS.md",
+      "bytes": 3593,
+      "sha256": "d570fcb6b39f9baddf7bb43ce37dbfb2154946af669ece3dafe0856e48ef8ac4"
+    },
+    {
+      "path": "work/a-dav-01/specs/A_DATA_ACQUISITION_VALIDATION/ACCESS_PRIVACY_AND_REDISTRIBUTION.md",
+      "bytes": 2957,
+      "sha256": "f6fb6b8adc38146eb8a915f4cab632914ba44f0d3814add33467131604c6b053"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/FORM_V1.json",
+      "bytes": 3128,
+      "sha256": "58ebf84e9f5e1cc9d4e427d8dfb2fb0de2616eaf493bb5a91444e92baa2b9ab3"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/FORM_CLARIFICATIONS.md",
+      "bytes": 2515,
+      "sha256": "e62051e2b3e60e3d6637a366d2dd81c0802e8b3b0de1fc99f1ae8de5beffb8a6"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/CASEBOOK_V1.json",
+      "bytes": 3456,
+      "sha256": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/POLICY_V1.json",
+      "bytes": 909,
+      "sha256": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/PROTOCOL_TEST_RUN.json",
+      "bytes": 677,
+      "sha256": "8cf8a603b1aee0d5e847b9119779dd7497f82dc026abd74639cbdf2523e4311c"
+    },
+    {
+      "path": "work/a-dav-01/docs/validation/A_DAV_PRAT_SYNTHETIC_WALKTHROUGH_01/protocol-tests.stdout.log",
+      "bytes": 99,
+      "sha256": "583e50995e560696a5ad07d5a6103aa9fdb547af24329cb0480670b63ddb6cde"
+    }
+  ],
+  "runtime_tests": "NOT_RERUN_UNCHANGED_RUNTIME; retained 33-test receipt from first walkthrough",
+  "real_source_data_used": false,
+  "runtime_changed": false,
+  "frozen_specs_changed": false
+}

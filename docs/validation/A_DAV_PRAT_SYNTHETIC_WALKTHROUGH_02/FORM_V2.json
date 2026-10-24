@@ -1,0 +1,94 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "dispositions": {
+    "CONFLICTING": "The case explicitly supplies incompatible assertions or proposals. Retain each with its kind and unequal support; a proposal gains no authority from this label.",
+    "NOT_IN_INSPECTED_OBJECTS": "The casebook supplies no substantive evidence for this domain. Scope absence to this case, and cite explicit omission statements when available; do not infer global absence.",
+    "SUPPORTED": "The stated narrow toy proposition is supported. State its exact scope and separately list missing parts of the full question. This never certifies question completeness, branch eligibility or admission.",
+    "UNRESOLVED": "A requested material join, meaning or choice lacks toy support. Preserve supported subclaims and state the gap; hypothetical alternatives alone do not establish a conflict between authenticated sources or readers."
+  },
+  "instructions": [
+    "Fill all seven question IDs for every case. Use only supplied toy lines, never prior reader answers or real Prat facts.",
+    "Separate supported facts, unsupported legacy proposals, hypothetical alternatives, gaps and scoped absence into subclaims using the listed kinds. Each subclaim preserves its provenance; a proposal is never a CASE_FACT.",
+    "support_scope states exactly which proposition is supported or unresolved. remaining_gaps lists unestablished parts of the full question even if a limited proposition is SUPPORTED. A named specimen/assay link does not prove exact header/object linkage or branch eligibility.",
+    "For CONFLICTING preserve the explicit native toy assertion and incompatible unsupported proposal with different kinds. Do not give them equal authority or transfer an outcome across episodes.",
+    "Hypothetical X/Y alternatives in a case are not the exercise readers' answers. If no toy rule selects between them, retain the unresolved choice. Equal legacy bytes cannot select an interpretation.",
+    "Every line reference must exist in the same toy object. NOT_IN_INSPECTED_OBJECTS may cite explicit omission text; cite it when supplied. Empty line lists are allowed only when the domain is simply not addressed and there is no explicit omission locator. Explain the case-limited scope.",
+    "Do not infer alias merges, episode joins, endpoint conversions, measurement scale, roles, eligibility or permissions. Every statement is invented training content.",
+    "real_source_data_used=false. actual_source_approval=PENDING_NOT_ESTABLISHED and actual_reader_authentication=NOT_RUN. This rehearsal neither appoints readers nor grants access.",
+    "peer_material_seen must be truthful. It is a process self-report, not authenticated independence. Do not read any earlier or current peer pass.",
+    "usability_notes records any remaining ambiguity; do not invent either agreement or disagreement. These form fields are training annotations, not frozen schema extensions."
+  ],
+  "questions": [
+    {
+      "question": "Which lexical aliases refer to each originating person and what supports each canonical link?",
+      "question_id": "identity"
+    },
+    {
+      "question": "How does each person relate to distinct specimens, assays and exact headers/objects?",
+      "question_id": "patient_specimen_assay"
+    },
+    {
+      "question": "Which index episode and components support each selected exposure, specimen and outcome?",
+      "question_id": "episode_bindings"
+    },
+    {
+      "question": "What source-supported pre-index/archival/repeat/lesion/assay policy was fixed before outcome-based selection?",
+      "question_id": "baseline_repeat_policy"
+    },
+    {
+      "question": "What exactly does the native endpoint mean and which same-episode individual assessment supports it?",
+      "question_id": "endpoint"
+    },
+    {
+      "question": "What exact measurement and processing contract supports this object and proposed branch use?",
+      "question_id": "assay"
+    },
+    {
+      "question": "What originating-family overlap and actual prior use affect protection for this review?",
+      "question_id": "overlap_exposure"
+    }
+  ],
+  "required_case": [
+    "case_id",
+    "assertions"
+  ],
+  "required_per_assertion": [
+    "question_id",
+    "disposition",
+    "assertion",
+    "object_id",
+    "line_ids",
+    "reason",
+    "support_scope",
+    "remaining_gaps",
+    "subclaims"
+  ],
+  "required_top_level": [
+    "classification",
+    "reader_label",
+    "casebook_sha256",
+    "form_sha256",
+    "policy_sha256",
+    "peer_material_seen",
+    "real_source_data_used",
+    "cases",
+    "usability_notes",
+    "actual_source_approval",
+    "actual_reader_authentication"
+  ],
+  "revises": "form-v1",
+  "scope": "INVENTED_CASEBOOK_ONLY_TRAINING_FORM_NOT_CANONICAL_DAV_SCHEMA",
+  "subclaim_fields": [
+    "kind",
+    "text",
+    "line_ids"
+  ],
+  "subclaim_kinds": [
+    "CASE_FACT",
+    "UNSUPPORTED_PROPOSAL",
+    "HYPOTHETICAL_ALTERNATIVE",
+    "UNRESOLVED_GAP",
+    "SCOPED_ABSENCE"
+  ],
+  "version": "form-v2"
+}

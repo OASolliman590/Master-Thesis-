@@ -1,0 +1,15 @@
+{
+  "actual_reader_authentication": "NOT_RUN",
+  "actual_source_approval": "PENDING_NOT_ESTABLISHED",
+  "base_commit": "18d19c567c9bd324977f9a44b784f845714a7791",
+  "casebook_and_policy_unchanged_from_first_walkthrough": true,
+  "classification": "SYNTHETIC_ONLY",
+  "created_utc": "2026-10-24T08:17:40.619428+00:00",
+  "files_sha256": {
+    "CASEBOOK_V1.json": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73",
+    "FORM_V2.json": "adef27de3027c54679c3129cd138a51bf7aafe06df154d4e73caf4142da0b9da",
+    "POLICY_V1.json": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9"
+  },
+  "policy_and_form_locked_before_dispatch": true,
+  "sequence": 1
+}

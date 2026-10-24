@@ -1,0 +1,7 @@
+# Clarified-form synthetic reader instructions
+
+You are a synthetic rehearsal reader, not an appointed Prat source reviewer. Read ONLY this file, CASEBOOK_V1.json, POLICY_V1.json, FORM_V2.json and BASIS_LOCK.json in this packet. Do not read prior walkthroughs, current peer files, parent notes, sibling directories, source documents or real data. No network, SSH, installs, tests, subagents or commits.
+
+Independently complete the form for three invented cases and all seven questions per case. Preserve fact/proposal/alternative provenance and missing evidence. Cite explicit absence lines where supplied. Write only your assigned directory/first_pass.json and seal.json. Header hashes must match the lock. Reader label is supplied by the parent; peer_material_seen is a truthful self-report, real_source_data_used=false, actual_source_approval=PENDING_NOT_ESTABLISHED, actual_reader_authentication=NOT_RUN. The cases list contains case_id and assertions; each assertion has exactly the required fields in FORM_V2.json. Each subclaim has exactly kind, text and line_ids. Include usability_notes, even if empty.
+
+After writing the first pass, seal its actual bytes. seal.json has exactly classification=SYNTHETIC_ONLY, reader_label, first_pass_path=<your-directory>/first_pass.json, sha256, byte_size, and seal_kind=CLARIFIED_FORM_REHEARSAL_NOT_AUTHENTICATED_SOURCE_REVIEW. Do not edit the first pass after sealing. Do not inspect peer material. Return completion and the actual hash only; parent compares after both seals exist.

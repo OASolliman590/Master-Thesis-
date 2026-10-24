@@ -1,0 +1,23 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "policy_and_form_lock_sequence": 1,
+  "reader_dispatches": [
+    {
+      "sequence": 2,
+      "reader_label": "SYN-V2-A",
+      "task": "/root/prat_form_v2_reader_a",
+      "fork_turns": "none",
+      "output_directory": "reader_a"
+    },
+    {
+      "sequence": 3,
+      "reader_label": "SYN-V2-B",
+      "task": "/root/prat_form_v2_reader_b",
+      "fork_turns": "none",
+      "output_directory": "reader_b"
+    }
+  ],
+  "prior_passes_provided_to_readers": false,
+  "comparison_started_at_dispatch": false,
+  "actual_reader_authentication": "NOT_RUN"
+}

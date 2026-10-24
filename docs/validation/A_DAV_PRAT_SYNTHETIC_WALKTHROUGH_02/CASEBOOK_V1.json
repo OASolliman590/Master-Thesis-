@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "case_id": "INV-C01",
+      "lines": [
+        {
+          "line_id": "A1",
+          "text": "The invented identity register explicitly distinguishes person INV-P-A from person INV-P-B."
+        },
+        {
+          "line_id": "A2",
+          "text": "INV-P-A has lexical alias INV-01; INV-P-B has lexical alias INV-001. Neither is an alias of the other."
+        },
+        {
+          "line_id": "A3",
+          "text": "The invented assay INV-ASSAY-A references only INV-1. The supplied text gives no mapping from INV-1 to either person or a specimen."
+        },
+        {
+          "line_id": "A4",
+          "text": "A legacy normalization proposal drops leading zeros and merges these labels. No source authority for that proposal is supplied."
+        },
+        {
+          "line_id": "A5",
+          "text": "No treatment episode, timing, endpoint, assay-scale, overlap or prior-use evidence is included in this toy object."
+        }
+      ],
+      "object_id": "INV-OBJECT-ALIAS",
+      "title": "Ambiguous lexical alias and assay join"
+    },
+    {
+      "case_id": "INV-C02",
+      "lines": [
+        {
+          "line_id": "B1",
+          "text": "The invented register has one person INV-P-C and two distinct treatment episodes INV-E-ALPHA and INV-E-BETA."
+        },
+        {
+          "line_id": "B2",
+          "text": "INV-SPECIMEN-C belongs to INV-P-C and is explicitly bound to INV-E-ALPHA. INV-ASSAY-C belongs to that specimen."
+        },
+        {
+          "line_id": "B3",
+          "text": "The native invented outcome value INV-POSITIVE belongs to INV-P-C and is explicitly bound to INV-E-BETA only."
+        },
+        {
+          "line_id": "B4",
+          "text": "A proposed legacy row attaches INV-POSITIVE to INV-E-ALPHA because the person is the same. No supporting source assertion is supplied."
+        },
+        {
+          "line_id": "B5",
+          "text": "No ORR, DCR, DCB or response-category definition is supplied for INV-POSITIVE. No pre-index timing, selection policy, assay-scale, overlap or prior-use evidence is supplied."
+        }
+      ],
+      "object_id": "INV-OBJECT-EPISODE",
+      "title": "Specimen and outcome belong to different episodes"
+    },
+    {
+      "case_id": "INV-C03",
+      "lines": [
+        {
+          "line_id": "C1",
+          "text": "Two hypothetical legacy rule sets emit the same toy table bytes: SYNTHETIC_ONLY followed by legacy_report=IDENTICAL. The toy table omits any episode field."
+        },
+        {
+          "line_id": "C2",
+          "text": "Hypothetical legacy interpretation X assigns an invented outcome to INV-E-X; hypothetical interpretation Y assigns it to INV-E-Y. These are casebook alternatives, not the exercise readers' answers."
+        },
+        {
+          "line_id": "C3",
+          "text": "The supplied toy source does not identify an outcome episode or provide a rule that selects X or Y."
+        },
+        {
+          "line_id": "C4",
+          "text": "No person/specimen/assay crosswalk, timing/selection policy, endpoint definition, measurement scale, overlap or prior-use evidence is supplied."
+        }
+      ],
+      "object_id": "INV-OBJECT-LEGACY",
+      "title": "Equal exported bytes with unresolved semantic assertions"
+    }
+  ],
+  "classification": "SYNTHETIC_ONLY",
+  "scope": "Every statement below is invented for this exercise; no study object was opened.",
+  "version": "casebook-v1"
+}

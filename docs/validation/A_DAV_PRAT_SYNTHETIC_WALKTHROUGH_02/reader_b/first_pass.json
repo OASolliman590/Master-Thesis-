@@ -1,0 +1,673 @@
+{
+  "classification": "SYNTHETIC_ONLY",
+  "reader_label": "SYN-V2-B",
+  "casebook_sha256": "363826aa2e5cde2883ffed55f9ee3f0a86023526ce01ffdac0e464f17e031b73",
+  "form_sha256": "adef27de3027c54679c3129cd138a51bf7aafe06df154d4e73caf4142da0b9da",
+  "policy_sha256": "1bac28aa140e018d5f895f3023333062153ed808511f0ab1098b3fb01fe1f0a9",
+  "peer_material_seen": false,
+  "real_source_data_used": false,
+  "cases": [
+    {
+      "case_id": "INV-C01",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "CONFLICTING",
+          "assertion": "The register preserves two distinct people and their separate lexical aliases; the incompatible leading-zero merge is an unsupported proposal.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A1",
+            "A2",
+            "A4"
+          ],
+          "reason": "The register supports separation; the legacy proposal has no supplied authority.",
+          "support_scope": "INV-P-A has alias INV-01; INV-P-B has alias INV-001, with neither alias belonging to the other.",
+          "remaining_gaps": [
+            "No canonical mapping for INV-1 is supplied.",
+            "No authority supports the normalization proposal."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "The identity register distinguishes INV-P-A and INV-P-B.",
+              "line_ids": [
+                "A1"
+              ]
+            },
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-01 belongs to INV-P-A and INV-001 belongs to INV-P-B; neither is an alias of the other.",
+              "line_ids": [
+                "A2"
+              ]
+            },
+            {
+              "kind": "UNSUPPORTED_PROPOSAL",
+              "text": "The legacy proposal removes leading zeros and merges labels without source authority.",
+              "line_ids": [
+                "A4"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "INV-1 has no supplied person or specimen mapping.",
+              "line_ids": [
+                "A3"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "UNRESOLVED",
+          "assertion": "INV-ASSAY-A references INV-1, but a person-to-specimen-to-assay join cannot be established.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "reason": "The only assay label lacks a crosswalk and normalization cannot supply one.",
+          "support_scope": "Only the assay reference to lexical label INV-1 is established.",
+          "remaining_gaps": [
+            "Person and specimen for INV-1 are unknown.",
+            "Exact headers/object linkage is unestablished.",
+            "Branch eligibility is unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-ASSAY-A references only INV-1.",
+              "line_ids": [
+                "A3"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "No mapping relates INV-1 to either registered person or a specimen.",
+              "line_ids": [
+                "A3"
+              ]
+            },
+            {
+              "kind": "UNSUPPORTED_PROPOSAL",
+              "text": "Leading-zero normalization proposes a merge without authority.",
+              "line_ids": [
+                "A4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive treatment episode, timing or outcome binding evidence.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "treatment episode, timing or outcome binding remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive treatment episode, timing or outcome binding evidence.",
+              "line_ids": [
+                "A5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive timing or pre-index/archival/repeat/lesion selection policy evidence.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "timing or pre-index/archival/repeat/lesion selection policy remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive timing or pre-index/archival/repeat/lesion selection policy evidence.",
+              "line_ids": [
+                "A5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive endpoint meaning or individual assessment evidence.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "endpoint meaning or individual assessment remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive endpoint meaning or individual assessment evidence.",
+              "line_ids": [
+                "A5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive assay-scale, measurement or processing contract evidence.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "assay-scale, measurement or processing contract remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive assay-scale, measurement or processing contract evidence.",
+              "line_ids": [
+                "A5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+          "object_id": "INV-OBJECT-ALIAS",
+          "line_ids": [
+            "A5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "originating-family overlap or actual prior use remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+              "line_ids": [
+                "A5"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "INV-C02",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "SUPPORTED",
+          "assertion": "The invented register supplies one person, INV-P-C.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B1"
+          ],
+          "reason": "This narrow person-register statement is explicit; no lexical aliases are supplied.",
+          "support_scope": "Existence of the single registered invented person INV-P-C only.",
+          "remaining_gaps": [
+            "Lexical aliases and their canonical-link evidence are not supplied."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "The register contains one person INV-P-C.",
+              "line_ids": [
+                "B1"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "The supplied register line provides no lexical alias crosswalk.",
+              "line_ids": [
+                "B1"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "SUPPORTED",
+          "assertion": "INV-SPECIMEN-C belongs to INV-P-C and INV-ASSAY-C belongs to that specimen.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B2"
+          ],
+          "reason": "The toy specimen and assay membership is explicit.",
+          "support_scope": "Only the named person-to-specimen-to-assay links; no exact header or object linkage is established.",
+          "remaining_gaps": [
+            "Exact headers/object linkage is not supplied.",
+            "Other specimens or assays are not characterized.",
+            "Branch eligibility is unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-SPECIMEN-C belongs to INV-P-C.",
+              "line_ids": [
+                "B2"
+              ]
+            },
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-ASSAY-C belongs to INV-SPECIMEN-C.",
+              "line_ids": [
+                "B2"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "The named membership links do not specify exact headers or object linkage.",
+              "line_ids": [
+                "B2"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "CONFLICTING",
+          "assertion": "The specimen is bound to INV-E-ALPHA, while the native outcome is bound only to INV-E-BETA; transferring that outcome to ALPHA is an unsupported legacy proposal.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ],
+          "reason": "The same person has two distinct episodes; shared identity does not authorize outcome transfer.",
+          "support_scope": "The supplied native episode assignments are supported; the ALPHA outcome assignment remains an unsupported incompatible proposal.",
+          "remaining_gaps": [
+            "Index episode and selected exposure components are unestablished.",
+            "No same-episode specimen/outcome pair for the proposed ALPHA row is established.",
+            "No authority supports transferring the outcome."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-P-C has distinct episodes INV-E-ALPHA and INV-E-BETA.",
+              "line_ids": [
+                "B1"
+              ]
+            },
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-SPECIMEN-C is explicitly bound to INV-E-ALPHA; INV-ASSAY-C belongs to that specimen.",
+              "line_ids": [
+                "B2"
+              ]
+            },
+            {
+              "kind": "CASE_FACT",
+              "text": "Native INV-POSITIVE belongs to INV-P-C and is bound only to INV-E-BETA.",
+              "line_ids": [
+                "B3"
+              ]
+            },
+            {
+              "kind": "UNSUPPORTED_PROPOSAL",
+              "text": "The legacy row attaches INV-POSITIVE to INV-E-ALPHA based only on shared person identity and without supporting source assertion.",
+              "line_ids": [
+                "B4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive pre-index timing or archival/repeat/lesion/assay selection policy evidence.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "pre-index timing or archival/repeat/lesion/assay selection policy remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive pre-index timing or archival/repeat/lesion/assay selection policy evidence.",
+              "line_ids": [
+                "B5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "UNRESOLVED",
+          "assertion": "INV-POSITIVE is a native invented outcome for INV-P-C in INV-E-BETA only, but its endpoint meaning and individual assessment are unestablished.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B3",
+            "B5"
+          ],
+          "reason": "Episode ownership is explicit; the text supplies no ORR, DCR, DCB or response-category definition.",
+          "support_scope": "The value label, person and BETA-only binding are supported; clinical endpoint interpretation is unresolved.",
+          "remaining_gaps": [
+            "Native endpoint definition is missing.",
+            "Same-episode individual assessment is missing.",
+            "No ORR/DCR/DCB or response-category conversion is authorized."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "INV-POSITIVE belongs to INV-P-C and INV-E-BETA only.",
+              "line_ids": [
+                "B3"
+              ]
+            },
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "This toy case supplies no ORR, DCR, DCB or response-category definition for INV-POSITIVE.",
+              "line_ids": [
+                "B5"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "The supplied value and binding do not provide an individual assessment or endpoint meaning.",
+              "line_ids": [
+                "B3",
+                "B5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive assay-scale, measurement or processing contract evidence.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "assay-scale, measurement or processing contract remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive assay-scale, measurement or processing contract evidence.",
+              "line_ids": [
+                "B5"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+          "object_id": "INV-OBJECT-EPISODE",
+          "line_ids": [
+            "B5"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "originating-family overlap or actual prior use remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+              "line_ids": [
+                "B5"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "INV-C03",
+      "assertions": [
+        {
+          "question_id": "identity",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive person identity or lexical-alias crosswalk evidence.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C4"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "person identity or lexical-alias crosswalk remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive person identity or lexical-alias crosswalk evidence.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "patient_specimen_assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive person/specimen/assay crosswalk or exact header/object linkage evidence.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C4"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "person/specimen/assay crosswalk or exact header/object linkage remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive person/specimen/assay crosswalk or exact header/object linkage evidence.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "episode_bindings",
+          "disposition": "UNRESOLVED",
+          "assertion": "Equal exported toy bytes do not select an outcome episode; X and Y remain hypothetical alternatives.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "reason": "The table omits episodes, and the source gives neither an episode assignment nor a rule selecting the alternatives.",
+          "support_scope": "Byte equality is supported, while semantic episode assignment is unresolved; these are not authenticated source or reader disagreements.",
+          "remaining_gaps": [
+            "Outcome episode is not identified.",
+            "No rule selects X or Y.",
+            "Index exposure and specimen components are unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "CASE_FACT",
+              "text": "Two hypothetical rule sets emit identical toy table bytes, and the table omits an episode field.",
+              "line_ids": [
+                "C1"
+              ]
+            },
+            {
+              "kind": "HYPOTHETICAL_ALTERNATIVE",
+              "text": "Interpretation X assigns the invented outcome to INV-E-X.",
+              "line_ids": [
+                "C2"
+              ]
+            },
+            {
+              "kind": "HYPOTHETICAL_ALTERNATIVE",
+              "text": "Interpretation Y assigns the invented outcome to INV-E-Y.",
+              "line_ids": [
+                "C2"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "The toy source identifies no outcome episode and gives no rule selecting X or Y.",
+              "line_ids": [
+                "C3"
+              ]
+            },
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The toy case supplies no person/specimen/assay crosswalk.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "baseline_repeat_policy",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive timing or pre-index/archival/repeat/lesion/assay selection policy evidence.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C4"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "timing or pre-index/archival/repeat/lesion/assay selection policy remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive timing or pre-index/archival/repeat/lesion/assay selection policy evidence.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "endpoint",
+          "disposition": "UNRESOLVED",
+          "assertion": "The toy outcome has neither a source-identified episode nor a supplied endpoint definition or same-episode individual assessment.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "reason": "Hypothetical episode assignments cannot establish native outcome semantics or an individual assessment.",
+          "support_scope": "Only the existence of hypothetical interpretations is established; endpoint meaning and assessment remain unresolved within this toy case.",
+          "remaining_gaps": [
+            "Native endpoint definition is missing.",
+            "Outcome episode is not identified.",
+            "Same-episode individual assessment is not supplied."
+          ],
+          "subclaims": [
+            {
+              "kind": "HYPOTHETICAL_ALTERNATIVE",
+              "text": "X assigns the outcome to INV-E-X and Y assigns it to INV-E-Y; these are casebook alternatives rather than reader answers.",
+              "line_ids": [
+                "C2"
+              ]
+            },
+            {
+              "kind": "UNRESOLVED_GAP",
+              "text": "No outcome episode or selecting rule is supplied.",
+              "line_ids": [
+                "C3"
+              ]
+            },
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "No endpoint definition is supplied in this toy case.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "assay",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive measurement scale or processing contract evidence.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C4"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "measurement scale or processing contract remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive measurement scale or processing contract evidence.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "overlap_exposure",
+          "disposition": "NOT_IN_INSPECTED_OBJECTS",
+          "assertion": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+          "object_id": "INV-OBJECT-LEGACY",
+          "line_ids": [
+            "C4"
+          ],
+          "reason": "Explicit omission text limits this absence to this invented case.",
+          "support_scope": "Absence within the supplied toy object only; no claim about any real source.",
+          "remaining_gaps": [
+            "originating-family overlap or actual prior use remains unestablished."
+          ],
+          "subclaims": [
+            {
+              "kind": "SCOPED_ABSENCE",
+              "text": "The supplied invented case contains no substantive originating-family overlap or actual prior use evidence.",
+              "line_ids": [
+                "C4"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "usability_notes": [],
+  "actual_source_approval": "PENDING_NOT_ESTABLISHED",
+  "actual_reader_authentication": "NOT_RUN"
+}
