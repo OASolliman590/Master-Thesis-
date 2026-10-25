@@ -1,0 +1,86 @@
+{
+  "map": {
+    "title": "A/A.1 acquisition: one source from retrieval to review",
+    "number": 20,
+    "url": "https://github.com/OASolliman590/Master-Thesis-/issues/20"
+  },
+  "children": [
+    {
+      "key": "provenance",
+      "file": "PROVENANCE_QUESTION",
+      "title": "What must provenance uncertainty block in A/A.1 source review?",
+      "number": 21,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/21",
+      "id": 6012457906,
+      "state": "closed",
+      "assignees": [
+        "OASolliman590"
+      ],
+      "labels": [
+        "wayfinder:research"
+      ]
+    },
+    {
+      "key": "shortlist",
+      "file": "FIRST_SOURCE_QUESTION",
+      "title": "Which A/A.1 candidate offers the clearest first review route?",
+      "number": 22,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/22",
+      "id": 6012458348,
+      "state": "closed",
+      "assignees": [
+        "OASolliman590"
+      ],
+      "labels": [
+        "wayfinder:research"
+      ]
+    },
+    {
+      "key": "choose",
+      "file": "CHOOSE_SOURCE_QUESTION",
+      "title": "Choose the first source and branch for end-to-end intake",
+      "number": 23,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/23",
+      "id": 6012458803,
+      "state": "open",
+      "assignees": [],
+      "labels": [
+        "wayfinder:grilling"
+      ]
+    },
+    {
+      "key": "handoff",
+      "file": "HANDOFF_QUESTION",
+      "title": "Set the bounded acquisition and review handoff",
+      "number": 24,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/24",
+      "id": 6012459201,
+      "state": "open",
+      "assignees": [],
+      "labels": [
+        "wayfinder:grilling"
+      ]
+    }
+  ],
+  "native_children_verified": [
+    21,
+    22,
+    23,
+    24
+  ],
+  "dependencies": {
+    "choose": [
+      21,
+      22
+    ],
+    "handoff": [
+      23
+    ]
+  },
+  "canonical_tracker": "GITHUB_NATIVE_SUB_ISSUES_AND_DEPENDENCIES",
+  "last_verified_client_date": "2026-10-25",
+  "research_resolution_comments": {
+    "provenance": "https://github.com/OASolliman590/Master-Thesis-/issues/21#issuecomment-6395915041",
+    "shortlist": "https://github.com/OASolliman590/Master-Thesis-/issues/22#issuecomment-6395927184"
+  }
+}

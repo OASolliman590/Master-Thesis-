@@ -1,0 +1,73 @@
+{
+  "scope": "NEW_WAYFINDER_MAP_AND_RESEARCH_ARTIFACTS",
+  "files": [
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/CHOOSE_SOURCE_QUESTION.md",
+      "bytes": 954,
+      "sha256": "3980d3cd8e3130f5be32447270a758ba45f83ab2c4cf68f0dc3e5d9704470418"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/FIRST_SOURCE_QUESTION.md",
+      "bytes": 1055,
+      "sha256": "c0822fc07cade7c8a90796226b3b3865937ef40f6e2cf43cccf432372a65f55a"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/FRONTIER.json",
+      "bytes": 2707,
+      "sha256": "b5d5ac11aa664d6f0a314b4761d5b463eb91897d9ee1b0189a7b7c3a1759d259"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/HANDOFF_QUESTION.md",
+      "bytes": 1067,
+      "sha256": "a053c9418c95add5104a7290e5d0987a43105530878b22718bf669d124c3b6c9"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/MAP.md",
+      "bytes": 3938,
+      "sha256": "5e09efc1b4433a7df69b4a37f7f73c1dccbfa677e6978de9156ac1cbc67ae8df"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/PROVENANCE_QUESTION.md",
+      "bytes": 977,
+      "sha256": "0cf6682855c2c475cf429a6200730080ef25a4b531ab855ab59e1c18ef070282"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/PROVENANCE_RESEARCH.md",
+      "bytes": 13077,
+      "sha256": "ffec25dbd57dab6863ae30b97844ef5f0fde61a6b56036f24f9660f6aeeaade5"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/PROVENANCE_RESOLUTION.md",
+      "bytes": 1725,
+      "sha256": "88a167558b8a214f84c1c0c5c837635067c2283e5fafc068a3c250022bc7c2fa"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/SHORTLIST_RESOLUTION.md",
+      "bytes": 2197,
+      "sha256": "a432fb8536dc99b4a9f419688f02c55b17e388c42e5694fa3a8419486c8ffa6a"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/SOURCE_SHORTLIST_RESEARCH.md",
+      "bytes": 7452,
+      "sha256": "f5f11f15a318045c3902b0e0373dd6f65226a29418a4e1dc3456dbe4d2b022b0"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/TRACKER.json",
+      "bytes": 2269,
+      "sha256": "413a3e535b064f4e27fbddb38508278946ee1f17159f61b11ee493350824d0f0"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/TRACKER_OPERATIONS.md",
+      "bytes": 2610,
+      "sha256": "e9a45cf763ceef980ce1902c7a05ddc2a57f6b540111d15e31f2b774d712d4f1"
+    },
+    {
+      "path": "work/a-dav-01/docs/wayfinding/A_A1_ACQUISITION_01/VERIFICATION.json",
+      "bytes": 1228,
+      "sha256": "e5fa71053554fce6246a235469fdedb24aff1013ad56cc32977c8d6d2ad88651"
+    }
+  ],
+  "excluded": [
+    "ARTIFACT_HASHES.json"
+  ]
+}

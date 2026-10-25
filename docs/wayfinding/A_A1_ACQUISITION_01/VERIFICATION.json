@@ -1,0 +1,30 @@
+{
+  "status": "PASSED",
+  "base_commit": "1fb99246335f1aba97ab22a6cac62047072ceff6",
+  "completed_client_date": "2026-10-25",
+  "destination_confirmed_by_user": "A_A1_ACQUISITION_ROUTE",
+  "priority_confirmed_by_user": "ONE_SOURCE_FIRST_REST_QUEUED",
+  "canonical_map": "https://github.com/OASolliman590/Master-Thesis-/issues/20",
+  "native_sub_issues_and_dependencies": "VERIFIED",
+  "research_questions_resolved": 2,
+  "next_frontier": [
+    {
+      "title": "Choose the first source and branch for end-to-end intake",
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/23"
+    }
+  ],
+  "human_source_choice": "PENDING",
+  "recommendation": "Riaz/GSE91061 x A_BASELINE_BIO; A1_ON_R_NR queued",
+  "protected_prior_files_unchanged": 2327,
+  "local_links_json_and_export_scan": "PASSED_WITHIN_NEW_MAP_FILES",
+  "frozen_specs_changed": false,
+  "runtime_changed": false,
+  "new_archive_search_run": false,
+  "new_data_retrieval_run": false,
+  "actual_reader_appointments_issued": false,
+  "source_admission": false,
+  "biological_analysis_executed": false,
+  "runtime_tests": "NOT_RERUN_PLANNING_ONLY",
+  "map_status": "OPEN_RESEARCH_COMPLETE_HUMAN_DECISIONS_REMAIN",
+  "code_or_research_branch_pushed": false
+}

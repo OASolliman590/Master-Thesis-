@@ -1,0 +1,92 @@
+{
+  "client_date": "2026-10-25",
+  "retrieved_utc": "2026-10-25T09:26:29.769346+00:00",
+  "canonical_map": {
+    "title": "A/A.1 acquisition: one source from retrieval to review",
+    "number": 20,
+    "url": "https://github.com/OASolliman590/Master-Thesis-/issues/20"
+  },
+  "children": [
+    {
+      "title": "What must provenance uncertainty block in A/A.1 source review?",
+      "number": 21,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/21",
+      "state": "closed",
+      "assignees": [
+        "OASolliman590"
+      ],
+      "labels": [
+        "wayfinder:research"
+      ],
+      "blockers": [],
+      "on_frontier": false
+    },
+    {
+      "title": "Which A/A.1 candidate offers the clearest first review route?",
+      "number": 22,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/22",
+      "state": "closed",
+      "assignees": [
+        "OASolliman590"
+      ],
+      "labels": [
+        "wayfinder:research"
+      ],
+      "blockers": [],
+      "on_frontier": false
+    },
+    {
+      "title": "Choose the first source and branch for end-to-end intake",
+      "number": 23,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/23",
+      "state": "open",
+      "assignees": [],
+      "labels": [
+        "wayfinder:grilling"
+      ],
+      "blockers": [
+        {
+          "title": "What must provenance uncertainty block in A/A.1 source review?",
+          "number": 21,
+          "state": "closed",
+          "url": "https://github.com/OASolliman590/Master-Thesis-/issues/21"
+        },
+        {
+          "title": "Which A/A.1 candidate offers the clearest first review route?",
+          "number": 22,
+          "state": "closed",
+          "url": "https://github.com/OASolliman590/Master-Thesis-/issues/22"
+        }
+      ],
+      "on_frontier": true
+    },
+    {
+      "title": "Set the bounded acquisition and review handoff",
+      "number": 24,
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/24",
+      "state": "open",
+      "assignees": [],
+      "labels": [
+        "wayfinder:grilling"
+      ],
+      "blockers": [
+        {
+          "title": "Choose the first source and branch for end-to-end intake",
+          "number": 23,
+          "state": "open",
+          "url": "https://github.com/OASolliman590/Master-Thesis-/issues/23"
+        }
+      ],
+      "on_frontier": false
+    }
+  ],
+  "frontier": [
+    {
+      "title": "Choose the first source and branch for end-to-end intake",
+      "url": "https://github.com/OASolliman590/Master-Thesis-/issues/23"
+    }
+  ],
+  "research_questions_resolved": 2,
+  "human_source_choice": "PENDING",
+  "handoff_decision": "BLOCKED_BY_SOURCE_CHOICE"
+}
