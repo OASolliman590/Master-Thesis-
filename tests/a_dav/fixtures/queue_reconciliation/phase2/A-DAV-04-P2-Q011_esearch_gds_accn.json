@@ -1,0 +1,1 @@
+{"header":{"type":"esearch","version":"0.3"},"esearchresult":{"count":"4","retmax":"4","retstart":"0","idlist":["200198052","100020301","305936942","305936941"],"translationset":[],"translationstack":[{"term":"GSE198052[ACCN]","field":"ACCN","count":"4","explode":"N"},"GROUP"],"querytranslation":"GSE198052[ACCN]"}}

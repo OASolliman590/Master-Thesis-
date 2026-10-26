@@ -1,0 +1,23 @@
+{
+ "accession": "GSE126044",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP183/SRP183455/",
+   "targetobject": "SRP183455"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "16791",
+ "n_samples": 16,
+ "pdat": "2020/02/03",
+ "pubmedids": [
+  "32879421"
+ ],
+ "summary": "The purpose of this study is to compare transcriptional profiles of non-small-cell lung cancer between responder patients and non-responder patients during anti-PD-1 treatment.",
+ "taxon": "Homo sapiens",
+ "title": "Genome-wide identification of differentially methylated promoters and enhancers associated with response to anti-PD-1 therapy in non-small cell lung cancer",
+ "uid": "200126044",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

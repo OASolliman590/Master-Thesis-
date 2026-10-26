@@ -1,0 +1,94 @@
+<delta>ROUND 2 of the a_dav redesign. B+C (classification policy, ingestion module, field maps, ingest command) are done in this thread. The user has now decided candidates A, D, E and F. Work test-first. Do not commit.
+
+Read these first:
+- docs/adr/0003-one-source-object-retrieval-module.md
+- docs/decisions/AMENDMENT_V7_PUBLIC_REVIEWER_20261025.md (approved)
+- the CONTEXT.md glossary, including the new terms "measurement representation" and "reviewer worksheet"
+- docs/research/A_DAV_REAL_INGESTION_SOURCES_01.md (pin list, URL patterns, cBioPortal LFS, GitHub raw at a commit)</delta>
+
+<decisions>
+A. **One source object retrieval module** (for example tools/a_dav/retrieval.py).
+   - It has one HTTP port; the urllib adapter is used in production and a fake transport in tests.
+   - It owns:
+     - host policy and the redirect rule (redirects stay allowlisted, every hop validated);
+     - request cap and ≥0.5 s spacing, counted across ALL attempts including retries and resumes;
+     - retry up to 3 times with backoff, only on 429, 5xx and timeouts;
+     - fail closed on hash mismatch, a non-allowlisted redirect, or a size overrun;
+     - bounded reads; resume with byte-range validation, otherwise a full re-download;
+     - full SHA-256, atomic publish into the content-addressed store from B (`<store>/objects/<sha256>` + MANIFEST.json), and a receipt row in the manifest.
+   - Fetch plans and host allowlists are DATA files, for example tools/a_dav/fetch_plans/riaz_gse91061.json.
+   - Thin URL adapters build locators: GEO (series soft/suppl/matrix and rnaseq_counts), ENA filereport, GitHub raw at a pinned commit, cBioPortal datahub via Git LFS media URLs.
+   - CLI: `python -m tools.a_dav.retrieval fetch --plan <file> --store <dir>`.
+   - Write the Riaz fetch plan with these 9 objects:
+     1. GSE91061_family.soft.gz
+     2. author FPKM GSE91061_BMS038109Sample.hg19KnownGene.fpkm.csv.gz
+     3. NCBI GSE91061_norm_counts_TPM_GRCh38.p13_NCBI.tsv.gz
+     4. Human.GRCh38.p13.annot.tsv.gz
+     5. bms038_analysis@137111c38a32f8626ee6a436e14ac667bd31b1e7: data/SampleTableCorrected.9.19.16.csv
+     6. same commit: data/bms038_clinical_data.csv
+     7. same commit: rnaseq/TableS6.A.R
+     8. cBioPortal mel_iatlas_riaz_nivolumab_2017 data_clinical_sample.txt
+     9. same study: data_clinical_patient.txt
+   - Include expected sizes and expected SHA-256 where the research note gives them; otherwise use null.
+   - Update the Riaz field map so it has two expression roles, author_fpkm_hg19 and ncbi_tpm_grch38. Treat them as separate measurement representations and never convert between them. Add the cBioPortal files as harmonized_cross_check roles.
+   - Migrate the callers, then DELETE the old fetchers: private_retrieval.py, filelist_fetch.py, listing_fetch.py, filelist_plan.py, listing_plan.py, lane_crosswalk.py, plus the network parts of object_verification.py. Keep any pure record-building functions that other code still imports. Delete or migrate their tests accordingly. Keep their historical evidence under docs/validation untouched. Port retry/backoff ideas from work/paper-a-batch-pipeline/batchqual/public_sources/fetch.py by copying them, not importing.
+D. **Admission writes a reviewer worksheet.**
+   - Remove the hardcoded BLOCKED_UNKNOWN / NOT_AUTHENTICATED / NOT_RUN in admission.py (around lines 379-394).
+   - Admission merges the ingestion worksheet items with V0–V8 gate questions into one reviewer worksheet per cohort and branch, with evidence pointers.
+   - Admission then reads the signed worksheet back. A signed worksheet needs reviewer_name, review_date and a decision per item. Per the approved amendment, for public non-controlled sources a single named signer satisfies both source reviewer and integrator; controlled sources keep the existing rules.
+   - Admission emits the admission draft. Unsigned or partial worksheets stay BLOCKED_UNKNOWN; contradictions fail.
+   - matrices.py asks one question, "eligible sources for branch", and no longer requires BLOCKED_UNKNOWN.
+   - Add CLI subcommands that write the worksheet and ingest a signed one.
+E. **Validate once.**
+   - registries is the only schema/integrity validator for entity tables.
+   - Remove the repeated schema/sha re-validation in matrices.py:19-26, admission.py:330, overlap.py:22, exposure.py:24, timing.py:105, workflow.py:67-70, assays.py:33 and release.py:40. Verify each site first. Rely on core's existing entity-immutability check.
+   - Memoize dependency verification within a run, so module files are not re-hashed on every verify (core.py:51-57, 247-249).
+F. **Two test suites.**
+   - Move tests that read docs/validation receipts, inventories or ARTIFACT_HASHES, call private underscore functions, or use inspect.getsource into an opt-in tests/evidence/ suite. Mark the suite so it is skipped unless DAV_EVIDENCE=1.
+   - Default suites test behaviour through module interfaces only.
+</decisions>
+
+<order>
+1. A
+2. D
+3. E
+4. F
+
+Each step must be green before the next one starts.
+</order>
+
+<hard_rules>
+- No network: the coordinator runs the actual fetch.
+- No commits.
+- No installs.
+- Do not touch specs/, docs/integration/, docs/validation/, orchestration/, sibling worktrees, or the contents of .scratch/runtime.
+- Never read ~/.ssh or any *HANDOVER*servers* file.
+- No patient rows, real GSM accessions or absolute local paths in Git-bound files.
+- No new review/receipt/hash-ledger bookkeeping files.
+- Ideas outside scope go to BACKLOG.md.
+</hard_rules>
+
+<gates>
+Run with PY=../envs/dav-pipeline/bin/python and PYTHONDONTWRITEBYTECODE=1:
+- $PY -m pytest -q -p no:cacheprovider tests/a_dav_implementation tests/a_dav_ingest
+- $PY -m pytest -q -p no:cacheprovider tests/a_dav tests/a_identity_adapter (with the deleted modules' tests removed or migrated)
+- DAV_EVIDENCE=1 $PY -m pytest -q -p no:cacheprovider tests/evidence
+- $PY -m unittest discover tests/a_a1_spec_contract
+- $PY docs/integration/20261015/verify_integration.py --git-ref HEAD
+- mypy --strict on new and changed modules
+- `git status --short -- specs docs/integration` must be empty
+
+Report test counts before and after each step, and justify every deleted test.
+</gates>
+
+<report_contract>
+Your final report must include:
+1. A gate table, baseline and final.
+2. For each of A, D, E and F: files added, changed and deleted; RED then GREEN; design notes.
+3. The Riaz fetch plan summary (9 objects, which hashes are known).
+4. The reviewer worksheet format, with an example using invented IDs.
+5. The list of deleted tests with reasons.
+6. The BACKLOG.md additions.
+7. Anything you could not do.
+8. Confirmation that you made no network calls and no commits.
+</report_contract>

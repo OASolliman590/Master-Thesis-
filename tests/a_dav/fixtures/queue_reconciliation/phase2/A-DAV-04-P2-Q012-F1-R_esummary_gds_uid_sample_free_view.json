@@ -1,0 +1,17 @@
+{
+ "accession": "GSE213145",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "16791",
+ "n_samples": 20,
+ "pdat": "2022/09/15",
+ "pubmedids": [
+  "36248850"
+ ],
+ "summary": "Melanoma is a highly aggressive skin cancer, which, although highly immunogenic, frequently escapes the body’s immune defences. Immune checkpoint inhibitors (ICI), such as anti-PD1, anti-PDL1, and anti-CTLA4 antibodies lead to reactivation of immune pathways, promoting rejection of melanoma. However, the benefits of ICI therapy remain limited to a relatively small proportion of patients who do not exhibit ICI resistance. Moreover, the precise mechanisms underlying innate and acquired ICI resistance remain unclear. Here, we have investigated differences in melanoma tissues in responder and non-responder patients to anti-PD1 therapy in terms of tumour and immune cell gene-associated signatures.",
+ "taxon": "Homo sapiens",
+ "title": "Innate immune checkpoint inhibitor resistance is associated with melanoma sub-types exhibiting invasive and de-differentiated gene expression signatures",
+ "uid": "200213145",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

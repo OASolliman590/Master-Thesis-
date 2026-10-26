@@ -102,7 +102,10 @@ def validate_timing(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
     for specimen_id, specimen, evidence, binding, is_canonical in context_assertions:
         require(evidence.get("inferred_from_order") is not True, "TIMEPOINT_ONLY_INFERRED_FROM_ORDER")
         if "canonical_category" in evidence:
-            schemas.validate("specimen_registry", {**specimen, "canonical_timing_category": evidence["canonical_category"]})
+            require(evidence["canonical_category"] in {"PRE_INDEX_BASELINE", "EARLY_ON_TREATMENT",
+                    "LATE_ON_TREATMENT", "RESPONSE_ASSESSMENT", "MAXIMAL_RESPONSE", "PROGRESSION",
+                    "POST_TREATMENT", "POST_DISCONTINUATION", "AFTER_REGIMEN_CHANGE", "UNKNOWN"},
+                    "TIMING_MAPPING_CONFLICT")
             if is_canonical:
                 require(evidence["canonical_category"] == specimen["canonical_timing_category"], "TIMING_MAPPING_CONFLICT")
         if is_canonical and _number(evidence.get("relative_day")) and _number(specimen.get("days_from_index_start")):

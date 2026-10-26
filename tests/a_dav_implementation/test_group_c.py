@@ -72,7 +72,7 @@ def material_packet():
         'source_object_ids':['SRC1'],'source_object_hashes':['a'*64],
         'gate_results':[{'gate':'V'+str(n),'status':'BLOCKED_UNKNOWN','reason':'ACTUAL_REVIEW_NOT_RUN'} for n in range(8)],
         'admission_status':'BLOCKED_UNKNOWN','approved_branches':[],'blocked_branches':[p['branch_id']],
-        'validator':'SYNTHETIC_SOFTWARE_ONLY','reviewer':'NOT_AUTHENTICATED','code_version':'synthetic-v1',
+        'validator':'SOFTWARE_ONLY','reviewer':'NOT_AUTHENTICATED','code_version':'dav-software-v1',
         'config_hash':'a'*64,'created_utc':'NOT_RUN','unresolved_limitations':['ACTUAL_REVIEW_NOT_RUN']}]
     rank = {'specimen_rank': {'B1':0,'B2':1,'F1':0,'F2':1},
             'assay_rank': {'A1':0,'A2':1,'A3':0,'A4':1}, 'selection_basis':'PRESPECIFIED_METADATA',
@@ -105,7 +105,7 @@ def seal(p, stages=('registries','endpoints','timing','assays','overlap','exposu
         audit = []
         if stage == 'admission':
             audit = [{'kind':'admission_eligibility','study_id':'S1','branch_id':p['branch_id'],
-                      'eligibility':'SYNTHETIC_READY','criteria':{},'actual_source_review':'NOT_RUN'}]
+                      'eligibility':'READY','criteria':{},'actual_source_review':'NOT_RUN'}]
         if stage == 'timing':
             audit=[{'check':'TIMING_ASSERTION','specimen_uid':sp['specimen_uid'],'precision':'EXACT',
                 'relative_day':sp['days_from_index_start'],'canonical_category':sp['canonical_timing_category'],
@@ -137,7 +137,7 @@ def test_baseline_selects_rank_and_preserves_sources_and_outcome_blindness():
     from tools.a_dav.matrices import build_baseline
     p=material_packet(); original=copy.deepcopy(p['records'])
     r=build_baseline(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     assert [(v['patient_uid'],v['specimen_uid'],v['assay_uid']) for v in r['records']['baseline']]==[('P1','B1','A1')]
     assert p['records']==original
     for table in original: assert r['records'][table]==sorted(original[table],key=lambda v: __import__('json').dumps(v,sort_keys=True,separators=(',',':')))
@@ -159,7 +159,7 @@ def test_baseline_tie_blocks_without_identifier_tiebreak():
 def test_longitudinal_keeps_repeats_and_missing_denominator():
     from tools.a_dav.matrices import build_longitudinal
     p=material_packet();r=build_longitudinal(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     assert len(r['records']['timepoint'])==4
     pairs={v['window_id']:v for v in r['records']['pair']}
     assert pairs['W1']['followup_specimen_uid']=='F1'
@@ -176,7 +176,7 @@ def test_longitudinal_keeps_repeats_and_missing_denominator():
 def test_longitudinal_does_not_silently_qualify_mismatches(field,value,reason):
     from tools.a_dav.matrices import build_longitudinal
     p=material_packet();p['records']['specimen_registry'][2][field]=value
-    r=build_longitudinal(seal(p),schemas=STORE);assert r['status'] in ('SYNTHETIC_READY','FAIL','BLOCKED_UNKNOWN')
+    r=build_longitudinal(seal(p),schemas=STORE);assert r['status'] in ('READY','FAIL','BLOCKED_UNKNOWN')
     assert reason in str(r['audit']) or reason in r['reasons']
 
 
@@ -195,7 +195,7 @@ def split_packet():
 def test_split_emits_valid_rows_and_rejects_patient_cross_roles():
     from tools.a_dav.release import validate_split
     p=split_packet();r=validate_split(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     assert r['records']['split'][0]['permanent_role']=='DEVELOPMENT'
     STORE.validate('split',r['records']['split'][0])
     second=copy.deepcopy(p['config']['split']['assignments'][0]);second.update(permanent_role='FINAL_TEST',
@@ -233,7 +233,7 @@ def report_packet():
 def test_reporting_suppresses_small_cells_and_exports_no_source_rows():
     from tools.a_dav.reporting import build_public_report
     p=report_packet();r=build_public_report(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     public=next(v['public_report'] for v in r['audit'] if 'public_report' in v)
     assert public['classification']=='SYNTHETIC_ONLY'
     assert '"001"' not in json.dumps(public); assert '"P1"' not in json.dumps(public); assert '"invented"' not in json.dumps(public)
@@ -254,10 +254,10 @@ def test_freeze_fresh_resume_tamper_and_collision(tmp_path):
     from tools.a_dav.release import freeze_bundle, verify_bundle
     p=report_packet();p['dependencies']['public_report']=build_public_report(p,schemas=STORE)
     target=tmp_path/'bundle';r=freeze_bundle(p,target,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY';assert target.is_dir()
+    assert r['status']=='READY';assert target.is_dir()
     assert freeze_bundle(p,target,schemas=STORE)==r
     verified=verify_bundle(target)
-    assert verified['status']=='SYNTHETIC_READY'
+    assert verified['status']=='READY'
     assert sorted(v.name for v in target.iterdir())==['manifest.json','packet.json','release_draft.json','result.json']
     (target/'packet.json').write_text('{}')
     with pytest.raises(ValueError): verify_bundle(target)
@@ -313,7 +313,7 @@ def test_extra_bundle_sidecar_and_changed_input_are_rejected(tmp_path):
     from tools.a_dav.reporting import build_public_report
     from tools.a_dav.release import freeze_bundle,verify_bundle
     p=report_packet();p['dependencies']['public_report']=build_public_report(p,schemas=STORE)
-    target=tmp_path/'bundle';assert freeze_bundle(p,target,schemas=STORE)['status']=='SYNTHETIC_READY'
+    target=tmp_path/'bundle';assert freeze_bundle(p,target,schemas=STORE)['status']=='READY'
     (target/'extra.json').write_text('{}')
     with pytest.raises(ValueError):verify_bundle(target)
     (target/'extra.json').unlink()
@@ -353,7 +353,7 @@ def final_packet():
 def test_final_split_simulation_keeps_actual_certification_false():
     from tools.a_dav.release import validate_split
     r=validate_split(final_packet(),schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     assert all(a['actual_untouched_certified'] is False for a in r['audit'])
     assert r['source_admission'] is False
 
@@ -429,7 +429,7 @@ def test_source_defined_binary_uses_own_meaning_without_orr():
     p=material_packet();p['records']['endpoint'][0].update(endpoint_class='OTHER',canonical_category='SOURCE_BINARY')
     p['config']['baseline']['endpoint_policy']['endpoint_class']='OTHER'
     r=build_baseline(seal(p),schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     row=r['records']['baseline'][0]
     assert row['inclusion_status']=='INCLUDED';assert row['orr'] is None;assert row['dcr'] is None
     assert row['canonical_category']=='SOURCE_BINARY'
@@ -440,7 +440,7 @@ def test_longitudinal_explicit_endpoint_optional_preserves_unlabelled_pairs():
     p=material_packet();p['records']['endpoint']=[]
     p['config']['longitudinal']['endpoint_policy'].update(required=False,endpoint_class=None)
     r=build_longitudinal(seal(p),schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     assert r['records']['pair'][0]['inclusion_status']=='INCLUDED'
     assert r['records']['pair'][0]['response_group']=='NOT_APPLICABLE'
 
@@ -455,7 +455,7 @@ def test_adjudicated_endpoint_selection_uses_sealed_preferred_outcome():
         'preferred_outcome_id':'O1','all_outcome_ids':['O1','O2']}])
     refresh_descendants(p, 'endpoints')
     r=build_baseline(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY';assert r['records']['baseline'][0]['orr']==1
+    assert r['status']=='READY';assert r['records']['baseline'][0]['orr']==1
     assert len(r['records']['endpoint'])==2
 
 
@@ -474,7 +474,7 @@ def test_public_report_has_allowlisted_gate_and_limitation_tables():
     r=build_public_report(report_packet(),schemas=STORE)
     public=next(a['public_report'] for a in r['audit'] if 'public_report' in a)
     assert public['gate_table']==[
-        {'gate':'SYNTHETIC_SOFTWARE','status':'SYNTHETIC_READY'},
+        {'gate':'SOFTWARE_CHECKS','status':'READY'},
         {'gate':'SOURCE_REVIEW','status':'NOT_RUN'},{'gate':'INDEPENDENT_REVIEW','status':'NOT_RUN'},
         {'gate':'ENVIRONMENT_VALIDATION','status':'NOT_RUN'},{'gate':'STATISTICAL_RELEASE','status':'NOT_RUN'}]
     assert public['limitation_table']==[{'code':v,'status':'NOT_RUN'} for v in
@@ -496,7 +496,7 @@ def test_multiple_evidenced_specimen_contexts_preserve_episode_specific_timepoin
     p['dependencies']['timing']=finish('timing',p,p['records'],audit=audits,schemas=STORE)
     refresh_descendants(p, 'timing')
     r=build_longitudinal(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     contexts={(v['treatment_episode_id'],v['canonical_timing'],v['relative_day']) for v in r['records']['timepoint'] if v['specimen_uid']=='F1'}
     assert contexts=={('E1','EARLY_ON_TREATMENT',10),('E2','PRE_INDEX_BASELINE',-3)}
     assert r['records']['pair'][0]['followup_specimen_uid']=='F1'
@@ -506,7 +506,7 @@ def test_prat_bound_general_report_is_count_free_despite_count_request():
     from tools.a_dav.reporting import build_public_report
     p=report_packet();p['dependencies']['prat_review']=finish('prat_review',p,p['records'],schemas=STORE)
     r=build_public_report(p,schemas=STORE)
-    assert r['status']=='SYNTHETIC_READY'
+    assert r['status']=='READY'
     public=next(a['public_report'] for a in r['audit'] if 'public_report' in a)
     assert 'patient_count' not in public;assert 'count_table' not in public
     assert {'code':'PRAT_COUNT_FREE_EXPORT','status':'ENFORCED'} in public['limitation_table']
@@ -544,5 +544,5 @@ def test_unknown_branch_compartment_policy_does_not_default_to_tumour():
     assert blocked['reasons'] == ['SPECIMEN_POLICY_UNKNOWN']
     p['config']['baseline']['baseline_compartments'] = ['TUMOUR']
     good = build_baseline(seal(p), schemas=STORE)
-    assert good['status'] == 'SYNTHETIC_READY'
+    assert good['status'] == 'READY'
     assert good['records']['baseline'][0]['specimen_uid'] == 'B1'

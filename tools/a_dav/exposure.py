@@ -17,13 +17,9 @@ def validate_exposure(packet: dict[str, Any], *, schemas: SchemaStore | None = N
                 "PATIENT_SET": {r["patient_uid"] for r in records.get("patient_registry", [])},
                 "SPECIMEN_SET": {r["specimen_uid"] for r in records.get("specimen_registry", [])},
                 "COMPARATOR_TRAINING_SET": set(config.get("comparator_training_set_ids", []))}
-    seen: set[str] = set()
     decisions: dict[tuple[str, str], list[str]] = {}
     rows = records.get("prior_exposure_record", [])
     for row in rows:
-        store.validate("prior_exposure_record", row)
-        require(row["exposure_id"] not in seen, "DUPLICATE_ID")
-        seen.add(row["exposure_id"])
         require(row["subject_id"] in subjects[row["subject_type"]], "EXPOSURE_SUBJECT_UNKNOWN")
         use, implication = row["use"], row["independence_implication"]
         if use in ASSOCIATED:
@@ -51,7 +47,7 @@ def validate_exposure(packet: dict[str, Any], *, schemas: SchemaStore | None = N
         audit.append({"kind": "exposure_decision", "subject_type": key[0], "subject_id": key[1],
                       "analysis_lineage_id": config["analysis_lineage_id"], "state": state,
                       "untouched_certified": False})
-    return finish("exposure", packet, records, status="BLOCKED_UNKNOWN" if unknown else "SYNTHETIC_READY",
+    return finish("exposure", packet, records, status="BLOCKED_UNKNOWN" if unknown else "READY",
                   reasons=["EXPOSURE_REVIEW_REQUIRED"] if unknown else [], audit=audit, schemas=store)
 
 

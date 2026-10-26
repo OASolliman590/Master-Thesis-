@@ -178,7 +178,7 @@ def main() -> int:
     args = parser.parse_args()
     result = run_workflow(synthetic_workflow_packet(), args.freeze)
     print(json.dumps(public_summary(result, include_counts=False), sort_keys=True))
-    return 0 if result["status"] == "SYNTHETIC_READY" else 1
+    return 0 if result["status"] == "READY" else 1
 
 
 if __name__ == "__main__":

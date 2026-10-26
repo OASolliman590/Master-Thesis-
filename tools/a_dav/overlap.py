@@ -19,7 +19,6 @@ def validate_overlap(packet: dict[str, Any], *, schemas: SchemaStore | None = No
     links: list[tuple[tuple[str, str], tuple[str, str], str]] = []
     for kind, (table, key) in NODE_TABLES.items():
         for row in records.get(table, []):
-            store.validate(table, row)
             nodes.add((kind, row[key]))
     trials: dict[str, list[tuple[str, str]]] = {}
     families: dict[str, list[tuple[str, str]]] = {}
@@ -53,13 +52,9 @@ def validate_overlap(packet: dict[str, Any], *, schemas: SchemaStore | None = No
     for group in list(trials.values()) + list(families.values()) + list(publications.values()) + list(accession_aliases.values()):
         links.extend((group[0], n, "VERIFIED") for n in group[1:])
     edges = records.get("overlap_edge", [])
-    ids: set[str] = set()
     independent: list[tuple[tuple[str, str], tuple[str, str]]] = []
     missing_evidence = False
     for edge in edges:
-        store.validate("overlap_edge", edge)
-        require(edge["overlap_edge_id"] not in ids, "DUPLICATE_ID")
-        ids.add(edge["overlap_edge_id"])
         a = (edge["source_node_type"], edge["source_node_id"])
         b = (edge["target_node_type"], edge["target_node_id"])
         require(a in nodes and b in nodes, "OVERLAP_NODE_UNKNOWN")

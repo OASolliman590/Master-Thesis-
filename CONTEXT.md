@@ -53,3 +53,32 @@ The programme investigates prostate immune regulation and interventions that may
 **Reproduction**: Re-execution of a previously released analysis with its declared inputs and methods. It differs from validation using independent experiments.
 
 **Unknown training overlap**: Incomplete provenance about whether a model encountered evaluation data. It is not evidence that the evaluation set is unseen.
+
+### Data acquisition
+
+**Source object**: One exact file retrieved from an official repository or author release. It is identified by the SHA-256 of its complete bytes, together with its locator and version.
+_Avoid_: dataset, download, file (when the exact object is meant)
+
+**Data classification**: The origin of a record's data: invented test data (synthetic) or real patient-level data from a source object. It says nothing about whether the record passed any check.
+_Avoid_: status, readiness
+
+**Field map**: A cohort-specific declaration of how a source object's fields and sample titles correspond to patients, specimens, timepoints and outcomes. It contains rules, never patient rows.
+_Avoid_: adapter config, cohort parser
+
+**Source of record**: The source object whose raw value is treated as primary for a given fact, such as an author clinical table for best overall response. Other sources of the same fact are corroborating.
+_Avoid_: ground truth, gold standard
+
+**Corroborating label**: A raw value for the same fact taken from a secondary source object (for example a GEO characteristic). It is kept unchanged and compared with the source of record, never silently merged into it.
+
+**Harmonized resource**: A third-party reprocessing of a cohort, such as cBioPortal or CRI iAtlas. It is used only as a cross-check and is never a source of record.
+
+**Ingestion proposal**: A record derived automatically from source objects through a field map. It carries a source locator, and it remains a proposal until clean joins pass or a reviewer resolves it.
+
+**Worksheet item**: One unresolved conflict or unknown raised by ingestion, with pointers to its evidence. It is resolved only by a recorded human decision.
+_Avoid_: issue, ticket, finding (when a source ambiguity is meant)
+
+**Measurement representation**: One specific processed form of an assay's measurements (for example author hg19 FPKM, or NCBI GRCh38 TPM) with its own unit, transform and feature IDs. Representations of the same samples are kept side by side and never converted into one another.
+_Avoid_: normalisation, version (when a different representation is meant)
+
+**Reviewer worksheet**: The single per-cohort, per-branch list of worksheet items and admission gate questions, with evidence pointers, that a named human signs. Admission reads the signed worksheet and never infers a decision.
+_Avoid_: checklist, review form

@@ -2,18 +2,22 @@
 from __future__ import annotations
 
 import copy
+from contextlib import contextmanager
+from contextvars import ContextVar
 import functools
 import hashlib
 import json
 import re
 import sys
 from pathlib import Path
-from typing import Any, Callable, Iterable, Literal, cast
+from typing import Any, Callable, Iterable, Iterator, Literal, cast
 
 from jsonschema import Draft202012Validator
 
 SCHEMA_ROOT = Path(__file__).resolve().parents[2] / "specs/A_DATA_ACQUISITION_VALIDATION/schemas"
-Status = Literal["SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"]
+Classification = Literal["SYNTHETIC_ONLY", "PRIVATE_PATIENT_LEVEL"]
+DATA_CLASSIFICATIONS: frozenset[Classification] = frozenset({"SYNTHETIC_ONLY", "PRIVATE_PATIENT_LEVEL"})
+Status = Literal["READY", "BLOCKED_UNKNOWN", "FAIL"]
 RecordSet = dict[str, list[dict[str, Any]]]
 StageFunction = Callable[..., dict[str, Any]]
 FLAGS = ("analysis_ready", "source_admission", "statistical_release", "biological_analysis_executed")
@@ -47,14 +51,47 @@ UPSTREAMS: dict[str, tuple[str, ...]] = {
 }
 LEGACY_RUNTIME = ('__init__', 'search_log', 'study_resolution', 'object_verification')
 
+# File digests are reused only during one explicit workflow invocation. Receipt,
+# packet, configuration and dependency checks still run on every verify_result.
+_RUN_FILE_HASHES: ContextVar[dict[tuple[str, int, int, int, int], str] | None] = ContextVar(
+    "a_dav_run_file_hashes", default=None)
+
+
+@contextmanager
+def verification_run() -> Iterator[None]:
+    """Share immutable module digests within one run, then discard them."""
+    token = _RUN_FILE_HASHES.set({})
+    try:
+        yield
+    finally:
+        _RUN_FILE_HASHES.reset(token)
+
+
+def _run_file_hash(path: Path) -> str:
+    cache = _RUN_FILE_HASHES.get()
+    if cache is None:
+        return _file_hash(path)
+    resolved = Path(path).resolve()
+    before = resolved.stat()
+    key = (str(resolved), before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns)
+    if key in cache:
+        return cache[key]
+    value = _file_hash(resolved)
+    after = resolved.stat()
+    if (before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns) == (
+            after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns):
+        cache[key] = value
+    return value
+
 
 def runtime_hashes(stage: str) -> dict[str, str]:
     names = {'core', MODULES[stage]}
     if stage == 'existing_seams': names.update(LEGACY_RUNTIME)
+    if stage in {'admission', 'workflow', 'freeze'}: names.add('worksheet')
     if stage in {'workflow', 'freeze'}:
         names.update(MODULES.values())
         names.update((*LEGACY_RUNTIME, 'demo'))
-    return {name + '.py': _file_hash(Path(__file__).with_name(name + '.py')) for name in sorted(names)}
+    return {name + '.py': _run_file_hash(Path(__file__).with_name(name + '.py')) for name in sorted(names)}
 
 
 def _upstream_receipts(stage: str, packet: Any) -> dict[str, str]:
@@ -177,7 +214,7 @@ def _stable_packet(packet: dict[str, Any]) -> dict[str, Any]:
 
 def check_packet(packet: dict[str, Any], schemas: SchemaStore) -> None:
     require(type(packet) is dict, "MALFORMED_INPUT")
-    require(packet.get("classification") == "SYNTHETIC_ONLY", "SYNTHETIC_ONLY_REQUIRED")
+    require(packet.get("classification") in DATA_CLASSIFICATIONS, "SYNTHETIC_ONLY_REQUIRED")
     branch_id = packet.get("branch_id")
     require(type(branch_id) is str and branch_id in BRANCHES, "UNSUPPORTED_BRANCH")
     require(packet.get("schema_hashes") == schemas.hashes, "SCHEMA_BINDING_MISMATCH")
@@ -195,10 +232,10 @@ def _module_path(stage: str) -> Path:
 
 
 def finish(stage: str, packet: dict[str, Any], records: RecordSet | None = None, *,
-           status: Status = "SYNTHETIC_READY", reasons: Iterable[str] = (),
+           status: Status = "READY", reasons: Iterable[str] = (),
            audit: Iterable[dict[str, Any]] = (), schemas: SchemaStore | None = None) -> dict[str, Any]:
     store = schemas or SchemaStore()
-    require(status in {"SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"}, "MALFORMED_INPUT")
+    require(status in {"READY", "BLOCKED_UNKNOWN", "FAIL"}, "MALFORMED_INPUT")
     out_records = _stable_records(records or {})
     out_audit = sorted(copy.deepcopy(list(audit)), key=canonical_bytes)
     codes = sorted(set(reasons))
@@ -214,13 +251,16 @@ def finish(stage: str, packet: dict[str, Any], records: RecordSet | None = None,
         config_hash = safe_digest
     module_path = _module_path(stage)
     packet_branch = packet.get("branch_id") if isinstance(packet, dict) else None
+    classification = packet.get("classification") if isinstance(packet, dict) else None
+    if classification not in DATA_CLASSIFICATIONS:
+        classification = "SYNTHETIC_ONLY"
     result = {
-        "classification": "SYNTHETIC_ONLY", "stage": stage, "status": status,
+        "classification": classification, "stage": stage, "status": status,
         "branch_id": packet_branch if type(packet_branch) is str and packet_branch in BRANCHES else None,
         "records": out_records, "audit": out_audit, "reasons": codes,
         "bindings": {"input_sha256": input_hash, "config_sha256": config_hash,
-                     "schemas_sha256": digest(store.hashes), "code_sha256": _file_hash(module_path),
-                     "core_sha256": _file_hash(Path(__file__)),
+                     "schemas_sha256": digest(store.hashes), "code_sha256": _run_file_hash(module_path),
+                     "core_sha256": _run_file_hash(Path(__file__)),
                      "runtime_sha256": runtime_hashes(stage),
                      "upstream_receipt_ids": _upstream_receipts(stage, packet),
                      "output_sha256": digest({"records": out_records, "audit": out_audit})},
@@ -233,19 +273,19 @@ def finish(stage: str, packet: dict[str, Any], records: RecordSet | None = None,
 def verify_result(result: dict[str, Any], stage: str | None = None, branch_id: str | None = None,
                   schemas: SchemaStore | None = None) -> None:
     require(type(result) is dict and isinstance(result.get("bindings"), dict), "DEPENDENCY_INVALID")
-    require(result.get("classification") == "SYNTHETIC_ONLY", "SYNTHETIC_ONLY_REQUIRED")
+    require(result.get("classification") in DATA_CLASSIFICATIONS, "SYNTHETIC_ONLY_REQUIRED")
     require(all(result.get(key) is False for key in FLAGS), "DEPENDENCY_INVALID")
     actual_stage = result.get("stage")
     require(isinstance(actual_stage, str) and actual_stage in MODULES, "DEPENDENCY_INVALID")
     require(stage is None or actual_stage == stage, "DEPENDENCY_INVALID")
     require(branch_id is None or result.get("branch_id") == branch_id, "DEPENDENCY_INVALID")
-    require(result.get("status") in {"SYNTHETIC_READY", "BLOCKED_UNKNOWN", "FAIL"}, "DEPENDENCY_INVALID")
+    require(result.get("status") in {"READY", "BLOCKED_UNKNOWN", "FAIL"}, "DEPENDENCY_INVALID")
     require(result.get("receipt_id") == digest({k: v for k, v in result.items() if k != "receipt_id"}), "RECEIPT_TAMPERED")
     bindings = result["bindings"]
     store = schemas or SchemaStore()
     require(bindings.get("schemas_sha256") == digest(store.hashes), "SCHEMA_BINDING_MISMATCH")
-    require(bindings.get("code_sha256") == _file_hash(_module_path(cast(str, actual_stage))), "CODE_BINDING_MISMATCH")
-    require(bindings.get("core_sha256") == _file_hash(Path(__file__)), "CODE_BINDING_MISMATCH")
+    require(bindings.get("code_sha256") == _run_file_hash(_module_path(cast(str, actual_stage))), "CODE_BINDING_MISMATCH")
+    require(bindings.get("core_sha256") == _run_file_hash(Path(__file__)), "CODE_BINDING_MISMATCH")
     require(bindings.get('runtime_sha256') == runtime_hashes(cast(str, actual_stage)), 'CODE_BINDING_MISMATCH')
     upstreams = bindings.get('upstream_receipt_ids')
     require(isinstance(upstreams, dict) and set(upstreams) <= set(UPSTREAMS[cast(str, actual_stage)])
@@ -265,7 +305,8 @@ def dependency(packet: dict[str, Any], stage: str, schemas: SchemaStore) -> dict
         value = packet.get('dependencies', {}).get(name)
         require(type(value) is dict, 'DEPENDENCY_MISSING', blocked=True)
         verify_result(value, stage=name, branch_id=packet['branch_id'], schemas=schemas)
-        require(value['status'] == 'SYNTHETIC_READY', 'DEPENDENCY_BLOCKED', blocked=True)
+        require(value['classification'] == packet['classification'], 'DEPENDENCY_INVALID')
+        require(value['status'] == 'READY', 'DEPENDENCY_BLOCKED', blocked=True)
         require(value['bindings']['config_sha256'] == digest(packet['config']), 'DEPENDENCY_INVALID')
         for upstream, receipt_id in value['bindings']['upstream_receipt_ids'].items():
             current = packet.get('dependencies', {}).get(upstream)
@@ -310,7 +351,7 @@ def public_summary(result: dict[str, Any], *, include_counts: bool = True) -> di
     module = sys.modules.get("tools.a_dav." + MODULES[result["stage"]])
     allowed = REASON_CODES | frozenset(getattr(module, "REASON_CODES", ()))
     reasons = sorted({code if code in allowed else "UNCLASSIFIED_REASON" for code in result["reasons"]})
-    summary = {"classification": "SYNTHETIC_ONLY", "stage": result["stage"],
+    summary = {"classification": result["classification"], "stage": result["stage"],
                "status": result["status"], "reasons": reasons,
                "bindings": {key: value for key, value in result["bindings"].items()
                             if key in {"input_sha256", "config_sha256", "schemas_sha256", "code_sha256", "core_sha256", "output_sha256"}

@@ -1,0 +1,23 @@
+{
+ "accession": "GSE165278",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP302/SRP302761/",
+   "targetobject": "SRP302761"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "16791",
+ "n_samples": 22,
+ "pdat": "2021/03/08",
+ "pubmedids": [
+  "33588426"
+ ],
+ "summary": "Here, we report the immune-mediated mechanisms underlying the improved activity of immune checkpoint blockade in glycolysis-defective tumor models.",
+ "taxon": "Homo sapiens",
+ "title": "CTLA-4 blockade drives loss of Treg stability in glycolysis-low tumors.",
+ "uid": "200165278",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

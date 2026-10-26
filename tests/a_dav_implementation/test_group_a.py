@@ -31,7 +31,7 @@ def test_registry_preserves_lexical_identity_and_all_records():
     p = packet()
     before = deepcopy(p)
     result = build_registries(p, schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["records"]["patient_registry"][0]["source_patient_id"] == "001"
     assert {k: sorted(v, key=str) for k, v in result["records"].items()} == {k: sorted(v, key=str) for k, v in before["records"].items()}
     assert p == before
@@ -60,7 +60,7 @@ def test_endpoint_raw_immutable_and_orr_dcr_literal():
     from tools.a_dav.endpoints import map_endpoints
     p = with_registries(endpoint_config(packet()))
     r = map_endpoints(p, schemas=SCHEMAS)
-    assert r["status"] == "SYNTHETIC_READY"
+    assert r["status"] == "READY"
     assert [(x["endpoint_class"], x["binary_value"]) for x in sorted(r["records"]["endpoint"], key=lambda x: x["endpoint_class"])] == [("DCR", 1), ("ORR", 1)]
     assert r["records"]["clinical_outcome"] == p["records"]["clinical_outcome"]
 
@@ -82,7 +82,7 @@ def test_timing_preserves_rows_and_exact_day_evidence():
     from tools.a_dav.timing import validate_timing
     p = with_registries(timing_config(packet()))
     r = validate_timing(p, schemas=SCHEMAS)
-    assert r["status"] == "SYNTHETIC_READY"
+    assert r["status"] == "READY"
     assert any(x.get("relative_day") == -2 and x.get("specimen_uid") == "sp1" for x in r["audit"])
     assert r["records"]["specimen_registry"] == p["records"]["specimen_registry"]
 
@@ -103,7 +103,7 @@ def test_assay_zero_is_observed_and_coverage_literal():
     from tools.a_dav.assays import validate_assays
     p = with_registries(assay_config(packet()))
     r = validate_assays(p, schemas=SCHEMAS)
-    assert r["status"] == "SYNTHETIC_READY"
+    assert r["status"] == "READY"
     row = r["records"]["coverage"][0]
     assert row["required_genes"] == ["F1", "F2"]
     assert row["present_genes"] == ["F1", "F2"]
@@ -154,7 +154,7 @@ def test_registry_repeats_lesions_and_raw_ids_across_studies_are_preserved():
     repeat = deepcopy(r["assay_registry"][0]); repeat.update(assay_uid="a2", matrix_header="repeat-001", replicate_status="REPEATED_SEQUENCING")
     r["assay_registry"].append(repeat)
     result = build_registries(p, schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert len(result["records"]["patient_registry"]) == 2
     assert len(result["records"]["specimen_registry"]) == 2
     assert len(result["records"]["assay_registry"]) == 2
@@ -167,7 +167,7 @@ def test_endpoint_all_source_categories(category, orr, dcr, evaluable):
     o.update(raw_endpoint_label="invented-" + category, canonical_category=category, orr_mapping=None if orr is None else bool(orr), dcr_mapping=None if dcr is None else bool(dcr), evaluability=evaluable)
     p["config"]["endpoints"]["category_map"] = {o["raw_endpoint_label"]: category}
     result = map_endpoints(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     rows = {x["endpoint_class"]: x for x in result["records"]["endpoint"]}
     assert rows["ORR"]["binary_value"] == orr
     assert rows["DCR"]["binary_value"] == dcr
@@ -192,7 +192,7 @@ def test_endpoint_separate_non_orr_lanes(source_class):
     if source_class in {"PFS", "OS"}:
         o.update(event_time=8, event_indicator=False, censoring="INVENTED_CENSORED")
     result = map_endpoints(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     row = result["records"]["endpoint"][0]
     assert row["binary_value"] is None
     if source_class in {"PFS", "OS"}:
@@ -205,7 +205,7 @@ def test_endpoint_dcb_requires_source_rule_and_short_censor_is_unevaluable():
     assert map_endpoints(with_registries(p), schemas=SCHEMAS)["reasons"] == ["DCB_RULE_UNKNOWN"]
     p["config"]["endpoints"]["dcb_rule"] = {"unit": "days", "threshold": 7, "source_locator": "invented-duration-rule", "outcomes": {"o1": {"source_supported_rule": True, "benefit": False, "duration": 2, "censored": True}}}
     result = map_endpoints(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["records"]["endpoint"][0]["binary_value"] is None
     assert result["records"]["endpoint"][0]["evaluability"] == "NOT_EVALUABLE"
 
@@ -219,7 +219,7 @@ def test_endpoint_discrepancies_require_explicit_priority_resolution_and_retain_
     assert map_endpoints(with_registries(p), schemas=SCHEMAS)["reasons"] == ["ENDPOINT_SOURCE_CONFLICT"]
     p["config"]["endpoints"]["discrepancy_resolutions"] = {"p1:e1": {"preferred_outcome_id": "o1", "source_locator": "invented-priority-rule"}}
     result = map_endpoints(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert len(result["records"]["clinical_outcome"]) == 2
     assert any(x.get("all_outcome_ids") == ["o1", "o2"] for x in result["audit"])
 
@@ -255,7 +255,7 @@ def test_timing_bounded_interval_is_not_exact_and_row_order_is_invariant():
     p["records"]["specimen_registry"][0]["days_from_index_start"] = None
     p["records"]["specimen_registry"][0]["collection_date_or_day"] = None
     first = validate_timing(with_registries(p), schemas=SCHEMAS)
-    assert first["status"] == "SYNTHETIC_READY"
+    assert first["status"] == "READY"
     assert first["audit"][0]["precision"] == "BOUNDED_INTERVAL"
     assert first["audit"][0]["relative_day"] is None
     for rows in p["records"].values():
@@ -275,7 +275,7 @@ def test_timing_followup_states_are_explicit_and_separate(category, role, day, r
     if reference_key:
         cfg[reference_key] = {"e1": day - 1}
     result = validate_timing(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["audit"][0]["canonical_category"] == category
 
 
@@ -331,7 +331,7 @@ def test_assay_declared_lanes_pass_without_coercion(unit, lane, transform, value
     if lane.startswith("METHYLATION"):
         a["modality"] = m["modality"] = "METHYLATION"
     result = validate_assays(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["records"]["coverage"][0]["expression_unit"] == unit
     assert result["records"]["assay_registry"][0]["measurement_unit"] == unit
 
@@ -340,7 +340,7 @@ def test_assay_targeted_panel_never_full_universe_de_and_missing_required_is_exp
     from tools.a_dav.assays import validate_assays
     p = assay_config(packet()); p["config"]["assays"]["matrices"][0]["feature_scope"] = "TARGETED"
     result = validate_assays(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["records"]["coverage"][0]["de_suitability"] == "FAIL"
     p["config"]["assays"]["required_features"].append("F3")
     result = validate_assays(with_registries(p), schemas=SCHEMAS)
@@ -365,7 +365,7 @@ def test_group_a_downstream_rejects_tampered_or_stale_registry(api, config_fn):
 def test_timing_component_start_can_be_delayed_within_episode():
     from tools.a_dav.timing import validate_timing
     p = timing_config(packet()); p["records"]["treatment_exposure"][0].update(start_date_or_day="1", stop_date_or_day="59")
-    assert validate_timing(with_registries(p), schemas=SCHEMAS)["status"] == "SYNTHETIC_READY"
+    assert validate_timing(with_registries(p), schemas=SCHEMAS)["status"] == "READY"
 
 
 def test_timing_unknown_precision_never_certifies_exact_window():
@@ -414,7 +414,7 @@ def test_timing_explicit_treatment_sequence_and_prior_ici(prior_ici, reverse_ord
     records["treatment_episode"].append(episode); records["treatment_exposure"].append(exposure); records["episode_binding"].append(binding)
     p["config"]["timing"]["episode_order"] = ["e2", "e1"] if reverse_order else ["e1", "e2"]
     result = validate_timing(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == ("SYNTHETIC_READY" if reason is None else "FAIL")
+    assert result["status"] == ("READY" if reason is None else "FAIL")
     assert result["reasons"] == ([] if reason is None else [reason])
 
 
@@ -428,7 +428,7 @@ def test_timing_multiple_followups_are_all_retained_with_explicit_windows():
         cfg["specimens"][specimen["specimen_uid"]] = {"treatment_episode_id": "e1", "precision": "EXACT", "relative_day": day, "canonical_category": "EARLY_ON_TREATMENT", "window_id": "invented-on", "source_locator": "invented-row", "inferred_from_order": False}
     cfg["windows"]["invented-on"] = {"category": "EARLY_ON_TREATMENT", "min_day": 1, "max_day": 4}
     result = validate_timing(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert sorted(x["relative_day"] for x in result["audit"]) == [-2, 2, 3]
     assert len(result["records"]["specimen_registry"]) == 3
 
@@ -442,7 +442,7 @@ def test_assay_repeated_profiles_preserved_and_audited():
     for row in m["values"]:
         row.append(row[0])
     result = validate_assays(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert len(result["records"]["coverage"]) == 2
     assert any(x.get("check") == "IDENTICAL_PROFILE_RETAINED" and x["assay_uids"] == ["a1", "a2"] for x in result["audit"])
 
@@ -457,7 +457,7 @@ def test_group_a_actual_shared_source_structural_status_preserved():
     from tools.a_dav.assays import validate_assays
     p = assay_config(packet()); p["records"]["source_record"][0]["validation_status"] = "STRUCTURAL_ONLY"
     result = validate_assays(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["records"]["source_record"][0]["validation_status"] == "STRUCTURAL_ONLY"
     assert result["source_admission"] is False
 
@@ -521,7 +521,7 @@ def test_timing_shared_specimen_keeps_separate_evidenced_episode_contexts():
     from tools.a_dav.timing import validate_timing
     p = timing_shared_specimen_context_packet(); before = deepcopy(p["records"]["specimen_registry"])
     first = validate_timing(with_registries(p), schemas=SCHEMAS)
-    assert first["status"] == "SYNTHETIC_READY"
+    assert first["status"] == "READY"
     contexts = sorted((row["treatment_episode_id"], row["canonical_category"], row["relative_day"]) for row in first["audit"] if row["specimen_uid"] == "sp1")
     assert contexts == [("e1", "POST_TREATMENT", 60), ("e2", "PRE_INDEX_BASELINE", 0)]
     assert first["records"]["specimen_registry"] == before
@@ -559,7 +559,7 @@ def test_endpoint_explicit_defined_source_binary_separate_other_lane(binary_valu
     from tools.a_dav.endpoints import map_endpoints
     p = defined_source_binary_packet(binary_value); before = deepcopy(p["records"]["clinical_outcome"])
     result = map_endpoints(with_registries(p), schemas=SCHEMAS)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     row = result["records"]["endpoint"][0]
     assert (row["endpoint_class"], row["canonical_category"], row["binary_value"], row["evaluability"]) == ("OTHER", "SOURCE_BINARY", binary_value, "EVALUABLE")
     assert result["records"]["clinical_outcome"] == before

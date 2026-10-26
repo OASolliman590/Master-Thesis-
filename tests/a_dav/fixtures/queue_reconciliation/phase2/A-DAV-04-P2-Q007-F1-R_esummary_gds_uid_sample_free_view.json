@@ -1,0 +1,17 @@
+{
+ "accession": "GSE176307",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "24014",
+ "n_samples": 90,
+ "pdat": "2021/06/08",
+ "pubmedids": [
+  "34294892"
+ ],
+ "summary": "Purpose: We evaluated clinical outcomes of patients with FGFR3-altered metastatic UC treated with ICB and investigate the underlying immunogenomic mechanisms of response and resistance Methods: 103 patients with metastatic UC treated with ICB at a single academic medical center from 2014-2018 were identified. Clinical annotation for demographics and cancer outcomes, as well as somatic DNA and RNA sequencing were performed. Objective response rate to ICB, progression-free survival, and overall survival was compared between patients with FGFR3 alterations and those without. RNA expression, including molecular subtyping and T cell receptor clonality, was also compared between FGFR3-altered and non-altered patients Results: Our findings from this dataset confirm that FGFR3-altered (n=17) and wild type (n=86) bladder cancers are equally responsive to ICB (12 vs 19%, p=0.73).  Moreover, we demonstrate that despite being less inflamed, FGFR3-altered tumors have equivalent T cell receptor (TCR) diversity and that the balance of a CD8 T cell gene expression signature to immune suppressive features is an important determinant of ICB response Conclusions: Our work in a real world dataset validates prior observations from clinical trials but also extends this prior work to demonstrate that FGFR3-altered and wild type tumors have equivalent TCR diversity and that the balance of effector T cell to immune suppression signals are an important determinant of ICB response.",
+ "taxon": "Homo sapiens",
+ "title": "Fibroblast Growth Factor Receptor 3 Alterations and Response to Immune Checkpoint Inhibition in Metastatic Urothelial Cancer: A Real World Experience",
+ "uid": "200176307",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

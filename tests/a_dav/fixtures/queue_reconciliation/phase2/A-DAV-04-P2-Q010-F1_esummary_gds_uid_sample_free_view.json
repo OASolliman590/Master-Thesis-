@@ -1,0 +1,17 @@
+{
+ "accession": "GSE188250",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing; Methylation profiling by array",
+ "gpl": "18573;21145",
+ "n_samples": 48,
+ "pdat": "2022/06/20",
+ "pubmedids": [
+  "35671108"
+ ],
+ "summary": "This SuperSeries is composed of the SubSeries listed below.",
+ "taxon": "Homo sapiens",
+ "title": "Epigenetic priming enhances anti-tumor immunity in resistant ovarian cancer",
+ "uid": "200188250",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

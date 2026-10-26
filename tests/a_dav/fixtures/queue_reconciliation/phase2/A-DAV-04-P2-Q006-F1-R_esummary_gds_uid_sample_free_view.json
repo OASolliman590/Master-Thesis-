@@ -1,0 +1,23 @@
+{
+ "accession": "GSE168204",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP309/SRP309174/",
+   "targetobject": "SRP309174"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "18573;11154",
+ "n_samples": 27,
+ "pdat": "2021/08/15",
+ "pubmedids": [
+  "34654806"
+ ],
+ "summary": "Both genomic and transcriptomic signatures have been developed to predict responses of metastatic melanoma to immune checkpoint blockade (ICB) therapies; however, most of these signatures were derived from pre-treatment biopsy samples. Here, we developed pathway-based signatures that predict response of metastatic melanoma to anti-PD1-based therapies in four independent datasets with RNAseq and clinical response data available for both pre- and on-treatment metastatic melanomas. We first identified pathway signatures that were significantly enriched in tumor specimens from anti-PD1 responders (R) compared to non-responders (NR) at pre-treatment and on-treatment time points, respectively. We also identified pathway signatures that were differentially expressed in pre-treatment versus on-treatment samples derived from R. Finally, we interrogated the capacity of the two types of signatures in predicting response of metastatic melanoma to anti-PD1 therapies in comparison with existing gene expression signatures. And we also investigated the effect of biopsy sites at the same biopsy time point on predictive performance of response to anti-PD1 therapy. Overall, we demonstrate that pathway-based signatures derived from on-treatment tumor specimens are highly predictive of response to anti-PD1 blockade therapies in patients with metastatic melanoma.",
+ "taxon": "Homo sapiens",
+ "title": "Pathway Signatures Derived from On-treatment Tumor Specimens Predict Response to Anti-PD1 Blockade in Metastatic Melanoma",
+ "uid": "200168204",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

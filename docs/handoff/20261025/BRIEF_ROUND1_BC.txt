@@ -1,0 +1,110 @@
+<goal>Graduate tools/a_dav from a synthetic-only validator into a real-source ingestion pipeline. The first cohort is Riaz 2017, GEO GSE91061, branch A_BASELINE_BIO. You implement architecture candidates B and C, which the user has already decided. Work test-first. You will NOT commit; the coordinator commits.</goal>
+
+<read_first>
+All paths are in the repo you are running in (work/a-dav-01). Read:
+- docs/adr/0001-data-classification-is-origin.md
+- docs/adr/0002-cohorts-are-field-maps.md
+- the "Data acquisition" section at the end of CONTEXT.md. Use exactly its terms: source object, data classification, field map, source of record, corroborating label, harmonized resource, ingestion proposal, worksheet item.
+- docs/research/A_DAV_REAL_INGESTION_SOURCES_01.md for the format and object facts
+- docs/research/A_source_admission_91061/audit_metadata.py and REPORT.md: the September Riaz parser and join rules
+- the frozen spec in specs/A_DATA_ACQUISITION_VALIDATION/: README.md, PATIENT_DATA_MODEL.md, RELATIONAL_INVARIANTS.md, schemas/
+- the existing stages in tools/a_dav: core.py, workflow.py, registries.py, endpoints.py, timing.py, assays.py, matrices.py, release.py, reporting.py, admission.py, demo.py
+</read_first>
+
+<decisions>
+These are settled. Do not re-litigate them.
+
+1. **C — classification policy owned by core.**
+   - `data_classification` records only where the data came from. Allowed values come from the frozen schema enums: `SYNTHETIC_ONLY` for tests and `PRIVATE_PATIENT_LEVEL` for real cohorts. core owns that list.
+   - A separate, classification-neutral status field records whether the checks passed (for example a ready status vs BLOCKED_UNKNOWN). Replace usages of `SYNTHETIC_READY` with it.
+   - Stages copy the packet's classification and never hardcode it. Fix the hardcoded values in core, workflow, matrices, release, reporting, admission and prat_review. The known sites are core.py:16,180,186,198,218,236,242,268,313; workflow.py:66,75,109; matrices.py:29,40,211,229,258,308,323; release.py:47,200,236; reporting.py:19,24; admission.py:379,385-394; prat_review.py:126-130. Verify each one.
+   - Leave legacy_bridge.py untouched; it stays synthetic.
+   - Keep all privacy guards. A real-classified packet must never be written into a Git-bound path.
+   - Every existing synthetic test must stay green. Add parametrized coverage proving the stages accept PRIVATE_PATIENT_LEVEL packets and propagate the classification.
+2. **B — a source ingestion module (new).**
+   - It reads source objects only by SHA-256, from a private content-addressed store laid out as `<store>/objects/<sha256>` plus `<store>/MANIFEST.json`. The manifest maps sha → locator, version (GEO last_update_date or git commit), byte size and retrieval time.
+   - It verifies the full sha before parsing.
+   - It NEVER makes a network request.
+   - It contains a few format adapters only:
+     - GEO family SOFT (.soft.gz): `^SAMPLE`, `!Sample_title`, `!Sample_geo_accession`, `!Sample_characteristics_ch1` key:value pairs, `!Sample_relation` BioSample/SRA;
+     - delimited table (CSV/TSV), with positional column reads for duplicated headers;
+     - matrix header (first line, bounded, gz-aware).
+   - Port the logic from audit_metadata.py and from work/paper-a-batch-pipeline/batchqual (adapters/riaz_fpkm.py parse_table, patient/readers.py bounded readers). Copy the code with tests. Do NOT import across worktrees and do NOT edit sys.path.
+3. **Field maps.**
+   - Cohort specifics live in a patient-free JSON field map at tools/a_dav/field_maps/<cohort>.json, validated by a JSON Schema you add at tools/a_dav/field_maps/field_map.schema.json.
+   - The Riaz map (riaz_gse91061.json) declares:
+     - the pinned objects by role: geo_family_soft, author_sample_table, author_clinical_table, expression_matrix;
+     - the title regex `^(Pt\d+)_(Pre|On)` giving patient and visit;
+     - the characteristic `visit (pre or on treatment)` and the characteristic `response` (GEO; a corroborating label);
+     - the author sample table, read with the duplicated Response column taken by position and the `.N` → `-N` sample-name rule;
+     - the author clinical table as source of record for BOR (CR/PR/SD/PD/NE) and Cohort (NIV3-NAIVE / NIV3-PROG → prior ipilimumab);
+     - agent nivolumab;
+     - the label vocabulary maps.
+   - Where hashes are not yet known, use placeholders such as `"sha256": null`. The coordinator fills them after the fetch.
+   - Adding a cohort must need only a new field map.
+4. **Ingestion output.**
+   - Ingestion emits ingestion proposals into packet["records"] for the existing registries/endpoints/timing/assays stages, each with a source_locator, under classification PRIVATE_PATIENT_LEVEL.
+   - Ingestion NEVER resolves ambiguity. Every conflict or unknown becomes a worksheet item with evidence pointers and status BLOCKED_UNKNOWN. Clean joins pass automatically. Riaz items known in advance:
+     - `Pt7_Pre` file name on the author row labelled Pt72;
+     - duplicate GEO `Pt109_On`;
+     - NE vs UNK;
+     - Pt3 (the paper's PCA outlier);
+     - the four exclusions in author code TableS6.A.R;
+     - GEO 109 vs cBioPortal 107 samples, cross-check only.
+   - Disagreements between source of record and corroborating label are worksheet items, never merged.
+5. **Command.**
+   - Add `python -m tools.a_dav.ingest --cohort riaz_gse91061 --branch A_BASELINE_BIO --store <dir> --out <dir>`.
+   - The pipeline is: sha lookup → adapters → packet → existing stages → `worksheet.json` + `records/` (private) + `SUMMARY.md` (patient-free: counts, conflict categories, object hashes).
+   - `--out` must be under `.scratch/runtime/` (gitignored), or under a path given explicitly with `--allow-external-out`. Refuse any Git-tracked output path.
+   - Admission redesign is NOT in scope.
+6. **Tests.**
+   - Use small real-format fixtures with invented IDs: a 3-sample SOFT excerpt in true SOFT grammar, gzipped in the test; a 4-row CSV with a duplicated Response header; a matrix header line. Put them under tests/a_dav_ingest/fixtures/ and keep them patient-free.
+   - Add one opt-in real-source tracer test, skipped unless the env var `DAV_REAL_STORE` points at a store containing the pinned Riaz objects. It asserts 109 samples, 51 Pre, 58 On and 65 patients, and that every baseline sample links to a patient.
+   - Tests go through module interfaces. Do not read docs/validation receipts.
+</decisions>
+
+<order>
+Do these sequentially. Each must be green before the next.
+- T1: C, the classification policy.
+- T2: object store reader + GEO SOFT adapter.
+- T3: delimited-table and matrix-header adapters, plus the field-map schema and the Riaz field map.
+- T4: the ingest command, worksheet, summary and the opt-in tracer.
+After T4, add tools/a_dav/INGESTION.md (≤1 page): how to add a cohort.
+</order>
+
+<hard_rules>
+- No network. No commits or git state changes. No installs.
+- Do not touch:
+  - specs/ (frozen);
+  - docs/integration/;
+  - docs/validation/;
+  - orchestration/;
+  - sibling worktrees;
+  - .scratch/runtime contents.
+- Never read ~/.ssh or any *HANDOVER*servers* file. No patient rows, GSM accessions other than invented ones, or absolute local paths in Git-bound files.
+- Do not add review/receipt/hash-ledger bookkeeping files. Do not reopen A-DAV packets.
+- Keep the existing test suites green. Do not "harden" unrelated modules. Record ideas outside scope in BACKLOG.md at the repo root instead of implementing them.
+</hard_rules>
+
+<gates>
+Use PY=../envs/dav-pipeline/bin/python, which has Python 3.12, pytest 9.1.1, jsonschema 4.26.0 and mypy 1.18.2. Set PYTHONDONTWRITEBYTECODE=1. Run:
+- $PY -m pytest -q -p no:cacheprovider tests/a_dav_implementation tests/a_dav_ingest
+- $PY -m pytest -q -p no:cacheprovider tests/a_dav tests/a_identity_adapter
+- $PY -m unittest discover tests/a_a1_spec_contract
+- $PY docs/integration/20261015/verify_integration.py --git-ref HEAD
+- $PY -m mypy --strict on the new ingestion modules (and on core.py if it passed before)
+- git status --short -- specs docs/integration must be empty
+Record baseline numbers before you change anything.
+</gates>
+
+<report_contract>
+Final message, in this order:
+1. Baseline and final gate results, as a table with counts.
+2. Per task: files touched, RED then GREEN evidence, notable design choices.
+3. Each classification site you changed: file:line → what changed.
+4. The Riaz field map summary and which hashes are still null.
+5. Worksheet item types implemented.
+6. The BACKLOG.md entries.
+7. Anything you could not do and why.
+8. Confirmation that you made no network calls and no commits.
+</report_contract>

@@ -123,11 +123,11 @@ def review_prat_packet(packet: dict[str, Any], *, schemas: SchemaStore | None = 
         else:
             require(question not in by_question, "ADJUDICATION_INVALID")
     require(bool(c.get("current_contract_sha256")), "REVIEW_POLICY_UNKNOWN", blocked=True)
-    audit.append({"kind": "prat_protocol", "software_protocol": "BLOCKED_UNKNOWN" if unresolved else "SYNTHETIC_READY",
+    audit.append({"kind": "prat_protocol", "software_protocol": "BLOCKED_UNKNOWN" if unresolved else "READY",
                   "actual_source_evidence": "NOT_RUN", "actual_reader_authentication": "NOT_RUN", "canonical_admission": "BLOCKED_UNKNOWN",
                   "legacy_reconstruction_equal": bool(first.get("legacy_table_hashes")) and first.get("legacy_table_hashes") == second.get("legacy_table_hashes"),
                   "basis_sha256": digest(basis), "first_pass_sha256": seals, "checklist": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"]})
-    return finish("prat_review", packet, packet["records"], status="BLOCKED_UNKNOWN" if unresolved else "SYNTHETIC_READY",
+    return finish("prat_review", packet, packet["records"], status="BLOCKED_UNKNOWN" if unresolved else "READY",
                   reasons=unresolved, audit=audit, schemas=store)
 
 

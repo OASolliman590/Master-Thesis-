@@ -1,4 +1,4 @@
-"""Strict public aggregate export boundary for synthetic DAV software."""
+"""Strict public aggregate export boundary for DAV software."""
 from __future__ import annotations
 from typing import Any
 from .core import FLAGS, SchemaStore, dependency, digest, finish, public_summary, require, stage_boundary
@@ -16,12 +16,12 @@ def build_public_report(packet: dict[str, Any], *, schemas: SchemaStore | None =
     require(set(cfg) <= {'minimum_cell_count','include_counts','payload'}, 'PUBLIC_PAYLOAD_REJECTED')
     # Caller-supplied content is never an export channel, even for synthetic inputs.
     require('payload' not in cfg, 'PUBLIC_PAYLOAD_REJECTED')
-    summary: dict[str, Any] = {'classification':'SYNTHETIC_ONLY','status':'SYNTHETIC_READY',
+    summary: dict[str, Any] = {'classification':packet['classification'],'status':'READY',
         'stage_statuses':{name:r['status'] for name,r in sorted(deps.items())},
         'receipt_hashes':{name:r['receipt_id'] for name,r in sorted(deps.items())},
         'config_sha256':digest(packet['config']), 'actual_source_review':'NOT_RUN',
         'actual_statistical_review':'NOT_RUN',
-        'gate_table':[{'gate':'SYNTHETIC_SOFTWARE','status':'SYNTHETIC_READY'},
+        'gate_table':[{'gate':'SOFTWARE_CHECKS','status':'READY'},
             {'gate':'SOURCE_REVIEW','status':'NOT_RUN'},{'gate':'INDEPENDENT_REVIEW','status':'NOT_RUN'},
             {'gate':'ENVIRONMENT_VALIDATION','status':'NOT_RUN'},{'gate':'STATISTICAL_RELEASE','status':'NOT_RUN'}],
         'limitation_table':[{'code':code,'status':'NOT_RUN'} for code in

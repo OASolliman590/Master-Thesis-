@@ -16,29 +16,19 @@ REASON_CODES = frozenset({'SELECTION_TIE', 'SELECTION_POLICY_UNKNOWN', 'NO_PRE_I
 def _prepare(packet: dict[str, Any], store: SchemaStore) -> tuple[dict[str, Any], dict[str, Any]]:
     deps = {name: dependency(packet, name, store) for name in
             ('admission', 'registries', 'endpoints', 'timing', 'assays', 'split', 'exposure')}
-    for table in ('patient_registry','specimen_registry','assay_registry','treatment_episode','episode_binding'):
-        seen: set[str] = set()
-        key = {'patient_registry':'patient_uid','specimen_registry':'specimen_uid',
-               'assay_registry':'assay_uid','treatment_episode':'treatment_episode_id',
-               'episode_binding':'binding_id'}[table]
-        for row in packet['records'].get(table, []):
-            store.validate(table, row)
-            require(row[key] not in seen, 'DUPLICATE_ID'); seen.add(row[key])
-    for patient in packet['records'].get('patient_registry', []):
-        require(any(a.get('kind') == 'admission_eligibility' and a.get('study_id') == patient['study_id']
-                    and a.get('branch_id') == packet['branch_id'] and a.get('eligibility') == 'SYNTHETIC_READY'
-                    for a in deps['admission']['audit']), 'SOURCE_NOT_ELIGIBLE', blocked=True)
     return copy.deepcopy(packet['records']), deps
 
 
 def _eligible_sources(deps: dict[str,Any], store: SchemaStore) -> set[tuple[str,str]]:
     sources: set[tuple[str,str]]=set()
     drafts=deps['admission']['records'].get('cohort_admission_receipt',[])
-    require(bool(drafts),'SOURCE_NOT_ELIGIBLE',blocked=True)
     for draft in drafts:
         store.validate('cohort_admission_receipt',draft)
-        require(draft['admission_status']=='BLOCKED_UNKNOWN' and draft['approved_branches']==[], 'SOURCE_NOT_ELIGIBLE')
-        if draft.get('branch_id')==deps['admission']['branch_id']:
+        synthetic_candidate = (deps['admission'].get('classification') == 'SYNTHETIC_ONLY' and
+                              draft.get('branch_id') == deps['admission']['branch_id'])
+        approved_real = (deps['admission']['branch_id'] in draft.get('approved_branches', []) and
+                draft.get('admission_status') in {'ADMITTED', 'ADMITTED_WITH_LIMITATIONS', 'SENSITIVITY_ONLY'})
+        if synthetic_candidate or approved_real:
             sources.update((draft['study_id'],source) for source in draft['source_object_ids'])
     return sources
 
@@ -208,7 +198,7 @@ def build_baseline(packet: dict[str,Any], *, schemas: SchemaStore | None = None)
         included=chosen is not None and endpoint['evaluability']=='EVALUABLE'
         require(patient.get('cancer'),'MISSING_ASSERTION',blocked=True)
         reason=None if included else 'PATIENT_EXCLUDED' if patient['inclusion_state']=='EXCLUDED' or cfg['_roles'][patient['patient_uid']]=='EXCLUDED' else 'PATIENT_UNKNOWN' if patient['inclusion_state']=='BLOCKED_UNKNOWN' else 'NO_PRE_INDEX_SPECIMEN' if chosen is None else 'ENDPOINT_UNKNOWN'
-        row={'row_type':'BASELINE','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+        row={'row_type':'BASELINE','schema_version':'1.1.0','data_classification':packet['classification'],
             'patient_uid':patient['patient_uid'],'study_id':patient['study_id'],'cancer':patient['cancer'],'subtype':patient.get('subtype'),
             'treatment_episode_id':ep['treatment_episode_id'],'regimen_id':ep['regimen_id'],'treatment_class':None,'prior_ici':ep['prior_ici'],
             'prior_treatment':patient.get('prior_systemic_treatment'),'specimen_uid':sp.get('specimen_uid'),'assay_uid':assay.get('assay_uid'),
@@ -226,7 +216,7 @@ def build_baseline(packet: dict[str,Any], *, schemas: SchemaStore | None = None)
     records.setdefault('matrix_build_receipt',[]).append(_draft('baseline',packet,records,deps,cfg,store,build_id))
     unknown={str(a['reason']) for a in audit if a.get('reason') in
              {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN','BASELINE_ELIGIBILITY_UNKNOWN','SPECIMEN_POLICY_UNKNOWN'}}
-    return finish('baseline',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'SYNTHETIC_READY',
+    return finish('baseline',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'READY',
                   reasons=unknown,audit=audit,schemas=store)
 
 
@@ -255,7 +245,7 @@ def build_longitudinal(packet: dict[str,Any], *, schemas: SchemaStore | None = N
             require(binding['patient_uid']==sp['patient_uid']==episode['patient_uid'],'EPISODE_MISMATCH')
             endpoint=_endpoint(records,patients[sp['patient_uid']],episode,cfg,deps,store,optional=True)
             for assay in assays or [None]:
-                row={'row_type':'TIMEPOINT','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY',
+                row={'row_type':'TIMEPOINT','schema_version':'1.1.0','data_classification':packet['classification'],
                     'patient_uid':sp['patient_uid'],'study_id':patients[sp['patient_uid']]['study_id'],'specimen_uid':sp['specimen_uid'],
                     'assay_uid':assay['assay_uid'] if assay else None,'treatment_episode_id':key[1],'raw_timing_label':sp.get('timing_raw_text'),
                     'canonical_timing':timing['canonical_category'],'relative_day':timing.get('relative_day'),'timing_precision':timing['precision'],
@@ -305,7 +295,7 @@ def build_longitudinal(packet: dict[str,Any], *, schemas: SchemaStore | None = N
                 'inclusion_status':'INCLUDED' if reason is None else 'EXCLUDED','pre_specimen_uid':pre_sp.get('specimen_uid'),
                 'followup_specimen_uid':sp.get('specimen_uid')})
             if pre is None or follow is None:continue
-            row={'row_type':'PAIR','schema_version':'1.1.0','data_classification':'SYNTHETIC_ONLY','patient_uid':patient['patient_uid'],
+            row={'row_type':'PAIR','schema_version':'1.1.0','data_classification':packet['classification'],'patient_uid':patient['patient_uid'],
                 'study_id':patient['study_id'],'treatment_episode_id':episode_id,'contrast_id':w['contrast_id'],'window_id':w['window_id'],
                 'response_group':'NOT_APPLICABLE' if not cfg['endpoint_policy']['required'] else 'R' if endpoint['binary_value']==1 else 'NR' if endpoint['binary_value']==0 else 'UNKNOWN',
                 'regimen_id':ep['regimen_id'],'pre_specimen_uid':pre_sp['specimen_uid'],'pre_assay_uid':pre_a['assay_uid'],
@@ -320,5 +310,5 @@ def build_longitudinal(packet: dict[str,Any], *, schemas: SchemaStore | None = N
     records.setdefault('matrix_build_receipt',[]).append(_draft('longitudinal',packet,records,deps,cfg,store,build_id))
     unknown={str(a['reason']) for a in audit if a.get('reason') in
              {'ASSAY_EVIDENCE_UNKNOWN','PATIENT_UNKNOWN','BASELINE_ELIGIBILITY_UNKNOWN','SPECIMEN_POLICY_UNKNOWN'}}
-    return finish('longitudinal',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'SYNTHETIC_READY',
+    return finish('longitudinal',packet,records,status='BLOCKED_UNKNOWN' if unknown else 'READY',
                   reasons=unknown,audit=audit,schemas=store)

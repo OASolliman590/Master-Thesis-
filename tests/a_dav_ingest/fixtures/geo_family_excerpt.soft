@@ -1,0 +1,27 @@
+^DATABASE = GeoMiame
+^SERIES = GSETEST000
+!Series_title = Invented three record series
+
+^SAMPLE = GSMTEST001
+!Sample_title = Subject01_Pre_A001-1
+!Sample_geo_accession = GSMTEST001
+!Sample_characteristics_ch1 = visit (pre or on treatment): Pre
+!Sample_characteristics_ch1 = response: PD
+!Sample_relation = BioSample: https://example.invalid/biosample/SAMNTEST001
+!Sample_relation = SRA: https://example.invalid/sra?term=SRXTEST001
+
+^SAMPLE = GSMTEST002
+!Sample_title = Subject02_On_A002-1
+!Sample_geo_accession = GSMTEST002
+!Sample_characteristics_ch1 = visit (pre or on treatment): On
+!Sample_characteristics_ch1 = response: PRCR
+!Sample_relation = BioSample: https://example.invalid/biosample/SAMNTEST002
+!Sample_relation = SRA: https://example.invalid/sra?term=SRXTEST002
+
+^SAMPLE = GSMTEST003
+!Sample_title = Subject03_Pre_A003-1
+!Sample_geo_accession = GSMTEST003
+!Sample_characteristics_ch1 = visit (pre or on treatment): Pre
+!Sample_characteristics_ch1 = response: UNK
+!Sample_relation = BioSample: https://example.invalid/biosample/SAMNTEST003
+!Sample_relation = SRA: https://example.invalid/sra?term=SRXTEST003

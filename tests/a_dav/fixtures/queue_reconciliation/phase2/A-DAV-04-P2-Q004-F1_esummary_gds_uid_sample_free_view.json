@@ -1,0 +1,23 @@
+{
+ "accession": "GSE159237",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP286/SRP286769/",
+   "targetobject": "SRP286769"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "16791",
+ "n_samples": 25,
+ "pdat": "2021/06/09",
+ "pubmedids": [
+  "33771853"
+ ],
+ "summary": "Pre-treatment (PT) and On-Treatment (C3D8) biopsy samples from patients on the Phase I trial of Ipilimumab and Evofosfamide (NCT03098160) were analyzed by RNA sequencing.",
+ "taxon": "Homo sapiens",
+ "title": "Immunotherapy Study of Evofosfamide in Combination With Ipilimumab (NCT03098160)",
+ "uid": "200159237",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

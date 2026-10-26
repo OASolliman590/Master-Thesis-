@@ -1,0 +1,8 @@
+{
+  "records": [
+    {"icbatlas_tagged": true, "reviewed": false, "source": {"study_id": "ICB-SYN-001", "primary_accession": "GSE000001", "secondary_accessions": ["SRS0000005", "ex://GSE000077"]}},
+    {"icbatlas_tagged": true, "reviewed": false, "source": {"study_id": "ICB-SYN-002", "primary_accession": "PRJEB000002", "secondary_accessions": []}},
+    {"icbatlas_tagged": false, "reviewed": false, "source": {"study_id": "ICB-SYN-003", "primary_accession": "GSE000003", "secondary_accessions": []}},
+    {"icbatlas_tagged": false, "reviewed": true, "source": {"study_id": "ICB-SYN-004", "primary_accession": "phs000004", "secondary_accessions": []}}
+  ]
+}

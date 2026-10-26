@@ -1,0 +1,130 @@
+{
+  "canonical_records": {
+    "assay_registry": [],
+    "clinical_outcome": [],
+    "episode_binding": [],
+    "patient_registry": [
+      {
+        "data_classification": "PRIVATE_PATIENT_LEVEL",
+        "inclusion_state": "CANDIDATE",
+        "patient_identity_confidence": "UNRESOLVED",
+        "patient_uid": "patient-001",
+        "schema_version": "1.0.0",
+        "source_locators": [
+          {
+            "kind": "fixture",
+            "value": "invented"
+          }
+        ],
+        "source_patient_id": "001",
+        "study_id": "study-001",
+        "treatment_naive_status": "UNKNOWN"
+      }
+    ],
+    "publication_family": [
+      {
+        "independence_status": "UNRESOLVED",
+        "publication_family_id": "family-001",
+        "publication_id": "publication-001",
+        "publication_role": "OTHER",
+        "source_locators": [
+          {
+            "kind": "fixture",
+            "value": "invented"
+          }
+        ],
+        "study_id": "study-001"
+      }
+    ],
+    "source_record": [],
+    "specimen_registry": [],
+    "study_registry": [
+      {
+        "cancer_type": "invented",
+        "candidate_paper_branches": [],
+        "publication_family_id": "family-001",
+        "source_locators": [
+          {
+            "kind": "fixture",
+            "value": "invented"
+          }
+        ],
+        "study_class": "OTHER",
+        "study_design": "invented",
+        "study_id": "study-001",
+        "study_status": "CANDIDATE",
+        "study_title": "Invented study"
+      }
+    ],
+    "treatment_episode": [],
+    "treatment_exposure": []
+  },
+  "classification": "SYNTHETIC_ONLY",
+  "legacy_table_rows": {
+    "analysis_unit": [],
+    "assay": [],
+    "assay_specimen": [],
+    "cohort": [
+      {
+        "cohort_id": "cohort-001",
+        "definition_rule_id": "rule-001",
+        "independence_group_id": "group-001",
+        "study_id": "legacy-study"
+      }
+    ],
+    "endpoint_map": [],
+    "endpoint_obs": [],
+    "overlap_edge": [],
+    "person": [
+      {
+        "cohort_id": "cohort-001",
+        "person_key": "person-001",
+        "rule_id": "rule-001",
+        "source_label": "001"
+      }
+    ],
+    "person_alias": [],
+    "rule": [],
+    "source_object": [],
+    "specimen": [],
+    "specimen_episode": [],
+    "study": [
+      {
+        "accessions": null,
+        "doi": null,
+        "pmid": null,
+        "role_proposed": "SYNTHETIC",
+        "study_id": "legacy-study",
+        "trial_id": null
+      }
+    ],
+    "treatment_episode": [],
+    "unmapped": []
+  },
+  "links": [
+    {
+      "canonical_key": "study-001",
+      "canonical_table": "study_registry",
+      "evidence_refs": [
+        "FIXTURE-EVIDENCE-1"
+      ],
+      "legacy_key": "legacy-study",
+      "legacy_table": "study"
+    },
+    {
+      "canonical_key": "patient-001",
+      "canonical_table": "patient_registry",
+      "evidence_refs": [
+        "FIXTURE-EVIDENCE-1"
+      ],
+      "legacy_key": "person-001",
+      "legacy_table": "person"
+    }
+  ],
+  "unresolved": [
+    "E01",
+    "E04",
+    "E06",
+    "E07"
+  ]
+}

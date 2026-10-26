@@ -1,0 +1,9 @@
+{
+  "esearchresult": {
+    "count": "2",
+    "retmax": "1",
+    "retstart": "0",
+    "idlist": ["200091061"],
+    "querytranslation": "(GSE91061[ACCN] OR GSE78220[ACCN]) AND gse[ETYP]"
+  }
+}

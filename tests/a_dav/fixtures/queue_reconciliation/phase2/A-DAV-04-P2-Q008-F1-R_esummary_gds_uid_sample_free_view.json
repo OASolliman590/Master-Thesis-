@@ -1,0 +1,23 @@
+{
+ "accession": "GSE181815",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP331/SRP331940/",
+   "targetobject": "SRP331940"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing; Other",
+ "gpl": "20301",
+ "n_samples": 30,
+ "pdat": "2021/08/31",
+ "pubmedids": [
+  "34622229"
+ ],
+ "summary": "Thymic carcinoma is rare and has a poorer prognosis than thymomas. The treatment options are limited after failure of platinum-based chemotherapy. We previously performed a single center phase II study of pembrolizumab in patients with advanced thymic carcinoma, showing a 22.5% response rate. Here, we characterized the genomic and transcriptomic profile of thymic carcinoma samples from 10 patients (5 non-responders vs 5 responders) in this cohort, with the main aim of identifying potential predictors of response to immunotherapy. We found that expression of PDL1 and alterations in genes or pathways that correlated with PD-L1 expression (CYLD and BAP1) could be potential predictors for response or resistance to immunotherapy in patients with advanced thymic carcinoma. Our study provides insights into potential predictive markers/pathways to select patients with thymic carcinoma for anti-PD-1 immunotherapy.",
+ "taxon": "Homo sapiens",
+ "title": "Molecular predictors of response to pembrolizumab in thymic carcinoma",
+ "uid": "200181815",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

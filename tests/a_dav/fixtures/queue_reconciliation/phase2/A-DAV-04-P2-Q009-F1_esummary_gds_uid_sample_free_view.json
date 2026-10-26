@@ -1,0 +1,23 @@
+{
+ "accession": "GSE188249",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP344/SRP344710/",
+   "targetobject": "SRP344710"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "18573",
+ "n_samples": 26,
+ "pdat": "2022/06/20",
+ "pubmedids": [
+  "35671108"
+ ],
+ "summary": "Here we describe the clinical and biological activity of guadecitabine, a second generation HMA, given in a low dose as a priming strategy before pembrolizumab, a humanized anti-PD1 antibody in a clinical trial for patients with recurrent, platinum resistant ovarian cancer. The methylomic and transcriptomic effects of the combination demonstrate readily activation of the anti-tumor immunity. High dimensional immune profiling of periferal mononuclear cells (PBMCs) and tumor biopsies obtained before and after treatment show distinct immune profiles and tissue architectural features associated with clinical benefit. Our study provides an in-depth view of the immune milieu of platinum resistant ovarian cancer and of the effects of the combination of HMAs and pembrolizumab on the interactions between immune cell populations and tumor cells.",
+ "taxon": "Homo sapiens",
+ "title": "Epigenetic priming enhances anti-tumor immunity in resistant ovarian cancer [RNA-Seq]",
+ "uid": "200188249",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

@@ -1,0 +1,115 @@
+{
+  "derived_from": "DERIVED_FROM_PRIVATE_RAW_RESPONSES_HASHES_IN_MANIFEST",
+  "fields_excluded": [
+    "samples",
+    "suppfile",
+    "ftplink",
+    "relations",
+    "geo2r",
+    "subsetinfo",
+    "ssinfo"
+  ],
+  "records": [
+    {
+      "accession": "GSE126043",
+      "bioproject": "PRJNA520851",
+      "entrytype": "GSE",
+      "extrelations": [],
+      "gdstype": "Methylation profiling by array",
+      "gpl": "21145",
+      "n_samples": 18,
+      "pdat": "2020/09/04",
+      "pubmedids": [
+        "32879421"
+      ],
+      "source_bytes": 2001,
+      "source_file": "16_esummary_gds_GSE126043.json",
+      "source_request_index": 16,
+      "source_sha256": "15ac1eb64656ee60f0af54802cbb93c3f12fda7b7852c2a563e3d6f5c5a087a9",
+      "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200126043&retmode=json&tool=a-dav-03-dav-t02-tracer",
+      "summary": "The purpose of this study is to compare transcriptional profiles of non-small-cell lung cancer between responder patients and non-responder patients during anti-PD-1 treatment.",
+      "taxon": "Homo sapiens",
+      "title": "Genome-wide identification of differentially methylated promoters and enhancers associated with response to anti-PD-1 therapy in non-small cell lung cancer",
+      "uid": "200126043"
+    },
+    {
+      "accession": "GSE126044",
+      "bioproject": "PRJNA520852",
+      "entrytype": "GSE",
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP183/SRP183455/",
+          "targetobject": "SRP183455"
+        }
+      ],
+      "gdstype": "Expression profiling by high throughput sequencing",
+      "gpl": "16791",
+      "n_samples": 16,
+      "pdat": "2020/02/03",
+      "pubmedids": [
+        "32879421"
+      ],
+      "source_bytes": 1995,
+      "source_file": "13_esummary_gds_GSE126044.json",
+      "source_request_index": 13,
+      "source_sha256": "c16f13c95b26f7c3f34b90839116b67b78697e6f94869fcf2de833eeb097bc80",
+      "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200126044&retmode=json&tool=a-dav-03-dav-t02-tracer",
+      "summary": "The purpose of this study is to compare transcriptional profiles of non-small-cell lung cancer between responder patients and non-responder patients during anti-PD-1 treatment.",
+      "taxon": "Homo sapiens",
+      "title": "Genome-wide identification of differentially methylated promoters and enhancers associated with response to anti-PD-1 therapy in non-small cell lung cancer",
+      "uid": "200126044"
+    },
+    {
+      "accession": "GSE126045",
+      "bioproject": "PRJNA520848",
+      "entrytype": "GSE",
+      "extrelations": [],
+      "gdstype": "Methylation profiling by array; Expression profiling by high throughput sequencing",
+      "gpl": "21145;16791",
+      "n_samples": 34,
+      "pdat": "2020/02/03",
+      "pubmedids": [
+        "32879421"
+      ],
+      "source_bytes": 2769,
+      "source_file": "10_esummary_gds_GSE126045.json",
+      "source_request_index": 10,
+      "source_sha256": "263f524a830b57e323d92b41b7ba5eb32ef384e08ddacbc2fb68c8d1b0661348",
+      "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200126045&retmode=json&tool=a-dav-03-dav-t02-tracer",
+      "summary": "This SuperSeries is composed of the SubSeries listed below.",
+      "taxon": "Homo sapiens",
+      "title": "Genome-wide identification of differentially methylated promoters and enhancers associated with response to anti-PD-1 therapy in non-small cell lung cancer",
+      "uid": "200126045"
+    },
+    {
+      "accession": "GSE91061",
+      "bioproject": "PRJNA356761",
+      "entrytype": "GSE",
+      "extrelations": [
+        {
+          "relationtype": "SRA",
+          "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP094/SRP094781/",
+          "targetobject": "SRP094781"
+        }
+      ],
+      "gdstype": "Expression profiling by high throughput sequencing",
+      "gpl": "9052",
+      "n_samples": 109,
+      "pdat": "2018/01/23",
+      "pubmedids": [
+        "29033130"
+      ],
+      "source_bytes": 7363,
+      "source_file": "07_esummary_gds_GSE91061.json",
+      "source_request_index": 7,
+      "source_sha256": "e3da05f9a5424b54451b7e7b3ff28077439db9c8c99caae031b3410be80ad467",
+      "source_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200091061&retmode=json&tool=a-dav-03-dav-t02-tracer",
+      "summary": "Immune checkpoint blockade (ICB) has demonstrated significant promise for the treatment of advanced malignancies. Anti-CTLA4 and ant-PD1 therapy can activate the immune system and result in durable control in diseases such as melanoma and non-small cell lung cancer.",
+      "taxon": "Homo sapiens",
+      "title": "Molecular portraits of tumor mutational and micro-environmental sculpting by immune checkpoint blockade therapy",
+      "uid": "200091061"
+    }
+  ],
+  "schema": "A-DAV-03.tracer_gds_series_extract.1"
+}

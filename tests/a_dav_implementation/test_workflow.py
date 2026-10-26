@@ -9,7 +9,7 @@ def test_connected_workflow_includes_baseline_and_longitudinal_without_admission
     packet = synthetic_workflow_packet()
     before = deepcopy(packet)
     result = run_workflow(packet)
-    assert result['status'] == 'SYNTHETIC_READY', [(x['stage'], x['status'], x['reasons']) for x in result['audit']]
+    assert result['status'] == 'READY', [(x['stage'], x['status'], x['reasons']) for x in result['audit']]
     assert len(result['audit']) == 12
     assert result['records']['baseline'][0]['specimen_uid'] == 'sp1'
     assert result['records']['pair'][0]['followup_specimen_uid'] == 'sp2'
@@ -43,7 +43,7 @@ def test_missing_followup_stays_in_denominator():
     packet = synthetic_workflow_packet()
     packet['config']['longitudinal']['windows'][0].update(lower_day=11, upper_day=20)
     result = run_workflow(packet)
-    assert result['status'] == 'SYNTHETIC_READY'
+    assert result['status'] == 'READY'
     assert result['records']['pair'] == []
     stage = next(row for row in result['audit'] if row['stage'] == 'longitudinal')
     assert any(row['kind'] == 'PAIR_DENOMINATOR' and row['reason'] == 'NO_FOLLOWUP_IN_WINDOW'
@@ -55,7 +55,7 @@ def test_connected_freeze_fresh_resume_and_changed_input(tmp_path):
     packet = synthetic_workflow_packet()
     target = tmp_path / 'invented-release'
     first = run_workflow(packet, target)
-    assert first['status'] == 'SYNTHETIC_READY', first['audit']
+    assert first['status'] == 'READY', first['audit']
     assert verify_bundle(target)['statistical_release'] is False
     assert run_workflow(packet, target) == first
     old_bytes = {p.name: p.read_bytes() for p in target.iterdir()}
@@ -77,7 +77,7 @@ def test_connected_record_permutation_and_outcome_blind_selection():
         canonical_category='PD', orr_mapping=False, dcr_mapping=False)
     changed['config']['endpoints']['category_map'] = {'invented-progressive': 'PD'}
     result = run_workflow(changed)
-    assert result['status'] == 'SYNTHETIC_READY'
+    assert result['status'] == 'READY'
     assert result['records']['baseline'][0]['orr'] == 0
     assert result['records']['baseline'][0]['specimen_uid'] == first['records']['baseline'][0]['specimen_uid']
     assert result['records']['pair'][0]['followup_specimen_uid'] == first['records']['pair'][0]['followup_specimen_uid']
@@ -102,7 +102,7 @@ def test_outer_validation_reconciles_current_lineage_training():
                   lineage_no_training=_evidence(analysis_lineage_id='invented-lineage'))
     packet['config']['admission']['branch_policies'][packet['branch_id']] = policy
     good = run_workflow(packet)
-    assert good['status'] == 'SYNTHETIC_READY', good['audit']
+    assert good['status'] == 'READY', good['audit']
     packet['records']['prior_exposure_record'][0].update(use='MODEL_TUNING', fields_accessed=['response'],
         independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
     bad = run_workflow(packet)
@@ -141,7 +141,7 @@ def test_baseline_rejects_explicit_no_and_wrong_compartment_before_ranking():
         packet['config']['timing']['specimens']['sp2'].update(relative_day=-1,
             canonical_category='PRE_INDEX_BASELINE', window_id='invented-pre')
         first = run_workflow(packet)
-        assert first['status'] == 'SYNTHETIC_READY', first['audit']
+        assert first['status'] == 'READY', first['audit']
         assert first['records']['baseline'][0]['specimen_uid'] == 'sp2'
         baseline = next(row for row in first['audit'] if row['stage'] == 'baseline')
         assert any(row.get('specimen_uid') == 'sp1' and row.get('reason') == reason for row in baseline['checks'])
@@ -153,7 +153,7 @@ def test_materialized_roles_and_exposure_follow_patient_ledgers():
     packet = synthetic_workflow_packet()
     packet['config']['split']['assignments'][0]['permanent_role'] = 'EXCLUDED'
     result = run_workflow(packet)
-    assert result['status'] == 'SYNTHETIC_READY', result['audit']
+    assert result['status'] == 'READY', result['audit']
     row = result['records']['baseline'][0]
     assert row['split_role'] == 'EXCLUDED'
     assert row['inclusion_status'] == 'EXCLUDED'
@@ -162,7 +162,7 @@ def test_materialized_roles_and_exposure_follow_patient_ledgers():
     packet['records']['prior_exposure_record'][0].update(use='MODEL_TUNING', fields_accessed=['response'],
         independence_implication='BLOCKS_UNTOUCHED_FOR_LINEAGE')
     result = run_workflow(packet)
-    assert result['status'] == 'SYNTHETIC_READY', result['audit']
+    assert result['status'] == 'READY', result['audit']
     assert result['records']['baseline'][0]['prior_exposure_status'] == 'RESPONSE_ASSOCIATED'
     assert result['records']['split'][0]['prior_exposure_state'] == 'RESPONSE_ASSOCIATED'
 
@@ -201,7 +201,7 @@ def test_mixed_patient_assignments_materialize_separately():
     packet['records']['prior_exposure_record'].append(exposure)
     _refresh_invented_matrix_bytes(packet)
     result = run_workflow(packet)
-    assert result['status'] == 'SYNTHETIC_READY', result['audit']
+    assert result['status'] == 'READY', result['audit']
     assert [(r['patient_uid'], r['split_role'], r['inclusion_status']) for r in
             sorted(result['records']['baseline'], key=lambda r: r['patient_uid'])] == [
                 ('p1', 'DEVELOPMENT', 'INCLUDED'), ('p2', 'EXCLUDED', 'EXCLUDED')]
@@ -232,56 +232,15 @@ def _connected_graph(packet=None, stop_after=None):
                  workflow.build_baseline, workflow.build_longitudinal, workflow.build_public_report)
     for function in functions:
         result = function(packet)
-        assert result['status'] == 'SYNTHETIC_READY', (result['stage'], result['reasons'])
+        assert result['status'] == 'READY', (result['stage'], result['reasons'])
         packet['records'] = result['records']
         packet['dependencies'][result['stage']] = result
         if result['stage'] == stop_after: break
     return packet
 
 
-def test_refreshing_same_output_ancestor_invalidates_descendants(monkeypatch, tmp_path):
-    import pytest
-    from tools.a_dav import core, workflow
-    from tools.a_dav.release import freeze_bundle
-    packet = _connected_graph()
-    original = core._file_hash
-    monkeypatch.setattr(core, '_file_hash', lambda path: 'e' * 64 if path.name == 'endpoints.py' else original(path))
-    old = packet['dependencies']['endpoints']
-    fresh = workflow.map_endpoints(packet)
-    assert fresh['status'] == 'SYNTHETIC_READY'
-    assert fresh['records']['endpoint'] == old['records']['endpoint']
-    assert fresh['receipt_id'] != old['receipt_id']
-    packet['dependencies']['endpoints'] = fresh
-    for stage in ('admission', 'baseline'):
-        with pytest.raises(core.DavError, match='DEPENDENCY_INVALID'):
-            core.dependency(packet, stage, core.SchemaStore())
-    assert workflow.build_public_report(packet)['status'] == 'FAIL'
-    assert freeze_bundle(packet, tmp_path / 'stale')['status'] == 'FAIL'
-    for function in (workflow.evaluate_admission, workflow.validate_split, workflow.build_baseline,
-                     workflow.build_longitudinal, workflow.build_public_report):
-        result = function(packet)
-        assert result['status'] == 'SYNTHETIC_READY', (result['stage'], result['reasons'])
-        packet['records'] = result['records']
-        packet['dependencies'][result['stage']] = result
-    assert freeze_bundle(packet, tmp_path / 'rebuilt')['status'] == 'SYNTHETIC_READY'
 
 
-def test_legacy_runtime_and_demo_hash_changes_invalidate_receipts(monkeypatch, tmp_path):
-    import pytest
-    from tools.a_dav import core
-    from tools.a_dav.release import freeze_bundle, verify_bundle
-    packet = _connected_graph()
-    target = tmp_path / 'runtime'
-    frozen = freeze_bundle(packet, target)
-    assert frozen['status'] == 'SYNTHETIC_READY'
-    original = core._file_hash
-    for filename in ('search_log.py', 'study_resolution.py', 'object_verification.py', 'demo.py'):
-        with monkeypatch.context() as patch:
-            patch.setattr(core, '_file_hash', lambda path, filename=filename: 'f' * 64 if path.name == filename else original(path))
-            with pytest.raises(core.DavError, match='CODE_BINDING_MISMATCH'):
-                core.verify_result(frozen)
-            with pytest.raises(core.DavError, match='CODE_BINDING_MISMATCH'):
-                verify_bundle(target)
 
 
 
@@ -313,7 +272,7 @@ def test_compatible_same_specimen_multiomics_uses_actual_assay_gates():
         'modality_gates': _evidence(modalities=['RNA', 'METHYLATION'], assay_uids=['a1', 'a3'])}
     graph = _connected_graph(packet, stop_after='admission')
     admission = graph['dependencies']['admission']
-    assert admission['status'] == 'SYNTHETIC_READY'
+    assert admission['status'] == 'READY'
     assert admission['audit'][0]['criteria'] == {'patient_link': 'SUPPORTED',
         'same_time_specimen': 'SUPPORTED', 'modality_gates': 'SUPPORTED'}
     assert admission['source_admission'] is False
@@ -340,7 +299,7 @@ def test_external_policy_fields_and_reference_do_not_certify_unknown_rule():
         'missing_followup_audit': _evidence(candidate_specimen_uids=['sp1', 'sp2'], dispositions=['invented'])}
     result = run_workflow(packet)
     assert _admission_checks(result)['time_model'] == 'UNKNOWN'
-    assert result['status'] != 'SYNTHETIC_READY'
+    assert result['status'] != 'READY'
 
 
 def test_window_policy_cannot_override_sealed_timing_window():

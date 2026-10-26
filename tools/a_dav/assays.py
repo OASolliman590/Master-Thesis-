@@ -132,4 +132,4 @@ def validate_assays(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
         if len(ids) > 1:
             audit.append({"check": "IDENTICAL_PROFILE_RETAINED", "assay_uids": sorted(ids)})
     records["coverage"] = coverage
-    return finish("assays", packet, records, status="BLOCKED_UNKNOWN" if reasons else "SYNTHETIC_READY", reasons=reasons, audit=audit, schemas=schemas)
+    return finish("assays", packet, records, status="BLOCKED_UNKNOWN" if reasons else "READY", reasons=reasons, audit=audit, schemas=schemas)

@@ -1,0 +1,18 @@
+{
+ "accession": "GSE198052",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "20301",
+ "n_samples": 2,
+ "pdat": "2022/03/10",
+ "pubmedids": [
+  "34663807",
+  "38418394"
+ ],
+ "summary": "We report the application of single cell RNA and TCR sequencing technology on 22 bone marrow aspirates from 8 AML patients. By exploring 60753 AML cells and 52641 tumor microenvironment cells, we show that TCR repertoires expand and primarily emerge from CD8+ cells in responsive patients, but contract in therapy-resistant patients.Tractory analysis reveals that CD8 + T cells in AML are on continuum with GZMK expression being enriched in a memory subset of CD8 + T cells. Also, Chromosome 7/7q loss s an intrinsic AML biomarker of resistance to ICB-therapy.",
+ "taxon": "Homo sapiens",
+ "title": "Single cell T cell landscape and T cell receptor repertoire profiling of AML in context of PD-1 blockade therapy",
+ "uid": "200198052",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

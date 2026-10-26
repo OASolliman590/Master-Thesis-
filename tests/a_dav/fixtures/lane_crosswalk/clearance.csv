@@ -1,0 +1,6 @@
+catalogue_entry_id,current_disposition,source_family,analysis_cleared,evidence_urls
+ICB-SYN-001,primary_candidate_pending_private,SYNTHETIC-FAMILY-1,False,
+ICB-SYN-002,supporting_or_context,SYNTHETIC-FAMILY-2,False,
+ICB-SYN-003,supporting_or_context,SYNTHETIC-FAMILY-3,False,
+ICB-SYN-004,blocked,SYNTHETIC-FAMILY-4,False,
+S-SYN-02,primary_candidate_pending_private,SYNTHETIC-FAMILY-5,False,

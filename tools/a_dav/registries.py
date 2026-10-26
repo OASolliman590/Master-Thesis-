@@ -30,7 +30,6 @@ def build_registries(packet: dict[str, Any], *, schemas: SchemaStore | None = No
     for table in ENTITY_TABLES & records.keys():
         index: dict[str, dict[str, Any]] = {}
         for row in records[table]:
-            schemas.validate(table, row)
             key = row.get(_KEYS[table])
             require(isinstance(key, str) and bool(key), "MISSING_ASSERTION", blocked=True)
             require(key not in index, "DUPLICATE_ID")

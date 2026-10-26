@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "cohort": "riaz_gse91061",
+  "branch_id": "A_BASELINE_BIO",
+  "request_cap": 40,
+  "max_object_bytes": 20000000,
+  "allowed_hosts": [
+    "ftp.ncbi.nlm.nih.gov",
+    "raw.githubusercontent.com",
+    "media.githubusercontent.com"
+  ],
+  "objects": [
+    {
+      "id": "geo_family_soft",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE91nnn/GSE91061/soft/GSE91061_family.soft.gz",
+      "version": "2026-08-09",
+      "expected_size": 7357,
+      "expected_sha256": "2ecd5f064b076fdce58fd651b0a3404cc01ef889c5cfb8d760dc5c7a01adeaf9",
+      "max_bytes": 1000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "author_fpkm_hg19",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE91nnn/GSE91061/suppl/GSE91061_BMS038109Sample.hg19KnownGene.fpkm.csv.gz",
+      "version": "2018-01-23",
+      "expected_size": 16354905,
+      "expected_sha256": "987c7637e72ff5ad9c9630b0ee959064713cd8f57348d05003fb85a2f4cc43d5",
+      "max_bytes": 20000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "ncbi_tpm_grch38",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/rnaseq_counts/GSE91nnn/GSE91061_norm_counts_TPM_GRCh38.p13_NCBI.tsv.gz",
+      "version": "2022-12-15",
+      "expected_size": 7838743,
+      "expected_sha256": "e56d6956ad5f5cf5cf50a9d993162f569806fbe5f38d89d03473b9ae5dad29bb",
+      "max_bytes": 20000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "ncbi_annotation_grch38",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/rnaseq_counts/annot/Human.GRCh38.p13.annot.tsv.gz",
+      "version": "2022-11-08",
+      "expected_size": 4417321,
+      "expected_sha256": "a0b6ff49b0851334c709edbd52ae9c80ae998d66d9a30185de364ffb4a59efea",
+      "max_bytes": 20000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "author_sample_table",
+      "url": "https://raw.githubusercontent.com/riazn/bms038_analysis/137111c38a32f8626ee6a436e14ac667bd31b1e7/data/SampleTableCorrected.9.19.16.csv",
+      "version": "137111c38a32f8626ee6a436e14ac667bd31b1e7",
+      "expected_size": 11689,
+      "expected_sha256": "775106fc1d43684bbd22414d179c4af08036de32cc2edacb1f50ed38768a4496",
+      "max_bytes": 1000000,
+      "host": "raw.githubusercontent.com"
+    },
+    {
+      "id": "author_clinical_table",
+      "url": "https://raw.githubusercontent.com/riazn/bms038_analysis/137111c38a32f8626ee6a436e14ac667bd31b1e7/data/bms038_clinical_data.csv",
+      "version": "137111c38a32f8626ee6a436e14ac667bd31b1e7",
+      "expected_size": 8112,
+      "expected_sha256": "a70ae5a0b1156b6d85ec89f0d58f3f67538bfb969d53ec5d98232411d19869ab",
+      "max_bytes": 1000000,
+      "host": "raw.githubusercontent.com"
+    },
+    {
+      "id": "author_analysis_code",
+      "url": "https://raw.githubusercontent.com/riazn/bms038_analysis/137111c38a32f8626ee6a436e14ac667bd31b1e7/rnaseq/TableS6.A.R",
+      "version": "137111c38a32f8626ee6a436e14ac667bd31b1e7",
+      "expected_size": 4969,
+      "expected_sha256": "9d1348fdf737230ea432b89c79c0858c6bf8f88d0bae8a3eac6ff86c5c3357fc",
+      "max_bytes": 1000000,
+      "host": "raw.githubusercontent.com"
+    },
+    {
+      "id": "cbioportal_sample",
+      "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/1da5c747e4fdb6125e46410e61842a786e134833/public/mel_iatlas_riaz_nivolumab_2017/data_clinical_sample.txt",
+      "version": "1da5c747e4fdb6125e46410e61842a786e134833:dcaf0a5c77c230480b7ea72491e7fdc6ddd2829ea5cdcf712ece5270d02e4199",
+      "expected_size": 18395,
+      "expected_sha256": "dcaf0a5c77c230480b7ea72491e7fdc6ddd2829ea5cdcf712ece5270d02e4199",
+      "max_bytes": 1000000,
+      "host": "media.githubusercontent.com"
+    },
+    {
+      "id": "cbioportal_patient",
+      "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/1da5c747e4fdb6125e46410e61842a786e134833/public/mel_iatlas_riaz_nivolumab_2017/data_clinical_patient.txt",
+      "version": "1da5c747e4fdb6125e46410e61842a786e134833:b172d7736210ef94d7cf66836501cf2c58231765452af8155f41fc0c03ae5e3f",
+      "expected_size": 5893,
+      "expected_sha256": "b172d7736210ef94d7cf66836501cf2c58231765452af8155f41fc0c03ae5e3f",
+      "max_bytes": 1000000,
+      "host": "media.githubusercontent.com"
+    }
+  ]
+}

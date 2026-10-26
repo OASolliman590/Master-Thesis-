@@ -1,0 +1,24 @@
+{
+ "accession": "GSE135222",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP217/SRP217040/",
+   "targetobject": "SRP217040"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "16791",
+ "n_samples": 27,
+ "pdat": "2019/08/02",
+ "pubmedids": [
+  "31537801",
+  "32762727"
+ ],
+ "summary": "Mitotic cell division increases tumour mutation burden and copy number load, predictive markers of the clinical benefit of immunotherapy. Cell division correlates also with genomic demethylation involving methylation loss in late-replicating partial methylation domains. Here we find that immunomodulatory pathway genes are concentrated in these domains and transcriptionally repressed in demethylated tumours with CpG island promoter hypermethylation. Global methylation loss correlated with immune evasion signatures independently of mutation burden and aneuploidy. Methylome data of our cohort (n = 60) and a published cohort (n = 81) in lung cancer and a melanoma cohort (n = 40) consistently demonstrated that genomic methylation alterations counteract the contribution of high mutation burden and increase immunotherapeutic resistance. Higher predictive power was observed for methylation loss than mutation burden. We also found that genomic hypomethylation correlates with the immune escape signatures of aneuploid tumours. Hence, DNA methylation alterations implicate epigenetic modulation in precision immunotherapy.",
+ "taxon": "Homo sapiens",
+ "title": "DNA methylation loss coupled with mitotic cell division promotes immune evasion of tumours with high mutation load [RNA-seq]",
+ "uid": "200135222",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

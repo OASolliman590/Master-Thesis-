@@ -44,7 +44,7 @@ def validate_split(packet: dict[str, Any], *, schemas: SchemaStore | None = None
     for row in rows:
         # Schema rejects a final-test row with nested folds before policy is considered.
         store.validate('split',row)
-        require(row['data_classification']=='SYNTHETIC_ONLY','SYNTHETIC_ONLY_REQUIRED')
+        require(row['data_classification']==packet['classification'],'SYNTHETIC_ONLY_REQUIRED')
         uid=row['patient_uid'];require(uid in patients,'FOREIGN_KEY_UNRESOLVED')
         require(uid not in assigned,'SPLIT_LEAKAGE');assigned[uid]=row
         require(row['study_id']==patients[uid]['study_id'] and row['split_version']==cfg['version'],'SPLIT_LEAKAGE')
@@ -96,7 +96,6 @@ def validate_split(packet: dict[str, Any], *, schemas: SchemaStore | None = None
             review=cfg.get('final_test_review',{})
             subject_kinds={'STUDY_FAMILY':'PUBLICATION_FAMILY','PATIENT_SET':'PATIENT','SPECIMEN_SET':'SPECIMEN','SOURCE_OBJECT':'SOURCE_OBJECT'}
             for exposure in records.get('prior_exposure_record',[]):
-                store.validate('prior_exposure_record',exposure)
                 subject=(subject_kinds.get(exposure['subject_type'],exposure['subject_type']),exposure['subject_id'])
                 if subject not in nodes:continue
                 # Older lineage use is retained; a new lineage name cannot erase exposure.
@@ -183,6 +182,7 @@ def freeze_bundle(packet: dict[str, Any], destination: Path, *, schemas: SchemaS
     @stage_boundary('freeze')
     def run(value: dict[str,Any], *, schemas: SchemaStore | None = None) -> dict[str,Any]:
         store=schemas or SchemaStore();target=_safe_destination(destination)
+        require(value['classification']=='SYNTHETIC_ONLY','UNSAFE_DESTINATION')
         deps={name:dependency(value,name,store) for name in FREEZE_DEPENDENCIES}
         for name in value['dependencies']:dependency(value,name,store)
         cfg=value['config'].get('freeze',{})
@@ -197,7 +197,7 @@ def freeze_bundle(packet: dict[str, Any], destination: Path, *, schemas: SchemaS
             'environment_sha256':digest(cfg['environment'])}],schemas=store)
         files={'packet.json':canonical_bytes(value),'release_draft.json':canonical_bytes(draft),
                'result.json':canonical_bytes(result)}
-        manifest={'classification':'SYNTHETIC_ONLY','files':{name:_sha(raw) for name,raw in sorted(files.items())},
+        manifest={'classification':result['classification'],'files':{name:_sha(raw) for name,raw in sorted(files.items())},
                   'receipt_id':result['receipt_id'],'schema_hashes':store.hashes,**dict.fromkeys(FLAGS,False)}
         files['manifest.json']=canonical_bytes(manifest)
         if target.exists():
@@ -233,7 +233,7 @@ def verify_bundle(destination: Path) -> dict[str, Any]:
         require(all((target/name).is_file() and not (target/name).is_symlink() for name in expected),'BUNDLE_INVALID')
         manifest=json.loads((target/'manifest.json').read_bytes())
         require(set(manifest)=={'classification','files','receipt_id','schema_hashes',*FLAGS},'BUNDLE_INVALID')
-        require(manifest['classification']=='SYNTHETIC_ONLY' and all(manifest[k] is False for k in FLAGS),'BUNDLE_INVALID')
+        require(manifest['classification'] in {'SYNTHETIC_ONLY','PRIVATE_PATIENT_LEVEL'} and all(manifest[k] is False for k in FLAGS),'BUNDLE_INVALID')
         require(set(manifest['files'])==expected-{'manifest.json'},'BUNDLE_INVALID')
         for name,sha in manifest['files'].items():require(_sha((target/name).read_bytes())==sha,'BUNDLE_INVALID')
         store=SchemaStore(expected_hashes=manifest['schema_hashes'])
@@ -241,6 +241,7 @@ def verify_bundle(destination: Path) -> dict[str, Any]:
         for name in FREEZE_DEPENDENCIES:dependency(packet,name,store)
         for name in packet['dependencies']:dependency(packet,name,store)
         result=json.loads((target/'result.json').read_bytes());verify_result(result,stage='freeze',branch_id=packet['branch_id'],schemas=store)
+        require(manifest['classification']==packet['classification']==result['classification'],'BUNDLE_INVALID')
         require(result['receipt_id']==manifest['receipt_id'],'BUNDLE_INVALID')
         require(result['bindings']['input_sha256']==finish('freeze',packet,packet['records'],schemas=store)['bindings']['input_sha256'],'BUNDLE_INVALID')
         draft=json.loads((target/'release_draft.json').read_bytes());store.validate('release_contract',draft)

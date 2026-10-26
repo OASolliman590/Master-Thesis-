@@ -1,0 +1,24 @@
+{
+ "accession": "GSE115821",
+ "entrytype": "GSE",
+ "extrelations": [
+  {
+   "relationtype": "SRA",
+   "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP150/SRP150548/",
+   "targetobject": "SRP150548"
+  }
+ ],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "11154;18573",
+ "n_samples": 37,
+ "pdat": "2018/08/20",
+ "pubmedids": [
+  "30127394",
+  "30333558"
+ ],
+ "summary": "Immune checkpoint blockade (ICB) therapy provides remarkable clinical gains, where melanoma is at the forefront of its success. However, only a subset of patients with advanced tumors currently benefit from these therapies, which at times incur considerable side-effects and costs. Constructing such predictors of patient’s response has remained a serious challenge due to the complexity of the immune response and the shortage of large ICB-treated patient cohorts including both omics and response data. Here we build IMPRES, a predictor of ICB-response in melanoma which encompasses 15 pairwise transcriptomics relations between immune checkpoint genes. It is based on two key conjectures: (a) immune mechanisms underlining spontaneous regression in neuroblastoma can predict ICB response in melanoma, and (b) key immune interactions can be captured via specific pairwise relations of immune checkpoint genes’ expression. IMPRES is validated on 9 published datasets1–6 and on a newly generated dataset of 31 tumor samples treated with anti-PD-1 and 10 tumor samples treated with anti-CTLA-4 (some of these are treated with both antibodies), spanning 297 samples in total. It achieves an overall accuracy of AUC=0.83, outperforming existing predictors, capturing almost all true responders while misclassifying less than half of the non-responders.  Future studies are warranted to determine the value of the approach presented here in other cancer types.",
+ "taxon": "Homo sapiens",
+ "title": "Robust prediction of response to immune checkpoint blockade therapy in metastatic melanoma",
+ "uid": "200115821",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

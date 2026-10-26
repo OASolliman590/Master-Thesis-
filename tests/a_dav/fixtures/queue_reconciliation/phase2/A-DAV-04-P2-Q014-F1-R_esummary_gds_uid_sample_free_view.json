@@ -1,0 +1,17 @@
+{
+ "accession": "GSE273798",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "24676",
+ "n_samples": 10,
+ "pdat": "2024/10/11",
+ "pubmedids": [
+  "39536751"
+ ],
+ "summary": "To explore the impact of immunotherapy, we report a single institution, dual cohort phase Ib study (NCT 03582475) of platinum-based chemotherapy in combination with PD-1 antagonist pembrolizumab to evaluate safety and preliminary efficacy in patients with small cell bladder and small cell/neuroendocrine prostate cancers. To assess the immunologic basis for responses, single cell gene expression and T cell receptor (TCR) sequencing of serial peripheral blood samples revealed a diverse T cell repertoire with expansion of large clonotypes correlating with response.",
+ "taxon": "Homo sapiens",
+ "title": "Expansion of peripheral T cell clonotypes predict response in patients with small cell neuroendocrine bladder and prostate cancers treated with chemo-immunotherapy in a phase I clinical trial [bulkRNA-Seq]",
+ "uid": "200273798",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

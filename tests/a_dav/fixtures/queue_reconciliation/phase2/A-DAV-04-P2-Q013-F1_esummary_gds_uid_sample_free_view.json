@@ -1,0 +1,17 @@
+{
+ "accession": "GSE248014",
+ "entrytype": "GSE",
+ "extrelations": [],
+ "gdstype": "Expression profiling by high throughput sequencing",
+ "gpl": "24676",
+ "n_samples": 45,
+ "pdat": "2024/07/29",
+ "pubmedids": [
+  "39532835"
+ ],
+ "summary": "We conducted a single-center, open-label, Simon two-stage, phase II study of entinostat in combination with the PD1 inhibitor nivolumab in patients with advanced pancreatic ductal adenocarcinoma. Patients received oral entinostat 5 mg once a week. After a 14-day lead-in with entinostat monotherapy, patients concurrently receive entinostat 5 mg orally once a week plus nivolumab 240 mg intravenously until the time of progression or unacceptable toxicities.",
+ "taxon": "Homo sapiens",
+ "title": "RNA sequensing data of a phase 2 clinical trial of pancreatic ductal adenocarcinoma treated with entinostat in combination with nivolumab",
+ "uid": "200248014",
+ "view": "sample-free allow-listed GDS metadata; samples omitted"
+}

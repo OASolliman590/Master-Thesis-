@@ -60,7 +60,7 @@ def test_all_three_dependency_stages_block_without_upstream() -> None:
 def test_complete_invented_prat_protocol_never_authenticates_actual_evidence() -> None:
     p = prat()
     result = invoke("prat_review", "review_prat_packet", p)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     assert result["source_admission"] is False
     audit = next(row for row in result["audit"] if row["kind"] == "prat_protocol")
     assert audit["actual_source_evidence"] == "NOT_RUN"
@@ -157,7 +157,7 @@ def test_prat_retains_resolved_disagreement_and_current_adjudication() -> None:
     adj = {"question_id": "identity", "basis_sha256": digest(c["basis"]), "first_pass_sha256": sorted(x["seal_sha256"] for x in c["readers"]), "final_contract_sha256": c["current_contract_sha256"], "rationale": "invented", "adjudicator_id": "invented", "adjudication_date": "invented", "authentication_reference": "invented", "source_locator": "invented", "disposition": "RESOLVED_FIRST"}
     c["adjudications"] = [adj]
     result = invoke("prat_review", "review_prat_packet", p)
-    assert result["status"] == "SYNTHETIC_READY"
+    assert result["status"] == "READY"
     conflict = next(a for a in result["audit"] if a["kind"] == "assertion_disagreement")
     assert conflict["first_assertion"]["value"] == "invented"
     assert conflict["second_assertion"]["value"] == "different-invented-value"
@@ -248,4 +248,4 @@ def test_review_unreferenced_optional_missing_object_does_not_block() -> None:
     p = prat(); c = p["config"]["prat_review"]
     c["manifest"].append({"object_id": "invented-optional", "state": "MISSING", "required": False})
     reseal_review_inventory(c)
-    assert invoke("prat_review", "review_prat_packet", p)["status"] == "SYNTHETIC_READY"
+    assert invoke("prat_review", "review_prat_packet", p)["status"] == "READY"

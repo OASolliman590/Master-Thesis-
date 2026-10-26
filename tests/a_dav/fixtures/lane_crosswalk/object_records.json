@@ -1,0 +1,13 @@
+{
+  "coverage": [
+    {"row_id": "ICB-SYN-001", "study_id": "QR-SYN-001", "final_state": "OBJECTS_LOCATED", "source_object_ids": ["OBJ-SYN-A"], "reason": null},
+    {"row_id": "ICB-SYN-003", "study_id": "QR-SYN-003", "final_state": "NOT_ATTEMPTED", "source_object_ids": [], "reason": "SYNTHETIC reason"},
+    {"row_id": "S-SYN-02", "study_id": "QR-SYN-02", "final_state": "CONTROLLED_PENDING", "source_object_ids": [], "reason": "SYNTHETIC reason"},
+    {"row_id": "S-SYN-04", "study_id": "QR-SYN-04", "final_state": "NOT_ATTEMPTED", "source_object_ids": [], "reason": "SYNTHETIC reason"}
+  ],
+  "records": [
+    {"source_object_id": "OBJ-SYN-A", "retrieval_status": "LOCATED", "accession": "GSE000001", "accession_link": "see GSE000077"},
+    {"source_object_id": "OBJ-SYN-B", "retrieval_status": "CONTROLLED_PENDING", "accession": "EGAD000017"},
+    {"source_object_id": "OBJ-SYN-C", "retrieval_status": "LOCATED", "accession": "GSE000018"}
+  ]
+}

@@ -1,10 +1,11 @@
-"""Synthetic branch eligibility, always accompanied by blocked canonical drafts."""
+"""Branch eligibility and evidence-backed admission drafts."""
 from __future__ import annotations
 from typing import Any
 from .exposure import patient_exposure_state
 from .core import BRANCHES, SchemaStore, dependency, digest, finish, require, stage_boundary
+from .worksheet import GATE_QUESTIONS, validate_signed_worksheet
 
-REASON_CODES = frozenset({"ADMISSION_POLICY_UNKNOWN", "REQUIRED_SOURCE_MISSING", "REQUIRED_SOURCE_INCOMPLETE", "BRANCH_CRITERION_FAILED", "BRANCH_EVIDENCE_UNKNOWN", "ACTUAL_REVIEW_NOT_RUN", "ADMISSION_DRAFT_COLLISION"})
+REASON_CODES = frozenset({"ADMISSION_POLICY_UNKNOWN", "REQUIRED_SOURCE_MISSING", "REQUIRED_SOURCE_INCOMPLETE", "BRANCH_CRITERION_FAILED", "BRANCH_EVIDENCE_UNKNOWN", "ACTUAL_REVIEW_NOT_RUN", "ADMISSION_DRAFT_COLLISION", "WORKSHEET_CONTEXT_MISMATCH", "WORKSHEET_UNSIGNED", "WORKSHEET_PARTIAL", "WORKSHEET_CONTRADICTION", "CONTROLLED_REVIEWERS_REQUIRED", "WORKSHEET_STUDY_AMBIGUOUS", "WORKSHEET_INPUT_INVALID"})
 DEPENDENCIES = ("registries", "endpoints", "timing", "assays", "overlap", "exposure")
 BRANCH_REQUIREMENTS: dict[str, tuple[str, ...]] = {
  "A_BASELINE_BIO": ("baseline", "endpoint"),
@@ -319,15 +320,13 @@ def _criterion(name: str, evidence: dict[str, Any], records: dict[str, Any], stu
 
 
 @stage_boundary("admission")
-def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = None) -> dict[str, Any]:
+def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = None,
+                       reviewer_worksheet: dict[str, Any] | None = None) -> dict[str, Any]:
     store = schemas or SchemaStore()
     for stage in DEPENDENCIES:
         dependency(packet, stage, store)
     records, config = packet["records"], packet["config"].get("admission", {})
     require(set(BRANCH_REQUIREMENTS) == set(BRANCHES), "ADMISSION_POLICY_UNKNOWN")
-    for table in ("study_registry", "source_record", "patient_registry", "specimen_registry", "clinical_outcome"):
-        for row in records.get(table, []):
-            store.validate(table, row)
     studies = records.get("study_registry", [])
     require(bool(studies), "BRANCH_EVIDENCE_UNKNOWN", blocked=True)
     sources = {r["source_object_id"]: r for r in records.get("source_record", [])}
@@ -356,6 +355,10 @@ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = 
                 source_reasons.setdefault(source["study_id"], set()).add("REQUIRED_SOURCE_INCOMPLETE")
     branch = packet["branch_id"]
     policy = config.get("branch_policies", {}).get(branch, {})
+    worksheet = reviewer_worksheet if reviewer_worksheet is not None else config.get("reviewer_worksheet")
+    signature: dict[str, Any] | None = None
+    if worksheet is not None:
+        signature = validate_signed_worksheet(packet, worksheet)
     audit: list[dict[str, Any]] = []
     drafts: list[dict[str, Any]] = []
     for study in studies:
@@ -366,7 +369,11 @@ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = 
         study_failed = "BRANCH_CRITERION_FAILED" in study_reasons
         criteria: dict[str, str] = {}
         if branch.startswith("A_P2") or branch == "A_BASELINE_BIO":
-            criteria["clinical_ici"] = "SUPPORTED" if study["study_class"] == "CLINICAL_ICI" else "CONTRADICTED"
+            study_class = study.get("study_class")
+            criteria["clinical_ici"] = (
+                "UNKNOWN" if study_class is None else
+                "SUPPORTED" if study_class == "CLINICAL_ICI" else "CONTRADICTED"
+            )
         for name in BRANCH_REQUIREMENTS[branch]:
             criteria[name] = _criterion(name, policy.get(name, {}), records, study, packet["dependencies"], packet["config"])
         if "CONTRADICTED" in criteria.values():
@@ -376,22 +383,71 @@ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = 
             study_reasons.add("BRANCH_EVIDENCE_UNKNOWN")
         if not scoped:
             study_reasons.add("REQUIRED_SOURCE_MISSING")
-        eligibility = "FAIL" if study_failed else "BLOCKED_UNKNOWN" if study_reasons else "SYNTHETIC_READY"
+        worksheet_statuses: dict[str, str] = {}
+        if signature is not None:
+            worksheet_statuses = signature["decisions"]
+            admission_decisions = {item_id: status for item_id, status in worksheet_statuses.items()
+                                   if item_id != "V8"}
+            if "FAIL" in admission_decisions.values():
+                study_failed = True
+                study_reasons.add("BRANCH_CRITERION_FAILED")
+            if "BLOCKED_UNKNOWN" in admission_decisions.values():
+                study_reasons.add("BRANCH_EVIDENCE_UNKNOWN")
+            if worksheet_statuses.get("V7") == "NOT_APPLICABLE":
+                study_failed = True
+                study_reasons.add("BRANCH_CRITERION_FAILED")
+            elif packet.get("classification") != "SYNTHETIC_ONLY" and worksheet_statuses.get("V7") != "PASS":
+                study_reasons.add("BRANCH_EVIDENCE_UNKNOWN")
+            if worksheet_statuses.get("V8") == "PASS":
+                matching_matrices = [row for row in records.get("matrix_build_receipt", [])
+                                     if row.get("branch_id") == branch]
+                if not matching_matrices or any(row.get("test_status") != "PASS" or
+                                                 row.get("validation_status") != "PASS"
+                                                 for row in matching_matrices):
+                    study_failed = True
+                    study_reasons.add("BRANCH_CRITERION_FAILED")
+            if worksheet_statuses.get("V7") == "PASS" and (
+                    "CONTRADICTED" in criteria.values() or
+                    study_reasons - {"BRANCH_EVIDENCE_UNKNOWN"} or study_failed):
+                study_failed = True
+                study_reasons.add("BRANCH_CRITERION_FAILED")
+        elif packet.get("classification") != "SYNTHETIC_ONLY" and not study_failed:
+            study_reasons.add("ACTUAL_REVIEW_NOT_RUN")
+        eligibility = "FAIL" if study_failed else "BLOCKED_UNKNOWN" if study_reasons else "READY"
         failed |= study_failed
         reasons.update(study_reasons)
         audit.append({"kind": "admission_eligibility", "study_id": study["study_id"], "branch_id": branch,
-                      "eligibility": eligibility, "criteria": criteria, "actual_source_review": "NOT_RUN"})
+                      "eligibility": eligibility, "criteria": criteria,
+                      "reviewer_name": signature["reviewer_name"] if signature else None,
+                      "review_date": signature["review_date"] if signature else None})
         if scoped:
-            draft = {"admission_receipt_id": "synthetic-draft-" + digest([study["study_id"], branch, config])[:20],
+            gate_results = []
+            for gate in GATE_QUESTIONS:
+                decision = worksheet_statuses.get(gate, "BLOCKED_UNKNOWN")
+                gate_results.append({"gate": gate, "status": decision,
+                                     "reason": "V7_PASS_REQUIRED" if gate == "V7" and decision != "PASS"
+                                     else None if decision in {"PASS", "NOT_APPLICABLE", "SUPERSEDED"}
+                                     else "MATRIX_BUILD_PENDING" if gate == "V8" and decision == "BLOCKED_UNKNOWN"
+                                     else "REVIEW_UNRESOLVED"})
+            draft = {"admission_receipt_id": "dav-draft-" + digest([study["study_id"], branch, config,
+                                                                     worksheet if signature is not None else None])[:20],
                      "study_id": study["study_id"], "publication_family_id": study["publication_family_id"],
-                     "branch_id": branch, "admission_version": str(config.get("admission_version", "synthetic-draft-v1")),
+                     "branch_id": branch, "admission_version": str(config.get("admission_version", "dav-draft-v1")),
                      "source_object_ids": sorted(r["source_object_id"] for r in scoped),
                      "source_object_hashes": sorted(r["sha256"] for r in scoped if r.get("sha256")),
-                     "gate_results": [{"gate": "V" + str(g), "status": "BLOCKED_UNKNOWN", "reason": "ACTUAL_REVIEW_NOT_RUN"} for g in range(8)],
-                     "admission_status": "BLOCKED_UNKNOWN", "approved_branches": [], "blocked_branches": [branch],
-                     "validator": "SYNTHETIC_SOFTWARE_ONLY", "reviewer": "NOT_AUTHENTICATED", "code_version": "synthetic-v1",
-                     "config_hash": digest(packet["config"]), "created_utc": "NOT_RUN",
-                     "unresolved_limitations": ["ACTUAL_REVIEW_NOT_RUN"]}
+                     "gate_results": gate_results,
+                     "admission_status": "EXCLUDED" if study_failed else
+                     "ADMITTED" if signature is not None and packet.get("classification") != "SYNTHETIC_ONLY"
+                     and eligibility == "READY" else "BLOCKED_UNKNOWN",
+                     "approved_branches": [branch] if signature is not None
+                     and packet.get("classification") != "SYNTHETIC_ONLY" and eligibility == "READY" else [],
+                     "blocked_branches": [] if signature is not None
+                     and packet.get("classification") != "SYNTHETIC_ONLY" and eligibility == "READY" else [branch],
+                     "validator": "SOFTWARE_ONLY", "reviewer": signature["reviewer_name"] if signature else "UNSIGNED",
+                     "code_version": "dav-admission-v2", "config_hash": digest(packet["config"]),
+                     "created_utc": worksheet.get("created_utc", "UNSIGNED_WORKSHEET") if isinstance(worksheet, dict)
+                     else "UNSIGNED_WORKSHEET",
+                     "unresolved_limitations": sorted(study_reasons)}
             store.validate("cohort_admission_receipt", draft)
             drafts.append(draft)
         else:
@@ -402,5 +458,5 @@ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = 
         prior = [r for r in existing if r.get("admission_receipt_id") == draft["admission_receipt_id"]]
         require(not prior or len(prior) == 1 and prior[0] == draft, "ADMISSION_DRAFT_COLLISION")
     output["cohort_admission_receipt"] = existing + [draft for draft in drafts if not any(r.get("admission_receipt_id") == draft["admission_receipt_id"] for r in existing)]
-    return finish("admission", packet, output, status="FAIL" if failed else "BLOCKED_UNKNOWN" if reasons else "SYNTHETIC_READY",
+    return finish("admission", packet, output, status="FAIL" if failed else "BLOCKED_UNKNOWN" if reasons else "READY",
                   reasons=reasons, audit=audit, schemas=store)

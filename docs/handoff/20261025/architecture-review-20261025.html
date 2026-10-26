@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>a_dav architecture review</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+</script>
+<style>
+  body { background:#fafaf9; }
+  .lbl { font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .deep { background: linear-gradient(135deg,#0f172a,#1e293b); color:#e2e8f0; }
+  .ghost { opacity:.45; }
+</style>
+</head>
+<body class="text-slate-900 font-sans">
+<main class="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-12">
+
+<header class="space-y-3">
+  <h1 class="font-serif text-3xl">tools/a_dav: from synthetic shell to real-source pipeline</h1>
+  <p class="text-sm text-slate-500">work/a-dav-01 · 25 Oct 2026 · goal: Riaz GSE91061 × A_BASELINE_BIO end to end · frozen specs untouched</p>
+  <div class="flex flex-wrap gap-4 text-xs text-slate-600">
+    <span class="flex items-center gap-1"><span class="inline-block w-4 h-3 border border-slate-500"></span>module</span>
+    <span class="flex items-center gap-1"><span class="inline-block w-6 border-t-2 border-dashed border-slate-500"></span>seam</span>
+    <span class="flex items-center gap-1"><span class="inline-block w-6 border-t-2 border-red-600"></span>leakage / duplication</span>
+    <span class="flex items-center gap-1"><span class="inline-block w-4 h-3 deep"></span>deep module</span>
+  </div>
+</header>
+
+<section id="candidates" class="space-y-10">
+
+<!-- B -->
+<article id="b" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">B · Add the source ingestion module</h2>
+    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-semibold">Strong</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">local-substitutable</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">new ingestion module · workflow.py:63-77 · demo.py:65 · legacy_bridge.py · registries.py</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">Before</div>
+<pre class="mermaid">
+flowchart LR
+  D[demo.py invented records] --> P[(packet.records)]
+  L[legacy_bridge synthetic] --> P
+  H[hex blob ≤2 MB in config] -.-> W[workflow]
+  R[real GEO / author files] -.no seam.-> X((nothing))
+  classDef leak stroke:#dc2626,stroke-width:2px;
+  class R,X leak
+</pre></div>
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">After</div>
+<pre class="mermaid">
+flowchart LR
+  S[(object store by sha256)] --> I
+  subgraph I[Source ingestion module]
+    g[GEO SOFT adapter]
+    a[author table adapter]
+    l[legacy adapter]
+  end
+  I -->|records + source locators| REG[registries]
+  classDef deep fill:#0f172a,color:#e2e8f0;
+  class I deep
+</pre></div>
+  </div>
+  <p><b>Problem.</b> Real files have no way in: records come only from demo.py or the synthetic legacy bridge, and source bytes are passed as a hex blob of at most 2 MB, which cannot hold a Riaz FPKM file.</p>
+  <p><b>Solution.</b> Add one ingestion module. It reads verified objects by their sha256 from a local store. GEO-SOFT and author-table adapters inside it turn the bytes plus a declared field map into entity rows, each carrying its source locator. This is where audit_metadata.py and batchqual's riaz_fpkm and readers get ported.</p>
+  <ul class="text-sm list-disc pl-5 grid sm:grid-cols-2 gap-x-6">
+    <li>Real data reaches registries</li><li>Two adapters justify the seam</li><li>Tests use small real-format fixtures</li><li>New cohort = new field map, not new code</li>
+  </ul>
+</article>
+
+<!-- C -->
+<article id="c" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">C · Let core own the data classification policy</h2>
+    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-semibold">Strong</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">in-process</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">core.py:16,180,186,198… · workflow.py:66,75,109 · matrices.py:29,40,211… · release.py · reporting.py · admission.py · legacy_bridge.py</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-3">Before: "SYNTHETIC_ONLY" written in ~13 modules</div>
+      <div class="grid grid-cols-4 gap-2 text-[10px] font-mono">
+        <div class="border-2 border-red-500 rounded p-1">core ×9</div><div class="border-2 border-red-500 rounded p-1">workflow ×3</div><div class="border-2 border-red-500 rounded p-1">matrices ×7</div><div class="border-2 border-red-500 rounded p-1">release ×3</div>
+        <div class="border-2 border-red-500 rounded p-1">reporting ×2</div><div class="border-2 border-red-500 rounded p-1">admission ×2</div><div class="border-2 border-red-500 rounded p-1">prat_review</div><div class="border-2 border-red-500 rounded p-1">legacy ×4</div>
+        <div class="border border-slate-300 rounded p-1 col-span-4">endpoints.py:103 already emits PRIVATE_PATIENT_LEVEL → the code contradicts itself</div>
+      </div></div>
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-3">After</div>
+      <div class="deep rounded-lg p-4 text-sm space-y-1">
+        <div class="lbl text-slate-300">core: classification policy</div>
+        <div>allowed: SYNTHETIC_ONLY · PRIVATE_PATIENT_LEVEL</div>
+        <div>ready status separate from the data's origin</div>
+      </div>
+      <div class="grid grid-cols-4 gap-2 mt-3 text-[10px] font-mono ghost">
+        <div class="border rounded p-1">stage</div><div class="border rounded p-1">stage</div><div class="border rounded p-1">stage</div><div class="border rounded p-1">stage</div>
+      </div>
+      <p class="text-xs text-slate-500 mt-2">Each stage copies the classification from the packet it receives.</p></div>
+  </div>
+  <p><b>Problem.</b> The code mixes two questions in one field: where the data came from ("synthetic") and whether the checks passed ("ready"). The answer is hard-coded across about 13 modules, so real data is refused by construction.</p>
+  <p><b>Solution.</b> Core declares the allowed classifications once, along with a ready status that says nothing about the data's origin. Stages pass the classification through instead of writing it themselves.</p>
+  <ul class="text-sm list-disc pl-5 grid sm:grid-cols-2 gap-x-6">
+    <li>One place unlocks real data</li><li>Existing stage tests run twice</li><li>Removes the internal contradiction</li><li>Privacy rules stay in core</li>
+  </ul>
+  <div class="rounded bg-amber-50 border border-amber-200 p-2 text-sm">Check against the frozen spec: its schemas already allow PRIVATE_PATIENT_LEVEL (treatment_episode and episode_binding enums), so this needs a code change only, no spec change. Confirm this during grilling.</div>
+</article>
+
+<!-- A -->
+<article id="a" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">A · Merge the five fetchers into one source object retrieval module</h2>
+    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-semibold">Strong</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">ports &amp; adapters</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">object_verification.py · private_retrieval.py · filelist_fetch.py · listing_fetch.py · filelist_plan.py · listing_plan.py · lane_crosswalk.py</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">Before</div>
+      <table class="text-xs w-full">
+        <tr class="text-slate-500"><td></td><td>copies</td></tr>
+        <tr><td>urllib transports</td><td class="text-red-600 font-semibold">5</td></tr>
+        <tr><td>host allowlists</td><td class="text-red-600 font-semibold">5</td></tr>
+        <tr><td>object/accession allowlists in code</td><td class="text-red-600 font-semibold">7</td></tr>
+        <tr><td>0.5 s rate limiters (caps 200/40/20/20)</td><td class="text-red-600 font-semibold">4</td></tr>
+        <tr><td>.part resume + hash publishers</td><td class="text-red-600 font-semibold">2</td></tr>
+        <tr><td>GEO URL "stem" builders</td><td class="text-red-600 font-semibold">3</td></tr>
+        <tr><td>transport signatures</td><td class="text-red-600 font-semibold">3 shapes</td></tr>
+      </table></div>
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">After</div>
+<pre class="mermaid">
+flowchart TB
+  plan[fetch plan: data file] --> M
+  subgraph M[Source object retrieval]
+    pol[host policy · caps · spacing · redirects]
+    pub[bounded read · resume · sha256 · atomic publish · receipt]
+  end
+  M -.HTTP port.-> u[urllib adapter]
+  M -.HTTP port.-> f[fake transport in tests]
+  geo[GEO / ENA / GitHub / cBioPortal URL adapters] --> plan
+  classDef deep fill:#0f172a,color:#e2e8f0;
+  class M deep
+</pre></div>
+  </div>
+  <p><b>Problem.</b> Retrieval is implemented many times over, and the allowlists are hard-coded, so every new cohort means editing code.</p>
+  <p><b>Solution.</b> One module owns host policy, request caps, spacing, resume, hashing and atomic publishing. Plans and allowlists become data files, and each repository gets a thin URL adapter. Retry and backoff are ported from batchqual's Fetcher.</p>
+  <ul class="text-sm list-disc pl-5 grid sm:grid-cols-2 gap-x-6">
+    <li>Deletes ~4 duplicate fetchers</li><li>One fake-transport test suite</li><li>Cohorts become config</li><li>One allowlist to audit</li>
+  </ul>
+</article>
+
+<!-- D -->
+<article id="d" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">D · Have admission produce a reviewer worksheet</h2>
+    <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-xs font-semibold">Worth exploring</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">in-process</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">admission.py:385-394 · matrices.py:34-43 · prat_review.py</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">Before</div>
+<pre class="mermaid">
+flowchart LR
+  ad[admission] -->|always BLOCKED_UNKNOWN| m[matrices]
+  m -->|requires BLOCKED_UNKNOWN| out[synthetic matrix]
+  classDef leak stroke:#dc2626,stroke-width:2px;
+  class ad,m leak
+</pre></div>
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">After</div>
+<pre class="mermaid">
+flowchart LR
+  ad[admission] --> ws[worksheet: V0–V8 questions + evidence pointers]
+  ws --> h((human signs))
+  h --> ad2[admission draft]
+  ad2 -->|eligible sources for branch?| m[matrices]
+  classDef deep fill:#0f172a,color:#e2e8f0;
+  class ad,ad2 deep
+</pre></div>
+  </div>
+  <p><b>Problem.</b> The admission draft is always "blocked" and matrices refuses anything that isn't blocked, so no source can ever be admitted.</p>
+  <p><b>Solution.</b> Admission writes a worksheet listing only the judgment calls, each with pointers to its evidence. It reads the signed worksheet back and emits the draft. Matrices asks a single question: which sources are eligible for this branch?</p>
+  <ul class="text-sm list-disc pl-5 grid sm:grid-cols-2 gap-x-6"><li>Human judges, never transcribes</li><li>Real admission becomes possible</li><li>Round-trip tests: complete, partial, contradicted</li></ul>
+</article>
+
+<!-- E -->
+<article id="e" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">E · Validate records once, at registries</h2>
+    <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-xs font-semibold">Worth exploring</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">in-process</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">matrices.py:19-26 · admission.py:330 · overlap.py:22 · exposure.py:24 · timing.py:105 · core.py:51-57,247-249</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">Before: the same checks repeated</div>
+      <div class="space-y-1 text-xs">
+        <div class="h-7 border-l-4 border-red-500 pl-2 flex items-center">registries: schema + sha</div>
+        <div class="h-7 border-l-4 border-red-500 pl-2 flex items-center">timing: schema again</div>
+        <div class="h-7 border-l-4 border-red-500 pl-2 flex items-center">overlap / exposure: schema again</div>
+        <div class="h-7 border-l-4 border-red-500 pl-2 flex items-center">admission / assays: sha again</div>
+        <div class="h-7 border-l-4 border-red-500 pl-2 flex items-center">matrices: schema again · core re-hashes code on every verify</div>
+      </div></div>
+    <div class="rounded-lg border border-slate-200 p-4"><div class="lbl text-slate-500 mb-2">After</div>
+      <div class="deep rounded p-3 text-sm">registries validates once; entity immutability is guaranteed</div>
+      <div class="space-y-1 text-xs mt-2 ghost"><div class="h-6 border-l-4 border-slate-300 pl-2">downstream stages trust the entity tables</div><div class="h-6 border-l-4 border-slate-300 pl-2">dependency verification memoized per run</div></div></div>
+  </div>
+  <p><b>Problem.</b> Downstream stages repeat checks registries already made, and core re-hashes the code on every verify. On real data volumes that becomes slow and noisy.</p>
+  <p><b>Solution.</b> Registries becomes the only validator. Later stages rely on the immutability check that already exists, and dependency checks are cached for the duration of a run.</p>
+  <ul class="text-sm list-disc pl-5"><li>Faster real runs</li><li>Invariant tests live in one place</li></ul>
+</article>
+
+<!-- F -->
+<article id="f" class="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+  <div class="flex flex-wrap items-center gap-2">
+    <h2 class="font-serif text-xl mr-2">F · Move evidence regression into its own opt-in test suite</h2>
+    <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-xs font-semibold">Speculative</span>
+    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">mock / fixture</span>
+  </div>
+  <p class="font-mono text-sm text-slate-600">test_object_verification.py:422-435,528,817-919 · test_queue_reconciliation.py:1601 · listing / filelist / metadata_queue / raw_question tests</p>
+  <p><b>Problem.</b> Unit tests read docs/validation receipts, ARTIFACT_HASHES files and private functions. A refactor then fails on receipt bookkeeping rather than on behaviour, and that is exactly how the review loops kept going.</p>
+  <p><b>Solution.</b> Unit tests go only through module interfaces. Checks on the receipts and evidence files move to a separate suite that runs only when asked.</p>
+  <ul class="text-sm list-disc pl-5"><li>A refactor stops breaking receipt tests</li><li>Tests check behaviour, not bookkeeping</li></ul>
+</article>
+</section>
+
+<section id="top-recommendation" class="rounded-xl deep p-8 space-y-3">
+  <div class="lbl text-slate-400">Top recommendation</div>
+  <h2 class="font-serif text-2xl"><a href="#b" class="underline">B · Source ingestion module</a>, together with <a href="#c" class="underline">C's classification policy</a></h2>
+  <p class="text-slate-300">Nothing real can reach the pipeline until both exist. B gives real files a way in, and C stops the stages refusing them. Riaz's metadata objects are small (the GEO sample text plus two author CSVs of about 8 and 12 KB; the size of the family SOFT will come from the research note), so a minimal fetch is enough to start; A can follow once full matrices are needed. Correction to an earlier claim: the Riaz source bytes are not stored locally, only small JSON summaries are.</p>
+</section>
+</main>
+</body>
+</html>

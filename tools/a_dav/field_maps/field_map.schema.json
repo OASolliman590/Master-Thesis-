@@ -1,0 +1,527 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a-dav.invalid/schemas/field_map.schema.json",
+  "title": "Patient-free cohort field map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "cohort",
+    "branch_id",
+    "source_objects",
+    "sample_identity",
+    "geo",
+    "author_sample_table",
+    "author_clinical_table",
+    "treatment",
+    "labels",
+    "harmonized_cross_checks",
+    "measurement_representations"
+  ],
+  "properties": {
+    "cohort": {
+      "type": "string",
+      "minLength": 1
+    },
+    "study_class": {
+      "type": "string",
+      "enum": [
+        "CLINICAL_ICI",
+        "NON_ICI_COMPARATOR",
+        "VACCINE",
+        "ADOPTIVE_CELL",
+        "DENDRITIC_CELL",
+        "MECHANISTIC_CELL_MODEL",
+        "UNTREATED_MOLECULAR",
+        "OTHER"
+      ]
+    },
+    "branch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_objects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "geo_family_soft",
+        "author_sample_table",
+        "author_clinical_table",
+        "author_analysis_code",
+        "author_fpkm_hg19",
+        "ncbi_tpm_grch38",
+        "ncbi_annotation_grch38",
+        "cbioportal_sample",
+        "cbioportal_patient"
+      ],
+      "properties": {
+        "geo_family_soft": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "author_sample_table": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "author_clinical_table": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "author_analysis_code": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "author_fpkm_hg19": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "ncbi_tpm_grch38": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "ncbi_annotation_grch38": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "cbioportal_sample": {
+          "$ref": "#/$defs/sourceObject"
+        },
+        "cbioportal_patient": {
+          "$ref": "#/$defs/sourceObject"
+        }
+      }
+    },
+    "sample_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title_regex",
+        "patient_group",
+        "visit_group"
+      ],
+      "properties": {
+        "title_regex": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_group": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "visit_group": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "geo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "characteristics",
+        "relation_kinds"
+      ],
+      "properties": {
+        "characteristics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "visit",
+            "response"
+          ],
+          "properties": {
+            "visit": {
+              "const": "visit (pre or on treatment)"
+            },
+            "response": {
+              "const": "response"
+            }
+          }
+        },
+        "relation_kinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "BioSample",
+              "SRA"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "author_sample_table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "sample_name_column",
+        "patient_column",
+        "bam_suffix",
+        "duplicated_headers",
+        "response_positions",
+        "sample_name_rule"
+      ],
+      "properties": {
+        "format": {
+          "const": "CSV"
+        },
+        "sample_name_column": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "patient_column": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bam_suffix": {
+          "const": ".bam"
+        },
+        "duplicated_headers": {
+          "type": "object",
+          "required": [
+            "Response"
+          ],
+          "properties": {
+            "Response": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "response_positions": {
+          "type": "object",
+          "required": [
+            "bor",
+            "response_primary",
+            "response_alternative"
+          ],
+          "properties": {
+            "bor": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "response_primary": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "response_alternative": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "sample_name_rule": {
+          "type": "object",
+          "required": [
+            "regex",
+            "replacement"
+          ],
+          "properties": {
+            "regex": {
+              "type": "string"
+            },
+            "replacement": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "sample_code_group": {
+          "type": "object",
+          "required": [
+            "regex",
+            "capture_group",
+            "use"
+          ],
+          "properties": {
+            "regex": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capture_group": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "use": {
+              "const": "CANDIDATE_DISCOVERY_ONLY"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "author_clinical_table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "patient_column",
+        "bor_column",
+        "cohort_column",
+        "source_of_record_for",
+        "bor_values",
+        "cohort_values"
+      ],
+      "properties": {
+        "format": {
+          "const": "CSV"
+        },
+        "patient_column": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bor_column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cohort_column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_of_record_for": {
+          "type": "array",
+          "const": [
+            "BOR",
+            "Cohort"
+          ]
+        },
+        "bor_values": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "CR",
+              "PR",
+              "SD",
+              "PD",
+              "NE"
+            ]
+          },
+          "minItems": 5,
+          "uniqueItems": true
+        },
+        "cohort_values": {
+          "type": "object",
+          "required": [
+            "NIV3-NAIVE",
+            "NIV3-PROG"
+          ],
+          "properties": {
+            "NIV3-NAIVE": {
+              "type": "string"
+            },
+            "NIV3-PROG": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "treatment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "prior_ipilimumab_by_cohort"
+      ],
+      "properties": {
+        "agent": {
+          "const": "nivolumab"
+        },
+        "prior_ipilimumab_by_cohort": {
+          "type": "object",
+          "required": [
+            "NIV3-NAIVE",
+            "NIV3-PROG"
+          ],
+          "properties": {
+            "NIV3-NAIVE": {
+              "const": false
+            },
+            "NIV3-PROG": {
+              "const": true
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "labels": {
+      "type": "object",
+      "required": [
+        "source_of_record_bor",
+        "geo_response",
+        "author_cohort"
+      ],
+      "properties": {
+        "source_of_record_bor": {
+          "type": "object"
+        },
+        "geo_response": {
+          "type": "object"
+        },
+        "author_cohort": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "harmonized_cross_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "resource",
+          "role",
+          "expected_sample_count",
+          "source_object_roles"
+        ],
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "role": {
+            "const": "CROSS_CHECK_ONLY"
+          },
+          "expected_sample_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "source_object_roles": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "cbioportal_sample",
+                "cbioportal_patient"
+              ]
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "measurement_representations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "author_fpkm_hg19",
+        "ncbi_tpm_grch38",
+        "conversion"
+      ],
+      "properties": {
+        "author_fpkm_hg19": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unit",
+            "transform",
+            "genome_build",
+            "annotation",
+            "annotation_source_object_role"
+          ],
+          "properties": {
+            "unit": {
+              "const": "FPKM"
+            },
+            "transform": {
+              "const": "AUTHOR_REPORTED"
+            },
+            "genome_build": {
+              "const": "hg19"
+            },
+            "annotation": {
+              "const": "KnownGene"
+            },
+            "annotation_source_object_role": {
+              "type": "null"
+            }
+          }
+        },
+        "ncbi_tpm_grch38": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "unit",
+            "transform",
+            "genome_build",
+            "annotation",
+            "annotation_source_object_role"
+          ],
+          "properties": {
+            "unit": {
+              "const": "TPM"
+            },
+            "transform": {
+              "const": "NCBI_PROVIDED"
+            },
+            "genome_build": {
+              "const": "GRCh38.p13"
+            },
+            "annotation": {
+              "const": "Entrez"
+            },
+            "annotation_source_object_role": {
+              "const": "ncbi_annotation_grch38"
+            }
+          }
+        },
+        "conversion": {
+          "const": "PROHIBITED"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sourceObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "locator",
+        "version",
+        "format",
+        "role"
+      ],
+      "properties": {
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "format": {
+          "enum": [
+            "GEO_FAMILY_SOFT",
+            "DELIMITED_CSV",
+            "DELIMITED_TSV",
+            "MATRIX_HEADER_CSV",
+            "MATRIX_HEADER_TSV",
+            "SCRIPT_R",
+            "TEXT_UTF8"
+          ]
+        },
+        "role": {
+          "enum": [
+            "source_of_record",
+            "harmonized_cross_check"
+          ]
+        },
+        "header_comment_prefix": {
+          "const": "#"
+        }
+      }
+    }
+  }
+}

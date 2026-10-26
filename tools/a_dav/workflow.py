@@ -7,8 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from tools.a_dav.core import DavError, SchemaStore, finish, require, stage_boundary
-from tools.a_dav.object_verification import validate_source_record, validate_unique_ids
+from tools.a_dav.core import DavError, SchemaStore, finish, require, stage_boundary, verification_run
 from tools.a_dav.search_log import validate_search_log
 from tools.a_dav.study_resolution import resolve
 from tools.a_dav.registries import build_registries
@@ -49,21 +48,19 @@ def run_existing_seams(packet: dict[str, Any], *, schemas: SchemaStore | None = 
         require(sorted(resolved["publication_records"], key=lambda row: row["publication_id"]) ==
                 sorted(packet["records"].get("publication_family", []), key=lambda row: row["publication_id"]),
                 "CONTEXT_MISMATCH")
-        source_schema = json.loads((schemas.root / "source_record.schema.json").read_text())
         sources = packet["records"].get("source_record", [])
         require(bool(sources), "SOURCE_OBJECT_INCOMPLETE", blocked=True)
-        validate_unique_ids(sources)  # type: ignore[no-untyped-call]
         payloads = config["source_payloads"]
         require(set(payloads) == {row["source_object_id"] for row in sources}, "CONTEXT_MISMATCH")
         for source in sources:
-            validate_source_record(source, source_schema)  # type: ignore[no-untyped-call]
             require(source["study_id"] in actual and
                     source["publication_family_id"] == actual[source["study_id"]]["publication_family_id"],
                     "CONTEXT_MISMATCH")
             encoded = payloads[source["source_object_id"]]
             require(isinstance(encoded, str) and len(encoded) <= 2 * 1024 * 1024, "MALFORMED_INPUT")
             content = bytes.fromhex(encoded)
-            require(content.startswith(b"SYNTHETIC_ONLY\n"), "SYNTHETIC_ONLY_REQUIRED")
+            marker = packet["classification"].encode("ascii") + b"\n"
+            require(content.startswith(marker), "SYNTHETIC_ONLY_REQUIRED")
             require(source.get("hash_scope") == "FULL_OBJECT" and source.get("retrieval_status") == "RETRIEVED",
                     "SOURCE_OBJECT_INCOMPLETE", blocked=True)
             require(source.get("sha256") == hashlib.sha256(content).hexdigest() and
@@ -72,7 +69,7 @@ def run_existing_seams(packet: dict[str, Any], *, schemas: SchemaStore | None = 
                         if m.get("source_object_id") == source["source_object_id"]]
             if matrices:
                 require(len(matrices) == 1, "MATRIX_BYTES_MISMATCH")
-                parsed = json.loads(content.removeprefix(b"SYNTHETIC_ONLY\n"))
+                parsed = json.loads(content.removeprefix(marker))
                 expected = {key: matrices[0][key] for key in MATRIX_PAYLOAD_FIELDS}
                 require(parsed == {"assay_matrix": expected}, "MATRIX_BYTES_MISMATCH")
     except DavError:
@@ -94,26 +91,27 @@ def run_workflow(packet: dict[str, Any], destination: Path | None = None, *,
     an actual stage invocation in this run. Freeze writes only on explicit Path.
     """
     assert schemas is not None
-    current = copy.deepcopy(packet)
-    current["dependencies"] = {}
-    audit: list[dict[str, Any]] = []
-    functions = (run_existing_seams, build_registries, map_endpoints, validate_timing, validate_assays,
-                 validate_overlap, validate_exposure, evaluate_admission, validate_split, build_baseline,
-                 build_longitudinal, build_public_report)
-    for function in functions:
-        result = function(current, schemas=schemas)
-        audit.append({"stage": result["stage"], "status": result["status"],
-                      "reasons": result["reasons"], "receipt_id": result["receipt_id"],
-                      "checks": result["audit"]})
-        current["records"] = result["records"]
-        if result["status"] != "SYNTHETIC_READY":
-            return finish("workflow", current, current["records"], status=result["status"],
+    with verification_run():
+        current = copy.deepcopy(packet)
+        current["dependencies"] = {}
+        audit: list[dict[str, Any]] = []
+        functions = (run_existing_seams, build_registries, map_endpoints, validate_timing, validate_assays,
+                     validate_overlap, validate_exposure, evaluate_admission, validate_split, build_baseline,
+                     build_longitudinal, build_public_report)
+        for function in functions:
+            result = function(current, schemas=schemas)
+            audit.append({"stage": result["stage"], "status": result["status"],
+                          "reasons": result["reasons"], "receipt_id": result["receipt_id"],
+                          "checks": result["audit"]})
+            current["records"] = result["records"]
+            if result["status"] != "READY":
+                return finish("workflow", current, current["records"], status=result["status"],
+                              reasons=result["reasons"], audit=audit, schemas=schemas)
+            current["dependencies"][result["stage"]] = result
+        if destination is not None:
+            result = freeze_bundle(current, destination, schemas=schemas)
+            audit.append({"stage": result["stage"], "status": result["status"],
+                          "reasons": result["reasons"], "receipt_id": result["receipt_id"]})
+            return finish("workflow", current, result["records"], status=result["status"],
                           reasons=result["reasons"], audit=audit, schemas=schemas)
-        current["dependencies"][result["stage"]] = result
-    if destination is not None:
-        result = freeze_bundle(current, destination, schemas=schemas)
-        audit.append({"stage": result["stage"], "status": result["status"],
-                      "reasons": result["reasons"], "receipt_id": result["receipt_id"]})
-        return finish("workflow", current, result["records"], status=result["status"],
-                      reasons=result["reasons"], audit=audit, schemas=schemas)
-    return finish("workflow", current, current["records"], audit=audit, schemas=schemas)
+        return finish("workflow", current, current["records"], audit=audit, schemas=schemas)

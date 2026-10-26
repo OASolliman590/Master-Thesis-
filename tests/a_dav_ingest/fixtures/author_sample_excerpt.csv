@@ -1,0 +1,5 @@
+PatientID,PreOn,Visit,BamName,USUBJID,Site,Run,Library,Batch,BOR,Response,Response,Protocol,Cohort
+Subject01,Pre,Pre,Subject01_Pre_A001-1.bam,Study001,SiteA,Run001,Lib001,B1,PD,PD,GroupA,ProtocolA,NIV3-NAIVE
+Subject02,On,On,Subject02_On_A002-1.bam,Study002,SiteB,Run002,Lib002,B1,PR,PRCR,GroupB,ProtocolA,NIV3-PROG
+Subject03,Pre,Pre,Subject03_Pre_A003-1.bam,Study003,SiteA,Run003,Lib003,B2,NE,NA,GroupC,ProtocolA,NIV3-NAIVE
+Subject04,Pre,Pre,Subject04_Pre_A004-1.bam,Study004,SiteC,Run004,Lib004,B2,CR,PRCR,GroupD,ProtocolA,NIV3-PROG

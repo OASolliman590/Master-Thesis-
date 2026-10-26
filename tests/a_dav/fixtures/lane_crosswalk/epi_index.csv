@@ -1,0 +1,6 @@
+study_id,title,model_group,immunotherapy,immunotherapy_type,accessions
+S-SYN-01,SYNTHETIC title one,Human clinical,None,,GSE000011
+S-SYN-02,SYNTHETIC title two,Human clinical,Checkpoint blockade,anti-PD-1 checkpoint,GSE000012; EGAS00000000016; ex://GSE000099
+S-SYN-03,SYNTHETIC title three,Mouse,Checkpoint blockade,checkpoint,GSE000013
+S-SYN-04,SYNTHETIC title four,Human clinical,SYNTHETIC CTLA-4 CHECKPOINT agent,,GSE000014
+S-SYN-05,SYNTHETIC title five,Human clinical,vaccine,,

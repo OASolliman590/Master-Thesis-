@@ -1,0 +1,2671 @@
+{
+ "cap_reached": false,
+ "duplicate_request_count": 8,
+ "duplicate_requests": [
+  {
+   "bytes": 4991,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q017-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q017-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q066_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q066",
+   "session": 2,
+   "sha256": "210428db750d6ae7999cc4a3dc199b077c62af76f396ea44bbf4ddae5f514bce",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=29443960&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:43.362Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 2345,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q018-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q018-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q067_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q067",
+   "session": 2,
+   "sha256": "477cad9c761ce8374737b27c67f141055d29341c9e24413a9a63e483bab00ebd",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=32879421&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:45.472Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 3743,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q019-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q019-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q068_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q068",
+   "session": 2,
+   "sha256": "953a85e1fff52623806c24a600ef3af78f38f5a7963ca8a8edc95d8f72c613b1",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34663807&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:45.961Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 2739,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q020-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q020-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q069_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q069",
+   "session": 2,
+   "sha256": "bd4cc64a46dd2d3dd5089074f698b78bee7e90ebc00eed69bb692d2b94688f71",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34654806&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:46.372Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 3217,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q021-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q021-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q070_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q070",
+   "session": 2,
+   "sha256": "b59b6d5a16a17f21fee898bfb72c2b06c19d98106af07165930fb755891397a9",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=39532835&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:46.862Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 2893,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q022-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q022-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q071_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q071",
+   "session": 2,
+   "sha256": "e6ed9bc2597b76215c2df5d6819b45e06aae88801a941e11d7c97c308e309469",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=41652014&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:47.579Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 2726,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q023-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q023-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q072_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q072",
+   "session": 2,
+   "sha256": "c8bfda405b48e38aaa1c63e11c06c029821729630f4f8ee38a2e5552269fe661",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=35671108&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:47.981Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 2312,
+   "curl_exit": 0,
+   "duplicate_of": "A-DAV-04-P2-Q024-F1",
+   "file": null,
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "private_file": "A-DAV-04-P2-Q024-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q073_PRIVATE.json",
+   "query_id": "A-DAV-04-P2-Q073",
+   "session": 2,
+   "sha256": "7292e09f1c1a837354bcaa78a74bb6eebbde0c0f29bfb2070813baa2c9c04829",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "private",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31703604&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:48.456Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  }
+ ],
+ "endpoints": [
+  "esearch",
+  "esummary",
+  "elink"
+ ],
+ "evaluated_request_count": 73,
+ "evaluation_sha256": "6b7b7fd87fae51656691df20e760bda0befd9bb492d4ad807b27dac125058dad",
+ "min_spacing_seconds_required": 0.4,
+ "pipeline_utc": "2026-10-17T16:00:00Z",
+ "request_cap": 150,
+ "request_count": 111,
+ "requests": [
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q001_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q001",
+   "session": 1,
+   "sha256": "29473c4f25196bd76c025d44576232241644aa56d852680e762e5d2d3fc26d2e",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE115821"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE115821%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:15.971Z"
+  },
+  {
+   "bytes": 488,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q002_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-025"
+   ],
+   "query_id": "A-DAV-04-P2-Q002",
+   "session": 1,
+   "sha256": "4111bb36223d774da48f6e0a3c4ce53135d35691f1ea278d9ddbc15ca2b20aa6",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE126044"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE126044%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:16.490Z"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q003_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-026"
+   ],
+   "query_id": "A-DAV-04-P2-Q003",
+   "session": 1,
+   "sha256": "8eff126c0ebc28568f1fb3624d207886c1082baa43149ef0136d6765fe64bab4",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE135222"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE135222%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:16.993Z"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q004_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "PROST-BULK-005"
+   ],
+   "query_id": "A-DAV-04-P2-Q004",
+   "session": 1,
+   "sha256": "cbad739924e9a7b21f2ae4e17cf1462215f91957044ac685781a801d15b10343",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE159237"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE159237%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:17.531Z"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q005_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-033"
+   ],
+   "query_id": "A-DAV-04-P2-Q005",
+   "session": 1,
+   "sha256": "cc7965754d4a17ecc21bc7d2d7b40f286583efa6f5aa825108646311c7a4affb",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE165278"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE165278%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:18.034Z"
+  },
+  {
+   "bytes": 770,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q005-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q005",
+   "priority_rows": [
+    "ICB-BULK-033"
+   ],
+   "query_id": "A-DAV-04-P2-Q005-F1",
+   "raw_bytes": 2031,
+   "raw_file": "A-DAV-04-P2-Q005-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "4f0186275ec4ba7d14765773ab33d60d94d46004f065136c6bbb0c3dddfcd98e",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "da7949e75d0c99cc38821e23a21158bee126bbf397df136a5fa900de6a706a86",
+   "source_sha256": "4f0186275ec4ba7d14765773ab33d60d94d46004f065136c6bbb0c3dddfcd98e",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE165278",
+    "uid": "200165278"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200165278&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:27.818Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q005-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q005",
+   "priority_rows": [
+    "ICB-BULK-033"
+   ],
+   "query_id": "A-DAV-04-P2-Q005-F2",
+   "session": 2,
+   "sha256": "339c042c02b9a7807336afe1031e51cdcdbc3c27a86e871defa2a1f1daaa3282",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE165278",
+    "uid": "200165278"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200165278&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:28.804Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q006_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q006",
+   "session": 1,
+   "sha256": "ae785c1e56c839348d02a960ee79bcb1a2534c3bf0d38552220cac77dd366e3c",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE168204"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE168204%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:19.824Z"
+  },
+  {
+   "bytes": 2042,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q006-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q006",
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q006-F1",
+   "raw_bytes": 3837,
+   "raw_file": "A-DAV-04-P2-Q006-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "fb041e667f3b8742a46dc33a31b06856cb140a0d7166e0629fc32773b766ac2a",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "d3257707bfdb11fd2df2c29a88ab2a6595e6b86ee5e24c482430d0068d422c61",
+   "source_sha256": "fb041e667f3b8742a46dc33a31b06856cb140a0d7166e0629fc32773b766ac2a",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE168204",
+    "uid": "200168204"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200168204&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:29.920Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q006-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q006",
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q006-F2",
+   "session": 2,
+   "sha256": "90378bd9270932fb1e07629471ff8f5ca768623d776b09114a75a05de775610f",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE168204",
+    "uid": "200168204"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200168204&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:30.359Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q007_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-009"
+   ],
+   "query_id": "A-DAV-04-P2-Q007",
+   "session": 1,
+   "sha256": "10bb696fabe62c6e06452101f7f0c1d1c595df488f36e0be0588db11c9da77aa",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE176307"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE176307%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:20.774Z"
+  },
+  {
+   "bytes": 2001,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q007-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q007",
+   "priority_rows": [
+    "ICB-BULK-009"
+   ],
+   "query_id": "A-DAV-04-P2-Q007-F1",
+   "raw_bytes": 7717,
+   "raw_file": "A-DAV-04-P2-Q007-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "ba89787c07921d9f42961213c11c5976de7c5cd25ebf10eee7d850f827c1d8ec",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "aa62d6444d4ce572496e812a073947b02a378826a7485a5cbdd1927f31b69c09",
+   "source_sha256": "ba89787c07921d9f42961213c11c5976de7c5cd25ebf10eee7d850f827c1d8ec",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE176307",
+    "uid": "200176307"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200176307&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:30.964Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q007-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q007",
+   "priority_rows": [
+    "ICB-BULK-009"
+   ],
+   "query_id": "A-DAV-04-P2-Q007-F2",
+   "session": 2,
+   "sha256": "2e0ef97add39e942313f59431abde79709f8de393912a7cd07df824d3b0fd619",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE176307",
+    "uid": "200176307"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200176307&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:31.398Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q008_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-024"
+   ],
+   "query_id": "A-DAV-04-P2-Q008",
+   "session": 1,
+   "sha256": "32e7a81ed96f67f75d14f466997470c481e0218a8a0d2ae4b09feab92a55bee4",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE181815"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE181815%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:21.278Z"
+  },
+  {
+   "bytes": 1546,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q008-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q008",
+   "priority_rows": [
+    "ICB-BULK-024"
+   ],
+   "query_id": "A-DAV-04-P2-Q008-F1",
+   "raw_bytes": 3565,
+   "raw_file": "A-DAV-04-P2-Q008-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "e48cf850e07ab0de1717b800d1d54fa2c32bddab23a8995a36cd83cbdb983e88",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "3c5457d9a9b7f9f0488e9459e19abe4cb18991d8c023f18047639ee5137edbcc",
+   "source_sha256": "e48cf850e07ab0de1717b800d1d54fa2c32bddab23a8995a36cd83cbdb983e88",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE181815",
+    "uid": "200181815"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200181815&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:31.822Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q008-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q008",
+   "priority_rows": [
+    "ICB-BULK-024"
+   ],
+   "query_id": "A-DAV-04-P2-Q008-F2",
+   "session": 2,
+   "sha256": "93b4b82628636e7c40cb3ae970f57bbce211280d13b4af674156b9b9c6dfe89f",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE181815",
+    "uid": "200181815"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200181815&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:33.595Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q009_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q009",
+   "session": 1,
+   "sha256": "d3125ef747217d691c1e6b0dce65d98e0615a36384285ffa3c27f83df16b8148",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188249"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE188249%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:21.783Z"
+  },
+  {
+   "bytes": 1484,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q009-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q009",
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q009-F1",
+   "raw_bytes": 3982,
+   "raw_file": "A-DAV-04-P2-Q009-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "5abb3596351a03490386ac0fc850b932b97ea8f4fc865899178cd7cc09775525",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "aad30df271971717b35ec41ff6e163a7c4a2ca7ba45746c70e516875c854ae42",
+   "source_sha256": "5abb3596351a03490386ac0fc850b932b97ea8f4fc865899178cd7cc09775525",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188249",
+    "uid": "200188249"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200188249&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:34.153Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q009-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q009",
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q009-F2",
+   "session": 2,
+   "sha256": "456fcf1690e85166ba43fcd0a5efd37639eba6ec6467bf1ac69756fecb3c73bb",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188249",
+    "uid": "200188249"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200188249&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:34.766Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q010_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q010",
+   "session": 1,
+   "sha256": "9380710f5eb6b6614efb9cf0c1f873410ffbd67ddfc26940b69c054ae45b2bf7",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188250"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE188250%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:22.283Z"
+  },
+  {
+   "bytes": 545,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q010-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q010",
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q010-F1",
+   "raw_bytes": 4730,
+   "raw_file": "A-DAV-04-P2-Q010-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "e0620fbe8fc91ba08e9b20c9bff688b8a51fd922762246e19fa1e534760bf657",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "0140393904f0f081ae7f9557e62ae36254a6ead653f9fa5cb63a81bd0bc75677",
+   "source_sha256": "e0620fbe8fc91ba08e9b20c9bff688b8a51fd922762246e19fa1e534760bf657",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188250",
+    "uid": "200188250"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200188250&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:35.124Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q010-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q010",
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q010-F2",
+   "session": 2,
+   "sha256": "bbad86d34fd8b036eaa01ea13d4b0e41c38c6451ddeb553023bec11fe3e86439",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE188250",
+    "uid": "200188250"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200188250&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:35.716Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 317,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q011_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S03"
+   ],
+   "query_id": "A-DAV-04-P2-Q011",
+   "session": 1,
+   "sha256": "08971d068464b034b7d662850c9194eee4e2e915f47a394a9fbd8f76035650f2",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE198052"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE198052%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:22.787Z"
+  },
+  {
+   "bytes": 1066,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q011-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q011",
+   "priority_rows": [
+    "S03"
+   ],
+   "query_id": "A-DAV-04-P2-Q011-F1",
+   "raw_bytes": 1477,
+   "raw_file": "A-DAV-04-P2-Q011-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "5b899f6afa0eb621cc74750f87255cb610d9117e6286bd1cfda95ec74cae2684",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "394059ac0d7081d4fa70bb7e86edbcbf67b3ed81ba0b135bbabb5352f4825b6d",
+   "source_sha256": "5b899f6afa0eb621cc74750f87255cb610d9117e6286bd1cfda95ec74cae2684",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE198052",
+    "uid": "200198052"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200198052&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:36.121Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 183,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q011-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q011",
+   "priority_rows": [
+    "S03"
+   ],
+   "query_id": "A-DAV-04-P2-Q011-F2",
+   "session": 2,
+   "sha256": "22a8186d66e76eebd224111c3026a9b59645530198f34b511836a8f1211e803d",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE198052",
+    "uid": "200198052"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200198052&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:36.711Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q012_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-027"
+   ],
+   "query_id": "A-DAV-04-P2-Q012",
+   "session": 1,
+   "sha256": "788eec1dbe4f3df0f51ef4bf92ef0a2c552f41c6218981d26149a71ef60be92c",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE213145"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE213145%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:23.290Z"
+  },
+  {
+   "bytes": 1228,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q012-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q012",
+   "priority_rows": [
+    "ICB-BULK-027"
+   ],
+   "query_id": "A-DAV-04-P2-Q012-F1",
+   "raw_bytes": 2362,
+   "raw_file": "A-DAV-04-P2-Q012-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "2c3bea8748f93f59c25b18b548ca14e9066d7ba89572c12dfe0b349f22b2f552",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "580a3feab7cf48a0107ab9f9369bba8ae5ea3750dc2391774c37fca81b192f85",
+   "source_sha256": "2c3bea8748f93f59c25b18b548ca14e9066d7ba89572c12dfe0b349f22b2f552",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE213145",
+    "uid": "200213145"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200213145&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:37.119Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q012-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q012",
+   "priority_rows": [
+    "ICB-BULK-027"
+   ],
+   "query_id": "A-DAV-04-P2-Q012-F2",
+   "session": 2,
+   "sha256": "d427a6272c323c515e52acc9adc14584e04704974007e906f5a4b9b1771cebea",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE213145",
+    "uid": "200213145"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200213145&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:37.701Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 512,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q013_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S01"
+   ],
+   "query_id": "A-DAV-04-P2-Q013",
+   "session": 1,
+   "sha256": "243b1a7998e672f9d50445d3f4bf1e4d6f75c17439e088bf4bee19d66ec8d287",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE248014"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE248014%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:23.793Z"
+  },
+  {
+   "bytes": 968,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q013-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q013",
+   "priority_rows": [
+    "S01"
+   ],
+   "query_id": "A-DAV-04-P2-Q013-F1",
+   "raw_bytes": 4683,
+   "raw_file": "A-DAV-04-P2-Q013-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "411d8c6b5f17bb448aefe3e82642a675df1f699d8723f94dffe059942ec04da0",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "f306ed3e1d41c7a81dc4a14e601f6fe4f01f259a6f5e34653a2f1f3f42b35ed1",
+   "source_sha256": "411d8c6b5f17bb448aefe3e82642a675df1f699d8723f94dffe059942ec04da0",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE248014",
+    "uid": "200248014"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200248014&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:39.666Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q013-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q013",
+   "priority_rows": [
+    "S01"
+   ],
+   "query_id": "A-DAV-04-P2-Q013-F2",
+   "session": 2,
+   "sha256": "3957361873ffc34ee3e8a9e1a1a354550b899588695ace5835de1b42ff20ffb9",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE248014",
+    "uid": "200248014"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200248014&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:40.113Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 416,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q014_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "PROST-BULK-003"
+   ],
+   "query_id": "A-DAV-04-P2-Q014",
+   "session": 1,
+   "sha256": "a02a1ee16baa7b8d079d8bf29842810ced1ef6ac504a0a209b87b0edb99d60a7",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE273798"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE273798%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:24.296Z"
+  },
+  {
+   "bytes": 1146,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q014-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q014",
+   "priority_rows": [
+    "PROST-BULK-003"
+   ],
+   "query_id": "A-DAV-04-P2-Q014-F1",
+   "raw_bytes": 2144,
+   "raw_file": "A-DAV-04-P2-Q014-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "edd703d80b58055f64e494f26a5b97ebbd930feb18a29d35a6ba16b9efd5658d",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "bd43cb2695a0abb4bd1ea282ccc402d0126232055ba279b00ec874c3d65a2785",
+   "source_sha256": "edd703d80b58055f64e494f26a5b97ebbd930feb18a29d35a6ba16b9efd5658d",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE273798",
+    "uid": "200273798"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200273798&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:40.519Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q014-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q014",
+   "priority_rows": [
+    "PROST-BULK-003"
+   ],
+   "query_id": "A-DAV-04-P2-Q014-F2",
+   "session": 2,
+   "sha256": "66785f9c4f3fb61248b0500ba75ecaed600ab24eb898ba811947384c88d9f8ed",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE273798",
+    "uid": "200273798"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200273798&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:41.165Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 510,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q015_esearch_gds_accn.json",
+   "http_status": 200,
+   "kind": "esearch_gds_accn",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-001"
+   ],
+   "query_id": "A-DAV-04-P2-Q015",
+   "session": 1,
+   "sha256": "e14674e0a6ee0538002fa3b31b8358586f9b6eca3cc62e6bbd9d8e770ad96da2",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE78220"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=GSE78220%5BACCN%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:24.800Z"
+  },
+  {
+   "bytes": 1852,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q015-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q015",
+   "priority_rows": [
+    "ICB-BULK-001"
+   ],
+   "query_id": "A-DAV-04-P2-Q015-F1",
+   "raw_bytes": 3300,
+   "raw_file": "A-DAV-04-P2-Q015-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "b9dedadfbb54ac366ff2420310796a90ffc4ac5c9d36d2f949569f0844668c4c",
+   "raw_storage": "private",
+   "session": 2,
+   "sha256": "e12dc380d970b78582867348f2dfdc092a9e0d2186a69c79efd36c9ce482dca0",
+   "source_sha256": "b9dedadfbb54ac366ff2420310796a90ffc4ac5c9d36d2f949569f0844668c4c",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE78220",
+    "uid": "200078220"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200078220&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:41.746Z",
+   "utc_source": "file write time; session-2 start time was not logged",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q015-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q015",
+   "priority_rows": [
+    "ICB-BULK-001"
+   ],
+   "query_id": "A-DAV-04-P2-Q015-F2",
+   "session": 2,
+   "sha256": "c8cc8df699b51dd86b75f4a7c1ae8ff16330b48a295e5855d6c758ac05d6c610",
+   "spacing_status": "original_unevidenced_spacing",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE78220",
+    "uid": "200078220"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200078220&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:48:42.491Z",
+   "utc_source": "file write time; session-2 start time was not logged"
+  },
+  {
+   "bytes": 25956,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q016_esummary_pubmed_batch.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_batch",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-002",
+    "ICB-BULK-003",
+    "ICB-BULK-009",
+    "ICB-BULK-024",
+    "ICB-BULK-042",
+    "PROST-BULK-003",
+    "PROST-BULK-005",
+    "PROST-BULK-010"
+   ],
+   "query_id": "A-DAV-04-P2-Q016",
+   "session": 1,
+   "sha256": "05a6966a2f00b7a0443596b90da4d81658a69701ce4d07ca725cd5ed0306e29b",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmids": [
+     "29033130",
+     "29443960",
+     "30127394",
+     "33771853",
+     "34294892",
+     "34622229",
+     "39536751",
+     "39964352"
+    ]
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=29033130%2C29443960%2C30127394%2C33771853%2C34294892%2C34622229%2C39536751%2C39964352&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:25.302Z"
+  },
+  {
+   "bytes": 205,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q017_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-014"
+   ],
+   "query_id": "A-DAV-04-P2-Q017",
+   "session": 1,
+   "sha256": "4fd855489f8c456a5e7d26dbe10c9eeee0d281210707948df6d9a958f7fc2bc6",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/nature25501"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fnature25501%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:25.822Z"
+  },
+  {
+   "bytes": 4991,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q017-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q017",
+   "priority_rows": [
+    "ICB-BULK-014"
+   ],
+   "query_id": "A-DAV-04-P2-Q017-F1",
+   "session": 1,
+   "sha256": "210428db750d6ae7999cc4a3dc199b077c62af76f396ea44bbf4ddae5f514bce",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/nature25501",
+    "pmid": "29443960"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=29443960&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:35.838Z"
+  },
+  {
+   "bytes": 212,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q018_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-025"
+   ],
+   "query_id": "A-DAV-04-P2-Q018",
+   "session": 1,
+   "sha256": "762ef8ad41096974d3c9decae5a8580cca2b6b5e45e2e373b9b0fb851b4b023d",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s12276-020-00493-8"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fs12276-020-00493-8%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:26.327Z"
+  },
+  {
+   "bytes": 2345,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q018-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q018",
+   "priority_rows": [
+    "ICB-BULK-025"
+   ],
+   "query_id": "A-DAV-04-P2-Q018-F1",
+   "session": 1,
+   "sha256": "477cad9c761ce8374737b27c67f141055d29341c9e24413a9a63e483bab00ebd",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s12276-020-00493-8",
+    "pmid": "32879421"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=32879421&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:36.342Z"
+  },
+  {
+   "bytes": 212,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q019_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S03"
+   ],
+   "query_id": "A-DAV-04-P2-Q019",
+   "session": 1,
+   "sha256": "6103258940510427c3dbf12233f3f607d24d0c6ca8b9f14cfaf06a12098064b3",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-021-26282-z"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fs41467-021-26282-z%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:26.830Z"
+  },
+  {
+   "bytes": 3743,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q019-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q019",
+   "priority_rows": [
+    "S03"
+   ],
+   "query_id": "A-DAV-04-P2-Q019-F1",
+   "session": 1,
+   "sha256": "953a85e1fff52623806c24a600ef3af78f38f5a7963ca8a8edc95d8f72c613b1",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-021-26282-z",
+    "pmid": "34663807"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34663807&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:36.846Z"
+  },
+  {
+   "bytes": 212,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q020_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q020",
+   "session": 1,
+   "sha256": "c5069c1ecc07344d6f81a795875d0895b7c5448ebdd53fe4f87b552e7e56f19a",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-021-26299-4"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fs41467-021-26299-4%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:27.334Z"
+  },
+  {
+   "bytes": 2739,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q020-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q020",
+   "priority_rows": [
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q020-F1",
+   "session": 1,
+   "sha256": "bd4cc64a46dd2d3dd5089074f698b78bee7e90ebc00eed69bb692d2b94688f71",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-021-26299-4",
+    "pmid": "34654806"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34654806&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:37.351Z"
+  },
+  {
+   "bytes": 212,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q021_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S01"
+   ],
+   "query_id": "A-DAV-04-P2-Q021",
+   "session": 1,
+   "sha256": "31e66eb9e8d5c1d0474bc1074fea538acfdad9d51fae2af3d1726ae77bbc13b8",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-024-52528-7"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fs41467-024-52528-7%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:27.838Z"
+  },
+  {
+   "bytes": 3217,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q021-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q021",
+   "priority_rows": [
+    "S01"
+   ],
+   "query_id": "A-DAV-04-P2-Q021-F1",
+   "session": 1,
+   "sha256": "b59b6d5a16a17f21fee898bfb72c2b06c19d98106af07165930fb755891397a9",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s41467-024-52528-7",
+    "pmid": "39532835"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=39532835&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:37.936Z"
+  },
+  {
+   "bytes": 212,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q022_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S05"
+   ],
+   "query_id": "A-DAV-04-P2-Q022",
+   "session": 1,
+   "sha256": "2b9fcece53eb48b84889175af592f7f41190de4bf02bccd8133928da2dfe7682",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s43856-026-01404-0"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1038%2Fs43856-026-01404-0%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:28.428Z"
+  },
+  {
+   "bytes": 2893,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q022-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q022",
+   "priority_rows": [
+    "S05"
+   ],
+   "query_id": "A-DAV-04-P2-Q022-F1",
+   "session": 1,
+   "sha256": "e6ed9bc2597b76215c2df5d6819b45e06aae88801a941e11d7c97c308e309469",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1038/s43856-026-01404-0",
+    "pmid": "41652014"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=41652014&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:39.662Z"
+  },
+  {
+   "bytes": 203,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q023_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q023",
+   "session": 1,
+   "sha256": "f07abe2f94a83080cde40edaa1aea5a60d695a39b0fc3667441ebf8bccd48976",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1172/jci158800"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1172%2Fjci158800%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:29.075Z"
+  },
+  {
+   "bytes": 2726,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q023-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q023",
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q023-F1",
+   "session": 1,
+   "sha256": "c8bfda405b48e38aaa1c63e11c06c029821729630f4f8ee38a2e5552269fe661",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1172/jci158800",
+    "pmid": "35671108"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=35671108&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:40.167Z"
+  },
+  {
+   "bytes": 211,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q024_esearch_pubmed_doi.json",
+   "http_status": 200,
+   "kind": "esearch_pubmed_doi",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S06"
+   ],
+   "query_id": "A-DAV-04-P2-Q024",
+   "session": 1,
+   "sha256": "38e920572bdd3a0d7672afd15b83cbbfc18d86aec9f180258e183b5da13e9d72",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1186/s40425-019-0745-3"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=10.1186%2Fs40425-019-0745-3%5BDOI%5D&retmode=json&retstart=0&retmax=20&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:29.579Z"
+  },
+  {
+   "bytes": 2312,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q024-F1_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "esummary_pubmed_uid",
+   "lane": "B-publication-metadata",
+   "parent_query_id": "A-DAV-04-P2-Q024",
+   "priority_rows": [
+    "S06"
+   ],
+   "query_id": "A-DAV-04-P2-Q024-F1",
+   "session": 1,
+   "sha256": "7292e09f1c1a837354bcaa78a74bb6eebbde0c0f29bfb2070813baa2c9c04829",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "doi": "10.1186/s40425-019-0745-3",
+    "pmid": "31703604"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31703604&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:40.671Z"
+  },
+  {
+   "bytes": 613,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q025_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S07"
+   ],
+   "query_id": "A-DAV-04-P2-Q025",
+   "session": 1,
+   "sha256": "5d384dcf7ea57efe6fd868ee77652c65deb29fcdc1edf894dd4fc15c460b8eb4",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "10010343"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=10010343&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:30.169Z"
+  },
+  {
+   "bytes": 954,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q026_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "PROST-BULK-003"
+   ],
+   "query_id": "A-DAV-04-P2-Q026",
+   "session": 1,
+   "sha256": "a9b05a09c0499d28115daa13cf0939e385a07b22e13b56f2388be6113b134ad5",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "11604497"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=11604497&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:30.671Z"
+  },
+  {
+   "bytes": 591,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q027_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S24"
+   ],
+   "query_id": "A-DAV-04-P2-Q027",
+   "session": 1,
+   "sha256": "448d4ff3f639ca45e56dcea35bc6f9f8ebc14e1c86f7b92c35f4eb2e552d16b0",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "11916277"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=11916277&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:31.175Z"
+  },
+  {
+   "bytes": 547,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q028_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S05"
+   ],
+   "query_id": "A-DAV-04-P2-Q028",
+   "session": 1,
+   "sha256": "fb10b20f015119d09b3cc62171444136493780a16e7d393a1a8171dbf193205e",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "12988192"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=12988192&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:31.814Z"
+  },
+  {
+   "bytes": 722,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q029_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-001"
+   ],
+   "query_id": "A-DAV-04-P2-Q029",
+   "session": 1,
+   "sha256": "4caf229259275cef8f09078c313230b0b468889d66dce64506172b92bad40ce0",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "4808437"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=4808437&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:32.318Z"
+  },
+  {
+   "bytes": 579,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q030_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-014",
+    "ICB-BULK-042"
+   ],
+   "query_id": "A-DAV-04-P2-Q030",
+   "session": 1,
+   "sha256": "056d2eafbf1496243e6dc9b98af971491669681e9d27a4552b814aa7f3c8c647",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "6028240"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=6028240&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:32.820Z"
+  },
+  {
+   "bytes": 843,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q031_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-038"
+   ],
+   "query_id": "A-DAV-04-P2-Q031",
+   "session": 1,
+   "sha256": "1f553a8ec285ab0c47f45b401d0262b8dba784769d111b9f8dc9f732216ee4e6",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "6035749"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=6035749&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:33.323Z"
+  },
+  {
+   "bytes": 752,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q032_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S06"
+   ],
+   "query_id": "A-DAV-04-P2-Q032",
+   "session": 1,
+   "sha256": "1000e007e52ebf558dccebc9873258036eefe94d5425a5bfc9da7cab31e36fa2",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "6839078"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=6839078&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:33.826Z"
+  },
+  {
+   "bytes": 809,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q033_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-026"
+   ],
+   "query_id": "A-DAV-04-P2-Q033",
+   "session": 1,
+   "sha256": "e9350d670621da4ae41b24f79fda64009497cc711351d3686e185b6d9c36d221",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "7410160"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=7410160&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:34.326Z"
+  },
+  {
+   "bytes": 920,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q034_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "S02"
+   ],
+   "query_id": "A-DAV-04-P2-Q034",
+   "session": 1,
+   "sha256": "f8f910d8d961452c6bc3bd22df33f7066f50f96f961ba57a60340035ac78c8cd",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "9282926"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=9282926&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:34.831Z"
+  },
+  {
+   "bytes": 1063,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q035_elink_pmc_pubmed.json",
+   "http_status": 200,
+   "kind": "elink_pmc_pubmed",
+   "parent_query_id": null,
+   "priority_rows": [
+    "ICB-BULK-027"
+   ],
+   "query_id": "A-DAV-04-P2-Q035",
+   "session": 1,
+   "sha256": "a6ab33380f6787233d9fd3568fd69d8cd2a976d4c26aa91863d5b3e59247c92a",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "pmc": "9554309"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pmc&db=pubmed&id=9554309&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:47:35.334Z"
+  },
+  {
+   "bytes": 2124,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q001-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q001",
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q001-F1",
+   "raw_bytes": 4393,
+   "raw_file": "A-DAV-04-P2-Q001-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "f1f94714ac20c1cd111c3bde546fd1d6467b454351168b646567d03c30b97ccb",
+   "raw_storage": "private",
+   "session": 3,
+   "sha256": "fc60946ed99cea6d69fd3e5c48370de071aba3c1cae7dca0abf6dea7cdb07cf0",
+   "source_sha256": "f1f94714ac20c1cd111c3bde546fd1d6467b454351168b646567d03c30b97ccb",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE115821",
+    "uid": "200115821"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200115821&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:53.913Z",
+   "utc_source": "request start (logged)",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 183,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q001-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q001",
+   "priority_rows": [
+    "ICB-BULK-003",
+    "ICB-BULK-019"
+   ],
+   "query_id": "A-DAV-04-P2-Q001-F2",
+   "session": 3,
+   "sha256": "a2c274fd81cbc40e9126b0b3ca9453bcf51de07c0b908b5c0593054560d23e45",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE115821",
+    "uid": "200115821"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200115821&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:55.665Z",
+   "utc_source": "request start (logged)"
+  },
+  {
+   "bytes": 883,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q002-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q002",
+   "priority_rows": [
+    "ICB-BULK-025"
+   ],
+   "query_id": "A-DAV-04-P2-Q002-F1",
+   "raw_bytes": 1995,
+   "raw_file": "A-DAV-04-P2-Q002-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "c16f13c95b26f7c3f34b90839116b67b78697e6f94869fcf2de833eeb097bc80",
+   "raw_storage": "private",
+   "session": 3,
+   "sha256": "ca2a73bc45518f3759ba034778f2c4ac77366e7e5724b9f8dc53ec8d9b57b9c5",
+   "source_sha256": "c16f13c95b26f7c3f34b90839116b67b78697e6f94869fcf2de833eeb097bc80",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE126044",
+    "uid": "200126044"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200126044&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:56.168Z",
+   "utc_source": "request start (logged)",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q002-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q002",
+   "priority_rows": [
+    "ICB-BULK-025"
+   ],
+   "query_id": "A-DAV-04-P2-Q002-F2",
+   "session": 3,
+   "sha256": "0b281aab74467bc188edb48f22cbca3e0e46cf709f01dc48b71b2ae3ec021aac",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE126044",
+    "uid": "200126044"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200126044&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:56.673Z",
+   "utc_source": "request start (logged)"
+  },
+  {
+   "bytes": 1816,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q003-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q003",
+   "priority_rows": [
+    "ICB-BULK-026"
+   ],
+   "query_id": "A-DAV-04-P2-Q003-F1",
+   "raw_bytes": 3384,
+   "raw_file": "A-DAV-04-P2-Q003-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "9a87567f824051e820c697d62ca58897b17447cc702abe1381b487e65908f5c6",
+   "raw_storage": "private",
+   "session": 3,
+   "sha256": "6ebedefb614a2efd0c73a2555165ba3f91b6eca475f9e6bd3f0e4f4129631c51",
+   "source_sha256": "9a87567f824051e820c697d62ca58897b17447cc702abe1381b487e65908f5c6",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE135222",
+    "uid": "200135222"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200135222&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:57.175Z",
+   "utc_source": "request start (logged)",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 183,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q003-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q003",
+   "priority_rows": [
+    "ICB-BULK-026"
+   ],
+   "query_id": "A-DAV-04-P2-Q003-F2",
+   "session": 3,
+   "sha256": "ce4bf56622e908b0995e1d392e7482aeee7d1e0039862d4f6ce44eef4c229130",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE135222",
+    "uid": "200135222"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200135222&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:57.679Z",
+   "utc_source": "request start (logged)"
+  },
+  {
+   "bytes": 802,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q004-F1_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "kind": "esummary_gds_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q004",
+   "priority_rows": [
+    "PROST-BULK-005"
+   ],
+   "query_id": "A-DAV-04-P2-Q004-F1",
+   "raw_bytes": 2260,
+   "raw_file": "A-DAV-04-P2-Q004-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_sha256": "38a17ccfc78d51903433071bef558687b3e31a22b70e22668483cfe5bf3b4856",
+   "raw_storage": "private",
+   "session": 3,
+   "sha256": "6f5ecaf182d4d889fef3ab23894ee96f2c0c4743b080198a84433758d0aa7cb1",
+   "source_sha256": "38a17ccfc78d51903433071bef558687b3e31a22b70e22668483cfe5bf3b4856",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE159237",
+    "uid": "200159237"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200159237&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:58.184Z",
+   "utc_source": "request start (logged)",
+   "view": "sample-free allow-listed GDS metadata; samples omitted"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "file": "A-DAV-04-P2-Q004-F2_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "kind": "elink_gds_pubmed_uid",
+   "lane": "C-repository-object-discovery",
+   "parent_query_id": "A-DAV-04-P2-Q004",
+   "priority_rows": [
+    "PROST-BULK-005"
+   ],
+   "query_id": "A-DAV-04-P2-Q004-F2",
+   "session": 3,
+   "sha256": "489f9713629377b6cc10e230af344629bf49da677870f8b770275214b5ccf6cc",
+   "spacing_status": "logged_start",
+   "storage": "committed",
+   "target": {
+    "gse": "GSE159237",
+    "uid": "200159237"
+   },
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200159237&retmode=json&tool=a-dav-04-queue-reconciliation",
+   "utc": "2026-10-17T19:51:58.686Z",
+   "utc_source": "request start (logged)"
+  }
+ ],
+ "requests_planned_but_not_run": [],
+ "rerun_request_count": 30,
+ "rerun_requests": [
+  {
+   "bytes": 770,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:09.706Z",
+   "file": "A-DAV-04-P2-Q005-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 770,
+   "original_file": "A-DAV-04-P2-Q005-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "da7949e75d0c99cc38821e23a21158bee126bbf397df136a5fa900de6a706a86",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q005-F1-R",
+   "raw_bytes": 2031,
+   "raw_file": "A-DAV-04-P2-Q005-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 2031,
+   "raw_original_file": "A-DAV-04-P2-Q005-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "4f0186275ec4ba7d14765773ab33d60d94d46004f065136c6bbb0c3dddfcd98e",
+   "raw_sha256": "4f0186275ec4ba7d14765773ab33d60d94d46004f065136c6bbb0c3dddfcd98e",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q005-F1",
+   "session": 4,
+   "sha256": "da7949e75d0c99cc38821e23a21158bee126bbf397df136a5fa900de6a706a86",
+   "source_sha256": "4f0186275ec4ba7d14765773ab33d60d94d46004f065136c6bbb0c3dddfcd98e",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:09.132Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200165278&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:10.244Z",
+   "file": "A-DAV-04-P2-Q005-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q005-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "339c042c02b9a7807336afe1031e51cdcdbc3c27a86e871defa2a1f1daaa3282",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q005-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q005-F2",
+   "session": 4,
+   "sha256": "339c042c02b9a7807336afe1031e51cdcdbc3c27a86e871defa2a1f1daaa3282",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:09.715Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200165278&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2042,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:10.689Z",
+   "file": "A-DAV-04-P2-Q006-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 2042,
+   "original_file": "A-DAV-04-P2-Q006-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "d3257707bfdb11fd2df2c29a88ab2a6595e6b86ee5e24c482430d0068d422c61",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q006-F1-R",
+   "raw_bytes": 3837,
+   "raw_file": "A-DAV-04-P2-Q006-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 3837,
+   "raw_original_file": "A-DAV-04-P2-Q006-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "fb041e667f3b8742a46dc33a31b06856cb140a0d7166e0629fc32773b766ac2a",
+   "raw_sha256": "fb041e667f3b8742a46dc33a31b06856cb140a0d7166e0629fc32773b766ac2a",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q006-F1",
+   "session": 4,
+   "sha256": "d3257707bfdb11fd2df2c29a88ab2a6595e6b86ee5e24c482430d0068d422c61",
+   "source_sha256": "fb041e667f3b8742a46dc33a31b06856cb140a0d7166e0629fc32773b766ac2a",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:10.247Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200168204&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:11.309Z",
+   "file": "A-DAV-04-P2-Q006-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q006-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "90378bd9270932fb1e07629471ff8f5ca768623d776b09114a75a05de775610f",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q006-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q006-F2",
+   "session": 4,
+   "sha256": "90378bd9270932fb1e07629471ff8f5ca768623d776b09114a75a05de775610f",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:10.750Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200168204&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2001,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:11.722Z",
+   "file": "A-DAV-04-P2-Q007-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 2001,
+   "original_file": "A-DAV-04-P2-Q007-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "aa62d6444d4ce572496e812a073947b02a378826a7485a5cbdd1927f31b69c09",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q007-F1-R",
+   "raw_bytes": 7717,
+   "raw_file": "A-DAV-04-P2-Q007-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 7717,
+   "raw_original_file": "A-DAV-04-P2-Q007-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "ba89787c07921d9f42961213c11c5976de7c5cd25ebf10eee7d850f827c1d8ec",
+   "raw_sha256": "ba89787c07921d9f42961213c11c5976de7c5cd25ebf10eee7d850f827c1d8ec",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q007-F1",
+   "session": 4,
+   "sha256": "aa62d6444d4ce572496e812a073947b02a378826a7485a5cbdd1927f31b69c09",
+   "source_sha256": "ba89787c07921d9f42961213c11c5976de7c5cd25ebf10eee7d850f827c1d8ec",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:11.312Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200176307&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:12.333Z",
+   "file": "A-DAV-04-P2-Q007-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q007-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "2e0ef97add39e942313f59431abde79709f8de393912a7cd07df824d3b0fd619",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q007-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q007-F2",
+   "session": 4,
+   "sha256": "2e0ef97add39e942313f59431abde79709f8de393912a7cd07df824d3b0fd619",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:11.812Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200176307&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1546,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:12.942Z",
+   "file": "A-DAV-04-P2-Q008-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1546,
+   "original_file": "A-DAV-04-P2-Q008-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "3c5457d9a9b7f9f0488e9459e19abe4cb18991d8c023f18047639ee5137edbcc",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q008-F1-R",
+   "raw_bytes": 3565,
+   "raw_file": "A-DAV-04-P2-Q008-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 3565,
+   "raw_original_file": "A-DAV-04-P2-Q008-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "e48cf850e07ab0de1717b800d1d54fa2c32bddab23a8995a36cd83cbdb983e88",
+   "raw_sha256": "e48cf850e07ab0de1717b800d1d54fa2c32bddab23a8995a36cd83cbdb983e88",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q008-F1",
+   "session": 4,
+   "sha256": "3c5457d9a9b7f9f0488e9459e19abe4cb18991d8c023f18047639ee5137edbcc",
+   "source_sha256": "e48cf850e07ab0de1717b800d1d54fa2c32bddab23a8995a36cd83cbdb983e88",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:12.336Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200181815&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:13.495Z",
+   "file": "A-DAV-04-P2-Q008-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q008-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "93b4b82628636e7c40cb3ae970f57bbce211280d13b4af674156b9b9c6dfe89f",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q008-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q008-F2",
+   "session": 4,
+   "sha256": "93b4b82628636e7c40cb3ae970f57bbce211280d13b4af674156b9b9c6dfe89f",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:12.947Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200181815&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1484,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:13.948Z",
+   "file": "A-DAV-04-P2-Q009-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1484,
+   "original_file": "A-DAV-04-P2-Q009-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "aad30df271971717b35ec41ff6e163a7c4a2ca7ba45746c70e516875c854ae42",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q009-F1-R",
+   "raw_bytes": 3982,
+   "raw_file": "A-DAV-04-P2-Q009-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 3982,
+   "raw_original_file": "A-DAV-04-P2-Q009-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "5abb3596351a03490386ac0fc850b932b97ea8f4fc865899178cd7cc09775525",
+   "raw_sha256": "5abb3596351a03490386ac0fc850b932b97ea8f4fc865899178cd7cc09775525",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q009-F1",
+   "session": 4,
+   "sha256": "aad30df271971717b35ec41ff6e163a7c4a2ca7ba45746c70e516875c854ae42",
+   "source_sha256": "5abb3596351a03490386ac0fc850b932b97ea8f4fc865899178cd7cc09775525",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:13.498Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200188249&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:14.580Z",
+   "file": "A-DAV-04-P2-Q009-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q009-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "456fcf1690e85166ba43fcd0a5efd37639eba6ec6467bf1ac69756fecb3c73bb",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q009-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q009-F2",
+   "session": 4,
+   "sha256": "456fcf1690e85166ba43fcd0a5efd37639eba6ec6467bf1ac69756fecb3c73bb",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:13.999Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200188249&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 545,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:15.033Z",
+   "file": "A-DAV-04-P2-Q010-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 545,
+   "original_file": "A-DAV-04-P2-Q010-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "0140393904f0f081ae7f9557e62ae36254a6ead653f9fa5cb63a81bd0bc75677",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q010-F1-R",
+   "raw_bytes": 4730,
+   "raw_file": "A-DAV-04-P2-Q010-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 4730,
+   "raw_original_file": "A-DAV-04-P2-Q010-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "e0620fbe8fc91ba08e9b20c9bff688b8a51fd922762246e19fa1e534760bf657",
+   "raw_sha256": "e0620fbe8fc91ba08e9b20c9bff688b8a51fd922762246e19fa1e534760bf657",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q010-F1",
+   "session": 4,
+   "sha256": "0140393904f0f081ae7f9557e62ae36254a6ead653f9fa5cb63a81bd0bc75677",
+   "source_sha256": "e0620fbe8fc91ba08e9b20c9bff688b8a51fd922762246e19fa1e534760bf657",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:14.583Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200188250&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:15.702Z",
+   "file": "A-DAV-04-P2-Q010-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q010-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "bbad86d34fd8b036eaa01ea13d4b0e41c38c6451ddeb553023bec11fe3e86439",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q010-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q010-F2",
+   "session": 4,
+   "sha256": "bbad86d34fd8b036eaa01ea13d4b0e41c38c6451ddeb553023bec11fe3e86439",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:15.083Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200188250&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1066,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:16.126Z",
+   "file": "A-DAV-04-P2-Q011-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1066,
+   "original_file": "A-DAV-04-P2-Q011-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "394059ac0d7081d4fa70bb7e86edbcbf67b3ed81ba0b135bbabb5352f4825b6d",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q011-F1-R",
+   "raw_bytes": 1477,
+   "raw_file": "A-DAV-04-P2-Q011-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 1477,
+   "raw_original_file": "A-DAV-04-P2-Q011-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "5b899f6afa0eb621cc74750f87255cb610d9117e6286bd1cfda95ec74cae2684",
+   "raw_sha256": "5b899f6afa0eb621cc74750f87255cb610d9117e6286bd1cfda95ec74cae2684",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q011-F1",
+   "session": 4,
+   "sha256": "394059ac0d7081d4fa70bb7e86edbcbf67b3ed81ba0b135bbabb5352f4825b6d",
+   "source_sha256": "5b899f6afa0eb621cc74750f87255cb610d9117e6286bd1cfda95ec74cae2684",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:15.704Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200198052&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 183,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:16.717Z",
+   "file": "A-DAV-04-P2-Q011-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 183,
+   "original_file": "A-DAV-04-P2-Q011-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "22a8186d66e76eebd224111c3026a9b59645530198f34b511836a8f1211e803d",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q011-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q011-F2",
+   "session": 4,
+   "sha256": "22a8186d66e76eebd224111c3026a9b59645530198f34b511836a8f1211e803d",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:16.207Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200198052&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1228,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:17.338Z",
+   "file": "A-DAV-04-P2-Q012-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1228,
+   "original_file": "A-DAV-04-P2-Q012-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "580a3feab7cf48a0107ab9f9369bba8ae5ea3750dc2391774c37fca81b192f85",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q012-F1-R",
+   "raw_bytes": 2362,
+   "raw_file": "A-DAV-04-P2-Q012-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 2362,
+   "raw_original_file": "A-DAV-04-P2-Q012-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "2c3bea8748f93f59c25b18b548ca14e9066d7ba89572c12dfe0b349f22b2f552",
+   "raw_sha256": "2c3bea8748f93f59c25b18b548ca14e9066d7ba89572c12dfe0b349f22b2f552",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q012-F1",
+   "session": 4,
+   "sha256": "580a3feab7cf48a0107ab9f9369bba8ae5ea3750dc2391774c37fca81b192f85",
+   "source_sha256": "2c3bea8748f93f59c25b18b548ca14e9066d7ba89572c12dfe0b349f22b2f552",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:16.720Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200213145&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:17.844Z",
+   "file": "A-DAV-04-P2-Q012-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q012-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "d427a6272c323c515e52acc9adc14584e04704974007e906f5a4b9b1771cebea",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q012-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q012-F2",
+   "session": 4,
+   "sha256": "d427a6272c323c515e52acc9adc14584e04704974007e906f5a4b9b1771cebea",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:17.343Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200213145&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 968,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:18.263Z",
+   "file": "A-DAV-04-P2-Q013-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 968,
+   "original_file": "A-DAV-04-P2-Q013-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "f306ed3e1d41c7a81dc4a14e601f6fe4f01f259a6f5e34653a2f1f3f42b35ed1",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q013-F1-R",
+   "raw_bytes": 4683,
+   "raw_file": "A-DAV-04-P2-Q013-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 4683,
+   "raw_original_file": "A-DAV-04-P2-Q013-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "411d8c6b5f17bb448aefe3e82642a675df1f699d8723f94dffe059942ec04da0",
+   "raw_sha256": "411d8c6b5f17bb448aefe3e82642a675df1f699d8723f94dffe059942ec04da0",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q013-F1",
+   "session": 4,
+   "sha256": "f306ed3e1d41c7a81dc4a14e601f6fe4f01f259a6f5e34653a2f1f3f42b35ed1",
+   "source_sha256": "411d8c6b5f17bb448aefe3e82642a675df1f699d8723f94dffe059942ec04da0",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:17.847Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200248014&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:18.852Z",
+   "file": "A-DAV-04-P2-Q013-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q013-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "3957361873ffc34ee3e8a9e1a1a354550b899588695ace5835de1b42ff20ffb9",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q013-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q013-F2",
+   "session": 4,
+   "sha256": "3957361873ffc34ee3e8a9e1a1a354550b899588695ace5835de1b42ff20ffb9",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:18.348Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200248014&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1146,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:19.239Z",
+   "file": "A-DAV-04-P2-Q014-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1146,
+   "original_file": "A-DAV-04-P2-Q014-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "bd43cb2695a0abb4bd1ea282ccc402d0126232055ba279b00ec874c3d65a2785",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q014-F1-R",
+   "raw_bytes": 2144,
+   "raw_file": "A-DAV-04-P2-Q014-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 2144,
+   "raw_original_file": "A-DAV-04-P2-Q014-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "edd703d80b58055f64e494f26a5b97ebbd930feb18a29d35a6ba16b9efd5658d",
+   "raw_sha256": "edd703d80b58055f64e494f26a5b97ebbd930feb18a29d35a6ba16b9efd5658d",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q014-F1",
+   "session": 4,
+   "sha256": "bd43cb2695a0abb4bd1ea282ccc402d0126232055ba279b00ec874c3d65a2785",
+   "source_sha256": "edd703d80b58055f64e494f26a5b97ebbd930feb18a29d35a6ba16b9efd5658d",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:18.855Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200273798&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:19.869Z",
+   "file": "A-DAV-04-P2-Q014-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q014-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "66785f9c4f3fb61248b0500ba75ecaed600ab24eb898ba811947384c88d9f8ed",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q014-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q014-F2",
+   "session": 4,
+   "sha256": "66785f9c4f3fb61248b0500ba75ecaed600ab24eb898ba811947384c88d9f8ed",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:19.355Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200273798&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 1852,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:20.277Z",
+   "file": "A-DAV-04-P2-Q015-F1-R_esummary_gds_uid_sample_free_view.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_gds_uid",
+   "original_bytes": 1852,
+   "original_file": "A-DAV-04-P2-Q015-F1_esummary_gds_uid_sample_free_view.json",
+   "original_sha256": "e12dc380d970b78582867348f2dfdc092a9e0d2186a69c79efd36c9ce482dca0",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q015-F1-R",
+   "raw_bytes": 3300,
+   "raw_file": "A-DAV-04-P2-Q015-F1-R_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_identical_to_original": true,
+   "raw_original_bytes": 3300,
+   "raw_original_file": "A-DAV-04-P2-Q015-F1_esummary_gds_uid_RAW_PRIVATE.json",
+   "raw_original_sha256": "b9dedadfbb54ac366ff2420310796a90ffc4ac5c9d36d2f949569f0844668c4c",
+   "raw_sha256": "b9dedadfbb54ac366ff2420310796a90ffc4ac5c9d36d2f949569f0844668c4c",
+   "raw_storage": "private",
+   "rerun_of": "A-DAV-04-P2-Q015-F1",
+   "session": 4,
+   "sha256": "e12dc380d970b78582867348f2dfdc092a9e0d2186a69c79efd36c9ce482dca0",
+   "source_sha256": "b9dedadfbb54ac366ff2420310796a90ffc4ac5c9d36d2f949569f0844668c4c",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:19.873Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200078220&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 172,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:20.865Z",
+   "file": "A-DAV-04-P2-Q015-F2-R_elink_gds_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "elink_gds_pubmed_uid",
+   "original_bytes": 172,
+   "original_file": "A-DAV-04-P2-Q015-F2_elink_gds_pubmed_uid.json",
+   "original_sha256": "c8cc8df699b51dd86b75f4a7c1ae8ff16330b48a295e5855d6c758ac05d6c610",
+   "original_storage": "committed",
+   "query_id": "A-DAV-04-P2-Q015-F2-R",
+   "rerun_of": "A-DAV-04-P2-Q015-F2",
+   "session": 4,
+   "sha256": "c8cc8df699b51dd86b75f4a7c1ae8ff16330b48a295e5855d6c758ac05d6c610",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:20.373Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gds&db=pubmed&id=200078220&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 4991,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:21.331Z",
+   "file": "A-DAV-04-P2-Q066-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 4991,
+   "original_file": "A-DAV-04-P2-Q017-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q066_PRIVATE.json",
+   "original_sha256": "210428db750d6ae7999cc4a3dc199b077c62af76f396ea44bbf4ddae5f514bce",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q066-R",
+   "rerun_of": "A-DAV-04-P2-Q066",
+   "session": 4,
+   "sha256": "210428db750d6ae7999cc4a3dc199b077c62af76f396ea44bbf4ddae5f514bce",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:20.875Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=29443960&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2345,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:22.010Z",
+   "file": "A-DAV-04-P2-Q067-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 2345,
+   "original_file": "A-DAV-04-P2-Q018-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q067_PRIVATE.json",
+   "original_sha256": "477cad9c761ce8374737b27c67f141055d29341c9e24413a9a63e483bab00ebd",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q067-R",
+   "rerun_of": "A-DAV-04-P2-Q067",
+   "session": 4,
+   "sha256": "477cad9c761ce8374737b27c67f141055d29341c9e24413a9a63e483bab00ebd",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:21.379Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=32879421&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 3743,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:22.691Z",
+   "file": "A-DAV-04-P2-Q068-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 3743,
+   "original_file": "A-DAV-04-P2-Q019-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q068_PRIVATE.json",
+   "original_sha256": "953a85e1fff52623806c24a600ef3af78f38f5a7963ca8a8edc95d8f72c613b1",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q068-R",
+   "rerun_of": "A-DAV-04-P2-Q068",
+   "session": 4,
+   "sha256": "953a85e1fff52623806c24a600ef3af78f38f5a7963ca8a8edc95d8f72c613b1",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:22.012Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34663807&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2739,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:23.319Z",
+   "file": "A-DAV-04-P2-Q069-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 2739,
+   "original_file": "A-DAV-04-P2-Q020-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q069_PRIVATE.json",
+   "original_sha256": "bd4cc64a46dd2d3dd5089074f698b78bee7e90ebc00eed69bb692d2b94688f71",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q069-R",
+   "rerun_of": "A-DAV-04-P2-Q069",
+   "session": 4,
+   "sha256": "bd4cc64a46dd2d3dd5089074f698b78bee7e90ebc00eed69bb692d2b94688f71",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:22.694Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=34654806&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 3217,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:23.827Z",
+   "file": "A-DAV-04-P2-Q070-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 3217,
+   "original_file": "A-DAV-04-P2-Q021-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q070_PRIVATE.json",
+   "original_sha256": "b59b6d5a16a17f21fee898bfb72c2b06c19d98106af07165930fb755891397a9",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q070-R",
+   "rerun_of": "A-DAV-04-P2-Q070",
+   "session": 4,
+   "sha256": "b59b6d5a16a17f21fee898bfb72c2b06c19d98106af07165930fb755891397a9",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:23.322Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=39532835&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2893,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:24.465Z",
+   "file": "A-DAV-04-P2-Q071-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 2893,
+   "original_file": "A-DAV-04-P2-Q022-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q071_PRIVATE.json",
+   "original_sha256": "e6ed9bc2597b76215c2df5d6819b45e06aae88801a941e11d7c97c308e309469",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q071-R",
+   "rerun_of": "A-DAV-04-P2-Q071",
+   "session": 4,
+   "sha256": "e6ed9bc2597b76215c2df5d6819b45e06aae88801a941e11d7c97c308e309469",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:23.830Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=41652014&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2726,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:24.924Z",
+   "file": "A-DAV-04-P2-Q072-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 2726,
+   "original_file": "A-DAV-04-P2-Q023-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q072_PRIVATE.json",
+   "original_sha256": "c8bfda405b48e38aaa1c63e11c06c029821729630f4f8ee38a2e5552269fe661",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q072-R",
+   "rerun_of": "A-DAV-04-P2-Q072",
+   "session": 4,
+   "sha256": "c8bfda405b48e38aaa1c63e11c06c029821729630f4f8ee38a2e5552269fe661",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:24.468Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=35671108&retmode=json&tool=a-dav-04-queue-reconciliation"
+  },
+  {
+   "bytes": 2312,
+   "curl_exit": 0,
+   "end_utc": "2026-10-17T20:37:25.436Z",
+   "file": "A-DAV-04-P2-Q073-R_esummary_pubmed_uid.json",
+   "http_status": 200,
+   "identical_to_original": true,
+   "kind": "esummary_pubmed_uid",
+   "original_bytes": 2312,
+   "original_file": "A-DAV-04-P2-Q024-F1_DUPLICATE_SENT_AS_A-DAV-04-P2-Q073_PRIVATE.json",
+   "original_sha256": "7292e09f1c1a837354bcaa78a74bb6eebbde0c0f29bfb2070813baa2c9c04829",
+   "original_storage": "private",
+   "query_id": "A-DAV-04-P2-Q073-R",
+   "rerun_of": "A-DAV-04-P2-Q073",
+   "session": 4,
+   "sha256": "7292e09f1c1a837354bcaa78a74bb6eebbde0c0f29bfb2070813baa2c9c04829",
+   "spacing_status": "rerun_logged_start",
+   "start_utc": "2026-10-17T20:37:24.973Z",
+   "storage": "committed",
+   "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=31703604&retmode=json&tool=a-dav-04-queue-reconciliation"
+  }
+ ],
+ "schema": "A-DAV-04.phase2_manifest.1",
+ "search_log_rows": 111,
+ "search_log_sha256": "d182a5bf7597c979a8d2181ff26a8242d6887c22341e065a61eb2a2fe0ee84fa",
+ "session_log": [
+  {
+   "requests_sent": 43,
+   "session": 1,
+   "source": "manifest written by the first run (start times logged)"
+  },
+  {
+   "duplicates": 8,
+   "evaluated": 22,
+   "requests_sent": 30,
+   "session": 2,
+   "source": "stderr log and saved files; start times reconstructed from file write times"
+  },
+  {
+   "new_requests_sent": 8,
+   "session": 3,
+   "source": "driver run with request-start logging"
+  },
+  {
+   "minimum_start_gap_seconds": 0.5,
+   "purpose": "QR-05 rerun of the 30 original session-2 requests, same URLs, once, start times logged",
+   "requests_sent": 30,
+   "session": 4
+  }
+ ],
+ "spacing_seconds_used": 0.5,
+ "ticket": "A-DAV-04 Phase 2 bounded public metadata",
+ "tool": "a-dav-04-queue-reconciliation"
+}
