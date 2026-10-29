@@ -1,0 +1,309 @@
+{
+  "comments": {
+    "purpose": "All values and hashes are invented. Replace each declaration with source-backed evidence before use.",
+    "source_objects": "Roles identify exact source objects; hashes cover complete bytes.",
+    "geo": "Characteristics map source keys to patient, visit and corroborating response.",
+    "biological_compartment": "Source names are mapped to controlled tissue categories without guessing.",
+    "labels": "The clinical table is the response source of record; GEO response is corroborating.",
+    "measurement_representations": "Keep distinct representations and their units; no conversion is authorized.",
+    "proposal_generation": "Specify the index episode, exposure, timing, overlap, prior use, admission and prespecified split. Obtain human review before admission.",
+    "v3": "Counts are invented structural expectations, never observed results."
+  },
+  "cohort": "invented_cohort",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "locator": "https://example.invalid/object-1",
+      "version": "invented-v1",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "author_clinical_table": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000002",
+      "locator": "https://example.invalid/object-2",
+      "version": "invented-v1",
+      "format": "DELIMITED_CSV",
+      "role": "source_of_record"
+    },
+    "invented_expression": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000003",
+      "locator": "https://example.invalid/object-3",
+      "version": "invented-v1",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record"
+    },
+    "invented_sensitivity": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000004",
+      "locator": "https://example.invalid/object-4",
+      "version": "invented-v1",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^(Person[0-9]+)_(Pre|On)$",
+    "patient_group": 1,
+    "visit_group": 2,
+    "patient_characteristic": "subject",
+    "visit_characteristic": "visit"
+  },
+  "geo": {
+    "characteristics": {
+      "patient": "subject",
+      "visit": "visit",
+      "response": "response category"
+    },
+    "relation_kinds": [
+      "BioSample"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "source_name",
+    "source_name_map": {
+      "tumour sample": "TUMOUR"
+    },
+    "evidence": "invented source-name documentation"
+  },
+  "author_clinical_table": {
+    "format": "CSV",
+    "patient_column": "subject",
+    "bor_column": "best_response",
+    "source_of_record_for": [
+      "best_response"
+    ],
+    "bor_values": [
+      "complete",
+      "partial",
+      "stable",
+      "progression",
+      "unknown"
+    ]
+  },
+  "treatment": {
+    "agent": "invented-agent"
+  },
+  "labels": {
+    "source_of_record_bor": {
+      "complete": "RESPONDER",
+      "partial": "RESPONDER",
+      "stable": "SD",
+      "progression": "PD",
+      "unknown": "NE"
+    },
+    "geo_response": {
+      "benefit": "RESPONDER",
+      "stable": "SD",
+      "progression": "PD",
+      "not_evaluable": "NE"
+    }
+  },
+  "measurement_representations": {
+    "invented_expression": {
+      "unit": "COUNTS",
+      "transform": "NONE",
+      "genome_build": "invented-build",
+      "annotation": "invented-annotation",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "invented-gene-id",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "invented methods:unit",
+        "transform": "invented methods:transform",
+        "genome_build": "invented methods:build",
+        "annotation": "invented methods:annotation"
+      }
+    },
+    "invented_sensitivity": {
+      "unit": "TPM",
+      "transform": "NONE",
+      "genome_build": "invented-build",
+      "annotation": "invented-annotation",
+      "annotation_source_object_role": null
+    },
+    "conversion": "PROHIBITED"
+  },
+  "source_validation": {
+    "roles": [
+      "geo_family_soft",
+      "author_clinical_table",
+      "invented_expression"
+    ],
+    "baseline_specimen_patient_links": 2,
+    "baseline_bor_patients": 2
+  },
+  "proposal_generation": {
+    "episode": {
+      "id_template": "{patient_uid}:index",
+      "regimen_id": "invented-regimen",
+      "index_event": "START_OF_INVENTED_TREATMENT",
+      "start_day": null,
+      "stop_day": null,
+      "timing_precision": "UNKNOWN",
+      "episode_status": "VERIFIED",
+      "source_locators": [
+        "invented-methods"
+      ]
+    },
+    "exposure": {
+      "id_template": "{patient_uid}:exposure",
+      "regimen_id": "invented-regimen",
+      "agent": "invented-agent",
+      "pharmacological_class": "ICI",
+      "sequence": "INDEX",
+      "monotherapy_or_combination": "MONOTHERAPY",
+      "line_of_therapy": "NOT_REPORTED",
+      "prior_ici_field": "prior_ici",
+      "prior_ici_map": {
+        "YES": "YES",
+        "NO": "NO",
+        "UNKNOWN": "UNKNOWN"
+      },
+      "certainty": "VERIFIED",
+      "source_locators": [
+        {
+          "kind": "INVENTED",
+          "value": "invented-methods"
+        }
+      ]
+    },
+    "binding": {
+      "id_template": "{subject_type}:{subject_id}:index",
+      "role_by_subject_type": {
+        "TREATMENT_EXPOSURE": "TREATMENT_COMPONENT",
+        "SPECIMEN": "PRE_INDEX_BASELINE",
+        "CLINICAL_OUTCOME": "OUTCOME_ASSESSMENT"
+      },
+      "source_locators": [
+        "invented-methods"
+      ]
+    },
+    "timing": {
+      "version": "invented-timing-v1",
+      "index_event": "START_OF_INVENTED_TREATMENT",
+      "source_locator": "invented-methods"
+    },
+    "overlap": {
+      "edge_id": "invented-overlap",
+      "external_node": {
+        "node_type": "STUDY",
+        "node_id": "invented-comparator"
+      },
+      "edge_type": "OTHER",
+      "certainty": "UNRESOLVED",
+      "implication_for_independence": "UNKNOWN",
+      "evidence": "Invented independence is unknown.",
+      "source_locators": [
+        {
+          "kind": "INVENTED",
+          "value": "invented-overlap"
+        }
+      ],
+      "single_cohort_disposition": "NON_BLOCKING",
+      "joint_split_disposition": "BLOCKING"
+    },
+    "prior_exposure": {
+      "id": "invented-prior-use",
+      "subject_type": "STUDY_FAMILY",
+      "analysis_lineage_id": "invented-lineage",
+      "fields_accessed": [
+        "study_identity"
+      ],
+      "use": "METADATA_INSPECTION",
+      "occurred_utc": null,
+      "date_precision": "UNKNOWN",
+      "actor_role": "SOURCE_REVIEWER",
+      "independence_implication": "METADATA_ONLY_REVIEWED",
+      "source_locators": [
+        "invented-review"
+      ]
+    },
+    "stage_config": {
+      "admission": {
+        "required_source_roles": [
+          "geo_family_soft",
+          "author_clinical_table",
+          "invented_expression"
+        ]
+      },
+      "overlap": {
+        "review_complete": false
+      },
+      "exposure": {
+        "analysis_lineage_id": "invented-lineage",
+        "review_complete": false
+      },
+      "split": {
+        "version": "invented-v1",
+        "analysis_lineage_id": "invented-lineage",
+        "selection_basis": "PRESPECIFIED_METADATA",
+        "performance_observed": false,
+        "policy": {
+          "permanent_role": "DEVELOPMENT",
+          "prior_exposure_state": "METADATA_ONLY"
+        }
+      }
+    }
+  },
+  "v3": {
+    "primary_representation": "invented_expression",
+    "fallback_representation": "invented_sensitivity",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 3,
+      "baseline_selected": 2,
+      "on_selected": 0
+    },
+    "representation_identity": {
+      "invented_expression": {
+        "annotation_role": null,
+        "genome_build": "invented-build",
+        "annotation_evidence_status": "DECLARED_ID_FORMAT_ONLY",
+        "identifier_pattern": "^[A-Z][0-9]+$",
+        "certification_level": "ID_FORMAT_AND_UNIQUENESS",
+        "limit": "Invented identifier format only."
+      },
+      "invented_sensitivity": {
+        "annotation_role": null,
+        "genome_build": "invented-build",
+        "annotation_evidence_status": "DECLARED_ID_FORMAT_ONLY",
+        "identifier_pattern": "^[A-Z][0-9]+$",
+        "certification_level": "ID_FORMAT_AND_UNIQUENESS",
+        "limit": "Invented identifier format only."
+      }
+    },
+    "source_object_roles": {
+      "primary": "invented_expression",
+      "fallback": "invented_sensitivity"
+    },
+    "header_key_by_role": {
+      "invented_expression": "title",
+      "invented_sensitivity": "title"
+    },
+    "delimiters": {
+      "invented_expression": ",",
+      "invented_sensitivity": ","
+    },
+    "compressed": {
+      "invented_expression": false,
+      "invented_sensitivity": false
+    },
+    "documentation": {
+      "invented_expression": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "invented-methods"
+      },
+      "invented_sensitivity": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "invented-methods"
+      }
+    },
+    "qc_policy": {
+      "numeric_thresholds": [],
+      "historical_flags_only": [],
+      "duplicate_profile_action": "QUARANTINE_KEEP",
+      "outcome_blind": true
+    }
+  }
+}

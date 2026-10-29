@@ -1,0 +1,269 @@
+{
+  "cohort": "gse168204",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "c67f07cc842dd3df51c09e8ac3e486f2a9f3b4494b0fc089163666139d895ba7",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE168nnn/GSE168204/soft/GSE168204_family.soft.gz",
+      "version": "GEO last update 2021-10-21; directory listing 2026-10-13",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "geo_featurecounts": {
+      "sha256": "4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE168nnn/GSE168204/suppl/GSE168204_MGH_counts.csv.gz",
+      "version": "2021-03-03",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record",
+      "header_allow_empty": true
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^([A-Za-z0-9]+)(?:_|-)",
+    "patient_group": 1,
+    "visit_characteristic": "treatment state",
+    "accept_title_token_with_signed_v4": true
+  },
+  "geo": {
+    "characteristics": {
+      "visit": "treatment state",
+      "response": "response immune checkpoint blockade therapy",
+      "timepoint": "timepoint (days)",
+      "antibody": "antibody",
+      "tissue": "source_name_ch1"
+    },
+    "relation_kinds": [
+      "BioSample",
+      "SRA"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "source_name_ch1",
+    "source_name_map": {
+      "frozen or formalin-fixed tumor": "TUMOUR"
+    },
+    "evidence": "geo_family_soft:!Sample_source_name_ch1"
+  },
+  "treatment": {
+    "agent": "anti-PD1 or anti-PDL1; per-sample distinction in geo_family_soft:!Sample_characteristics_ch1"
+  },
+  "labels": {
+    "source_binary_geo_response": {
+      "R": "SOURCE_POSITIVE",
+      "NR": "SOURCE_NEGATIVE"
+    }
+  },
+  "measurement_representations": {
+    "geo_featurecounts": {
+      "unit": "READ_COUNTS",
+      "transform": "NONE",
+      "genome_build": "hg19",
+      "annotation": "UNKNOWN",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "GENE_SYMBOL",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "DERIVED_FROM_OBJECT: ALL_RETAINED_VALUES_WHOLE_NONNEGATIVE; sha256 4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff",
+        "genome_build": "geo_family_soft:!Sample_data_processing assembly/build",
+        "transform": "DERIVED_FROM_OBJECT: ALL_RETAINED_VALUES_WHOLE_NONNEGATIVE; sha256 4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff",
+        "annotation": "UNKNOWN: GEO processing text and article do not state a gene annotation system",
+        "feature_identifier_system": "DERIVED_FROM_OBJECT: GENE_SYMBOL_MAJORITY; sha256 4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff",
+        "platform": "geo_family_soft:!Series_platform_id, !Sample_platform_id, !Platform_title",
+        "missing_policy": "docs/decisions/OBJECT_DERIVED_EVIDENCE_20261028.md",
+        "normalization": "geo_family_soft:!Sample_data_processing",
+        "feature_scope": "geo_family_soft:!Series_type and !Sample_data_processing; docs/research/cohort_sources/gse168204_SOURCES.md; complete deposited expression feature universe"
+      },
+      "platform": "GPL11154 (Illumina HiSeq 2000); GPL18573 (Illumina NextSeq 500)",
+      "auxiliary_columns": [
+        {
+          "index": 27,
+          "header": ""
+        },
+        {
+          "index": 28,
+          "header": "gene"
+        }
+      ],
+      "missing_policy": "EXCLUDE_FEATURE_IF_ANY_MISSING",
+      "derived_facts": {
+        "unit": {
+          "status": "DERIVED",
+          "value": "READ_COUNTS",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "ALL_RETAINED_VALUES_WHOLE_NONNEGATIVE",
+          "source_sha256": "4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff"
+        },
+        "transform": {
+          "status": "DERIVED",
+          "value": "NONE",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "ALL_RETAINED_VALUES_WHOLE_NONNEGATIVE",
+          "source_sha256": "4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff"
+        },
+        "feature_identifier_system": {
+          "status": "DERIVED",
+          "value": "GENE_SYMBOL",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "GENE_SYMBOL_MAJORITY",
+          "source_sha256": "4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff"
+        },
+        "source_counts": {
+          "status": "DERIVED",
+          "value": "SOURCE_COUNTS",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "COUNT_SOURCE_MISSING_CELLS_AND_FEATURES",
+          "source_sha256": "4e3ec53c42b7c487a746201eef1cb546d61bede8faedaf9137e3d4ae39cd38ff",
+          "feature_count": 75253,
+          "missing_cells": 44,
+          "genes_with_missing_cells": 44
+        }
+      },
+      "normalization": "NONE",
+      "feature_scope": "COMPLETE"
+    },
+    "conversion": "PROHIBITED"
+  },
+  "comments": {
+    "scope": "Public GEO metadata supports pretreatment tumour RNA-seq with per-sample R/NR labels. These labels are not independently verified best overall response categories.",
+    "unknowns": "RECIST version, prior immunotherapy, gene identifier type, expression transform, and handling of SD with exactly 180 days PFS are unknown; see sources note.",
+    "counts": "27 GEO samples; 10 PRE samples across 10 patients, counted from GEO family metadata.",
+    "BOR_limitation": "The analysis endpoint is the paper-defined SOURCE_BINARY R/NR label, not four-level BOR.",
+    "endpoint": "SOURCE_BINARY: source-defined R/NR according to RECIST criteria, with SD classification split at PFS >180 versus <180 days; RECIST version is unstated.",
+    "split": "split role DEVELOPMENT pending user confirmation",
+    "auxiliary_columns": "Two non-sample columns in the pinned matrix header are excluded from the sample axis; source layout requires review.",
+    "treatment_identity": "GEO identifies checkpoint antibody classes, not patient-specific drug names; individual drug remains UNKNOWN."
+  },
+  "decision_config": {
+    "endpoint": {
+      "endpoint_class": "SOURCE_BINARY",
+      "source_binary_definition": {
+        "name": "GSE168204 RECIST/PFS responder classification",
+        "criteria": "RECIST criteria; version not stated",
+        "threshold": {
+          "measure": "progression-free survival",
+          "unit": "days",
+          "value": 180
+        },
+        "R": "Complete response (CR), partial response (PR), or stable disease (SD) with PFS longer than 180 days.",
+        "NR": "Progressive disease (PD), or SD with PFS shorter than 180 days.",
+        "raw_value_map": {
+          "R": "SOURCE_POSITIVE",
+          "NR": "SOURCE_NEGATIVE"
+        },
+        "source_locator": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8519947/",
+        "source_section": "Methods > Melanoma datasets and patient selection",
+        "scope_note": "The article does not assign SD with PFS exactly 180 days to either category.",
+        "endpoint_label": "clinical benefit (stable disease duration included)"
+      }
+    },
+    "preview": {
+      "endpoint": "SOURCE_BINARY clinical-benefit: CR/PR or SD with PFS longer than 180 days",
+      "index_episode": {
+        "agent": "anti-PD-1 or anti-PD-L1, source characteristic antibody",
+        "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8519947/",
+        "start_time": "UNKNOWN"
+      },
+      "prior_ici": "UNKNOWN",
+      "study_class": "CLINICAL_ICI",
+      "required_roles": [
+        "geo_family_soft",
+        "geo_featurecounts"
+      ],
+      "expected_baseline_candidates": 10,
+      "split_policy": "DEVELOPMENT",
+      "decision_evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md"
+    },
+    "overlap_review": {
+      "source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md",
+      "edges": [
+        {
+          "target_node_type": "STUDY",
+          "target_node_id": "STUDY:gse115821",
+          "edge_type": "SUSPECTED_SAME_PATIENT",
+          "certainty": "POSSIBLE",
+          "implication_for_independence": "INDEPENDENCE_BLOCKED",
+          "evidence": "Possible MGH patient overlap remains unresolved; resolve before any joint split."
+        }
+      ]
+    },
+    "development_policy": {
+      "prior_ici_policy": "UNKNOWN_ALLOWED_DEVELOPMENT",
+      "analysis_lineage_id": "gse168204-a-baseline-development-20261029",
+      "source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md#prior-ici-exposure-and-split-declarations",
+      "nonbaseline_specimens": "OUTSIDE_BRANCH",
+      "split_role": "DEVELOPMENT",
+      "exposure_state": "METADATA_ONLY",
+      "review_complete": true,
+      "covered_subject_types": [
+        "STUDY_FAMILY",
+        "PATIENT_SET"
+      ],
+      "nonbaseline_visit_values": [
+        "ON"
+      ],
+      "cancer": "melanoma",
+      "cancer_source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md#gse168204-metastatic-melanoma-mgh"
+    }
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "PRE"
+    ],
+    "response_source": "geo_family_soft",
+    "endpoint_class": "SOURCE_BINARY",
+    "response_map": {
+      "R": "SOURCE_POSITIVE",
+      "NR": "SOURCE_NEGATIVE"
+    },
+    "baseline_tie_rule": null
+  },
+  "expression_column_map": {
+    "geo_featurecounts": {
+      "method": "REGEX",
+      "header_regex": "^(?P<sample>[A-Za-z0-9][A-Za-z0-9_-]+)$",
+      "title_regex": "^(?P<sample>[A-Za-z0-9][A-Za-z0-9_-]+?)(?:_bam)?$",
+      "normalizations": [
+        {
+          "regex": "-",
+          "replacement": "_"
+        }
+      ],
+      "evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md",
+      "review_required": false
+    }
+  },
+  "v3": {
+    "primary_representation": "geo_featurecounts",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 27,
+      "baseline_selected": 10,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "geo_featurecounts"
+    },
+    "documentation": {
+      "geo_featurecounts": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE168nnn/GSE168204/suppl/GSE168204_MGH_counts.csv.gz"
+      }
+    },
+    "delimiters": {
+      "geo_featurecounts": ","
+    },
+    "compressed": {
+      "geo_featurecounts": true
+    }
+  },
+  "treatment_proposal": {
+    "agent_source": "GEO_CHARACTERISTIC",
+    "agent_field": "antibody",
+    "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE168nnn/GSE168204/soft/GSE168204_family.soft.gz",
+    "pharmacological_class": "ICI",
+    "regimen_id": "REGIMEN:gse168204:INDEX",
+    "index_event": "START_OF_INDEX_TREATMENT",
+    "agent_interpretation": "CLASS"
+  }
+}

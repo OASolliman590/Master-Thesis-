@@ -1,0 +1,285 @@
+{
+  "comments": {
+    "purpose": "Patient-free field map for public GEO series GSE176307 in A_BASELINE_BIO.",
+    "source_objects": "Hashes are null pending coordinator retrieval and hashing.",
+    "identity": "GEO title contains a patient code; suffixes may distinguish repeated sequencing records, which require review.",
+    "visit": "GEO has no explicit sample timepoint characteristic. Pretreatment status is supported by the primary study context and published cohort reviews.",
+    "response": "Use raw GEO io.response as the only located per-sample response label. Preserve NA as unknown; no author patient-level BOR table was located.",
+    "expression": "Use the author-submitted GEO log-transformed normalized RNA-seq matrix. Feature identifier system is UNKNOWN from inspected processing text; do not infer from annotation wording.",
+    "limitations": "Prior immunotherapy history and individual biopsy date are not established from the inspected public metadata."
+  },
+  "cohort": "gse176307",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "ea242fbb98aa104c384a97a3d1f0baaa938031e91a5a3872b065982d73b1bf72",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/soft/GSE176307_family.soft.gz",
+      "version": "GEO directory listing dated 2026-10-05",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "log_transformed_expression": {
+      "sha256": "2a59a9fccf8f8e370807e55f70e441bdce3403420d60d8f12433ec399f850b07",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_BACI_log_trans_normalized_RNAseq.csv.gz",
+      "version": "2023-05-18",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^Patient sample (BACI[0-9]+)(?:_[0-9]+)?$",
+    "patient_group": 1,
+    "patient_characteristic": "UNKNOWN",
+    "visit_characteristic": "UNKNOWN"
+  },
+  "geo": {
+    "characteristics": {
+      "response": "io.response",
+      "treatment": "io.therapy",
+      "treatment_line": "io.lot",
+      "tissue_site": "primary tumor location"
+    },
+    "relation_kinds": [
+      "BioSample"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "publication patient-sample description",
+    "source_name_map": {
+      "archived FFPE tumour tissue from primary or metastatic site": "TUMOUR"
+    },
+    "evidence": "Published methods: eligible advanced urothelial cancer patients had archived FFPE tumour tissue from a primary or metastatic site."
+  },
+  "author_clinical_table": {
+    "format": "CSV",
+    "patient_column": "subject",
+    "bor_column": "best_response",
+    "source_of_record_for": [
+      "best_response"
+    ],
+    "bor_values": [
+      "complete",
+      "partial",
+      "stable",
+      "progression",
+      "unknown"
+    ]
+  },
+  "treatment": {
+    "agent": "Varies by patient: pembrolizumab, atezolizumab, nivolumab, durvalumab, or avelumab (GEO io.therapy).",
+    "trial": "No prospective trial named; retrospective single-center real-world cohort.",
+    "prior_immunotherapy": "UNKNOWN; io.lot denotes ICI treatment line but the inspected sources do not establish prior ICI exposure per patient."
+  },
+  "labels": {
+    "geo_io_response_source_of_record": {
+      "CR": "RESPONDER",
+      "PR": "RESPONDER",
+      "SD": "NON_RESPONDER",
+      "PD": "NON_RESPONDER",
+      "NA": "UNKNOWN"
+    },
+    "corroboration_note": {
+      "primary_article": "Study-level response outcomes and RECIST criteria; no located patient-level crosswalk."
+    }
+  },
+  "measurement_representations": {
+    "log_transformed_expression": {
+      "unit": "log-transformed filtered read counts; exact scale after centering/scaling not further specified",
+      "transform": "log2(1+x), median centered, upper quartile scaled",
+      "genome_build": "GRCh38 v.22",
+      "annotation": "Ensembl protein-coding annotation; filtered gene set reported as 16,901",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
+        "transform": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
+        "genome_build": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
+        "annotation": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
+        "feature_identifier_system": "UNKNOWN: GEO processing text says Ensemble protein-coding annotation but does not identify matrix row key type."
+      },
+      "orientation": "samples_as_rows"
+    },
+    "conversion": "PROHIBITED"
+  },
+  "source_validation": {
+    "roles": [
+      "geo_family_soft",
+      "log_transformed_expression"
+    ],
+    "baseline_specimen_patient_links": 90,
+    "baseline_bor_patients": 89
+  },
+  "proposal_generation": {
+    "episode": {
+      "id_template": "{patient_uid}:index",
+      "regimen_id": "invented-regimen",
+      "index_event": "START_OF_INVENTED_TREATMENT",
+      "start_day": null,
+      "stop_day": null,
+      "timing_precision": "UNKNOWN",
+      "episode_status": "VERIFIED",
+      "source_locators": [
+        "invented-methods"
+      ]
+    },
+    "exposure": {
+      "id_template": "{patient_uid}:exposure",
+      "regimen_id": "invented-regimen",
+      "agent": "invented-agent",
+      "pharmacological_class": "ICI",
+      "sequence": "INDEX",
+      "monotherapy_or_combination": "MONOTHERAPY",
+      "line_of_therapy": "NOT_REPORTED",
+      "prior_ici_field": "prior_ici",
+      "prior_ici_map": {
+        "YES": "YES",
+        "NO": "NO",
+        "UNKNOWN": "UNKNOWN"
+      },
+      "certainty": "VERIFIED",
+      "source_locators": [
+        {
+          "kind": "INVENTED",
+          "value": "invented-methods"
+        }
+      ]
+    },
+    "binding": {
+      "id_template": "{subject_type}:{subject_id}:index",
+      "role_by_subject_type": {
+        "TREATMENT_EXPOSURE": "TREATMENT_COMPONENT",
+        "SPECIMEN": "PRE_INDEX_BASELINE",
+        "CLINICAL_OUTCOME": "OUTCOME_ASSESSMENT"
+      },
+      "source_locators": [
+        "invented-methods"
+      ]
+    },
+    "timing": {
+      "version": "invented-timing-v1",
+      "index_event": "START_OF_INVENTED_TREATMENT",
+      "source_locator": "invented-methods"
+    },
+    "overlap": {
+      "edge_id": "invented-overlap",
+      "external_node": {
+        "node_type": "STUDY",
+        "node_id": "invented-comparator"
+      },
+      "edge_type": "OTHER",
+      "certainty": "UNRESOLVED",
+      "implication_for_independence": "UNKNOWN",
+      "evidence": "Invented independence is unknown.",
+      "source_locators": [
+        {
+          "kind": "INVENTED",
+          "value": "invented-overlap"
+        }
+      ],
+      "single_cohort_disposition": "NON_BLOCKING",
+      "joint_split_disposition": "BLOCKING"
+    },
+    "prior_exposure": {
+      "id": "invented-prior-use",
+      "subject_type": "STUDY_FAMILY",
+      "analysis_lineage_id": "invented-lineage",
+      "fields_accessed": [
+        "study_identity"
+      ],
+      "use": "METADATA_INSPECTION",
+      "occurred_utc": null,
+      "date_precision": "UNKNOWN",
+      "actor_role": "SOURCE_REVIEWER",
+      "independence_implication": "METADATA_ONLY_REVIEWED",
+      "source_locators": [
+        "invented-review"
+      ]
+    },
+    "stage_config": {
+      "admission": {
+        "required_source_roles": [
+          "geo_family_soft",
+          "author_clinical_table",
+          "invented_expression"
+        ]
+      },
+      "overlap": {
+        "review_complete": false
+      },
+      "exposure": {
+        "analysis_lineage_id": "invented-lineage",
+        "review_complete": false
+      },
+      "split": {
+        "version": "invented-v1",
+        "analysis_lineage_id": "invented-lineage",
+        "selection_basis": "PRESPECIFIED_METADATA",
+        "performance_observed": false,
+        "policy": {
+          "permanent_role": "DEVELOPMENT",
+          "prior_exposure_state": "METADATA_ONLY"
+        }
+      }
+    }
+  },
+  "v3": {
+    "primary_representation": "log_transformed_expression",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 90,
+      "baseline_selected": 90,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "log_transformed_expression"
+    },
+    "header_key_by_role": {
+      "log_transformed_expression": "title"
+    },
+    "delimiters": {
+      "log_transformed_expression": ","
+    },
+    "compressed": {
+      "log_transformed_expression": true
+    },
+    "documentation": {
+      "log_transformed_expression": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "GEO sample data_processing text"
+      }
+    },
+    "qc_policy": {
+      "numeric_thresholds": [],
+      "historical_flags_only": [],
+      "duplicate_profile_action": "QUARANTINE_KEEP",
+      "outcome_blind": true
+    }
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "COHORT_BASELINE"
+    ],
+    "response_source": "geo_family_soft",
+    "endpoint_class": "TUMOUR_RESPONSE",
+    "response_map": {
+      "CR": "CR",
+      "PR": "PR",
+      "SD": "SD",
+      "PD": "PD",
+      "NA": "UNKNOWN"
+    },
+    "baseline_tie_rule": null,
+    "baseline_by_cohort": true
+  },
+  "expression_column_map": {
+    "log_transformed_expression": {
+      "method": "REGEX",
+      "header_regex": "^(?P<sample>BACI[0-9]+)$",
+      "title_regex": "^Patient sample (?P<sample>BACI[0-9]+)(?:_[0-9]+)?$",
+      "review_required": true,
+      "evidence": "GEO family titles and deposited matrix row identifiers; repeated patient profiles require review."
+    }
+  }
+}

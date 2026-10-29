@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -20,6 +21,7 @@ from .matrix_header import parse_matrix_header
 from .registries import build_registries
 from .source_objects import ContentAddressedStore, SourceObject, SourceObjectError
 from .timing import validate_timing
+from .xlsx import read_numeric_xlsx
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -95,7 +97,11 @@ def _parse_source(source: SourceObject, object_map: dict[str, Any]) -> Any:
         return read_delimited_table(raw, delimiter=delimiter)
     if source_format in {"MATRIX_HEADER_CSV", "MATRIX_HEADER_TSV"}:
         delimiter = "," if source_format == "MATRIX_HEADER_CSV" else "\t"
-        return parse_matrix_header(source.bytes, delimiter=delimiter)
+        return parse_matrix_header(source.bytes, delimiter=delimiter,
+                                   allow_empty=object_map.get("header_allow_empty", False),
+                                   orientation=object_map.get("orientation", "samples_as_columns"))
+    if source_format == "XLSX_NUMERIC":
+        return read_numeric_xlsx(source.bytes)[0]
     if source_format in {"TEXT_UTF8", "SCRIPT_R"}:
         if len(source.bytes) > 8 * 1024 * 1024:
             raise IngestError("SOURCE_OBJECT_PARSE_INVALID")
@@ -139,6 +145,258 @@ def _source_object_id(cohort: str, role: str) -> str:
     return f"SOURCE:{cohort}:{role}"
 
 
+def _expression_bindings(soft: list[dict[str, Any]], parsed: dict[str, Any],
+                         sources: dict[str, SourceObject], field_map: dict[str, Any],
+                         items: list[dict[str, Any]]) -> dict[tuple[str, str], str]:
+    bindings: dict[tuple[str, str], str] = {}
+    for role, representation in field_map.get('measurement_representations', {}).items():
+        if not isinstance(representation, dict):
+            continue
+        rules = field_map.get('expression_column_map', {})
+        rule = rules.get(role)
+        headers = parsed.get(role)
+        if not isinstance(rule, dict) or rule.get('method') == 'UNRESOLVED':
+            _item(items, 'EXPRESSION_BINDING_RULE_UNRESOLVED', [{'role': role}])
+            continue
+        if not isinstance(headers, tuple) or role not in sources:
+            _item(items, 'EXPRESSION_BINDING_UNRESOLVED', [{'role': role}])
+            continue
+        method = rule['method']
+        if rule.get('review_required', False):
+            _item(items, 'EXPRESSION_BINDING_RULE_REVIEW_REQUIRED', [{'role': role}])
+        crosswalk: dict[str, list[str]] = {}
+        if method == 'CROSSWALK':
+            cross_role = rule['source_role']
+            table = parsed.get(cross_role)
+            metadata = field_map['source_objects'].get(cross_role, {})
+            if not isinstance(table, DelimitedTable) or cross_role not in sources or not metadata.get('sha256') or sources[cross_role].sha256 != metadata['sha256']:
+                _item(items, 'EXPRESSION_CROSSWALK_UNAVAILABLE', [{'role': cross_role}])
+                continue
+            try:
+                mi = table.headers.index(rule['matrix_column'])
+                gi = table.headers.index(rule['geo_column'])
+            except ValueError:
+                _item(items, 'EXPRESSION_CROSSWALK_UNAVAILABLE', [{'role': cross_role}])
+                continue
+            if table.headers.count(rule['matrix_column']) != 1 or table.headers.count(rule['geo_column']) != 1:
+                _item(items, 'EXPRESSION_CROSSWALK_UNAVAILABLE', [{'role': cross_role}])
+                continue
+            for row in table.rows:
+                crosswalk.setdefault(row[mi], []).append(row[gi])
+        header_pattern = re.compile(rule['header_regex']) if method == 'REGEX' else None
+        title_pattern = re.compile(rule['title_regex']) if method == 'REGEX' else None
+        def match_key(pattern: re.Pattern[str] | None, value: str) -> tuple[tuple[str, str], ...] | None:
+            match = pattern.fullmatch(value) if pattern else None
+            if match is None or not match.groupdict() or any(value is None for value in match.groupdict().values()):
+                return None
+            groups = match.groupdict()
+            for name, value in groups.items():
+                for change in rule.get('normalizations', []):
+                    value = re.sub(change['regex'], change['replacement'], value)
+                groups[name] = value
+            return tuple(sorted(groups.items()))
+        matches: dict[str, list[str]] = {}
+        header_counts = Counter(headers)
+        for sample in soft:
+            candidates: list[str] = []
+            for header in headers:
+                if not header:
+                    continue
+                if method == 'TITLE':
+                    matched = header == sample['title']
+                elif method == 'ACCESSION':
+                    matched = header == sample['accession']
+                elif method == 'REGEX':
+                    a, b = match_key(header_pattern, header), match_key(title_pattern, sample['title'])
+                    header_groups = dict(a) if a is not None else {}
+                    allowed_groups = rule.get('characteristic_groups', {})
+                    characteristics_match = True
+                    for group, declaration in allowed_groups.items():
+                        token = header_groups.pop(group, None)
+                        characteristic_values = {entry['value'] for entry in sample['characteristics']
+                                                 if entry['key'] == declaration['characteristic']}
+                        expected_value = declaration['values'].get(token)
+                        if expected_value is None or characteristic_values != {expected_value}:
+                            characteristics_match = False
+                    matched = a is not None and b is not None and characteristics_match and tuple(sorted(header_groups.items())) == b
+                elif method == 'CROSSWALK':
+                    values = crosswalk.get(header, [])
+                    matched = sample[rule['geo_key']] in values
+                    if matched and len(values) != 1:
+                        _item(items, 'EXPRESSION_BINDING_AMBIGUOUS', [{'role': role, 'record': sample['accession']}, {'role': rule['source_role']}])
+                        continue
+                else:
+                    matched = False
+                if matched:
+                    candidates.append(header)
+            matches[sample['accession']] = candidates
+        used = Counter(header for candidates in matches.values() for header in candidates)
+        for sample in soft:
+            candidates = matches[sample['accession']]
+            if len(candidates) == 1 and header_counts[candidates[0]] == 1 and used[candidates[0]] == 1:
+                bindings[(role, sample['accession'])] = candidates[0]
+            else:
+                visit_key = field_map.get('geo', {}).get('characteristics', {}).get('visit')
+                visits = {entry['value'] for entry in sample.get('characteristics', []) if entry['key'] == visit_key}
+                baseline_values = field_map.get('geo_ingest', {}).get('baseline_values', [])
+                if (not candidates and rule.get('nonbaseline_unmatched') == 'NOT_APPLICABLE'
+                        and len(visits) == 1 and next(iter(visits)) not in baseline_values):
+                    continue
+                category = 'EXPRESSION_BINDING_AMBIGUOUS' if candidates else 'EXPRESSION_BINDING_UNRESOLVED'
+                _item(items, category, [{'role': role, 'record': sample['accession']}])
+    return bindings
+
+
+def _geo_records(tables: dict[str, list[dict[str, Any]]], soft: list[dict[str, Any]],
+                 parsed: dict[str, Any], sources: dict[str, SourceObject],
+                 field_map: dict[str, Any], items: list[dict[str, Any]]) -> None:
+    cfg = field_map['geo_ingest']
+    identity = field_map['sample_identity']
+    characteristics = field_map['geo']['characteristics']
+    study_id = 'STUDY:' + field_map['cohort']
+    locator = field_map['source_objects']['geo_family_soft']['locator']
+    title_re = re.compile(identity['title_regex']) if identity.get('title_regex') else None
+    bindings = _expression_bindings(soft, parsed, sources, field_map, items)
+    grouped: dict[str, list[tuple[dict[str, Any], str, str | None]]] = {}
+    treatment_declaration = field_map.get('treatment_proposal', {})
+    if treatment_declaration.get('agent_interpretation') == 'CLASS':
+        _item(items, 'TREATMENT_DRUG_IDENTITY_UNKNOWN', [{'role': 'geo_family_soft',
+              'field': treatment_declaration['agent_field']}])
+    if cfg.get('baseline_by_cohort'):
+        _item(items, 'COHORT_BASELINE_TIMING_UNVERIFIED', [{'role': 'geo_family_soft', 'field': 'sample timing'}])
+    for sample in soft:
+        values: dict[str, list[str]] = {}
+        for entry in sample['characteristics']:
+            values.setdefault(entry['key'], []).append(entry['value'])
+        def characteristic(key: str | None) -> str | None:
+            matches = values.get(key or '', [])
+            return matches[0] if len(set(matches)) == 1 and matches else None
+        match = title_re.match(sample['title']) if title_re else None
+        patient = characteristic(characteristics.get('patient'))
+        title_patient = match.group(identity['patient_group']) if match and identity.get('patient_group') else None
+        if patient and title_patient and patient != title_patient:
+            _item(items, 'GEO_PATIENT_IDENTITY_CONFLICT', [{'role': 'geo_family_soft', 'record': sample['accession']}])
+            continue
+        patient = patient or title_patient
+        if not patient or cfg.get('patient_mapping_unverified', False):
+            _item(items, 'GEO_PATIENT_IDENTITY_UNRESOLVED', [{'role': 'geo_family_soft', 'record': sample['accession'], 'field': 'title'}])
+            continue
+        visit = characteristic(characteristics.get('visit'))
+        if visit is None and match and identity.get('visit_group'):
+            visit = match.group(identity['visit_group'])
+        if visit is None and cfg.get('baseline_by_cohort'):
+            visit = 'COHORT_BASELINE'
+        if visit is None:
+            _item(items, 'GEO_VISIT_CHARACTERISTIC_UNKNOWN', [{'role': 'geo_family_soft', 'record': sample['accession']}])
+            visit = 'UNKNOWN'
+        response = characteristic(characteristics.get('response'))
+        grouped.setdefault(patient, []).append((sample, visit, response))
+    for patient, entries in sorted(grouped.items()):
+        uid = f"{study_id}:PATIENT:{hashlib.sha256(patient.encode('utf-8')).hexdigest()}"
+        tables['patient_registry'].append({'data_classification': 'PRIVATE_PATIENT_LEVEL', 'patient_uid': uid,
+            'study_id': study_id, 'source_patient_id': patient, 'patient_identity_confidence': 'UNRESOLVED',
+            'prior_ici': 'UNKNOWN', 'prior_radiotherapy': 'UNKNOWN', 'treatment_naive_status': 'UNKNOWN',
+            'inclusion_state': 'CANDIDATE', 'source_locators': _locator(locator)})
+        treatment = field_map.get('treatment_proposal')
+        if isinstance(treatment, dict):
+            if treatment['agent_source'] == 'GEO_CHARACTERISTIC':
+                agents = {item['value'] for sample, _, _ in entries for item in sample['characteristics']
+                          if item['key'] == treatment['agent_field'] and item['value'].strip()}
+                agent = next(iter(agents)) if len(agents) == 1 else 'UNKNOWN'
+                if len(agents) != 1:
+                    _item(items, 'TREATMENT_AGENT_UNRESOLVED', [{'role': 'geo_family_soft',
+                          'field': treatment['agent_field'], 'record': entries[0][0]['accession']}])
+            else:
+                agent = treatment['agent_value']
+            treatment_class = treatment['pharmacological_class']
+            if treatment.get('agent_interpretation') == 'CLASS':
+                treatment_class, agent = agent, 'UNKNOWN'
+            episode_id, exposure_id = uid + ':index', uid + ':exposure'
+            tables['treatment_episode'].append({'schema_version': '1.1.0',
+                'data_classification': 'PRIVATE_PATIENT_LEVEL', 'treatment_episode_id': episode_id,
+                'patient_uid': uid, 'study_id': study_id, 'regimen_id': treatment['regimen_id'],
+                'index_event': treatment['index_event'], 'start_day': None, 'stop_day': None,
+                'timing_precision': 'UNKNOWN', 'prior_ici': 'UNKNOWN', 'episode_status': 'BLOCKED_UNKNOWN',
+                'component_exposure_ids': [exposure_id], 'source_locators': [treatment['source_locator']]})
+            tables['treatment_exposure'].append({'data_classification': 'PRIVATE_PATIENT_LEVEL',
+                'treatment_exposure_id': exposure_id, 'patient_uid': uid, 'regimen_id': treatment['regimen_id'],
+                'agent': agent, 'pharmacological_class': treatment_class,
+                'sequence': 'INDEX', 'line_of_therapy': 'UNKNOWN', 'prior_ici': 'UNKNOWN',
+                'certainty': 'UNRESOLVED', 'source_locators': _locator(treatment['source_locator'])})
+        baseline_entries = [entry for entry in entries if entry[1] in cfg['baseline_values'] or entry[1] == 'COHORT_BASELINE']
+        selected_baseline = baseline_entries
+        if len(baseline_entries) > 1 and cfg.get('baseline_tie_rule') == 'LEXICOGRAPHIC_ACCESSION':
+            selected_baseline = [min(baseline_entries, key=lambda entry: entry[0]['accession'])]
+        elif len(baseline_entries) > 1 and cfg.get('baseline_tie_rule') == 'LOWEST_LESION_LETTER':
+            lesion_group = identity.get('lesion_group')
+            matches = [(title_re.fullmatch(entry[0]['title']) if title_re else None, entry)
+                       for entry in baseline_entries]
+            letters = [match.group(lesion_group) if match and lesion_group else None for match, _ in matches]
+            if all(letter and re.fullmatch('[A-Z]', letter) for letter in letters) and len(set(letters)) == len(letters):
+                selected_baseline = [min(zip(letters, baseline_entries), key=lambda pair: pair[0] or '')[1]]
+            else:
+                _item(items, 'BASELINE_LESION_TIE_UNRESOLVED', [{'role': 'geo_family_soft', 'rule': 'lesion letter'}])
+                selected_baseline = []
+        if len(baseline_entries) > 1 and len(selected_baseline) != 1:
+            _item(items, 'DUPLICATE_GEO_PATIENT_VISIT', [{'role': 'geo_family_soft', 'rule': 'patient+baseline'}],
+                  {'duplicate_record_count': len(baseline_entries), 'tie_rule': cfg.get('baseline_tie_rule')})
+        for sample, visit, response in entries:
+            accession = sample['accession']
+            is_baseline = (sample, visit, response) in selected_baseline
+            pointer = f"sha256:{sources['geo_family_soft'].sha256}#sample={accession}" if 'geo_family_soft' in sources else locator + '#sample=' + accession
+            specimen_uid = f'{study_id}:SPECIMEN:{accession}'
+            compartment_cfg = field_map.get('biological_compartment', {})
+            field = compartment_cfg.get('source_name_field')
+            raw_compartment = sample.get(field) if isinstance(field, str) else None
+            if raw_compartment is None and isinstance(field, str):
+                candidates = {entry['value'] for entry in sample['characteristics'] if entry['key'] == field}
+                raw_compartment = next(iter(candidates)) if len(candidates) == 1 else None
+            compartment_map = compartment_cfg.get('source_name_map', {})
+            normalized_map = {key.strip().lower(): value for key, value in compartment_map.items()}
+            compartment = normalized_map.get(raw_compartment.strip().lower(), 'UNKNOWN') if isinstance(raw_compartment, str) else 'UNKNOWN'
+            tables['specimen_registry'].append({'data_classification': 'PRIVATE_PATIENT_LEVEL',
+                'specimen_uid': specimen_uid, 'patient_uid': uid, 'raw_sample_aliases': [accession, sample['title']],
+                'timing_raw_text': visit, 'canonical_timing_category': 'PRE_INDEX_BASELINE' if (sample, visit, response) in baseline_entries else 'UNKNOWN',
+                'tissue_type': '', 'biological_compartment': compartment, 'scheduled_or_clinically_indicated': 'UNKNOWN',
+                'baseline_candidate_status': ('YES' if is_baseline else 'UNKNOWN'
+                    if visit == 'UNKNOWN' or ((sample, visit, response) in baseline_entries and not selected_baseline) else 'NO'),
+                'longitudinal_pair_status': 'UNKNOWN', 'source_locators': _locator(pointer)})
+            for role, representation in field_map.get('measurement_representations', {}).items():
+                headers, source = parsed.get(role), sources.get(role)
+                if not isinstance(representation, dict) or not isinstance(headers, tuple) or source is None:
+                    continue
+                header = bindings.get((role, accession))
+                if header is None:
+                    continue
+                tables['assay_registry'].append({'data_classification': 'PRIVATE_PATIENT_LEVEL',
+                    'assay_uid': f'{study_id}:ASSAY:{role}:{accession}', 'specimen_uid': specimen_uid,
+                    'source_sample_id': accession, 'source_object_id': _source_object_id(field_map['cohort'], role),
+                    'modality': 'RNA_SEQ', 'platform': representation.get('platform', ''),
+                    'measurement_unit': representation.get('unit', ''), 'genome_build': representation.get('genome_build'),
+                    'feature_annotation': representation.get('annotation'), 'transform': representation.get('transform'),
+                    'matrix_header': header, 'qc_status': 'NOT_EVALUATED', 'replicate_status': 'UNKNOWN',
+                    'branch_suitability': [], 'source_locators': _locator(f"sha256:{source.sha256}#{'row' if representation.get('orientation') == 'samples_as_rows' else 'column'}={header}")})
+        if not baseline_entries:
+            continue
+        responses = {response for _, _, response in baseline_entries if response is not None}
+        if cfg['response_source'] != 'geo_family_soft':
+            _item(items, 'RESPONSE_SOURCE_NOT_AVAILABLE', [{'role': cfg['response_source']}])
+            continue
+        if len(responses) != 1:
+            _item(items, 'GEO_RESPONSE_UNRESOLVED', [{'role': 'geo_family_soft', 'field': characteristics.get('response', '')}])
+            continue
+        raw = next(iter(responses))
+        category = cfg['response_map'].get(raw, 'UNKNOWN')
+        if category == 'UNKNOWN' and raw not in cfg['response_map']:
+            _item(items, 'GEO_RESPONSE_VALUE_UNKNOWN', [{'role': 'geo_family_soft', 'field': characteristics.get('response', '')}])
+        tables['clinical_outcome'].append({'data_classification': 'PRIVATE_PATIENT_LEVEL',
+            'outcome_id': f'{uid}:BOR', 'patient_uid': uid, 'raw_endpoint_label': raw,
+            'endpoint_class': cfg['endpoint_class'], 'assessment_criteria': cfg.get('assessment_criteria', ''),
+            'best_overall_response': category if category in {'CR', 'PR', 'SD', 'PD', 'NE'} else 'UNKNOWN',
+            'canonical_category': category, 'evaluability': 'UNKNOWN', 'mapping_rule_version': 'field-map',
+            'mapping_confidence': 'UNRESOLVED', 'discrepancy_status': 'UNRESOLVED', 'source_locators': _locator(locator)})
+
+
 def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObject],
                            field_map: dict[str, Any], items: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     """Map clean source joins into frozen entity tables, leaving judgments unresolved."""
@@ -155,7 +413,7 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
     object_locators = [metadata["locator"] for metadata in role_cfgs.values()]
     study_record = {
         "study_id": study_id, "publication_family_id": family_id, "study_title": cohort,
-        "cancer_type": "", "study_design": "",
+        "cancer_type": field_map.get("cancer_type", ""), "study_design": "",
         "candidate_paper_branches": [field_map["branch_id"]], "study_status": "CANDIDATE",
         "source_locators": [pointer for locator in object_locators for pointer in _locator(locator)],
     }
@@ -194,6 +452,7 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
                 "feature_identifier_system": representation.get("annotation"),
                 "measurement_unit": representation.get("unit"),
                 "transform": representation.get("transform"),
+                "platform": representation.get("platform"),
             })
         if metadata.get("role") == "harmonized_cross_check":
             source_record["notes"] = "Harmonized resource; cross-check only."
@@ -202,10 +461,14 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
     soft = parsed.get("geo_family_soft")
     if not isinstance(soft, list):
         return tables
+    if "geo_ingest" in field_map:
+        _geo_records(tables, soft, parsed, sources, field_map, items)
+        return tables
     sample_table = parsed.get("author_sample_table")
     clinical_table = parsed.get("author_clinical_table")
     sample_cfg = field_map["author_sample_table"]
     clinical_cfg = field_map["author_clinical_table"]
+    compartment_cfg = field_map.get("biological_compartment", {})
     sample_matches: dict[str, list[tuple[str, ...]]] = {}
     sample_code_matches: dict[str, list[tuple[str, ...]]] = {}
     if isinstance(sample_table, DelimitedTable):
@@ -344,6 +607,7 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
             "data_classification": "PRIVATE_PATIENT_LEVEL",
             "patient_uid": f"{study_id}:{patient_id}", "study_id": study_id,
             "source_patient_id": patient_id, "patient_identity_confidence": "VERIFIED" if linked else "UNRESOLVED",
+            **({"cancer": field_map["cancer_type"]} if field_map.get("cancer_type") else {}),
             "prior_ici": prior_ici, "prior_radiotherapy": "UNKNOWN", "treatment_naive_status": "UNKNOWN",
             "inclusion_state": "CANDIDATE",
             "source_locators": [pointer for value in source_values for pointer in _locator(value)],
@@ -359,13 +623,20 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
         specimen_uid = f"{study_id}:SPECIMEN:{accession}"
         clinical_locator = field_map["source_objects"]["author_clinical_table"]["locator"]
         aliases = [accession, title]
+        source_name_field = compartment_cfg.get("source_name_field")
+        source_name = sample.get(source_name_field) if isinstance(source_name_field, str) else None
+        compartment_map = compartment_cfg.get("source_name_map", {})
+        biological_compartment = (compartment_map.get(source_name.strip().lower(), "UNKNOWN")
+                                  if isinstance(source_name, str) and isinstance(compartment_map, dict)
+                                  else "UNKNOWN")
         tables["specimen_registry"].append({
             "data_classification": "PRIVATE_PATIENT_LEVEL",
             "specimen_uid": specimen_uid, "patient_uid": patient_uid, "raw_sample_aliases": aliases,
             "timing_raw_text": visit,
             "canonical_timing_category": "PRE_INDEX_BASELINE" if visit == "Pre" else "UNKNOWN",
             "tissue_type": "",
-            "biological_compartment": "UNKNOWN", "scheduled_or_clinically_indicated": "UNKNOWN",
+            "biological_compartment": biological_compartment,
+            "scheduled_or_clinically_indicated": "UNKNOWN",
             "baseline_candidate_status": "YES" if visit == "Pre" else "NO",
             "longitudinal_pair_status": "UNKNOWN",
             "source_locators": source_pointer,
@@ -416,7 +687,7 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
                 "data_classification": "PRIVATE_PATIENT_LEVEL",
                 "assay_uid": f"{study_id}:ASSAY:{role}:{accession}", "specimen_uid": specimen_uid,
                 "source_sample_id": sample_header, "source_object_id": source_obj_id,
-                "modality": "RNA_SEQ", "platform": "", "measurement_unit": representation.get("unit", ""),
+                "modality": "RNA_SEQ", "platform": representation.get("platform", ""), "measurement_unit": representation.get("unit", ""),
                 "genome_build": representation.get("genome_build"),
                 "feature_annotation": representation.get("annotation"),
                 "transform": representation.get("transform"), "matrix_header": sample_header,
@@ -476,6 +747,8 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
         field_map = load_field_map(field_map_path)
     except FieldMapError as error:
         raise IngestError(str(error)) from None
+    if field_map.get("status") == "PARKED":
+        raise IngestError("Cohort is PARKED: " + field_map["parked_reason"])
     if branch != field_map["branch_id"]:
         raise IngestError("COHORT_BRANCH_MISMATCH")
     items: list[dict[str, Any]] = []
@@ -499,27 +772,40 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
         if role == "ncbi_annotation_grch38":
             continue
         try:
-            parsed[role] = _parse_source(source, metadata)
+            representation = field_map.get("measurement_representations", {}).get(role, {})
+            orientation = representation.get("orientation", "samples_as_columns") if isinstance(representation, dict) else "samples_as_columns"
+            parsed[role] = _parse_source(source, {**metadata, "orientation": orientation})
         except (ValueError, KeyError, TypeError):
             _item(items, "SOURCE_OBJECT_PARSE_INVALID", [{"role": role, "sha256": sha,
                   "locator": source.locator}])
     records = build_canonical_records(parsed, sources, field_map, items)
     geo_samples = parsed.get("geo_family_soft")
-    title_matcher = re.compile(field_map["sample_identity"]["title_regex"])
-    title_rows = [match for sample in (geo_samples if isinstance(geo_samples, list) else [])
-                  if (match := title_matcher.match(sample["title"])) is not None]
-    counts = {
-        "geo_samples": len(geo_samples) if isinstance(geo_samples, list) else 0,
-        "pre_samples": sum(match.group(field_map["sample_identity"]["visit_group"]) == "Pre" for match in title_rows),
-        "on_samples": sum(match.group(field_map["sample_identity"]["visit_group"]) == "On" for match in title_rows),
-        "unique_patients": len({match.group(field_map["sample_identity"]["patient_group"]) for match in title_rows}),
-        "baseline_samples_linked_to_patient": sum(
-            row.get("timing_raw_text") == "Pre" for row in records["specimen_registry"]),
-    }
+    if "geo_ingest" in field_map:
+        specimens = records["specimen_registry"]
+        counts = {
+            "geo_samples": len(geo_samples) if isinstance(geo_samples, list) else 0,
+            "pre_samples": sum(row["baseline_candidate_status"] == "YES" for row in specimens),
+            "on_samples": 0,
+            "unique_patients": len(records["patient_registry"]),
+            "baseline_samples_linked_to_patient": sum(row["baseline_candidate_status"] == "YES" for row in specimens),
+        }
+    else:
+        title_matcher = re.compile(field_map["sample_identity"]["title_regex"])
+        title_rows = [match for sample in (geo_samples if isinstance(geo_samples, list) else [])
+                      if (match := title_matcher.match(sample["title"])) is not None]
+        counts = {
+            "geo_samples": len(geo_samples) if isinstance(geo_samples, list) else 0,
+            "pre_samples": sum(match.group(field_map["sample_identity"]["visit_group"]) == "Pre" for match in title_rows),
+            "on_samples": sum(match.group(field_map["sample_identity"]["visit_group"]) == "On" for match in title_rows),
+            "unique_patients": len({match.group(field_map["sample_identity"]["patient_group"]) for match in title_rows}),
+            "baseline_samples_linked_to_patient": sum(row.get("timing_raw_text") == "Pre" for row in records["specimen_registry"]),
+        }
     _known_items(field_map, items, counts, parsed)
     records_config = {
         "study_ids": [row["study_id"] for row in records["study_registry"]],
         "source_hashes": {row["source_object_id"]: row["sha256"] for row in records["source_record"]},
+        "source_roles": {role: _source_object_id(cohort, role)
+                         for role in field_map["source_objects"]},
     }
     raw_worksheet = {"classification": "PRIVATE_PATIENT_LEVEL",
                      "status": "BLOCKED_UNKNOWN" if items else "READY", "items": items}
@@ -527,7 +813,16 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
         "classification": "PRIVATE_PATIENT_LEVEL", "branch_id": branch,
         "records": records,
         "config": {"registries": records_config,
-                   "admission": {"ingestion_worksheet": raw_worksheet}},
+                   "ingestion_validation": {
+                       "sha256_verified_roles": sorted(sources),
+                       "parsed_source_roles": sorted(parsed),
+                       **({"endpoint_definition": field_map.get("decision_config", {}).get("endpoint", {}).get("source_binary_definition")}
+                          if isinstance(field_map.get("decision_config"), dict) and field_map.get("geo_ingest", {}).get("endpoint_class") == "SOURCE_BINARY" else {}),
+                       "adapter_by_role": {role: field_map["source_objects"][role]["format"]
+                                           for role in parsed},
+                   },
+                   "admission": {"ingestion_worksheet": raw_worksheet,
+                                 "worksheet_prefill": field_map.get("worksheet_prefill", {})}},
         "schema_hashes": SchemaStore().hashes,
         "dependencies": {},
     }

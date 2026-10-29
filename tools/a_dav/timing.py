@@ -25,6 +25,7 @@ def validate_timing(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
     specimens = {s["specimen_uid"]: s for s in records.get("specimen_registry", [])}
     outcomes = {o["outcome_id"]: o for o in records.get("clinical_outcome", [])}
     bindings = records.get("episode_binding", [])
+    allow_undated_components = set(cfg.get("allow_undated_treatment_exposure_ids", []))
     require(bool(episodes), "INDEX_TREATMENT_UNRESOLVED", blocked=True)
     for episode in episodes.values():
         require(episode["episode_status"] != "CONFLICT", "TREATMENT_SEQUENCE_CONFLICT")
@@ -53,7 +54,8 @@ def validate_timing(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
             component_days: dict[str, float] = {}
             for field in ("start_date_or_day", "stop_date_or_day"):
                 if subject.get(field) is None:
-                    unknown_component_timing = True
+                    if subject["treatment_exposure_id"] not in allow_undated_components:
+                        unknown_component_timing = True
                     continue
                 try:
                     parsed = float(subject[field])
@@ -185,7 +187,14 @@ def validate_timing(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
         audit.append({"check": "TIMING_ASSERTION", "specimen_uid": specimen_id, "binding_id": binding["binding_id"], "role": binding["role"], "treatment_episode_id": episode["treatment_episode_id"], "canonical_category": category, "precision": precision, "relative_day": day, "interval": [low, high], "window_id": evidence.get("window_id"), "mapping_version": cfg["version"]})
     require(not unknown_component_timing, "INDEX_TREATMENT_UNRESOLVED", blocked=True)
     require(all(e["episode_status"] == "VERIFIED" for e in episodes.values()) and all(b["binding_status"] == "VERIFIED" for b in bindings), "INDEX_TREATMENT_UNRESOLVED", blocked=True)
-    require(all(e["prior_ici"] != "UNKNOWN" for e in episodes.values()) and all(e["prior_ici"] != "UNKNOWN" for e in exposures.values()), "PRIOR_ICI_UNKNOWN", blocked=True)
+    split = packet['config'].get('split', {})
+    assignments = split.get('assignments')
+    development = (packet['branch_id'] not in {'A_P2_FINAL_TEST', 'A_P2_OUTER_VALIDATION'}
+                   and split.get('policy', {}).get('permanent_role') == 'DEVELOPMENT'
+                   and (assignments is None or (isinstance(assignments, list) and bool(assignments)
+                        and all(row.get('permanent_role') == 'DEVELOPMENT' for row in assignments))))
+    allow_unknown_prior = cfg.get('prior_ici_policy') == 'UNKNOWN_ALLOWED_DEVELOPMENT' and development
+    require(allow_unknown_prior or (all(e["prior_ici"] != "UNKNOWN" for e in episodes.values()) and all(e["prior_ici"] != "UNKNOWN" for e in exposures.values())), "PRIOR_ICI_UNKNOWN", blocked=True)
     require(all(e["certainty"] == "VERIFIED" and bool(e["sequence"]) and bool(e["line_of_therapy"]) for e in exposures.values()), "INDEX_TREATMENT_UNRESOLVED", blocked=True)
     for patient_id, patient in patients.items():
         require(not (patient.get("prior_ici") == "YES" and patient["treatment_naive_status"] == "VERIFIED_YES"), "TREATMENT_SEQUENCE_CONFLICT")

@@ -1,6 +1,22 @@
 {
   "cohort": "riaz_gse91061",
   "study_class": "CLINICAL_ICI",
+  "biological_compartment": {
+    "source_name_field": "source_name_ch1",
+    "source_name_map": {
+      "tumor": "TUMOUR"
+    },
+    "evidence": "geo_family_soft:!Sample_source_name_ch1"
+  },
+  "source_validation": {
+    "roles": [
+      "geo_family_soft",
+      "author_sample_table",
+      "author_clinical_table"
+    ],
+    "baseline_specimen_patient_links": 51,
+    "baseline_bor_patients": 51
+  },
   "branch_id": "A_BASELINE_BIO",
   "source_objects": {
     "geo_family_soft": {
@@ -171,10 +187,30 @@
   "measurement_representations": {
     "author_fpkm_hg19": {
       "unit": "FPKM",
-      "transform": "AUTHOR_REPORTED",
+      "transform": "NONE",
       "genome_build": "hg19",
-      "annotation": "KnownGene",
-      "annotation_source_object_role": null
+      "annotation": "Entrez",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "Entrez",
+      "platform": "GPL9052",
+      "platform_title": "Illumina Genome Analyzer (Homo sapiens)",
+      "instrument_model": "Illumina Genome Analyzer",
+      "modality": "RNA_SEQ",
+      "normalization": "DESeq2 v1.12.4 robust FPKM estimate",
+      "feature_scope": "COMPLETE",
+      "evidence": {
+        "unit": "geo_family_soft:!Sample_data_processing",
+        "transform": "geo_family_soft:!Sample_data_processing",
+        "genome_build": "geo_family_soft:!Sample_data_processing",
+        "annotation": "geo_family_soft:!Sample_data_processing",
+        "feature_identifier_system": "geo_family_soft:!Sample_data_processing",
+        "platform": "geo_family_soft:!Series_platform_id",
+        "platform_title": "geo_family_soft:!Platform_title",
+        "instrument_model": "geo_family_soft:!Sample_instrument_model",
+        "modality": "geo_family_soft:!Sample_data_processing",
+        "normalization": "geo_family_soft:!Sample_data_processing",
+        "feature_scope": "geo_family_soft:processed full-gene FPKM object plus V3 full-object parse"
+      }
     },
     "ncbi_tpm_grch38": {
       "unit": "TPM",
@@ -184,5 +220,485 @@
       "annotation_source_object_role": "ncbi_annotation_grch38"
     },
     "conversion": "PROHIBITED"
-  }
+  },
+  "decision_config": {
+    "qc_policy": {
+      "numeric_thresholds": [],
+      "historical_flags_only": [
+        "PAPER_PCA_PT3",
+        "TABLES6_A_R_FOUR_EXCLUSIONS"
+      ],
+      "duplicate_profile_action": "QUARANTINE_KEEP",
+      "outcome_blind": true
+    },
+    "representation_selection": {
+      "primary": "ncbi_tpm_grch38",
+      "sensitivity": "author_fpkm_hg19",
+      "conditional_fallback": "author_fpkm_hg19",
+      "fallback_condition": "PRIMARY_PROCESSING_DOCUMENTATION_INSUFFICIENT",
+      "conversion": "PROHIBITED"
+    },
+    "treatment_episode_binding": {
+      "index_agent": "nivolumab",
+      "regimen": "monotherapy",
+      "trial": "CA209-038",
+      "author_bor_role": "INDEX_EPISODE_RESPONSE",
+      "author_cohort_role": "PRIOR_ICI_ATTRIBUTE",
+      "author_cohort_target_field": "prior_ici",
+      "author_cohort_map": {
+        "NIV3-NAIVE": "NO_PRIOR_IPILIMUMAB",
+        "NIV3-PROG": "PRIOR_IPILIMUMAB"
+      },
+      "decision_status": "PROPOSED_UNSIGNED",
+      "binding_status": "BLOCKED_UNKNOWN",
+      "reviewer": null,
+      "reviewed_utc": null
+    },
+    "timing": {
+      "index_event": "START_OF_NIVOLUMAB",
+      "baseline_source_label": "Pre",
+      "collection_day": "NOT_REPORTED",
+      "protocol_window_inference": "PROHIBITED"
+    },
+    "overlap_exposure": {
+      "hugo_identifier_overlap": "NONE",
+      "site_level_independence": "UNKNOWN",
+      "single_cohort_a_baseline_bio": "NON_BLOCKING",
+      "joint_splits": "BLOCKING",
+      "prior_project_exposure": "METADATA_ONLY"
+    }
+  },
+  "v3": {
+    "primary_representation": "ncbi_tpm_grch38",
+    "fallback_representation": "author_fpkm_hg19",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 109,
+      "baseline_selected": 51,
+      "on_selected": 0
+    },
+    "representation_identity": {
+      "ncbi_tpm_grch38": {
+        "annotation_role": "ncbi_annotation_grch38",
+        "genome_build": "GRCh38.p13",
+        "annotation_evidence_status": "PINNED_ANNOTATION",
+        "identifier_pattern": "^[0-9]+$",
+        "certification_level": "MATCHED_PINNED_ANNOTATION",
+        "limit": null
+      },
+      "author_fpkm_hg19": {
+        "annotation_role": null,
+        "genome_build": "hg19",
+        "annotation_evidence_status": "DECLARED_ID_FORMAT_ONLY",
+        "identifier_pattern": "^[0-9]+$",
+        "certification_level": "ID_FORMAT_AND_UNIQUENESS",
+        "limit": "No hg19 annotation object is pinned; certify Entrez ID format and uniqueness only."
+      }
+    },
+    "source_object_roles": {
+      "primary": "ncbi_tpm_grch38",
+      "fallback": "author_fpkm_hg19"
+    },
+    "header_key_by_role": {
+      "ncbi_tpm_grch38": "accession",
+      "author_fpkm_hg19": "title"
+    },
+    "delimiters": {
+      "ncbi_tpm_grch38": "\t",
+      "author_fpkm_hg19": ",",
+      "ncbi_annotation_grch38": "\t"
+    },
+    "compressed": {
+      "ncbi_tpm_grch38": true,
+      "author_fpkm_hg19": true,
+      "ncbi_annotation_grch38": true
+    },
+    "documentation": {
+      "ncbi_tpm_grch38": {
+        "status": "UNVERIFIED",
+        "evidence_pointer": "docs/research/A_DAV_REAL_INGESTION_SOURCES_01.md#NCBI-rnaseq_counts-processing-details"
+      },
+      "author_fpkm_hg19": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "docs/research/A_DAV_RIAZ_QC_PROPOSAL_20261026.md#matrix-structure-and-feature-identity"
+      }
+    },
+    "qc_policy": {
+      "numeric_thresholds": [],
+      "historical_flags_only": [
+        "PAPER_PCA_PT3",
+        "TABLES6_A_R_FOUR_EXCLUSIONS"
+      ],
+      "duplicate_profile_action": "QUARANTINE_KEEP",
+      "outcome_blind": true
+    }
+  },
+  "proposal_generation": {
+    "episode": {
+      "id_template": "{patient_uid}:CA209-038:index-nivolumab",
+      "regimen_id": "CA209-038:nivolumab-monotherapy",
+      "index_event": "START_OF_NIVOLUMAB",
+      "start_day": null,
+      "stop_day": null,
+      "timing_precision": "UNKNOWN",
+      "episode_status": "VERIFIED",
+      "source_locators": [
+        "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#3-treatmentresponse-binding",
+        "docs/research/A_DAV_RIAZ_QC_PROPOSAL_20261026.md#treatment-response-binding"
+      ],
+      "notes": "Index episode identity is supported; the exact treatment start day is not reported."
+    },
+    "exposure": {
+      "id_template": "{patient_uid}:CA209-038:index-exposure",
+      "regimen_id": "CA209-038:nivolumab-monotherapy",
+      "agent": "nivolumab",
+      "pharmacological_class": "IMMUNE_CHECKPOINT_INHIBITOR",
+      "checkpoint_target": "PD-1",
+      "monotherapy_or_combination": "MONOTHERAPY",
+      "combination_components": [],
+      "sequence": "INDEX_EPISODE",
+      "line_of_therapy": "NOT_REPORTED",
+      "start_date_or_day": null,
+      "stop_date_or_day": null,
+      "prior_ici_field": "prior_ici",
+      "prior_ici_map": {
+        "YES": "YES",
+        "NO": "NO",
+        "UNKNOWN": "UNKNOWN"
+      },
+      "author_cohort_prior_ici": {
+        "NIV3-NAIVE": "NO",
+        "NIV3-PROG": "YES"
+      },
+      "prior_systemic_therapy": "UNKNOWN",
+      "certainty": "VERIFIED",
+      "source_locators": [
+        {
+          "kind": "DECISION",
+          "value": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#3-treatmentresponse-binding",
+          "page_or_section": null,
+          "accessed_utc": null
+        },
+        {
+          "kind": "SOURCE_ROLE",
+          "value": "author_clinical_table:Cohort",
+          "page_or_section": null,
+          "accessed_utc": null
+        }
+      ]
+    },
+    "binding": {
+      "id_template": "{subject_type}:{subject_id}:index-nivolumab",
+      "role_by_subject_type": {
+        "TREATMENT_EXPOSURE": "TREATMENT_COMPONENT",
+        "SPECIMEN": "PRE_INDEX_BASELINE",
+        "CLINICAL_OUTCOME": "OUTCOME_ASSESSMENT"
+      },
+      "source_locators": [
+        "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#3-treatmentresponse-binding",
+        "SIGNED_WORKSHEET_V5_PASS"
+      ]
+    },
+    "timing": {
+      "version": "riaz-index-timing-v1",
+      "index_event": "START_OF_NIVOLUMAB",
+      "source_category_only": true,
+      "source_locator": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#4-timing"
+    },
+    "endpoint_discrepancy_resolution": {
+      "worksheet_item_category": "OUTCOME_LABEL_DISAGREEMENT",
+      "preferred_source_role": "author_clinical_table",
+      "source_locator": "docs/decisions/RIAZ_BASELINE_BOR_20261026.md",
+      "selection_rule": "DECLARED_SOURCE_PRIORITY"
+    },
+    "overlap": {
+      "edge_id": "riaz:hugo:site-independence",
+      "external_node": {
+        "node_type": "STUDY",
+        "node_id": "external:hugo"
+      },
+      "edge_type": "OTHER",
+      "certainty": "UNRESOLVED",
+      "implication_for_independence": "UNKNOWN",
+      "evidence": "No shared GSM, SRA or BioSample identifiers were found; site-level independence remains unknown.",
+      "source_locators": [
+        {
+          "kind": "DECISION",
+          "value": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#5-overlap-and-prior-use",
+          "page_or_section": null,
+          "accessed_utc": null
+        }
+      ],
+      "single_cohort_disposition": "NON_BLOCKING",
+      "joint_split_disposition": "BLOCKING",
+      "notes": "No identifier overlap with Hugo. This edge records UNKNOWN site-level independence; it must block joint splits and is non-blocking for this single-cohort branch."
+    },
+    "prior_exposure": {
+      "id": "riaz:metadata-only-prior-project-review",
+      "subject_type": "STUDY_FAMILY",
+      "analysis_lineage_id": "riaz-a-baseline-bio-v1",
+      "fields_accessed": [
+        "study_identity",
+        "source_metadata",
+        "sample_identity",
+        "treatment_metadata"
+      ],
+      "use": "METADATA_INSPECTION",
+      "occurred_utc": null,
+      "date_precision": "UNKNOWN",
+      "actor_role": "SOURCE_REVIEWER",
+      "independence_implication": "METADATA_ONLY_REVIEWED",
+      "source_locators": [
+        "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#5-overlap-and-prior-use"
+      ],
+      "notes": "Prior project exposure is metadata-only; no expression results have been inspected."
+    },
+    "stage_config": {
+      "admission": {
+        "required_source_roles": [
+          "geo_family_soft",
+          "author_sample_table",
+          "author_clinical_table",
+          "author_fpkm_hg19"
+        ],
+        "branch_policies": {
+          "A_BASELINE_BIO": {
+            "baseline": {
+              "policy_version": "riaz-baseline-bio-v1",
+              "source_locators": [
+                "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md#1-qc-rules"
+              ]
+            },
+            "endpoint": {
+              "policy_version": "riaz-orr-v1",
+              "source_locators": [
+                "docs/decisions/RIAZ_BASELINE_BOR_20261026.md"
+              ],
+              "endpoint_class": "ORR"
+            }
+          }
+        }
+      },
+      "overlap": {
+        "review_complete": false
+      },
+      "exposure": {
+        "analysis_lineage_id": "riaz-a-baseline-bio-v1",
+        "review_complete": false
+      },
+      "split": {
+        "version": "riaz-baseline-development-v1",
+        "analysis_lineage_id": "riaz-a-baseline-bio-v1",
+        "selection_basis": "PRESPECIFIED_METADATA",
+        "performance_observed": false,
+        "policy": {
+          "permanent_role": "DEVELOPMENT",
+          "prior_exposure_state": "METADATA_ONLY"
+        }
+      },
+      "baseline": {
+        "selection_basis": "PRESPECIFIED_METADATA",
+        "ranking": "UNIQUE_CANDIDATE",
+        "assay_suitability": "BASELINE_DE",
+        "coverage_suitability": "de_suitability",
+        "endpoint_policy": {
+          "required": true,
+          "endpoint_class": "ORR",
+          "discrepancy_policy": "SEALED_PREFERRED_OUTCOME"
+        },
+        "build_utc": "AT_BUILD_TIME"
+      },
+      "materialization": {
+        "version": "baseline-expression-v1",
+        "representation_from_v3": "effective_primary",
+        "include_only": "EVALUABLE_AND_INCLUDED",
+        "feature_identifiers": "SOURCE_EXACT",
+        "historical_flag_sources": [
+          "PAPER_PCA_PT3",
+          "TABLES6_A_R_FOUR_EXCLUSIONS"
+        ],
+        "pca_flag_evidence": {
+          "document": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md",
+          "patient_id_regex": "paper.s\\s+([A-Za-z]+[0-9]+)\\s+PCA\\s+outlier"
+        },
+        "historical_title_rule": {
+          "patient_regex": "^(Pt\\d+)_(Pre|On)",
+          "patient_group": 1
+        },
+        "assay_suitability": "BASELINE_DE"
+      }
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "gates": {
+      "V0": {
+        "status": "PASS",
+        "decision": "Source discovery and the exact source set are documented.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_REAL_INGESTION_SOURCES_01.md"
+          }
+        ]
+      },
+      "V1": {
+        "status": "PASS",
+        "decision": "Study and publication identity are reconciled for this branch.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_IDENTITY_REVIEW_20261026.md"
+          }
+        ]
+      },
+      "V2": {
+        "status": "PASS",
+        "decision": "The pinned source objects have complete hashes.",
+        "evidence_pointers": [
+          {
+            "type": "FIELD_MAP",
+            "path": "tools/a_dav/field_maps/riaz_gse91061.json#source_objects"
+          }
+        ]
+      },
+      "V3": {
+        "status": "PASS",
+        "decision": "NCBI TPM is blocked because its pinned evidence does not document the unit, transform, feature grain, or annotation processing. Author hg19 FPKM passes V3 and is the effective primary; TPM is the effective sensitivity. FPKM identity is certified to numeric Entrez-ID format and uniqueness only because no hg19 annotation object is pinned.",
+        "evidence_pointers": [
+          {
+            "type": "PRIVATE_ARTIFACT",
+            "path": "../v3-20261026-fix1/receipt.json"
+          },
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_QC_PROPOSAL_20261026.md#matrix-structure-and-feature-identity"
+          }
+        ]
+      },
+      "V4": {
+        "status": "PASS",
+        "decision": "The 51 baseline specimen-to-patient joins are source-supported; unresolved on-treatment records remain retained outside this branch.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_IDENTITY_REVIEW_20261026.md"
+          }
+        ]
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Pre is baseline and collection day is not reported. The CA209-038 nivolumab episode and BOR binding remain proposed and unsigned.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md"
+          }
+        ]
+      },
+      "V6": {
+        "status": "PASS",
+        "decision": "No shared Hugo identifiers were found; site-level independence remains unknown and is non-blocking for this single-cohort branch. Prior exposure is metadata-only.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md"
+          }
+        ]
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Source admission remains unsigned; the proposed episode binding requires a named human reviewer.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/AMENDMENT_V7_PUBLIC_REVIEWER_20261025.md"
+          }
+        ]
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "No branch patient matrix has been materialized or validated.",
+        "evidence_pointers": [
+          {
+            "type": "CONTRACT",
+            "path": "specs/A_DATA_ACQUISITION_VALIDATION/PATIENT_MATRIX_CONTRACT.md"
+          }
+        ]
+      }
+    },
+    "source_items": {
+      "AUTHOR_SAMPLE_CODE_IDENTITY_CONFLICT": {
+        "status": "NOT_APPLICABLE",
+        "decision": "Retain the source identity question for A.1; it does not change the selected baseline set.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_IDENTITY_REVIEW_20261026.md"
+          }
+        ]
+      },
+      "AUTHOR_SAMPLE_ROW_MISSING": {
+        "status": "NOT_APPLICABLE",
+        "decision": "Retain the source question; it does not alter the source-supported baseline joins.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_IDENTITY_REVIEW_20261026.md"
+          }
+        ]
+      },
+      "DUPLICATE_GEO_PATIENT_VISIT": {
+        "status": "NOT_APPLICABLE",
+        "decision": "The duplicate visit issue is on-treatment and outside A_BASELINE_BIO; preserve for A.1.",
+        "evidence_pointers": [
+          {
+            "type": "DOCUMENT",
+            "path": "docs/research/A_DAV_RIAZ_IDENTITY_REVIEW_20261026.md"
+          }
+        ]
+      },
+      "ON_TREATMENT_WINDOW_UNRESOLVED": {
+        "status": "NOT_APPLICABLE",
+        "decision": "The unresolved on-treatment window is outside A_BASELINE_BIO; collection day is not inferred.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md"
+          }
+        ]
+      },
+      "OUTCOME_LABEL_DISAGREEMENT": {
+        "status": "PASS",
+        "decision": "Use author BOR as source of record and preserve GEO response as corroboration; do not overwrite raw labels.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/RIAZ_BASELINE_BOR_20261026.md"
+          }
+        ]
+      },
+      "AUTHOR_EXCLUSION_POLICY_UNRESOLVED": {
+        "status": "PASS",
+        "decision": "Pt3 and the four TableS6.A.R exclusions are historical flags only; no automatic exclusion.",
+        "evidence_pointers": [
+          {
+            "type": "DECISION",
+            "path": "docs/decisions/RIAZ_QC_EXPRESSION_BINDING_20261026.md"
+          }
+        ]
+      },
+      "HARMONIZED_SAMPLE_COUNT_CROSSCHECK": {
+        "status": "NOT_APPLICABLE",
+        "decision": "Keep cBioPortal as a cross-check only; it does not change branch membership.",
+        "evidence_pointers": [
+          {
+            "type": "FIELD_MAP",
+            "path": "tools/a_dav/field_maps/riaz_gse91061.json#harmonized_cross_checks"
+          }
+        ]
+      }
+    }
+  },
+  "cancer_type": "melanoma"
 }

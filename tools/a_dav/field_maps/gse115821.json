@@ -1,0 +1,153 @@
+{
+  "cohort": "gse115821",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "aad3e91b171c0010e9ffbeb275e94f473152913a060665d2e60f6bcabc8467b2",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115821/soft/GSE115821_family.soft.gz",
+      "version": "2026-08-26",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "geo_featurecounts_hg19": {
+      "sha256": "7b8fdab4d5240475404cc7cf18f7582d0769ec56e6485e53b1c06f549b6787bf",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115821/suppl/GSE115821_MGH_counts.csv.gz",
+      "version": "2018-11-27",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "patient_characteristic": "patient id",
+    "visit_characteristic": "treatment state"
+  },
+  "geo": {
+    "characteristics": {
+      "patient": "patient id",
+      "visit": "treatment state",
+      "timepoint": "timepoint",
+      "response": "response",
+      "treatment": "antibody",
+      "tissue": "tumor type"
+    },
+    "relation_kinds": [
+      "BioSample"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "source_name_ch1",
+    "source_name_map": {
+      "metastatic melanoma": "TUMOUR"
+    },
+    "evidence": "GEO sample metadata identifies source as metastatic melanoma and describes tumor specimens."
+  },
+  "treatment": {
+    "agent": "anti-PD-1 and/or anti-CTLA-4; exact drug and trial UNKNOWN",
+    "prior_immunotherapy": "UNKNOWN"
+  },
+  "labels": {
+    "geo_response": {
+      "R": "RESPONDER",
+      "NR": "NON_RESPONDER"
+    }
+  },
+  "measurement_representations": {
+    "geo_featurecounts_hg19": {
+      "unit": "featureCounts summary read counts (GEO description; count scale as deposited)",
+      "transform": "UNKNOWN",
+      "genome_build": "hg19",
+      "annotation": "UNKNOWN",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115821/soft/GSE115821_family.soft.gz",
+        "genome_build": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115821/soft/GSE115821_family.soft.gz",
+        "annotation": "UNKNOWN: GEO processing text does not identify the feature annotation or gene-ID type.",
+        "transform": "UNKNOWN: GEO processing text does not describe a transform."
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "v3": {
+    "primary_representation": "geo_featurecounts_hg19",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 37,
+      "baseline_selected": 14,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "geo_featurecounts_hg19"
+    },
+    "header_key_by_role": {
+      "geo_featurecounts_hg19": "title"
+    },
+    "delimiters": {
+      "geo_featurecounts_hg19": ","
+    },
+    "compressed": {
+      "geo_featurecounts_hg19": true
+    },
+    "documentation": {
+      "geo_featurecounts_hg19": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115821/soft/GSE115821_family.soft.gz"
+      }
+    },
+    "qc_policy": {
+      "numeric_thresholds": [],
+      "historical_flags_only": [],
+      "duplicate_profile_action": "QUARANTINE_KEEP",
+      "outcome_blind": true
+    }
+  },
+  "comments": {
+    "response_limit": "The original paper defines the MGH SOURCE_BINARY response under RECIST: R=CR/PR and NR=PD; it states no time threshold and no RECIST version. Per-patient MGH clinical response classifications are cited to Supplementary Table 9. GEO sample response is the corroborating label.",
+    "baseline_limit": "14 records are labeled PRE ICB, including 3 with concurrent dabrafenib+trametinib; GEO patient id characteristic maps records to patients, but multiple baseline records share patients and titles do not encode patient IDs.",
+    "treatment_limit": "GEO uses antibody classes; exact drugs, trial, and prior immunotherapy are UNKNOWN."
+  },
+  "decision_config": {
+    "endpoint": {
+      "endpoint_class": "SOURCE_BINARY",
+      "source_of_record": "author_supplementary_table_9",
+      "corroborating_label_source": "geo_family_soft:response",
+      "source_binary_definition": {
+        "name": "MGH melanoma response classification",
+        "criteria": "RECIST (version not stated): R is CR or PR; NR is PD.",
+        "threshold": "No time threshold stated for the MGH dataset.",
+        "value_map": {
+          "R": 1,
+          "NR": 0
+        },
+        "source_locator": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6693632/ (Online Methods, Clinical response classification, Table 1; patient classifications: Supplementary Table 9)",
+        "citation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6693632/ (Online Methods, \u201cClinical response classification,\u201d Table 1; patient-level MGH classifications: Supplementary Table 9)"
+      }
+    }
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "PRE Immune Checkpoint Blockade Therapy",
+      "PRE Immune Checkpoint Blockade Therapy (On dabrafenib+trametinib)"
+    ],
+    "response_source": "author_supplementary_table_9",
+    "endpoint_class": "SOURCE_BINARY",
+    "response_map": {
+      "R": "SOURCE_POSITIVE",
+      "NR": "SOURCE_NEGATIVE"
+    },
+    "baseline_tie_rule": null
+  },
+  "expression_column_map": {
+    "geo_featurecounts_hg19": {
+      "method": "REGEX",
+      "header_regex": "^(?P<sample>[^.]+)(?:\\.bam)?$",
+      "title_regex": "^(?P<sample>[^.]+)(?:\\.bam)?$",
+      "evidence": "GEO source titles and deposited matrix header; suffix normalization is a proposed binding.",
+      "review_required": true
+    }
+  },
+  "status": "PARKED",
+  "parked_reason": "author per-patient response not public; only GEO R/NR"
+}

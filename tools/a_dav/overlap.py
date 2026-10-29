@@ -20,6 +20,13 @@ def validate_overlap(packet: dict[str, Any], *, schemas: SchemaStore | None = No
     for kind, (table, key) in NODE_TABLES.items():
         for row in records.get(table, []):
             nodes.add((kind, row[key]))
+    external_nodes = config.get("external_nodes", [])
+    require(isinstance(external_nodes, list), "OVERLAP_NODE_UNKNOWN")
+    for external in external_nodes:
+        require(isinstance(external, dict) and set(external) == {"node_type", "node_id"} and
+                isinstance(external["node_type"], str) and bool(external["node_type"]) and
+                isinstance(external["node_id"], str) and bool(external["node_id"]), "OVERLAP_NODE_UNKNOWN")
+        nodes.add((external["node_type"], external["node_id"]))
     trials: dict[str, list[tuple[str, str]]] = {}
     families: dict[str, list[tuple[str, str]]] = {}
     for row in records.get("study_registry", []):

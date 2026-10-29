@@ -1,0 +1,244 @@
+{
+  "comments": {
+    "purpose": "Patient-free field map for the GSE78220 baseline branch. Unknown values are intentionally not inferred.",
+    "source_objects": "Exact GEO public source objects; hashes are null because bytes were not downloaded.",
+    "response": "GEO anti-pd-1 response characteristic is the available per-sample response source; paper group definitions corroborate but do not provide an author clinical table in the inspected sources.",
+    "expression": "Workbook header and sample binding require review; representation details remain unknown.",
+    "counts": "27 pre-treatment sample records and one on-treatment sample record; one patient has two baseline lesions; decision selects the lowest lesion letter.",
+    "source_validation": "Baseline specimen-to-patient and BOR patient counts remain unresolved pending identity review.",
+    "split": "split role DEVELOPMENT pending user confirmation"
+  },
+  "cohort": "hugo_gse78220",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "ed47c48810839ede910542b73002bff1506e70d5adeea5bd16367ecc9fe64c6d",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/soft/GSE78220_family.soft.gz",
+      "version": "2026-09-01",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "geo_author_expression": {
+      "sha256": "ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/suppl/GSE78220_PatientFPKM.xlsx",
+      "version": "2016-02-23",
+      "format": "XLSX_NUMERIC",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^(Pt[0-9]+)([A-Z]?)$",
+    "patient_group": 1,
+    "patient_characteristic": "patient id",
+    "visit_characteristic": "biopsy time",
+    "lesion_group": 2
+  },
+  "geo": {
+    "characteristics": {
+      "patient": "patient id",
+      "visit": "biopsy time",
+      "response": "anti-pd-1 response",
+      "treatment": "treatment",
+      "tissue": "tissue"
+    },
+    "relation_kinds": [
+      "BioSample",
+      "SRA"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "tissue",
+    "source_name_map": {
+      "Melanoma biopsies": "TUMOUR"
+    },
+    "evidence": "geo_family_soft:!Sample_characteristics_ch1 tissue"
+  },
+  "treatment": {
+    "agent": "anti-PD-1; patient-level drug is reported in GEO characteristic treatment (pembrolizumab or nivolumab)"
+  },
+  "labels": {
+    "geo_response": {
+      "Complete Response": "CR",
+      "Partial Response": "PR",
+      "Stable Disease": "SD",
+      "Progressive Disease": "PD"
+    }
+  },
+  "measurement_representations": {
+    "conversion": "PROHIBITED",
+    "geo_author_expression": {
+      "unit": "FPKM",
+      "transform": "NONE",
+      "genome_build": "hg19",
+      "annotation": "UNKNOWN",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "GENE_SYMBOL",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "DERIVED_FROM_OBJECT: FILENAME_PLUS_NONCONTRADICTING_PAPER; sha256 ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+        "transform": "DERIVED_FROM_OBJECT: LINEAR_FPKM_BY_RANGE; sha256 ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+        "genome_build": "geo_family_soft:!Sample_data_processing assembly/build",
+        "annotation": "UNKNOWN",
+        "platform": "geo_family_soft:!Series_platform_id, !Sample_platform_id, !Platform_title",
+        "feature_identifier_system": "DERIVED_FROM_OBJECT: GENE_SYMBOL_MAJORITY; sha256 ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+        "normalization": "geo_family_soft:!Sample_data_processing",
+        "feature_scope": "geo_family_soft:!Series_type and !Sample_data_processing; docs/research/cohort_sources/hugo_gse78220_SOURCES.md; complete deposited expression feature universe"
+      },
+      "platform": "GPL11154 (Illumina HiSeq 2000)",
+      "derived_facts": {
+        "unit": {
+          "status": "DERIVED",
+          "value": "FPKM",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "FILENAME_PLUS_NONCONTRADICTING_PAPER",
+          "source_sha256": "ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+          "filename_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/suppl/GSE78220_PatientFPKM.xlsx",
+          "paper_locator": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4808437/"
+        },
+        "transform": {
+          "status": "DERIVED",
+          "value": "NONE",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "LINEAR_FPKM_BY_RANGE",
+          "source_sha256": "ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6"
+        },
+        "feature_identifier_system": {
+          "status": "DERIVED",
+          "value": "GENE_SYMBOL",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "GENE_SYMBOL_MAJORITY",
+          "source_sha256": "ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6"
+        },
+        "source_counts": {
+          "status": "DERIVED",
+          "value": "SOURCE_COUNTS",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "COUNT_SOURCE_MISSING_CELLS_AND_FEATURES",
+          "source_sha256": "ae3b044f23a0a4cd2859da36726a220856c35216a169c17f93dfc3bd20b04de6",
+          "feature_count": 25268,
+          "missing_cells": 0,
+          "genes_with_missing_cells": 0
+        }
+      },
+      "normalization": "Cuffnorm",
+      "feature_scope": "COMPLETE"
+    }
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "pre-treatment"
+    ],
+    "response_source": "geo_family_soft",
+    "endpoint_class": "TUMOUR_RESPONSE",
+    "response_map": {
+      "Complete Response": "CR",
+      "Partial Response": "PR",
+      "Stable Disease": "SD",
+      "Progressive Disease": "PD"
+    },
+    "baseline_tie_rule": "LOWEST_LESION_LETTER",
+    "nonbaseline_visit_values": [
+      "on-treatment"
+    ]
+  },
+  "expression_column_map": {
+    "geo_author_expression": {
+      "method": "REGEX",
+      "header_regex": "^(?P<sample>Pt[0-9]+[A-Z]?)\\.(?P<time>baseline|OnTx)$",
+      "title_regex": "^(?P<sample>Pt[0-9]+[A-Z]?)$",
+      "evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md; geo_family_soft:!Sample_title and biopsy time; pinned expression workbook header",
+      "review_required": false,
+      "characteristic_groups": {
+        "time": {
+          "characteristic": "biopsy time",
+          "values": {
+            "baseline": "pre-treatment",
+            "OnTx": "on-treatment"
+          }
+        }
+      },
+      "evidence_type": "DERIVED_FROM_OBJECT",
+      "rule_name": "TITLE_TOKEN_AND_SOURCE_VISIT"
+    }
+  },
+  "decision_config": {
+    "preview": {
+      "endpoint": "ORR derived from GEO per-patient CR/PR/PD labels",
+      "index_episode": {
+        "agent": "GEO treatment characteristic: pembrolizumab or nivolumab",
+        "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4808437/",
+        "start_time": "UNKNOWN"
+      },
+      "prior_ici": "UNKNOWN",
+      "study_class": "CLINICAL_ICI",
+      "required_roles": [
+        "geo_family_soft",
+        "geo_author_expression"
+      ],
+      "expected_baseline_candidates": 26,
+      "split_policy": "DEVELOPMENT",
+      "decision_evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md",
+      "nonbaseline_only_policy": "NOT_APPLICABLE for A_BASELINE_BIO; retain for A.1"
+    },
+    "overlap_review": {
+      "source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md",
+      "edges": [
+        {
+          "target_node_type": "STUDY",
+          "target_node_id": "STUDY:riaz_gse91061",
+          "edge_type": "OTHER",
+          "certainty": "UNRESOLVED",
+          "implication_for_independence": "UNKNOWN",
+          "evidence": "No shared identifiers were found; site-level independence remains unknown."
+        }
+      ]
+    },
+    "development_policy": {
+      "prior_ici_policy": "UNKNOWN_ALLOWED_DEVELOPMENT",
+      "analysis_lineage_id": "hugo_gse78220-a-baseline-development-20261029",
+      "source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md#prior-ici-exposure-and-split-declarations",
+      "split_role": "DEVELOPMENT",
+      "exposure_state": "METADATA_ONLY",
+      "review_complete": true,
+      "covered_subject_types": [
+        "STUDY_FAMILY",
+        "PATIENT_SET"
+      ],
+      "cancer": "melanoma",
+      "cancer_source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md#hugo-gse78220-metastatic-melanoma-pembrolizumab-or-nivolumab"
+    }
+  },
+  "v3": {
+    "primary_representation": "geo_author_expression",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 28,
+      "baseline_selected": 26,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "geo_author_expression"
+    },
+    "documentation": {
+      "geo_author_expression": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/suppl/GSE78220_PatientFPKM.xlsx"
+      }
+    },
+    "delimiters": {
+      "geo_author_expression": ","
+    },
+    "compressed": {
+      "geo_author_expression": false
+    }
+  },
+  "treatment_proposal": {
+    "agent_source": "GEO_CHARACTERISTIC",
+    "agent_field": "treatment",
+    "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/soft/GSE78220_family.soft.gz",
+    "pharmacological_class": "ICI",
+    "regimen_id": "REGIMEN:hugo_gse78220:INDEX",
+    "index_event": "START_OF_INDEX_TREATMENT"
+  }
+}

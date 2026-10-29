@@ -96,7 +96,7 @@ def material_packet():
 
 def seal(p, stages=('registries','endpoints','timing','assays','overlap','exposure','admission','split')):
     p['dependencies']={}
-    if 'split' in p['config']:
+    if 'split' in p['config'] and 'assignments' in p['config']['split']:
         p['records']['split'] = copy.deepcopy(p['config']['split']['assignments'])
     order = ('registries','endpoints','timing','assays','overlap','exposure','admission','split',
              'baseline','longitudinal','prat_review','public_report')
@@ -546,3 +546,68 @@ def test_unknown_branch_compartment_policy_does_not_default_to_tumour():
     good = build_baseline(seal(p), schemas=STORE)
     assert good['status'] == 'READY'
     assert good['records']['baseline'][0]['specimen_uid'] == 'B1'
+
+
+def test_declared_split_policy_generates_schema_valid_patient_rows():
+    from tools.a_dav.release import validate_split
+    p = split_packet()
+    p['records']['study_registry'] = [{'study_id': 'S1', 'publication_family_id': 'FAM1'}]
+    p['config']['split'].pop('assignments')
+    p['config']['split']['policy'] = {'permanent_role': 'DEVELOPMENT', 'prior_exposure_state': 'METADATA_ONLY'}
+    result = validate_split(seal(p), schemas=STORE)
+    assert result['status'] == 'READY', result['reasons']
+    rows = result['records']['split']
+    assert len(rows) == 1
+    assert rows[0]['patient_uid'] == 'P1'
+    assert rows[0]['permanent_role'] == 'DEVELOPMENT'
+    STORE.validate('split', rows[0])
+
+
+@pytest.mark.parametrize(('role', 'state', 'expected'), [
+    ('UNKNOWN', 'UNKNOWN', 'BLOCKED_UNKNOWN'),
+    ('FINAL_TEST', 'METADATA_ONLY', 'FAIL'),
+])
+def test_declared_split_policy_rejects_unresolved_roles_and_final_exposure(role, state, expected):
+    from tools.a_dav.release import validate_split
+    p = split_packet()
+    p['records']['study_registry'] = [{'study_id': 'S1', 'publication_family_id': 'FAM1'}]
+    p['config']['split'].pop('assignments')
+    p['config']['split']['policy'] = {'permanent_role': role, 'prior_exposure_state': state}
+    assert validate_split(seal(p), schemas=STORE)['status'] == expected
+
+
+def test_baseline_matrix_carries_split_role():
+    from tools.a_dav.matrices import build_baseline
+    result = build_baseline(material_packet(), schemas=STORE)
+    assert result['status'] == 'READY'
+    assert result['records']['baseline'][0]['split_role'] == 'DEVELOPMENT'
+
+
+def test_baseline_build_records_runtime_timestamp_when_config_requests_it():
+    from datetime import datetime
+    from tools.a_dav.matrices import build_baseline
+    p = material_packet()
+    p['config']['baseline']['build_utc'] = 'AT_BUILD_TIME'
+    result = build_baseline(seal(p), schemas=STORE)
+    assert result['status'] == 'READY'
+    stamp = result['records']['matrix_build_receipt'][-1]['build_utc']
+    assert datetime.fromisoformat(stamp.replace('Z', '+00:00')).tzinfo is not None
+
+
+def test_unknown_prior_ici_development_exception_cannot_be_reused_for_final_test():
+    from tools.a_dav.release import validate_split
+    p = split_packet()
+    p['config']['timing'] = {'prior_ici_policy':'UNKNOWN_ALLOWED_DEVELOPMENT'}
+    p['records']['patient_registry'][0]['prior_ici'] = 'UNKNOWN'
+    p['config']['split']['assignments'][0].update(permanent_role='FINAL_TEST', prior_exposure_state='ADJUDICATED_UNTOUCHED', exposure_decision_id='CLAIM', nested_assignments=[])
+    result = validate_split(seal(p), schemas=STORE)
+    assert result['status'] == 'BLOCKED_UNKNOWN'
+    assert result['reasons'] == ['PRIOR_ICI_UNKNOWN']
+
+
+def test_baseline_preserves_unknown_prior_ici_covariate():
+    from tools.a_dav.matrices import build_baseline
+    p=material_packet(); p['records']['treatment_episode'][0]['prior_ici']='UNKNOWN'
+    result=build_baseline(seal(p),schemas=STORE)
+    assert result['status']=='READY'
+    assert result['records']['baseline'][0]['prior_ici']=='UNKNOWN'

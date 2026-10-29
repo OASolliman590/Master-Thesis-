@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "cohort": "gse126044",
+  "branch_id": "A_BASELINE_BIO",
+  "request_cap": 40,
+  "max_object_bytes": 1000000,
+  "allowed_hosts": [
+    "ftp.ncbi.nlm.nih.gov"
+  ],
+  "objects": [
+    {
+      "id": "geo_family_soft",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE126nnn/GSE126044/soft/GSE126044_family.soft.gz",
+      "version": "2026-08-29",
+      "expected_size": 2419,
+      "expected_sha256": null,
+      "max_bytes": 1000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "author_counts_grch37",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE126nnn/GSE126044/suppl/GSE126044_counts.txt.gz",
+      "version": "2019-04-04",
+      "expected_size": 559926,
+      "expected_sha256": null,
+      "max_bytes": 1000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    }
+  ]
+}

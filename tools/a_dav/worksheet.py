@@ -22,6 +22,24 @@ GATE_QUESTIONS = {
     "V8": "Has the branch matrix been built, tested, and structurally validated?",
 }
 DECISIONS = frozenset({"PASS", "FAIL", "BLOCKED_UNKNOWN", "NOT_APPLICABLE", "SUPERSEDED"})
+SIGNATURE_DERIVED_RECORD_FIELDS = frozenset({"reviewer", "review_date", "reviewed_utc"})
+
+
+def _context_entity_records(records: dict[str, Any]) -> dict[str, list[Any]]:
+    """Hash reviewed facts without binding them to the signer's identity or date."""
+    context_records: dict[str, list[Any]] = {}
+    for table in sorted(ENTITY_TABLES):
+        normalized = []
+        for value in records.get(table, []):
+            if isinstance(value, dict):
+                row = copy.deepcopy(value)
+                for field in SIGNATURE_DERIVED_RECORD_FIELDS:
+                    row.pop(field, None)
+                normalized.append(row)
+            else:
+                normalized.append(copy.deepcopy(value))
+        context_records[table] = sorted(normalized, key=canonical_bytes)
+    return context_records
 
 
 def _ingestion_items(packet: dict[str, Any]) -> list[dict[str, Any]]:
@@ -71,6 +89,14 @@ def build_worksheet(packet: dict[str, Any]) -> dict[str, Any]:
     require(len(study_ids) == 1, "WORKSHEET_STUDY_AMBIGUOUS")
     ingestion = _ingestion_items(packet)
     items = list(ingestion)
+    admission = config.get("admission", {})
+    prefill = admission.get("worksheet_prefill", {}) if isinstance(admission, dict) else {}
+    require(isinstance(prefill, dict), "WORKSHEET_PREFILL_INVALID")
+    default_status = prefill.get("default_status", "BLOCKED_UNKNOWN")
+    require(default_status in DECISIONS, "WORKSHEET_PREFILL_INVALID")
+    source_prefill = prefill.get("source_items", {})
+    gate_prefill = prefill.get("gates", {})
+    require(isinstance(source_prefill, dict) and isinstance(gate_prefill, dict), "WORKSHEET_PREFILL_INVALID")
     gate_tables = {
         "V0": ("source_record",), "V1": ("study_registry", "publication_family"),
         "V2": ("source_record",), "V3": ("assay_registry",),
@@ -90,6 +116,21 @@ def build_worksheet(packet: dict[str, Any]) -> dict[str, Any]:
         row = {"kind": "gate", "gate": gate, "question": question, "evidence_pointers": evidence}
         row["item_id"] = gate
         items.append(row)
+    for item in items:
+        decisions = gate_prefill if item.get("kind") == "gate" else source_prefill
+        key = item.get("gate") if item.get("kind") == "gate" else item.get("category")
+        value = decisions.get(key, {}) if isinstance(key, str) else {}
+        require(isinstance(value, dict), "WORKSHEET_PREFILL_INVALID")
+        status = value.get("status", default_status)
+        require(status in DECISIONS, "WORKSHEET_PREFILL_INVALID")
+        pointers = item["evidence_pointers"] + value.get("evidence_pointers", [])
+        require(isinstance(pointers, list) and all(isinstance(pointer, dict) for pointer in pointers),
+                "WORKSHEET_PREFILL_INVALID")
+        pointers = list({canonical_bytes(pointer): pointer for pointer in pointers}.values())
+        decision = value.get("decision", "Awaiting reviewer disposition.")
+        require(isinstance(decision, str) and decision.strip(), "WORKSHEET_PREFILL_INVALID")
+        item["prefilled_decision"] = {"status": status, "decision": decision,
+                                      "evidence_pointers": pointers}
     bound_config = copy.deepcopy(config)
     if isinstance(bound_config, dict) and isinstance(bound_config.get("admission"), dict):
         bound_config["admission"].pop("reviewer_worksheet", None)
@@ -97,8 +138,7 @@ def build_worksheet(packet: dict[str, Any]) -> dict[str, Any]:
     context = {
         "study_id": study_ids[0], "branch_id": branch,
         "config_hash": digest(bound_config), "sources": sources,
-        "entity_records_hash": digest({table: sorted(packet["records"].get(table, []), key=canonical_bytes)
-                                        for table in sorted(ENTITY_TABLES)}),
+        "entity_records_hash": digest(_context_entity_records(packet["records"])),
         "ingestion_items_hash": digest(ingestion),
     }
     context_hash = digest(context)
@@ -107,7 +147,8 @@ def build_worksheet(packet: dict[str, Any]) -> dict[str, Any]:
         created = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     return {"schema_version": "1", "worksheet_id": "worksheet-" + context_hash[:24],
             "created_utc": created, "context": context, "context_hash": context_hash,
-            "items": items}
+            "items": items, "review_status": "UNSIGNED", "reviewer_name": "", "review_date": "",
+            "signature_placeholder": "Awaiting the user's named reviewer and actual sign-off."}
 
 
 def validate_signed_worksheet(packet: dict[str, Any], worksheet: dict[str, Any]) -> dict[str, Any]:
@@ -129,6 +170,24 @@ def validate_signed_worksheet(packet: dict[str, Any], worksheet: dict[str, Any])
         date.fromisoformat(review_date)
     except ValueError:
         raise DavError("WORKSHEET_UNSIGNED", blocked=True) from None
+    decision_status = {row.get("item_id"): row.get("status") for row in decisions
+                       if isinstance(row, dict)} if isinstance(decisions, list) else {}
+    for row in packet["records"].get("episode_binding", []):
+        if isinstance(row, dict) and row.get("binding_status") == "VERIFIED":
+            require(row.get("reviewer") == reviewer.strip() and row.get("reviewed_utc") == review_date,
+                    "WORKSHEET_SIGNATURE_RECORD_MISMATCH")
+    if decision_status.get("V6") == "PASS":
+        for row in packet["records"].get("overlap_edge", []):
+            if isinstance(row, dict):
+                record_reviewer, record_date = row.get("reviewer"), row.get("review_date")
+                if record_reviewer not in (None, "") or record_date not in (None, ""):
+                    require(record_reviewer == reviewer.strip() and record_date == review_date,
+                            "WORKSHEET_SIGNATURE_RECORD_MISMATCH")
+        for row in packet["records"].get("prior_exposure_record", []):
+            if isinstance(row, dict):
+                record_reviewer = row.get("reviewer")
+                if record_reviewer not in (None, ""):
+                    require(record_reviewer == reviewer.strip(), "WORKSHEET_SIGNATURE_RECORD_MISMATCH")
     public_routes = {"PUBLIC_DIRECT", "PUBLIC_LANDING"}
     public_only = bool(packet["records"].get("source_record")) and all(
         row.get("access_route") in public_routes for row in packet["records"].get("source_record", []))

@@ -38,7 +38,21 @@ def validate_split(packet: dict[str, Any], *, schemas: SchemaStore | None = None
     require(cfg.get('selection_basis')=='PRESPECIFIED_METADATA' and isinstance(cfg.get('version'),str)
             and bool(cfg['version']) and isinstance(cfg.get('analysis_lineage_id'),str), 'SPLIT_POLICY_UNKNOWN',blocked=True)
     _source_complete(packet,cfg.get('required_source_ids'))
-    rows=cfg.get('assignments');require(isinstance(rows,list) and bool(rows),'SPLIT_POLICY_UNKNOWN',blocked=True)
+    rows=cfg.get('assignments')
+    if rows is None and isinstance(cfg.get('policy'), dict):
+        policy=cfg['policy']
+        family_by_study={s['study_id']:s['publication_family_id'] for s in packet['records'].get('study_registry', [])}
+        require(all(p.get('study_id') in family_by_study for p in packet['records'].get('patient_registry', [])),
+                'SPLIT_POLICY_UNKNOWN',blocked=True)
+        rows=[{'row_type':'SPLIT','schema_version':'1.1.0','data_classification':packet['classification'],
+               'patient_uid':p['patient_uid'],'study_id':p['study_id'],
+               'independence_family_id':family_by_study[p['study_id']],
+               'permanent_role':policy.get('permanent_role'),
+               'prior_exposure_state':policy.get('prior_exposure_state'),
+               'exposure_decision_id':policy.get('exposure_decision_id'),
+               'split_version':cfg['version'],'reason':cfg['selection_basis'],'nested_assignments':[]}
+              for p in packet['records'].get('patient_registry', [])]
+    require(isinstance(rows,list) and bool(rows),'SPLIT_POLICY_UNKNOWN',blocked=True)
     records=copy.deepcopy(packet['records']);patients={p['patient_uid']:p for p in records.get('patient_registry',[])}
     assigned: dict[str,dict[str,Any]] = {}
     for row in rows:
@@ -49,6 +63,12 @@ def validate_split(packet: dict[str, Any], *, schemas: SchemaStore | None = None
         require(uid not in assigned,'SPLIT_LEAKAGE');assigned[uid]=row
         require(row['study_id']==patients[uid]['study_id'] and row['split_version']==cfg['version'],'SPLIT_LEAKAGE')
         require(row['permanent_role']!='UNKNOWN','SPLIT_POLICY_UNKNOWN',blocked=True)
+        if row['permanent_role'] == 'FINAL_TEST' and packet['config'].get('timing', {}).get('prior_ici_policy') == 'UNKNOWN_ALLOWED_DEVELOPMENT':
+            patient_episodes = [e for e in records.get('treatment_episode', []) if e['patient_uid'] == uid]
+            patient_exposures = [e for e in records.get('treatment_exposure', []) if e['patient_uid'] == uid]
+            require(patients[uid].get('prior_ici') not in {None, 'UNKNOWN'} and bool(patient_episodes)
+                    and all(e.get('prior_ici') not in {None, 'UNKNOWN'} for e in patient_episodes + patient_exposures),
+                    'PRIOR_ICI_UNKNOWN', blocked=True)
         require(row['permanent_role']=='DEVELOPMENT' or not row['nested_assignments'],'SPLIT_LEAKAGE')
         folds: set[tuple[str,str]] = set()
         for fold in row['nested_assignments']:

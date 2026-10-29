@@ -1,0 +1,127 @@
+{
+  "cohort": "gse126044",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "7741ad6098179ad0cc073794e310ca4b9e89f6d74426536e2d43fcf37d69b81a",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE126nnn/GSE126044/soft/GSE126044_family.soft.gz",
+      "version": "2026-08-29",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "author_counts_grch37": {
+      "sha256": "97abe0c051a5a80d5fc61e6d47c6611795484797e65843391b312672f0929607",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE126nnn/GSE126044/suppl/GSE126044_counts.txt.gz",
+      "version": "2019-04-04",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^RNA-seq_Dis_([0-9]+)$",
+    "patient_group": 1
+  },
+  "geo": {
+    "characteristics": {
+      "tissue": "tissue",
+      "visit": "treatment status",
+      "response": "patient response"
+    },
+    "relation_kinds": [
+      "BioSample",
+      "SRA"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "source_name_ch1",
+    "source_name_map": {
+      "NSCLC biopsies": "TUMOUR"
+    },
+    "evidence": "GEO sample source name and linked article's tumor-sample description"
+  },
+  "labels": {
+    "geo_response": {
+      "responder": "SOURCE_POSITIVE",
+      "non-responder": "SOURCE_NEGATIVE"
+    },
+    "treatment_status": {
+      "pre-treatment": "PRE_TREATMENT"
+    }
+  },
+  "measurement_representations": {
+    "author_counts_grch37": {
+      "unit": "COUNTS",
+      "transform": "UNKNOWN",
+      "genome_build": "GRCh37.p13, release 19",
+      "annotation": "UNKNOWN",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "geo_family_soft:!Sample_data_processing (states counts per sample)",
+        "transform": "UNKNOWN: GEO data_processing text does not state a transformation",
+        "genome_build": "geo_family_soft:!Sample_data_processing",
+        "annotation": "UNKNOWN: GEO data_processing text does not name an annotation",
+        "feature_identifier_system": "UNKNOWN: GEO data_processing text does not state gene identifier type",
+        "modality": "geo_family_soft:!Sample_library_strategy"
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "decision_config": {
+    "endpoint": {
+      "endpoint_class": "SOURCE_BINARY",
+      "source_binary_definition": {
+        "name": "RECIST 1.1 response group with stable-disease duration threshold",
+        "version": "cho2020-recist11-rnr-v1",
+        "assessment_criteria": "RECIST version 1.1",
+        "responder_definition": "Partial response (PR), or stable disease (SD) for >6 months",
+        "non_responder_definition": "Progressive disease (PD), or stable disease (SD) for \u22646 months",
+        "threshold": {
+          "value": 6,
+          "unit": "months",
+          "responder_comparator": ">",
+          "non_responder_comparator": "\u2264"
+        },
+        "raw_value_map": {
+          "responder": 1,
+          "non-responder": 0
+        },
+        "source_locator": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8080767/#sec3",
+        "citation": "Cho et al. 2020, Materials and methods > Patient cohorts",
+        "endpoint_label": "clinical benefit (stable disease duration included)"
+      },
+      "label_source_role": "geo_family_soft",
+      "definition_source": "Cho et al. 2020, Materials and methods > Patient cohorts"
+    }
+  },
+  "comments": {
+    "patient_identity": "The title regex extracts the GEO Dis_XX token only. No source reviewed explicitly defines that token as a patient identifier or supplies a patient crosswalk; do not treat the extracted token as a verified patient join.",
+    "endpoint_source_roles": "GEO family SOFT supplies raw per-sample responder/non-responder labels; Cho et al. 2020 supplies their RECIST 1.1 and stable-disease-duration definition."
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "pre-treatment"
+    ],
+    "response_source": "geo_family_soft",
+    "endpoint_class": "SOURCE_BINARY",
+    "response_map": {
+      "responder": "SOURCE_POSITIVE",
+      "non-responder": "SOURCE_NEGATIVE"
+    },
+    "baseline_tie_rule": null,
+    "patient_mapping_unverified": true
+  },
+  "expression_column_map": {
+    "author_counts_grch37": {
+      "method": "REGEX",
+      "header_regex": "^(?P<sample>Dis_[0-9]+)$",
+      "title_regex": "^RNA-seq_(?P<sample>Dis_[0-9]+)$",
+      "evidence": "GEO source titles and deposited matrix header; title-to-patient identity remains unresolved.",
+      "review_required": true
+    }
+  },
+  "status": "PARKED",
+  "parked_reason": "sample-to-patient mapping not documented by any source"
+}

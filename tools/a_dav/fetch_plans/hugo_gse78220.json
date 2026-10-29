@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "cohort": "hugo_gse78220",
+  "branch_id": "A_BASELINE_BIO",
+  "request_cap": 40,
+  "max_object_bytes": 10000000,
+  "allowed_hosts": [
+    "ftp.ncbi.nlm.nih.gov"
+  ],
+  "objects": [
+    {
+      "id": "geo_family_soft",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/soft/GSE78220_family.soft.gz",
+      "version": "2026-09-01",
+      "expected_size": 4753,
+      "expected_sha256": null,
+      "max_bytes": 1000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "geo_author_expression",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE78nnn/GSE78220/suppl/GSE78220_PatientFPKM.xlsx",
+      "version": "2016-02-23",
+      "expected_size": 7145318,
+      "expected_sha256": null,
+      "max_bytes": 9000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    }
+  ]
+}

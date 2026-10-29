@@ -191,3 +191,29 @@ def test_cli_writes_fresh_unsigned_packet_and_keeps_qc_pending(tmp_path: Path):
 def test_output_keeps_private_runtime_boundary():
     with pytest.raises(DavError, match="OUTPUT_PATH_NOT_ALLOWED"):
         prepare_baseline(_packet(), Path("/private/tmp/riaz-baseline-outside"))
+
+
+def test_generic_baseline_uses_declared_source_roles_and_retains_extra_specimen():
+    packet = {'classification': 'PRIVATE_PATIENT_LEVEL', 'branch_id': 'A_BASELINE_BIO',
+        'records': {'study_registry': [{'study_id': 'invented-study'}],
+            'source_record': [{'source_object_id': 'SOURCE:invented:geo', 'sha256': 'a' * 64, 'retrieval_status': 'RETRIEVED', 'hash_scope': 'FULL_OBJECT'}, {'source_object_id': 'SOURCE:invented:matrix', 'sha256': 'b' * 64, 'retrieval_status': 'RETRIEVED', 'hash_scope': 'FULL_OBJECT'}],
+            'patient_registry': [{'patient_uid': 'p1', 'source_patient_id': 'p1', 'patient_identity_confidence': 'UNRESOLVED'}, {'patient_uid': 'p2', 'source_patient_id': 'p2', 'patient_identity_confidence': 'UNRESOLVED'}],
+            'specimen_registry': [{'specimen_uid': 's1', 'patient_uid': 'p1', 'canonical_timing_category': 'PRE_INDEX_BASELINE', 'baseline_candidate_status': 'YES'}, {'specimen_uid': 's2', 'patient_uid': 'p1', 'canonical_timing_category': 'PRE_INDEX_BASELINE', 'baseline_candidate_status': 'NO'}, {'specimen_uid': 's3', 'patient_uid': 'p2', 'canonical_timing_category': 'UNKNOWN', 'baseline_candidate_status': 'NO'}],
+            'assay_registry': [{'assay_uid': 'a1', 'specimen_uid': 's1'}, {'assay_uid': 'a2', 'specimen_uid': 's2'}],
+            'clinical_outcome': [{'outcome_id': 'o1', 'patient_uid': 'p1', 'raw_endpoint_label': 'R', 'canonical_category': 'SOURCE_POSITIVE', 'endpoint_class': 'SOURCE_BINARY'}]},
+        'config': {'admission': {'ingestion_worksheet': {'items': []}}, 'registries': {}}, 'dependencies': {}}
+    mapping = {'cohort': 'invented', 'geo_ingest': {'response_map': {'R': 'SOURCE_POSITIVE'}, 'endpoint_class': 'SOURCE_BINARY'},
+        'decision_config': {'preview': {'required_roles': ['geo', 'matrix']}},
+        'source_objects': {'geo': {'sha256': 'a' * 64}, 'matrix': {'sha256': 'b' * 64}}}
+    result = build_baseline_packet(packet, field_map=mapping)
+    assert [p['patient_uid'] for p in result['records']['patient_registry']] == ['p1']
+    assert {s['specimen_uid'] for s in result['records']['specimen_registry']} == {'s1', 's2'}
+    assert result['records']['clinical_outcome'][0]['endpoint_class'] == 'SOURCE_BINARY'
+    assert result['records']['patient_registry'][0]['patient_identity_confidence'] == 'UNRESOLVED'
+
+
+def test_generic_baseline_refuses_unretrieved_declared_source():
+    packet = {'branch_id': 'A_BASELINE_BIO', 'records': {'source_record': [{'source_object_id': 'SOURCE:invented:geo', 'sha256': 'a' * 64, 'retrieval_status': 'NOT_ATTEMPTED', 'hash_scope': 'NOT_RETRIEVED'}], 'specimen_registry': [{'patient_uid': 'p1', 'specimen_uid': 's1', 'canonical_timing_category': 'PRE_INDEX_BASELINE', 'baseline_candidate_status': 'YES'}]}, 'config': {}}
+    mapping = {'cohort': 'invented', 'geo_ingest': {'response_map': {}, 'endpoint_class': 'SOURCE_BINARY'}, 'decision_config': {'preview': {'required_roles': ['geo']}}, 'source_objects': {'geo': {'sha256': 'a' * 64}}}
+    with pytest.raises(DavError, match='BASELINE_SOURCE_MISMATCH'):
+        build_baseline_packet(packet, field_map=mapping)

@@ -590,3 +590,28 @@ def test_endpoint_defined_source_binary_still_cannot_be_orr_or_dcr():
     from tools.a_dav.endpoints import map_endpoints
     p = defined_source_binary_packet(); p["config"]["endpoints"]["classes"] = ["ORR", "DCR"]
     assert map_endpoints(with_registries(p), schemas=SCHEMAS)["reasons"] == ["INVALID_ENDPOINT_CONVERSION"]
+
+@pytest.mark.parametrize('role,expected', [('DEVELOPMENT', 'READY'), ('FINAL_TEST', 'BLOCKED_UNKNOWN'), ('HOLDOUT', 'BLOCKED_UNKNOWN'), (None, 'BLOCKED_UNKNOWN')])
+def test_unknown_prior_ici_requires_declared_development_policy(role, expected):
+    from tools.a_dav.timing import validate_timing
+    p = timing_config(packet())
+    for table in ('patient_registry', 'treatment_episode', 'treatment_exposure'):
+        p['records'][table][0]['prior_ici'] = 'UNKNOWN'
+    p['config']['timing']['prior_ici_policy'] = 'UNKNOWN_ALLOWED_DEVELOPMENT'
+    p['config']['split'] = {'policy': {'permanent_role': role}}
+    result = validate_timing(with_registries(p), schemas=SCHEMAS)
+    assert result['status'] == expected
+    if expected == 'READY':
+        assert result['records']['patient_registry'][0]['prior_ici'] == 'UNKNOWN'
+    else:
+        assert result['reasons'] == ['PRIOR_ICI_UNKNOWN']
+
+@pytest.mark.parametrize('branch', ['A_P2_FINAL_TEST', 'A_P2_OUTER_VALIDATION'])
+def test_unknown_prior_ici_never_allowed_in_holdout_branch(branch):
+    from tools.a_dav.timing import validate_timing
+    p=timing_config(packet()); p['branch_id']=branch
+    for table in ('patient_registry','treatment_episode','treatment_exposure'):
+        p['records'][table][0]['prior_ici']='UNKNOWN'
+    p['config']['timing']['prior_ici_policy']='UNKNOWN_ALLOWED_DEVELOPMENT'
+    p['config']['split']={'policy':{'permanent_role':'DEVELOPMENT'}}
+    assert validate_timing(with_registries(p),schemas=SCHEMAS)['reasons']==['PRIOR_ICI_UNKNOWN']

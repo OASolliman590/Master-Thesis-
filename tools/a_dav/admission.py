@@ -321,11 +321,16 @@ def _criterion(name: str, evidence: dict[str, Any], records: dict[str, Any], stu
 
 @stage_boundary("admission")
 def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = None,
-                       reviewer_worksheet: dict[str, Any] | None = None) -> dict[str, Any]:
+                       reviewer_worksheet: dict[str, Any] | None = None,
+                       worksheet_context_packet: dict[str, Any] | None = None) -> dict[str, Any]:
     store = schemas or SchemaStore()
     for stage in DEPENDENCIES:
         dependency(packet, stage, store)
     records, config = packet["records"], packet["config"].get("admission", {})
+    worksheet = reviewer_worksheet if reviewer_worksheet is not None else config.get("reviewer_worksheet")
+    signature: dict[str, Any] | None = None
+    if worksheet is not None:
+        signature = validate_signed_worksheet(worksheet_context_packet or packet, worksheet)
     require(set(BRANCH_REQUIREMENTS) == set(BRANCHES), "ADMISSION_POLICY_UNKNOWN")
     studies = records.get("study_registry", [])
     require(bool(studies), "BRANCH_EVIDENCE_UNKNOWN", blocked=True)
@@ -355,10 +360,6 @@ def evaluate_admission(packet: dict[str, Any], *, schemas: SchemaStore | None = 
                 source_reasons.setdefault(source["study_id"], set()).add("REQUIRED_SOURCE_INCOMPLETE")
     branch = packet["branch_id"]
     policy = config.get("branch_policies", {}).get(branch, {})
-    worksheet = reviewer_worksheet if reviewer_worksheet is not None else config.get("reviewer_worksheet")
-    signature: dict[str, Any] | None = None
-    if worksheet is not None:
-        signature = validate_signed_worksheet(packet, worksheet)
     audit: list[dict[str, Any]] = []
     drafts: list[dict[str, Any]] = []
     for study in studies:

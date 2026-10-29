@@ -104,13 +104,48 @@ def _all_patient_disagreements_are_ne_unk(items: list[dict[str, Any]], source_pa
         for item in relevant)
 
 
-def build_baseline_packet(packet: dict[str, Any]) -> dict[str, Any]:
+def _build_declared_baseline(packet: dict[str, Any], field_map: dict[str, Any]) -> dict[str, Any]:
+    require(packet.get('branch_id') == 'A_BASELINE_BIO', 'BASELINE_BRANCH_MISMATCH')
+    require(isinstance(packet.get('records'), dict) and isinstance(packet.get('config'), dict), 'MALFORMED_INPUT')
+    current = copy.deepcopy(packet)
+    records = current['records']
+    role_list = field_map.get('decision_config', {}).get('preview', {}).get('required_roles', [])
+    require(isinstance(role_list, list) and bool(role_list), 'BASELINE_REQUIRED_ROLES_UNKNOWN', blocked=True)
+    sources = {row.get('source_object_id'): row for row in records.get('source_record', [])}
+    for role in role_list:
+        declared_hash = field_map.get('source_objects', {}).get(role, {}).get('sha256')
+        source = sources.get(f"SOURCE:{field_map['cohort']}:{role}")
+        require(bool(declared_hash) and isinstance(source, dict) and source.get('sha256') == declared_hash
+                and source.get('retrieval_status') == 'RETRIEVED' and source.get('hash_scope') == 'FULL_OBJECT',
+                'BASELINE_SOURCE_MISMATCH', blocked=True)
+    selected = {row['patient_uid'] for row in records.get('specimen_registry', [])
+                if row.get('canonical_timing_category') == 'PRE_INDEX_BASELINE'
+                and row.get('baseline_candidate_status') == 'YES'}
+    require(bool(selected), 'BASELINE_POPULATION_EMPTY', blocked=True)
+    records['patient_registry'] = [row for row in records.get('patient_registry', []) if row.get('patient_uid') in selected]
+    records['specimen_registry'] = [row for row in records.get('specimen_registry', []) if row.get('patient_uid') in selected]
+    specimens = {row['specimen_uid'] for row in records['specimen_registry']}
+    records['assay_registry'] = [row for row in records.get('assay_registry', []) if row.get('specimen_uid') in specimens]
+    records['clinical_outcome'] = [row for row in records.get('clinical_outcome', []) if row.get('patient_uid') in selected]
+    for table in ('treatment_episode', 'treatment_exposure', 'episode_binding'):
+        records[table] = [row for row in records.get(table, []) if row.get('patient_uid') in selected]
+    cfg = field_map['geo_ingest']
+    classes = ['OTHER'] if cfg['endpoint_class'] == 'SOURCE_BINARY' else ['ORR']
+    current['config']['endpoints'] = {'version': 'field-map', 'classes': classes,
+        'category_map': copy.deepcopy(cfg['response_map']),
+        'source_priority': [row['outcome_id'] for row in records['clinical_outcome']]}
+    current['dependencies'] = {}
+    return current
+
+def build_baseline_packet(packet: dict[str, Any], *, field_map: dict[str, Any] | None = None) -> dict[str, Any]:
     """Create a branch-scoped copy from canonical ingestion records.
 
     The function preserves source inventory and raw labels. It filters branch membership
     to identity-verified pretreatment specimens and their linked records, and sets a
     versioned author-BOR-to-RECIST mapping without setting any admission decision.
     """
+    if field_map is not None and "geo_ingest" in field_map:
+        return _build_declared_baseline(packet, field_map)
     require(isinstance(packet, dict) and packet.get("branch_id") == "A_BASELINE_BIO",
             "BASELINE_BRANCH_MISMATCH")
     require(isinstance(packet.get("records"), dict) and isinstance(packet.get("config"), dict),

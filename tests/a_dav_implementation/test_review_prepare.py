@@ -41,7 +41,9 @@ def test_rebuild_discards_old_receipts_and_derivations_and_refreshes_unsigned_co
     assert "endpoint" not in first["packet"]["records"]
     assert set(first["packet"]["records"]) <= ENTITY_TABLES | {"coverage"}
     assert "signature" not in first["worksheet"]
-    assert first["worksheet"] == build_worksheet(first["packet"])
+    regenerated = build_worksheet(first["packet"])
+    assert {k: v for k, v in first["worksheet"].items() if k != "created_utc"} == {
+        k: v for k, v in regenerated.items() if k != "created_utc"}
     assert first["summary"]["source_admission"] is False
     assert first["summary"]["matrix_construction"] is False
 

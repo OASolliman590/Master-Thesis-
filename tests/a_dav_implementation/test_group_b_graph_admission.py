@@ -33,6 +33,15 @@ def seal(p: dict[str, Any], stages: tuple[str, ...] = ("registries",)) -> dict[s
     return p
 
 
+def bind_existing_reviews_to_worksheet_signature(p: dict[str, Any]) -> None:
+    for binding in p["records"].get("episode_binding", []):
+        if binding.get("binding_status") == "VERIFIED":
+            binding["reviewer"] = "Thesis Author"
+            binding["reviewed_utc"] = "2026-10-25"
+    for exposure in p["records"].get("prior_exposure_record", []):
+        exposure["reviewer"] = "Thesis Author"
+
+
 def edge(id: str, a: str, b: str, certainty: str = "POSSIBLE") -> dict[str, Any]:
     return {"overlap_edge_id": id, "source_node_type": "STUDY", "source_node_id": a, "target_node_type": "STUDY", "target_node_id": b, "edge_type": "SAME_TRIAL", "evidence": "invented", "certainty": certainty, "implication_for_independence": "INDEPENDENCE_BLOCKED", "reviewer": "invented", "review_date": "invented", "source_locators": [{"kind": "INVENTED", "value": "invented"}]}
 
@@ -121,6 +130,7 @@ def test_signed_public_worksheet_admits_only_when_upstream_evidence_is_ready() -
     p = admission_packet()
     p["classification"] = "PRIVATE_PATIENT_LEVEL"
     p["records"]["source_record"][0]["access_route"] = "PUBLIC_DIRECT"
+    bind_existing_reviews_to_worksheet_signature(p)
     worksheet = build_worksheet(p)
     worksheet["signature"] = {"reviewer_name": "Thesis Author", "review_date": "2026-10-25"}
     worksheet["decisions"] = [
@@ -159,6 +169,7 @@ def test_signed_worksheet_does_not_contradict_declared_clinical_ici() -> None:
     p["classification"] = "PRIVATE_PATIENT_LEVEL"
     p["records"]["study_registry"][0]["study_class"] = "CLINICAL_ICI"
     p["records"]["source_record"][0]["access_route"] = "PUBLIC_DIRECT"
+    bind_existing_reviews_to_worksheet_signature(p)
     worksheet = build_worksheet(p)
     worksheet["signature"] = {"reviewer_name": "Thesis Author", "review_date": "2026-10-25"}
     worksheet["decisions"] = [
@@ -180,6 +191,7 @@ def test_undeclared_study_class_blocks_as_unknown_without_exclusion() -> None:
     p["classification"] = "PRIVATE_PATIENT_LEVEL"
     p["records"]["study_registry"][0].pop("study_class")
     p["records"]["source_record"][0]["access_route"] = "PUBLIC_DIRECT"
+    bind_existing_reviews_to_worksheet_signature(p)
     worksheet = build_worksheet(p)
     worksheet["signature"] = {"reviewer_name": "Thesis Author", "review_date": "2026-10-25"}
     worksheet["decisions"] = [
@@ -201,6 +213,7 @@ def test_superseded_v7_does_not_admit_real_cohort() -> None:
     p = admission_packet()
     p["classification"] = "PRIVATE_PATIENT_LEVEL"
     p["records"]["source_record"][0]["access_route"] = "PUBLIC_DIRECT"
+    bind_existing_reviews_to_worksheet_signature(p)
     worksheet = build_worksheet(p)
     worksheet["signature"] = {"reviewer_name": "Thesis Author", "review_date": "2026-10-25"}
     worksheet["decisions"] = [

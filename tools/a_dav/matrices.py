@@ -2,6 +2,7 @@
 from __future__ import annotations
 import copy
 import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, cast
 from .core import DavError, SchemaStore, canonical_bytes, dependency, digest, finish, require, stage_boundary
@@ -178,7 +179,8 @@ def _draft(stage: str, packet: dict[str, Any], records: dict[str, Any], deps: di
            'patient_count':len(records.get('patient_registry',[])),
            'input_hashes':sorted(v['receipt_id'] for v in deps.values()),
            'code_hash':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-           'config_hash':digest(packet['config']),'output_hash':digest({k:sorted(v,key=canonical_bytes) for k,v in records.items()}),'build_utc':cfg['build_utc'],
+           'config_hash':digest(packet['config']),'output_hash':digest({k:sorted(v,key=canonical_bytes) for k,v in records.items()}),
+           'build_utc':datetime.now(timezone.utc).isoformat() if cfg['build_utc']=='AT_BUILD_TIME' else cfg['build_utc'],
            'test_status':'NOT_RUN','validation_status':'BLOCKED_UNKNOWN'}
     store.validate('matrix_build_receipt',row)
     return row

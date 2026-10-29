@@ -1,0 +1,30 @@
+{
+  "cohort": "gse176307",
+  "branch_id": "A_BASELINE_BIO",
+  "schema_version": 1,
+  "request_cap": 20,
+  "max_object_bytes": 20000000,
+  "allowed_hosts": [
+    "ftp.ncbi.nlm.nih.gov"
+  ],
+  "objects": [
+    {
+      "id": "geo_family_soft",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/soft/GSE176307_family.soft.gz",
+      "version": "2026-10-05",
+      "expected_size": 13609,
+      "expected_sha256": null,
+      "max_bytes": 1000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    },
+    {
+      "id": "log_transformed_expression",
+      "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_BACI_log_trans_normalized_RNAseq.csv.gz",
+      "version": "2023-05-18",
+      "expected_size": 6880837,
+      "expected_sha256": null,
+      "max_bytes": 10000000,
+      "host": "ftp.ncbi.nlm.nih.gov"
+    }
+  ]
+}

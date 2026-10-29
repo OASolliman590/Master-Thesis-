@@ -54,6 +54,35 @@ def test_worksheet_merges_ingestion_items_and_all_nine_gates() -> None:
     assert "source-demo" in str(worksheet["context"])
 
 
+def test_worksheet_prefills_each_gate_and_source_item_without_a_signature() -> None:
+    p = packet()
+    p["config"]["admission"]["ingestion_worksheet"] = [{
+        "category": "INVENTED_SOURCE_QUESTION", "status": "BLOCKED_UNKNOWN",
+        "evidence_pointers": [],
+    }]
+    p["config"]["admission"]["worksheet_prefill"] = {
+        "default_status": "BLOCKED_UNKNOWN",
+        "gates": {"V3": {"status": "PASS", "decision": "Invented structural evidence passed."}},
+        "source_items": {"INVENTED_SOURCE_QUESTION": {
+            "status": "PASS", "decision": "Resolved from invented evidence.",
+            "evidence_pointers": [{"kind": "INVENTED", "value": "invented-ledger"}],
+        }},
+    }
+
+    worksheet = build_worksheet(p)
+    assert all("prefilled_decision" in item for item in worksheet["items"])
+    gate = next(item for item in worksheet["items"] if item.get("gate") == "V3")
+    assert gate["prefilled_decision"]["status"] == "PASS"
+    source = next(item for item in worksheet["items"]
+                  if item.get("category") == "INVENTED_SOURCE_QUESTION")
+    assert source["prefilled_decision"]["evidence_pointers"] == [
+        {"kind": "INVENTED", "value": "invented-ledger"}]
+    assert worksheet["review_status"] == "UNSIGNED"
+    assert worksheet["reviewer_name"] == ""
+    assert worksheet["review_date"] == ""
+    assert worksheet["signature_placeholder"] == "Awaiting the user's named reviewer and actual sign-off."
+
+
 def test_signature_is_bound_to_exact_sources_branch_and_item_set() -> None:
     p = packet()
     worksheet = build_worksheet(p)
@@ -69,6 +98,47 @@ def test_signature_is_bound_to_exact_sources_branch_and_item_set() -> None:
         mutate(changed)
         with pytest.raises(ValueError, match="WORKSHEET_CONTEXT_MISMATCH"):
             validate_signed_worksheet(changed, signed(worksheet))
+
+
+def test_signature_derived_record_fields_do_not_change_context_hash() -> None:
+    first = packet()
+    first["records"]["study_registry"][0]["study_class"] = "CLINICAL_ICI"
+    first["records"]["episode_binding"] = [{
+        "binding_id": "invented-binding", "binding_status": "VERIFIED",
+        "reviewer": "Invented Reviewer",
+        "reviewed_utc": "2026-10-26",
+    }]
+    first["records"]["overlap_edge"] = [{
+        "overlap_edge_id": "invented-edge", "reviewer": "Invented Reviewer",
+        "review_date": "2026-10-26",
+    }]
+    first["records"]["prior_exposure_record"] = [{
+        "exposure_id": "invented-exposure", "reviewer": "Invented Reviewer",
+    }]
+    second = deepcopy(first)
+    second["records"]["episode_binding"][0]["reviewed_utc"] = "2026-10-27"
+    second["records"]["overlap_edge"][0]["review_date"] = "2026-10-27"
+
+    first_worksheet = signed(build_worksheet(first))
+    first_worksheet["signature"]["reviewer_name"] = "Invented Reviewer"
+    first_worksheet["signature"]["review_date"] = "2026-10-26"
+    second_worksheet = signed(build_worksheet(second))
+    second_worksheet["signature"]["reviewer_name"] = "Invented Reviewer"
+    second_worksheet["signature"]["review_date"] = "2026-10-27"
+
+    assert build_worksheet(first)["context_hash"] == build_worksheet(second)["context_hash"]
+    assert validate_signed_worksheet(first, first_worksheet)["review_date"] == "2026-10-26"
+    assert validate_signed_worksheet(second, second_worksheet)["review_date"] == "2026-10-27"
+
+    signature_mismatch = deepcopy(second)
+    signature_mismatch["records"]["episode_binding"][0]["reviewed_utc"] = "2026-10-26"
+    with pytest.raises(ValueError, match="WORKSHEET_SIGNATURE_RECORD_MISMATCH"):
+        validate_signed_worksheet(signature_mismatch, second_worksheet)
+
+    changed_fact = deepcopy(second)
+    changed_fact["records"]["study_registry"][0]["study_class"] = "OTHER"
+    with pytest.raises(ValueError, match="WORKSHEET_CONTEXT_MISMATCH"):
+        validate_signed_worksheet(changed_fact, second_worksheet)
 
 
 def test_unsigned_partial_and_contradictory_decisions_are_not_accepted() -> None:

@@ -7,7 +7,7 @@ from typing import Any
 from .source_objects import SourceObjectError
 
 
-def parse_geo_family_soft(raw: bytes) -> list[dict[str, Any]]:
+def parse_geo_family_soft(raw: bytes, *, characteristic_keys: set[str] | None = None) -> list[dict[str, Any]]:
     """Parse SOFT `^SAMPLE` blocks, preserving repeated characteristics and links."""
     try:
         text = gzip.decompress(raw).decode("utf-8") if raw.startswith(b"\x1f\x8b") else raw.decode("utf-8")
@@ -32,10 +32,14 @@ def parse_geo_family_soft(raw: bytes) -> list[dict[str, Any]]:
             current["title"] = value
         elif attribute == "Sample_geo_accession":
             current["geo_accession"] = value
+        elif attribute == "Sample_source_name_ch1":
+            current["source_name_ch1"] = value
         elif attribute == "Sample_characteristics_ch1":
             key, separator, characteristic_value = value.partition(":")
             if not separator or not key.strip():
                 raise SourceObjectError("GEO_SOFT_INVALID")
+            if characteristic_keys is not None and key.strip() not in characteristic_keys:
+                continue
             current["characteristics"].append({"key": key.strip(),
                                                "value": characteristic_value.strip()})
         elif attribute == "Sample_relation":

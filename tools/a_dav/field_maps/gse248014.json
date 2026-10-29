@@ -1,0 +1,226 @@
+{
+  "cohort": "gse248014",
+  "branch_id": "A_BASELINE_BIO",
+  "study_class": "CLINICAL_ICI",
+  "comments": {
+    "scope": "Baseline tumour expression and source binary R/NR labels are present. GEO does not expose per-patient CR/PR/SD/PD categories; use the documented SOURCE_BINARY endpoint only.",
+    "response": "SOURCE_BINARY is supported by the official trial ORR definition: CR/PR by RECIST 1.1 versus no CR/PR; GEO recist provides the per-patient binary label. Preserve the GEO label unchanged.",
+    "baseline": "Only Baseline is selected; C1D1 follows a two-week entinostat lead-in, and C2D1 follows combination therapy. These timepoint definitions are from GEO series design.",
+    "expression": "The public supplementary table contains RSEM expected gene counts, hg38. Transform is none. Feature identifier system and annotation are not stated in GEO processing text or article; UNKNOWN.",
+    "prior_immunotherapy": "UNKNOWN from public sources reviewed.",
+    "split": "split role DEVELOPMENT pending user confirmation"
+  },
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "d8d66c58e8b786df4c809347774115aa85daa4e6506ab81cf9e928b11234c703",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE248nnn/GSE248014/soft/GSE248014_family.soft.gz",
+      "version": "2026-08-18",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "geo_rsem_expected_counts": {
+      "sha256": "e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE248nnn/GSE248014/suppl/GSE248014_table_RNAseq.csv.gz",
+      "version": "2023-11-16",
+      "format": "MATRIX_HEADER_CSV",
+      "role": "source_of_record"
+    }
+  },
+  "geo": {
+    "characteristics": {
+      "patient": "patient id",
+      "visit": "time point",
+      "response": "recist",
+      "tissue": "cell type"
+    },
+    "relation_kinds": [
+      "BioSample"
+    ]
+  },
+  "sample_identity": {
+    "title_regex": "^patient (.+) at time point (.+)$",
+    "patient_group": 1,
+    "visit_group": 2,
+    "patient_characteristic": "patient id",
+    "visit_characteristic": "time point"
+  },
+  "biological_compartment": {
+    "source_name_field": "cell type",
+    "source_name_map": {
+      "tumor cells": "TUMOUR"
+    },
+    "evidence": "GEO sample source name and characteristic identify tumor cells; paper describes tumor biopsy."
+  },
+  "treatment": {
+    "agent": "entinostat plus nivolumab; phase II NCT03250273; 14-day entinostat lead-in followed by combination. Prior immunotherapy UNKNOWN.",
+    "prior_immunotherapy": "Trial eligibility excluded prior checkpoint inhibitor treatment; patient-level eligibility confirmation is not public."
+  },
+  "labels": {
+    "geo_response": {
+      "Responder": "RESPONDER",
+      "NonResponder": "NONRESPONDER"
+    }
+  },
+  "measurement_representations": {
+    "geo_rsem_expected_counts": {
+      "unit": "RSEM expected counts",
+      "transform": "NONE",
+      "genome_build": "hg38",
+      "annotation": "UNKNOWN",
+      "annotation_source_object_role": null,
+      "feature_identifier_system": "GENE_SYMBOL",
+      "modality": "RNA_SEQ",
+      "evidence": {
+        "unit": "DERIVED_FROM_OBJECT: FRACTIONAL_NONNEGATIVE_VALUES_WITH_RSEM_SOURCE; sha256 e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+        "transform": "DERIVED_FROM_OBJECT: FRACTIONAL_NONNEGATIVE_VALUES_WITH_RSEM_SOURCE; sha256 e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+        "genome_build": "geo_family_soft:!Sample_data_processing assembly/build",
+        "annotation": "UNKNOWN: GEO processing text and article do not specify annotation release or mapping",
+        "platform": "geo_family_soft:!Series_platform_id, !Sample_platform_id, !Platform_title",
+        "feature_identifier_system": "DERIVED_FROM_OBJECT: GENE_SYMBOL_MAJORITY; sha256 e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+        "normalization": "geo_family_soft:!Sample_data_processing",
+        "feature_scope": "geo_family_soft:!Series_type and !Sample_data_processing; docs/research/cohort_sources/gse248014_SOURCES.md; complete deposited expression feature universe"
+      },
+      "platform": "GPL24676 (Illumina NovaSeq 6000)",
+      "derived_facts": {
+        "unit": {
+          "status": "DERIVED",
+          "value": "RSEM expected counts",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "FRACTIONAL_NONNEGATIVE_VALUES_WITH_RSEM_SOURCE",
+          "source_sha256": "e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+          "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE248nnn/GSE248014/soft/GSE248014_family.soft.gz#!Sample_data_processing"
+        },
+        "transform": {
+          "status": "DERIVED",
+          "value": "NONE",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "FRACTIONAL_NONNEGATIVE_VALUES_WITH_RSEM_SOURCE",
+          "source_sha256": "e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+          "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE248nnn/GSE248014/soft/GSE248014_family.soft.gz#!Sample_data_processing"
+        },
+        "feature_identifier_system": {
+          "status": "DERIVED",
+          "value": "GENE_SYMBOL",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "GENE_SYMBOL_MAJORITY",
+          "source_sha256": "e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450"
+        },
+        "source_counts": {
+          "status": "DERIVED",
+          "value": "SOURCE_COUNTS",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "COUNT_SOURCE_MISSING_CELLS_AND_FEATURES",
+          "source_sha256": "e494f6d6c34ec495d40967981a7b4bd1646dc265c4ccc8d17daf0767975df450",
+          "feature_count": 26467,
+          "missing_cells": 0,
+          "genes_with_missing_cells": 0
+        }
+      },
+      "normalization": "NONE",
+      "feature_scope": "COMPLETE"
+    },
+    "conversion": "PROHIBITED"
+  },
+  "source_validation": {
+    "roles": [
+      "geo_family_soft",
+      "geo_rsem_expected_counts"
+    ],
+    "baseline_specimen_patient_links": 23,
+    "baseline_bor_patients": 23
+  },
+  "v3": {
+    "primary_representation": "geo_rsem_expected_counts",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 45,
+      "baseline_selected": 23,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "geo_rsem_expected_counts"
+    },
+    "header_key_by_role": {
+      "geo_rsem_expected_counts": "accession"
+    },
+    "delimiters": {
+      "geo_rsem_expected_counts": ","
+    },
+    "compressed": {
+      "geo_rsem_expected_counts": true
+    },
+    "documentation": {
+      "geo_rsem_expected_counts": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "GEO sample data_processing; GSE248014_table_RNAseq.csv.gz"
+      }
+    }
+  },
+  "decision_config": {
+    "endpoint": {
+      "endpoint_type": "SOURCE_BINARY",
+      "source_binary_definition": {
+        "responder": "Complete response (CR) or partial response (PR) by RECIST 1.1.",
+        "non_responder": "No CR or PR under the binary ORR definition (includes SD/PD); trial results specifically classify discontinuation for clinical progression before post-baseline tumour assessment as non-response.",
+        "assessment_criteria": "RECIST 1.1",
+        "time_threshold": "None stated for R/NR; response is the ORR/best overall response during study assessment.",
+        "citation": "https://clinicaltrials.gov/study/NCT03250273?rank=6&tab=results&term=entinostat&viewType=Table",
+        "citation_section": "Study Results > Outcome Measures > Objective Response Rate (ORR) Using RECIST 1.1",
+        "corroborating_citation": "https://pubmed.ncbi.nlm.nih.gov/39532835/",
+        "corroborating_section": "Figure 2 legend: best overall response by RECIST 1.1; Figure 5 legend defines NR/R as non responders/responders."
+      },
+      "source_of_record": "ClinicalTrials.gov trial results definition for binary ORR; GEO recist characteristic supplies per-patient R/NR labels.",
+      "corroborating_label": "GEO sample characteristic recist."
+    },
+    "preview": {
+      "endpoint": "SOURCE_BINARY ORR-type: CR/PR by RECIST 1.1",
+      "index_episode": {
+        "agent": "entinostat plus nivolumab",
+        "source": "https://clinicaltrials.gov/study/NCT03250273",
+        "start_time": "UNKNOWN"
+      },
+      "prior_ici": "UNKNOWN",
+      "study_class": "CLINICAL_ICI",
+      "required_roles": [
+        "geo_family_soft",
+        "geo_rsem_expected_counts"
+      ],
+      "expected_baseline_candidates": 23,
+      "split_policy": "DEVELOPMENT",
+      "decision_evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md"
+    },
+    "overlap_review": {
+      "source_locator": "docs/decisions/BATCH1_SIGNATURE_20261029.md",
+      "edges": []
+    }
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "Baseline"
+    ],
+    "response_source": "geo_family_soft",
+    "endpoint_class": "SOURCE_BINARY",
+    "response_map": {
+      "Responder": "SOURCE_POSITIVE",
+      "NonResponder": "SOURCE_NEGATIVE"
+    },
+    "baseline_tie_rule": null
+  },
+  "expression_column_map": {
+    "geo_rsem_expected_counts": {
+      "method": "REGEX",
+      "header_regex": "^(?P<patient>.+)_(?P<visit>Baseline|C1D1|C2D1)$",
+      "title_regex": "^patient (?P<patient>.+) at time point (?P<visit>Baseline|C1D1|C2D1)$",
+      "evidence": "docs/decisions/BATCH1_REVIEW_DECISIONS_20261028.md",
+      "review_required": false
+    }
+  },
+  "treatment_proposal": {
+    "agent_source": "CITED_CONSTANT",
+    "agent_value": "entinostat plus nivolumab",
+    "source_locator": "https://clinicaltrials.gov/study/NCT03250273",
+    "pharmacological_class": "UNKNOWN",
+    "regimen_id": "REGIMEN:gse248014:INDEX",
+    "index_event": "START_OF_INDEX_TREATMENT"
+  }
+}

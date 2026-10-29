@@ -7,18 +7,14 @@
   "required": [
     "cohort",
     "branch_id",
-    "source_objects",
-    "sample_identity",
-    "geo",
-    "author_sample_table",
-    "author_clinical_table",
-    "treatment",
-    "labels",
-    "harmonized_cross_checks",
-    "measurement_representations"
+    "source_objects"
   ],
   "properties": {
     "cohort": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cancer_type": {
       "type": "string",
       "minLength": 1
     },
@@ -35,62 +31,83 @@
         "OTHER"
       ]
     },
+    "biological_compartment": {
+      "type": "object",
+      "required": [
+        "source_name_field",
+        "source_name_map",
+        "evidence"
+      ],
+      "properties": {
+        "source_name_field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_name_map": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "TUMOUR",
+              "NORMAL",
+              "BLOOD",
+              "PLASMA",
+              "SERUM",
+              "PBMC",
+              "OTHER",
+              "UNKNOWN"
+            ]
+          }
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "source_validation": {
+      "type": "object",
+      "required": [
+        "roles",
+        "baseline_specimen_patient_links",
+        "baseline_bor_patients"
+      ],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "baseline_specimen_patient_links": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "baseline_bor_patients": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "branch_id": {
       "type": "string",
       "minLength": 1
     },
     "source_objects": {
       "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "geo_family_soft",
-        "author_sample_table",
-        "author_clinical_table",
-        "author_analysis_code",
-        "author_fpkm_hg19",
-        "ncbi_tpm_grch38",
-        "ncbi_annotation_grch38",
-        "cbioportal_sample",
-        "cbioportal_patient"
-      ],
-      "properties": {
-        "geo_family_soft": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "author_sample_table": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "author_clinical_table": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "author_analysis_code": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "author_fpkm_hg19": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "ncbi_tpm_grch38": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "ncbi_annotation_grch38": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "cbioportal_sample": {
-          "$ref": "#/$defs/sourceObject"
-        },
-        "cbioportal_patient": {
-          "$ref": "#/$defs/sourceObject"
-        }
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/sourceObject"
       }
     },
     "sample_identity": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "title_regex",
-        "patient_group",
-        "visit_group"
-      ],
+      "required": [],
       "properties": {
         "title_regex": {
           "type": "string",
@@ -103,6 +120,21 @@
         "visit_group": {
           "type": "integer",
           "minimum": 1
+        },
+        "patient_characteristic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accept_title_token_with_signed_v4": {
+          "type": "boolean"
+        },
+        "visit_characteristic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lesion_group": {
+          "type": "integer",
+          "minimum": 1
         }
       }
     },
@@ -110,33 +142,22 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "characteristics",
-        "relation_kinds"
+        "characteristics"
       ],
       "properties": {
         "characteristics": {
           "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "visit",
-            "response"
-          ],
-          "properties": {
-            "visit": {
-              "const": "visit (pre or on treatment)"
-            },
-            "response": {
-              "const": "response"
-            }
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "relation_kinds": {
           "type": "array",
           "items": {
-            "enum": [
-              "BioSample",
-              "SRA"
-            ]
+            "type": "string",
+            "minLength": 1
           },
           "uniqueItems": true
         }
@@ -146,17 +167,14 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "format",
-        "sample_name_column",
-        "patient_column",
-        "bam_suffix",
-        "duplicated_headers",
-        "response_positions",
-        "sample_name_rule"
+        "format"
       ],
       "properties": {
         "format": {
-          "const": "CSV"
+          "enum": [
+            "CSV",
+            "TSV"
+          ]
         },
         "sample_name_column": {
           "type": "integer",
@@ -167,48 +185,26 @@
           "minimum": 0
         },
         "bam_suffix": {
-          "const": ".bam"
+          "type": "string",
+          "minLength": 1
         },
         "duplicated_headers": {
           "type": "object",
-          "required": [
-            "Response"
-          ],
-          "properties": {
-            "Response": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "minItems": 2,
-              "maxItems": 2
+          "additionalProperties": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
             }
-          },
-          "additionalProperties": false
+          }
         },
         "response_positions": {
           "type": "object",
-          "required": [
-            "bor",
-            "response_primary",
-            "response_alternative"
-          ],
-          "properties": {
-            "bor": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "response_primary": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "response_alternative": {
-              "type": "integer",
-              "minimum": 0
-            }
-          },
-          "additionalProperties": false
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
         },
         "sample_name_rule": {
           "type": "object",
@@ -256,19 +252,26 @@
       "required": [
         "format",
         "patient_column",
-        "bor_column",
-        "cohort_column",
-        "source_of_record_for",
-        "bor_values",
-        "cohort_values"
+        "source_of_record_for"
       ],
       "properties": {
         "format": {
-          "const": "CSV"
+          "enum": [
+            "CSV",
+            "TSV"
+          ]
         },
         "patient_column": {
-          "type": "integer",
-          "minimum": 0
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
         },
         "bor_column": {
           "type": "string",
@@ -280,91 +283,57 @@
         },
         "source_of_record_for": {
           "type": "array",
-          "const": [
-            "BOR",
-            "Cohort"
-          ]
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "bor_values": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
-            "enum": [
-              "CR",
-              "PR",
-              "SD",
-              "PD",
-              "NE"
-            ]
-          },
-          "minItems": 5,
-          "uniqueItems": true
+            "type": "string",
+            "minLength": 1
+          }
         },
         "cohort_values": {
           "type": "object",
-          "required": [
-            "NIV3-NAIVE",
-            "NIV3-PROG"
-          ],
-          "properties": {
-            "NIV3-NAIVE": {
-              "type": "string"
-            },
-            "NIV3-PROG": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
     "treatment": {
       "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "agent",
-        "prior_ipilimumab_by_cohort"
-      ],
+      "minProperties": 1,
       "properties": {
         "agent": {
-          "const": "nivolumab"
+          "type": "string",
+          "minLength": 1
         },
         "prior_ipilimumab_by_cohort": {
           "type": "object",
-          "required": [
-            "NIV3-NAIVE",
-            "NIV3-PROG"
-          ],
-          "properties": {
-            "NIV3-NAIVE": {
-              "const": false
-            },
-            "NIV3-PROG": {
-              "const": true
-            }
-          },
-          "additionalProperties": false
+          "additionalProperties": {
+            "type": "boolean"
+          }
         }
-      }
+      },
+      "additionalProperties": true
     },
     "labels": {
       "type": "object",
-      "required": [
-        "source_of_record_bor",
-        "geo_response",
-        "author_cohort"
-      ],
-      "properties": {
-        "source_of_record_bor": {
-          "type": "object"
-        },
-        "geo_response": {
-          "type": "object"
-        },
-        "author_cohort": {
-          "type": "object"
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "minLength": 1
         }
-      },
-      "additionalProperties": false
+      }
     },
     "harmonized_cross_checks": {
       "type": "array",
@@ -390,13 +359,10 @@
           "source_object_roles": {
             "type": "array",
             "items": {
-              "enum": [
-                "cbioportal_sample",
-                "cbioportal_patient"
-              ]
+              "type": "string",
+              "minLength": 1
             },
-            "minItems": 2,
-            "maxItems": 2,
+            "minItems": 1,
             "uniqueItems": true
           }
         },
@@ -405,76 +371,839 @@
     },
     "measurement_representations": {
       "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "author_fpkm_hg19",
-        "ncbi_tpm_grch38",
-        "conversion"
-      ],
+      "minProperties": 1,
       "properties": {
-        "author_fpkm_hg19": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "unit",
-            "transform",
-            "genome_build",
-            "annotation",
-            "annotation_source_object_role"
-          ],
-          "properties": {
-            "unit": {
-              "const": "FPKM"
-            },
-            "transform": {
-              "const": "AUTHOR_REPORTED"
-            },
-            "genome_build": {
-              "const": "hg19"
-            },
-            "annotation": {
-              "const": "KnownGene"
-            },
-            "annotation_source_object_role": {
-              "type": "null"
-            }
-          }
-        },
-        "ncbi_tpm_grch38": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "unit",
-            "transform",
-            "genome_build",
-            "annotation",
-            "annotation_source_object_role"
-          ],
-          "properties": {
-            "unit": {
-              "const": "TPM"
-            },
-            "transform": {
-              "const": "NCBI_PROVIDED"
-            },
-            "genome_build": {
-              "const": "GRCh38.p13"
-            },
-            "annotation": {
-              "const": "Entrez"
-            },
-            "annotation_source_object_role": {
-              "const": "ncbi_annotation_grch38"
-            }
-          }
-        },
         "conversion": {
           "const": "PROHIBITED"
         }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "unit",
+          "transform",
+          "genome_build",
+          "annotation"
+        ],
+        "properties": {
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "transform": {
+            "type": "string",
+            "minLength": 1
+          },
+          "genome_build": {
+            "type": "string",
+            "minLength": 1
+          },
+          "annotation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "annotation_source_object_role": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "feature_identifier_system": {
+            "type": "string",
+            "minLength": 1
+          },
+          "platform": {
+            "type": "string",
+            "minLength": 1
+          },
+          "platform_title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "instrument_model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "modality": {
+            "type": "string",
+            "minLength": 1
+          },
+          "normalization": {
+            "type": "string",
+            "minLength": 1
+          },
+          "feature_scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "orientation": {
+            "enum": [
+              "samples_as_columns",
+              "samples_as_rows"
+            ]
+          },
+          "auxiliary_columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "index",
+                "header"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "header": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "missing_policy": {
+            "enum": [
+              "BLOCK",
+              "EXCLUDE_FEATURE_IF_ANY_MISSING"
+            ]
+          },
+          "derived_facts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "status",
+                "value"
+              ],
+              "properties": {
+                "status": {
+                  "enum": [
+                    "DERIVED",
+                    "BLOCKED"
+                  ]
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "evidence_type": {
+                  "const": "DERIVED_FROM_OBJECT"
+                },
+                "rule": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "const": "DERIVED"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "evidence_type",
+                      "rule",
+                      "source_sha256"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "status": {
+                        "const": "BLOCKED"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "reason"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
       }
+    },
+    "decision_config": {
+      "$ref": "#/$defs/decisionConfig"
+    },
+    "v3": {
+      "$ref": "#/$defs/v3Config"
+    },
+    "proposal_generation": {
+      "type": "object",
+      "minProperties": 1,
+      "properties": {
+        "stage_config": {
+          "type": "object",
+          "properties": {
+            "split": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "version",
+                "analysis_lineage_id",
+                "selection_basis",
+                "performance_observed",
+                "policy"
+              ],
+              "properties": {
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "analysis_lineage_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "selection_basis": {
+                  "const": "PRESPECIFIED_METADATA"
+                },
+                "performance_observed": {
+                  "const": false
+                },
+                "policy": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "permanent_role",
+                    "prior_exposure_state"
+                  ],
+                  "properties": {
+                    "permanent_role": {
+                      "enum": [
+                        "DEVELOPMENT",
+                        "FINAL_TEST",
+                        "PREVIOUSLY_INSPECTED_EXTERNAL",
+                        "A1_ONLY",
+                        "PROSTATE_TRANSPORT",
+                        "EXCLUDED",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "prior_exposure_state": {
+                      "enum": [
+                        "ADJUDICATED_UNTOUCHED",
+                        "METADATA_ONLY",
+                        "RESPONSE_ASSOCIATED",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "exposure_decision_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "worksheet_prefill": {
+      "$ref": "#/$defs/worksheetPrefill"
+    },
+    "comments": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "geo_ingest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_values",
+        "response_source",
+        "endpoint_class",
+        "response_map",
+        "baseline_tie_rule"
+      ],
+      "properties": {
+        "baseline_values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "response_source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "endpoint_class": {
+          "enum": [
+            "TUMOUR_RESPONSE",
+            "SOURCE_BINARY"
+          ]
+        },
+        "response_map": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "CR",
+              "PR",
+              "SD",
+              "PD",
+              "NE",
+              "UNKNOWN",
+              "SOURCE_POSITIVE",
+              "SOURCE_NEGATIVE"
+            ]
+          }
+        },
+        "baseline_tie_rule": {
+          "enum": [
+            null,
+            "LEXICOGRAPHIC_ACCESSION",
+            "LOWEST_LESION_LETTER"
+          ]
+        },
+        "baseline_by_cohort": {
+          "type": "boolean"
+        },
+        "patient_mapping_unverified": {
+          "type": "boolean"
+        },
+        "assessment_criteria": {
+          "type": "string"
+        },
+        "nonbaseline_visit_values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "expression_column_map": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "method"
+        ],
+        "properties": {
+          "method": {
+            "enum": [
+              "TITLE",
+              "ACCESSION",
+              "REGEX",
+              "CROSSWALK",
+              "UNRESOLVED"
+            ]
+          },
+          "header_regex": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title_regex": {
+            "type": "string",
+            "minLength": 1
+          },
+          "normalizations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "regex",
+                "replacement"
+              ],
+              "properties": {
+                "regex": {
+                  "type": "string"
+                },
+                "replacement": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "source_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "matrix_column": {
+            "type": "string",
+            "minLength": 1
+          },
+          "geo_column": {
+            "type": "string",
+            "minLength": 1
+          },
+          "geo_key": {
+            "enum": [
+              "title",
+              "accession"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review_required": {
+            "type": "boolean"
+          },
+          "nonbaseline_unmatched": {
+            "enum": [
+              "NOT_APPLICABLE"
+            ]
+          },
+          "characteristic_groups": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": [
+                "characteristic",
+                "values"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "characteristic": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "values": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "evidence_type": {
+            "enum": [
+              "DERIVED_FROM_OBJECT"
+            ]
+          },
+          "rule_name": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "method": {
+                  "const": "REGEX"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "header_regex",
+                "title_regex"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "method": {
+                  "const": "CROSSWALK"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "source_role",
+                "matrix_column",
+                "geo_column",
+                "geo_key"
+              ]
+            }
+          }
+        ],
+        "dependentRequired": {
+          "evidence_type": [
+            "rule_name"
+          ],
+          "rule_name": [
+            "evidence_type"
+          ]
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "PARKED"
+      ]
+    },
+    "parked_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "treatment_proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_source",
+        "source_locator",
+        "regimen_id",
+        "index_event",
+        "pharmacological_class"
+      ],
+      "properties": {
+        "agent_source": {
+          "enum": [
+            "GEO_CHARACTERISTIC",
+            "CITED_CONSTANT"
+          ]
+        },
+        "agent_field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "regimen_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index_event": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pharmacological_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_interpretation": {
+          "enum": [
+            "DRUG",
+            "CLASS"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "agent_source": {
+                "const": "GEO_CHARACTERISTIC"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_field"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "agent_source": {
+                "const": "CITED_CONSTANT"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agent_value"
+            ]
+          }
+        }
+      ]
     }
   },
   "$defs": {
+    "decisionConfig": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "v3Config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary_representation",
+        "sample_inventory_source_role",
+        "expected_counts"
+      ],
+      "properties": {
+        "primary_representation": {
+          "type": "string"
+        },
+        "fallback_representation": {
+          "type": "string"
+        },
+        "sample_inventory_source_role": {
+          "type": "string"
+        },
+        "expected_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "full_header_columns",
+            "baseline_selected",
+            "on_selected"
+          ],
+          "properties": {
+            "full_header_columns": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "baseline_selected": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "on_selected": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "representation_identity": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/$defs/representationIdentity"
+          }
+        },
+        "source_object_roles": {
+          "type": "object",
+          "required": [
+            "primary"
+          ],
+          "properties": {
+            "primary": {
+              "type": "string"
+            },
+            "fallback": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "header_key_by_role": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": [
+              "accession",
+              "title"
+            ]
+          }
+        },
+        "delimiters": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "compressed": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "documentation": {
+          "type": "object",
+          "minProperties": 1
+        },
+        "qc_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "numeric_thresholds",
+            "historical_flags_only",
+            "duplicate_profile_action",
+            "outcome_blind"
+          ],
+          "properties": {
+            "numeric_thresholds": {
+              "type": "array"
+            },
+            "historical_flags_only": {
+              "type": "array"
+            },
+            "duplicate_profile_action": {
+              "const": "QUARANTINE_KEEP"
+            },
+            "outcome_blind": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "representationIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_role",
+        "genome_build",
+        "annotation_evidence_status",
+        "identifier_pattern",
+        "certification_level",
+        "limit"
+      ],
+      "properties": {
+        "annotation_role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "genome_build": {
+          "type": "string"
+        },
+        "annotation_evidence_status": {
+          "enum": [
+            "PINNED_ANNOTATION",
+            "DECLARED_ID_FORMAT_ONLY"
+          ]
+        },
+        "identifier_pattern": {
+          "type": "string"
+        },
+        "certification_level": {
+          "type": "string"
+        },
+        "limit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "worksheetPrefill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_status",
+        "gates",
+        "source_items"
+      ],
+      "properties": {
+        "default_status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "BLOCKED_UNKNOWN",
+            "NOT_APPLICABLE",
+            "SUPERSEDED"
+          ]
+        },
+        "gates": {
+          "type": "object",
+          "minProperties": 9,
+          "additionalProperties": {
+            "$ref": "#/$defs/worksheetPrefillItem"
+          }
+        },
+        "source_items": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/$defs/worksheetPrefillItem"
+          }
+        }
+      }
+    },
+    "worksheetPrefillItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "decision",
+        "evidence_pointers"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "BLOCKED_UNKNOWN",
+            "NOT_APPLICABLE",
+            "SUPERSEDED"
+          ]
+        },
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_pointers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "path"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    },
     "sourceObject": {
       "type": "object",
       "additionalProperties": false,
@@ -509,7 +1238,8 @@
             "MATRIX_HEADER_CSV",
             "MATRIX_HEADER_TSV",
             "SCRIPT_R",
-            "TEXT_UTF8"
+            "TEXT_UTF8",
+            "XLSX_NUMERIC"
           ]
         },
         "role": {
@@ -519,9 +1249,32 @@
           ]
         },
         "header_comment_prefix": {
-          "const": "#"
+          "type": "string",
+          "minLength": 1
+        },
+        "header_allow_empty": {
+          "type": "boolean"
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "const": "PARKED"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "parked_reason"
+        ]
+      }
+    }
+  ]
 }
