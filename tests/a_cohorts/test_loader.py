@@ -1,3 +1,6 @@
+import gzip
+import zipfile
+
 import pytest
 
 from tools.a_cohorts import core
@@ -34,6 +37,36 @@ def test_matrix_selection_preserves_duplicate_features(tmp_path):
     genes, duplicates = core.project_matrix(source, target, {'s2': 'p2'}, {'format': 'MATRIX_HEADER_TSV'}, orientation='samples_as_columns')
     assert (genes, duplicates) == (3, 1)
     assert target.read_text() == 'gene\tp2\ng1\t2\ng2\t4\ng2\t6\n'
+
+
+def test_compressed_tsv_matrix_source(tmp_path):
+    source = tmp_path / 'in.tsv.gz'
+    with gzip.open(source, 'wt', encoding='utf-8') as stream:
+        stream.write('gene\ts1\ts2\ng1\t1\t2\n')
+    target = tmp_path / 'out.tsv'
+    genes, duplicates = core.project_matrix(
+        source, target, {'s2': 'p2'},
+        {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True})
+    assert (genes, duplicates) == (1, 0)
+    assert target.read_text() == 'gene\tp2\ng1\t2\n'
+
+
+def test_named_xlsx_matrix_source(tmp_path):
+    source = tmp_path / 'in.xlsx'
+    files = {
+        'xl/workbook.xml': '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Sheet 1" sheetId="1" r:id="rId1"/></sheets></workbook>',
+        'xl/_rels/workbook.xml.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Target="worksheets/sheet1.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"/></Relationships>',
+        'xl/worksheets/sheet1.xml': '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Gene</t></is></c><c r="B1" t="inlineStr"><is><t>s1</t></is></c><c r="C1" t="inlineStr"><is><t>s2</t></is></c></row><row r="2"><c r="A2" t="inlineStr"><is><t>g1</t></is></c><c r="B2"><v>1</v></c><c r="C2"><v>2</v></c></row></sheetData></worksheet>',
+    }
+    with zipfile.ZipFile(source, 'w') as archive:
+        for name, content in files.items():
+            archive.writestr(name, content)
+    target = tmp_path / 'out.tsv'
+    genes, duplicates = core.project_matrix(
+        source, target, {'s2': 'p2'},
+        {'format': 'XLSX_NAMED_STREAM', 'sheet_name': 'Sheet 1', 'header_row': 1})
+    assert (genes, duplicates) == (1, 0)
+    assert target.read_text() == 'gene\tp2\ng1\t2\n'
 
 
 def test_non_numeric_expression_is_refused(tmp_path):

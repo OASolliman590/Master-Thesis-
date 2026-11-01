@@ -24,3 +24,11 @@ The user signed in chat on 1 Nov 2026: "I sign the 9". The scope was presented i
 **Accepted limitations:** each cohort's `caveats.md`, as shown to the user, for example unknown tool versions, Braun's within-study ComBat and archival tissue, Van Allen's undocumented quantification, overlap flags and unknown prior ICI.
 
 **Not signed (waiting for their papers):** gse176307 and kim2018. IMvigor210 remains UNTOUCHED_FINAL_TEST.
+
+## Batch A addition (user, 1 Nov 2026: "I sign both")
+Signed for DEVELOPMENT use (loaded by Luna into `.scratch/runtime/<c>/simple/`):
+| Cohort | Patients | Cancer | Endpoint | Main caveats |
+| --- | ---: | --- | --- | --- |
+| gse218989 | 355 | lung | SOURCE_BINARY (GEO `treatment outcome`: Responder 168 / Non-responder 187). Not ORR | Biopsy timing not stated in GEO; protein-coding TPM |
+| gse159067 | 102 | head and neck | ORR (GEO `best response on immunotherapy (recist)`: CR 5 / PR 6 / SD 27 / PD 64) | Targeted log2-CPM panel (2,567 genes); pre-treatment per the series design |
+Not signed: gse145996 and gse165278 have no per-patient response in GEO (their papers may resolve it).

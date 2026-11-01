@@ -18,7 +18,8 @@ VERSION = 'simple-3'
 ADMITTED = {'riaz_gse91061': 'admitted-20261029', 'hugo_gse78220': 'admitted-20261029e',
             'gse168204': 'admitted-20261029e', 'liu2019': 'admitted-20261030d'}
 
-SUPPORTED_COHORTS = set(ADMITTED) | {'gse135222', 'gse136961', 'gse176307', 'braun2020', 'vanallen2015', 'gide2019', 'kim2018'}
+SIMPLE_GEO = {'gse218989', 'gse159067', 'gse145996', 'gse165278'}
+SUPPORTED_COHORTS = set(ADMITTED) | {'gse135222', 'gse136961', 'gse176307', 'braun2020', 'vanallen2015', 'gide2019', 'kim2018'} | SIMPLE_GEO
 
 def registry():
     with REGISTRY.open(newline='') as f:
@@ -256,6 +257,13 @@ def input_files(cohort):
         if sha256(base / 'counts.tsv') != receipt['output_sha256'] or sha256(base / 'sample_inventory.tsv') != receipt['inventory_sha256']:
             raise ValueError('recount3 product hash mismatch')
         hashes = []
+    elif cohort in SIMPLE_GEO:
+        manifest_path = safe_path(RUNTIME / cohort / 'store/MANIFEST.json')
+        paths.append(manifest_path)
+        manifest = json.loads(manifest_path.read_text())
+        hashes = [digest for digest in manifest.get('objects', {})]
+        if len(hashes) != 2:
+            raise ValueError('Expected one GEO SOFT and one expression object')
     else:
         field = ROOT / 'tools/a_dav/field_maps' / (cohort + '.json')
         packet = safe_path(RUNTIME / cohort / 'ingest-20261030/records/ingestion_packet.json')
@@ -317,9 +325,15 @@ def load(cohort):
             clinical, genes, hashes, caveats = export_admitted(cohort, stage, row)
         elif cohort == 'kim2018':
             clinical, genes, hashes, caveats = export_kim(stage)
+        elif cohort in SIMPLE_GEO:
+            clinical, genes, hashes, caveats = export_simple_geo(cohort, stage)
         else:
             clinical, genes, hashes, caveats = export_ingested(cohort, stage)
         columns = ['patient_id', 'sample_id', 'timepoint', 'drug_class', 'prior_ici', 'orr', 'clinical_benefit', 'pd_event', 'pfs', 'os', 'raw_orr', 'raw_clinical_benefit', 'endpoint_source', 'endpoint_definition']
+        if cohort in SIMPLE_GEO:
+            columns[10:10] = ['pfs_event', 'os_event', 'hot_score', 'hot_phenotype']
+        if cohort == 'gse218989':
+            columns.append('treatment_outcome')
         write_rows(stage / 'clinical.tsv', clinical, columns)
         (stage / 'caveats.md').write_text('# Caveats\n\n- ' + '\n- '.join([row['caveats'], *caveats]) + '\n')
         manifest = {'cohort': cohort, 'loader_version': VERSION, 'input_sha256': hashes,
@@ -357,7 +371,145 @@ def export_kim(output):
     return clinical, genes, [sha256(base / x) for x in ('counts.tsv', 'sample_inventory.tsv', 'PROVENANCE.json')], [f'{len(inventory)} distinct tumour-labelled sample titles are provisional patient identifiers; patient identity and pretreatment timing are unverified. No response source; all ORR UNKNOWN. recount3 approximate counts; Megadepth version unknown. Duplicate gene IDs: {duplicates}.']
 
 
-def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_columns'):
+def export_simple_geo(cohort, output):
+    """Project one GEO expression object using its exact SOFT sample links."""
+    import gzip
+    from tools.a_dav.geo_soft import parse_geo_family_soft
+
+    store = safe_path(RUNTIME / cohort / 'store')
+    manifest = json.loads(safe_path(store / 'MANIFEST.json').read_text())
+    objects = manifest.get('objects', {})
+    soft_entry = next((v for v in objects.values() if 'family.soft' in v.get('locator', '')), None)
+    matrix_entry = next((v for v in objects.values() if 'family.soft' not in v.get('locator', '')), None)
+    if not soft_entry or not matrix_entry or len(objects) != 2:
+        raise ValueError('Expected one GEO SOFT and one expression object')
+    soft_hash = soft_entry['receipt']['complete_sha256']
+    matrix_hash = matrix_entry['receipt']['complete_sha256']
+    soft_path = safe_path(store / 'objects' / soft_hash)
+    matrix_path = safe_path(store / 'objects' / matrix_hash)
+    if sha256(soft_path) != soft_hash or sha256(matrix_path) != matrix_hash:
+        raise ValueError('Pinned source object hash mismatch')
+    soft_raw = soft_path.read_bytes()
+    samples = parse_geo_family_soft(soft_raw)
+
+    # GSE159067's expression headers are explicitly repeated in Sample_description.
+    descriptions = {}
+    if cohort == 'gse159067':
+        text = gzip.decompress(soft_raw).decode('utf-8')
+        for match in re.finditer(r'(?ms)^\^SAMPLE = ([^\n]+)\n(.*?)(?=^\^SAMPLE = |\Z)', text):
+            description = re.search(r'^!Sample_description = (.+)$', match[2], re.MULTILINE)
+            if description:
+                descriptions[match[1]] = description[1].strip()
+
+    sample_by_matrix_id = {}
+    parsed = {}
+    selected_samples = []
+    for sample in samples:
+        attrs = {x['key'].strip().lower(): x['value'].strip() for x in sample['characteristics']}
+        title = sample['title'].strip()
+        timing = 'UNKNOWN'
+        if cohort == 'gse159067':
+            matrix_id = descriptions.get(sample['accession'], '')
+            timing = 'PRE_TREATMENT'
+        elif cohort == 'gse218989':
+            matrix_id = title
+        elif cohort == 'gse145996':
+            matrix_id = title
+            timing = 'PRE_TREATMENT'
+        else:
+            matrix_id = title
+            treatment = attrs.get('treatment', '').strip().lower()
+            if treatment == 'pre ipilimumab':
+                timing = 'PRE_TREATMENT'
+            elif treatment == 'post ipilimumab':
+                continue
+            else:
+                raise ValueError('GSE165278 sample has no recognized treatment timing')
+        if not matrix_id or matrix_id in sample_by_matrix_id:
+            raise ValueError('Missing or duplicate SOFT-to-expression sample link')
+        sample_by_matrix_id[matrix_id] = sample
+        parsed[sample['accession']] = attrs
+        selected_samples.append((sample, matrix_id, timing))
+    mapping = {matrix_id: sample['title'] for sample, matrix_id, _ in selected_samples}
+
+    if cohort == 'gse145996':
+        cfg = {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True}
+    elif cohort == 'gse165278':
+        cfg = {'format': 'XLSX_NAMED_STREAM', 'delimiter': '\t', 'compressed': False,
+               'sheet_name': 'Sheet 1', 'header_row': 1}
+    else:
+        cfg = {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True}
+    genes, duplicates = project_matrix(matrix_path, output / 'expression.tsv', mapping, cfg,
+                                       skip_empty_features=cohort == 'gse165278')
+
+    clinical = []
+    for sample, _, timing in selected_samples:
+        attrs = parsed[sample['accession']]
+        response = attrs.get('best response on immunotherapy (recist)', '')
+        binary = attrs.get('treatment outcome', '')
+        if cohort == 'gse218989':
+            benefit = 'UNKNOWN'
+            orr = 'UNKNOWN'
+            endpoint_source = 'GEO SOFT characteristic: treatment outcome'
+            endpoint_definition = 'SOURCE_BINARY; raw GEO categories retained; no RECIST CR/PR evidence in SOFT.'
+            raw_orr = ''
+            raw_benefit = ''
+        elif cohort == 'gse159067':
+            orr = orr_category(response)
+            benefit = 'UNKNOWN'
+            endpoint_source = 'GEO SOFT characteristic: best response on immunotherapy (recist)'
+            endpoint_definition = 'Best response on immunotherapy (RECIST), as named in GEO SOFT.'
+            raw_orr = response
+            raw_benefit = ''
+        else:
+            orr = benefit = 'UNKNOWN'
+            endpoint_source = 'No per-sample response characteristic in GEO SOFT'
+            endpoint_definition = 'Response UNKNOWN; sample-title prefixes were not interpreted as response labels.'
+            raw_orr = raw_benefit = ''
+        pfs = attrs.get('pfs (month)', '')
+        os_value = attrs.get('os (month)', '')
+        clinical.append({
+            'patient_id': sample['title'], 'sample_id': sample['accession'],
+            'timepoint': timing,
+            'drug_class': {'gse218989': 'ANTI_PD_1_PD_L1', 'gse159067': 'ANTI_PD_1_PD_L1',
+                           'gse145996': 'ANTI_PD_1', 'gse165278': 'ANTI_CTLA_4'}[cohort],
+            'prior_ici': 'UNKNOWN', 'orr': orr, 'clinical_benefit': benefit,
+            'pfs': f'{pfs} months' if pfs else 'UNKNOWN',
+            'os': f'{os_value} months' if os_value else 'UNKNOWN',
+            'pfs_event': attrs.get('pfs (event)', ''), 'os_event': attrs.get('os (event)', ''),
+            'hot_score': attrs.get('hot score', ''), 'hot_phenotype': attrs.get('hot phenotype', ''),
+            'raw_orr': raw_orr, 'raw_clinical_benefit': raw_benefit,
+            'treatment_outcome': binary if cohort == 'gse218989' and binary in {'Responder', 'Non-responder'} else '',
+            'endpoint_source': endpoint_source, 'endpoint_definition': endpoint_definition,
+        })
+
+    timing_notes = {
+        'gse218989': 'SOFT does not state whether specimens were collected before treatment; timepoint is UNKNOWN.',
+        'gse159067': 'Series overall design states biopsies/specimens were collected prior to treatment initiation.',
+        'gse145996': 'Series overall design describes pre-immunotherapy tumors; SOFT has no per-sample response field.',
+        'gse165278': 'Included only the 7 samples labelled pre ipilimumab; excluded 15 post ipilimumab samples from baseline. Post samples remain available for A.1.',
+    }
+    scale_notes = {
+        'gse218989': 'Protein-coding TPM matrix; duplicate genes were already removed in the supplied object.',
+        'gse159067': 'GEO-supplied log2 CPM targeted RNA panel; kept on its own scale, including control/probe rows.',
+        'gse145996': 'GEO-supplied FPKM matrix; kept on its own scale. The matrix includes a Locus column, which is not used as expression.',
+        'gse165278': 'GEO-supplied TPM XLSX, read with the repository standard-library XLSX reader; kept on its own scale.',
+    }
+    response_notes = {
+        'gse218989': 'Response source is the GEO SOFT field "treatment outcome" (Responder/Non-responder); no RECIST CR/PR definition was found, so this is SOURCE_BINARY and is not called ORR.',
+        'gse159067': 'Response source is the GEO SOFT field "best response on immunotherapy (recist)"; OS/PFS times, event fields, hot score and hot phenotype are retained as supplied.',
+        'gse145996': 'No per-sample response characteristic is present in the GEO SOFT; all response values remain UNKNOWN despite series-level responder-group summary.',
+        'gse165278': 'No per-sample response characteristic is present in the GEO SOFT; CR/NR/SD-looking title prefixes were not interpreted as response labels.',
+    }
+    caveats = [scale_notes[cohort], timing_notes[cohort], response_notes[cohort],
+               f'Retained all {genes} source feature rows, including {duplicates} duplicated feature identifiers; no aggregation or filtering was applied.']
+    if cohort == 'gse165278':
+        caveats.append('The response-looking sample-title prefixes are retained only as identifiers; treatment groups and response endpoints remain separate.')
+        caveats.append('Rows with an empty gene identifier in the XLSX were omitted because they cannot be addressed as gene rows.')
+    return clinical, genes, [soft_hash, matrix_hash], caveats
+
+
+def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_columns', skip_empty_features=False):
     """Stream projected columns and retain every source feature row."""
     import sqlite3
     from tools.a_dav.matrix_header import matrix_rows
@@ -382,7 +534,11 @@ def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_
             if orientation == 'samples_as_rows':
                 selected = {}
                 for row in rows:
-                    if len(row) != len(header) or not row[0]:
+                    if len(row) != len(header):
+                        raise ValueError('Malformed expression row')
+                    if not row[0]:
+                        if skip_empty_features:
+                            continue
                         raise ValueError('Malformed expression row')
                     if row[0] in mapping:
                         if row[0] in selected:
@@ -403,7 +559,11 @@ def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_
                     raise ValueError('Selected matrix columns missing')
                 columns = list(mapping)
                 for row in rows:
-                    if len(row) != len(header) or not row[0]:
+                    if len(row) != len(header):
+                        raise ValueError('Malformed expression row')
+                    if not row[0]:
+                        if skip_empty_features:
+                            continue
                         raise ValueError('Malformed expression row')
                     vals = [row[positions[c]] for c in columns]
                     if not all(v and v.strip() for v in vals):
