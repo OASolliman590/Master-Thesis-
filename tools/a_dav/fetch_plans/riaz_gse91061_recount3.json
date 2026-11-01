@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "cohort": "riaz_gse91061",
+  "branch_id": "A_BASELINE_BIO",
+  "request_cap": 40,
+  "max_object_bytes": 20000000,
+  "allowed_hosts": [
+    "recount-opendata.s3.amazonaws.com"
+  ],
+  "objects": [
+    {
+      "id": "recount3_gene_sums_G026",
+      "url": "https://recount-opendata.s3.amazonaws.com/recount3/release/human/data_sources/sra/gene_sums/81/SRP094781/sra.gene_sums.SRP094781.G026.gz",
+      "version": "recount3 release (AWS open data), retrieved 2026-10-30",
+      "expected_size": 10948964,
+      "expected_sha256": "6c890498692694e50deda070072be9ae4346ce41f446d90a2fc190ebe7e682bb",
+      "max_bytes": 13238756,
+      "host": "recount-opendata.s3.amazonaws.com"
+    },
+    {
+      "id": "recount3_sra_metadata",
+      "url": "https://recount-opendata.s3.amazonaws.com/recount3/release/human/data_sources/sra/metadata/81/SRP094781/sra.sra.SRP094781.MD.gz",
+      "version": "recount3 release (AWS open data), retrieved 2026-10-30",
+      "expected_size": 9221,
+      "expected_sha256": "1fc7dc15f4b9641f0b048a14c84cf86fe0f385863632d0f622404839a80cae08",
+      "max_bytes": 111065,
+      "host": "recount-opendata.s3.amazonaws.com"
+    },
+    {
+      "id": "recount3_project_metadata",
+      "url": "https://recount-opendata.s3.amazonaws.com/recount3/release/human/data_sources/sra/metadata/81/SRP094781/sra.recount_project.SRP094781.MD.gz",
+      "version": "recount3 release (AWS open data), retrieved 2026-10-30",
+      "expected_size": 865,
+      "expected_sha256": "6133791e630cf3ba7d3c8b3eb0e405b8b345f054e4edf56a9b357eede6ac69db",
+      "max_bytes": 101038,
+      "host": "recount-opendata.s3.amazonaws.com"
+    },
+    {
+      "id": "recount3_qc_metadata",
+      "url": "https://recount-opendata.s3.amazonaws.com/recount3/release/human/data_sources/sra/metadata/81/SRP094781/sra.recount_qc.SRP094781.MD.gz",
+      "version": "recount3 release (AWS open data), retrieved 2026-10-30",
+      "expected_size": 28251,
+      "expected_sha256": "2fb649b4867dba05edcd724f5a4e6eb2c8d2ac546e6ec0b68dd05efe47a8d3aa",
+      "max_bytes": 133901,
+      "host": "recount-opendata.s3.amazonaws.com"
+    },
+    {
+      "id": "recount3_gencode_v26_gene_annotation",
+      "url": "https://recount-opendata.s3.amazonaws.com/recount3/release/human/annotations/gene_sums/human.gene_sums.G026.gtf.gz",
+      "version": "recount3 G026 (GENCODE v26)",
+      "expected_size": 1842619,
+      "expected_sha256": "2d1bdff8d91e08f1291fd47850d9d61cfa6768cc3a4cb8516775a873b007d0f6",
+      "max_bytes": 2500000,
+      "host": "recount-opendata.s3.amazonaws.com"
+    }
+  ]
+}

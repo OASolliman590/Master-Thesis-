@@ -70,7 +70,11 @@ def validate_assays(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
         require(matrix.get("delimiter") in {"TAB", "COMMA"} and matrix.get("encoding") == "UTF-8" and matrix.get("source_locator"), "ASSAY_POLICY_UNKNOWN", blocked=True)
         require(matrix.get("missingness_policy") == "PRESERVE", "ASSAY_POLICY_UNKNOWN", blocked=True)
         require(matrix.get("replicate_policy") == "PRESERVE", "ASSAY_REPLICATE_UNKNOWN", blocked=True)
-        require(matrix.get("feature_scope") in {"COMPLETE", "TARGETED"}, "FEATURE_UNIVERSE_UNKNOWN", blocked=True)
+        from .assay_policy import validate_feature_scope, AssayPolicyEvidenceError
+        try:
+            validate_feature_scope(matrix, provisional=False)
+        except AssayPolicyEvidenceError:
+            require(False, "FEATURE_UNIVERSE_UNKNOWN", blocked=True)
         universe = matrix.get("feature_universe")
         require(isinstance(universe, list) and bool(universe), "FEATURE_UNIVERSE_UNKNOWN", blocked=True)
         require(len(universe) == len(set(universe)) and set(features) == set(universe), "FEATURE_UNIVERSE_UNKNOWN")
@@ -124,7 +128,7 @@ def validate_assays(packet: dict[str, Any], *, schemas: SchemaStore | None = Non
         if assay.get("replicate_status", "UNKNOWN") == "UNKNOWN":
             reasons.add("ASSAY_REPLICATE_UNKNOWN")
         specimen = specimens[assay["specimen_uid"]]
-        row = {"row_type": "COVERAGE", "schema_version": "1.1.0", "study_id": patients[specimen["patient_uid"]]["study_id"], "assay_uid": assay["assay_uid"], "branch_id": packet["branch_id"], "required_genes": sorted(required), "present_genes": sorted(set(required) & available), "missing_genes": sorted(missing), "ambiguous_genes": [], "annotation_version": matrix["annotation"], "expression_unit": assay["measurement_unit"], "measurement_suitability": "PASS" if not nulls and assay["qc_status"] == "PASS" else "UNKNOWN", "scoring_suitability": "PASS" if not missing and not nulls and assay["qc_status"] == "PASS" else "FAIL", "de_suitability": "PASS" if matrix["feature_scope"] == "COMPLETE" and matrix["lane"] in {"COUNTS", "CONTINUOUS", "ARRAY"} and not nulls and assay["qc_status"] == "PASS" else "FAIL", "final_test_suitability": "UNKNOWN", "source_object_id": assay["source_object_id"]}
+        row = {"row_type": "COVERAGE", "schema_version": "1.1.0", "study_id": patients[specimen["patient_uid"]]["study_id"], "assay_uid": assay["assay_uid"], "branch_id": packet["branch_id"], "required_genes": sorted(required), "present_genes": sorted(set(required) & available), "missing_genes": sorted(missing), "ambiguous_genes": [], "annotation_version": matrix["annotation"], "expression_unit": assay["measurement_unit"], "measurement_suitability": "PASS" if not nulls and assay["qc_status"] == "PASS" else "UNKNOWN", "scoring_suitability": "PASS" if not missing and not nulls and assay["qc_status"] == "PASS" else "FAIL", "de_suitability": "PASS" if matrix["feature_scope"] in {"COMPLETE", "COMPLETE_WITH_DOCUMENTED_EXCLUSIONS"} and matrix["lane"] in {"COUNTS", "CONTINUOUS", "ARRAY"} and not nulls and assay["qc_status"] == "PASS" else "FAIL", "final_test_suitability": "UNKNOWN", "source_object_id": assay["source_object_id"]}
         schemas.validate("coverage", row)
         coverage.append(row)
         audit.append({"check": "MATRIX_COLUMN_VALIDATED", "assay_uid": assay["assay_uid"], "source_object_id": assay["source_object_id"], "feature_count": len(profile), "missing_value_count": nulls, "zero_value_count": zeros, "feature_scope": matrix["feature_scope"], "replicate_status": assay.get("replicate_status", "UNKNOWN")})

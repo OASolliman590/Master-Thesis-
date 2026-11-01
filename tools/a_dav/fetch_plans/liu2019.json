@@ -1,0 +1,103 @@
+{
+    "schema_version": 1,
+    "cohort": "liu2019",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "raw.githubusercontent.com",
+        "media.githubusercontent.com"
+    ],
+    "objects": [
+        {
+            "id": "cbioportal_mel_iatlas_liu_2019_meta_study",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/meta_study.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:1dc403307920ef96de99bf2544cffc138e084d9e969e4c66a2f7e0216920c339",
+            "expected_size": 752,
+            "expected_sha256": "1dc403307920ef96de99bf2544cffc138e084d9e969e4c66a2f7e0216920c339",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_liu_2019_data_clinical_patient",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_clinical_patient.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ef4a7d9d14d78ccbbb75bbb0f17161388921122ccc6729acec47769c7bb60f5b",
+            "expected_size": 12988,
+            "expected_sha256": "ef4a7d9d14d78ccbbb75bbb0f17161388921122ccc6729acec47769c7bb60f5b",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_liu_2019_data_clinical_sample",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_clinical_sample.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f6ece7f92fed7cc62aa080bb509e78da8b76660219c25d21ecb0db208955f945",
+            "expected_size": 23002,
+            "expected_sha256": "f6ece7f92fed7cc62aa080bb509e78da8b76660219c25d21ecb0db208955f945",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_liu_2019_meta_mrna_seq_tpm",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/meta_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f830c1b9abf8891522f41b1b3bc27e3d993c8e9df0f9b9c2742d35ab844e614e",
+            "expected_size": 273,
+            "expected_sha256": "f830c1b9abf8891522f41b1b3bc27e3d993c8e9df0f9b9c2742d35ab844e614e",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_liu_2019_data_mrna_seq_tpm",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ec81f1658973d09263f488aefd2907266a6febc7bf4a9f0621f43c3d98942fbe",
+            "expected_size": 51952027,
+            "expected_sha256": "ec81f1658973d09263f488aefd2907266a6febc7bf4a9f0621f43c3d98942fbe",
+            "max_bytes": 57147229,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_dfci_2019_meta_study",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/meta_study.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:7776359bea1a80ad9b88acef36ecb09a29a88c7010b9bafa816ab3548d331341",
+            "expected_size": 571,
+            "expected_sha256": "7776359bea1a80ad9b88acef36ecb09a29a88c7010b9bafa816ab3548d331341",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_dfci_2019_data_clinical_patient",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_clinical_patient.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:3defdf06485e877d4b91b6b69c8e7af5615dd749c9dea54662ca3f4d0bc760a1",
+            "expected_size": 29339,
+            "expected_sha256": "3defdf06485e877d4b91b6b69c8e7af5615dd749c9dea54662ca3f4d0bc760a1",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_dfci_2019_data_clinical_sample",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_clinical_sample.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f665b8688708327e7a32f2d5a4efa3e34e7a7c849a9eb3996ec50e19d9111316",
+            "expected_size": 20976,
+            "expected_sha256": "f665b8688708327e7a32f2d5a4efa3e34e7a7c849a9eb3996ec50e19d9111316",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_dfci_2019_meta_mrna_seq_tpm",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/meta_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:eef866a8e2a4148dab228c5aed2cd5a11d9bfe001f60abb6c4c1098bce77d51f",
+            "expected_size": 342,
+            "expected_sha256": "eef866a8e2a4148dab228c5aed2cd5a11d9bfe001f60abb6c4c1098bce77d51f",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_dfci_2019_data_mrna_seq_tpm",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4",
+            "expected_size": 26276330,
+            "expected_sha256": "5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4",
+            "max_bytes": 28903963,
+            "host": "media.githubusercontent.com"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "schema_version": 1,
+    "cohort": "gse135222",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "ftp.ncbi.nlm.nih.gov"
+    ],
+    "objects": [
+        {
+            "id": "geo_family_soft",
+            "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE135nnn/GSE135222/soft/GSE135222_family.soft.gz",
+            "version": "GEO 2026-10-30",
+            "expected_size": null,
+            "expected_sha256": null,
+            "max_bytes": 20000000,
+            "host": "ftp.ncbi.nlm.nih.gov"
+        },
+        {
+            "id": "geo_expression_table",
+            "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE135nnn/GSE135222/suppl/GSE135222_GEO_RNA-seq_omicslab_exp.tsv.gz",
+            "version": "GEO listing 2026-10-30",
+            "expected_size": null,
+            "expected_sha256": null,
+            "max_bytes": 50000000,
+            "host": "ftp.ncbi.nlm.nih.gov"
+        }
+    ]
+}

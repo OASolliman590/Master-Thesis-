@@ -4,9 +4,62 @@ from __future__ import annotations
 from typing import Any
 
 
+def add_v3_blocker_item(packet: dict[str, Any], receipt: dict[str, Any]) -> dict[str, Any]:
+    import copy
+    result = copy.deepcopy(packet)
+    check = receipt.get('checks', {}).get('primary', {})
+    if check.get('status') == 'BLOCKED':
+        items = result.setdefault('config', {}).setdefault('admission', {}).setdefault('ingestion_worksheet', [])
+        if isinstance(items, dict):
+            items = items['items']
+        items.append({'category':'V3_REVIEW_REQUIRED','status':'BLOCKED_UNKNOWN',
+                      'evidence_pointers':[{'role':'V3','sha256':receipt.get('source_sha256', {}).get('primary')}],
+                      'context':{'reasons':check.get('reasons', [])}})
+    return result
+
+
+def v3_limitations(receipt: dict[str, Any]) -> dict[str, str]:
+    primary = receipt.get('checks', {}).get('primary', {})
+    return {key: primary[key] for key in ('processing_limitation', 'processing_acceptance_evidence')
+            if isinstance(primary.get(key), str)}
+
+
+def add_v3_exclusion_item(packet: dict[str, Any], receipt: dict[str, Any]) -> dict[str, Any]:
+    """Carry object-derived excluded feature rows into the unsigned worksheet."""
+    import copy
+    result = copy.deepcopy(packet)
+    evidence = receipt.get('checks', {}).get('primary', {}).get('object_derived_evidence', {})
+    rows, fact = evidence.get('excluded_rows', []), evidence.get('excluded_rows_evidence', {})
+    if rows and fact.get('evidence_type') == 'DERIVED_FROM_OBJECT' and fact.get('rule') == 'NONSTANDARD_ROWS_EXCLUDED':
+        items = result['config']['admission']['ingestion_worksheet']
+        if isinstance(items, dict):
+            items = items['items']
+        items.append({'category':'FEATURE_ROWS_EXCLUDED','status':'BLOCKED_UNKNOWN',
+                      'evidence_pointers':[{'rule':'NONSTANDARD_ROWS_EXCLUDED','sha256':fact['source_sha256']}],
+                      'context':{'count':len(rows),'excluded_rows':copy.deepcopy(rows),
+                                 'evidence_type':'DERIVED_FROM_OBJECT','rule':'NONSTANDARD_ROWS_EXCLUDED'}})
+    return result
+
+
+def cbio_preview_blockers(field_map: dict[str, Any], receipt: dict[str, Any]) -> list[str]:
+    """Keep an unsigned cBioPortal preview blocked until its role and V3 are settled."""
+    reasons: list[str] = []
+    role = field_map.get('decision_config', {}).get('preview', {}).get('split_policy')
+    if field_map.get('decision_config', {}).get('preview', {}).get('author_endpoint_join') == 'UNRESOLVED':
+        reasons.append('AUTHOR_ENDPOINT_JOIN_UNRESOLVED')
+    if field_map.get('decision_config', {}).get('representation_restrictions', {}).get('development_only') and role != 'DEVELOPMENT':
+        reasons.append('DEVELOPMENT_ONLY_REPRESENTATION')
+    if role not in {'DEVELOPMENT', 'FINAL_TEST'}:
+        reasons.append('SPLIT_NOT_FROZEN')
+    check = receipt.get('checks', {}).get('primary', {})
+    if check.get('status') != 'PASS':
+        reasons.extend('V3_BLOCKED:'+str(reason) for reason in check.get('reasons', ['V3_NOT_PASSED']))
+    return reasons
+
+
 def preview_split_role(packet: dict[str, Any], field_map: dict[str, Any]) -> str:
     role = packet.get('config', {}).get('split', {}).get('policy', {}).get('permanent_role')
-    if role is None and 'geo_ingest' in field_map:
+    if role is None and ('geo_ingest' in field_map or 'cbio_ingest' in field_map):
         role = field_map.get('decision_config', {}).get('preview', {}).get('split_policy')
     if not isinstance(role, str) or not role or role == 'UNKNOWN':
         raise ValueError('SPLIT_NOT_FROZEN')
@@ -14,7 +67,8 @@ def preview_split_role(packet: dict[str, Any], field_map: dict[str, Any]) -> str
 
 
 def provisional_patient_rows(records: dict[str, Any], source_id: str, role: str, *,
-                             nonbaseline_visit_values: list[str] | None = None) -> dict[str, Any]:
+                             nonbaseline_visit_values: list[str] | None = None,
+                             exclude_without_assay: bool = False) -> dict[str, Any]:
     """Build a provisional patient view; fail on unresolved selection or endpoint joins."""
     if role == 'UNKNOWN' or not role:
         raise ValueError('SPLIT_NOT_FROZEN')
@@ -37,37 +91,46 @@ def provisional_patient_rows(records: dict[str, Any], source_id: str, role: str,
                      and s.get('baseline_candidate_status') == 'YES']
         assays = [(s, a) for s in specimens for a in records.get('assay_registry', [])
                   if a['specimen_uid'] == s['specimen_uid'] and a.get('source_object_id') == source_id]
+        if exclude_without_assay and len(specimens) == 1 and not assays:
+            not_applicable += 1
+            continue
         if len(assays) != 1:
             raise ValueError('BASELINE_SELECTION_AMBIGUOUS')
         outcomes = [o for o in records.get('clinical_outcome', []) if o['patient_uid'] == uid]
         episodes = [e for e in records.get('treatment_episode', []) if e['patient_uid'] == uid]
-        if len(outcomes) > 1 or len(episodes) != 1:
+        classes = [o.get('endpoint_class') for o in outcomes]
+        if len(classes) != len(set(classes)) or len(episodes) != 1:
             raise ValueError('UNRESOLVED_IDENTIFIER')
         specimen, assay = assays[0]
-        outcome = outcomes[0] if outcomes else {}
-        status = outcome.get('evaluability', 'UNKNOWN')
-        category = outcome.get('canonical_category')
-        endpoint_class = outcome.get('endpoint_class')
-        raw = outcome.get('raw_endpoint_label')
-        if endpoint_class in {'TUMOUR_RESPONSE', 'SOURCE_BINARY'}:
-            if not isinstance(raw, str) or not raw.strip() or category in {None, 'UNKNOWN', 'UNK'}:
-                status = 'UNKNOWN'
-            elif category == 'NE':
-                status = 'NOT_EVALUABLE'
-            elif ((endpoint_class == 'TUMOUR_RESPONSE' and category in {'CR', 'PR', 'SD', 'PD'}) or
-                  (endpoint_class == 'SOURCE_BINARY' and category in {'SOURCE_POSITIVE', 'SOURCE_NEGATIVE'})):
-                status = 'EVALUABLE'
-            else:
-                status = 'UNKNOWN'
+        def evaluability(outcome: dict[str, Any]) -> str:
+            status = outcome.get('evaluability', 'UNKNOWN')
+            category = outcome.get('canonical_category'); endpoint_class = outcome.get('endpoint_class')
+            raw = outcome.get('raw_endpoint_label')
+            if endpoint_class in {'TUMOUR_RESPONSE', 'SOURCE_BINARY'}:
+                if not isinstance(raw, str) or not raw.strip() or category in {None, 'UNKNOWN', 'UNK'}:
+                    return 'UNKNOWN'
+                if category == 'NE':
+                    return 'NOT_EVALUABLE'
+                if ((endpoint_class == 'TUMOUR_RESPONSE' and category in {'CR', 'PR', 'SD', 'PD'}) or
+                    (endpoint_class == 'SOURCE_BINARY' and category in {'SOURCE_POSITIVE', 'SOURCE_NEGATIVE'})):
+                    return 'EVALUABLE'
+                return 'UNKNOWN'
+            return str(status)
+        outcome = next((o for o in outcomes if o.get('endpoint_class') == 'TUMOUR_RESPONSE'),
+                       outcomes[0] if outcomes else {})
+        status = evaluability(outcome)
         included = status == 'EVALUABLE' and role != 'EXCLUDED'
-        rows.append({'patient_uid': uid, 'study_id': patient['study_id'],
+        result_row = {'patient_uid': uid, 'study_id': patient['study_id'],
                      'specimen_uid': specimen['specimen_uid'], 'assay_uid': assay['assay_uid'],
                      'expression_column': assay['matrix_header'], 'raw_response': outcome.get('raw_endpoint_label'),
                      'canonical_category': outcome.get('canonical_category'), 'endpoint_evaluability': status,
                      'inclusion_status': 'INCLUDED' if included else 'EXCLUDED',
                      'exclusion_reason': None if included else 'ENDPOINT_NOT_EVALUABLE',
                      'split_role': role, 'prior_ici': episodes[0].get('prior_ici', 'UNKNOWN'),
-                     'flags': []})
+                     'flags': []}
+        if len(outcomes) > 1:
+            result_row['endpoint_evaluability_by_class'] = {o['endpoint_class']: evaluability(o) for o in outcomes}
+        rows.append(result_row)
     return {'status': 'PROVISIONAL', 'admission_status': 'PROVISIONAL_PENDING_SIGNATURE',
             'releasable': False, 'rows': rows, 'not_applicable_patients': not_applicable}
 
@@ -102,7 +165,7 @@ def apply_declared_historical_flags(rows: list[dict[str, Any]], packet: dict[str
     import re
     from pathlib import Path
     evidence = policy.get('pca_flag_evidence')
-    if evidence is None and 'geo_ingest' in field_map:
+    if evidence is None and ('geo_ingest' in field_map or 'cbio_ingest' in field_map):
         return
     if not isinstance(evidence, dict):
         raise ValueError('HISTORICAL_FLAG_EVIDENCE_MISSING')
@@ -209,6 +272,13 @@ def run_provisional(packet: dict[str, Any], field_map: dict[str, Any], store: An
                     v3_receipt: dict[str, Any] | None = None,
                     allow_external_out: bool = False) -> dict[str, Any]:
     """Run real stages and a separate non-admissible preview without signing anything."""
+    if field_map.get('decision_config', {}).get('family_protection', {}).get('status') == 'UNTOUCHED_FINAL_TEST':
+        raise ValueError('UNTOUCHED_FINAL_TEST_PROTECTED')
+    if field_map.get('decision_config', {}).get('representation_restrictions', {}).get('development_only'):
+        declared = field_map.get('decision_config', {}).get('preview', {}).get('split_policy')
+        packet_role = packet.get('config', {}).get('split', {}).get('policy', {}).get('permanent_role')
+        if declared != 'DEVELOPMENT' or packet_role not in (None, 'DEVELOPMENT'):
+            raise ValueError('DEVELOPMENT_ONLY_REPRESENTATION')
     import copy
     import json
     import re
@@ -259,7 +329,10 @@ def run_provisional(packet: dict[str, Any], field_map: dict[str, Any], store: An
     role = matching_roles[0]
     role_name = preview_split_role(packet, field_map)
     result_rows = provisional_patient_rows(packet['records'], source_id, role_name,
-        nonbaseline_visit_values=field_map.get('geo_ingest', {}).get('nonbaseline_visit_values'))
+        nonbaseline_visit_values=(field_map.get('geo_ingest', {}).get('nonbaseline_visit_values') or
+                                  (field_map.get('cbio_ingest', {}).get('nonbaseline_values', []) +
+                                   field_map.get('cbio_ingest', {}).get('excluded_visit_values', []))),
+        exclude_without_assay=field_map.get('decision_config', {}).get('preview', {}).get('exclude_without_assay', False))
     policy = packet['config'].get('materialization', {})
     apply_declared_historical_flags(result_rows['rows'], packet, field_map, policy)
     folder = Path(output)
@@ -274,11 +347,13 @@ def run_provisional(packet: dict[str, Any], field_map: dict[str, Any], store: An
                                         allow_external_out=allow_external_out)
     result['stages'] = statuses
     if v3_receipt is not None:
+        result['representation_limitations'] = v3_limitations(v3_receipt)
         result['checks'] = audit_provisional_contract(result_rows['rows'], packet['records'], result,
                                                        v3_receipt, field_map)
         record = provisional_matrix_record(result, unsigned, branch=packet['branch_id'],
                                            matrix_version=policy.get('version', 'PROVISIONAL'),
                                            split_version=packet['config'].get('split', {}).get('version', 'PROVISIONAL_PENDING_CONFIRMATION'))
+        record['representation_limitations'] = v3_limitations(v3_receipt)
         (folder / 'provisional_matrix_record.json').write_text(json.dumps(record, indent=2, sort_keys=True) + '\n')
     (folder / 'PROVISIONAL.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
     (folder / 'reviewer_worksheet.unsigned.json').write_text(json.dumps(unsigned, indent=2, sort_keys=True) + '\n')

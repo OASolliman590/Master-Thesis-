@@ -1,0 +1,58 @@
+{
+    "schema_version": 1,
+    "cohort": "imvigor210",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "raw.githubusercontent.com",
+        "media.githubusercontent.com"
+    ],
+    "objects": [
+        {
+            "id": "cbioportal_blca_iatlas_imvigor210_2017_meta_study",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/meta_study.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f9d86e4c64755d33b826ed016fa16444dbe5744f28f6cb1beb6e5c875afa5748",
+            "expected_size": 645,
+            "expected_sha256": "f9d86e4c64755d33b826ed016fa16444dbe5744f28f6cb1beb6e5c875afa5748",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_blca_iatlas_imvigor210_2017_data_clinical_patient",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_clinical_patient.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:293b80f4d0e8fe5ceeb32098ea8f6542aa26fbb2b6171f7aefecc8bbd0f3c14a",
+            "expected_size": 24934,
+            "expected_sha256": "293b80f4d0e8fe5ceeb32098ea8f6542aa26fbb2b6171f7aefecc8bbd0f3c14a",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_blca_iatlas_imvigor210_2017_data_clinical_sample",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_clinical_sample.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:e21ff3efb00ecf583a90a804551cf0122aff0dc5819d9d8f6af6c2d9af064eb1",
+            "expected_size": 57089,
+            "expected_sha256": "e21ff3efb00ecf583a90a804551cf0122aff0dc5819d9d8f6af6c2d9af064eb1",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/meta_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:704d5c0821767c076be973c76c9c73fc75fa6fb6f18d23a37add93b09612419b",
+            "expected_size": 287,
+            "expected_sha256": "704d5c0821767c076be973c76c9c73fc75fa6fb6f18d23a37add93b09612419b",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_blca_iatlas_imvigor210_2017_data_mrna_seq_tpm",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_mrna_seq_tpm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:e13445ffecb9f77b97c3ee0c50b8a2c591e79b0daef55ebbd009bdde6905228c",
+            "expected_size": 166295023,
+            "expected_sha256": "e13445ffecb9f77b97c3ee0c50b8a2c591e79b0daef55ebbd009bdde6905228c",
+            "max_bytes": 182924525,
+            "host": "media.githubusercontent.com"
+        }
+    ]
+}

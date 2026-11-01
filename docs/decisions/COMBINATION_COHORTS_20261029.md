@@ -41,3 +41,5 @@
 | GSE188249 / GSE186825 | Ovarian, platinum-resistant | guadecitabine + pembrolizumab (RNA + EPIC methylation) | Combination paper (R2) |
 | GSE222932 / GSE222933 | Urothelial, post-ICI | guadecitabine + atezolizumab (RNA + EPIC methylation) | Combination paper (R2) |
 | GSE147537 (METADUR) | CRC / breast / ovarian | CC-486 + durvalumab (methylation only) | Combination paper (R2) |
+
+**Source for the next ORR cohorts (user, 29 Oct 2026):** cBioPortal / iAtlas processed tables may be the source for IMvigor210, Liu, Gide and the IMmotion150 atezolizumab-only arm. Each is cross-checked against the original author package (for example IMvigor210CoreBiologies), within the 500 MB per-cohort cap.

@@ -89,12 +89,15 @@ def map_endpoints(packet: dict[str, Any], *, schemas: SchemaStore | None = None)
                 value_map = definition.get("raw_value_map", {})
                 require(isinstance(value_map, dict), "SOURCE_BINARY_DEFINITION_CONFLICT")
                 require(all(isinstance(key, str) and type(value) is int and value in {0, 1} for key, value in value_map.items()), "SOURCE_BINARY_DEFINITION_CONFLICT")
-                require(raw in value_map, "SOURCE_BINARY_DEFINITION_UNKNOWN", blocked=True)
-                require(category in {"SOURCE_POSITIVE", "SOURCE_NEGATIVE"}, "SOURCE_BINARY_DEFINITION_CONFLICT")
-                require(value_map[raw] == int(category == "SOURCE_POSITIVE"), "SOURCE_BINARY_DEFINITION_CONFLICT")
                 require(outcome.get("orr_mapping") is None and outcome.get("dcr_mapping") is None, "INVALID_ENDPOINT_CONVERSION")
-                require(evaluability == "EVALUABLE", "SOURCE_BINARY_DEFINITION_UNKNOWN", blocked=True)
-                binary = value_map[raw]
+                if category == 'UNKNOWN':
+                    require(evaluability == 'UNKNOWN', 'SOURCE_BINARY_DEFINITION_CONFLICT')
+                else:
+                    require(raw in value_map, "SOURCE_BINARY_DEFINITION_UNKNOWN", blocked=True)
+                    require(category in {"SOURCE_POSITIVE", "SOURCE_NEGATIVE"}, "SOURCE_BINARY_DEFINITION_CONFLICT")
+                    require(value_map[raw] == int(category == "SOURCE_POSITIVE"), "SOURCE_BINARY_DEFINITION_CONFLICT")
+                    require(evaluability == "EVALUABLE", "SOURCE_BINARY_DEFINITION_UNKNOWN", blocked=True)
+                    binary = value_map[raw]
                 audit.append({"check": "SOURCE_BINARY_DEFINED", "patient_uid": outcome["patient_uid"], "treatment_episode_id": episode_id, "outcome_id": outcome["outcome_id"], "definition_name": definition["name"], "definition_version": definition["version"], "source_locator": definition["source_locator"]})
             elif endpoint_class == "SOURCE_BINARY_UNKNOWN":
                 evaluability = "UNKNOWN"

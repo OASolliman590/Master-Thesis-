@@ -1,0 +1,336 @@
+{
+  "cohort": "gse136961",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "NSCLC",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "geo_family_soft": {
+      "sha256": "59a448c766f1e72a2e086a9bb9a456ec02e3f2b7a1926ae6e01196b1392d6193",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE136nnn/GSE136961/soft/GSE136961_family.soft.gz",
+      "version": "GEO 2026-10-30",
+      "format": "GEO_FAMILY_SOFT",
+      "role": "source_of_record"
+    },
+    "geo_tpm": {
+      "sha256": "c1c41b61c4604d9b29f0e892b0c08c3d9705bac525f8887a528694a7c0348a80",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE136nnn/GSE136961/suppl/GSE136961_TPM.tsv.gz",
+      "version": "GEO listing 2026-10-30",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    },
+    "geo_raw_count": {
+      "sha256": "eb1d873f7f396290535807cd7258489053d58ca34dc9304951beca603b9d5ef2",
+      "locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE136nnn/GSE136961/suppl/GSE136961_raw_count.tsv.gz",
+      "version": "GEO listing 2026-10-30",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    }
+  },
+  "sample_identity": {
+    "title_regex": "^([DN][0-9]+)$",
+    "patient_group": 1
+  },
+  "geo": {
+    "characteristics": {
+      "response": "UNKNOWN"
+    },
+    "relation_kinds": [
+      "BioSample",
+      "SRA"
+    ]
+  },
+  "biological_compartment": {
+    "source_name_field": "source_name_ch1",
+    "source_name_map": {
+      "non-small cell lung cancer cells": "TUMOUR"
+    },
+    "evidence": "geo_family_soft sample source and characteristics"
+  },
+  "geo_ingest": {
+    "baseline_values": [
+      "COHORT_BASELINE"
+    ],
+    "baseline_by_cohort": true,
+    "response_source": "geo_family_soft",
+    "endpoint_class": "SOURCE_BINARY",
+    "response_map": {},
+    "baseline_tie_rule": null
+  },
+  "treatment_proposal": {
+    "agent_source": "CITED_CONSTANT",
+    "agent_value": "UNKNOWN",
+    "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE136nnn/GSE136961/soft/GSE136961_family.soft.gz",
+    "pharmacological_class": "ANTI_PD_1",
+    "regimen_id": "REGIMEN:gse136961:INDEX",
+    "index_event": "START_OF_INDEX_TREATMENT"
+  },
+  "measurement_representations": {
+    "geo_tpm": {
+      "unit": "TPM",
+      "transform": "UNKNOWN",
+      "genome_build": "hg19",
+      "annotation": "immuneresponse V3.1 panel reference (not a genome annotation release)",
+      "feature_identifier_system": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "platform": "GPL24014 Ion Torrent S5 XL",
+      "normalization": "TPM",
+      "feature_scope": "TARGETED",
+      "evidence": {
+        "unit": "geo_family_soft:!Sample_data_processing TPM",
+        "transform": "UNKNOWN: no explicit transformation statement",
+        "genome_build": "geo_family_soft:!Sample_data_processing genome build",
+        "annotation": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#4",
+        "feature_identifier_system": "UNKNOWN",
+        "platform": "geo_family_soft:!Series_platform_id and !Platform_title",
+        "feature_scope": "geo_family_soft:Oncomine Immune Response panel"
+      }
+    },
+    "geo_raw_count": {
+      "unit": "READ_COUNTS",
+      "transform": "NONE",
+      "genome_build": "hg19",
+      "annotation": "UNKNOWN",
+      "feature_identifier_system": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "platform": "GPL24014 Ion Torrent S5 XL",
+      "normalization": "NONE",
+      "feature_scope": "TARGETED",
+      "evidence": {
+        "unit": "geo_family_soft:!Sample_data_processing raw count",
+        "transform": "geo_family_soft:!Sample_data_processing raw count",
+        "platform": "geo_family_soft:!Platform_title"
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "expression_column_map": {
+    "geo_tpm": {
+      "method": "TITLE",
+      "review_required": true,
+      "evidence": "geo_family_soft sample titles and pinned matrix headers"
+    },
+    "geo_raw_count": {
+      "method": "TITLE",
+      "review_required": true,
+      "evidence": "GEO sample titles and raw count matrix header; extra columns require review"
+    }
+  },
+  "decision_config": {
+    "preview": {
+      "required_roles": [
+        "geo_family_soft",
+        "geo_tpm"
+      ],
+      "split_policy": "UNKNOWN"
+    },
+    "proposed_policies": {
+      "split": "DEVELOPMENT",
+      "exposure": "METADATA_ONLY",
+      "prior_ici": "UNKNOWN_ALLOWED_DEVELOPMENT"
+    },
+    "review_items": {
+      "items": [
+        {
+          "category": "SPLIT_ROLE_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Propose DEVELOPMENT; the user must decide before analysis."
+        },
+        {
+          "category": "EXPOSURE_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Propose METADATA_ONLY; the user must review."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Keep prior ICI UNKNOWN unless the source documents it; UNKNOWN is proposed only for DEVELOPMENT."
+        },
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Review the source-title patient and expression-column correspondence."
+        },
+        {
+          "category": "TIMING_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Review baseline timing from source evidence; do not infer individual dates."
+        },
+        {
+          "category": "ENDPOINT_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "The per-patient response mapping is not established; retain UNKNOWN and do not infer labels."
+        },
+        {
+          "category": "PROCESSING_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Obtain the missing processing and feature-identity evidence before V3."
+        },
+        {
+          "category": "RAW_MATRIX_EXTRA_COLUMNS_REVIEW",
+          "role": "geo_family_soft",
+          "question": "Review extra raw-count columns without assigning them to patients."
+        }
+      ]
+    },
+    "endpoint": {
+      "endpoint_class": "SOURCE_BINARY",
+      "definition": "durable clinical benefit; source does not document the patient-level category mapping or threshold in the pinned family SOFT"
+    }
+  },
+  "v3": {
+    "primary_representation": "geo_tpm",
+    "sample_inventory_source_role": "geo_family_soft",
+    "expected_counts": {
+      "full_header_columns": 21,
+      "baseline_selected": 0,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "geo_tpm"
+    },
+    "delimiters": {
+      "geo_tpm": "\t"
+    },
+    "compressed": {
+      "geo_tpm": true
+    },
+    "documentation": {
+      "geo_tpm": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "geo_family_soft:!Sample_data_processing"
+      }
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose DEVELOPMENT; the user must decide before analysis.",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose METADATA_ONLY; the user must review.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Keep prior ICI UNKNOWN unless the source documents it; UNKNOWN is proposed only for DEVELOPMENT.",
+        "evidence_pointers": []
+      },
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the source-title patient and expression-column correspondence.",
+        "evidence_pointers": []
+      },
+      "TIMING_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review baseline timing from source evidence; do not infer individual dates.",
+        "evidence_pointers": []
+      },
+      "ENDPOINT_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: use the D/N title prefix for DCB/NDB (9/12), with the source >24-week definition. Requires user approval of this mapping; no label is applied now.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "PROCESSING_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Obtain the missing processing and feature-identity evidence before V3.",
+        "evidence_pointers": []
+      },
+      "RAW_MATRIX_EXTRA_COLUMNS_REVIEW": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: leave the five extra raw-count columns unassigned; the aggregate low-read exclusions do not prove their identities.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "GEO_RESPONSE_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO source and do not guess unresolved response, timing or identity.",
+        "evidence_pointers": []
+      },
+      "GEO_VISIT_CHARACTERISTIC_UNKNOWN": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO source and do not guess unresolved response, timing or identity.",
+        "evidence_pointers": []
+      },
+      "COHORT_BASELINE_TIMING_UNVERIFIED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO source and do not guess unresolved response, timing or identity.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_BINDING_RULE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO source and do not guess unresolved response, timing or identity.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_BINDING_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO source and do not guess unresolved response, timing or identity.",
+        "evidence_pointers": []
+      },
+      "V3_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review each listed V3 structural and processing blocker against its pinned source; keep unknown facts blocked and do not rename or guess.",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

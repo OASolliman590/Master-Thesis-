@@ -1,0 +1,392 @@
+{
+  "cohort": "gide2019",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "melanoma",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "mel_iatlas_gide_2019_meta_study": {
+      "sha256": "f90ef6d4b91762ebd12d7e793db72e2dbd344132552474632d680a878a8de8ca",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/meta_study.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f90ef6d4b91762ebd12d7e793db72e2dbd344132552474632d680a878a8de8ca",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "mel_iatlas_gide_2019_data_clinical_patient": {
+      "sha256": "d66be75803000e29be7d57674ccdba29de3d7cf264d6cbb62e0cf63c658fa437",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_clinical_patient.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:d66be75803000e29be7d57674ccdba29de3d7cf264d6cbb62e0cf63c658fa437",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "mel_iatlas_gide_2019_data_clinical_sample": {
+      "sha256": "ebdf3aa1067c7aac73d17167bed34d246c243d177f7e95671fb34c988c3b5e62",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_clinical_sample.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ebdf3aa1067c7aac73d17167bed34d246c243d177f7e95671fb34c988c3b5e62",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "mel_iatlas_gide_2019_meta_mrna_seq_expression": {
+      "sha256": "2488f76b26dd7b4bc27be671bc7f49fe9104b3c22a56082b71a6cb2b412c090a",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/meta_mrna_seq_expression.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:2488f76b26dd7b4bc27be671bc7f49fe9104b3c22a56082b71a6cb2b412c090a",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "mel_iatlas_gide_2019_data_mrna_seq_expression": {
+      "sha256": "a2e5e119409f76120510f82954f605c02d64605ef8e7bb9b17fb49bd3683912b",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_mrna_seq_expression.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:a2e5e119409f76120510f82954f605c02d64605ef8e7bb9b17fb49bd3683912b",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    },
+    "author_mmc2": {
+      "sha256": "6153cd8606c17a43f2a1dd36967a5680b42693007f428daffc4bb80feefe2c15",
+      "locator": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026:mmc2.xlsx",
+      "version": "staged-20261030:6153cd8606c17a43f2a1dd36967a5680b42693007f428daffc4bb80feefe2c15",
+      "format": "XLSX_CLINICAL",
+      "header_row": 3,
+      "role": "source_of_record"
+    },
+    "author_mmc3": {
+      "sha256": "83c5efac77e6566fb4af3569afe8f814325d03394c05e21d7f6952e9f9c44ac5",
+      "locator": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026:mmc3.xlsx",
+      "version": "staged-20261030:83c5efac77e6566fb4af3569afe8f814325d03394c05e21d7f6952e9f9c44ac5",
+      "format": "XLSX_CLINICAL",
+      "header_row": 3,
+      "role": "source_of_record"
+    }
+  },
+  "cbio_ingest": {
+    "patient_role": "mel_iatlas_gide_2019_data_clinical_patient",
+    "sample_role": "mel_iatlas_gide_2019_data_clinical_sample",
+    "matrix_role": "mel_iatlas_gide_2019_data_mrna_seq_expression",
+    "patient_id": "PATIENT_ID",
+    "sample_id": "SAMPLE_ID",
+    "visit_field": "SAMPLE_TREATMENT",
+    "baseline_values": [
+      "Pre"
+    ],
+    "nonbaseline_values": [
+      "On"
+    ],
+    "response_field": "RESPONSE",
+    "response_map": {
+      "Complete Response": "CR",
+      "Partial Response": "PR",
+      "Stable Disease": "SD",
+      "Progressive Disease": "PD",
+      "NE": "NE",
+      "NA": "UNKNOWN"
+    },
+    "drug_field": "ICI_RX",
+    "drug_class_map": {
+      "Atezolizumab": "ANTI_PD_L1",
+      "Pembrolizumab": "ANTI_PD_1",
+      "Nivolumab": "ANTI_PD_1",
+      "Pembro": "ANTI_PD_1",
+      "Ipilimumab Pembrolizumab": "ANTI_PD_1_PLUS_ANTI_CTLA_4",
+      "Ipilimumab Nivolumab": "ANTI_PD_1_PLUS_ANTI_CTLA_4"
+    },
+    "treatment": {
+      "regimen_id": "REGIMEN:gide2019:INDEX"
+    },
+    "author_clinical_join": {
+      "mono_role": "author_mmc2",
+      "dual_role": "author_mmc3"
+    }
+  },
+  "measurement_representations": {
+    "mel_iatlas_gide_2019_data_mrna_seq_expression": {
+      "unit": "log_expression",
+      "transform": "LOG2",
+      "genome_build": "hg38",
+      "annotation": "Hugo_Symbol",
+      "feature_identifier_system": "GENE_SYMBOL",
+      "platform": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "normalization": "upper quartile normalized counts",
+      "feature_scope": "UNKNOWN",
+      "evidence": {
+        "unit": "mel_iatlas_gide_2019_meta_mrna_seq_expression:profile_name/profile_description",
+        "transform": "mel_iatlas_gide_2019_meta_mrna_seq_expression:profile_description",
+        "genome_build": "mel_iatlas_gide_2019_meta_study:reference_genome",
+        "annotation": "mel_iatlas_gide_2019_data_mrna_seq_expression:Hugo_Symbol column header",
+        "feature_identifier_system": "mel_iatlas_gide_2019_data_mrna_seq_expression:Hugo_Symbol column header",
+        "platform": "UNKNOWN: profile and study metadata do not state instrument",
+        "normalization": "mel_iatlas_gide_2019_meta_mrna_seq_expression:profile_description",
+        "feature_scope": "UNKNOWN: profile does not establish completeness"
+      },
+      "derived_facts": {
+        "feature_identifier_system": {
+          "status": "DERIVED",
+          "value": "GENE_SYMBOL",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "GENE_SYMBOL_MAJORITY",
+          "source_sha256": "a2e5e119409f76120510f82954f605c02d64605ef8e7bb9b17fb49bd3683912b"
+        }
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "decision_config": {
+    "review_items": {
+      "items": [
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "mel_iatlas_gide_2019_data_clinical_sample",
+          "question": "Review patient and sample linkage from source identifiers."
+        },
+        {
+          "category": "MELANOMA_OVERLAP_UNRESOLVED",
+          "role": "mel_iatlas_gide_2019_meta_study",
+          "question": "Possible overlap with Liu, Gide, Riaz, Hugo and GSE168204; no independence certified."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "mel_iatlas_gide_2019_data_clinical_sample",
+          "question": "Review missing prior ICI history and whether the chosen split role permits UNKNOWN."
+        },
+        {
+          "category": "PROCESSING_EXCEPTION_REVIEW",
+          "role": "mel_iatlas_gide_2019_meta_mrna_seq_expression",
+          "question": "Review the development-only exception and its four conditions for the undocumented deposited processing pipeline."
+        },
+        {
+          "category": "SOURCE_BINARY_DEFINITION_REVIEW",
+          "role": "author_mmc2",
+          "question": "Review author clinical benefit separately from RECIST ORR, including the six-month threshold."
+        },
+        {
+          "category": "SEPARATE_ENDPOINT_MATERIALIZATION_PENDING",
+          "role": "author_mmc2",
+          "question": "Review downstream materialization of separate ORR and multi-field clinical-benefit outcomes before admission."
+        }
+      ]
+    },
+    "preview": {
+      "required_roles": [
+        "mel_iatlas_gide_2019_data_clinical_patient",
+        "mel_iatlas_gide_2019_data_clinical_sample",
+        "mel_iatlas_gide_2019_meta_mrna_seq_expression",
+        "mel_iatlas_gide_2019_data_mrna_seq_expression"
+      ],
+      "split_policy": "DEVELOPMENT",
+      "exclude_without_assay": true,
+      "author_endpoint_join": "VERIFIED_WITH_EXCEPTIONS"
+    },
+    "representation_review": {
+      "primary": "mel_iatlas_gide_2019_data_mrna_seq_expression",
+      "reason": "Single pinned representation.",
+      "sensitivity": "UNKNOWN"
+    },
+    "overlap_review": {
+      "status": "UNKNOWN",
+      "no_independence_certified": true,
+      "targets": [
+        "STUDY:liu2019",
+        "STUDY:riaz_gse91061",
+        "STUDY:hugo_gse78220",
+        "STUDY:gse168204"
+      ],
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    },
+    "representation_restrictions": {
+      "development_only": true,
+      "own_deposited_scale_only": true,
+      "report_pooled_without_cohort": true,
+      "final_test_or_confirmation_prohibited": true,
+      "limitation_required": true,
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026",
+      "feature_scope_exception": {
+        "feature_scope": "UNKNOWN",
+        "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026",
+        "limitation": "The deposited feature universe is undocumented; development only under the approved processing exception. No claim of a complete universe."
+      }
+    },
+    "prior_ici_policy": {
+      "value": "UNKNOWN_ALLOWED_DEVELOPMENT",
+      "source": "author Tables S1 and S2 lack a prior ICI field",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026"
+    },
+    "exposure_policy": {
+      "state": "METADATA_ONLY",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md"
+    },
+    "author_endpoints": {
+      "join_status": "VERIFIED_WITH_EXCEPTIONS",
+      "source_roles": [
+        "author_mmc2",
+        "author_mmc3"
+      ],
+      "orr": {
+        "endpoint_class": "TUMOUR_RESPONSE",
+        "source_field": "Best RECIST response",
+        "criteria": "RECIST 1.1"
+      },
+      "clinical_benefit": {
+        "endpoint_class": "SOURCE_BINARY",
+        "definition": "CR or PR, or SD with PFS > 182.5 days without progression: R; PD or SD with PFS <= 182.5 days: NR; unknowns remain unknown. Never merge with ORR.",
+        "fields": [
+          "Best RECIST response",
+          "Progression Free Survival (Days)",
+          "Progressed"
+        ]
+      },
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026"
+    }
+  },
+  "v3": {
+    "primary_representation": "mel_iatlas_gide_2019_data_mrna_seq_expression",
+    "sample_inventory_source_role": "mel_iatlas_gide_2019_data_clinical_sample",
+    "expected_counts": {
+      "full_header_columns": 91,
+      "baseline_selected": 73,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "mel_iatlas_gide_2019_data_mrna_seq_expression"
+    },
+    "documentation": {
+      "mel_iatlas_gide_2019_data_mrna_seq_expression": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "mel_iatlas_gide_2019_meta_mrna_seq_expression:profile_description"
+      }
+    },
+    "delimiters": {
+      "mel_iatlas_gide_2019_data_mrna_seq_expression": "\t"
+    },
+    "compressed": {
+      "mel_iatlas_gide_2019_data_mrna_seq_expression": false
+    },
+    "processing_acceptance": {
+      "accepted_unknown_fields": [
+        "platform"
+      ],
+      "split_role": "DEVELOPMENT",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-decisions-user-30-oct-2026",
+      "limitation": "Deposited log2 upper-quartile profile was produced by an undocumented downstream pipeline; own deposited scale only, report pooled results without Gide, never use for final test or confirmation; state this limitation wherever it contributes."
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Leave UNKNOWN until the user chooses a permanent role, protecting the whole family if selected as final test.",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review prior metadata, expression, scores and outcome exposure; no exposure state is assumed.",
+        "evidence_pointers": []
+      },
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "Use exact cBioPortal patient and sample identifiers; identity remains unsigned. docs/decisions/BATCH2_CBIOPORTAL_20261030.md",
+        "evidence_pointers": []
+      },
+      "REPRESENTATION_FACTS_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Obtain missing processing, instrument and feature-universe facts before passing V3.",
+        "evidence_pointers": []
+      },
+      "MELANOMA_OVERLAP_UNRESOLVED": {
+        "status": "PASS",
+        "decision": "Flag possible melanoma overlap; do not certify independence. docs/decisions/BATCH2_CBIOPORTAL_20261030.md",
+        "evidence_pointers": []
+      },
+      "FEATURE_IDENTIFIER_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the deposited composite feature THRA1/BTR; do not rename or remap it.",
+        "evidence_pointers": []
+      },
+      "AUTHOR_CROSSCHECK_UNAVAILABLE": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Keep the original author cross-check open until its source objects are pinned and compared.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "Keep prior ICI UNKNOWN under the DEVELOPMENT-only policy. docs/decisions/BATCH2_CBIOPORTAL_20261030.md",
+        "evidence_pointers": []
+      },
+      "AUTHOR_PATIENT_JOIN_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Establish a documented unambiguous author-to-cBioPortal identity rule before joining the author endpoints.",
+        "evidence_pointers": []
+      },
+      "PROCESSING_EXCEPTION_REVIEW": {
+        "status": "PASS",
+        "decision": "Use the deposited scale only, report pooled results without Gide, prohibit final-test or confirmation use, and state the limitation wherever Gide contributes.",
+        "evidence_pointers": []
+      },
+      "FEATURE_ROWS_EXCLUDED": {
+        "status": "PASS",
+        "decision": "Exclude listed rows under NONSTANDARD_ROWS_EXCLUDED, without renaming or remapping. docs/decisions/BATCH2_CBIOPORTAL_20261030.md",
+        "evidence_pointers": []
+      },
+      "AUTHOR_RNA_LINK_EXCEPTION": {
+        "status": "PASS",
+        "decision": "Keep the matched no-RNA author row unlinked and retain only its cBioPortal fields; review the aggregate exception under docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-link-and-liu-feature-scope-user-30-oct-2026.",
+        "evidence_pointers": []
+      },
+      "SOURCE_BINARY_DEFINITION_REVIEW": {
+        "status": "PASS",
+        "decision": "Use the author clinical-benefit definition as SOURCE_BINARY, separate from ORR; missing or ambiguous values remain UNKNOWN. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#gide-link-and-liu-feature-scope-user-30-oct-2026",
+        "evidence_pointers": []
+      },
+      "SEPARATE_ENDPOINT_MATERIALIZATION_PENDING": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Keep the separate endpoint assertions unsigned until downstream mapping supports both endpoint types and the PFS/progression evidence.",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

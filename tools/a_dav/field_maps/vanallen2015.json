@@ -1,0 +1,296 @@
+{
+  "cohort": "vanallen2015",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "melanoma",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "skcm_dfci_2015_meta_study": {
+      "sha256": "5231297538e4c2074b5d2ada2e6ddbff24d8ab393d047d782010dbfe94531dff",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/meta_study.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:5231297538e4c2074b5d2ada2e6ddbff24d8ab393d047d782010dbfe94531dff",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "skcm_dfci_2015_data_clinical_patient": {
+      "sha256": "c684b93833c3e1983fa94beb77eb6b9c033571c8c560ed83801806ae3e278ce0",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_clinical_patient.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:c684b93833c3e1983fa94beb77eb6b9c033571c8c560ed83801806ae3e278ce0",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "skcm_dfci_2015_data_clinical_sample": {
+      "sha256": "2c37d96c0daf6c9660aaea928ae7a129072e80fec048b90a6ac2aefd50399f9d",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_clinical_sample.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:2c37d96c0daf6c9660aaea928ae7a129072e80fec048b90a6ac2aefd50399f9d",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "skcm_dfci_2015_meta_mrna_seq_rpkm": {
+      "sha256": "caba3cdcdbcd3289cb24c0076a07a113027469eb65270472ecef3ee9609a1939",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/meta_mrna_seq_rpkm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:caba3cdcdbcd3289cb24c0076a07a113027469eb65270472ecef3ee9609a1939",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "skcm_dfci_2015_data_mrna_seq_rpkm": {
+      "sha256": "4c7e8d686b8f81eb32115b8010b2ae5b87091ea24a1965e162e2916d855c1835",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_mrna_seq_rpkm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:4c7e8d686b8f81eb32115b8010b2ae5b87091ea24a1965e162e2916d855c1835",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    }
+  },
+  "cbio_ingest": {
+    "patient_role": "skcm_dfci_2015_data_clinical_patient",
+    "sample_role": "skcm_dfci_2015_data_clinical_sample",
+    "matrix_role": "skcm_dfci_2015_data_mrna_seq_rpkm",
+    "patient_id": "PATIENT_ID",
+    "sample_id": "SAMPLE_ID",
+    "visit_field": "SOMATIC_STATUS",
+    "baseline_values": [],
+    "response_field": "DURABLE_CLINICAL_BENEFIT",
+    "response_map": {
+      "CR": "CR",
+      "PR": "PR",
+      "SD": "SD",
+      "PD": "PD",
+      "X": "UNKNOWN"
+    },
+    "drug_field": "TREATMENT",
+    "drug_class_map": {
+      "ipilimumab": "ANTI_CTLA_4"
+    },
+    "treatment": {
+      "regimen_id": "REGIMEN:vanallen2015:INDEX"
+    },
+    "outcomes_without_baseline": true
+  },
+  "measurement_representations": {
+    "skcm_dfci_2015_data_mrna_seq_rpkm": {
+      "unit": "UNKNOWN",
+      "transform": "UNKNOWN",
+      "genome_build": "UNKNOWN",
+      "annotation": "Entrez_Gene_Id",
+      "feature_identifier_system": "ENTREZ_GENE",
+      "platform": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "normalization": "UNKNOWN",
+      "feature_scope": "UNKNOWN",
+      "evidence": {
+        "unit": "UNKNOWN: RPKM filename conflicts with FPKM profile description",
+        "annotation": "skcm_dfci_2015_data_mrna_seq_rpkm:Entrez_Gene_Id header",
+        "feature_identifier_system": "skcm_dfci_2015_data_mrna_seq_rpkm:Entrez_Gene_Id header",
+        "platform": "UNKNOWN",
+        "genome_build": "UNKNOWN",
+        "transform": "UNKNOWN"
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "decision_config": {
+    "review_items": {
+      "items": [
+        {
+          "category": "SPLIT_ROLE_REVIEW_REQUIRED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "Propose DEVELOPMENT; obtain user confirmation."
+        },
+        {
+          "category": "EXPOSURE_REVIEW_REQUIRED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "Propose METADATA_ONLY; obtain user review."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "Keep prior ICI UNKNOWN unless source evidence establishes it."
+        },
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "Review exact source PATIENT_ID/SAMPLE_ID joins."
+        },
+        {
+          "category": "BASELINE_TIMING_UNRESOLVED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "The pinned clinical fields do not establish pretreatment timing; review source evidence."
+        },
+        {
+          "category": "EXPRESSION_SCALE_CONFLICT",
+          "role": "skcm_dfci_2015_meta_mrna_seq_rpkm",
+          "question": "The matrix filename says RPKM while the profile description says FPKM; establish the unit and processing facts."
+        },
+        {
+          "category": "ENDPOINT_REVIEW_REQUIRED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "The source field named DURABLE_CLINICAL_BENEFIT contains CR/PR/SD/PD/X; review its intended definition and assessment criteria."
+        },
+        {
+          "category": "MELANOMA_OVERLAP_UNRESOLVED",
+          "role": "skcm_dfci_2015_data_clinical_patient",
+          "question": "Flag possible overlap with other melanoma studies; do not certify independence."
+        }
+      ]
+    },
+    "preview": {
+      "required_roles": [
+        "skcm_dfci_2015_data_clinical_patient",
+        "skcm_dfci_2015_data_clinical_sample",
+        "skcm_dfci_2015_meta_mrna_seq_rpkm",
+        "skcm_dfci_2015_data_mrna_seq_rpkm"
+      ],
+      "split_policy": "UNKNOWN"
+    },
+    "proposed_policies": {
+      "split": "DEVELOPMENT",
+      "exposure": "METADATA_ONLY",
+      "prior_ici": "UNKNOWN_ALLOWED_DEVELOPMENT"
+    }
+  },
+  "v3": {
+    "primary_representation": "skcm_dfci_2015_data_mrna_seq_rpkm",
+    "sample_inventory_source_role": "skcm_dfci_2015_data_clinical_sample",
+    "expected_counts": {
+      "full_header_columns": 40,
+      "baseline_selected": 0,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "skcm_dfci_2015_data_mrna_seq_rpkm"
+    },
+    "documentation": {
+      "skcm_dfci_2015_data_mrna_seq_rpkm": {
+        "status": "UNKNOWN",
+        "evidence_pointer": "skcm_dfci_2015_meta_mrna_seq_rpkm:profile_description"
+      }
+    },
+    "delimiters": {
+      "skcm_dfci_2015_data_mrna_seq_rpkm": "\t"
+    },
+    "compressed": {
+      "skcm_dfci_2015_data_mrna_seq_rpkm": false
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose DEVELOPMENT; obtain user confirmation.",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose METADATA_ONLY; obtain user review.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Keep prior ICI UNKNOWN unless source evidence establishes it.",
+        "evidence_pointers": []
+      },
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review exact source PATIENT_ID/SAMPLE_ID joins.",
+        "evidence_pointers": []
+      },
+      "BASELINE_TIMING_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "The pinned clinical fields do not establish pretreatment timing; review source evidence.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_SCALE_CONFLICT": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: a Gide-style DEVELOPMENT-only undocumented-processing exception, own scale only, report pooled results without this cohort, never final test or confirmation. RPKM/FPKM remains unknown; requires user decision.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "ENDPOINT_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: retain CR/PR/SD/PD/X from DURABLE_CLINICAL_BENEFIT as raw best-response categories. X remains UNKNOWN. The OS-based clinical-benefit composite is separate.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "MELANOMA_OVERLAP_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Flag possible overlap with other melanoma studies; do not certify independence.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_SAMPLE_UNMATCHED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical and matrix sources; do not guess identity or timing.",
+        "evidence_pointers": []
+      },
+      "ORR_RESPONSE_UNKNOWN": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical and matrix sources; do not guess identity or timing.",
+        "evidence_pointers": []
+      },
+      "MATRIX_COLUMN_UNMAPPED_OR_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical and matrix sources; do not guess identity or timing.",
+        "evidence_pointers": []
+      },
+      "V3_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review each listed V3 structural and processing blocker against its pinned source; keep unknown facts blocked and do not rename or guess.",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review source evidence and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

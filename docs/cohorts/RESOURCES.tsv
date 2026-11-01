@@ -1,0 +1,108 @@
+resource_id	track	kind	status	note	source	local_path
+GEO	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+E-utilities	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+SRA	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+ENA	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+cBioPortal	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+cBioPortal datahub	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+ArrayExpress	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+BioStudies	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+Zenodo	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+Figshare AACR	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+ClinicalTrials.gov	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+PubMed	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+PMC	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+Europe PMC	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+Springer supplements	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+Elsevier supplements	shared	primary repository	available route	Each cohort needs its own pinned public source; listing does not verify a dataset	user source roster 31 Oct; metadata only	
+EGA	shared	controlled repository	restricted	Catalogue reference only; no controlled data download	user source roster 31 Oct; metadata only	
+dbGaP	shared	controlled repository	restricted	Catalogue reference only; no controlled data download	user source roster 31 Oct; metadata only	
+recount3	A	collection or processing	in use	Gide/Kim run matrices; Riaz/Hugo sensitivity; patient mapping status separate	user source roster 31 Oct; metadata only	
+ARCHS4	A	collection or processing	cross-check candidate	GEO coverage; processing versions not established	user source roster 31 Oct; metadata only	
+Expression Atlas	A	collection or processing	rejected in prior search	No eligible ICI tumour cohorts found in prior search	user source roster 31 Oct; metadata only	
+nf-core/rnaseq	A	collection or processing	deferred	Zhao raw processing awaits cluster and approval	user source roster 31 Oct; metadata only	
+ICBatlas	A	collection or processing	provided study index	Only studies/normalization metadata imported; primary links unverified	user source roster 31 Oct; metadata only	
+ICBcomb	A/C	collection or processing	context only	Use published tables; website reconstruction not imported	user source roster 31 Oct; metadata only	
+ICBcDrug	A/C	collection or processing	context only	Use published tables; drug scores and website reconstruction not imported	user source roster 31 Oct; metadata only	
+ORCESTRA / PredictIO	A	collection or processing	candidate source	Cross-check and gap cohort source; verify each primary	user source roster 31 Oct; metadata only	
+CRI iAtlas	A	collection or processing	cross-check	Alternative source representations, not additional patients	user source roster 31 Oct; metadata only	
+TIGER	A	collection or processing	cross-check candidate	Primary-source verification pending	user source roster 31 Oct; metadata only	
+IOhub	A	collection or processing	rejected	No usable released expression found; batch-corrected	user source roster 31 Oct; metadata only	
+CPI1000+	A	collection or processing	rejected	No expression release found	user source roster 31 Oct; metadata only	
+TIDE	A	collection or processing	rejected	Blocked access / normalized data	user source roster 31 Oct; metadata only	
+Cancer-Immu	A	collection or processing	index only	No new bulk cohort established	user source roster 31 Oct; metadata only	
+TCCIA	A	collection or processing	previously checked	See prior harvest	user source roster 31 Oct; metadata only	
+CAMOIP	A	collection or processing	previously checked	See prior harvest	user source roster 31 Oct; metadata only	
+TCGA-PRAD	B	data/reference	separate track	Existing GDC work; leave B code and data untouched	user source roster 31 Oct; metadata only	
+CPC-GENE	B	data/reference	untouched external test	Separate Paper B authorization	user source roster 31 Oct; metadata only	
+Illumina 450K annotation	B	data/reference	existing B reference	Promoter annotations	user source roster 31 Oct; metadata only	
+EpiFactors	B	data/reference	optional	Wider regulator list	user source roster 31 Oct; metadata only	
+MSigDB Hallmark IFN-gamma	B	data/reference	existing panel reference	Existing panel definition; no scoring	user source roster 31 Oct; metadata only	
+TCGA-SKCM	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-BLCA	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-KIRC	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-HNSC	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-LUAD	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-LUSC	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+TCGA-PAAD	B-MX	multiomics	needs download approval	RNA, methylation, miRNA, RPPA, ATAC as available; per-project approval remains required	user source roster 31 Oct; metadata only	
+LINCS/CMap	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+DepMap/CCLE	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+PRISM/GDSC	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+DrugBank/ChEMBL	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+Perturb-CITE-seq	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+TISMO	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+LJP4	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+GSE199800	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+GSE216053	C	context source	existing spec / not implemented here	No analysis or download in this task	user source roster 31 Oct; metadata only	
+GSE115978 / SCP109	A.1/B single-cell	dataset lead	unsigned module	Jerby-Arnon; whole tumour melanoma; no baseline response inference	user source roster 31 Oct; metadata only	
+GSE120575 / SCP398	A.1/B single-cell	dataset lead	unsigned module	Sade-Feldman; CD45+ immune cells only	user source roster 31 Oct; metadata only	
+GSE123813	A.1/B single-cell	dataset lead	unsigned module	Yost; skin BCC/SCC	user source roster 31 Oct; metadata only	
+SCP1288	A.1/B single-cell	dataset lead	unsigned module	Bi 2021; not GSE156728; raw controlled	user source roster 31 Oct; metadata only	
+Krishna 2021 CELLxGENE	A.1/B single-cell	dataset lead	unsigned module	Kidney reference lead	user source roster 31 Oct; metadata only	
+Sci Data 2025 integrated cancer cells	A.1/B single-cell	dataset lead	unsigned module	CELLxGENE lead	user source roster 31 Oct; metadata only	
+SCP2510	A.1/B single-cell	dataset lead	unsigned module	Lung lead	user source roster 31 Oct; metadata only	
+SCP3341	A.1/B single-cell	dataset lead	unsigned module	Glioblastoma lead	user source roster 31 Oct; metadata only	
+SCP3121	A.1/B single-cell	dataset lead	unsigned module	Unverified lead	user source roster 31 Oct; metadata only	
+Lin 2026 Cancer Cell atlas	A.1/B single-cell	dataset lead	unsigned module	Paper/PDF and public access need checking	user source roster 31 Oct; metadata only	
+prostate tumour SC reference	A.1/B single-cell	dataset lead	unsigned module	Reference still missing	user source roster 31 Oct; metadata only	
+TISCH2	single-cell/reference	portal	catalogue only	Module unsigned; no single-cell download authorized	user source roster 31 Oct; metadata only	
+CELLxGENE	single-cell/reference	portal	catalogue only	Module unsigned; no single-cell download authorized	user source roster 31 Oct; metadata only	
+Broad Single Cell Portal	single-cell/reference	portal	catalogue only	Module unsigned; no single-cell download authorized	user source roster 31 Oct; metadata only	
+GTEx	single-cell/reference	portal	catalogue only	Module unsigned; no single-cell download authorized	user source roster 31 Oct; metadata only	
+GSE248014	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE343570 combination arm	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE188249 / GSE186825	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE222932 / GSE222933	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE147537	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE211645	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+PRINCE paad_iatlas_prince_2022	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE241876	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE235919	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE345048	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE248514	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE285963	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE213065	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE319641	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE273798	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE227666	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE271757	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE266919	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE165252	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE77910	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE169246	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+IMmotion150 bevacizumab arm	B-V / combination	cohort or arm	excluded from A/B response	Check mixed arms independently; no analysis here	docs/decisions/COMBINATION_COHORTS_20261029.md; user roster	
+GSE326589	side note	blood HMA + ICI	context only	Outside current solid-tumour production	user source roster 31 Oct; metadata only	
+GSE219085	side note	blood HMA + ICI	context only	Outside current solid-tumour production	user source roster 31 Oct; metadata only	
+GSE178926	side note	blood HMA + ICI	context only	Outside current solid-tumour production	user source roster 31 Oct; metadata only	
+GSE271406	side note	blood HMA + ICI	context only	Outside current solid-tumour production	user source roster 31 Oct; metadata only	
+Ravi 2023 = GSE135222	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+Jung = GSE126044	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+Padron = GSE153960	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+Zhang = GSE179368	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+SISIR-Omics IMvigor210 copy	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+IOhub data folder	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+ORCESTRA + IOhub 70% coverage	source audit	rejected lead	do not use	Previously reported wrong; no unsupported mapping or coverage claim carried forward	user source roster 31 Oct; metadata only	
+riaz_gse91061 recount3	A	local expression representation	run table ready; patient selection unapproved	sensitivity; 63856 feature rows x 109 runs; output hashes verified; no response or patient mapping adopted	docs/research/cohort_sources/RECOUNT3_ROUND_20261030.md	.scratch/runtime/riaz_gse91061/recount3-reviewed-20261030
+hugo_gse78220 recount3	A	local expression representation	run table ready; patient selection unapproved	sensitivity; 63856 feature rows x 28 runs; output hashes verified; no response or patient mapping adopted	docs/research/cohort_sources/RECOUNT3_ROUND_20261030.md	.scratch/runtime/hugo_gse78220/recount3-reviewed-20261030
+gide2019 recount3	A	local expression representation	run table ready; patient selection unapproved	intended primary; 63856 feature rows x 91 runs; output hashes verified; no response or patient mapping adopted	docs/research/cohort_sources/RECOUNT3_ROUND_20261030.md	.scratch/runtime/gide2019/recount3-reviewed-20261030
+kim2018 recount3	A	local expression representation	run table ready; patient selection unapproved	intended primary; 63856 feature rows x 45 runs; output hashes verified; no response or patient mapping adopted	docs/research/cohort_sources/RECOUNT3_ROUND_20261030.md	.scratch/runtime/kim2018/recount3-reviewed-20261030

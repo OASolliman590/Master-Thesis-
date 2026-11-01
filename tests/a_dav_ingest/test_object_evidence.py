@@ -131,3 +131,8 @@ def test_symbol_share_has_rule_and_object_provenance():
     assert result['gene_symbol_share_evidence']['evidence_type'] == 'DERIVED_FROM_OBJECT'
     assert result['gene_symbol_share_evidence']['rule'] == 'GENE_SYMBOL_MAJORITY'
     assert result['gene_symbol_share_evidence']['source_sha256'] == 'a' * 64
+def test_mixed_ensembl_identifiers_are_not_misclassified_as_symbols():
+    from tools.a_dav.object_evidence import derive_object_evidence
+    rows=[(f'ENSG{i:011d}', ['1']) for i in range(100)]+[('SYNTHETIC', ['1'])]
+    result=derive_object_evidence(rows,source_sha256='a'*64)
+    assert result['feature_identifier_system']['status']=='BLOCKED'

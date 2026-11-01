@@ -75,7 +75,11 @@ def derive_object_evidence(rows: Iterable[tuple[str, Sequence[str]]], *, source_
         else:
             continue
         excluded_rows.append({'row': index, 'identifier': identifier, 'reason': reason})
-    if feature_count and symbol_count * 100 >= 99 * feature_count and types not in ({'ENSEMBL_GENE'}, {'ENTREZ_GENE'}):
+    ensembl_count = sum(bool(re.fullmatch(r'ENSG\d{11}(?:\.\d+)?', x)) for x in identifiers)
+    # Ensembl IDs also match the broad symbol regex; a substantial mixed Ensembl
+    # population is ambiguous rather than evidence of HGNC symbols.
+    mixed_ensembl = len(types) > 1 and ensembl_count * 100 > feature_count
+    if feature_count and symbol_count * 100 >= 99 * feature_count and not mixed_ensembl and types not in ({'ENSEMBL_GENE'}, {'ENTREZ_GENE'}):
         feature_fact = fact('GENE_SYMBOL', 'GENE_SYMBOL_MAJORITY')
     elif feature_count and len(types) == 1 and 'AMBIGUOUS' not in types:
         kind = next(iter(types))

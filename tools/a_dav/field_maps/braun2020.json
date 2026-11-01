@@ -1,0 +1,305 @@
+{
+  "cohort": "braun2020",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "clear-cell renal cell carcinoma",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "clinical": {
+      "sha256": "a1f8683676d416b255291dcaa007aa0fa48c736c23e6a7a566664ba528bf205b",
+      "locator": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0839-y/MediaObjects/41591_2020_839_MOESM2_ESM.xlsx",
+      "version": "Springer ESM, Last-Modified 2023-11-14",
+      "format": "XLSX_NAMED_STREAM",
+      "role": "source_of_record",
+      "sheet_name": "S1_Clinical_and_Immune_Data",
+      "header_row": 2,
+      "table_kind": "clinical"
+    },
+    "expression": {
+      "sha256": "a1f8683676d416b255291dcaa007aa0fa48c736c23e6a7a566664ba528bf205b",
+      "locator": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0839-y/MediaObjects/41591_2020_839_MOESM2_ESM.xlsx",
+      "version": "Springer ESM, Last-Modified 2023-11-14",
+      "format": "XLSX_NAMED_STREAM",
+      "role": "source_of_record",
+      "sheet_name": "S4A_RNA_Expression",
+      "header_row": 2,
+      "table_kind": "matrix"
+    }
+  },
+  "cbio_ingest": {
+    "patient_role": "clinical",
+    "sample_role": "clinical",
+    "matrix_role": "expression",
+    "patient_id": "SUBJID",
+    "sample_id": "RNA_ID",
+    "visit_field": "Days_from_TumorSample_Collection_and_Start_of_Trial_Therapy",
+    "baseline_values": [],
+    "response_field": "ORR",
+    "response_map": {
+      "CR": "CR",
+      "PR": "PR",
+      "SD": "SD",
+      "PD": "PD",
+      "NE": "NE",
+      "CRPR": "UNKNOWN"
+    },
+    "drug_field": "Arm",
+    "drug_class_map": {
+      "NIVOLUMAB": "ANTI_PD_1"
+    },
+    "treatment": {
+      "regimen_id": "REGIMEN:braun2020:INDEX"
+    },
+    "cohort_filter": {
+      "field": "Arm",
+      "allowed_values": [
+        "NIVOLUMAB"
+      ]
+    },
+    "expression_samples_only": true,
+    "outcomes_without_baseline": true,
+    "secondary_outcome": {
+      "field": "Benefit",
+      "endpoint_class": "SOURCE_BINARY",
+      "response_map": {}
+    }
+  },
+  "measurement_representations": {
+    "expression": {
+      "unit": "log_expression",
+      "transform": "LOG2",
+      "genome_build": "UNKNOWN",
+      "annotation": "gene_name",
+      "feature_identifier_system": "UNKNOWN",
+      "platform": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "normalization": "TPM upper-quartile normalized to 1000; log2; ComBat across four batches; +21 offset",
+      "feature_scope": "UNKNOWN",
+      "evidence": {
+        "unit": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#1",
+        "transform": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#1",
+        "genome_build": "UNKNOWN",
+        "platform": "UNKNOWN",
+        "annotation": "author workbook S4A_RNA_Expression gene_name header",
+        "normalization": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#1"
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "decision_config": {
+    "preview": {
+      "required_roles": [
+        "clinical",
+        "expression"
+      ],
+      "split_policy": "UNKNOWN"
+    },
+    "proposed_policies": {
+      "split": "DEVELOPMENT",
+      "exposure": "METADATA_ONLY",
+      "prior_ici": "UNKNOWN_ALLOWED_DEVELOPMENT"
+    },
+    "review_items": {
+      "items": [
+        {
+          "category": "SPLIT_ROLE_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Propose DEVELOPMENT; obtain user confirmation."
+        },
+        {
+          "category": "EXPOSURE_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Propose METADATA_ONLY; obtain user review."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Prior therapy is not a prior-ICI indicator; keep prior ICI UNKNOWN."
+        },
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Review exact SUBJID and RNA_ID joins in the author workbook."
+        },
+        {
+          "category": "BASELINE_TIMING_UNRESOLVED",
+          "role": "clinical",
+          "question": "Interpret the source days-from-collection-to-treatment field against the paper; individual baseline status is not inferred."
+        },
+        {
+          "category": "ENDPOINT_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Review ORR categories including CRPR and the separate CB/NCB/ICB benefit definition against the paper."
+        },
+        {
+          "category": "PROCESSING_REVIEW_REQUIRED",
+          "role": "clinical",
+          "question": "Pin the paper methods for the deposited expression unit, transformation, platform, genome and annotation."
+        },
+        {
+          "category": "CLINICAL_WITHOUT_EXPRESSION_EXCLUDED",
+          "role": "clinical",
+          "question": "Exclude clinical patients lacking a matched RNA matrix column from the RNA branch; review counts."
+        }
+      ]
+    },
+    "endpoint": {
+      "source_binary_definition": "UNKNOWN: meaning of Benefit categories requires paper methods"
+    }
+  },
+  "v3": {
+    "primary_representation": "expression",
+    "sample_inventory_source_role": "clinical",
+    "expected_counts": {
+      "full_header_columns": 181,
+      "baseline_selected": 0,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "expression"
+    },
+    "delimiters": {
+      "expression": "\t"
+    },
+    "compressed": {
+      "expression": false
+    },
+    "documentation": {
+      "expression": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#1"
+      }
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose DEVELOPMENT; obtain user confirmation.",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose METADATA_ONLY; obtain user review.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Prior therapy is not a prior-ICI indicator; keep prior ICI UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review exact SUBJID and RNA_ID joins in the author workbook.",
+        "evidence_pointers": []
+      },
+      "BASELINE_TIMING_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: review archival, pre-anti-angiogenic tissue as distinct from a fresh pre-ICI biopsy; patient timing remains unresolved.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "ENDPOINT_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review ORR categories including CRPR and the separate CB/NCB/ICB benefit definition against the paper.",
+        "evidence_pointers": []
+      },
+      "PROCESSING_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: admit for DEVELOPMENT with tool versions, RNA reference and annotation unknown; retain the documented UQ=1000, log2, ComBat across four batches, +21 scale. Requires user decision.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "CLINICAL_WITHOUT_EXPRESSION_EXCLUDED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Exclude clinical patients lacking a matched RNA matrix column from the RNA branch; review counts.",
+        "evidence_pointers": []
+      },
+      "ORR_RESPONSE_UNKNOWN": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical workbook and keep unresolved timing, identity and endpoint labels UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "ORR_RESPONSE_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical workbook and keep unresolved timing, identity and endpoint labels UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "SECONDARY_ENDPOINT_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical workbook and keep unresolved timing, identity and endpoint labels UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "COHORT_FILTER_IDENTITY_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical workbook and keep unresolved timing, identity and endpoint labels UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "MATRIX_COLUMN_UNMAPPED_OR_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned clinical workbook and keep unresolved timing, identity and endpoint labels UNKNOWN.",
+        "evidence_pointers": []
+      },
+      "V3_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review each listed V3 structural and processing blocker against its pinned source; keep unknown facts blocked and do not rename or guess.",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the cited author sources and resolve the recorded unknowns before signing.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

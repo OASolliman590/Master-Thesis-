@@ -82,6 +82,9 @@ def _item(items: list[dict[str, Any]], category: str, pointers: list[dict[str, s
 
 def _parse_source(source: SourceObject, object_map: dict[str, Any]) -> Any:
     source_format = object_map["format"]
+    if source_format in {'CBIO_CLINICAL_TSV', 'CBIO_META'}:
+        from .cbioportal import read_clinical, read_meta
+        return read_clinical(source.bytes) if source_format == 'CBIO_CLINICAL_TSV' else read_meta(source.bytes)
     if source_format == "GEO_FAMILY_SOFT":
         return parse_geo_family_soft(source.bytes)
     if source_format in {"DELIMITED_CSV", "DELIMITED_TSV"}:
@@ -102,6 +105,21 @@ def _parse_source(source: SourceObject, object_map: dict[str, Any]) -> Any:
                                    orientation=object_map.get("orientation", "samples_as_columns"))
     if source_format == "XLSX_NUMERIC":
         return read_numeric_xlsx(source.bytes)[0]
+    if source_format == "XLSX_CLINICAL":
+        from .xlsx import read_clinical_xlsx
+        return read_clinical_xlsx(source.bytes, header_row=object_map['header_row'])
+    if source_format == 'XLSX_NAMED_STREAM':
+        import io
+        from .xlsx import iter_xlsx_sheet
+        rows = iter_xlsx_sheet(io.BytesIO(source.bytes), object_map['sheet_name'])
+        for _ in range(object_map['header_row'] - 1):
+            next(rows)
+        header = next(rows)
+        if object_map['table_kind'] == 'matrix':
+            return tuple(header)
+        if len(set(header)) != len(header) or not all(header):
+            raise IngestError('SOURCE_OBJECT_PARSE_INVALID')
+        return [dict(zip(header, row + [''] * (len(header) - len(row)))) for row in rows]
     if source_format in {"TEXT_UTF8", "SCRIPT_R"}:
         if len(source.bytes) > 8 * 1024 * 1024:
             raise IngestError("SOURCE_OBJECT_PARSE_INVALID")
@@ -309,6 +327,8 @@ def _geo_records(tables: dict[str, list[dict[str, Any]]], soft: list[dict[str, A
             else:
                 agent = treatment['agent_value']
             treatment_class = treatment['pharmacological_class']
+            if isinstance(treatment.get('agent_class_map'), dict):
+                treatment_class = treatment['agent_class_map'].get(agent, 'UNKNOWN')
             if treatment.get('agent_interpretation') == 'CLASS':
                 treatment_class, agent = agent, 'UNKNOWN'
             episode_id, exposure_id = uid + ':index', uid + ':exposure'
@@ -458,6 +478,10 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
             source_record["notes"] = "Harmonized resource; cross-check only."
         tables["source_record"].append(source_record)
 
+    if 'cbio_ingest' in field_map:
+        from .cbioportal import build_records
+        build_records(tables, parsed, sources, field_map, items)
+        return tables
     soft = parsed.get("geo_family_soft")
     if not isinstance(soft, list):
         return tables
@@ -699,6 +723,8 @@ def build_canonical_records(parsed: dict[str, Any], sources: dict[str, SourceObj
 
 def _known_items(field_map: dict[str, Any], items: list[dict[str, Any]], counts: dict[str, int],
                  parsed: dict[str, Any]) -> None:
+    for review in field_map.get('decision_config', {}).get('review_items', {}).get('items', []):
+        _item(items, review['category'], [{'role':review['role'], 'field':review['question']}])
     code = parsed.get("author_analysis_code")
     if isinstance(code, str):
         if re.search(r"(?i)PCA.{0,80}outlier|outlier.{0,80}PCA", code):
@@ -749,6 +775,8 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
         raise IngestError(str(error)) from None
     if field_map.get("status") == "PARKED":
         raise IngestError("Cohort is PARKED: " + field_map["parked_reason"])
+    if field_map.get('decision_config', {}).get('family_protection', {}).get('status') == 'UNTOUCHED_FINAL_TEST':
+        raise IngestError('UNTOUCHED_FINAL_TEST_PROTECTED: source joins require authorized final evaluation')
     if branch != field_map["branch_id"]:
         raise IngestError("COHORT_BRANCH_MISMATCH")
     items: list[dict[str, Any]] = []
@@ -780,7 +808,13 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
                   "locator": source.locator}])
     records = build_canonical_records(parsed, sources, field_map, items)
     geo_samples = parsed.get("geo_family_soft")
-    if "geo_ingest" in field_map:
+    if "cbio_ingest" in field_map:
+        specimens = records['specimen_registry']
+        counts = {'geo_samples':len(specimens), 'pre_samples':sum(s['baseline_candidate_status']=='YES' for s in specimens),
+                  'on_samples':sum(s.get('timing_raw_text') in field_map['cbio_ingest'].get('nonbaseline_values', []) for s in specimens),
+                  'unique_patients':len(records['patient_registry']),
+                  'baseline_samples_linked_to_patient':sum(s['baseline_candidate_status']=='YES' for s in specimens)}
+    elif "geo_ingest" in field_map:
         specimens = records["specimen_registry"]
         counts = {
             "geo_samples": len(geo_samples) if isinstance(geo_samples, list) else 0,
@@ -826,6 +860,15 @@ def run_ingest(cohort: str, branch: str, store_path: Path, output: Path, *,
         "schema_hashes": SchemaStore().hashes,
         "dependencies": {},
     }
+    cross = field_map.get('cbio_ingest', {}).get('response_crosscheck')
+    if isinstance(cross, dict):
+        source_rows, other_rows = parsed.get(cross['source_role']), parsed.get(cross['author_role'])
+        if isinstance(source_rows, list) and isinstance(other_rows, list):
+            from .cbioportal import response_corroboration
+            packet['config']['cbio_response_corroboration'] = {
+                'source_role':cross['source_role'], 'other_role':cross['author_role'],
+                'rows':response_corroboration(source_rows, other_rows, field_map['cbio_ingest']['patient_id'],
+                                              cross['source_field'], cross['author_field'])}
     stages = (build_registries, map_endpoints, validate_timing, validate_assays)
     stage_statuses: dict[str, str] = {}
     for stage in stages:

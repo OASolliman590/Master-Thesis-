@@ -1,0 +1,21 @@
+{
+    "schema_version": 1,
+    "cohort": "braun2020",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "static-content.springer.com"
+    ],
+    "objects": [
+        {
+            "id": "author_supplementary_tables",
+            "url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41591-020-0839-y/MediaObjects/41591_2020_839_MOESM2_ESM.xlsx",
+            "version": "Springer ESM, Last-Modified 2023-11-14",
+            "expected_size": 125569016,
+            "expected_sha256": null,
+            "max_bytes": 140000000,
+            "host": "static-content.springer.com"
+        }
+    ]
+}

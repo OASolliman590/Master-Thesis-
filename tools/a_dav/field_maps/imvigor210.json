@@ -1,0 +1,291 @@
+{
+  "cohort": "imvigor210",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "urothelial carcinoma",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "blca_iatlas_imvigor210_2017_meta_study": {
+      "sha256": "f9d86e4c64755d33b826ed016fa16444dbe5744f28f6cb1beb6e5c875afa5748",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/meta_study.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f9d86e4c64755d33b826ed016fa16444dbe5744f28f6cb1beb6e5c875afa5748",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "blca_iatlas_imvigor210_2017_data_clinical_patient": {
+      "sha256": "293b80f4d0e8fe5ceeb32098ea8f6542aa26fbb2b6171f7aefecc8bbd0f3c14a",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_clinical_patient.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:293b80f4d0e8fe5ceeb32098ea8f6542aa26fbb2b6171f7aefecc8bbd0f3c14a",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "blca_iatlas_imvigor210_2017_data_clinical_sample": {
+      "sha256": "e21ff3efb00ecf583a90a804551cf0122aff0dc5819d9d8f6af6c2d9af064eb1",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_clinical_sample.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:e21ff3efb00ecf583a90a804551cf0122aff0dc5819d9d8f6af6c2d9af064eb1",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm": {
+      "sha256": "704d5c0821767c076be973c76c9c73fc75fa6fb6f18d23a37add93b09612419b",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/meta_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:704d5c0821767c076be973c76c9c73fc75fa6fb6f18d23a37add93b09612419b",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm": {
+      "sha256": "e13445ffecb9f77b97c3ee0c50b8a2c591e79b0daef55ebbd009bdde6905228c",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/blca_iatlas_imvigor210_2017/data_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:e13445ffecb9f77b97c3ee0c50b8a2c591e79b0daef55ebbd009bdde6905228c",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    }
+  },
+  "cbio_ingest": {
+    "patient_role": "blca_iatlas_imvigor210_2017_data_clinical_patient",
+    "sample_role": "blca_iatlas_imvigor210_2017_data_clinical_sample",
+    "matrix_role": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm",
+    "patient_id": "PATIENT_ID",
+    "sample_id": "SAMPLE_ID",
+    "visit_field": "SAMPLE_TREATMENT",
+    "baseline_values": [
+      "Pre"
+    ],
+    "nonbaseline_values": [
+      "On"
+    ],
+    "response_field": "RESPONSE",
+    "response_map": {
+      "Complete Response": "CR",
+      "Partial Response": "PR",
+      "Stable Disease": "SD",
+      "Progressive Disease": "PD",
+      "NE": "NE",
+      "NA": "UNKNOWN"
+    },
+    "drug_field": "ICI_RX",
+    "drug_class_map": {
+      "Atezolizumab": "ANTI_PD_L1",
+      "Pembrolizumab": "ANTI_PD_1",
+      "Nivolumab": "ANTI_PD_1",
+      "Pembro": "ANTI_PD_1",
+      "Ipilimumab Pembrolizumab": "ANTI_PD_1_PLUS_ANTI_CTLA_4",
+      "Ipilimumab Nivolumab": "ANTI_PD_1_PLUS_ANTI_CTLA_4"
+    },
+    "treatment": {
+      "regimen_id": "REGIMEN:imvigor210:INDEX"
+    }
+  },
+  "measurement_representations": {
+    "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm": {
+      "unit": "TPM",
+      "transform": "UNKNOWN",
+      "genome_build": "hg38",
+      "annotation": "Hugo_Symbol",
+      "feature_identifier_system": "GENE_SYMBOL",
+      "platform": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "normalization": "UNKNOWN",
+      "feature_scope": "UNKNOWN",
+      "evidence": {
+        "unit": "blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm:profile_name/profile_description",
+        "transform": "UNKNOWN: profile does not specify transformation",
+        "genome_build": "blca_iatlas_imvigor210_2017_meta_study:reference_genome",
+        "annotation": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm:Hugo_Symbol column header",
+        "feature_identifier_system": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm:Hugo_Symbol column header",
+        "platform": "UNKNOWN: profile and study metadata do not state instrument",
+        "normalization": "UNKNOWN: profile does not specify normalization",
+        "feature_scope": "UNKNOWN: profile does not establish completeness"
+      }
+    },
+    "conversion": "PROHIBITED"
+  },
+  "decision_config": {
+    "review_items": {
+      "items": [
+        {
+          "category": "SPLIT_ROLE_REVIEW_REQUIRED",
+          "role": "blca_iatlas_imvigor210_2017_meta_study",
+          "question": "Choose the permanent split role before any outcome analysis; protect the whole family for final test."
+        },
+        {
+          "category": "EXPOSURE_REVIEW_REQUIRED",
+          "role": "blca_iatlas_imvigor210_2017_meta_study",
+          "question": "Review the full prior-use exposure history and analysis lineage."
+        },
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "blca_iatlas_imvigor210_2017_data_clinical_sample",
+          "question": "Review patient and sample linkage from source identifiers."
+        },
+        {
+          "category": "REPRESENTATION_FACTS_UNRESOLVED",
+          "role": "blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm",
+          "question": "Review missing platform, transform, annotation and feature scope evidence."
+        },
+        {
+          "category": "AUTHOR_CROSSCHECK_UNAVAILABLE",
+          "role": "blca_iatlas_imvigor210_2017_meta_study",
+          "question": "Author package is available only via plain HTTP and has not been fetched or checked."
+        },
+        {
+          "category": "FEATURE_IDENTIFIER_REVIEW_REQUIRED",
+          "role": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm",
+          "question": "A single deposited feature has a slash-delimited composite name; review it without renaming or remapping."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "blca_iatlas_imvigor210_2017_data_clinical_sample",
+          "question": "Review missing prior ICI history and whether the chosen split role permits UNKNOWN."
+        }
+      ]
+    },
+    "preview": {
+      "required_roles": [
+        "blca_iatlas_imvigor210_2017_data_clinical_patient",
+        "blca_iatlas_imvigor210_2017_data_clinical_sample",
+        "blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm",
+        "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm"
+      ],
+      "split_policy": "UNTOUCHED_FINAL_TEST"
+    },
+    "representation_review": {
+      "primary": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm",
+      "reason": "Single pinned representation.",
+      "sensitivity": "UNKNOWN"
+    },
+    "overlap_review": {
+      "status": "UNKNOWN",
+      "no_independence_certified": true
+    },
+    "family_protection": {
+      "status": "UNTOUCHED_FINAL_TEST",
+      "scope": "WHOLE_STUDY_FAMILY_ALL_PAPERS",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    },
+    "prior_ici": {
+      "value": "NONE",
+      "scope": "STUDY_LEVEL",
+      "evidence": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#4-imvigor210-prior-ici-eligibility"
+    },
+    "exposure": {
+      "state": "METADATA_ONLY",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    }
+  },
+  "v3": {
+    "primary_representation": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm",
+    "sample_inventory_source_role": "blca_iatlas_imvigor210_2017_data_clinical_sample",
+    "expected_counts": {
+      "full_header_columns": 347,
+      "baseline_selected": 347,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm"
+    },
+    "documentation": {
+      "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm": {
+        "status": "UNKNOWN",
+        "evidence_pointer": "blca_iatlas_imvigor210_2017_meta_mrna_seq_tpm:profile_description"
+      }
+    },
+    "delimiters": {
+      "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm": "\t"
+    },
+    "compressed": {
+      "blca_iatlas_imvigor210_2017_data_mrna_seq_tpm": false
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "The user selected UNTOUCHED_FINAL_TEST for the whole study family. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "User-declared prior exposure is METADATA_ONLY. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the exact PATIENT_ID and SAMPLE_ID joins against the pinned clinical tables.",
+        "evidence_pointers": []
+      },
+      "REPRESENTATION_FACTS_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Obtain missing processing, instrument and feature-universe facts before passing V3.",
+        "evidence_pointers": []
+      },
+      "AUTHOR_CROSSCHECK_UNAVAILABLE": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "The author package is staged unopened; its data are reserved for authorized final evaluation. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "FEATURE_IDENTIFIER_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the deposited composite feature THRA1/BTR; do not rename or remap it.",
+        "evidence_pointers": []
+      },
+      "ORR_RESPONSE_UNKNOWN": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Retain unknown labels as UNKNOWN, not as NE or non-response, until source evidence resolves them.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "NONE at study level by the trial eligibility criterion; do not manufacture per-patient assertions. docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#4-imvigor210-prior-ici-eligibility",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

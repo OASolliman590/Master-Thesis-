@@ -146,3 +146,19 @@ State the claim as "transcriptomic predictor → covariate equation", since "exp
 3. **Prostate transfer is novel.** Prior work explains cold prostate cancer gene by gene (HLA-I methylation 36050516, NSD2) or with PRAD-only signatures scored by TIDE, not by transferring real ICI responder programmes.
 4. **The equation claim is partly done.** LORIS (2024) is already an explicit six-feature ICI equation, and omics → TGI-covariate pipelines exist (33792207). The new part is a transcriptomic or epigenetic predictor built as a PK/PD covariate, plus symbolic regression.
 5. **Caveats:** PubMed only, no preprints. Items marked UNVERIFIED (Bareche's endpoint handling, Thorsson's PRAD and methylation details, AMADEUS prostate inclusion) should be checked in full text before writing the thesis claims.
+
+## Addendum, 30 Oct 2026: Lin et al., Cancer Cell 2026 (closest new neighbour for Paper A)
+Lin Z, …, Becker JC, Aran D. "Tumor immune microenvironment remodeling predicts response to checkpoint inhibitor therapy." Cancer Cell 44(9):1847–1861.e6, 2026. PMID 42679812, doi:10.1016/j.ccell.2026.08.007. Read from the PubMed abstract only; the full text is not yet read.
+- **What it did:**
+  - built a longitudinal scRNA-seq atlas: 441 samples, 241 patients, 10 cancer types;
+  - defined 77 immune and stromal subtypes and 4 conserved TIME subtypes;
+  - found that about 40% of tumours shift state on therapy, and the transition predicts outcome better than the baseline state;
+  - derived a **59-gene signature that predicted response and survival in 1,383 baseline tumours across 19 independent bulk cohorts**.
+- **Effect on the claims:**
+  - **Claim 1/A-P2 (a bulk predictor across cohorts):** this is now a strong 2026 neighbour. Our distinct parts remain endpoint sensitivity (the same estimate under ORR versus clinical benefit), the locked-panel structure, and the protected untouched final test.
+  - **A.1 (on-treatment change):** directly supported; the transition matters more than baseline.
+  - **The chain (Claim 2) and prostate (Claim 3):** not addressed by this paper; still novel as a whole.
+- **Action items:**
+  - add the 59-gene signature to the comparator registry if its genes and weights are published;
+  - record which of its 19 validation cohorts overlap ours. If IMvigor210 is among them, it is PREVIOUSLY_INSPECTED for that comparator: still fair as a test for our learner, but the comparator's IMvigor210 performance is not unbiased;
+  - check whether the atlas is public, as a possible SC-1 reference.

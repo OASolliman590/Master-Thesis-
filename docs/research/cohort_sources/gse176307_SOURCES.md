@@ -1,0 +1,3 @@
+# GSE176307 source notes
+
+The pinned GEO family SOFT and author-submitted log-transformed, normalized expression object are listed in the field map and described in [the source review](../GSE176307_SOURCES.md). The matrix has 89 sample rows and 16,383 gene columns. The GEO family has 90 samples representing 89 title-derived patients; two sample records make the row-to-title binding ambiguous. The cohort-level pretreatment statement does not establish each individual biopsy time. Duplicate profile selection and the binding rule remain reviewer questions. Prior ICI is UNKNOWN. DEVELOPMENT and METADATA_ONLY are proposed, unsigned.

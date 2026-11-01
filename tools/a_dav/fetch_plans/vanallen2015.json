@@ -1,0 +1,58 @@
+{
+    "schema_version": 1,
+    "cohort": "vanallen2015",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "raw.githubusercontent.com",
+        "media.githubusercontent.com"
+    ],
+    "objects": [
+        {
+            "id": "cbioportal_skcm_dfci_2015_meta_study",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/meta_study.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:5231297538e4c2074b5d2ada2e6ddbff24d8ab393d047d782010dbfe94531dff",
+            "expected_size": 316,
+            "expected_sha256": "5231297538e4c2074b5d2ada2e6ddbff24d8ab393d047d782010dbfe94531dff",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_skcm_dfci_2015_data_clinical_patient",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_clinical_patient.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:c684b93833c3e1983fa94beb77eb6b9c033571c8c560ed83801806ae3e278ce0",
+            "expected_size": 10785,
+            "expected_sha256": "c684b93833c3e1983fa94beb77eb6b9c033571c8c560ed83801806ae3e278ce0",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_skcm_dfci_2015_data_clinical_sample",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_clinical_sample.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:2c37d96c0daf6c9660aaea928ae7a129072e80fec048b90a6ac2aefd50399f9d",
+            "expected_size": 30194,
+            "expected_sha256": "2c37d96c0daf6c9660aaea928ae7a129072e80fec048b90a6ac2aefd50399f9d",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_skcm_dfci_2015_meta_mrna_seq_rpkm",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/meta_mrna_seq_rpkm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:caba3cdcdbcd3289cb24c0076a07a113027469eb65270472ecef3ee9609a1939",
+            "expected_size": 294,
+            "expected_sha256": "caba3cdcdbcd3289cb24c0076a07a113027469eb65270472ecef3ee9609a1939",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_skcm_dfci_2015_data_mrna_seq_rpkm",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/skcm_dfci_2015/data_mrna_seq_rpkm.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:4c7e8d686b8f81eb32115b8010b2ae5b87091ea24a1965e162e2916d855c1835",
+            "expected_size": 9196286,
+            "expected_sha256": "4c7e8d686b8f81eb32115b8010b2ae5b87091ea24a1965e162e2916d855c1835",
+            "max_bytes": 10115914,
+            "host": "media.githubusercontent.com"
+        }
+    ]
+}

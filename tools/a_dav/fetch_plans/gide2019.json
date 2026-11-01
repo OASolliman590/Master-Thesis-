@@ -1,0 +1,58 @@
+{
+    "schema_version": 1,
+    "cohort": "gide2019",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 40,
+    "max_object_bytes": 200000000,
+    "allowed_hosts": [
+        "raw.githubusercontent.com",
+        "media.githubusercontent.com"
+    ],
+    "objects": [
+        {
+            "id": "cbioportal_mel_iatlas_gide_2019_meta_study",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/meta_study.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f90ef6d4b91762ebd12d7e793db72e2dbd344132552474632d680a878a8de8ca",
+            "expected_size": 612,
+            "expected_sha256": "f90ef6d4b91762ebd12d7e793db72e2dbd344132552474632d680a878a8de8ca",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_gide_2019_data_clinical_patient",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_clinical_patient.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:d66be75803000e29be7d57674ccdba29de3d7cf264d6cbb62e0cf63c658fa437",
+            "expected_size": 8731,
+            "expected_sha256": "d66be75803000e29be7d57674ccdba29de3d7cf264d6cbb62e0cf63c658fa437",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_gide_2019_data_clinical_sample",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_clinical_sample.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ebdf3aa1067c7aac73d17167bed34d246c243d177f7e95671fb34c988c3b5e62",
+            "expected_size": 11739,
+            "expected_sha256": "ebdf3aa1067c7aac73d17167bed34d246c243d177f7e95671fb34c988c3b5e62",
+            "max_bytes": 1000000,
+            "host": "media.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_gide_2019_meta_mrna_seq_expression",
+            "url": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/meta_mrna_seq_expression.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:2488f76b26dd7b4bc27be671bc7f49fe9104b3c22a56082b71a6cb2b412c090a",
+            "expected_size": 361,
+            "expected_sha256": "2488f76b26dd7b4bc27be671bc7f49fe9104b3c22a56082b71a6cb2b412c090a",
+            "max_bytes": 1000000,
+            "host": "raw.githubusercontent.com"
+        },
+        {
+            "id": "cbioportal_mel_iatlas_gide_2019_data_mrna_seq_expression",
+            "url": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_gide_2019/data_mrna_seq_expression.txt",
+            "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:a2e5e119409f76120510f82954f605c02d64605ef8e7bb9b17fb49bd3683912b",
+            "expected_size": 42791702,
+            "expected_sha256": "a2e5e119409f76120510f82954f605c02d64605ef8e7bb9b17fb49bd3683912b",
+            "max_bytes": 47070872,
+            "host": "media.githubusercontent.com"
+        }
+    ]
+}

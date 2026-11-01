@@ -17,6 +17,158 @@ from .release import validate_split
 from .worksheet import build_worksheet, read_worksheet, validate_signed_worksheet
 
 
+def retain_endpoint_source_priority(config: dict[str, Any], outcomes: list[dict[str, Any]]) -> None:
+    retained = {row['outcome_id'] for row in outcomes}
+    config['source_priority'] = [value for value in config.get('source_priority', []) if value in retained]
+
+
+def verify_signed_cbio_identities(packet: dict[str, Any], field_map: dict[str, Any],
+                                  worksheet: dict[str, Any], store_root: Path) -> dict[str, Any]:
+    """Verify only signed V4 patient/sample joins reproduced from pinned clinical objects."""
+    from .cbioportal import read_clinical
+    from .source_objects import ContentAddressedStore
+    if worksheet.get('review_status') != 'SIGNED':
+        raise DavError('WORKSHEET_UNSIGNED', blocked=True)
+    signed = validate_signed_worksheet(packet, worksheet)
+    result = copy.deepcopy(packet)
+    cfg = field_map.get('cbio_ingest', {})
+    if signed['decisions'].get('V4') != 'PASS' or not cfg or cfg.get('patient_mapping_unverified'):
+        return result
+    store = ContentAddressedStore(store_root)
+    patients = read_clinical(store.read(field_map['source_objects'][cfg['patient_role']]['sha256']).bytes)
+    samples = read_clinical(store.read(field_map['source_objects'][cfg['sample_role']]['sha256']).bytes)
+    patient_key, sample_key = cfg['patient_id'], cfg['sample_id']
+    for patient in result['records'].get('patient_registry', []):
+        pid = patient.get('source_patient_id')
+        matching_patients = [row for row in patients if row.get(patient_key) == pid]
+        specimens = [row for row in result['records'].get('specimen_registry', []) if row.get('patient_uid') == patient.get('patient_uid')]
+        if not pid or len(matching_patients) != 1 or not specimens:
+            continue
+        supported = True
+        for specimen in specimens:
+            aliases = specimen.get('raw_sample_aliases', [])
+            matches = [row for row in samples if row.get(sample_key) in aliases]
+            if len(matches) != 1 or matches[0].get(patient_key) != pid:
+                supported = False
+                break
+        if supported:
+            patient['patient_identity_confidence'] = 'VERIFIED'
+            for specimen in specimens:
+                specimen.setdefault('tissue_type', 'UNKNOWN')
+            patient.setdefault('source_locators', []).extend([
+                {'kind':'worksheet','value':'worksheet:'+worksheet['worksheet_id']+'#V4'},
+                {'kind':'field_map','value':f"{cfg['patient_role']}:{patient_key}; {cfg['sample_role']}:{sample_key}/{patient_key}"}])
+    return result
+
+
+def verify_signed_cbio_outcome_bindings(packet: dict[str, Any], field_map: dict[str, Any],
+                                        worksheet: dict[str, Any]) -> dict[str, Any]:
+    """Apply the same signed V5 episode rule to declared cBioPortal source roles."""
+    cfg = field_map.get('cbio_ingest', {})
+    treatment = cfg.get('treatment', {})
+    locator = field_map.get('source_objects', {}).get(cfg.get('patient_role'), {}).get('locator')
+    if not isinstance(treatment, dict) or not treatment.get('regimen_id') or not locator:
+        return copy.deepcopy(packet)
+    timing_role = cfg.get('patient_role') if cfg.get('visit_source') == 'patient' else cfg.get('sample_role')
+    sample_source = field_map.get('source_objects', {}).get(timing_role, {})
+    virtual = {**field_map, 'geo_ingest': {'baseline_values': cfg.get('baseline_values', [])},
+               'treatment_proposal': {'regimen_id': treatment['regimen_id'],
+                   'index_event': 'START_OF_INDEX_TREATMENT', 'source_locator': locator},
+               'source_objects': {**field_map.get('source_objects', {}), 'geo_family_soft': sample_source}}
+    return verify_signed_geo_outcome_bindings(packet, virtual, worksheet)
+
+
+def materialize_signed_cbio_development(packet: dict[str, Any], field_map: dict[str, Any],
+                                        worksheet: dict[str, Any]) -> dict[str, Any]:
+    """Apply signed development declarations without certifying independence."""
+    cfg = field_map.get('decision_config', {}); preview = cfg.get('preview', {})
+    exposure = cfg.get('exposure', cfg.get('exposure_policy', {})); prior = cfg.get('prior_ici_policy', {})
+    if (preview.get('split_policy') != 'DEVELOPMENT' or exposure.get('state') != 'METADATA_ONLY'
+            or not exposure.get('evidence') or prior.get('value') != 'UNKNOWN_ALLOWED_DEVELOPMENT'):
+        return copy.deepcopy(packet)
+    cbio = field_map.get('cbio_ingest', {})
+    declaration = {'prior_ici_policy':'UNKNOWN_ALLOWED_DEVELOPMENT','split_role':'DEVELOPMENT',
+        'exposure_state':'METADATA_ONLY','review_complete':True,'covered_subject_types':['STUDY_FAMILY','PATIENT_SET'],
+        'analysis_lineage_id':'CBIO:'+field_map['cohort']+':DEVELOPMENT', 'source_locator':exposure['evidence'],
+        'nonbaseline_specimens':'OUTSIDE_BRANCH',
+        'nonbaseline_visit_values': cbio.get('nonbaseline_values', []) + cbio.get('excluded_visit_values', [])}
+    cancer = field_map.get('cancer_type')
+    cancer_source = field_map.get('source_objects', {}).get(cfg.get('cancer_evidence', {}).get('source_role'), {}).get('locator')
+    if isinstance(cancer, str) and cancer and isinstance(cancer_source, str) and cancer_source:
+        declaration['cancer'] = cancer
+        declaration['cancer_source_locator'] = cancer_source
+    virtual = {**field_map, 'geo_ingest': {'endpoint_class':'TUMOUR_RESPONSE'},
+               'decision_config': {**cfg, 'development_policy': declaration}}
+    result = materialize_signed_geo_development_policy(packet, virtual, worksheet)
+    if preview.get('exclude_without_assay') and 'split' in result['config']:
+        records = result['records']
+        assayed = {a['specimen_uid'] for a in records.get('assay_registry', [])}
+        eligible = {s['patient_uid'] for s in records.get('specimen_registry', []) if s['specimen_uid'] in assayed}
+        records['patient_registry'] = [p for p in records.get('patient_registry', []) if p['patient_uid'] in eligible]
+        for table in ('specimen_registry','clinical_outcome','treatment_episode','treatment_exposure','episode_binding'):
+            records[table] = [row for row in records.get(table, []) if row.get('patient_uid') in eligible]
+        records['prior_exposure_record'] = [row for row in records.get('prior_exposure_record', [])
+            if row.get('subject_type') != 'PATIENT_SET' or row.get('subject_id') in eligible]
+        exposure_cfg = result['config']['exposure']
+        exposure_cfg['covered_subjects'] = [row for row in exposure_cfg['covered_subjects']
+            if row.get('subject_type') != 'PATIENT_SET' or row.get('subject_id') in eligible]
+    return result
+
+
+def materialize_signed_cbio_endpoints(packet: dict[str, Any], worksheet: dict[str, Any]) -> dict[str, Any]:
+    if worksheet.get('review_status') != 'SIGNED':
+        raise DavError('WORKSHEET_UNSIGNED', blocked=True)
+    signed = validate_signed_worksheet(packet, worksheet)
+    result = copy.deepcopy(packet)
+    if signed['decisions'].get('V5') != 'PASS':
+        return result
+    outcomes = result['records'].get('clinical_outcome', [])
+    mapping = result.get('config', {}).get('endpoints', {}).get('category_map', {})
+    for outcome in outcomes:
+        category = outcome.get('canonical_category'); raw = outcome.get('raw_endpoint_label')
+        if mapping.get(raw) != category or category not in {'CR','PR','SD','PD','NE','UNKNOWN','SOURCE_POSITIVE','SOURCE_NEGATIVE'}:
+            continue
+        outcome['evaluability'] = 'NOT_EVALUABLE' if category == 'NE' else 'UNKNOWN' if category == 'UNKNOWN' else 'EVALUABLE'
+        outcome['mapping_confidence'] = 'VERIFIED'
+        if outcome.get('discrepancy_status') == 'UNRESOLVED' and sum(
+                o.get('patient_uid') == outcome.get('patient_uid') and o.get('endpoint_class') == outcome.get('endpoint_class')
+                for o in outcomes) == 1:
+            outcome['discrepancy_status'] = 'RESOLVED'
+    return result
+
+
+def materialize_signed_cbio_overlap(packet: dict[str, Any], field_map: dict[str, Any],
+                                    worksheet: dict[str, Any]) -> dict[str, Any]:
+    signed = validate_signed_worksheet(packet, worksheet)
+    result = copy.deepcopy(packet)
+    cfg = field_map.get('decision_config', {}).get('overlap_review', {})
+    if (worksheet.get('review_status') == 'SIGNED' and signed['decisions'].get('V6') == 'PASS'
+            and cfg.get('status') == 'UNKNOWN' and cfg.get('no_independence_certified') is True
+            and cfg.get('evidence')):
+        targets = cfg.get('targets', [])
+        if not isinstance(targets, list) or not all(isinstance(target, str) and target for target in targets):
+            return result
+        edges = [{'target_node_type':'STUDY','target_node_id':target,'edge_type':'SUSPECTED_SAME_PATIENT',
+                  'certainty':'POSSIBLE','implication_for_independence':'INDEPENDENCE_BLOCKED',
+                  'evidence':'Possible overlap; independence not certified.'} for target in targets]
+        virtual = {**field_map, 'decision_config': {**field_map.get('decision_config', {}),
+                    'overlap_review': {'edges':edges,'source_locator':cfg['evidence']}}}
+        result = materialize_signed_geo_overlap(packet, virtual, worksheet)
+        result['config']['overlap'].update({'possible_overlap':'UNKNOWN','independence_certified':False})
+    return result
+
+
+def materialize_signed_cbio_admission(packet: dict[str, Any], field_map: dict[str, Any],
+                                      worksheet: dict[str, Any]) -> dict[str, Any]:
+    cfg = field_map.get('cbio_ingest', {})
+    source = field_map.get('source_objects', {}).get(cfg.get('patient_role'), {})
+    if not source.get('locator'):
+        return copy.deepcopy(packet)
+    virtual = {**field_map, 'geo_ingest': {'endpoint_class':'TUMOUR_RESPONSE'},
+               'source_objects': {**field_map.get('source_objects', {}), 'geo_family_soft': source}}
+    return materialize_signed_geo_admission_policy(packet, virtual, worksheet)
+
+
 def materialize_signed_geo_development_policy(packet: dict[str, Any], field_map: dict[str, Any],
                                               worksheet: dict[str, Any]) -> dict[str, Any]:
     """Apply the reviewed development-only exposure and branch scope declarations."""
@@ -78,7 +230,7 @@ def materialize_signed_geo_development_policy(packet: dict[str, Any], field_map:
             'endpoint_policy':{'required':True, 'endpoint_class':'OTHER' if endpoint == 'SOURCE_BINARY' else 'ORR',
                                'discrepancy_policy':'SEALED_PREFERRED_OUTCOME'}, 'build_utc':'AT_BUILD_TIME'}
         suitable = {m['source_object_id'] for m in config.get('assays', {}).get('matrices', [])
-                    if m.get('feature_scope') == 'COMPLETE' and m.get('lane') in {'COUNTS','CONTINUOUS','ARRAY'}}
+                    if m.get('feature_scope') in {'COMPLETE','COMPLETE_WITH_DOCUMENTED_EXCLUSIONS'} and m.get('lane') in {'COUNTS','CONTINUOUS','ARRAY'}}
         for assay in records.get('assay_registry', []):
             if assay.get('source_object_id') in suitable and 'BASELINE_DE' not in assay.get('branch_suitability', []):
                 assay.setdefault('branch_suitability', []).append('BASELINE_DE')
@@ -294,7 +446,7 @@ def verify_signed_geo_identities(packet: dict[str, Any], field_map: dict[str, An
 
 def materialize_configured_proposals(packet: dict[str, Any], field_map: dict[str, Any]) -> dict[str, Any]:
     declaration = field_map.get('proposal_generation', {})
-    if not declaration and 'geo_ingest' in field_map:
+    if not declaration and ('geo_ingest' in field_map or 'cbio_ingest' in field_map):
         return packet
     if not isinstance(declaration, dict):
         raise ValueError('PROPOSAL_DECLARATION_MISSING')
@@ -319,7 +471,7 @@ def certify_required_source_validation(packet: dict[str, Any], field_map: dict[s
     result = copy.deepcopy(packet)
     records = result.get("records", {})
     evidence = ingestion_validation or {}
-    if 'geo_ingest' in field_map:
+    if 'geo_ingest' in field_map or 'cbio_ingest' in field_map:
         roles = field_map.get('decision_config', {}).get('preview', {}).get('required_roles', [])
         patients = records.get('patient_registry', [])
         outcomes = records.get('clinical_outcome', [])
@@ -488,6 +640,13 @@ def run_fresh_signed_admission(cohort: str, branch: str, store_root: Path,
     """Re-ingest pinned objects, rebuild branch context, then stop on stale signatures."""
     if field_map.get("status") == "PARKED":
         raise ValueError("Cohort is PARKED: " + field_map["parked_reason"])
+    if field_map.get('decision_config', {}).get('family_protection', {}).get('status') == 'UNTOUCHED_FINAL_TEST':
+        raise DavError('UNTOUCHED_FINAL_TEST_PROTECTED', blocked=True)
+    if (field_map.get('decision_config', {}).get('representation_restrictions', {}).get('development_only')
+            and field_map.get('decision_config', {}).get('preview', {}).get('split_policy') != 'DEVELOPMENT'):
+        raise DavError('DEVELOPMENT_ONLY_REPRESENTATION', blocked=True)
+    if field_map.get('decision_config', {}).get('preview', {}).get('author_endpoint_join') == 'UNRESOLVED':
+        raise DavError('AUTHOR_ENDPOINT_JOIN_UNRESOLVED', blocked=True)
     store = schemas or SchemaStore()
     output = validate_output_path(output_dir)
     if output.exists():
@@ -495,7 +654,7 @@ def run_fresh_signed_admission(cohort: str, branch: str, store_root: Path,
     output.mkdir(parents=True, exist_ok=False)
     ingest_result = run_ingest(cohort, branch, store_root, output / "fresh-ingest")
     candidate = (build_baseline_packet(ingest_result["packet"], field_map=field_map)
-                 if "geo_ingest" in field_map else build_baseline_packet(ingest_result["packet"]))
+                 if "geo_ingest" in field_map or "cbio_ingest" in field_map else build_baseline_packet(ingest_result["packet"]))
     try:
         receipt = json.loads(v3_receipt_path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, json.JSONDecodeError):
@@ -530,13 +689,28 @@ def run_fresh_provisional(cohort: str, branch: str, store_root: Path, field_map:
     from .provisional import run_provisional
     if field_map.get("status") == "PARKED":
         raise ValueError("Cohort is PARKED: " + field_map["parked_reason"])
+    if field_map.get('decision_config', {}).get('family_protection', {}).get('status') == 'UNTOUCHED_FINAL_TEST':
+        raise DavError('UNTOUCHED_FINAL_TEST_PROTECTED', blocked=True)
     output = validate_output_path(output_dir)
     if output.exists():
         raise DavError("OUTPUT_ALREADY_EXISTS")
     output.mkdir(parents=True)
     ingested = run_ingest(cohort, branch, store_root, output / "fresh-ingest")
+    if 'cbio_ingest' in field_map or 'geo_ingest' in field_map:
+        from .provisional import add_v3_blocker_item, add_v3_exclusion_item, cbio_preview_blockers
+        receipt = json.loads(v3_receipt_path.read_text(encoding='utf-8'))
+        ingested['packet'] = add_v3_exclusion_item(ingested['packet'], receipt)
+        ingested['worksheet'] = build_worksheet(ingested['packet'])
+        reasons = cbio_preview_blockers(field_map, receipt)
+        if reasons:
+            ingested['packet'] = add_v3_blocker_item(ingested['packet'], receipt)
+            ingested['worksheet'] = build_worksheet(ingested['packet'])
+            result = {'status':'BLOCKED_UNKNOWN', 'releasable':False, 'reasons':reasons}
+            _write_json(output / 'PROVISIONAL.json', result)
+            _write_json(output / 'reviewer_worksheet.unsigned.json', ingested['worksheet'])
+            return result
     packet = (build_baseline_packet(ingested["packet"], field_map=field_map)
-              if "geo_ingest" in field_map else build_baseline_packet(ingested["packet"]))
+              if "geo_ingest" in field_map or "cbio_ingest" in field_map else build_baseline_packet(ingested["packet"]))
     receipt = json.loads(v3_receipt_path.read_text(encoding="utf-8"))
     packet = materialize_primary_assay_policy(packet, field_map, receipt, store_root, provisional=True)
     packet = materialize_configured_proposals(packet, field_map)
@@ -553,15 +727,66 @@ def run_signed_admission(packet: dict[str, Any], field_map: dict[str, Any],
     """Validate the signature, materialize declared proposals, and preserve live receipts."""
     if field_map.get("status") == "PARKED":
         raise ValueError("Cohort is PARKED: " + field_map["parked_reason"])
+    if field_map.get('decision_config', {}).get('family_protection', {}).get('status') == 'UNTOUCHED_FINAL_TEST':
+        raise DavError('UNTOUCHED_FINAL_TEST_PROTECTED', blocked=True)
+    if field_map.get('decision_config', {}).get('representation_restrictions', {}).get('development_only'):
+        declared = field_map.get('decision_config', {}).get('preview', {}).get('split_policy')
+        packet_role = packet.get('config', {}).get('split', {}).get('policy', {}).get('permanent_role')
+        if declared != 'DEVELOPMENT' or packet_role not in (None, 'DEVELOPMENT'):
+            raise DavError('DEVELOPMENT_ONLY_REPRESENTATION', blocked=True)
+    if field_map.get('decision_config', {}).get('preview', {}).get('author_endpoint_join') == 'UNRESOLVED':
+        raise DavError('AUTHOR_ENDPOINT_JOIN_UNRESOLVED', blocked=True)
     store = schemas or SchemaStore()
     ensure_field_map_matches(packet, field_map)
     validate_signed_worksheet(packet, worksheet)
     signature = validate_signed_worksheet(packet, worksheet)
     declaration = field_map.get("proposal_generation", {})
-    current = (packet if not declaration and 'geo_ingest' in field_map else
+    current = (packet if not declaration and ('geo_ingest' in field_map or 'cbio_ingest' in field_map) else
                materialize_proposals(packet, declaration, reviewer_worksheet=worksheet, schemas=store))
     decisions_by_gate = {item["gate"]: signature["decisions"].get(item["item_id"])
                          for item in worksheet.get("items", []) if item.get("kind") == "gate"}
+    if 'cbio_ingest' in field_map and store_root is not None:
+        current = verify_signed_cbio_identities(packet, field_map, worksheet, store_root)
+        bound = verify_signed_cbio_outcome_bindings(packet, field_map, worksheet)
+        for name in ('episode_binding', 'treatment_episode', 'treatment_exposure'):
+            current['records'][name] = bound['records'].get(name, [])
+        if 'timing' in bound['config']:
+            current['config']['timing'] = bound['config']['timing']
+        endpoints = materialize_signed_cbio_endpoints(packet, worksheet)
+        current['records']['clinical_outcome'] = endpoints['records'].get('clinical_outcome', [])
+        overlap = materialize_signed_cbio_overlap(packet, field_map, worksheet)
+        if 'overlap' in overlap['config']:
+            current['config']['overlap'] = overlap['config']['overlap']
+            current['records']['overlap_edge'] = overlap['records'].get('overlap_edge', [])
+        admission_policy = materialize_signed_cbio_admission(packet, field_map, worksheet)
+        current['config']['admission'] = admission_policy['config'].get('admission', {})
+        development = materialize_signed_cbio_development(packet, field_map, worksheet)
+        if 'split' in development['config']:
+            current['records']['prior_exposure_record'] = development['records'].get('prior_exposure_record', [])
+            for name in ('exposure', 'split', 'baseline'):
+                current['config'][name] = development['config'][name]
+            current['config']['split']['required_source_ids'] = current['config']['admission'].get('required_source_object_ids', [])
+            current['config'].setdefault('timing', {})['prior_ici_policy'] = development['config'].get('timing', {}).get('prior_ici_policy')
+            retained = {row['specimen_uid'] for row in development['records'].get('specimen_registry', [])}
+            eligible_patients = {row['patient_uid'] for row in development['records'].get('patient_registry', [])}
+            current['records']['patient_registry'] = [row for row in current['records'].get('patient_registry', []) if row['patient_uid'] in eligible_patients]
+            declared_patients = {row['patient_uid']:row for row in development['records'].get('patient_registry', [])}
+            for patient in current['records']['patient_registry']:
+                declared_patient = declared_patients.get(patient['patient_uid'], {})
+                if declared_patient.get('cancer') and not patient.get('cancer'):
+                    patient['cancer'] = declared_patient['cancer']
+                    patient['source_locators'] = declared_patient.get('source_locators', patient.get('source_locators', [])) + [
+                        loc for loc in patient.get('source_locators', []) if loc.get('kind') in {'worksheet','field_map'}]
+            for name in ('clinical_outcome','treatment_episode','treatment_exposure','episode_binding'):
+                current['records'][name] = [row for row in current['records'].get(name, []) if row.get('patient_uid') in eligible_patients]
+            retain_endpoint_source_priority(current['config']['endpoints'], current['records']['clinical_outcome'])
+            timing_config = current['config'].get('timing', {})
+            retained_episodes = {row['treatment_episode_id'] for row in current['records'].get('treatment_episode', [])}
+            timing_config['episode_order'] = [value for value in timing_config.get('episode_order', []) if value in retained_episodes]
+            current['records']['specimen_registry'] = [row for row in current['records'].get('specimen_registry', []) if row['specimen_uid'] in retained]
+            current['records']['assay_registry'] = development['records'].get('assay_registry', [])
+            current['records']['episode_binding'] = [b for b in current['records'].get('episode_binding', []) if b['subject_type'] != 'SPECIMEN' or b['subject_id'] in retained]
+            current['config']['assays'] = development['config'].get('assays', {})
     if not declaration and 'geo_ingest' in field_map and store_root is not None:
         current = verify_signed_geo_identities(packet, field_map, worksheet, store_root)
         bound = verify_signed_geo_outcome_bindings(packet, field_map, worksheet)
@@ -608,7 +833,7 @@ def run_signed_admission(packet: dict[str, Any], field_map: dict[str, Any],
     current = certify_required_source_validation(current, field_map, decisions_by_gate,
                                                  ingestion_validation)
     chain_options: dict[str, Any] = {'reviewer_worksheet': worksheet, 'worksheet_context_packet': packet, 'schemas': store}
-    if not declaration and 'geo_ingest' in field_map:
+    if not declaration and ('geo_ingest' in field_map or 'cbio_ingest' in field_map):
         chain_options['collect_blockers'] = True
     result = run_admission_chain(current, declaration, **chain_options)
     statuses = result["stage_statuses"]

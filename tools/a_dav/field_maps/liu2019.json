@@ -1,0 +1,405 @@
+{
+  "cohort": "liu2019",
+  "branch_id": "A_BASELINE_BIO",
+  "cancer_type": "melanoma",
+  "study_class": "CLINICAL_ICI",
+  "source_objects": {
+    "mel_iatlas_liu_2019_meta_study": {
+      "sha256": "1dc403307920ef96de99bf2544cffc138e084d9e969e4c66a2f7e0216920c339",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/meta_study.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:1dc403307920ef96de99bf2544cffc138e084d9e969e4c66a2f7e0216920c339",
+      "format": "CBIO_META",
+      "role": "harmonized_cross_check"
+    },
+    "mel_iatlas_liu_2019_data_clinical_patient": {
+      "sha256": "ef4a7d9d14d78ccbbb75bbb0f17161388921122ccc6729acec47769c7bb60f5b",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_clinical_patient.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ef4a7d9d14d78ccbbb75bbb0f17161388921122ccc6729acec47769c7bb60f5b",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "harmonized_cross_check"
+    },
+    "mel_iatlas_liu_2019_data_clinical_sample": {
+      "sha256": "f6ece7f92fed7cc62aa080bb509e78da8b76660219c25d21ecb0db208955f945",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_clinical_sample.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f6ece7f92fed7cc62aa080bb509e78da8b76660219c25d21ecb0db208955f945",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "harmonized_cross_check"
+    },
+    "mel_iatlas_liu_2019_meta_mrna_seq_tpm": {
+      "sha256": "f830c1b9abf8891522f41b1b3bc27e3d993c8e9df0f9b9c2742d35ab844e614e",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/meta_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f830c1b9abf8891522f41b1b3bc27e3d993c8e9df0f9b9c2742d35ab844e614e",
+      "format": "CBIO_META",
+      "role": "harmonized_cross_check"
+    },
+    "mel_iatlas_liu_2019_data_mrna_seq_tpm": {
+      "sha256": "ec81f1658973d09263f488aefd2907266a6febc7bf4a9f0621f43c3d98942fbe",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_iatlas_liu_2019/data_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:ec81f1658973d09263f488aefd2907266a6febc7bf4a9f0621f43c3d98942fbe",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "harmonized_cross_check"
+    },
+    "mel_dfci_2019_meta_study": {
+      "sha256": "7776359bea1a80ad9b88acef36ecb09a29a88c7010b9bafa816ab3548d331341",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/meta_study.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:7776359bea1a80ad9b88acef36ecb09a29a88c7010b9bafa816ab3548d331341",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "mel_dfci_2019_data_clinical_patient": {
+      "sha256": "3defdf06485e877d4b91b6b69c8e7af5615dd749c9dea54662ca3f4d0bc760a1",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_clinical_patient.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:3defdf06485e877d4b91b6b69c8e7af5615dd749c9dea54662ca3f4d0bc760a1",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "mel_dfci_2019_data_clinical_sample": {
+      "sha256": "f665b8688708327e7a32f2d5a4efa3e34e7a7c849a9eb3996ec50e19d9111316",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_clinical_sample.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:f665b8688708327e7a32f2d5a4efa3e34e7a7c849a9eb3996ec50e19d9111316",
+      "format": "CBIO_CLINICAL_TSV",
+      "role": "source_of_record"
+    },
+    "mel_dfci_2019_meta_mrna_seq_tpm": {
+      "sha256": "eef866a8e2a4148dab228c5aed2cd5a11d9bfe001f60abb6c4c1098bce77d51f",
+      "locator": "https://raw.githubusercontent.com/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/meta_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:eef866a8e2a4148dab228c5aed2cd5a11d9bfe001f60abb6c4c1098bce77d51f",
+      "format": "CBIO_META",
+      "role": "source_of_record"
+    },
+    "mel_dfci_2019_data_mrna_seq_tpm": {
+      "sha256": "5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4",
+      "locator": "https://media.githubusercontent.com/media/cBioPortal/datahub/e1b75cd25bf7436d16719b7d76117ad8f3f66e54/public/mel_dfci_2019/data_mrna_seq_tpm.txt",
+      "version": "e1b75cd25bf7436d16719b7d76117ad8f3f66e54:5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4",
+      "format": "MATRIX_HEADER_TSV",
+      "role": "source_of_record"
+    }
+  },
+  "cbio_ingest": {
+    "patient_role": "mel_dfci_2019_data_clinical_patient",
+    "sample_role": "mel_dfci_2019_data_clinical_sample",
+    "matrix_role": "mel_dfci_2019_data_mrna_seq_tpm",
+    "patient_id": "PATIENT_ID",
+    "sample_id": "SAMPLE_ID",
+    "visit_field": "BIOPSY_CONTEXT",
+    "baseline_values": [
+      "Pre-PD1"
+    ],
+    "nonbaseline_values": [
+      "On-Ipi",
+      "On-PD1"
+    ],
+    "response_field": "BR",
+    "response_map": {
+      "Complete Response": "CR",
+      "Partial Response": "PR",
+      "Stable Disease": "SD",
+      "Progressive Disease": "PD",
+      "NE": "NE",
+      "Mixed Response": "UNKNOWN",
+      "NA": "UNKNOWN"
+    },
+    "drug_field": "IO_THERAPY",
+    "drug_class_map": {
+      "MK3475": "ANTI_PD_1",
+      "MK 3475": "ANTI_PD_1",
+      "pembrolizumab": "ANTI_PD_1",
+      "Pembro": "ANTI_PD_1",
+      "Pembrolizumab": "ANTI_PD_1",
+      "nivolumab": "ANTI_PD_1",
+      "Nivo": "ANTI_PD_1",
+      "Nivolumab": "ANTI_PD_1"
+    },
+    "treatment": {
+      "regimen_id": "REGIMEN:liu2019:INDEX"
+    },
+    "prior_ici_field": "PRIOR_CTLA4",
+    "prior_ici_map": {
+      "Yes": "YES",
+      "No": "NO",
+      "": "UNKNOWN"
+    },
+    "response_crosscheck": {
+      "source_role": "mel_dfci_2019_data_clinical_patient",
+      "author_role": "mel_iatlas_liu_2019_data_clinical_sample",
+      "source_field": "BR",
+      "author_field": "RESPONSE"
+    },
+    "visit_source": "patient",
+    "excluded_visit_values": [
+      "Pre-Ipi"
+    ]
+  },
+  "measurement_representations": {
+    "mel_iatlas_liu_2019_data_mrna_seq_tpm": {
+      "unit": "TPM",
+      "transform": "UNKNOWN",
+      "genome_build": "hg38",
+      "annotation": "Hugo_Symbol",
+      "feature_identifier_system": "GENE_SYMBOL",
+      "platform": "UNKNOWN",
+      "modality": "RNA_SEQ",
+      "normalization": "UNKNOWN",
+      "feature_scope": "UNKNOWN",
+      "evidence": {
+        "unit": "mel_iatlas_liu_2019_meta_mrna_seq_tpm:data_filename (TPM); processing description does not state unit",
+        "transform": "UNKNOWN: profile does not specify transformation",
+        "genome_build": "mel_iatlas_liu_2019_meta_study:reference_genome",
+        "annotation": "mel_iatlas_liu_2019_data_mrna_seq_tpm:Hugo_Symbol column header",
+        "feature_identifier_system": "mel_iatlas_liu_2019_data_mrna_seq_tpm:Hugo_Symbol column header",
+        "platform": "UNKNOWN: profile and study metadata do not state instrument",
+        "normalization": "UNKNOWN: profile does not specify normalization",
+        "feature_scope": "UNKNOWN: profile does not establish completeness"
+      }
+    },
+    "conversion": "PROHIBITED",
+    "mel_dfci_2019_data_mrna_seq_tpm": {
+      "unit": "TPM",
+      "transform": "NONE",
+      "genome_build": "UNKNOWN",
+      "annotation": "Hugo_Symbol",
+      "feature_identifier_system": "GENE_SYMBOL",
+      "platform": "Illumina HiSeq 2000 v3 or HiSeq 2500",
+      "modality": "RNA_SEQ",
+      "normalization": "TPM_resummed_after_snoRNA_exclusion",
+      "feature_scope": "COMPLETE_WITH_DOCUMENTED_EXCLUSIONS",
+      "auxiliary_columns": [
+        {
+          "index": 1,
+          "header": "Entrez_Gene_Id"
+        }
+      ],
+      "evidence": {
+        "unit": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "genome_build": "UNKNOWN: GRCh38.p10 applies to biotype filter; alignment reference and GTF are not stated.",
+        "annotation": "mel_dfci_2019_data_mrna_seq_tpm:Hugo_Symbol; docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "platform": "docs/research/cohort_sources/liu2019_SOURCES.md#sequencing-and-processing-facts-pmc-full-text-pmc6898788-read-30-oct-2026",
+        "transform": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "normalization": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "feature_scope": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "feature_identifier_system": "DERIVED_FROM_OBJECT: GENE_SYMBOL_MAJORITY; sha256:5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4"
+      },
+      "derived_facts": {
+        "feature_identifier_system": {
+          "status": "DERIVED",
+          "value": "GENE_SYMBOL",
+          "evidence_type": "DERIVED_FROM_OBJECT",
+          "rule": "GENE_SYMBOL_MAJORITY",
+          "source_sha256": "5b12ee2a161cbce35274d5ed6a999e89d6fcb21679cd10f2f8e8e0374c6c2dd4"
+        }
+      },
+      "excluded_feature_classes": [
+        {
+          "class": "snoRNA genes",
+          "count": 380,
+          "method": "Ensembl GRCh38.p10 biotype filter",
+          "evidence": "docs/research/cohort_sources/liu2019_SOURCES.md#sequencing-and-processing-facts-pmc-full-text-pmc6898788-read-30-oct-2026"
+        }
+      ]
+    }
+  },
+  "decision_config": {
+    "review_items": {
+      "items": [
+        {
+          "category": "SOURCE_IDENTITY_REVIEW_REQUIRED",
+          "role": "mel_dfci_2019_data_clinical_sample",
+          "question": "Exact patient and sample source identifiers; review proposed unsigned linkage."
+        },
+        {
+          "category": "REPRESENTATION_FACTS_UNRESOLVED",
+          "role": "mel_dfci_2019_meta_mrna_seq_tpm",
+          "question": "Review the approved developmental V3 limitation: alignment build and GTF and tool versions remain unknown."
+        },
+        {
+          "category": "MELANOMA_OVERLAP_UNRESOLVED",
+          "role": "mel_dfci_2019_data_clinical_patient",
+          "question": "Retain potential overlap with other melanoma studies; no independence certified."
+        }
+      ]
+    },
+    "preview": {
+      "required_roles": [
+        "mel_dfci_2019_data_clinical_patient",
+        "mel_dfci_2019_data_clinical_sample",
+        "mel_dfci_2019_meta_mrna_seq_tpm",
+        "mel_dfci_2019_data_mrna_seq_tpm"
+      ],
+      "split_policy": "DEVELOPMENT",
+      "exclude_without_assay": true
+    },
+    "representation_review": {
+      "primary": "mel_dfci_2019_data_mrna_seq_tpm",
+      "sensitivity": "mel_iatlas_liu_2019_data_mrna_seq_tpm",
+      "reason": "Author DFCI TPM per approved follow-up; iAtlas remains separate sensitivity.",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    },
+    "overlap_review": {
+      "status": "UNKNOWN",
+      "no_independence_certified": true,
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+      "targets": [
+        "STUDY:gide2019",
+        "STUDY:riaz_gse91061",
+        "STUDY:hugo_gse78220",
+        "STUDY:gse168204"
+      ]
+    },
+    "processing_evidence": {
+      "aligner": "STAR",
+      "aligner_version": "UNKNOWN",
+      "quantifier": "RSEM",
+      "quantifier_version": "UNKNOWN",
+      "alignment_gtf": "UNKNOWN",
+      "biotype_filter": "Ensembl GRCh38.p10",
+      "feature_scope": "gene-level with snoRNA removed; remaining TPM re-summed",
+      "evidence": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm"
+    },
+    "exposure": {
+      "state": "METADATA_ONLY",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    },
+    "prior_ici_policy": {
+      "value": "UNKNOWN_ALLOWED_DEVELOPMENT",
+      "source": "PRIOR_CTLA4",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions"
+    },
+    "prior_ici_sensitivity": {
+      "excluded_visit": "Pre-Ipi",
+      "use": "prior-ICI sensitivity; pairs descriptive only",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#liu-v3-user-30-oct-2026"
+    },
+    "cancer_evidence": {
+      "source_role": "mel_dfci_2019_meta_study"
+    }
+  },
+  "v3": {
+    "primary_representation": "mel_dfci_2019_data_mrna_seq_tpm",
+    "sample_inventory_source_role": "mel_dfci_2019_data_clinical_sample",
+    "expected_counts": {
+      "full_header_columns": 121,
+      "baseline_selected": 104,
+      "on_selected": 0
+    },
+    "source_object_roles": {
+      "primary": "mel_dfci_2019_data_mrna_seq_tpm"
+    },
+    "documentation": {
+      "mel_dfci_2019_data_mrna_seq_tpm": {
+        "status": "DOCUMENTED",
+        "evidence_pointer": "docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm"
+      }
+    },
+    "delimiters": {
+      "mel_dfci_2019_data_mrna_seq_tpm": "\t"
+    },
+    "compressed": {
+      "mel_dfci_2019_data_mrna_seq_tpm": false
+    },
+    "processing_acceptance": {
+      "accepted_unknown_fields": [
+        "genome_build"
+      ],
+      "split_role": "DEVELOPMENT",
+      "evidence": "docs/decisions/BATCH2_CBIOPORTAL_20261030.md#liu-v3-user-30-oct-2026",
+      "limitation": "Alignment reference build and GTF, and STAR/RSEM versions, are UNKNOWN; GRCh38.p10 is a biotype filter, not an asserted alignment build."
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SOURCE_IDENTITY_REVIEW_REQUIRED": {
+        "status": "PASS",
+        "decision": "Use exact DFCI PATIENT_ID/SAMPLE_ID joins; identity remains unsigned. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "REPRESENTATION_FACTS_UNRESOLVED": {
+        "status": "PASS",
+        "decision": "PASS: Accept DFCI TPM for development; state that alignment reference, GTF and tool versions are unknown, per the Liu V3 decision.",
+        "evidence_pointers": []
+      },
+      "MELANOMA_OVERLAP_UNRESOLVED": {
+        "status": "PASS",
+        "decision": "Flag overlap and do not certify independence. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "AUTHOR_RESPONSE_DISAGREEMENT": {
+        "status": "PASS",
+        "decision": "Use DFCI BR as source of record; retain iAtlas RESPONSE separately without overwriting. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "ORR_RESPONSE_UNKNOWN": {
+        "status": "PASS",
+        "decision": "Keep mixed or unknown labels UNKNOWN; do not assume non-response. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      },
+      "BASELINE_TIMING_UNRESOLVED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Pre-Ipi timing relative to index anti-PD-1 is unresolved; review original methods or author metadata. docs/research/cohort_sources/BATCH2_PROCESSING_EVIDENCE_20261030.md#2-liu-2019-mel_dfci_2019-authors-tpm",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_SAMPLE_UNMATCHED": {
+        "status": "PASS",
+        "decision": "PASS: Exclude clinical samples without a matrix column because RNA is unavailable, per the Liu follow-up decision.",
+        "evidence_pointers": []
+      },
+      "MATRIX_COLUMN_UNMAPPED_OR_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Resolve each ambiguous or unmatched expression column from source identifiers only. mel_dfci_2019_meta_mrna_seq_tpm",
+        "evidence_pointers": []
+      },
+      "FEATURE_ROWS_EXCLUDED": {
+        "status": "PASS",
+        "decision": "Exclude all listed duplicate-symbol rows under NONSTANDARD_ROWS_EXCLUDED; never rename or remap. docs/decisions/BATCH2_CBIOPORTAL_20261030.md#follow-up-decisions",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Unsigned source review is required.",
+        "evidence_pointers": []
+      }
+    }
+  }
+}

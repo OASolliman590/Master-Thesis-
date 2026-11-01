@@ -1,0 +1,29 @@
+{
+  "input_kind": "user-provided parse; no network download",
+  "publication": "https://doi.org/10.1158/2326-6066.CIR-22-0249",
+  "publisher_byte_provenance": "UNVERIFIED",
+  "source_files": {
+    "databases/icbatlas.db": "a76230b486c5cd3a231ab967a5666d20ecc65c2df6ab84590c7291a9c2d60340",
+    "build_all_databases.py": "f392179c5622d19a40e79aaf15d9da0eef8d33850670a8c1023b26da69a683ec",
+    "data/ICBatlas/table_s1.docx": "9e58cd982999e7000ab776d8729b1d92ad5b2b84cd8c0eaf60d03fae1e3068a6",
+    "data/ICBatlas/table_s2.docx": "d9d7a2c5bb77a504caa1206029e04f809e0ca63ab5914a8343789d482df2a3ce"
+  },
+  "imported_columns": {
+    "studies": [
+      "study",
+      "data_type",
+      "source",
+      "url"
+    ],
+    "normalization": [
+      "study",
+      "cancer",
+      "data_type",
+      "raw_data_format",
+      "normalization",
+      "method"
+    ]
+  },
+  "excluded": "No response summaries, patient data, drug scores, reconstructed APIs or website-derived ICBcomb/ICBcDrug content",
+  "output_sha256": "5a461b0ef3ac74a13139a35d4e24b818d9c9aa20ea155c2085bd96ba355c08ac"
+}

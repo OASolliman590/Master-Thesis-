@@ -1,0 +1,18 @@
+{
+  "ici": {
+    "anti_pd1": ["nivolumab", "pembrolizumab", "cemiplimab", "dostarlimab", "anti-pd-1", "anti-pd1"],
+    "anti_pdl1": ["atezolizumab", "durvalumab", "avelumab", "anti-pd-l1", "anti-pdl1"],
+    "anti_ctla4": ["ipilimumab", "tremelimumab", "anti-ctla-4", "anti-ctla4"],
+    "other_checkpoint": ["relatlimab", "anti-lag-3", "checkpoint inhibitor"]
+  },
+  "non_ici": {
+    "chemotherapy": ["chemotherapy", "chemo", "carboplatin", "cisplatin", "paclitaxel", "docetaxel"],
+    "tki": ["tyrosine kinase inhibitor", "tki", "sunitinib", "cabozantinib", "axitinib", "lenvatinib"],
+    "anti_vegf": ["anti-vegf", "bevacizumab"],
+    "hdac": ["hdac inhibitor", "entinostat", "vorinostat"],
+    "dnmt": ["dnmt inhibitor", "guadecitabine", "azacitidine", "decitabine"],
+    "ezh2": ["ezh2 inhibitor", "tazemetostat"],
+    "adt": ["androgen deprivation therapy", "leuprolide", "adt"],
+    "radiotherapy": ["radiotherapy", "radiation therapy", "chemoradiation", "radiation", "rt"]
+  }
+}

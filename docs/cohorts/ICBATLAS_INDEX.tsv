@@ -1,0 +1,51 @@
+record_type	study	cancer	data_type	source	url	raw_data_format	normalization	method	evidence
+studies	SRP128156(phs001493.v2.p1)		RNA-seq	NCBI dbGaP	https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001493.v2.p1				provided index; primary source and patient eligibility unverified
+studies	SRP302761		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP302761				provided index; primary source and patient eligibility unverified
+studies	SRP150548		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP150548				provided index; primary source and patient eligibility unverified
+studies	SRP250849		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP250849				provided index; primary source and patient eligibility unverified
+studies	SRP183455		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP183455				provided index; primary source and patient eligibility unverified
+studies	SRP155030		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP155030				provided index; primary source and patient eligibility unverified
+studies	SRP070710		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP070710				provided index; primary source and patient eligibility unverified
+studies	SRP217040		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP217040				provided index; primary source and patient eligibility unverified
+studies	SRP230414(phs001919.v1.p1)		RNA-seq	NCBI dbGaP	https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001919.v1.p1				provided index; primary source and patient eligibility unverified
+studies	ERP105482		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20ERP105482				provided index; primary source and patient eligibility unverified
+studies	SRP011540(phs000452.v3.p1)		RNA-seq	NCBI dbGaP	https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000452.v3.p1				provided index; primary source and patient eligibility unverified
+studies	ERP107734		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20ERP107734				provided index; primary source and patient eligibility unverified
+studies	SRP094781		RNA-seq	NCBI SRA	https://www.ncbi.nlm.nih.gov/sra?term=%20SRP094781				provided index; primary source and patient eligibility unverified
+studies	IMvigor210		RNA-seq	R packages IMvigor210CoreBiologies	http://research-pub.gene.com/IMvigor210CoreBiologies/packageVersions/				provided index; primary source and patient eligibility unverified
+studies	PMID:32472114		RNA-seq	Article Supplementary Tables (S4A)	https://www.nature.com/articles/s41591-020-0839-y#Sec27				provided index; primary source and patient eligibility unverified
+studies	PMID:33806963		RNA-seq	Article Supplementary Tables (S10)	https://www.mdpi.com/2072-6694/13/6/1475#supplementary				provided index; primary source and patient eligibility unverified
+studies	TCGA		RNA-seq	TCGA	https://portal.gdc.cancer.gov/repository				provided index; primary source and patient eligibility unverified
+studies	GSE176307		RNA-seq	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307				provided index; primary source and patient eligibility unverified
+studies	GSE136961		RNA-seq	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE136961				provided index; primary source and patient eligibility unverified
+studies	GSE93157		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE93157				provided index; primary source and patient eligibility unverified
+studies	GSE67501		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE67501				provided index; primary source and patient eligibility unverified
+studies	GSE99070		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE99070				provided index; primary source and patient eligibility unverified
+studies	GSE122220		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122220				provided index; primary source and patient eligibility unverified
+studies	GSE140901		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE140901				provided index; primary source and patient eligibility unverified
+studies	GSE111636		Microarray	NCBI GEO	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111636				provided index; primary source and patient eligibility unverified
+normalization	SRP128156	RCC	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP302761	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP150548	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP250849	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP183455	NSCLC	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP155030	GBM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP070710	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP217040	NSCLC	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP230414	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	ERP105482	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP011540	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	ERP107734	GC	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	SRP094781	SKCM	RNA-seq			Fastq	FPKM/TPM	StringTie	provided index; primary source and patient eligibility unverified
+normalization	IMvigor210	UC	RNA-seq			Matrix	FPKM/TPM	Normalized using trimmed mean of M-values (TMM)(1)	provided index; primary source and patient eligibility unverified
+normalization	PMID: 32472114	RCC	RNA-seq			Matrix	Normalized expression matrix	RSEM	provided index; primary source and patient eligibility unverified
+normalization	PMID: 33806963	RCC	RNA-seq			Matrix	Normalized expression matrix	DESeq2(2)	provided index; primary source and patient eligibility unverified
+normalization	TCGA	SKCM	RNA-seq			Matrix	FPKM/TPM	RSEM	provided index; primary source and patient eligibility unverified
+normalization	GSE176307	UC	RNA-seq			Matrix	FPKM/TPM	RSEM	provided index; primary source and patient eligibility unverified
+normalization	GSE136961	NSCLC	RNA-seq			Matrix	FPKM/TPM	ImmuneResponseRNA Report plug-in in Torrent Suite software (Version 5.2)(3)	provided index; primary source and patient eligibility unverified
+normalization	GSE93157	HNSCC,SKCM,NSCLC	Microarray			Matrix	Normalized signal	Normalized using 5 house-keepinggenes (ACTB, MRPL19, PSMC4, RPLP0 and SF3A1)(4)	provided index; primary source and patient eligibility unverified
+normalization	GSE67501	RCC	Microarray			Matrix	Normalized signal	Normalized by scaling: for each sample all its expression values were multiplied by the constant which made the median of the expression values for that sample equal to 256(5)	provided index; primary source and patient eligibility unverified
+normalization	GSE99070	MPM	Microarray			Matrix	Normalized signal	Quantile normalization(6)	provided index; primary source and patient eligibility unverified
+normalization	GSE122220	SKCM	Microarray			Matrix	Normalized signal	Quantile normalization(7)	provided index; primary source and patient eligibility unverified
+normalization	GSE140901	HCC	Microarray			Matrix	Normalized signal	Normalized by the trimmed mean of M-values normalization method (TMM)(8)	provided index; primary source and patient eligibility unverified
+normalization	GSE111636	UC	Microarray			CEL	Normalized signal	RMA	provided index; primary source and patient eligibility unverified

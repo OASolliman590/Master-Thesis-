@@ -1,6 +1,13 @@
 """Derive assay measurement declarations from pinned V3 and field-map evidence."""
 from __future__ import annotations
 
+
+def provisional_feature_scope(value: str | None, provisional: bool) -> str | None:
+    """Preserve the legacy validator's unknown state for a documented filtered universe."""
+    if provisional and value == 'GENE_LEVEL_EXCLUDING_SNORNA':
+        return 'UNKNOWN'
+    return value
+
 import re
 import copy
 import csv
@@ -14,6 +21,25 @@ from typing import Any, cast
 
 class AssayPolicyEvidenceError(ValueError):
     """Raised when evidence cannot support a required measurement declaration."""
+
+
+def validate_feature_scope(representation: dict[str, Any], *, provisional: bool) -> str:
+    scope = provisional_feature_scope(representation.get('feature_scope'), provisional)
+    if provisional and not scope:
+        scope = 'UNKNOWN'
+    allowed = {'COMPLETE', 'TARGETED', 'COMPLETE_WITH_DOCUMENTED_EXCLUSIONS'}
+    if provisional:
+        allowed.add('UNKNOWN')
+    if scope not in allowed:
+        raise AssayPolicyEvidenceError('ASSAY_POLICY_EVIDENCE_MISSING:feature_scope')
+    if scope == 'COMPLETE_WITH_DOCUMENTED_EXCLUSIONS':
+        exclusions = representation.get('excluded_feature_classes')
+        if (not isinstance(exclusions, list) or not exclusions or
+                any(not isinstance(entry, dict) or
+                    any(not isinstance(entry.get(k), str) or not entry[k].strip() or entry[k].strip().upper() == 'UNKNOWN'
+                        for k in ('class', 'evidence')) for entry in exclusions)):
+            raise AssayPolicyEvidenceError('ASSAY_POLICY_EVIDENCE_MISSING:excluded_feature_classes')
+    return str(scope)
 
 
 _SHA256 = re.compile(r"^[a-f0-9]{64}$")
@@ -259,11 +285,10 @@ def materialize_primary_assay_policy(packet: dict[str, Any], field_map: dict[str
         normalization = 'UNKNOWN'
     if not isinstance(normalization, str) or not normalization:
         raise AssayPolicyEvidenceError(f"ASSAY_POLICY_EVIDENCE_MISSING:normalization:{role}")
-    feature_scope = representation.get("feature_scope")
-    if provisional and not feature_scope:
-        feature_scope = 'UNKNOWN'
-    if feature_scope not in ({"COMPLETE", "TARGETED", "UNKNOWN"} if provisional else {"COMPLETE", "TARGETED"}):
-        raise AssayPolicyEvidenceError(f"ASSAY_POLICY_EVIDENCE_MISSING:feature_scope:{role}")
+    try:
+        feature_scope = validate_feature_scope(representation, provisional=provisional)
+    except AssayPolicyEvidenceError as error:
+        raise AssayPolicyEvidenceError(f'{error}:{role}') from None
     unit = metadata["unit"]
     unit = {'READ_COUNTS': 'counts', 'RSEM expected counts': 'estimated_counts'}.get(unit, unit)
     lane = ('COUNTS' if unit in {'counts', 'estimated_counts'} else
@@ -294,6 +319,8 @@ def materialize_primary_assay_policy(packet: dict[str, Any], field_map: dict[str
         "missingness_policy": "PRESERVE", "delimiter": delimiter_name, "encoding": "UTF-8",
         "platform": metadata["platform"], "modality": metadata["modality"],
     }
+    if feature_scope == 'COMPLETE_WITH_DOCUMENTED_EXCLUSIONS':
+        matrix['excluded_feature_classes'] = copy.deepcopy(representation['excluded_feature_classes'])
     if lane == 'COUNTS':
         if any(value is None for row in values for value in row):
             raise AssayPolicyEvidenceError('ASSAY_MATRIX_MISSING_COUNTS')

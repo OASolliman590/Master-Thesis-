@@ -436,6 +436,17 @@
             "type": "string",
             "minLength": 1
           },
+          "negative_values_allowed": {"type": "boolean"},
+          "negative_values_source_phrase": {"type": "string", "minLength": 1},
+          "excluded_feature_classes": {
+            "type": "array", "minItems": 1,
+            "items": {"type": "object", "required": ["class", "evidence"],
+              "properties": {"class": {"type": "string", "minLength": 1},
+                             "evidence": {"type": "string", "minLength": 1},
+                             "count": {"type": "integer", "minimum": 1},
+                             "method": {"type": "string", "minLength": 1}},
+              "additionalProperties": false}
+          },
           "evidence": {
             "type": "object",
             "additionalProperties": {
@@ -909,6 +920,10 @@
           "type": "string",
           "minLength": 1
         },
+        "agent_class_map": {
+          "type": "object", "minProperties": 1,
+          "additionalProperties": {"type": "string", "minLength": 1}
+        },
         "source_locator": {
           "type": "string",
           "minLength": 1
@@ -962,6 +977,152 @@
           }
         }
       ]
+    },
+    "cbio_ingest": {
+      "type": "object",
+      "required": [
+        "patient_role",
+        "sample_role",
+        "matrix_role",
+        "patient_id",
+        "sample_id",
+        "visit_field",
+        "baseline_values",
+        "response_field",
+        "response_map"
+      ],
+      "properties": {
+        "patient_role": {
+          "type": "string"
+        },
+        "sample_role": {
+          "type": "string"
+        },
+        "matrix_role": {
+          "type": "string"
+        },
+        "patient_id": {
+          "type": "string"
+        },
+        "sample_id": {
+          "type": "string"
+        },
+        "visit_field": {
+          "type": "string"
+        },
+        "baseline_values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nonbaseline_values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "response_field": {
+          "type": "string"
+        },
+        "response_map": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "CR",
+              "PR",
+              "SD",
+              "PD",
+              "NE",
+              "UNKNOWN"
+            ]
+          }
+        },
+        "drug_field": {
+          "type": "string"
+        },
+        "drug_class_map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "prior_ici_field": {
+          "type": "string"
+        },
+        "prior_ici_map": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "YES",
+              "NO",
+              "UNKNOWN"
+            ]
+          }
+        },
+        "treatment": {
+          "type": "object"
+        },
+        "response_crosscheck": {
+          "type": "object",
+          "required": [
+            "source_role",
+            "author_role",
+            "source_field",
+            "author_field"
+          ],
+          "properties": {
+            "source_role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "author_role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_field": {
+              "type": "string",
+              "minLength": 1
+            },
+            "author_field": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "visit_source": {
+          "enum": [
+            "patient",
+            "sample"
+          ]
+        },
+        "author_clinical_join": {
+          "type": "object", "required": ["mono_role", "dual_role"],
+          "properties": {"mono_role": {"type": "string", "minLength": 1},
+                         "dual_role": {"type": "string", "minLength": 1}},
+          "additionalProperties": false
+        },
+        "cohort_filter": {
+          "type": "object", "required": ["field", "allowed_values"],
+          "properties": {"field": {"type": "string", "minLength": 1},
+            "allowed_values": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}},
+          "additionalProperties": false
+        },
+        "outcomes_without_baseline": {"type": "boolean"},
+        "expression_samples_only": {"type": "boolean"},
+        "secondary_outcome": {
+          "type": "object", "required": ["field", "endpoint_class", "response_map"],
+          "properties": {"field": {"type": "string", "minLength": 1},
+            "endpoint_class": {"const": "SOURCE_BINARY"},
+            "response_map": {"type": "object", "additionalProperties": {"enum": ["SOURCE_POSITIVE", "SOURCE_NEGATIVE", "UNKNOWN"]}}},
+          "additionalProperties": false
+        },
+        "excluded_visit_values": {
+          "type": "array", "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
     }
   },
   "$defs": {
@@ -981,6 +1142,17 @@
         "expected_counts"
       ],
       "properties": {
+        "processing_acceptance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["accepted_unknown_fields", "split_role", "evidence", "limitation"],
+          "properties": {
+            "accepted_unknown_fields": {"type": "array", "items": {"type": "string"}},
+            "split_role": {"const": "DEVELOPMENT"},
+            "evidence": {"type": "string", "minLength": 1},
+            "limitation": {"type": "string", "minLength": 1}
+          }
+        },
         "primary_representation": {
           "type": "string"
         },
@@ -1005,7 +1177,7 @@
             },
             "baseline_selected": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 0
             },
             "on_selected": {
               "type": "integer",
@@ -1239,7 +1411,11 @@
             "MATRIX_HEADER_TSV",
             "SCRIPT_R",
             "TEXT_UTF8",
-            "XLSX_NUMERIC"
+            "XLSX_NUMERIC",
+            "XLSX_CLINICAL",
+            "XLSX_NAMED_STREAM",
+            "CBIO_META",
+            "CBIO_CLINICAL_TSV"
           ]
         },
         "role": {
@@ -1254,6 +1430,15 @@
         },
         "header_allow_empty": {
           "type": "boolean"
+        },
+        "header_row": {
+          "type": "integer", "minimum": 1
+        },
+        "sheet_name": {
+          "type": "string", "minLength": 1
+        },
+        "table_kind": {
+          "enum": ["clinical", "matrix"]
         }
       }
     }

@@ -192,3 +192,13 @@ def test_count_policy_preserves_values_and_derives_library_size_from_retained_ro
     assert matrix['library_properties']['invented_pre_1']=={'library_size':float(values[0])+1.0,'source_locator':'sha256:'+sha,'evidence_type':'DERIVED_FROM_OBJECT','rule':'COLUMN_SUM_LIBRARY_SIZE'}
     if expected_unit=='estimated_counts':
         assert matrix['quantifier']=='RSEM' and matrix['estimated_count_structure']
+def test_documented_excluded_feature_scope_requires_class_and_evidence():
+    from tools.a_dav.assay_policy import validate_feature_scope, AssayPolicyEvidenceError
+    scope = 'COMPLETE_WITH_DOCUMENTED_EXCLUSIONS'
+    assert validate_feature_scope({'feature_scope': scope, 'excluded_feature_classes': [
+        {'class': 'invented', 'evidence': 'synthetic source'}]}, provisional=False) == scope
+    with pytest.raises(AssayPolicyEvidenceError):
+        validate_feature_scope({'feature_scope': scope, 'excluded_feature_classes': [
+            {'class': 'invented', 'evidence': ''}]}, provisional=False)
+    with pytest.raises(AssayPolicyEvidenceError):
+        validate_feature_scope({'feature_scope': scope}, provisional=False)

@@ -349,6 +349,18 @@ def test_assay_targeted_panel_never_full_universe_de_and_missing_required_is_exp
     assert result["records"]["coverage"][0]["scoring_suitability"] == "FAIL"
 
 
+def test_assay_documented_exclusions_accepts_only_evidenced_classes():
+    from tools.a_dav.assays import validate_assays
+    p = assay_config(packet()); matrix = p['config']['assays']['matrices'][0]
+    matrix['feature_scope'] = 'COMPLETE_WITH_DOCUMENTED_EXCLUSIONS'
+    matrix['excluded_feature_classes'] = [{'class': 'synthetic', 'evidence': 'synthetic source'}]
+    result = validate_assays(with_registries(p), schemas=SCHEMAS)
+    assert result['status'] == 'READY'
+    assert result['records']['coverage'][0]['de_suitability'] == 'PASS'
+    matrix['excluded_feature_classes'][0]['evidence'] = ''
+    assert validate_assays(with_registries(p), schemas=SCHEMAS)['status'] == 'BLOCKED_UNKNOWN'
+
+
 @pytest.mark.parametrize("api,config_fn", [("endpoints", endpoint_config), ("timing", timing_config), ("assays", assay_config)])
 def test_group_a_downstream_rejects_tampered_or_stale_registry(api, config_fn):
     from tools.a_dav.endpoints import map_endpoints
@@ -590,6 +602,28 @@ def test_endpoint_defined_source_binary_still_cannot_be_orr_or_dcr():
     from tools.a_dav.endpoints import map_endpoints
     p = defined_source_binary_packet(); p["config"]["endpoints"]["classes"] = ["ORR", "DCR"]
     assert map_endpoints(with_registries(p), schemas=SCHEMAS)["reasons"] == ["INVALID_ENDPOINT_CONVERSION"]
+
+
+@pytest.mark.parametrize('binary_category', ['UNKNOWN', 'SOURCE_POSITIVE'])
+def test_orr_and_source_binary_keep_independent_evaluability(binary_category):
+    from tools.a_dav.endpoints import map_endpoints
+    p = endpoint_config(packet()); original = p['records']['clinical_outcome'][0]
+    other = deepcopy(original); other.update(outcome_id='o2', endpoint_class='SOURCE_BINARY',
+        raw_endpoint_label='invented-unknown', canonical_category=binary_category,
+        evaluability='UNKNOWN' if binary_category == 'UNKNOWN' else 'EVALUABLE',
+        orr_mapping=None, dcr_mapping=None)
+    p['records']['clinical_outcome'].append(other)
+    binding = deepcopy(next(x for x in p['records']['episode_binding'] if x['subject_id'] == 'o1'))
+    binding.update(binding_id='bo2', subject_id='o2');p['records']['episode_binding'].append(binding)
+    cfg=p['config']['endpoints'];cfg['classes']=['ORR','OTHER'];cfg['source_priority']=['o1','o2']
+    cfg['category_map']['invented-unknown']=binary_category
+    cfg['binary_definitions']={'o2':{'name':'invented','version':'v1','source_locator':'invented','raw_value_map':{'invented-unknown':1}}}
+    result=map_endpoints(with_registries(p),schemas=SCHEMAS)
+    assert result['status']=='READY'
+    rows={x['endpoint_class']:x for x in result['records']['endpoint']}
+    assert rows['ORR']['evaluability']=='EVALUABLE' and rows['ORR']['binary_value']==1
+    assert rows['OTHER']['evaluability']==('UNKNOWN' if binary_category=='UNKNOWN' else 'EVALUABLE')
+    assert rows['OTHER']['binary_value']==(None if binary_category=='UNKNOWN' else 1)
 
 @pytest.mark.parametrize('role,expected', [('DEVELOPMENT', 'READY'), ('FINAL_TEST', 'BLOCKED_UNKNOWN'), ('HOLDOUT', 'BLOCKED_UNKNOWN'), (None, 'BLOCKED_UNKNOWN')])
 def test_unknown_prior_ici_requires_declared_development_policy(role, expected):

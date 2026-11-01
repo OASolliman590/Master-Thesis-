@@ -129,11 +129,32 @@ def _build_declared_baseline(packet: dict[str, Any], field_map: dict[str, Any]) 
     records['clinical_outcome'] = [row for row in records.get('clinical_outcome', []) if row.get('patient_uid') in selected]
     for table in ('treatment_episode', 'treatment_exposure', 'episode_binding'):
         records[table] = [row for row in records.get(table, []) if row.get('patient_uid') in selected]
-    cfg = field_map['geo_ingest']
-    classes = ['OTHER'] if cfg['endpoint_class'] == 'SOURCE_BINARY' else ['ORR']
+    cfg = field_map.get('geo_ingest', field_map.get('cbio_ingest', {}))
+    classes = ['OTHER'] if cfg.get('endpoint_class') == 'SOURCE_BINARY' else ['ORR']
     current['config']['endpoints'] = {'version': 'field-map', 'classes': classes,
         'category_map': copy.deepcopy(cfg['response_map']),
         'source_priority': [row['outcome_id'] for row in records['clinical_outcome']]}
+    if 'cbio_ingest' in field_map and isinstance(field_map.get('decision_config', {}).get('author_endpoints'), dict):
+        declared = field_map['decision_config']['author_endpoints']
+        definition = declared.get('clinical_benefit', {})
+        require(bool(definition.get('definition')) and bool(declared.get('evidence')),
+                'SOURCE_BINARY_DEFINITION_UNKNOWN', blocked=True)
+        endpoint_cfg = current['config']['endpoints']
+        endpoint_cfg['classes'] = ['ORR', 'OTHER']
+        endpoint_cfg['binary_definitions'] = {}
+        for outcome in records['clinical_outcome']:
+            raw, category = outcome.get('raw_endpoint_label'), outcome.get('canonical_category')
+            if not isinstance(raw, str) or not raw or not isinstance(category, str):
+                continue
+            previous = endpoint_cfg['category_map'].get(raw)
+            require(previous is None or previous == category, 'ENDPOINT_MAPPING_CONFLICT')
+            endpoint_cfg['category_map'][raw] = category
+            if outcome.get('endpoint_class') == 'SOURCE_BINARY':
+                value_map = ({raw: int(category == 'SOURCE_POSITIVE')}
+                             if category in {'SOURCE_POSITIVE', 'SOURCE_NEGATIVE'} else {})
+                endpoint_cfg['binary_definitions'][outcome['outcome_id']] = {
+                    'name': definition['definition'], 'version': 'field-map',
+                    'source_locator': declared['evidence'], 'raw_value_map': value_map}
     current['dependencies'] = {}
     return current
 
@@ -144,7 +165,7 @@ def build_baseline_packet(packet: dict[str, Any], *, field_map: dict[str, Any] |
     to identity-verified pretreatment specimens and their linked records, and sets a
     versioned author-BOR-to-RECIST mapping without setting any admission decision.
     """
-    if field_map is not None and "geo_ingest" in field_map:
+    if field_map is not None and ("geo_ingest" in field_map or "cbio_ingest" in field_map):
         return _build_declared_baseline(packet, field_map)
     require(isinstance(packet, dict) and packet.get("branch_id") == "A_BASELINE_BIO",
             "BASELINE_BRANCH_MISMATCH")

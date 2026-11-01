@@ -21,6 +21,25 @@ from .matrix_header import matrix_rows, transpose_sample_rows
 _SHA256 = re.compile(r"^[a-f0-9]{64}$")
 
 
+def source_allows_negative(declaration: dict[str, Any], source_text: str) -> bool:
+    phrase = declaration.get('negative_values_source_phrase')
+    return (declaration.get('negative_values_allowed') is True and isinstance(phrase, str) and bool(phrase.strip())
+            and any(phrase.lower() in line.lower() for line in source_text.splitlines()
+                    if line.startswith('!Sample_data_processing = ')))
+
+
+def reviewed_processing_unknowns(unknown: list[str], declaration: dict[str, Any],
+                                 split_role: str | None) -> tuple[list[str], str | None]:
+    """Apply only a documented, role-specific acceptance of named unknown facts."""
+    if (split_role != 'DEVELOPMENT' or declaration.get('split_role') != split_role
+            or not declaration.get('evidence') or not declaration.get('limitation')):
+        return unknown, None
+    accepted = declaration.get('accepted_unknown_fields', [])
+    if not isinstance(accepted, list) or any(not isinstance(x, str) for x in accepted):
+        return unknown, None
+    return [x for x in unknown if x not in accepted], str(declaration['limitation'])
+
+
 def _open_text(path: Path, compressed: bool | None = None) -> TextIO:
     if compressed if compressed is not None else path.suffix == ".gz":
         return cast(TextIO, gzip.open(path, "rt", encoding="utf-8", newline=""))
@@ -59,6 +78,10 @@ def validate_v3_matrix(
     auxiliary_columns: list[dict[str, Any]] | None = None,
     missing_policy: str = "BLOCK",
     excluded_feature_rows: list[dict[str, Any]] | None = None,
+    allow_negative: bool = False,
+    sheet_name: str | None = None,
+    header_row: int = 1,
+    excluded_sample_ids: set[str] | None = None,
 ) -> dict[str, Any]:
     """Validate a complete delimited expression matrix without outcome inputs.
 
@@ -100,12 +123,25 @@ def validate_v3_matrix(
     duplicate_groups: list[list[str]] = []
     numeric_bad = {"NONNUMERIC_VALUES_PRESENT", "NONFINITE_VALUES_PRESENT", "NEGATIVE_VALUES_PRESENT"}
     try:
+        selected_columns = None
+        original_header: list[str] | None = None
+        if source_format == 'XLSX_NAMED_STREAM' and excluded_sample_ids:
+            with matrix_rows(matrix_path, delimiter=matrix_delimiter, compressed=False,
+                             source_format=source_format, sheet_name=sheet_name, header_row=header_row) as initial:
+                original_header = next(initial, [])
+            selected_columns = {i + 1 for i, value in enumerate(original_header)
+                                if i == 0 or value not in excluded_sample_ids}
         with matrix_rows(matrix_path, delimiter=matrix_delimiter,
                          compressed=compressed if compressed is not None else matrix_path.suffix == ".gz",
-                         source_format=source_format) as reader:
+                         source_format=source_format, sheet_name=sheet_name, header_row=header_row,
+                         selected_columns=selected_columns) as reader:
             if orientation == "samples_as_rows":
                 reader = iter(transpose_sample_rows(reader))
             header = next(reader, None)
+            if original_header is not None:
+                header = original_header
+                original_width = len(original_header)
+                reader = iter((row + [''] * (original_width - len(row)) if len(row) <= original_width else row for row in reader))
             if header is None or len(header) < 2:
                 reasons.append("MATRIX_HEADER_INVALID")
                 header = []
@@ -119,6 +155,12 @@ def validate_v3_matrix(
                 excluded = set(indexes)
                 header = [value for index, value in enumerate(header) if index not in excluded]
                 reader = iter(([value for index, value in enumerate(row) if index not in excluded]
+                               if len(row) == source_width else [] for row in reader))
+            if excluded_sample_ids:
+                source_width = len(header)
+                excluded_indices = {i for i, value in enumerate(header) if i > 0 and value in excluded_sample_ids}
+                header = [value for i, value in enumerate(header) if i not in excluded_indices]
+                reader = iter(([value for i, value in enumerate(row) if i not in excluded_indices]
                                if len(row) == source_width else [] for row in reader))
             sample_header = header[1:]
             counts["sample_columns"] = len(sample_header)
@@ -187,7 +229,8 @@ def validate_v3_matrix(
                         reasons.append("NONFINITE_VALUES_PRESENT")
                         counts["nonfinite_cells"] += 1
                     elif number < 0:
-                        reasons.append("NEGATIVE_VALUES_PRESENT")
+                        if not allow_negative:
+                            reasons.append("NEGATIVE_VALUES_PRESENT")
                         counts["negative_cells"] += 1
                 for index, sample in selected_indices:
                     if feature_missing and missing_policy == "EXCLUDE_FEATURE_IF_ANY_MISSING":
@@ -369,6 +412,91 @@ def _load_json(path: Path) -> dict[str, Any]:
     return cast(dict[str, Any], value)
 
 
+def run_cbioportal_v3(store: Path, field_map: dict[str, Any]) -> dict[str, Any]:
+    """Check a cBioPortal primary using only sample identity and visit metadata."""
+    from .cbioportal import read_inventory, read_workbook_inventory
+    cfg = field_map['cbio_ingest']; v3 = field_map['v3']; role = v3['primary_representation']
+    sample_sha = field_map['source_objects'][cfg['sample_role']]['sha256']
+    matrix_sha = field_map['source_objects'][role]['sha256']
+    sample_path = object_path_by_sha256(store, sample_sha)
+    matrix_path = object_path_by_sha256(store, matrix_sha)
+    rep = field_map['measurement_representations'][role]
+    matrix_meta = field_map['source_objects'][role]
+    matrix_format = matrix_meta.get('format', 'MATRIX_HEADER_TSV')
+    def inventory(path: Path, source_role: str, fields: list[str]) -> list[dict[str, str]]:
+        metadata = field_map['source_objects'][source_role]
+        if metadata.get('format') == 'XLSX_NAMED_STREAM':
+            return read_workbook_inventory(path, metadata['sheet_name'], metadata.get('header_row', 1), fields)
+        return read_inventory(path.read_bytes(), fields)
+    selection = cfg.get('cohort_filter', {})
+    filter_field = selection.get('field')
+    patient_sha = None
+    if cfg.get('visit_source') == 'patient':
+        samples = inventory(sample_path, cfg['sample_role'], [cfg['sample_id'], cfg['patient_id']])
+        patient_sha = field_map['source_objects'][cfg['patient_role']]['sha256']
+        patient_fields = [cfg['patient_id'], cfg['visit_field']] + ([filter_field] if filter_field and filter_field not in {cfg['patient_id'], cfg['visit_field']} else [])
+        patients = inventory(object_path_by_sha256(store, patient_sha), cfg['patient_role'], patient_fields)
+        by_patient: dict[str, list[dict[str, str]]] = {}
+        for row in patients:
+            by_patient.setdefault(row[cfg['patient_id']], []).append(row)
+        for row in samples:
+            matches = by_patient.get(row[cfg['patient_id']], [])
+            row[cfg['visit_field']] = matches[0][cfg['visit_field']] if len(matches) == 1 else ''
+            if filter_field:
+                row[filter_field] = matches[0].get(filter_field, '') if len(matches) == 1 else ''
+    else:
+        fields = [cfg['sample_id'], cfg['visit_field']] + ([filter_field] if filter_field and filter_field not in {cfg['sample_id'], cfg['visit_field']} else [])
+        samples = inventory(sample_path, cfg['sample_role'], fields)
+    with matrix_rows(matrix_path, delimiter=v3['delimiters'][role], compressed=v3['compressed'][role], source_format=matrix_format,
+                     sheet_name=matrix_meta.get('sheet_name'), header_row=matrix_meta.get('header_row', 1)) as reader:
+        header = next(reader, [])
+    auxiliary = {item['index'] for item in rep.get('auxiliary_columns', [])}
+    axis = {value for index, value in enumerate(header) if index > 0 and index not in auxiliary}
+    samples = [row for row in samples if row[cfg['sample_id']] in axis]
+    excluded_samples = {row[cfg['sample_id']] for row in samples if filter_field and row.get(filter_field) not in selection.get('allowed_values', [])}
+    samples = [row for row in samples if row[cfg['sample_id']] not in excluded_samples]
+    expected = {row[cfg['sample_id']] for row in samples}
+    pre = {row[cfg['sample_id']] for row in samples if row.get(cfg['visit_field']) in cfg['baseline_values']
+           and (not filter_field or row.get(filter_field) in selection.get('allowed_values', []))}
+    on = {row[cfg['sample_id']] for row in samples if row.get(cfg['visit_field']) in cfg.get('nonbaseline_values', [])}
+    unknown = [name for name in ('unit','transform','platform','genome_build','feature_identifier_system') if rep.get(name) in (None,'','UNKNOWN')]
+    unknown, limitation = reviewed_processing_unknowns(unknown, v3.get('processing_acceptance', {}),
+        field_map.get('decision_config', {}).get('preview', {}).get('split_policy'))
+    args = {'expected_sample_ids':expected,'pre_sample_ids':pre,'on_sample_ids':on,'selected_sample_ids':pre,
+        'expected_counts':v3['expected_counts'],'annotation_feature_ids':None,
+        'annotation_evidence_status':'DECLARED_ID_FORMAT_ONLY','feature_id_pattern':r'[A-Za-z0-9][A-Za-z0-9._-]*',
+        'annotation_label':rep.get('annotation','UNKNOWN'),'genome_build':rep.get('genome_build','UNKNOWN'),
+        'representation':role,'processing_documented':v3.get('documentation',{}).get(role,{}).get('status')=='DOCUMENTED',
+        'certification_level':'ID_FORMAT_AND_UNIQUENESS','feature_identity_limit':'No independent gene annotation is pinned.',
+        'delimiter':v3['delimiters'][role],'compressed':v3['compressed'][role], 'undocumented_fields':unknown,
+        'source_format':matrix_format,'sheet_name':matrix_meta.get('sheet_name'), 'header_row':matrix_meta.get('header_row', 1),
+        'excluded_sample_ids':excluded_samples,
+        'auxiliary_columns':rep.get('auxiliary_columns',[]),
+        'allow_negative':rep.get('unit')=='log_expression' and rep.get('transform') in {'LOG2','LN','LOG10'}}
+    evidence: dict[str, Any] | None = None
+    declaration = rep.get('derived_facts', {}).get('feature_identifier_system', {})
+    if declaration.get('rule') == 'GENE_SYMBOL_MAJORITY' and declaration.get('source_sha256') == matrix_sha:
+        from .object_evidence import derive_file_evidence
+        evidence = derive_file_evidence(matrix_path, source_sha256=matrix_sha, source_format='MATRIX_HEADER_TSV',
+                                        delimiter=v3['delimiters'][role], compressed=v3['compressed'][role],
+                                        auxiliary_columns=rep.get('auxiliary_columns', []))
+        if evidence['feature_identifier_system'].get('status') == 'DERIVED' and evidence['feature_identifier_system'].get('value') == 'GENE_SYMBOL':
+            args['excluded_feature_rows'] = evidence['excluded_rows']
+        else:
+            args['undocumented_fields'] = unknown + ['feature_identifier_system']
+    result = run_v3_with_fallback(matrix_path, None, primary_arguments=args, fallback_arguments=None)
+    if evidence is not None:
+        result['primary']['object_derived_evidence'] = evidence
+    if limitation:
+        result['primary']['processing_limitation'] = limitation
+        result['primary']['processing_acceptance_evidence'] = v3['processing_acceptance']['evidence']
+    hashes = {'primary':matrix_sha,'sample_inventory':sample_sha}
+    if patient_sha is not None:
+        hashes['patient_inventory'] = patient_sha
+    return {'schema_version':'1','checks_version':'V3','checks':result,
+            'source_sha256':hashes,'qc_policy':v3.get('qc_policy',{})}
+
+
 def _run_geo_primary_only(store: Path, field_map: dict[str, Any], output: Path) -> int:
     """Run source-preserving V3 checks without reading endpoint labels."""
     from .ingest import _expression_bindings, _parse_source
@@ -438,7 +566,6 @@ def _run_geo_primary_only(store: Path, field_map: dict[str, Any], output: Path) 
     recomputed: dict[str, Any] = {}
     feature_evidence: dict[str, Any] = {}
     if derived_declarations:
-        import gzip
         from .object_evidence import derive_file_evidence
         unit_declaration = derived_declarations.get('unit', {})
         raw_geo = geo_path.read_bytes()
@@ -489,6 +616,8 @@ def _run_geo_primary_only(store: Path, field_map: dict[str, Any], output: Path) 
     source_format = metadata['format']
     delimiter = config.get('delimiters', {}).get(role, '\t' if source_format == 'MATRIX_HEADER_TSV' else ',')
     compressed = config.get('compressed', {}).get(role, False)
+    geo_raw = geo_path.read_bytes()
+    geo_text = gzip.decompress(geo_raw).decode('utf-8') if geo_raw.startswith(b'\x1f\x8b') else geo_raw.decode('utf-8')
     args = {'expected_sample_ids': expected, 'pre_sample_ids': pre, 'on_sample_ids': on,
             'selected_sample_ids': selected, 'expected_counts': config['expected_counts'],
             'annotation_feature_ids': annotation_ids, 'annotation_evidence_status': identity_status,
@@ -497,6 +626,7 @@ def _run_geo_primary_only(store: Path, field_map: dict[str, Any], output: Path) 
             'representation': role, 'processing_documented': config.get('documentation', {}).get(role, {}).get('status') == 'DOCUMENTED',
             'certification_level': identity_evidence.get('certification_level', 'UNKNOWN'),
             'feature_identity_limit': identity_evidence.get('limit'), 'orientation': representation.get('orientation', 'samples_as_columns'),
+            'allow_negative': source_allows_negative(representation, geo_text),
             'source_format': source_format, 'delimiter': delimiter, 'compressed': compressed,
             'undocumented_fields': unknown, 'auxiliary_columns': representation.get('auxiliary_columns'),
             'missing_policy': representation.get('missing_policy', 'BLOCK'),
@@ -521,6 +651,13 @@ def main(argv: list[str] | None = None) -> int:
     try:
         field_map = _load_json(args.field_map)
         config = field_map["v3"]
+        if 'cbio_ingest' in field_map:
+            receipt = run_cbioportal_v3(args.store, field_map)
+            output = validate_output_path(args.out)
+            output.mkdir(parents=True, exist_ok=True)
+            (output / 'receipt.json').write_text(json.dumps(receipt,sort_keys=True,indent=2)+'\n')
+            (output / 'SUMMARY.json').write_text(json.dumps(patient_free_summary(receipt['checks']),sort_keys=True,indent=2)+'\n')
+            return 0
         if "geo_ingest" in field_map and not config.get("fallback_representation"):
             return _run_geo_primary_only(args.store, field_map, validate_output_path(args.out))
         source_hashes = {role: row["sha256"] for role, row in field_map["source_objects"].items()}

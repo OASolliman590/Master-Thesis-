@@ -78,9 +78,19 @@ from pathlib import Path
 
 
 @contextmanager
-def matrix_rows(path: Path, *, delimiter: str, compressed: bool, source_format: str) -> Iterator[Iterator[list[str]]]:
+def matrix_rows(path: Path, *, delimiter: str, compressed: bool, source_format: str,
+                sheet_name: str | None = None, header_row: int = 1,
+                selected_columns: set[int] | None = None) -> Iterator[Iterator[list[str]]]:
     """Read delimited or XLSX matrix rows from a verified source path."""
-    if source_format == 'XLSX_NUMERIC':
+    if source_format == 'XLSX_NAMED_STREAM':
+        from .xlsx import iter_xlsx_sheet
+        if not sheet_name or header_row < 1:
+            raise ValueError('MATRIX_FORMAT_UNSUPPORTED')
+        rows = iter_xlsx_sheet(path, sheet_name, selected_columns=selected_columns)
+        for _ in range(header_row - 1):
+            next(rows)
+        yield rows
+    elif source_format == 'XLSX_NUMERIC':
         from .xlsx import read_numeric_xlsx
         header, data = read_numeric_xlsx(path.read_bytes())
         yield iter([list(header)] + [[str(value) for value in row] for row in data])

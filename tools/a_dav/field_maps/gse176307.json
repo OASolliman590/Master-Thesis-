@@ -86,7 +86,7 @@
   "measurement_representations": {
     "log_transformed_expression": {
       "unit": "log-transformed filtered read counts; exact scale after centering/scaling not further specified",
-      "transform": "log2(1+x), median centered, upper quartile scaled",
+      "transform": "UNKNOWN",
       "genome_build": "GRCh38 v.22",
       "annotation": "Ensembl protein-coding annotation; filtered gene set reported as 16,901",
       "annotation_source_object_role": null,
@@ -94,12 +94,14 @@
       "modality": "RNA_SEQ",
       "evidence": {
         "unit": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
-        "transform": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
+        "transform": "UNKNOWN: docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md#5 distinguishes deposited log-transformed file from other median-centered analyses",
         "genome_build": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
         "annotation": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176307&targ=gsm&form=text&view=brief",
-        "feature_identifier_system": "UNKNOWN: GEO processing text says Ensemble protein-coding annotation but does not identify matrix row key type."
+        "feature_identifier_system": "UNKNOWN: GEO processing text says Ensemble protein-coding annotation but does not identify matrix row key type.",
+        "negative_values": "UNKNOWN: median-centering of the deposited BACI file is unverified"
       },
-      "orientation": "samples_as_rows"
+      "orientation": "samples_as_rows",
+      "negative_values_allowed": false
     },
     "conversion": "PROHIBITED"
   },
@@ -110,119 +112,6 @@
     ],
     "baseline_specimen_patient_links": 90,
     "baseline_bor_patients": 89
-  },
-  "proposal_generation": {
-    "episode": {
-      "id_template": "{patient_uid}:index",
-      "regimen_id": "invented-regimen",
-      "index_event": "START_OF_INVENTED_TREATMENT",
-      "start_day": null,
-      "stop_day": null,
-      "timing_precision": "UNKNOWN",
-      "episode_status": "VERIFIED",
-      "source_locators": [
-        "invented-methods"
-      ]
-    },
-    "exposure": {
-      "id_template": "{patient_uid}:exposure",
-      "regimen_id": "invented-regimen",
-      "agent": "invented-agent",
-      "pharmacological_class": "ICI",
-      "sequence": "INDEX",
-      "monotherapy_or_combination": "MONOTHERAPY",
-      "line_of_therapy": "NOT_REPORTED",
-      "prior_ici_field": "prior_ici",
-      "prior_ici_map": {
-        "YES": "YES",
-        "NO": "NO",
-        "UNKNOWN": "UNKNOWN"
-      },
-      "certainty": "VERIFIED",
-      "source_locators": [
-        {
-          "kind": "INVENTED",
-          "value": "invented-methods"
-        }
-      ]
-    },
-    "binding": {
-      "id_template": "{subject_type}:{subject_id}:index",
-      "role_by_subject_type": {
-        "TREATMENT_EXPOSURE": "TREATMENT_COMPONENT",
-        "SPECIMEN": "PRE_INDEX_BASELINE",
-        "CLINICAL_OUTCOME": "OUTCOME_ASSESSMENT"
-      },
-      "source_locators": [
-        "invented-methods"
-      ]
-    },
-    "timing": {
-      "version": "invented-timing-v1",
-      "index_event": "START_OF_INVENTED_TREATMENT",
-      "source_locator": "invented-methods"
-    },
-    "overlap": {
-      "edge_id": "invented-overlap",
-      "external_node": {
-        "node_type": "STUDY",
-        "node_id": "invented-comparator"
-      },
-      "edge_type": "OTHER",
-      "certainty": "UNRESOLVED",
-      "implication_for_independence": "UNKNOWN",
-      "evidence": "Invented independence is unknown.",
-      "source_locators": [
-        {
-          "kind": "INVENTED",
-          "value": "invented-overlap"
-        }
-      ],
-      "single_cohort_disposition": "NON_BLOCKING",
-      "joint_split_disposition": "BLOCKING"
-    },
-    "prior_exposure": {
-      "id": "invented-prior-use",
-      "subject_type": "STUDY_FAMILY",
-      "analysis_lineage_id": "invented-lineage",
-      "fields_accessed": [
-        "study_identity"
-      ],
-      "use": "METADATA_INSPECTION",
-      "occurred_utc": null,
-      "date_precision": "UNKNOWN",
-      "actor_role": "SOURCE_REVIEWER",
-      "independence_implication": "METADATA_ONLY_REVIEWED",
-      "source_locators": [
-        "invented-review"
-      ]
-    },
-    "stage_config": {
-      "admission": {
-        "required_source_roles": [
-          "geo_family_soft",
-          "author_clinical_table",
-          "invented_expression"
-        ]
-      },
-      "overlap": {
-        "review_complete": false
-      },
-      "exposure": {
-        "analysis_lineage_id": "invented-lineage",
-        "review_complete": false
-      },
-      "split": {
-        "version": "invented-v1",
-        "analysis_lineage_id": "invented-lineage",
-        "selection_basis": "PRESPECIFIED_METADATA",
-        "performance_observed": false,
-        "policy": {
-          "permanent_role": "DEVELOPMENT",
-          "prior_exposure_state": "METADATA_ONLY"
-        }
-      }
-    }
   },
   "v3": {
     "primary_representation": "log_transformed_expression",
@@ -280,6 +169,171 @@
       "title_regex": "^Patient sample (?P<sample>BACI[0-9]+)(?:_[0-9]+)?$",
       "review_required": true,
       "evidence": "GEO family titles and deposited matrix row identifiers; repeated patient profiles require review."
+    }
+  },
+  "decision_config": {
+    "preview": {
+      "required_roles": [
+        "geo_family_soft",
+        "log_transformed_expression"
+      ],
+      "split_policy": "UNKNOWN"
+    },
+    "proposed_policies": {
+      "split": "DEVELOPMENT",
+      "exposure": "METADATA_ONLY",
+      "prior_ici": "UNKNOWN_ALLOWED_DEVELOPMENT"
+    },
+    "review_items": {
+      "items": [
+        {
+          "category": "SPLIT_ROLE_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Propose DEVELOPMENT pending user confirmation."
+        },
+        {
+          "category": "EXPOSURE_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Propose METADATA_ONLY pending user confirmation."
+        },
+        {
+          "category": "PRIOR_ICI_REVIEW_REQUIRED",
+          "role": "geo_family_soft",
+          "question": "Keep prior ICI UNKNOWN unless the source documents it."
+        },
+        {
+          "category": "FEATURE_COUNT_DISCREPANCY",
+          "role": "log_transformed_expression",
+          "question": "The GEO processing statement describes 16,901 genes while the matrix has 16,383 feature columns; review the source discrepancy without remapping."
+        },
+        {
+          "category": "DUPLICATE_PROFILE_REVIEW_REQUIRED",
+          "role": "log_transformed_expression",
+          "question": "Review whether the duplicated patient/sample records correspond to one profile; the available matrix row does not establish a tie rule."
+        }
+      ]
+    }
+  },
+  "worksheet_prefill": {
+    "default_status": "BLOCKED_UNKNOWN",
+    "source_items": {
+      "SPLIT_ROLE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose DEVELOPMENT pending user confirmation.",
+        "evidence_pointers": []
+      },
+      "EXPOSURE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Propose METADATA_ONLY pending user confirmation.",
+        "evidence_pointers": []
+      },
+      "PRIOR_ICI_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Keep prior ICI UNKNOWN unless the source documents it.",
+        "evidence_pointers": []
+      },
+      "COHORT_BASELINE_TIMING_UNVERIFIED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "The cohort context supports pretreatment material but individual biopsy timing remains unverified; review before admission.",
+        "evidence_pointers": []
+      },
+      "DUPLICATE_GEO_PATIENT_VISIT": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Two GEO sample records share a patient and visit; review the duplicate profile and retain both until a source-supported selection is approved.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_BINDING_AMBIGUOUS": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "The matrix row identifier matches more than one GEO title under the declared rule; do not select a record without review.",
+        "evidence_pointers": []
+      },
+      "EXPRESSION_BINDING_RULE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the row-identifier-to-title correspondence; do not infer a match from format alone.",
+        "evidence_pointers": []
+      },
+      "V3_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "SUGGESTED ONLY: keep blocked pending deposited-file scale, 518-gene discrepancy, timing and source response definition. No assumption that this BACI file is median-centered.",
+        "evidence_pointers": [
+          {
+            "type": "SOURCE_NOTE",
+            "path": "docs/research/cohort_sources/BATCH3_EVIDENCE_20261030.md"
+          }
+        ]
+      },
+      "FEATURE_COUNT_DISCREPANCY": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "The GEO processing statement describes 16,901 genes while the matrix has 16,383 feature columns; review the source discrepancy without remapping.",
+        "evidence_pointers": []
+      },
+      "DUPLICATE_PROFILE_REVIEW_REQUIRED": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review whether the duplicated patient/sample records correspond to one profile; the available matrix row does not establish a tie rule.",
+        "evidence_pointers": []
+      }
+    },
+    "gates": {
+      "V0": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V1": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V2": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V3": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V4": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V5": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V6": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V7": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      },
+      "V8": {
+        "status": "BLOCKED_UNKNOWN",
+        "decision": "Review the pinned GEO and paper evidence before signing.",
+        "evidence_pointers": []
+      }
+    }
+  },
+  "treatment_proposal": {
+    "agent_source": "GEO_CHARACTERISTIC",
+    "agent_field": "io.therapy",
+    "source_locator": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/soft/GSE176307_family.soft.gz",
+    "regimen_id": "REGIMEN:gse176307:INDEX",
+    "index_event": "START_OF_INDEX_TREATMENT",
+    "pharmacological_class": "ICI",
+    "agent_class_map": {
+      "Pembrolizumab": "ANTI_PD_1",
+      "Nivolumab": "ANTI_PD_1",
+      "Atezolizumab": "ANTI_PD_L1",
+      "Durvalumab": "ANTI_PD_L1",
+      "Avelumab": "ANTI_PD_L1"
     }
   }
 }
