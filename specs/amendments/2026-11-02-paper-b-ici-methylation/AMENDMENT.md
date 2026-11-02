@@ -1,6 +1,6 @@
-# Paper B secondary B-ICIM: immune-gene methylation in ICI-treated tumours, DRAFT v2, 2 Nov 2026
+# Paper B secondary B-ICIM: immune-gene methylation in ICI-treated tumours, v2, signed 2 Nov 2026
 
-**Status: DRAFT v2 for signature.** It follows the user's requests of 2 Nov 2026 ("Draft it with Astra"; centre it on immunity and the 11 panels; then "investigate all the genes related to the anti-cancer effect of immunity or the success of immunotherapy, including the targets of immunotherapy"), and Astra's high review (`REVIEW_ASTRA_HIGH.md`, verdict "add minimal version"), whose defaults are adopted here. It adds one secondary to Paper B. **B-P is unchanged and isolated.** No B-ICIM gene, probe, sign, QC choice or result may modify B-P, use CPC-GENE, or rewrite the TCGA-only hand-off. B-MX and B-V are unchanged.
+**Status: SIGNED by the user on 2 Nov 2026 ("I sign it"), as v2.** It follows the user's requests of 2 Nov 2026 ("Draft it with Astra"; centre it on immunity and the 11 panels; then "investigate all the genes related to the anti-cancer effect of immunity or the success of immunotherapy, including the targets of immunotherapy"), and Astra's high review (`REVIEW_ASTRA_HIGH.md`, verdict "add minimal version"), whose defaults are adopted here. It adds one secondary to Paper B. **B-P is unchanged and isolated.** No B-ICIM gene, probe, sign, QC choice or result may modify B-P, use CPC-GENE, or rewrite the TCGA-only hand-off. B-MX and B-V are unchanged.
 
 ## Question (outcome-free)
 **Is promoter DNA methylation associated with the expression of immune-related genes, after tumour-purity adjustment, in pretreatment tumours from patients who then received ICI, and does the pattern resemble TCGA?**
