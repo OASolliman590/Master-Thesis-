@@ -32,3 +32,14 @@ Signed for DEVELOPMENT use (loaded by Luna into `.scratch/runtime/<c>/simple/`):
 | gse218989 | 355 | lung | SOURCE_BINARY (GEO `treatment outcome`: Responder 168 / Non-responder 187). Not ORR | Biopsy timing not stated in GEO; protein-coding TPM |
 | gse159067 | 102 | head and neck | ORR (GEO `best response on immunotherapy (recist)`: CR 5 / PR 6 / SD 27 / PD 64) | Targeted log2-CPM panel (2,567 genes); pre-treatment per the series design |
 Not signed: gse145996 and gse165278 have no per-patient response in GEO (their papers may resolve it).
+
+## Batch B (user, 2 Nov 2026: "I sign the four")
+Signed for DEVELOPMENT use (loaded by Luna into `.scratch/runtime/<c>/simple/`; reviewed by the coordinator):
+| Cohort | Patients | Cancer | Endpoint | Main caveats |
+| --- | ---: | --- | --- | --- |
+| gse93157 | 65 | melanoma, lung (non-squamous, squamous), head and neck; `cancer` column per patient | ORR from GEO `best.resp` (CR 3 / PR 17 / SD 16 / PD 29) | NanoString 730-gene panel; log2 HK-normalised scale inferred from the values; the contradictory GEO `response` field is ignored; 32 of 65 biopsies archival |
+| gse67501 | 11 | kidney (PD-L1-positive RCC) | ORR from the CR/PR/SD/NR characteristic (CR 2 / PR 2 / SD 2 / NR 5) | Specimens predate nivolumab by months to years; probe-level with probe_to_gene map |
+| gse122220 | 10 | melanoma | ORR (CR 2 / PR 2 / SD 1 / PD 5) | 2 dual ipilimumab + anti-PD-1 kept (drug class per patient); 8 had prior ipilimumab; probe-level with map |
+| gse111636 | 11 | bladder (pembrolizumab) | SOURCE_BINARY (`treatment response`: responder 6 / progressor 5). Not ORR | Submitter RMA + ComBat values; probe-level with map; no linked paper |
+
+**Not signed:** gse140901 (liver, 24) is on hold: its paper reports single-agent or combination ICI therapy and GEO gives no per-patient regimen. gse99070 is on hold (no ICI treatment shown); gse207422 is a combination study (combination paper only); the TCGA melanoma ICI subset is excluded.

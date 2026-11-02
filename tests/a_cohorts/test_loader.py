@@ -51,6 +51,61 @@ def test_compressed_tsv_matrix_source(tmp_path):
     assert target.read_text() == 'gene\tp2\ng1\t2\n'
 
 
+def test_hash_comment_prefixed_matrix_source(tmp_path):
+    source = tmp_path / 'nanostring.txt.gz'
+    with gzip.open(source, 'wt', encoding='utf-8') as stream:
+        stream.write('# Example matrix\n# Normalized signal\n"# Ignore this row"\n\n')
+        stream.write('ID_REF\tS01\tS02\nA2M\t12.5\t11.0\n')
+    target = tmp_path / 'out.tsv'
+    genes, duplicates = core.project_matrix(
+        source, target, {'S02': 'patient'},
+        {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True,
+         'skip_hash_comment_rows': True})
+    assert (genes, duplicates) == (1, 0)
+    assert target.read_text() == 'gene\tpatient\nA2M\t11.0\n'
+
+
+def test_series_matrix_wrapper_rows_are_projected(tmp_path):
+    source = tmp_path / 'series_matrix.txt.gz'
+    with gzip.open(source, 'wt', encoding='utf-8') as stream:
+        stream.write('!Series_title\t"Fixture"\n!series_matrix_table_begin\n')
+        stream.write('ID_REF\tsample_a\tsample_b\nA2M\t1.5\t2.5\n!series_matrix_table_end\n')
+    target = tmp_path / 'out.tsv'
+    genes, duplicates = core.project_matrix(
+        source, target, {'sample_a': 'patient'},
+        {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True,
+         'geo_series_matrix': True})
+    assert (genes, duplicates) == (1, 0)
+    assert target.read_text() == 'gene\tpatient\nA2M\t1.5\n'
+
+
+def test_soft_probe_map_preserves_unmapped_and_multi_probe_counts(tmp_path):
+    soft = b'''!platform_table_begin
+ID\tSymbol\tEntrez_Gene_ID
+probe_a\tGENE_A\t101
+probe_b\tGENE_A\t101
+probe_c\t\t
+!platform_table_end
+'''
+    expression = tmp_path / 'expression.tsv'
+    expression.write_text('gene\tsynthetic_column\nprobe_a\t1\nprobe_b\t2\nprobe_c\t3\n')
+    target = tmp_path / 'probe_to_gene.tsv'
+    counts = core.write_probe_to_gene_map(soft, expression, target)
+    assert counts == {'mapped': 2, 'unmapped': 1, 'multi_probe_symbols': 1}
+    assert target.read_text() == ('probe_id\tgene_symbol\tentrez_id\n'
+                                  'probe_a\tGENE_A\t101\n'
+                                  'probe_b\tGENE_A\t101\n'
+                                  'probe_c\t\t\n')
+
+
+def test_gse93157_log2_scale_accepts_a_few_negative_values(tmp_path):
+    expression = tmp_path / 'expression.tsv'
+    expression.write_text('gene\ta\tb\tc\td\te\ng1\t-1.5\t7\t7.7\t8\t18\n')
+    summary = core.check_gse93157_scale(expression)
+    assert summary['negative_values'] == 1
+    assert summary['minimum'] == -1.5
+
+
 def test_named_xlsx_matrix_source(tmp_path):
     source = tmp_path / 'in.xlsx'
     files = {

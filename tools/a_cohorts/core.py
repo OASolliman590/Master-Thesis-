@@ -18,7 +18,8 @@ VERSION = 'simple-3'
 ADMITTED = {'riaz_gse91061': 'admitted-20261029', 'hugo_gse78220': 'admitted-20261029e',
             'gse168204': 'admitted-20261029e', 'liu2019': 'admitted-20261030d'}
 
-SIMPLE_GEO = {'gse218989', 'gse159067', 'gse145996', 'gse165278'}
+SIMPLE_GEO = {'gse218989', 'gse159067', 'gse145996', 'gse165278',
+              'gse93157', 'gse67501', 'gse122220', 'gse140901', 'gse111636'}
 SUPPORTED_COHORTS = set(ADMITTED) | {'gse135222', 'gse136961', 'gse176307', 'braun2020', 'vanallen2015', 'gide2019', 'kim2018'} | SIMPLE_GEO
 
 def registry():
@@ -195,6 +196,82 @@ def write_rows(path, rows, columns):
         writer.writerows(rows)
 
 
+def expected_output_names(cohort):
+    names = ['expression.tsv', 'clinical.tsv', 'caveats.md']
+    if cohort in {'gse67501', 'gse122220', 'gse111636'}:
+        names.append('probe_to_gene.tsv')
+    return names
+
+
+def _soft_platform_rows(soft_raw):
+    import gzip
+    text = gzip.decompress(soft_raw).decode('utf-8') if soft_raw.startswith(b'\x1f\x8b') else soft_raw.decode('utf-8')
+    if '!platform_table_begin\n' not in text or '!platform_table_end' not in text:
+        raise ValueError('GEO SOFT has no platform annotation table')
+    table = text.split('!platform_table_begin\n', 1)[1].split('!platform_table_end', 1)[0]
+    return list(csv.DictReader(table.splitlines(), delimiter='\t'))
+
+
+def write_probe_to_gene_map(soft_raw, expression_path, target):
+    """Write a probe-level table from the expression rows and SOFT platform annotation."""
+    from collections import Counter
+    annotation = {}
+    for row in _soft_platform_rows(soft_raw):
+        probe = (row.get('ID') or '').strip()
+        if not probe or probe in annotation:
+            raise ValueError('Missing or duplicate SOFT platform probe ID')
+        symbol = (row.get('Symbol') or '').strip()
+        entrez_key = next((key for key in row if key.lower() in {'entrez_gene_id', 'entrez id'}), None)
+        entrez = (row.get(entrez_key) or '').strip() if entrez_key else ''
+        if symbol in {'---', 'NA', 'N/A', 'NULL'}:
+            symbol = ''
+        if entrez in {'---', 'NA', 'N/A', 'NULL'}:
+            entrez = ''
+        annotation[probe] = (symbol, entrez)
+    with expression_path.open(newline='') as stream:
+        reader = csv.reader(stream, delimiter='\t')
+        next(reader)
+        probes = [row[0] for row in reader]
+    if not probes or len(set(probes)) != len(probes):
+        raise ValueError('Expression probe IDs are empty or duplicated')
+    missing = set(probes) - set(annotation)
+    if missing:
+        raise ValueError('Expression probes are missing from the SOFT platform table')
+    symbols = Counter()
+    mapped = unmapped = 0
+    rows = []
+    for probe in probes:
+        symbol, entrez = annotation[probe]
+        if symbol:
+            mapped += 1
+            symbols[symbol] += 1
+        else:
+            unmapped += 1
+        rows.append({'probe_id': probe, 'gene_symbol': symbol, 'entrez_id': entrez})
+    write_rows(target, rows, ['probe_id', 'gene_symbol', 'entrez_id'])
+    return {'mapped': mapped, 'unmapped': unmapped,
+            'multi_probe_symbols': sum(count > 1 for count in symbols.values())}
+
+
+def check_gse93157_scale(expression_path):
+    from statistics import median
+    values = []
+    with expression_path.open(newline='') as stream:
+        reader = csv.reader(stream, delimiter='\t')
+        next(reader)
+        for row in reader:
+            values.extend(float(value) for value in row[1:])
+    if not values or not all(math.isfinite(value) for value in values):
+        raise ValueError('GSE93157 expression has no finite values')
+    summary = {'minimum': min(values), 'maximum': max(values), 'median': median(values),
+               'negative_values': sum(value < 0 for value in values)}
+    if not (-2.5 <= summary['minimum'] <= -0.5 and 15 <= summary['maximum'] <= 21
+            and 6.5 <= summary['median'] <= 9
+            and summary['negative_values'] <= max(10, len(values) * 0.01)):
+        raise ValueError('GSE93157 matrix values do not match the expected log2 NanoString scale')
+    return summary
+
+
 def export_admitted(cohort, output, row):
     base = safe_path(RUNTIME / cohort / ADMITTED[cohort])
     products = base / 'products'
@@ -261,9 +338,10 @@ def input_files(cohort):
         manifest_path = safe_path(RUNTIME / cohort / 'store/MANIFEST.json')
         paths.append(manifest_path)
         manifest = json.loads(manifest_path.read_text())
-        hashes = [digest for digest in manifest.get('objects', {})]
-        if len(hashes) != 2:
-            raise ValueError('Expected one GEO SOFT and one expression object')
+        hashes = [digest for digest, entry in manifest.get('objects', {}).items()
+                  if cohort != 'gse111636' or any(part in entry.get('locator', '') for part in ('/matrix/', 'family.soft'))]
+        if len(hashes) != (3 if cohort == 'gse140901' else 2):
+            raise ValueError('Unexpected number of pinned GEO source objects')
     else:
         field = ROOT / 'tools/a_dav/field_maps' / (cohort + '.json')
         packet = safe_path(RUNTIME / cohort / 'ingest-20261030/records/ingestion_packet.json')
@@ -295,10 +373,11 @@ def validate(cohort):
         raise ValueError('Stale output manifest')
     if input_files(cohort) != manifest.get('input_files'):
         raise ValueError('Stale source or configuration')
+    expected_outputs = set(expected_output_names(cohort))
     for name, expected in manifest['output_sha256'].items():
-        if name not in {'expression.tsv', 'clinical.tsv', 'caveats.md'} or sha256(safe_path(output / name)) != expected:
+        if name not in expected_outputs or sha256(safe_path(output / name)) != expected:
             raise ValueError('Output hash mismatch')
-    if set(manifest['output_sha256']) != {'expression.tsv', 'clinical.tsv', 'caveats.md'}:
+    if set(manifest['output_sha256']) != expected_outputs:
         raise ValueError('Incomplete output hashes')
     with (output / 'expression.tsv').open(newline='') as f:
         header = next(csv.reader(f, delimiter='\t'))
@@ -334,12 +413,23 @@ def load(cohort):
             columns[10:10] = ['pfs_event', 'os_event', 'hot_score', 'hot_phenotype']
         if cohort == 'gse218989':
             columns.append('treatment_outcome')
+        if cohort == 'gse111636':
+            columns.append('treatment_outcome')
+        if cohort in {'gse93157', 'gse140901'}:
+            columns.append('cancer')
+        if cohort == 'gse93157':
+            columns.append('biopsy')
+        if cohort == 'gse67501':
+            columns += ['specimen_origin', 'therapy_interval_months']
+        if cohort == 'gse122220':
+            columns.append('previous_ipilimumab')
         write_rows(stage / 'clinical.tsv', clinical, columns)
         (stage / 'caveats.md').write_text('# Caveats\n\n- ' + '\n- '.join([row['caveats'], *caveats]) + '\n')
+        output_names = expected_output_names(cohort)
         manifest = {'cohort': cohort, 'loader_version': VERSION, 'input_sha256': hashes,
                     'patients': len(clinical), 'genes': genes,
                     'status': 'ADMITTED' if cohort in ADMITTED else 'PENDING_BATCH_REVIEW', 'input_files': inputs,
-                    'output_sha256': {name: sha256(stage / name) for name in ('expression.tsv', 'clinical.tsv', 'caveats.md')}}
+                    'output_sha256': {name: sha256(stage / name) for name in output_names}}
         (stage / 'manifest.json').write_text(json.dumps(manifest, indent=2, sort_keys=True) + '\n')
         with (stage / 'expression.tsv').open(newline='') as f:
             header = next(csv.reader(f, delimiter='\t'))
@@ -380,9 +470,12 @@ def export_simple_geo(cohort, output):
     manifest = json.loads(safe_path(store / 'MANIFEST.json').read_text())
     objects = manifest.get('objects', {})
     soft_entry = next((v for v in objects.values() if 'family.soft' in v.get('locator', '')), None)
-    matrix_entry = next((v for v in objects.values() if 'family.soft' not in v.get('locator', '')), None)
-    if not soft_entry or not matrix_entry or len(objects) != 2:
-        raise ValueError('Expected one GEO SOFT and one expression object')
+    if cohort == 'gse140901':
+        matrix_entry = next((v for v in objects.values() if '/suppl/' in v.get('locator', '')), None)
+    else:
+        matrix_entry = next((v for v in objects.values() if '/matrix/' in v.get('locator', '')), None)
+    if not soft_entry or not matrix_entry:
+        raise ValueError('Missing pinned GEO SOFT or expression object')
     soft_hash = soft_entry['receipt']['complete_sha256']
     matrix_hash = matrix_entry['receipt']['complete_sha256']
     soft_path = safe_path(store / 'objects' / soft_hash)
@@ -404,18 +497,23 @@ def export_simple_geo(cohort, output):
     sample_by_matrix_id = {}
     parsed = {}
     selected_samples = []
+    new_cohorts = {'gse93157', 'gse67501', 'gse122220', 'gse140901', 'gse111636'}
     for sample in samples:
         attrs = {x['key'].strip().lower(): x['value'].strip() for x in sample['characteristics']}
         title = sample['title'].strip()
-        timing = 'UNKNOWN'
-        if cohort == 'gse159067':
+        timing = 'PRE_TREATMENT' if cohort in new_cohorts else 'UNKNOWN'
+        if cohort == 'gse140901':
+            title_match = re.fullmatch(r'HCC\s+(S\d+)', title)
+            matrix_id = title_match.group(1) if title_match else ''
+        elif cohort in new_cohorts:
+            matrix_id = sample['accession']
+        elif cohort == 'gse159067':
             matrix_id = descriptions.get(sample['accession'], '')
             timing = 'PRE_TREATMENT'
-        elif cohort == 'gse218989':
+        elif cohort in {'gse218989', 'gse145996'}:
             matrix_id = title
-        elif cohort == 'gse145996':
-            matrix_id = title
-            timing = 'PRE_TREATMENT'
+            if cohort == 'gse145996':
+                timing = 'PRE_TREATMENT'
         else:
             matrix_id = title
             treatment = attrs.get('treatment', '').strip().lower()
@@ -432,6 +530,18 @@ def export_simple_geo(cohort, output):
         selected_samples.append((sample, matrix_id, timing))
     mapping = {matrix_id: sample['title'] for sample, matrix_id, _ in selected_samples}
 
+    if cohort in new_cohorts:
+        actual_headers = set(_geo_matrix_header(
+            matrix_path, compressed=True, skip_hash_comment_rows=cohort == 'gse140901',
+            series_matrix=cohort != 'gse140901')[1:])
+        if actual_headers != set(mapping) or len(actual_headers) != len(mapping):
+            raise ValueError('GEO expression columns do not map one-to-one through SOFT')
+
+    probe_symbols = None
+    unmapped_features = 0
+    multi_probe_symbols = 0
+    if cohort == 'gse111636':
+        probe_symbols, unmapped_features, multi_probe_symbols = _gse111636_gene_map(soft_raw, matrix_path)
     if cohort == 'gse145996':
         cfg = {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True}
     elif cohort == 'gse165278':
@@ -439,15 +549,94 @@ def export_simple_geo(cohort, output):
                'sheet_name': 'Sheet 1', 'header_row': 1}
     else:
         cfg = {'format': 'MATRIX_HEADER_TSV', 'delimiter': '\t', 'compressed': True}
+    if cohort in {'gse93157', 'gse67501', 'gse122220', 'gse111636'}:
+        cfg['geo_series_matrix'] = True
+    if cohort == 'gse140901':
+        cfg['skip_hash_comment_rows'] = True
+    if cohort == 'gse93157':
+        cfg['skip_incomplete_features'] = True
     genes, duplicates = project_matrix(matrix_path, output / 'expression.tsv', mapping, cfg,
                                        skip_empty_features=cohort == 'gse165278')
+    scale_summary = check_gse93157_scale(output / 'expression.tsv') if cohort == 'gse93157' else None
+    probe_map_counts = None
+    if cohort in {'gse67501', 'gse122220'}:
+        probe_map_counts = write_probe_to_gene_map(
+            soft_raw, output / 'expression.tsv', output / 'probe_to_gene.tsv')
+    if cohort == 'gse111636':
+        with (output / 'expression.tsv').open(newline='') as stream:
+            reader = csv.reader(stream, delimiter='\t')
+            next(reader)
+            probes = [row[0] for row in reader]
+        write_rows(output / 'probe_to_gene.tsv',
+                   [{'probe_id': p, 'gene_symbol': probe_symbols.get(p, ''), 'entrez_id': ''} for p in probes],
+                   ['probe_id', 'gene_symbol', 'entrez_id'])
 
     clinical = []
     for sample, _, timing in selected_samples:
         attrs = parsed[sample['accession']]
         response = attrs.get('best response on immunotherapy (recist)', '')
         binary = attrs.get('treatment outcome', '')
-        if cohort == 'gse218989':
+        extras = {}
+        if cohort in new_cohorts:
+            if cohort == 'gse93157':
+                response = attrs.get('best.resp', '')
+                orr, benefit = orr_category(response), 'UNKNOWN'
+                cancer = {'MELANOMA': 'melanoma', 'LUNG NON-SQUAMOUS CANCER': 'lung non-squamous',
+                          'SQUAMOUS LUNG CANCER': 'lung squamous', 'HEADNECK': 'head and neck'}.get(
+                              sample.get('source_name_ch1', '').strip().upper(), 'UNKNOWN')
+                extras = {'cancer': cancer, 'biopsy': attrs.get('biopsy', 'UNKNOWN')}
+                pfs, pfs_event = attrs.get('pfs', ''), attrs.get('pfse', '')
+                drug = attrs.get('drug', 'UNKNOWN').upper()
+                endpoint_source = 'GEO SOFT characteristic: best.resp'
+                endpoint_definition = 'ORR: CR/PR versus SD/PD; original best.resp category retained.'
+                raw_orr, raw_benefit = response, ''
+            elif cohort == 'gse67501':
+                response_key = next((k for k in attrs if k.startswith('response to anti-pd-1') and '(complete response' in k), '')
+                response = attrs.get(response_key, '')
+                orr = 'R' if response.upper() in {'CR', 'PR'} else ('NR' if response.upper() in {'SD', 'NR'} else 'UNKNOWN')
+                benefit = 'UNKNOWN'
+                extras = {'specimen_origin': attrs.get('primary tumor or metastasis', 'UNKNOWN'),
+                          'therapy_interval_months': attrs.get('interval between specimen collection and anti-pd1 therapy (months)', 'UNKNOWN')}
+                pfs = pfs_event = ''
+                drug = 'NIVOLUMAB'
+                endpoint_source = 'GEO SOFT characteristic: CR/PR/SD/NR response field'
+                endpoint_definition = 'ORR: CR/PR versus SD/NR; original category retained.'
+                raw_orr, raw_benefit = response, ''
+            elif cohort == 'gse122220':
+                response_key = next((k for k in attrs if k.startswith('response (')), '')
+                response = attrs.get(response_key, '')
+                orr, benefit = orr_category(response), 'UNKNOWN'
+                treatment = attrs.get('treatment', '').upper()
+                drug = 'ANTI_CTLA4_PLUS_ANTI_PD1' if treatment == 'IPILIMUMAB+PD1' else 'ANTI_PD1'
+                extras = {'previous_ipilimumab': attrs.get('previous ipilumimab', 'UNKNOWN')}
+                pfs = pfs_event = ''
+                endpoint_source = 'GEO SOFT characteristic: response (PD/SD/PR/CR)'
+                endpoint_definition = 'ORR: CR/PR versus SD/PD; original category retained.'
+                raw_orr, raw_benefit = response, ''
+            elif cohort == 'gse140901':
+                response = attrs.get('best_response', '')
+                orr = orr_category(response)
+                binary = attrs.get('clinical_benefit_response', '')
+                benefit = {'YES': 'R', 'NO': 'NR'}.get(binary.upper(), 'UNKNOWN')
+                extras = {'cancer': 'liver (HCC)'}
+                pfs, pfs_event = attrs.get('pfs_time', ''), attrs.get('pfs_event', '')
+                os_value, os_event = attrs.get('os_time', ''), attrs.get('os_event', '')
+                drug = 'ICI_BASED_UNSPECIFIED'
+                endpoint_source = 'GEO SOFT characteristics: best_response; clinical_benefit_response'
+                endpoint_definition = 'ORR uses best_response (PR/SD/PD); separate SOURCE_BINARY clinical benefit uses clinical_benefit_response.'
+                raw_orr, raw_benefit = response, binary
+            else:
+                binary = attrs.get('treatment response', '')
+                orr = benefit = 'UNKNOWN'
+                pfs = pfs_event = ''
+                drug = 'ANTI_PD1'
+                endpoint_source = 'GEO SOFT characteristic: treatment response'
+                endpoint_definition = 'SOURCE_BINARY; responder/progressor source labels retained; SOFT does not define this as RECIST.'
+                raw_orr, raw_benefit = '', ''
+                extras['treatment_outcome'] = binary
+            if cohort != 'gse140901':
+                os_value, os_event = '', ''
+        elif cohort == 'gse218989':
             benefit = 'UNKNOWN'
             orr = 'UNKNOWN'
             endpoint_source = 'GEO SOFT characteristic: treatment outcome'
@@ -466,21 +655,24 @@ def export_simple_geo(cohort, output):
             endpoint_source = 'No per-sample response characteristic in GEO SOFT'
             endpoint_definition = 'Response UNKNOWN; sample-title prefixes were not interpreted as response labels.'
             raw_orr = raw_benefit = ''
-        pfs = attrs.get('pfs (month)', '')
-        os_value = attrs.get('os (month)', '')
+        if cohort not in new_cohorts:
+            pfs = attrs.get('pfs (month)', '')
+            os_value = attrs.get('os (month)', '')
         clinical.append({
             'patient_id': sample['title'], 'sample_id': sample['accession'],
             'timepoint': timing,
-            'drug_class': {'gse218989': 'ANTI_PD_1_PD_L1', 'gse159067': 'ANTI_PD_1_PD_L1',
+            'drug_class': drug if cohort in new_cohorts else {'gse218989': 'ANTI_PD_1_PD_L1', 'gse159067': 'ANTI_PD_1_PD_L1',
                            'gse145996': 'ANTI_PD_1', 'gse165278': 'ANTI_CTLA_4'}[cohort],
             'prior_ici': 'UNKNOWN', 'orr': orr, 'clinical_benefit': benefit,
-            'pfs': f'{pfs} months' if pfs else 'UNKNOWN',
+            'pfs': (str(pfs) if cohort == 'gse93157' else f'{pfs} months') if pfs else 'UNKNOWN',
             'os': f'{os_value} months' if os_value else 'UNKNOWN',
-            'pfs_event': attrs.get('pfs (event)', ''), 'os_event': attrs.get('os (event)', ''),
+            'pfs_event': pfs_event if cohort in new_cohorts else attrs.get('pfs (event)', ''),
+            'os_event': os_event if cohort in new_cohorts else attrs.get('os (event)', ''),
             'hot_score': attrs.get('hot score', ''), 'hot_phenotype': attrs.get('hot phenotype', ''),
             'raw_orr': raw_orr, 'raw_clinical_benefit': raw_benefit,
-            'treatment_outcome': binary if cohort == 'gse218989' and binary in {'Responder', 'Non-responder'} else '',
+            'treatment_outcome': binary if cohort == 'gse218989' else extras.get('treatment_outcome', ''),
             'endpoint_source': endpoint_source, 'endpoint_definition': endpoint_definition,
+            **extras,
         })
 
     timing_notes = {
@@ -488,39 +680,134 @@ def export_simple_geo(cohort, output):
         'gse159067': 'Series overall design states biopsies/specimens were collected prior to treatment initiation.',
         'gse145996': 'Series overall design describes pre-immunotherapy tumors; SOFT has no per-sample response field.',
         'gse165278': 'Included only the 7 samples labelled pre ipilimumab; excluded 15 post ipilimumab samples from baseline. Post samples remain available for A.1.',
+        'gse93157': 'SOFT biopsy labels distinguish BASELINE and ARCHIVAL specimens; archival specimens may substantially predate treatment.',
+        'gse67501': 'SOFT specimen-to-nivolumab intervals are recorded in months; all are before therapy and some specimens predate therapy by several years.',
+        'gse122220': 'SOFT labels all samples as pre-treatment.',
+        'gse140901': 'The SOFT series design describes archival HCC tissue from patients receiving ICI; per-sample interval to treatment is not stated.',
+        'gse111636': 'SOFT describes pretreatment bladder specimens; the treatment response field is patient-level and the samples are baseline.',
     }
     scale_notes = {
         'gse218989': 'Protein-coding TPM matrix; duplicate genes were already removed in the supplied object.',
         'gse159067': 'GEO-supplied log2 CPM targeted RNA panel; kept on its own scale, including control/probe rows.',
         'gse145996': 'GEO-supplied FPKM matrix; kept on its own scale. The matrix includes a Locus column, which is not used as expression.',
         'gse165278': 'GEO-supplied TPM XLSX, read with the repository standard-library XLSX reader; kept on its own scale.',
+        'gse93157': 'log2, HK-normalised (5 HK genes) NanoString counts, as deposited. The log2 scale is inferred from the deposited value pattern; it is not explicit in the SOFT.',
+        'gse67501': 'GEO SOFT says per-sample values were scaled to median 256 and log2 transformed; matrix values are retained on that claimed log2 scale.',
+        'gse122220': 'GEO SOFT says probe values were quantile normalized, model-background adjusted, 3-MAD trimmed and averaged; matrix values are retained on this source scale.',
+        'gse140901': 'GEO SOFT says counts were TMM normalized and converted to log2 CPM; the supplementary expression object is retained on that scale.',
+        'gse111636': 'GEO SOFT says values were GCCN/SST normalized, summarized with RMA, then batch corrected with ComBat; the series-matrix values are retained on that claimed scale.',
     }
     response_notes = {
         'gse218989': 'Response source is the GEO SOFT field "treatment outcome" (Responder/Non-responder); no RECIST CR/PR definition was found, so this is SOURCE_BINARY and is not called ORR.',
         'gse159067': 'Response source is the GEO SOFT field "best response on immunotherapy (recist)"; OS/PFS times, event fields, hot score and hot phenotype are retained as supplied.',
         'gse145996': 'No per-sample response characteristic is present in the GEO SOFT; all response values remain UNKNOWN despite series-level responder-group summary.',
         'gse165278': 'No per-sample response characteristic is present in the GEO SOFT; CR/NR/SD-looking title prefixes were not interpreted as response labels.',
+        'gse93157': 'ORR uses GEO SOFT best.resp (CR/PR versus SD/PD). The separate SOFT characteristic response reports RC_RP_SD for 60 and PD for 5 and contradicts best.resp; it was not used.',
+        'gse67501': 'ORR uses the GEO SOFT CR/PR/SD/NR characteristic as CR/PR versus SD/NR. The separate response/no-response characteristic was not substituted.',
+        'gse122220': 'ORR uses the GEO SOFT response (PD/SD/PR/CR) characteristic; dual ipilimumab plus anti-PD-1 cases remain included and are identified by drug class.',
+        'gse140901': 'ORR from best_response and SOURCE_BINARY clinical benefit from clinical_benefit_response are preserved as separate endpoints. SOFT names no per-patient drug; non-ICI combination exposure cannot be identified or excluded.',
+        'gse111636': 'treatment response is retained as SOURCE_BINARY (responder/progressor). The SOFT does not define the field as RECIST, so it is not called ORR.',
     }
-    caveats = [scale_notes[cohort], timing_notes[cohort], response_notes[cohort],
-               f'Retained all {genes} source feature rows, including {duplicates} duplicated feature identifiers; no aggregation or filtering was applied.']
+    if cohort == 'gse111636':
+        feature_note = (f'Expression remains probe-level (all GPL17586 probes); probe_to_gene.tsv maps probes to symbols from the SOFT gene_assignment. '
+                        f'{unmapped_features} probes have no single unambiguous symbol (blank in the map); '
+                        f'{multi_probe_symbols} symbols have several probes. No probe collapse was applied.')
+    elif cohort == 'gse93157':
+        feature_note = f'Retained {genes} of 765 source feature rows; the 40 rows with no expression values were omitted without imputation. Duplicate identifiers among retained rows: {duplicates}.'
+    else:
+        feature_note = f'Retained all {genes} source feature rows, including {duplicates} duplicated feature identifiers; no aggregation or filtering was applied.'
+    caveats = [scale_notes[cohort], timing_notes[cohort], response_notes[cohort], feature_note]
+    if cohort == 'gse93157':
+        caveats.append('Small cohort (65); four cancer arms remain in one cohort and are identified in the cancer column.')
+        caveats.append(f"Scale inference: log2, HK-normalised (5 HK genes) NanoString counts, as deposited; values range {scale_summary['minimum']:.2f} to {scale_summary['maximum']:.2f}, median {scale_summary['median']:.2f}. The SOFT does not explicitly state log2; the few negative values ({scale_summary['negative_values']}) are consistent with log2 of very low normalised counts.")
+    if cohort == 'gse67501':
+        caveats.append('Small cohort (11); specimen-to-therapy intervals range from months to several years.')
+        caveats.append(f"GPL14951 probe map: {probe_map_counts['mapped']} mapped, {probe_map_counts['unmapped']} without a symbol, {probe_map_counts['multi_probe_symbols']} symbols represented by multiple probes; expression remains probe-level.")
+    if cohort == 'gse122220':
+        caveats.append('Small cohort (10); eight anti-PD-1 monotherapy and two dual ipilimumab plus anti-PD-1 samples are retained.')
+        caveats.append(f"GPL10558 probe map: {probe_map_counts['mapped']} mapped, {probe_map_counts['unmapped']} without a symbol, {probe_map_counts['multi_probe_symbols']} symbols represented by multiple probes; expression remains probe-level.")
+    if cohort == 'gse140901':
+        caveats.append('Small cohort (24); this is described as ICI-based therapy. GEO SOFT gives no per-patient regimen, so possible non-ICI combinations cannot be flagged.')
+    if cohort == 'gse111636':
+        caveats.append('Small cohort (11). The series matrix, rather than the unused CEL archive, is the expression source.')
     if cohort == 'gse165278':
         caveats.append('The response-looking sample-title prefixes are retained only as identifiers; treatment groups and response endpoints remain separate.')
         caveats.append('Rows with an empty gene identifier in the XLSX were omitted because they cannot be addressed as gene rows.')
     return clinical, genes, [soft_hash, matrix_hash], caveats
 
 
-def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_columns', skip_empty_features=False):
-    """Stream projected columns and retain every source feature row."""
+def _geo_rows(rows, *, series_matrix=False, skip_hash_comment_rows=False):
+    active = not series_matrix
+    for row in rows:
+        marker = row[0].strip().lower() if row else ''
+        if series_matrix and marker == '!series_matrix_table_begin':
+            active = True
+            continue
+        if series_matrix and marker == '!series_matrix_table_end':
+            break
+        if not active:
+            continue
+        if skip_hash_comment_rows and (not row or not any(str(cell).strip() for cell in row)
+                                       or row[0].strip().lstrip('"').startswith('#')):
+            continue
+        if skip_hash_comment_rows:
+            while row and not str(row[-1]).strip():
+                row.pop()
+        yield row
+
+
+def _geo_matrix_header(source, *, compressed, skip_hash_comment_rows=False, series_matrix=False):
+    from tools.a_dav.matrix_header import matrix_rows
+    with matrix_rows(source, delimiter='\t', compressed=compressed, source_format='MATRIX_HEADER_TSV') as rows:
+        return next(_geo_rows(rows, series_matrix=series_matrix,
+                              skip_hash_comment_rows=skip_hash_comment_rows))
+
+
+def _gse111636_gene_map(soft_raw, matrix_path):
+    import gzip
+    from collections import Counter
+    from tools.a_dav.matrix_header import matrix_rows
+    text = gzip.decompress(soft_raw).decode('utf-8') if soft_raw.startswith(b'\x1f\x8b') else soft_raw.decode('utf-8')
+    if '!platform_table_begin\n' not in text or '!platform_table_end' not in text:
+        raise ValueError('GSE111636 SOFT has no platform annotation table')
+    annotation = text.split('!platform_table_begin\n', 1)[1].split('!platform_table_end', 1)[0]
+    rows = csv.DictReader(annotation.splitlines(), delimiter='\t')
+    mapping = {}
+    for row in rows:
+        probe = (row.get('ID') or '').strip()
+        symbols = set()
+        for group in (row.get('gene_assignment') or '').split(' /// '):
+            fields = group.split(' // ')
+            if len(fields) > 1 and fields[1].strip() not in {'', '---', 'NULL'}:
+                symbols.add(fields[1].strip())
+        if probe and len(symbols) == 1:
+            mapping[probe] = next(iter(symbols))
+    with matrix_rows(matrix_path, delimiter='\t', compressed=True, source_format='MATRIX_HEADER_TSV') as matrix:
+        matrix_rows_only = _geo_rows(matrix, series_matrix=True)
+        next(matrix_rows_only)
+        feature_ids = {row[0].strip('"') for row in matrix_rows_only if row}
+    if not (feature_ids & set(mapping)):
+        raise ValueError('GSE111636 SOFT platform annotation cannot map matrix probes to gene symbols')
+    mapped = {probe: mapping[probe] for probe in feature_ids if probe in mapping}
+    symbol_counts = Counter(mapped.values())
+    multi_probe_symbols = sum(count > 1 for count in symbol_counts.values())
+    return mapping, len(feature_ids - set(mapping)), multi_probe_symbols
+
+
+def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_columns',
+                   skip_empty_features=False, skip_incomplete_features=False, feature_map=None):
+    """Stream selected sample columns, with optional source feature mapping."""
     import sqlite3
     from tools.a_dav.matrix_header import matrix_rows
     dbpath = target.with_suffix('.sqlite')
     db = sqlite3.connect(dbpath)
     def check_values(values):
         try:
-            if not all(math.isfinite(float(v)) for v in values):
-                raise ValueError
+            numbers = [float(v) for v in values]
         except ValueError:
             raise ValueError('Expression contains non-numeric or non-finite values') from None
+        if not all(math.isfinite(v) for v in numbers):
+            raise ValueError('Expression contains non-numeric or non-finite values')
     try:
         db.execute('CREATE TABLE features (id TEXT, values_text TEXT)')
         if not mapping or len(set(mapping.values())) != len(mapping) or any(not x for x in mapping.values()):
@@ -528,6 +815,9 @@ def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_
         with matrix_rows(source, delimiter=source_cfg.get('delimiter', '\t'),
                          compressed=source_cfg.get('compressed', False), source_format=source_cfg['format'],
                          sheet_name=source_cfg.get('sheet_name'), header_row=source_cfg.get('header_row', 1)) as rows:
+            if source_cfg.get('skip_hash_comment_rows') or source_cfg.get('geo_series_matrix'):
+                rows = _geo_rows(rows, series_matrix=source_cfg.get('geo_series_matrix', False),
+                                 skip_hash_comment_rows=source_cfg.get('skip_hash_comment_rows', False))
             header = next(rows)
             if not header or len(set(header)) != len(header):
                 raise ValueError('Duplicate or empty matrix header')
@@ -565,11 +855,16 @@ def project_matrix(source, target, mapping, source_cfg, orientation='samples_as_
                         if skip_empty_features:
                             continue
                         raise ValueError('Malformed expression row')
+                    feature = feature_map.get(row[0], '') if feature_map is not None else row[0]
+                    if not feature:
+                        continue
                     vals = [row[positions[c]] for c in columns]
                     if not all(v and v.strip() for v in vals):
+                        if skip_incomplete_features or source_cfg.get('skip_incomplete_features'):
+                            continue
                         raise ValueError('Empty expression value')
                     check_values(vals)
-                    db.execute('INSERT INTO features VALUES (?,?)', (row[0], '\t'.join(vals)))
+                    db.execute('INSERT INTO features VALUES (?,?)', (feature, '\t'.join(vals)))
         db.commit()
         duplicates = db.execute('SELECT count(*) FROM (SELECT id FROM features GROUP BY id HAVING count(*)>1)').fetchone()[0]
         with target.open('w', newline='') as f:
