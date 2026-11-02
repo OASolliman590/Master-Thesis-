@@ -58,3 +58,10 @@ Signed for DEVELOPMENT use:
 | gse165278 | 7 | melanoma (ipilimumab) | Clinical benefit, PFS > 24 weeks (benefit 2 / none 5). Not ORR | Labels from Nathanson 2017 Online Data File 1 (pinned GitHub commit), joined exactly by Study ID; GEO pre/post agrees for all 22 samples. Same MSKCC cohort as Snyder 2014. 15 post-ipilimumab samples kept for A.1 |
 
 Also fixed with this change: a loader regression (from the batch B round) that stopped earlier GEO cohorts with supplementary expression files from reloading. All affected cohorts were rebuilt and their expression, clinical and probe-map files are byte-identical to the previous build.
+
+## Supplement-resolved addition (user, 2 Nov 2026: "Sign both, keep flagged")
+Signed for DEVELOPMENT use after linking the user-supplied supplements:
+| Cohort | Patients | Cancer | Endpoint | Main caveats |
+| --- | ---: | --- | --- | --- |
+| gse145996 | 10 | melanoma (anti-PD-1) | ORR, RECIST 1.1, from Amato 2020 Table S1 (CR 2 / PR 5 / PD 3) | Baseline = collection date before anti-PD-1 start (Table S2 vs S1); 4 of 14 GEO samples excluded (3 on-treatment, 1 undated). Prior ipilimumab in 6; 1 nivolumab + concurrent ipilimumab (dual ICI) |
+| gse140901 | 24 | liver (HCC) | ORR (PR 6 / SD 10 / PD 8) and clinical benefit (13 / 11), kept separate | Regimen per patient from Hsu 2021 Table S3: nivolumab 13, nivolumab + ipilimumab 9, PDR001 + MBG453 2. **The 2 anti-PD-1 + anti-TIM-3 patients are kept and flagged by drug class** (user decision); no non-ICI drug. Archival tissue 0-12 years before ICI; targeted panel |

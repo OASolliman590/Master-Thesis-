@@ -20,6 +20,11 @@ ADMITTED = {'riaz_gse91061': 'admitted-20261029', 'hugo_gse78220': 'admitted-202
 
 SIMPLE_GEO = {'gse218989', 'gse159067', 'gse145996', 'gse165278',
               'gse93157', 'gse67501', 'gse122220', 'gse140901', 'gse111636'}
+# Coordinator-extracted paper tables (from user-supplied supplements), keyed for an exact join.
+PAPER_TABLES = {
+    'gse145996': ('staging-paper-20261102', 'supplement.zip', 'table_s1_s2_linked.tsv', 'geo_title'),
+    'gse140901': ('staging-paper-20261102', 'supplement.pdf', 'table_s3_discovery.tsv', 'subject'),
+}
 SUPPORTED_COHORTS = set(ADMITTED) | {'gse135222', 'gse136961', 'gse176307', 'braun2020', 'vanallen2015', 'gide2019', 'kim2018'} | SIMPLE_GEO
 
 def registry():
@@ -346,6 +351,9 @@ def input_files(cohort):
             raise ValueError('Unexpected number of pinned GEO source objects')
         if cohort == 'gse165278':
             paths.append(safe_path(RUNTIME / cohort / 'store_labels/MANIFEST.json'))
+        if cohort in PAPER_TABLES:
+            folder, source, table, _ = PAPER_TABLES[cohort]
+            paths += [safe_path(RUNTIME / cohort / folder / x) for x in (source, table, table.replace('.tsv', '.provenance.json'))]
     else:
         field = ROOT / 'tools/a_dav/field_maps' / (cohort + '.json')
         packet = safe_path(RUNTIME / cohort / 'ingest-20261030/records/ingestion_packet.json')
@@ -427,6 +435,10 @@ def load(cohort):
             columns += ['specimen_origin', 'therapy_interval_months']
         if cohort == 'gse122220':
             columns.append('previous_ipilimumab')
+        if cohort == 'gse140901':
+            columns += ['regimen', 'years_sample_to_ici']
+        if cohort == 'gse145996':
+            columns += ['prior_ipilimumab', 'days_sample_to_anti_pd1']
         write_rows(stage / 'clinical.tsv', clinical, columns)
         (stage / 'caveats.md').write_text('# Caveats\n\n- ' + '\n- '.join([row['caveats'], *caveats]) + '\n')
         output_names = expected_output_names(cohort)
@@ -529,6 +541,8 @@ def export_simple_geo(cohort, output):
     parsed = {}
     selected_samples = []
     new_cohorts = {'gse93157', 'gse67501', 'gse122220', 'gse140901', 'gse111636'}
+    paper, paper_hashes = _paper_table(cohort) if cohort in PAPER_TABLES else ({}, [])
+    not_baseline = 0
     for sample in samples:
         attrs = {x['key'].strip().lower(): x['value'].strip() for x in sample['characteristics']}
         title = sample['title'].strip()
@@ -544,6 +558,10 @@ def export_simple_geo(cohort, output):
         elif cohort in {'gse218989', 'gse145996'}:
             matrix_id = title
             if cohort == 'gse145996':
+                # Baseline only when the paper's collection date precedes the anti-PD-1 start date.
+                if paper[title]['collected_before_anti_pd1'] != 'True':
+                    not_baseline += 1
+                    continue
                 timing = 'PRE_TREATMENT'
         else:
             matrix_id = title
@@ -653,7 +671,10 @@ def export_simple_geo(cohort, output):
                 extras = {'cancer': 'liver (HCC)'}
                 pfs, pfs_event = attrs.get('pfs_time', ''), attrs.get('pfs_event', '')
                 os_value, os_event = attrs.get('os_time', ''), attrs.get('os_event', '')
-                drug = 'ICI_BASED_UNSPECIFIED'
+                regimen = paper[sample['title'].split()[-1]]
+                drug = {'Nivolumab': 'ANTI_PD_1', 'Nivolumab+Ipilimumab': 'ANTI_PD_1_PLUS_ANTI_CTLA_4',
+                        'PDR001+MBG453': 'ANTI_PD_1_PLUS_ANTI_TIM_3'}[regimen['regimen']]
+                extras.update(regimen=regimen['regimen'], years_sample_to_ici=regimen['years_sample_to_ici'])
                 endpoint_source = 'GEO SOFT characteristics: best_response; clinical_benefit_response'
                 endpoint_definition = 'ORR uses best_response (PR/SD/PD); separate SOURCE_BINARY clinical benefit uses clinical_benefit_response.'
                 raw_orr, raw_benefit = response, binary
@@ -693,6 +714,17 @@ def export_simple_geo(cohort, output):
             endpoint_source = 'Nathanson 2017 Online Data File 1 (cohort.csv), column Benefit'
             endpoint_definition = 'Clinical benefit: progression-free survival > 24 weeks after starting ipilimumab (Nathanson 2017). Not ORR.'
             raw_orr = ''
+        elif cohort == 'gse145996':
+            label = paper[sample['title']]
+            raw_orr = label['best_response']
+            orr = orr_category(raw_orr)
+            benefit, raw_benefit = 'UNKNOWN', ''
+            drug = {'PEM': 'ANTI_PD_1'}.get(label['drug'].upper(), 'ANTI_PD_1')
+            if label['prior_ipilimumab'] == 'Concurrent':
+                drug = 'ANTI_PD_1_PLUS_ANTI_CTLA_4'
+            extras = {'prior_ipilimumab': label['prior_ipilimumab'], 'days_sample_to_anti_pd1': label['days_before_start']}
+            endpoint_source = 'Amato 2020 Supplementary Table S1 (Best Response), linked by tumour ID via Table S2'
+            endpoint_definition = 'Best response per RECIST 1.1 (paper methods); ORR CR/PR versus SD/PD.'
         else:
             orr = benefit = 'UNKNOWN'
             endpoint_source = 'No per-sample response characteristic in GEO SOFT'
@@ -704,9 +736,10 @@ def export_simple_geo(cohort, output):
         clinical.append({
             'patient_id': sample['title'], 'sample_id': sample['accession'],
             'timepoint': timing,
-            'drug_class': drug if cohort in new_cohorts else {'gse218989': 'ANTI_PD_1_PD_L1', 'gse159067': 'ANTI_PD_1_PD_L1',
-                           'gse145996': 'ANTI_PD_1', 'gse165278': 'ANTI_CTLA_4'}[cohort],
-            'prior_ici': 'UNKNOWN', 'orr': orr, 'clinical_benefit': benefit,
+            'drug_class': drug if cohort in new_cohorts | {'gse145996'} else {'gse218989': 'ANTI_PD_1_PD_L1', 'gse159067': 'ANTI_PD_1_PD_L1',
+                           'gse165278': 'ANTI_CTLA_4'}[cohort],
+            'prior_ici': {'Y': 'YES', 'N': 'NO'}.get(extras.get('prior_ipilimumab'), 'UNKNOWN') if cohort == 'gse145996' else 'UNKNOWN',
+            'orr': orr, 'clinical_benefit': benefit,
             'pfs': (str(pfs) if cohort == 'gse93157' else f'{pfs} months') if pfs else 'UNKNOWN',
             'os': f'{os_value} months' if os_value else 'UNKNOWN',
             'pfs_event': pfs_event if cohort in new_cohorts else attrs.get('pfs (event)', ''),
@@ -721,12 +754,12 @@ def export_simple_geo(cohort, output):
     timing_notes = {
         'gse218989': 'SOFT does not state whether specimens were collected before treatment; timepoint is UNKNOWN.',
         'gse159067': 'Series overall design states biopsies/specimens were collected prior to treatment initiation.',
-        'gse145996': 'Series overall design describes pre-immunotherapy tumors; SOFT has no per-sample response field.',
+        'gse145996': 'Baseline uses only samples whose Table S2 collection date precedes the Table S1 anti-PD-1 start date (18 to 1,003 days before). Samples collected after the start or without dates are excluded from baseline.',
         'gse165278': 'Included only the 7 samples labelled pre ipilimumab; excluded 15 post ipilimumab samples from baseline. Post samples remain available for A.1.',
         'gse93157': 'SOFT biopsy labels distinguish BASELINE and ARCHIVAL specimens; archival specimens may substantially predate treatment.',
         'gse67501': 'SOFT specimen-to-nivolumab intervals are recorded in months; all are before therapy and some specimens predate therapy by several years.',
         'gse122220': 'SOFT labels all samples as pre-treatment.',
-        'gse140901': 'The SOFT series design describes archival HCC tissue from patients receiving ICI; per-sample interval to treatment is not stated.',
+        'gse140901': 'Archival HCC tissue; Hsu 2021 Supplementary Table 3 gives the time from sample collection to ICI (0 to 12 years), kept per patient.',
         'gse111636': 'SOFT describes pretreatment bladder specimens; the treatment response field is patient-level and the samples are baseline.',
     }
     scale_notes = {
@@ -743,12 +776,12 @@ def export_simple_geo(cohort, output):
     response_notes = {
         'gse218989': 'Response source is the GEO SOFT field "treatment outcome" (Responder/Non-responder); no RECIST CR/PR definition was found, so this is SOURCE_BINARY and is not called ORR.',
         'gse159067': 'Response source is the GEO SOFT field "best response on immunotherapy (recist)"; OS/PFS times, event fields, hot score and hot phenotype are retained as supplied.',
-        'gse145996': 'No per-sample response characteristic is present in the GEO SOFT; all response values remain UNKNOWN despite series-level responder-group summary.',
+        'gse145996': 'Best response (RECIST 1.1) from Amato 2020 Supplementary Table S1, linked exactly through the tumour ID in the GEO title and Table S2; all 14 GEO samples link to one patient each.',
         'gse165278': 'GEO SOFT has no response field. Clinical benefit (PFS > 24 weeks) comes from Nathanson 2017 Online Data File 1 (hammerlab/melanoma-reanalysis cohort.csv, pinned commit), joined exactly by Study ID = GEO title; all 22 GEO samples match and GEO pre/post agrees with the table for every sample.',
         'gse93157': 'ORR uses GEO SOFT best.resp (CR/PR versus SD/PD). The separate SOFT characteristic response reports RC_RP_SD for 60 and PD for 5 and contradicts best.resp; it was not used.',
         'gse67501': 'ORR uses the GEO SOFT CR/PR/SD/NR characteristic as CR/PR versus SD/NR. The separate response/no-response characteristic was not substituted.',
         'gse122220': 'ORR uses the GEO SOFT response (PD/SD/PR/CR) characteristic; dual ipilimumab plus anti-PD-1 cases remain included and are identified by drug class.',
-        'gse140901': 'ORR from best_response and SOURCE_BINARY clinical benefit from clinical_benefit_response are preserved as separate endpoints. SOFT names no per-patient drug; non-ICI combination exposure cannot be identified or excluded.',
+        'gse140901': 'ORR from best_response and SOURCE_BINARY clinical benefit from clinical_benefit_response are preserved as separate endpoints; per-patient regimen comes from Hsu 2021 Supplementary Table 3.',
         'gse111636': 'treatment response is retained as SOURCE_BINARY (responder/progressor). The SOFT does not define the field as RECIST, so it is not called ORR.',
     }
     if cohort == 'gse111636':
@@ -770,7 +803,7 @@ def export_simple_geo(cohort, output):
         caveats.append('Small cohort (10); eight anti-PD-1 monotherapy and two dual ipilimumab plus anti-PD-1 samples are retained.')
         caveats.append(f"GPL10558 probe map: {probe_map_counts['mapped']} mapped, {probe_map_counts['unmapped']} without a symbol, {probe_map_counts['multi_probe_symbols']} symbols represented by multiple probes; expression remains probe-level.")
     if cohort == 'gse140901':
-        caveats.append('Small cohort (24); this is described as ICI-based therapy. GEO SOFT gives no per-patient regimen, so possible non-ICI combinations cannot be flagged.')
+        caveats.append('Small cohort (24). Regimens from Hsu 2021 Supplementary Table 3 (discovery cohort), joined exactly by subject code: nivolumab 13, nivolumab + ipilimumab 9, PDR001 + MBG453 (anti-PD-1 + investigational anti-TIM-3) 2. No non-ICI drug in this cohort; drug class is per patient.')
     if cohort == 'gse111636':
         caveats.append('Small cohort (11). The series matrix, rather than the unused CEL archive, is the expression source.')
     if cohort == 'gse165278':
@@ -778,7 +811,21 @@ def export_simple_geo(cohort, output):
         caveats.append('Rows with an empty gene identifier in the XLSX were omitted because they cannot be addressed as gene rows.')
         caveats.append('Same MSKCC ipilimumab cohort as Snyder 2014 / Nathanson 2017 (64 patients); any other loaded copy of that cohort overlaps. Small (7 baseline); prior ICI not recorded (ipilimumab era).')
         return clinical, genes, [soft_hash, matrix_hash, label_hash], caveats
-    return clinical, genes, [soft_hash, matrix_hash], caveats
+    if cohort == 'gse145996':
+        caveats.append(f'{not_baseline} GEO samples are not baseline (collected after anti-PD-1 start, or undated) and were excluded. Prior ipilimumab is per patient; "Concurrent" ipilimumab with nivolumab is recorded as dual ICI.')
+    return clinical, genes, [soft_hash, matrix_hash, *paper_hashes], caveats
+
+
+def _paper_table(cohort):
+    """Read a coordinator-extracted paper table after checking its source and extract hashes."""
+    folder, source, table, key = PAPER_TABLES[cohort]
+    stage = safe_path(RUNTIME / cohort / folder)
+    provenance = json.loads((stage / table.replace('.tsv', '.provenance.json')).read_text())
+    if sha256(stage / source) != provenance['source_sha256']:
+        raise ValueError(f'{cohort} paper source hash mismatch')
+    if 'linked_tsv_sha256' in provenance and sha256(stage / table) != provenance['linked_tsv_sha256']:
+        raise ValueError(f'{cohort} extracted table hash mismatch')
+    return unique_index(read_rows(stage / table), key), [provenance['source_sha256'], sha256(stage / table)]
 
 
 def _nathanson_labels():
