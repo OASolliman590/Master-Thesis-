@@ -1,5 +1,7 @@
 # Single-cell module (A-SC / B-SC): DRAFT, revised after Astra review, 30 Oct 2026
 
+**Superseded on 2 Nov 2026** by the signed `specs/amendments/2026-11-02-single-cell-plan/PLAN.md`. Kept for the record.
+
 **Status: DRAFT, unsigned. Revised to the minimal version Astra recommended (`REVIEW_ASTRA_HIGH.md`):**
 - **SC-1 kept:** cell-type expression *localization* in sampled compartments only. It covers one donor-resolved, unsorted prostate tumour reference, plus one for Paper A's main development cancer if inexpensive. It gives one donor-aware figure and a provenance table.
 - **SC-3 conditional:** a small baseline per-patient pseudobulk check, only if verified patient counts and labels meet frozen feasibility rules.
