@@ -22,6 +22,8 @@ CODE_PATHS = (
     "tools/b_features/__main__.py",
     "tools/b_features/provider.py",
     "tools/b_features/scores.py",
+    "tools/b_formats/__init__.py",
+    "tools/b_formats/__main__.py",
     "tools/b_formats/records.py",
     "tools/b_prediction/__init__.py",
     "tools/b_prediction/__main__.py",

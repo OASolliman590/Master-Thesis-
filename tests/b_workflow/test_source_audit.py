@@ -12,6 +12,9 @@ from pathlib import Path
 from tools.b_acquire.audit import audit_sources
 
 
+REPO = Path(__file__).resolve().parents[2]
+
+
 def _tmp() -> Path:
     explicit = os.environ.get("B_WORKFLOW_TEST_TMP_ROOT")
     root = Path(explicit) if explicit else REPO / "tmp" / "paper_b_checks"

@@ -87,7 +87,17 @@ class TestBFormatInspectionCLI(unittest.TestCase):
         self.tmp_root = _tmpdir_root()
         self.tmp_root.mkdir(parents=True, exist_ok=True)
 
-    def test_real_fixtures_all_formats(self):
+    def test_real_fixtures_tcga(self):
+        self._check_real_fixtures("tcga-")
+
+    def test_real_fixtures_cpc(self):
+        # CPC-GENE is the held-out B-P evaluation cohort; its prefixes are fetched only on explicit user approval.
+        missing = [p.name for p in (RESEARCH_ROOT / "GSE107299_processed_prefix.tsv", RESEARCH_ROOT / "GSE107298_processed_prefix.tsv") if not p.exists()]
+        if missing:
+            self.skipTest(f"held-out CPC-GENE fixtures not fetched: {', '.join(missing)}")
+        self._check_real_fixtures("cpc-")
+
+    def _check_real_fixtures(self, format_prefix: str):
         real_cases = [
             {
                 "format": "tcga-star-expression",
@@ -141,6 +151,8 @@ class TestBFormatInspectionCLI(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(dir=self.tmp_root) as td:
             tmpdir = Path(td)
+            real_cases = [case for case in real_cases if case["format"].startswith(format_prefix)]
+            self.assertTrue(real_cases)
             for idx, case in enumerate(real_cases):
                 output_name = f"summary_real_{idx}.json"
                 code, _, stderr, output = _run_fixture(
