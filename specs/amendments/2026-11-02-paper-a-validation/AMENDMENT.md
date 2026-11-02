@@ -1,6 +1,6 @@
 # Paper A validation and predictor amendment, 2 Nov 2026
 
-**Status: DRAFT for signature.** Built from `OPTIONS.md` and Astra's high-effort review (`REVIEW_ASTRA_HIGH.md`), on the user's instruction of 2 Nov 2026 ("Yes, write it"). It amends the A-P2 parts of `specs/A/PREDICTION_ANALYSIS.md`, `specs/A/VALIDATION_AND_SPLITS.md` and `specs/A/SCIENTIFIC_AIM_AND_CLAIMS.md`, and the 29 Oct integrated plan. Everything not named here is unchanged: A-BIO, A-P1, the locked panels as the main biology result, endpoint rules, combination exclusions and the protected final-test family. It authorises no analysis by itself; the numbers below are frozen when this is signed.
+**Status: SIGNED by the user on 2 Nov 2026 ("I sign it").** The numbers below are frozen from this date. Built from `OPTIONS.md` and Astra's high-effort review (`REVIEW_ASTRA_HIGH.md`), on the user's instruction of 2 Nov 2026 ("Yes, write it"). It amends the A-P2 parts of `specs/A/PREDICTION_ANALYSIS.md`, `specs/A/VALIDATION_AND_SPLITS.md` and `specs/A/SCIENTIFIC_AIM_AND_CLAIMS.md`, and the 29 Oct integrated plan. Everything not named here is unchanged: A-BIO, A-P1, the locked panels as the main biology result, endpoint rules, combination exclusions and the protected final-test family. It authorises no analysis by itself; the numbers below are frozen when this is signed.
 
 ## Why it changes
 - The user proposed a 70/30 patient split within every cohort, so that every cancer is represented in training.
