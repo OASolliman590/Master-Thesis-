@@ -36,3 +36,10 @@ Dropped: open-ended Cabrita, Chen and Weber searches; GSE314805 admission (PD-1 
 - **Pathology:** no image-model work. Existing patient-linked purity, infiltration or PD-L1 annotations can serve as covariates.
 - **Prostate rows:** none is a new eligible B-P cohort or a ready A response cohort; context only. No listed source gives paired methylation, RNA and ICI response in prostate.
 - **Methylation in ICI-treated patients:** Jung is not the only source. GSE264158 (melanoma) and the signed B-V guadecitabine cohorts also exist.
+
+## Follow-up results (2 Nov 2026)
+- **Krakow melanoma:** GSE213145 (RNA, 20) and GSE264158 (EPIC methylation, 17) share exact sample codes for 13 patients, labelled by GSE264158 (RECIST-based: 5 responders, 8 non-responders). The RNA series has no response field of its own.
+- **GSE165745:** Wnt NanoString panel of 228 genes covering 8 of the 46 learner-panel genes, without GZMA: low value (individual genes only).
+- **Jung (NSCLC):** methylation GSE119144 (EPIC, 60) contains all 27 signed GSE135222 RNA patients by title number; 33 methylation-only.
+- **Cho (NSCLC):** methylation GSE126043 (EPIC, 18) contains all 16 GSE126044 RNA patients by title code, which may unpark that RNA cohort.
+- **In total:** about 56 ICI-treated patients with paired tumour RNA and methylation across 3 studies (2 NSCLC, 1 melanoma), plus the signed B-V epigenetic-drug cohorts. Using them in Paper B would need a new secondary analysis and an amendment; the current B primary is unchanged.
