@@ -1,0 +1,102 @@
+{
+    "schema_version": 1,
+    "cohort": "prostate_hormone_naive_atlas",
+    "branch_id": "SC_MODULE",
+    "request_cap": 30,
+    "max_object_bytes": 734490687,
+    "allowed_hosts": [
+        "datasets.cellxgene.cziscience.com"
+    ],
+    "objects": [
+        {
+            "id": "h5ad_b347446f",
+            "url": "https://datasets.cellxgene.cziscience.com/8d50e14d-4b9c-48fa-873a-a80f0bea9601.h5ad",
+            "version": "CELLxGENE dataset b347446f-2e38-4248-96fb-39acc50f2112 (collection revised 2026-06-11)",
+            "expected_size": 286618482,
+            "expected_sha256": null,
+            "max_bytes": 286618483,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_9613ef7c",
+            "url": "https://datasets.cellxgene.cziscience.com/fe0406d0-15c4-40af-9225-4ccc72dce006.h5ad",
+            "version": "CELLxGENE dataset 9613ef7c-dec7-4d68-acbe-1ffa7f57fde5 (collection revised 2026-06-11)",
+            "expected_size": 139651223,
+            "expected_sha256": null,
+            "max_bytes": 139651224,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_881e0e6b",
+            "url": "https://datasets.cellxgene.cziscience.com/68b23fda-7191-46a5-8870-819feca3e66e.h5ad",
+            "version": "CELLxGENE dataset 881e0e6b-a185-45f1-9b56-81606e91e7ff (collection revised 2026-06-11)",
+            "expected_size": 734490686,
+            "expected_sha256": null,
+            "max_bytes": 734490687,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_83d62c7b",
+            "url": "https://datasets.cellxgene.cziscience.com/2ad0d20a-fdf9-40cf-98d0-f8f0c5cf6b6d.h5ad",
+            "version": "CELLxGENE dataset 83d62c7b-3439-47ba-988c-d99e705bda12 (collection revised 2026-06-11)",
+            "expected_size": 79781563,
+            "expected_sha256": null,
+            "max_bytes": 79781564,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_629f83be",
+            "url": "https://datasets.cellxgene.cziscience.com/b165fade-97fb-4610-b40a-5147a679d344.h5ad",
+            "version": "CELLxGENE dataset 629f83be-1e74-44df-8526-f26439b8f95e (collection revised 2026-06-11)",
+            "expected_size": 35067634,
+            "expected_sha256": null,
+            "max_bytes": 35067635,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_584a1915",
+            "url": "https://datasets.cellxgene.cziscience.com/9bdb7d2d-5717-4113-9ebd-425199ab53d6.h5ad",
+            "version": "CELLxGENE dataset 584a1915-74ac-4659-a953-f2db8c6a90c5 (collection revised 2026-06-11)",
+            "expected_size": 38147137,
+            "expected_sha256": null,
+            "max_bytes": 38147138,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_3f1c0eb7",
+            "url": "https://datasets.cellxgene.cziscience.com/c7357a47-3e0a-4e79-a757-dd8c2e9dedb0.h5ad",
+            "version": "CELLxGENE dataset 3f1c0eb7-c2b2-435c-af1b-793670935fd9 (collection revised 2026-06-11)",
+            "expected_size": 171468658,
+            "expected_sha256": null,
+            "max_bytes": 171468659,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_20de8570",
+            "url": "https://datasets.cellxgene.cziscience.com/8b3fc760-f3fd-4723-a768-9323ac12a0bd.h5ad",
+            "version": "CELLxGENE dataset 20de8570-f01a-4016-9e0d-7e2bfb43932a (collection revised 2026-06-11)",
+            "expected_size": 15721033,
+            "expected_sha256": null,
+            "max_bytes": 15721034,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_182f8181",
+            "url": "https://datasets.cellxgene.cziscience.com/2ea100a4-f40f-4035-b66d-0262b84682c0.h5ad",
+            "version": "CELLxGENE dataset 182f8181-172b-46c3-9bc3-575bf3bce91b (collection revised 2026-06-11)",
+            "expected_size": 11660383,
+            "expected_sha256": null,
+            "max_bytes": 11660384,
+            "host": "datasets.cellxgene.cziscience.com"
+        },
+        {
+            "id": "h5ad_04557650",
+            "url": "https://datasets.cellxgene.cziscience.com/4d0a653a-291d-44f6-966d-c3a7f1f3bd09.h5ad",
+            "version": "CELLxGENE dataset 04557650-a691-4306-a56c-232fbfeb236c (collection revised 2026-06-11)",
+            "expected_size": 11348624,
+            "expected_sha256": null,
+            "max_bytes": 11348625,
+            "host": "datasets.cellxgene.cziscience.com"
+        }
+    ]
+}
