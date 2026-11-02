@@ -162,3 +162,11 @@ Lin Z, …, Becker JC, Aran D. "Tumor immune microenvironment remodeling predict
   - add the 59-gene signature to the comparator registry if its genes and weights are published;
   - record which of its 19 validation cohorts overlap ours. If IMvigor210 is among them, it is PREVIOUSLY_INSPECTED for that comparator: still fair as a test for our learner, but the comparator's IMvigor210 performance is not unbiased;
   - check whether the atlas is public, as a possible SC-1 reference.
+
+## Addendum, 2 Nov 2026: two further neighbours (PubMed records; Subramanian also from PMC full text)
+- **Fuchs HS et al., *Med* 2026 (doi:10.1016/j.medj.2026.101327; PMID 42874594).** Phase 2 LUD2015-005 in oesophageal cancer (73 patients): a 4-week durvalumab + tremelimumab window, then chemotherapy or chemoradiotherapy. Paired biopsies with WGS, methylome, single-cell and bulk RNA; five DNA-methylation subtypes with distinct immune microenvironments, and a 5-gene monocyte signature (CFISH: CXCL8, FCN1, IFI30, SLC11A1, HLA-DRA) predicting overall survival.
+  - **Paper B:** the closest published link between tumour DNA methylation and ICI outcome. It differs from ours in cancer type (oesophageal, not prostate), design (one trial, immunochemotherapy outcome) and question (methylation subtypes, not regulator-to-panel chains). Cite it and state the difference.
+  - **A.1:** the ICI-only window with paired biopsies is a clean on-treatment contrast, if the data are accessible.
+  - **A/B response analyses:** excluded, because the response is measured after combination therapy.
+- **Subramanian M et al., *Cell Rep Med* 2023 (doi:10.1016/j.xcrm.2022.100896; PMID 36630952).** Three pan-cancer "angio-immune" subtypes from 91 MSigDB gene sets, predicting ICI benefit; validated on cohorts we already hold (including IMvigor210 and Braun).
+  - **Paper A:** a comparator. Add it to the comparator registry (gene sets in Document S2, code in Dryad). Its IMvigor210 performance is not an unbiased benchmark.
