@@ -344,6 +344,8 @@ def input_files(cohort):
                   if cohort != 'gse111636' or any(part in entry.get('locator', '') for part in ('/matrix/', 'family.soft'))]
         if len(hashes) != (3 if cohort == 'gse140901' else 2):
             raise ValueError('Unexpected number of pinned GEO source objects')
+        if cohort == 'gse165278':
+            paths.append(safe_path(RUNTIME / cohort / 'store_labels/MANIFEST.json'))
     else:
         field = ROOT / 'tools/a_dav/field_maps' / (cohort + '.json')
         packet = safe_path(RUNTIME / cohort / 'ingest-20261030/records/ingestion_packet.json')
@@ -497,8 +499,12 @@ def export_simple_geo(cohort, output):
     soft_entry = next((v for v in objects.values() if 'family.soft' in v.get('locator', '')), None)
     if cohort == 'gse140901':
         matrix_entry = next((v for v in objects.values() if '/suppl/' in v.get('locator', '')), None)
-    else:
+    elif cohort in {'gse93157', 'gse67501', 'gse122220', 'gse111636'}:
         matrix_entry = next((v for v in objects.values() if '/matrix/' in v.get('locator', '')), None)
+    else:
+        # Earlier cohorts pin one SOFT plus one supplementary expression object.
+        others = [v for v in objects.values() if 'family.soft' not in v.get('locator', '')]
+        matrix_entry = others[0] if len(others) == 1 else None
     if not soft_entry or not matrix_entry:
         raise ValueError('Missing pinned GEO SOFT or expression object')
     soft_hash = soft_entry['receipt']['complete_sha256']
@@ -596,6 +602,7 @@ def export_simple_geo(cohort, output):
                    [{'probe_id': p, 'gene_symbol': probe_symbols.get(p, ''), 'entrez_id': ''} for p in probes],
                    ['probe_id', 'gene_symbol', 'entrez_id'])
 
+    labels, label_hash = _nathanson_labels() if cohort == 'gse165278' else ({}, None)
     clinical = []
     for sample, _, timing in selected_samples:
         attrs = parsed[sample['accession']]
@@ -675,6 +682,17 @@ def export_simple_geo(cohort, output):
             endpoint_definition = 'Best response on immunotherapy (RECIST), as named in GEO SOFT.'
             raw_orr = response
             raw_benefit = ''
+        elif cohort == 'gse165278':
+            # GEO titles are Nathanson 2017 Study IDs, with a '.n' suffix for extra lesions; join exactly.
+            label = labels.get(sample['title'].split('.')[0])
+            if label is None or label['Biopsy pre or post ipi'] != 'pre':
+                raise ValueError('GSE165278 baseline sample without a matching pre-ipilimumab Nathanson 2017 row')
+            orr = 'UNKNOWN'
+            raw_benefit = label['Benefit']
+            benefit = {'True': 'R', 'False': 'NR'}.get(raw_benefit, 'UNKNOWN')
+            endpoint_source = 'Nathanson 2017 Online Data File 1 (cohort.csv), column Benefit'
+            endpoint_definition = 'Clinical benefit: progression-free survival > 24 weeks after starting ipilimumab (Nathanson 2017). Not ORR.'
+            raw_orr = ''
         else:
             orr = benefit = 'UNKNOWN'
             endpoint_source = 'No per-sample response characteristic in GEO SOFT'
@@ -726,7 +744,7 @@ def export_simple_geo(cohort, output):
         'gse218989': 'Response source is the GEO SOFT field "treatment outcome" (Responder/Non-responder); no RECIST CR/PR definition was found, so this is SOURCE_BINARY and is not called ORR.',
         'gse159067': 'Response source is the GEO SOFT field "best response on immunotherapy (recist)"; OS/PFS times, event fields, hot score and hot phenotype are retained as supplied.',
         'gse145996': 'No per-sample response characteristic is present in the GEO SOFT; all response values remain UNKNOWN despite series-level responder-group summary.',
-        'gse165278': 'No per-sample response characteristic is present in the GEO SOFT; CR/NR/SD-looking title prefixes were not interpreted as response labels.',
+        'gse165278': 'GEO SOFT has no response field. Clinical benefit (PFS > 24 weeks) comes from Nathanson 2017 Online Data File 1 (hammerlab/melanoma-reanalysis cohort.csv, pinned commit), joined exactly by Study ID = GEO title; all 22 GEO samples match and GEO pre/post agrees with the table for every sample.',
         'gse93157': 'ORR uses GEO SOFT best.resp (CR/PR versus SD/PD). The separate SOFT characteristic response reports RC_RP_SD for 60 and PD for 5 and contradicts best.resp; it was not used.',
         'gse67501': 'ORR uses the GEO SOFT CR/PR/SD/NR characteristic as CR/PR versus SD/NR. The separate response/no-response characteristic was not substituted.',
         'gse122220': 'ORR uses the GEO SOFT response (PD/SD/PR/CR) characteristic; dual ipilimumab plus anti-PD-1 cases remain included and are identified by drug class.',
@@ -758,7 +776,21 @@ def export_simple_geo(cohort, output):
     if cohort == 'gse165278':
         caveats.append('The response-looking sample-title prefixes are retained only as identifiers; treatment groups and response endpoints remain separate.')
         caveats.append('Rows with an empty gene identifier in the XLSX were omitted because they cannot be addressed as gene rows.')
+        caveats.append('Same MSKCC ipilimumab cohort as Snyder 2014 / Nathanson 2017 (64 patients); any other loaded copy of that cohort overlaps. Small (7 baseline); prior ICI not recorded (ipilimumab era).')
+        return clinical, genes, [soft_hash, matrix_hash, label_hash], caveats
     return clinical, genes, [soft_hash, matrix_hash], caveats
+
+
+def _nathanson_labels():
+    """Read the pinned Nathanson 2017 clinical table (Online Data File 1), keyed by Study ID."""
+    store = safe_path(RUNTIME / 'gse165278' / 'store_labels')
+    objects = json.loads(safe_path(store / 'MANIFEST.json').read_text())['objects']
+    (digest, entry), = objects.items()
+    path = safe_path(store / 'objects' / digest)
+    if sha256(path) != digest or 'hammerlab/melanoma-reanalysis' not in entry['locator']:
+        raise ValueError('Nathanson 2017 label object hash or source mismatch')
+    rows = list(csv.DictReader(path.read_text().splitlines()))
+    return unique_index(rows, 'Study ID'), digest
 
 
 def _geo_rows(rows, *, series_matrix=False, skip_hash_comment_rows=False):

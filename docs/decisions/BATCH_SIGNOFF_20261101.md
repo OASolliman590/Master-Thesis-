@@ -50,3 +50,11 @@ Signed for DEVELOPMENT use after checking the user-supplied primary papers:
 | --- | ---: | --- | --- | --- |
 | gse176307 | 88 | bladder (urothelial) | ORR, RECIST 1.1 by a blinded radiologist (CR 7 / PR 9 / SD 4 / PD 67 / unknown 1) | Rose 2021: deaths or clear clinical progression before imaging count as non-responders; single-agent anti-PD-1/PD-L1; archival FFPE, interval to ICB not stated; log2(1+x) median-centred upper-quartile values; GEO has 16,383 genes and 88 patients vs 16,901 and 89 in the paper |
 | kim2018 | 45 | gastric | ORR, RECIST 1.1 (CR 3 / PR 9 / SD 15 / PD 18) | Kim 2018 Table 2, coordinator-extracted from the hash-verified PDF and joined exactly by sequencing ID (45/45); pembrolizumab monotherapy, ICI-naive, fresh-frozen biopsy within 42 days before treatment; recount3 approximate counts |
+
+## GSE165278 (user, 2 Nov 2026: "I sign it")
+Signed for DEVELOPMENT use:
+| Cohort | Patients | Cancer | Endpoint | Main caveats |
+| --- | ---: | --- | --- | --- |
+| gse165278 | 7 | melanoma (ipilimumab) | Clinical benefit, PFS > 24 weeks (benefit 2 / none 5). Not ORR | Labels from Nathanson 2017 Online Data File 1 (pinned GitHub commit), joined exactly by Study ID; GEO pre/post agrees for all 22 samples. Same MSKCC cohort as Snyder 2014. 15 post-ipilimumab samples kept for A.1 |
+
+Also fixed with this change: a loader regression (from the batch B round) that stopped earlier GEO cohorts with supplementary expression files from reloading. All affected cohorts were rebuilt and their expression, clinical and probe-map files are byte-identical to the previous build.

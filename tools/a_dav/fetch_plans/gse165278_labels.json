@@ -1,0 +1,21 @@
+{
+    "schema_version": 1,
+    "cohort": "gse165278",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 5,
+    "max_object_bytes": 1000000,
+    "allowed_hosts": [
+        "raw.githubusercontent.com"
+    ],
+    "objects": [
+        {
+            "id": "nathanson2017_online_data_file_1",
+            "url": "https://raw.githubusercontent.com/hammerlab/melanoma-reanalysis/2ce35b97c15a54d27090ac7e6b2e73f140e087b3/files/cohort.csv",
+            "version": "hammerlab/melanoma-reanalysis commit 2ce35b97 (Nathanson 2017 Online Data File 1)",
+            "expected_size": 5275,
+            "expected_sha256": null,
+            "max_bytes": 100000,
+            "host": "raw.githubusercontent.com"
+        }
+    ]
+}
