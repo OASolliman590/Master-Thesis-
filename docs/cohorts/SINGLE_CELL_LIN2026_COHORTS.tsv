@@ -1,0 +1,18 @@
+cohort	pts	samples	treatment	metric	pre_ici_pts	pre_R	pre_NR	malignant	types	paper_A_SC1
+TNBC_Shiao	35	69	aPD1	Pathology	35	24	11	42006	13	yes
+BRCA_Bassez1	29	58	aPD1	T-cell expansion	29	9	20	24475	13	yes
+CRC_Chen	22	44	aPD1/aPD1+Chemo	Pathology+RECIST	17	11	6	20053	13	yes
+HNSC_Franken	20	40	aPDL1/aPDL1+CTLA4	T-cell expansion	20	9	11	23380	13	yes
+NSCLC_Yan	19	26	aPD1+Chemo	Pathology	0	0	0	45207	13	no
+SKCM_Plozniak	19	38	aPD1/aPD1+CTLA4	Pathology+RECIST	19	9	10	10325	13	yes
+HNSC_vanderLeun	18	36	aPD1+CTLA4	RECIST	18	11	7	0	8	yes
+SKCM_this study	17	25	aPD1/aPD1+CTLA4	RECIST	15	6	8	13805	13	yes
+BRCA_Bassez2	11	22	aPD1	T-cell expansion	11	3	8	4588	13	yes
+BCC_Yost	10	20	aPD1	RECIST	10	6	4	3535	11	yes
+HCC_Guo	9	14	aPD1	RECIST	6	4	2	0	8	yes
+RCC_Bi	8	8	NoICI/aPD1/aPD1+CTLA4	RECIST	0	0	0	5543	13	no
+CRC_Li	7	14	aPD1	Pathology	7	6	1	6063	13	yes
+HNSC_Luoma	6	12	aPD1/aPD1+CTLA4	Pathology+RECIST	6	1	5	0	8	yes
+TNBC_Zhang	6	12	aPDL1+Chemo	RECIST	0	0	0	0	8	no
+HCC_Ma	5	10	aPDL1/CTLA4	Unspecified	5	3	2	609	12	yes
+PCa_Hawley	4	7	aPD1	Blood PSA	3	0	3	1187	13	no
