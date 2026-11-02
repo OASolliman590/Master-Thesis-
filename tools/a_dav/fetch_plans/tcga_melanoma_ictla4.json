@@ -1,0 +1,39 @@
+{
+    "schema_version": 1,
+    "cohort": "tcga_melanoma_ictla4",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 10,
+    "max_object_bytes": 5000000,
+    "allowed_hosts": [
+        "api.gdc.cancer.gov"
+    ],
+    "objects": [
+        {
+            "id": "gdc_clinical_drug",
+            "url": "https://api.gdc.cancer.gov/data/8da29d73-2299-49f0-9740-d04b3793fd8d",
+            "version": "GDC BCR Biotab, listed 2 Nov 2026 (md5 e79253b28f0cebe8640cb9e96760cee5)",
+            "expected_size": 117252,
+            "expected_sha256": null,
+            "max_bytes": 1000000,
+            "host": "api.gdc.cancer.gov"
+        },
+        {
+            "id": "gdc_clinical_follow_up_v2",
+            "url": "https://api.gdc.cancer.gov/data/c23a0f90-d56f-45b3-8b3d-2983339a6019",
+            "version": "GDC BCR Biotab, listed 2 Nov 2026 (md5 a1d70004cf0d18855394a5f98035e64c)",
+            "expected_size": 177637,
+            "expected_sha256": null,
+            "max_bytes": 1000000,
+            "host": "api.gdc.cancer.gov"
+        },
+        {
+            "id": "gdc_clinical_patient",
+            "url": "https://api.gdc.cancer.gov/data/58cbbc07-5ec4-47c7-9295-11ccbf7693f4",
+            "version": "GDC BCR Biotab, listed 2 Nov 2026 (md5 b93abd848f9401fe26c9930c1fda2ad0)",
+            "expected_size": 304102,
+            "expected_sha256": null,
+            "max_bytes": 1000000,
+            "host": "api.gdc.cancer.gov"
+        }
+    ]
+}
