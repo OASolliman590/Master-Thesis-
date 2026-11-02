@@ -1,0 +1,30 @@
+{
+    "schema_version": 1,
+    "cohort": "gse176307",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 10,
+    "max_object_bytes": 20000000,
+    "allowed_hosts": [
+        "ftp.ncbi.nlm.nih.gov"
+    ],
+    "objects": [
+        {
+            "id": "geo_salmon_tpm_gene",
+            "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_salmon_tpm_gene.matrix.tsv.gz",
+            "version": "GEO 2023-07-12 replacement file, listed 2 Nov 2026",
+            "expected_size": 10131698,
+            "expected_sha256": null,
+            "max_bytes": 20000000,
+            "host": "ftp.ncbi.nlm.nih.gov"
+        },
+        {
+            "id": "geo_sample_name_key",
+            "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE176nnn/GSE176307/suppl/GSE176307_BACI_Omniseq_Sample_Name_Key_submitted_GEO_v2.csv.gz",
+            "version": "GEO, checksum recorded by the 6 Sep 2026 source audit",
+            "expected_size": 530,
+            "expected_sha256": "cfe452ec72c99f2c84216bb25fe291b4c78028e53b8a8189acbd5c9ed7db919b",
+            "max_bytes": 10000,
+            "host": "ftp.ncbi.nlm.nih.gov"
+        }
+    ]
+}

@@ -67,3 +67,13 @@ Raw expression is still never merged across studies. Pooling is allowed only for
 
 ## 8. Still open (separate decisions, not in this amendment)
 The A-BIO details: the locked-panel effect measure, endpoint families, and the genome-wide differential-expression method and FDR (decisions D4 to D6 of 2 Nov).
+
+## Addendum 1 (DRAFT for signature, 2 Nov 2026): cohort-adaptive sensitivity and GSE176307
+From Astra's review of the score-level rescue (`REVIEW_ASTRA_RESCUE.md`) and the TPM check (`docs/decisions/A_P2_MEASUREMENT_20261102.md`). **The primary is unchanged:** the TPM learner, exact CYT and IMvigor210 with development-derived standardisation.
+1. **GSE176307 joins primary training** through its official Salmon TPM file, joined by the GEO name key. One patient with two assays gets one assay by a rule frozen before any outcome look. The earlier statement that only centred values exist is corrected.
+2. **New secondary sensitivity: cohort-adaptive, mixed representation.** Each completed panel feature is standardised within each study (sample SD, n−1; a zero or non-finite SD makes that fit unavailable). Braun joins if all four features qualify on its deposited log2 scale.
+   - Held-out studies, and IMvigor210, are standardised on their own eligible baseline patients without outcomes. The 70/30 splits use the training split's moments.
+   - IMvigor210 under this sensitivity is labelled "external, outcome-blinded cohort-adaptive evaluation", and is reported descriptively.
+3. **Learner and CYT eligibility are separate for this sensitivity only.** Exact CYT is reported only where the measurement contract allows it, so Braun gets a learner AUROC without a CYT difference. Each result states its denominators.
+4. The deposited preprocessing (for example ComBat) is documented. Standardisation inside a split cannot undo preprocessing already estimated on the whole source cohort.
+5. Both equations are frozen before external evaluation, and the primary is never chosen from external performance.
