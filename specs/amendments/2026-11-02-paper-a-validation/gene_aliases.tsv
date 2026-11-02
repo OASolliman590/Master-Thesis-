@@ -1,0 +1,4 @@
+source_symbol	registry_symbol	reason
+MB21D1	CGAS	HGNC previous symbol (seen in Hugo, GSE145996, Braun)
+TMEM173	STING1	HGNC previous symbol (seen in Liu, Hugo, GSE145996, Braun, GSE176307)
+RIGI	DDX58	current HGNC symbol RIGI; the registry uses DDX58 (seen in Liu)

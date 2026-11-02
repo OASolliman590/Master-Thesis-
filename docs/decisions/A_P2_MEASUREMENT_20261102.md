@@ -31,3 +31,20 @@ Section 3 of the signed `specs/amendments/2026-11-02-paper-a-validation/AMENDMEN
 - The title-rule crosswalk links 60 of 73 PRE runs to cBioPortal patients. Each linked run's sex was inferred from its own recount3 counts (summed CPM of RPS4Y1, DDX3Y, KDM5D, UTY, EIF1AY and ZFY; XIST recorded) and compared with cBioPortal SEX. No response or outcome field was used.
 - **Result: 60 of 60 agree** (21 female, 39 male). Recorded women have Y-gene expression of 0.2-6.5 CPM, recorded men 214-2,961 CPM, a clean separation. Three male runs also show high XIST, noted as a sample caveat.
 - **Accepted** for the 60 PRE runs. Limitation: a sex check cannot detect a swap between two patients of the same sex. The 14 matched EDT (on-treatment) runs are not accepted here; they belong to A.1.
+
+## Built inputs (2 Nov 2026, `python -m tools.a_p2 build`)
+`tools/a_p2` writes `.scratch/runtime/a_p2/inputs/` (features.tsv, coverage.tsv, manifest.json; git-ignored). It does no model fitting and no feature-by-response summaries.
+
+| Cohort | Final N | R | NR | TPM route |
+| --- | ---: | ---: | ---: | --- |
+| liu2019 | 102 | 41 | 61 | author TPM |
+| gse176307 | 87 | 16 | 71 | official Salmon TPM (1 unknown ORR excluded) |
+| gide2019 | 60 | 39 | 21 | recount3 counts → TPM (accepted crosswalk; 13 without a join excluded) |
+| riaz_gse91061 | 49 | 10 | 39 | author FPKM → TPM |
+| kim2018 | 45 | 12 | 33 | recount3 counts → TPM |
+| vanallen2015 | 39 | 7 | 32 | author FPKM-like → TPM (study-level pretreatment, PMC5054517; 1 unknown ORR excluded) |
+| hugo_gse78220 | 26 | 14 | 12 | author FPKM → TPM |
+| **Total** | **408** | **139** | **269** | 7 families: 5 melanoma, 1 gastric, 1 bladder |
+
+- recount3 gene length: column 6 (GTF score) of the pinned G026 gene annotation, which is recount3's bp_length. The TPM denominator uses primary-assembly genes only (5,637 alternate or unplaced rows dropped per cohort). Every converted sample sums to 1,000,000.
+- No missing or negative feature values and no duplicate patients; 40 tests pass.

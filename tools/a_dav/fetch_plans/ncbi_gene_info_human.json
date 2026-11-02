@@ -1,0 +1,21 @@
+{
+    "schema_version": 1,
+    "cohort": "reference_gene_maps",
+    "branch_id": "A_BASELINE_BIO",
+    "request_cap": 3,
+    "max_object_bytes": 100000000,
+    "allowed_hosts": [
+        "ftp.ncbi.nlm.nih.gov"
+    ],
+    "objects": [
+        {
+            "id": "ncbi_homo_sapiens_gene_info",
+            "url": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz",
+            "version": "NCBI Gene, retrieved 2 Nov 2026 (file is updated daily; the stored hash is the frozen version)",
+            "expected_size": 5199800,
+            "expected_sha256": null,
+            "max_bytes": 100000000,
+            "host": "ftp.ncbi.nlm.nih.gov"
+        }
+    ]
+}
