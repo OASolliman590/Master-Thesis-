@@ -330,6 +330,8 @@ def input_files(cohort):
     elif cohort == 'kim2018':
         base = safe_path(RUNTIME / cohort / 'recount3-reviewed-20261030')
         paths += [base / x for x in ('counts.tsv', 'sample_inventory.tsv', 'PROVENANCE.json')]
+        paper = safe_path(RUNTIME / cohort / 'staging-paper-20261102')
+        paths += [paper / x for x in ('paper.pdf', 'table2_extracted.tsv', 'table2_extracted.provenance.json')]
         receipt = json.loads((base / 'PROVENANCE.json').read_text())
         if sha256(base / 'counts.tsv') != receipt['output_sha256'] or sha256(base / 'sample_inventory.tsv') != receipt['inventory_sha256']:
             raise ValueError('recount3 product hash mismatch')
@@ -454,11 +456,34 @@ def export_kim(output):
     inventory = read_rows(base / 'sample_inventory.tsv')
     unique_index(inventory, 'external_id')
     unique_index(inventory, 'sample_title')
-    mapping = {r['external_id']: r['sample_title'] for r in inventory}
+    stage = RUNTIME / 'kim2018/staging-paper-20261102'
+    provenance = json.loads((stage / 'table2_extracted.provenance.json').read_text())
+    if sha256(stage / 'paper.pdf') != provenance['source_sha256']:
+        raise ValueError('Kim 2018 paper hash mismatch')
+    table = {r['seq_id']: r for r in read_rows(stage / 'table2_extracted.tsv')}
+    # recount3 sample titles are the paper's Table 2 sequencing IDs plus '_RNA'; join exactly.
+    linked = {r['external_id']: table.get(r['sample_title'].removesuffix('_RNA')) for r in inventory}
+    if None in linked.values():
+        raise ValueError('recount3 sample title without an exact Table 2 sequencing ID')
+    mapping = {r['external_id']: linked[r['external_id']]['trial_patient'] for r in inventory}
+    unique_index([{'p': p} for p in mapping.values()], 'p')
     output.mkdir(parents=True, exist_ok=True)
     genes, duplicates = project_matrix(base / 'counts.tsv', output / 'expression.tsv', mapping, {'format': 'MATRIX_HEADER_TSV'})
-    clinical = [{'patient_id': r['sample_title'], 'sample_id': r['external_id'], 'timepoint': 'UNKNOWN', 'drug_class': 'ANTI_PD_1', 'prior_ici': 'UNKNOWN', 'orr': 'UNKNOWN', 'clinical_benefit': 'UNKNOWN', 'pfs': 'UNKNOWN', 'os': 'UNKNOWN'} for r in inventory]
-    return clinical, genes, [sha256(base / x) for x in ('counts.tsv', 'sample_inventory.tsv', 'PROVENANCE.json')], [f'{len(inventory)} distinct tumour-labelled sample titles are provisional patient identifiers; patient identity and pretreatment timing are unverified. No response source; all ORR UNKNOWN. recount3 approximate counts; Megadepth version unknown. Duplicate gene IDs: {duplicates}.']
+    clinical = []
+    for r in inventory:
+        t = linked[r['external_id']]
+        best = t['best_response']
+        clinical.append({'patient_id': t['trial_patient'], 'sample_id': r['external_id'], 'timepoint': 'PRE_TREATMENT',
+                         'drug_class': 'ANTI_PD_1', 'prior_ici': 'NO', 'orr': best if best in {'CR', 'PR', 'SD', 'PD'} else 'UNKNOWN',
+                         'clinical_benefit': 'UNKNOWN', 'pfs': 'UNKNOWN', 'os': 'UNKNOWN', 'raw_orr': best, 'raw_clinical_benefit': '',
+                         'endpoint_source': 'Kim 2018 Nat Med Table 2 (coordinator-extracted)', 'endpoint_definition': 'Best overall response, RECIST 1.1'})
+    hashes = [sha256(base / x) for x in ('counts.tsv', 'sample_inventory.tsv', 'PROVENANCE.json')]
+    hashes += [sha256(stage / 'table2_extracted.tsv'), provenance['source_sha256']]
+    return clinical, genes, hashes, [
+        f'All {len(inventory)} recount3 RNA samples join exactly to Kim 2018 Table 2 sequencing IDs (title minus "_RNA"); patient IDs are the trial patient codes. Table 2 is coordinator-extracted from the hash-verified PDF text layer; rows with wrapped text were checked by hand.',
+        'Pembrolizumab monotherapy after at least one platinum/fluoropyrimidine line (phase 2, NCT02589496). Fresh-frozen tumour obtained between day 42 and day 1 before treatment. Prior ICI recorded as NO: the trial required patients naive to anti-PD-1/PD-L1/PD-L2 (prior anti-CTLA-4 is not stated).',
+        'ORR is best overall response per RECIST 1.1 as given in Table 2; NE would be UNKNOWN (none among the RNA samples).',
+        f'recount3 approximate counts; Megadepth version unknown. Duplicate gene IDs: {duplicates}.']
 
 
 def export_simple_geo(cohort, output):

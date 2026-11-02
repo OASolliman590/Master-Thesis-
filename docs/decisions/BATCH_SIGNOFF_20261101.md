@@ -43,3 +43,10 @@ Signed for DEVELOPMENT use (loaded by Luna into `.scratch/runtime/<c>/simple/`; 
 | gse111636 | 11 | bladder (pembrolizumab) | SOURCE_BINARY (`treatment response`: responder 6 / progressor 5). Not ORR | Submitter RMA + ComBat values; probe-level with map; no linked paper |
 
 **Not signed:** gse140901 (liver, 24) is on hold: its paper reports single-agent or combination ICI therapy and GEO gives no per-patient regimen. gse99070 is on hold (no ICI treatment shown); gse207422 is a combination study (combination paper only); the TCGA melanoma ICI subset is excluded.
+
+## Paper-resolved addition (user, 2 Nov 2026: "I sign both")
+Signed for DEVELOPMENT use after checking the user-supplied primary papers:
+| Cohort | Patients | Cancer | Endpoint | Main caveats |
+| --- | ---: | --- | --- | --- |
+| gse176307 | 88 | bladder (urothelial) | ORR, RECIST 1.1 by a blinded radiologist (CR 7 / PR 9 / SD 4 / PD 67 / unknown 1) | Rose 2021: deaths or clear clinical progression before imaging count as non-responders; single-agent anti-PD-1/PD-L1; archival FFPE, interval to ICB not stated; log2(1+x) median-centred upper-quartile values; GEO has 16,383 genes and 88 patients vs 16,901 and 89 in the paper |
+| kim2018 | 45 | gastric | ORR, RECIST 1.1 (CR 3 / PR 9 / SD 15 / PD 18) | Kim 2018 Table 2, coordinator-extracted from the hash-verified PDF and joined exactly by sequencing ID (45/45); pembrolizumab monotherapy, ICI-naive, fresh-frozen biopsy within 42 days before treatment; recount3 approximate counts |
