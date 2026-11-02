@@ -1,0 +1,57 @@
+{
+    "schema_version": 1,
+    "cohort": "lin2026_atlas",
+    "branch_id": "SC_MODULE",
+    "request_cap": 20,
+    "max_object_bytes": 4021369095,
+    "allowed_hosts": [
+        "zenodo.org"
+    ],
+    "objects": [
+        {
+            "id": "D2398_zip",
+            "url": "https://zenodo.org/api/records/19586163/files/D2398.zip/content",
+            "version": "Zenodo 10.5281/zenodo.19586163 (md5:27078f2c651244dcee67b582b233cbd1)",
+            "expected_size": 1455743744,
+            "expected_sha256": null,
+            "max_bytes": 1455743745,
+            "host": "zenodo.org"
+        },
+        {
+            "id": "D2816_zip",
+            "url": "https://zenodo.org/api/records/19586163/files/D2816.zip/content",
+            "version": "Zenodo 10.5281/zenodo.19586163 (md5:1ae2311cdbe86c5d1e1bd012904b2cda)",
+            "expected_size": 456019693,
+            "expected_sha256": null,
+            "max_bytes": 456019694,
+            "host": "zenodo.org"
+        },
+        {
+            "id": "D2989_zip",
+            "url": "https://zenodo.org/api/records/19586163/files/D2989.zip/content",
+            "version": "Zenodo 10.5281/zenodo.19586163 (md5:3d60b456f10faaa7156a124034c7395e)",
+            "expected_size": 632847132,
+            "expected_sha256": null,
+            "max_bytes": 632847133,
+            "host": "zenodo.org"
+        },
+        {
+            "id": "D993_zip",
+            "url": "https://zenodo.org/api/records/19586163/files/D993.zip/content",
+            "version": "Zenodo 10.5281/zenodo.19586163 (md5:344f3ccd61665bb03e0ff3f5212dc2fc)",
+            "expected_size": 164159915,
+            "expected_sha256": null,
+            "max_bytes": 164159916,
+            "host": "zenodo.org"
+        },
+        {
+            "id": "seurat_full_qs2",
+            "url": "https://zenodo.org/api/records/19586163/files/seurat_full.qs2/content",
+            "version": "Zenodo 10.5281/zenodo.19586163 (md5:a3486788163889f8cc910ea0115d70ac)",
+            "expected_size": 4021369094,
+            "expected_sha256": null,
+            "max_bytes": 4021369095,
+            "host": "zenodo.org"
+        }
+    ]
+}
