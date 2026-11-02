@@ -5,18 +5,18 @@
 User decisions applied (2 Nov): controlled-access sources are dropped; spatial data are out (single-cell plan); the signed single-cell plan cuts standalone single-cell downloads.
 
 ## Verdict counts (117 rows)
-covered 28 · not needed 19 · not useful 19 · excluded 18 · no expression 9 · dropped 7 · no new data 6 · check 6 · lead 3 · added 2.
+After Astra's corrections: covered 23 · excluded 20 · not needed 18 · not useful 14 · poor fit 5 · check 12 · no expression 8 · dropped 6 · no new data 5 · lead 5 · added 1 (see `RECONCILIATION.tsv`).
 
 ## Questions asked by the user
 - **The two new ICI leads:** both are public and now in the registry as candidates. GSE181815 is pembrolizumab in thymic carcinoma (10 patients, 5 responders versus 5 non-responders, RNA-seq). GSE213145 is anti-PD-1 monotherapy in melanoma (20 patients with RNA-seq, clinical-benefit endpoint).
 - **The 32 prostate rows against Paper B:** none is in Paper B's data list, which is untreated TCGA-PRAD and CPC-GENE by design. **None fits Paper A's response analyses:**
   - most combine ICI with ADT, chemotherapy, radiotherapy, evofosfamide, vaccines or CD40/IL-8 agents;
   - others are non-ICI immunotherapies, single cases, trial reports without expression data, or controlled access.
-  - Two "check" items: GSE314805 (NanoString, mixed immunotherapies, PSA response) and GSE274229 (prostate myeloid ICI-resistance single-cell, a possible Paper B interpretation reference).
-- **Single-cell (21 ICI rows):** useful only as already planned. Eight are inside the Lin atlas or its source cohorts. The rest are cut by the signed plan (cite only), are integrated databases superseded by the atlas, or are not ICI-treated.
+  - GSE314805 is PD-1 plus a DNA vaccine (combination, context only). GSE274229 only needs a citation and provenance check against the atlas's PCa_Hawley source.
+- **Single-cell (21 ICI rows):** see the corrected answers below; atlas coverage is verified per row, not assumed.
 - **Spatial (7 + 2):** not used (user decision).
-- **Proteomics (6 + 3):** not useful for A or B. They are blood or serum proteomics with no link to the tumour expression panels; discussion only.
-- **Pathology and radiology (5 + 1):** not useful; no expression data; discussion only.
+- **Proteomics (6 + 3):** see the corrected answers below.
+- **Pathology and radiology (5 + 1):** see the corrected answers below.
 - **The 4 old "primary candidates":** IMvigor210 (locked; listed under another name), Miao RCC (dropped, controlled), and the two new leads above.
 
 ## Leads worth action (ranked after Astra's review)
