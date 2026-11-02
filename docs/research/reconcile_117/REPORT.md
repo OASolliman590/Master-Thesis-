@@ -5,7 +5,7 @@
 User decisions applied (2 Nov): controlled-access sources are dropped; spatial data are out (single-cell plan); the signed single-cell plan cuts standalone single-cell downloads.
 
 ## Verdict counts (117 rows)
-After Astra's corrections: covered 23 · excluded 20 · not needed 18 · not useful 14 · poor fit 5 · check 12 · no expression 8 · dropped 6 · no new data 5 · lead 5 · added 1 (see `RECONCILIATION.tsv`).
+After Astra's corrections: covered 23 · excluded 20 · not needed 18 · not useful 11 · poor fit 8 · check 12 · no expression 8 · dropped 6 · no new data 5 · lead 5 · added 1 (see `RECONCILIATION.tsv`).
 
 ## Questions asked by the user
 - **The two new ICI leads:** both are public and now in the registry as candidates. GSE181815 is pembrolizumab in thymic carcinoma (10 patients, 5 responders versus 5 non-responders, RNA-seq). GSE213145 is anti-PD-1 monotherapy in melanoma (20 patients with RNA-seq, clinical-benefit endpoint).
