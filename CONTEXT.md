@@ -82,3 +82,7 @@ _Avoid_: normalisation, version (when a different representation is meant)
 
 **Reviewer worksheet**: The single per-cohort, per-branch list of worksheet items and admission gate questions, with evidence pointers, that a named human signs. Admission reads the signed worksheet and never infers a decision.
 _Avoid_: checklist, review form
+
+**Cell composition estimate**: An estimated cell-type fraction from a reference-based deconvolution of bulk data (for example quanTIseq on RNA, MethylCIBERSORT on methylation). An RNA-derived composition estimate is not an independent covariate for RNA outcomes.
+
+**Naive-to-ICI bridge**: A comparison of the same cancer's treatment-naive reference tumours (TCGA) with pretreatment tumours from ICI-treated cohorts, by expression structure, position or concordance of frozen effects. It is not a validation of either set and does not test response itself.

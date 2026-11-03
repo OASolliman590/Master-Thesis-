@@ -1,6 +1,6 @@
-# Paper B: rethought specification v2, 3 Nov 2026
+# Paper B: rethought specification v2.1, 3 Nov 2026
 
-**Status: DRAFT v2 for debate review and signature.** It is the result of the user's request to rethink Paper B (2-3 Nov 2026) and of a grilling session whose decisions (Q1-Q21) are recorded below. It is informed by the evidence review `docs/research/SPEC_REVISION_EVIDENCE_20261102.md`.
+**Status: DRAFT v2.1 for signature.** v2.1 (3 Nov) adds the naive-to-ICI bridge (secondary 2), MethylCIBERSORT and CIBERSORTx as composition secondaries (secondary 5), and a dedicated single-cell section (8), from the user's grilling answers in `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` and the evidence in `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. It is the result of the user's request to rethink Paper B (2-3 Nov 2026) and of a grilling session whose decisions (Q1-Q21) are recorded below. It is informed by the evidence review `docs/research/SPEC_REVISION_EVIDENCE_20261102.md`.
 - **Replaces** the earlier Paper B primary: B-P, 8 antigen-presentation genes, Delta R² TCGA-PRAD → CPC-GENE. B-P becomes a named sub-result.
 - **Absorbs** the signed B-ICIM (`specs/amendments/2026-11-02-paper-b-ici-methylation/AMENDMENT.md`) and B-V (29 Oct) as supporting analyses.
 - **Unchanged** older contracts in `specs/B/` keep their technical detail (probe masks, specimen policy, CPC-GENE linkage) unless this document says otherwise.
@@ -17,6 +17,7 @@ It is anchored in prostate. It links to the thesis rationale, epigenetic priming
 | **TCGA-PRAD** | Discovery set for the prostate primary (about 497 cases with matched RNA and 450K methylation) |
 | **CPC-GENE** (GSE107298 methylation, GSE107299 expression arrays) | The single independent prostate test, used once; about 72-114 usable patients after specimen linkage |
 | **TCGA comparator cancers** (SKCM, LUAD, LUSC, KIRC, BLCA, HNSC, STAD, LIHC: those of Paper A's cohorts) | Cross-cancer comparison ("cold versus hot") |
+| **Paper A ICI RNA-seq cohorts** (v2.1: Liu, Gide, Riaz, Hugo, Van Allen, GSE176307, Kim, GSE218989, GSE135222) | The ICI side of the naive-to-ICI bridge (secondary 2): expression only, pretreatment, IMvigor210 never used |
 | **ICI-treated paired cohorts** (Jung GSE119144/GSE135222, Cho GSE126043/GSE126044, Krakow GSE264158/GSE213145; about 56 paired patients) | Supporting only (B-ICIM), never primary |
 | **Epigenetic-drug + ICI cohorts** (GSE248014 entinostat lead-in, guadecitabine studies, GSE343570) | Supporting perturbation evidence (B-V) |
 | **Prostate single-cell references** (CELLxGENE hormone-naive atlas, 24 donors; Lin atlas PCa_Hawley, labelled anti-PD-1 + ADT; PCCAT candidate) | Cellular context for interpretation |
@@ -58,14 +59,24 @@ It is anchored in prostate. It links to the thesis rationale, epigenetic priming
    - the same per-gene models within each TCGA cancer, with 5-fold cross-validated ΔR²;
    - prostate compared with each comparator cancer as a difference in median ΔR² with bootstrap intervals;
    - descriptive, with no pass/fail threshold; cancer types differ in many ways besides immunity.
-2. **Enhancer and gene-body methylation (Q8):** the primary design with enhancer or gene-body aggregates.
-3. **Multi-omics integration (Q12, Q16), exploratory:**
+2. **Naive-to-ICI bridge (v2.1):** how the immune-gene pattern of each TCGA comparator cancer carries over to pretreatment tumours of the same cancer in Paper A's ICI cohorts. Expression only, since the ICI cohorts have no methylation; imputing methylation from expression is rejected as circular. Three parts:
+   - **(a) Structure:** module preservation (Langfelder 2011; Zsummary and medianRank) of co-expression modules defined in TCGA on the Tier 1+2 genes, tested in linear RNA-seq ICI cohorts with at least 40 patients (Liu 102, Gide 73, Riaz 49, Van Allen 40 → SKCM; GSE176307 88 → BLCA; Kim 45 → STAD; GSE218989 355 → LUAD/LUSC as the cohort's histology allows). Run twice: as is, and after regressing out purity ("Other" fraction) and the immune axis (quanTIseq CD8 and GEP), because infiltration alone can make structure look preserved. Outcome-free.
+   - **(b) Position:** where ICI pretreatment tumours sit within the same cancer's TCGA distribution: each tumour's percentile for each panel score. Main analysis only on the recount3-processed subset (Gide, Riaz and Hugo recount3 versions → SKCM; Kim → STAD), so both sides share one pipeline; the other linear cohorts on the A-P2 TPM route are a labelled sensitivity. Outcome-free; metastatic ICI tumours versus mostly primary TCGA tumours is stated as a difference in population.
+   - **(c) Concordance:** for each matched cancer, the genes with methylation association in that TCGA cancer (secondary 1 models; not prostate), compared with the frozen A-BIO per-study response effects: sign agreement and Spearman correlation between the TCGA methylation coefficient and the Paper A effect. Runs only after A-BIO is frozen; no new outcome analysis; IMvigor210 is never touched.
+   - KIRC, HNSC and LIHC have no linear ICI RNA-seq cohort (Braun, NanoString and arrays excluded) and are reported as "no linear ICI cohort".
+   - Claim: "the naive immune-gene structure is (or is not) preserved in ICI-treated tumours" and "genes with methylation association in naive tumours show concordant (or discordant) response associations". Never that methylation predicts ICI response.
+3. **Enhancer and gene-body methylation (Q8):** the primary design with enhancer or gene-body aggregates.
+4. **Multi-omics integration (Q12, Q16), exploratory:**
    - MOFA+ unsupervised, per cancer and pan-cancer, on RNA, methylation, copy number, and miRNA and RPPA where coverage allows.
    - DIABLO only with non-RNA labels: Gleason grade group in prostate, cancer type pan-cancer. No RNA-derived immune subtype labels (circular).
-4. **Cell composition and methylation state (Q20, Q21):** quanTIseq (default; CIBERSORTx if the user obtains access) cell fractions related to each tumour's immune-gene methylation state, descriptively. RNA-derived fractions are never used as covariates for RNA outcomes. This runs in TCGA-PRAD, CPC-GENE, the comparator cancers and the ICI cohorts with the same frozen reference.
-5. **Prostate transfer of Paper A's frozen panels:** TCGA-PRAD scored with Paper A's frozen programmes; "low" is relative to other prostate tumours. Low RNA is not HLA loss.
-6. **B-ICIM (supporting):** the outcome-free immune-gene methylation–expression association in ICI-treated tumours, as signed, **with one change covered by this v2 signature: global methylation is added to the B-ICIM adjustment set** (from the Q9 decision, since Jung 2019 showed global hypomethylation drives immune-gene repression in this very cohort). Jung first (27 pairs); Cho and Krakow deferred. It is compared with Jung 2019 and Hossain 2025, which already reported methylation findings in these cohorts.
-7. **B-V (supporting perturbation evidence):** change in pre-declared immune scores after an epigenetic drug, as signed on 29 Oct. Only GSE248014's lead-in isolates the drug alone, HDAC inhibitors are not assumed to demethylate DNA, and Holm correction applies.
+5. **Cell composition and methylation state (Q20, Q21; extended in v2.1):**
+   - **quanTIseq (primary deconvolution, same pinned version as Paper A):** RNA fractions related to each tumour's immune-gene methylation state, descriptively, in TCGA-PRAD, CPC-GENE (array mode, labelled), the comparator cancers and the ICI methylation cohorts.
+   - **CIBERSORTx (secondary):** LM22, relative mode, same samples, only if the user registers; otherwise "not run".
+   - **MethylCIBERSORT (secondary, in addition to its role as the primary's sensitivity):** (i) methylation-derived fractions in TCGA-PRAD, CPC-GENE, the 8 comparators and the 3 ICI methylation cohorts, related descriptively to the immune-gene methylation state; (ii) per tumour, agreement (Spearman, per matched cell type) between MethylCIBERSORT fractions and quanTIseq fractions. Because it crosses data types, (ii) is the one non-circular composition check.
+   - RNA-derived fractions are never covariates for RNA outcomes. None of these uses single-cell data as a reference (SC-2 stays cut).
+6. **Prostate transfer of Paper A's frozen panels:** TCGA-PRAD scored with Paper A's frozen programmes; "low" is relative to other prostate tumours. Low RNA is not HLA loss.
+7. **B-ICIM (supporting):** the outcome-free immune-gene methylation–expression association in ICI-treated tumours, as signed, **with one change covered by this v2 signature: global methylation is added to the B-ICIM adjustment set** (from the Q9 decision, since Jung 2019 showed global hypomethylation drives immune-gene repression in this very cohort). Jung first (27 pairs); Cho and Krakow deferred. It is compared with Jung 2019 and Hossain 2025, which already reported methylation findings in these cohorts.
+8. **B-V (supporting perturbation evidence):** change in pre-declared immune scores after an epigenetic drug, as signed on 29 Oct. Only GSE248014's lead-in isolates the drug alone, HDAC inhibitors are not assumed to demethylate DNA, and Holm correction applies.
 
 ## 7. Claim ceiling (Q13)
 **Permitted:** "Paper B provides epigenetic evidence that promoter methylation of immune and immunotherapy-target genes is associated with their reduced expression in untreated prostate cancer. The association holds after adjustment for purity, copy number (if available) and global methylation, is replicated in an independent cohort, and is consistent with an epigenetically repressed immune state. **Only if the pre-specified MethylCIBERSORT sensitivity does not materially attenuate it** may the claim add "and is robust to methylation-estimated cell composition"; otherwise the attenuation is reported. Perturbation evidence from epigenetic-drug cohorts is reported where available."
@@ -77,21 +88,31 @@ It is anchored in prostate. It links to the thesis rationale, epigenetic priming
 
 Signed rule 7 wording ("association supported", "inconclusive", "not measured") applies to every result.
 
-## 8. Budget (Q6)
-About 180 researcher-hours:
+## 8. Single-cell (signed single-cell plan, 2 Nov; at most 8 hours, done before Paper A's SC-1)
+- **Role:** cellular context only. No response testing, no deconvolution reference, no silencing or causality claim, and no "exclusive compartment" from non-detection.
+- **Untreated reference (on the SSD):** CELLxGENE hormone-naive primary prostate atlas (collection bdac7a53; 68,322 cells, 24 donors), stored in the runtime area `prostate_hormone_naive_atlas/`. Broad compartments: luminal/malignant epithelial, basal epithelial, T/NK, B/plasma, myeloid, fibroblast/stromal, endothelial.
+- **ICI-treated exception:** the Lin atlas PCa_Hawley cohort (anti-PD-1 + ADT, label to confirm against Hawley 2023), 3 baseline patients, shown per patient with no medians or intervals, no response contrast (all PSA non-responders), limitations in the legend.
+- **v2.1 job: tumour-intrinsic or infiltrate-expressed.** Each gene with a methylation association in the primary gets a label from the reference: expressed mainly in epithelial/malignant cells, mainly in immune/stromal cells, mixed, or `below_scRNA_detection_limit`. This tells whether a methylation–expression link is likely a tumour-cell signal or an infiltrate signal (Bacolod 2019 and Fröhlich 2020 show the latter is common). The label is a lookup column in the biological-context table, fixed before the primary is unblinded by a frozen rule (share of donor-median CPM in each compartment).
+- **Numeric rules:** as signed (15 cells, 5,000 UMI, 5 donors, log2(CPM+1) on the full library; low-copy genes never called absent).
+
+## 9. Budget (Q6, updated v2.1)
+About 210 researcher-hours:
 - gene universe and measurement freeze: 25;
 - primary: 45;
 - cold versus hot: 30;
+- naive-to-ICI bridge: 22;
 - multi-omics: 30;
-- deconvolution: 15;
+- deconvolution (quanTIseq, MethylCIBERSORT secondary, CIBERSORTx): 23;
 - B-ICIM: 20 (stop-loss);
 - B-V: 15.
-Over-runs cut the exploratory items first, in this order: multi-omics, then deconvolution.
+Single-cell (8) is counted in the signed single-cell plan. Over-runs cut, in this order: multi-omics, then bridge position (b), then the deconvolution secondaries.
 
-## 9. Open gates before any association is examined
+## 10. Open gates before any association is examined
 1. Freeze the Tier 1-3 gene lists and the Hallmark IFN-gamma membership.
 2. CPC-GENE gene-level copy number: verify, or apply the fallback in section 4.
 3. CPC-GENE specimen and patient linkage (the 73/114 issue in `specs/B/DATA_AND_SOURCES.md`).
 4. Freeze the probe sets, global-methylation probe list, purity sources and MethylCIBERSORT reference.
 5. TCGA comparator cohort sizes with matched RNA and methylation (to be counted from GDC metadata).
 6. Correct the PCa_Hawley label in the single-cell plan to "anti-PD-1 + ADT" once confirmed against Hawley 2023.
+7. Pin the quanTIseq version (shared with Paper A) and the MethylCIBERSORT reference; CIBERSORTx needs the user's registration.
+8. Freeze the bridge pairs (cohort ↔ TCGA cancer) and the single-cell attribution rule.
