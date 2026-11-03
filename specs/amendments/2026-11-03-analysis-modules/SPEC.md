@@ -1,6 +1,6 @@
 # Analysis modules: A-META and standard bulk/single-cell analysis (3 Nov 2026)
 
-**Status: DRAFT for signature.** Decisions: `docs/wayfinding/ANALYSIS_MODULES_20261103/MAP.md` (grilling Q1-Q15). Evidence: `docs/research/ANALYSIS_CODEBASE_SURVEY_20261103.md`. Architecture review: five candidates, all adopted, pseudobulk last. Signed constraints carried: A-BIO D4-D6, three endpoint families never pooled, raw expression never merged across studies, IMvigor210 UNTOUCHED_FINAL_TEST, single-cell-reference deconvolution (SC-2) stays cut. **SC-3 (single-cell responder versus non-responder DE) is reinstated by the user on 3 Nov 2026**, amending the signed single-cell plan; it needs the user's signature with this spec, genome-wide lists never feed A-P2.
+**Status: SIGNED by the user on 3 Nov 2026 ("I sign it"), including the reinstatement of SC-3.** Decisions: `docs/wayfinding/ANALYSIS_MODULES_20261103/MAP.md` (grilling Q1-Q15). Evidence: `docs/research/ANALYSIS_CODEBASE_SURVEY_20261103.md`. Architecture review: five candidates, all adopted, pseudobulk last. Signed constraints carried: A-BIO D4-D6, three endpoint families never pooled, raw expression never merged across studies, IMvigor210 UNTOUCHED_FINAL_TEST, single-cell-reference deconvolution (SC-2) stays cut. **SC-3 (single-cell responder versus non-responder DE) is reinstated by the user on 3 Nov 2026**, amending the signed single-cell plan; it needs the user's signature with this spec, genome-wide lists never feed A-P2.
 
 ## Problem Statement
 

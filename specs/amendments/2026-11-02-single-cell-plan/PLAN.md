@@ -2,6 +2,8 @@
 
 **Status: SIGNED by the user on 2 Nov 2026 ("I sign it").** It supersedes the unsigned 30 Oct single-cell draft. Revision 2 follows two read-only reviews and one debate round (`REVIEW_ASTRA_HIGH.md`, `REVIEW_ARGON_HIGH.md`, `DEBATE.md`), the Gate 0 inspection of the Lin atlas, and the user's choice on 2 Nov 2026: **"All cancers, no spatial."** After the debate both reviewers preferred a single source study for Paper A; the user's all-cancers choice stands, now that Gate 0 shows six cancers pass the donor floor from one already-qualified object. It replaces the scope of `specs/amendments/2026-10-30-single-cell-module/DRAFT.md`. Simple mode applies: one catalogue (`docs/cohorts/SINGLE_CELL.tsv`), a provenance table, one batch sign-off; no per-study worksheets.
 
+> **Amended 3 Nov 2026 (signed):** SC-3 is reinstated as patient-level pseudobulk responder versus non-responder DE per compartment, within one response metric, exploratory. See `specs/amendments/2026-11-03-analysis-modules/SPEC.md` section 7. The rest of this plan is unchanged.
+
 ## Role
 Single-cell is **descriptive support** only. It shows where locked genes are expressed in sampled cells. It never tests response, never selects or changes bulk features, never alters the frozen A→B gene handoff, and never touches the locked final test. Leaving out either paper's single-cell part is an acceptable outcome.
 
