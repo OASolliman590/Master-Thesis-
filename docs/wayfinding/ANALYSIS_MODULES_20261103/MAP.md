@@ -16,7 +16,7 @@ Skills: research, wayfinder, improve-codebase-architecture (with codebase-design
 - A-BIO settings D4-D6: Hedges g; REML with modified Knapp–Hartung; three endpoint families never pooled; NB GLM (DESeq2 or edgeR) or limma; BH FDR 10%; synthesis only within an effect type.
 - Raw expression is never merged across studies.
 - IMvigor210 is UNTOUCHED_FINAL_TEST in every module.
-- Single-cell plan (signed 2 Nov): descriptive only; no single-cell response testing (SC-3); no single-cell-reference deconvolution (SC-2).
+- Single-cell plan (signed 2 Nov): descriptive only; no single-cell-reference deconvolution (SC-2). SC-3 (single-cell response testing) was cut there and is reinstated by this effort.
 - Genome-wide lists never feed A-P2.
 
 ## Tickets
@@ -45,4 +45,4 @@ None. (Figures settled in Q14-Q15; A-COMP fractions enter A-META as one more uni
 
 ## Out of scope
 
-New data acquisition; raw-read reprocessing of all studies (rejected earlier as too risky); single-cell response testing; touching IMvigor210.
+New data acquisition; raw-read reprocessing of all studies (rejected earlier as too risky); cell-level (non-pseudobulk) response tests; touching IMvigor210.
