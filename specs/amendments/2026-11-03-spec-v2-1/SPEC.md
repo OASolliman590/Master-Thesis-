@@ -1,6 +1,6 @@
 # Spec v2.1: composition, naive-to-ICI bridge, single-cell placement (3 Nov 2026)
 
-**Status: DRAFT for signature with SPEC v2.1 of A, A.1 and B.** Decisions: `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` (grilling rounds 1-2). Evidence: `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. The edited sections live in `specs/A/SPEC_v2.md` (4.3, 4.4, 8, 10-12) and `specs/B/SPEC_v2.md` (2, 6, 8-10).
+**Status: SIGNED by the user on 3 Nov 2026, with SPEC v2.1 of A, A.1 and B ("I sign all three").** Decisions: `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` (grilling rounds 1-2). Evidence: `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. The edited sections live in `specs/A/SPEC_v2.md` (4.3, 4.4, 8, 10-12) and `specs/B/SPEC_v2.md` (2, 6, 8-10).
 
 ## Problem Statement
 

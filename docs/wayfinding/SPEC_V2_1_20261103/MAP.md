@@ -15,18 +15,18 @@ Skills: research, grilling, domain-modeling (via grill-with-docs), to-spec. Lean
 - Single-cell plan (signed 2 Nov): single-cell is descriptive only; SC-2 (deconvolution with a single-cell reference) is cut permanently; SC-3 response testing is cut.
 - IMvigor210 is UNTOUCHED_FINAL_TEST in every analysis.
 - Paper B claim ceiling: no ICI-response prediction in prostate.
-- Paper A 4.3: composition adjustment is a separate sensitivity.
+- Paper A 4.3: composition adjustment is a separate sensitivity (superseded by T2: removed).
 
 ## Tickets
 
 | Ticket | Type | Blocked by | Status |
 | --- | --- | --- | --- |
-| T1 What evidence supports quanTIseq/CIBERSORTx on our cohorts, cohort linking, single-cell roles? | research | none | open (agent running) |
-| T2 What does the Paper A composition analysis relate fractions to (response? programmes? both), on which cohorts? | grilling | none | open |
-| T3 Is quanTIseq in A consistent with the SC-2 cut? | grilling | none | open |
-| T4 What does "association between TCGA and our cohorts" mean in Paper B (estimand), and does it touch outcomes? | grilling | T1 | open |
-| T5 Where does single-cell appear in the v2.1 specs and PDF? | grilling | none | open |
-| T6 Write v2.1 specs and rebuild the PDF | task | T2-T5 | open |
+| T1 What evidence supports quanTIseq/CIBERSORTx on our cohorts, cohort linking, single-cell roles? | research | none | closed |
+| T2 What does the Paper A composition analysis relate fractions to (response? programmes? both), on which cohorts? | grilling | none | closed |
+| T3 Is quanTIseq in A consistent with the SC-2 cut? | grilling | none | closed |
+| T4 What does "association between TCGA and our cohorts" mean in Paper B (estimand), and does it touch outcomes? | grilling | T1 | closed |
+| T5 Where does single-cell appear in the v2.1 specs and PDF? | grilling | none | closed |
+| T6 Write v2.1 specs and rebuild the PDF | task | T2-T5 | closed |
 
 ## Decisions so far
 
@@ -35,10 +35,11 @@ Skills: research, grilling, domain-modeling (via grill-with-docs), to-spec. Lean
 - T3 (Q4, Q8): consistent with the SC-2 cut, since quanTIseq uses its own fixed signature; no single-cell pseudobulk benchmark.
 - T4 (Q5, Q6): quanTIseq primary in both papers, one version; CIBERSORT(x) and MethylCIBERSORT added as secondaries; the naive-to-ICI bridge uses all three of structure, position and concordance.
 - T5 (Q7): single-cell gets its own section in each spec and its own PDF chapter, including tumour-intrinsic vs infiltrate labelling of Paper B genes.
+- T6: specs written (change spec issue #25), PDF rebuilt; all three v2.1 specs signed by the user on 3 Nov 2026. Map complete.
 
 ## Not yet specified
 
-Whether the B linking analysis needs its own budget line or comes out of the cold-versus-hot 30 hours.
+None. (The bridge budget was settled in round 2: its own 22-hour line.)
 
 ## Out of scope
 
