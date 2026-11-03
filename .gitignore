@@ -14,6 +14,16 @@ __pycache__/
 *.key
 credentials*.json
 .DS_Store
+._*
+
+# renv libraries and staging data are machine-local and can be very large.
+r/renv/library/
+r/renv/staging/
+r/renv/local/
+r/renv/cellar/
+r/renv/lock/
+r/renv/python/
+r/renv/sandbox/
 
 # Private connection material and machine-local configuration do not belong here.
 *_servers.md

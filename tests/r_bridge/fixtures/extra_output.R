@@ -1,0 +1,6 @@
+source("R/bridge.R")
+bridge_require(c("jsonlite", "BiocManager"))
+config <- bridge_config()
+writeLines("expected", file.path(config$output_dir, "result.tsv"))
+writeLines("unexpected", file.path(config$output_dir, "surprise.tsv"))
+bridge_write_session(config$output_dir)
