@@ -86,3 +86,7 @@ _Avoid_: checklist, review form
 **Cell composition estimate**: An estimated cell-type fraction from a reference-based deconvolution of bulk data (for example quanTIseq on RNA, MethylCIBERSORT on methylation). An RNA-derived composition estimate is not an independent covariate for RNA outcomes.
 
 **Naive-to-ICI bridge**: A comparison of the same cancer's treatment-naive reference tumours (TCGA) with pretreatment tumours from ICI-treated cohorts, by expression structure, position or concordance of frozen effects. It is not a validation of either set and does not test response itself.
+
+**Drug class**: The immunotherapy target class a patient received, normalised to anti-PD-(L)1 axis, anti-CTLA-4, or dual anti-PD-1 plus anti-CTLA-4. A drug name or a raw source label is not a drug class until it is mapped.
+
+**Synthesis stratum**: A set of studies whose per-study effects are combined in one meta-analysis, defined by cancer, by drug class, or by both. A stratum with one or two studies is reported by the small-k rule, never pooled into a mixed group.
