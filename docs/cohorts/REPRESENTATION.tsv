@@ -1,0 +1,21 @@
+cohort_id	cancer	platform	unit	transform	feature_id	de_engine	uniform_drug_class	evidence
+riaz_gse91061	melanoma	rnaseq	fpkm	linear	entrez	limma	ANTI_PD_L1_AXIS	tools/a_dav/field_maps/riaz_gse91061.json:measurement_representations.author_fpkm_hg19; Riaz et al., PMID 29033130 (nivolumab for all included patients)
+hugo_gse78220	melanoma	rnaseq	fpkm	linear	symbol	limma	ANTI_PD_L1_AXIS	tools/a_dav/field_maps/hugo_gse78220.json:measurement_representations.geo_author_expression; Hugo et al., PMID 26997480 (anti-PD-1 for all included patients)
+gse168204	melanoma	rnaseq	counts	linear	symbol	deseq2		tools/a_dav/field_maps/gse168204.json:measurement_representations.geo_featurecounts
+liu2019	melanoma	rnaseq	tpm	linear	symbol	limma		tools/a_dav/field_maps/liu2019.json:measurement_representations.mel_dfci_2019_data_mrna_seq_tpm
+gide2019	melanoma	rnaseq	normalised_counts	log2	symbol	limma		tools/a_dav/field_maps/gide2019.json:measurement_representations.mel_iatlas_gide_2019_data_mrna_seq_expression; docs/decisions/BATCH_SIGNOFF_20261101.md (iAtlas log2 upper-quartile profile used while recount3 crosswalk is incomplete)
+braun2020	kidney	rnaseq	tpm	other	symbol	limma		UNCERTAIN: tools/a_dav/field_maps/braun2020.json:measurement_representations.expression (gene_name treated as symbol); BATCH3_EVIDENCE_20261030.md#1 (log2 UQ TPM, ComBat, +21 offset)
+vanallen2015	melanoma	rnaseq	fpkm	linear	entrez	limma		UNCERTAIN: tools/a_dav/field_maps/vanallen2015.json:measurement_representations.skcm_dfci_2015_data_mrna_seq_rpkm (RPKM filename conflicts with FPKM profile description)
+gse135222	lung	rnaseq	tpm	linear	ensembl	limma		UNCERTAIN: tools/a_dav/field_maps/gse135222.json:measurement_representations.geo_tpm (TPM known; transform and feature identifier unrecorded; linear/Ensembl are best values)
+gse136961	lung	targeted_rna	tpm	linear	symbol	limma		UNCERTAIN: tools/a_dav/field_maps/gse136961.json:measurement_representations.geo_tpm (targeted TPM; transform and feature identifier unrecorded; linear/symbol are best values)
+gse176307	bladder	rnaseq	normalised_counts	other	ensembl	limma		UNCERTAIN: tools/a_dav/field_maps/gse176307.json:measurement_representations.log_transformed_expression (log2(1+x), median-centred and upper-quartile scaled; exact scale and row key not stated)
+kim2018	gastric	rnaseq	counts	linear	ensembl	deseq2		REGISTRY: recount3 GENCODE v26 counts
+gse145996	melanoma	rnaseq	fpkm	linear	symbol	limma		UNCERTAIN: REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (FPKM deposited; feature identifier type not recorded, symbol is best value)
+gse165278	melanoma	rnaseq	tpm	linear	symbol	limma		UNCERTAIN: REGISTRY: TPM XLSX; tools/a_cohorts/core.py:scale_notes (feature identifier type not recorded, symbol is best value)
+gse93157	multi	nanostring	normalised_counts	log2	symbol	limma		UNCERTAIN: REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (log2 inferred from deposited values; feature identifier type not recorded, symbol is best value)
+gse67501	kidney	microarray	probe_intensity	log2	probe	limma		REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (GEO SOFT states median scaling and log2)
+gse122220	melanoma	microarray	probe_intensity	other	probe	limma		REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (quantile normalised, background adjusted, 3-MAD trimmed)
+gse140901	liver	nanostring	cpm	log2	symbol	limma		REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (TMM-normalised log2 CPM)
+gse111636	bladder	microarray	probe_intensity	other	probe	limma		REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (GCCN/SST, RMA and ComBat)
+gse218989	lung	rnaseq	tpm	linear	ensembl	limma		UNCERTAIN: REGISTRY: representation (protein-coding TPM; row identifier type not stated, Ensembl is best value)
+gse159067	head_and_neck	targeted_rna	cpm	log2	probe	limma		UNCERTAIN: REGISTRY: representation; tools/a_cohorts/core.py:scale_notes (log2 CPM; feature ID type unrecorded, control/probe rows retained, probe is best value)
