@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import os
 import re
@@ -19,6 +18,14 @@ from tools.a_meta.features import (
     read_external_feature_table,
     read_feature_table,
     write_feature_table,
+)
+from tools.a_meta.provenance import (
+    SYNTHETIC_FIXTURE_PRODUCER,
+    canonical_sha256,
+    is_locked_study,
+    known_cohort_ids,
+    effect_input_payload,
+    validate_effect_file_manifest,
 )
 from tools.a_meta.synthesis import (
     SUBGROUP_COLUMNS,
@@ -36,7 +43,10 @@ _CODE_FILES = (
     "tools/a_meta/__init__.py",
     "tools/a_meta/__main__.py",
     "tools/a_meta/effects.py",
+    "tools/a_meta/endpoint_definitions.py",
     "tools/a_meta/features.py",
+    "tools/a_meta/provenance.py",
+    "tools/a_meta/r_manifest.py",
     "tools/a_meta/synthesis.py",
     "tools/a_cohorts/view.py",
     "tools/a_cohorts/core.py",
@@ -139,7 +149,7 @@ def _features(args, results_root: Path) -> None:
             "unit": unit,
             "n_found": details.get("n_found", ""),
             "n_total": details.get("n_total", ""),
-            "complete": str(bool(details.get("complete", False))).lower(),
+            "complete": str(_coverage_complete(details.get("complete", False))).lower(),
             "missing": ",".join(details.get("missing", ())),
         }
         for family, table in tables.items()
@@ -148,6 +158,14 @@ def _features(args, results_root: Path) -> None:
     coverage_path = output_dir / "coverage.tsv"
     _write_tsv(coverage_path, coverage_rows, ("unit_family", "unit", "n_found", "n_total", "complete", "missing"))
     output_hashes[coverage_path.name] = _sha256(coverage_path)
+    for family, table in tables.items():
+        if "r_manifest" not in table.metadata:
+            continue
+        r_dir = output_dir / "R-singscore"
+        for name in ("scores.tsv", "coverage.tsv", "sessionInfo.txt", "manifest.json"):
+            path = r_dir / name
+            if path.is_file():
+                output_hashes[path.relative_to(output_dir).as_posix()] = _sha256(path)
 
     input_hashes = {
         "cohort_expression": _sha256(view.expression_path),
@@ -177,6 +195,7 @@ def _features(args, results_root: Path) -> None:
         for family, table in tables.items()
         if "r_manifest" in table.metadata
     }
+    panel_coverage = _panel_coverage_counts(coverage_rows)
     manifest = {
         "data_classification": "real",
         "cohort": args.cohort,
@@ -184,13 +203,18 @@ def _features(args, results_root: Path) -> None:
         "code_sha256": _code_hashes(),
         "outputs_sha256": output_hashes,
         "feature_tables": table_stats,
+        "row_identity_sha256": _cohort_row_identity_sha256(view),
+        "effect_input_sha256": {
+            family: canonical_sha256(effect_input_payload(view, table))
+            for family, table in tables.items()
+        },
         "feature_metadata": {
             family: _safe_feature_metadata(table.metadata)
             for family, table in tables.items()
         },
         "panel_coverage": {
-            "complete": sum(bool(item["complete"]) for item in coverage_rows if item["unit_family"] == "panel"),
-            "incomplete": sum(not bool(item["complete"]) for item in coverage_rows if item["unit_family"] == "panel"),
+            "complete": panel_coverage[0],
+            "incomplete": panel_coverage[1],
         },
         "panel_registry_note": (
             "Ten materialized memberships are currently available. Hallmark IFN-gamma "
@@ -207,13 +231,21 @@ def _features(args, results_root: Path) -> None:
 
 
 def _effects(args, results_root: Path) -> None:
-    if _is_locked_study(args.cohort):
+    if is_locked_study(args.cohort):
         raise SystemExit("IMvigor210 is a locked final test and is refused by A-META")
-    if _is_real_cohort(args.cohort) and not args.allow_outcomes:
+    is_real = _is_real_cohort(args.cohort)
+    if is_real and not args.allow_outcomes:
         raise SystemExit("Real-cohort effects require the explicit --allow-outcomes flag")
 
     view = cohort_view(args.cohort, args.runtime)
     feature_dir = results_root / args.cohort / "features"
+    feature_manifest_path = feature_dir / "manifest.json"
+    feature_manifest = _validate_feature_manifest(view, feature_dir, args.cohort)
+    if not is_real:
+        if feature_manifest.get("data_classification") != "synthetic":
+            raise SystemExit("Unknown-cohort effects require a hash-matched synthetic feature fixture")
+        if feature_manifest.get("producer") != SYNTHETIC_FIXTURE_PRODUCER:
+            raise SystemExit("Synthetic feature classification was not written by the fixture path")
     families = (
         ("gene", "panel", "pathway", "fraction")
         if args.unit_family == "all"
@@ -244,36 +276,51 @@ def _effects(args, results_root: Path) -> None:
                 table,
                 endpoint,
                 by_drug_class=not args.no_drug_class,
+                allow_outcomes=args.allow_outcomes,
+                provenance_manifest=feature_manifest_path,
             ))
     output_dir = results_root / args.cohort / "effects"
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / "effects.tsv"
     _write_tsv(output_path, results, EFFECT_COLUMNS)
     manifest = {
-        "data_classification": "real" if _is_real_cohort(args.cohort) else "synthetic",
+        "data_classification": "real" if is_real else "synthetic",
         "cohort": args.cohort,
         "inputs_sha256": input_hashes,
         "code_sha256": _code_hashes(),
         "outputs_sha256": {output_path.name: _sha256(output_path)},
-        "effect_variance": "Hedges-g variance from SPEC_v2: J^2 * [N/(n_R*n_NR) + d^2/(2N)]",
+        "effect_variance": "metafor escalc(measure='SMD', vtype='LS'): N/(n_R*n_NR) + g^2/(2N), with exact gamma Hedges correction",
     }
+    if not is_real:
+        manifest.update({
+            "producer": SYNTHETIC_FIXTURE_PRODUCER,
+            "manifest_version": 1,
+            "kind": "effect_table",
+            "cohort_ids": [args.cohort],
+        })
+    manifest["outputs_sha256"] = {output_path.name: _sha256(output_path)}
     _write_json(output_dir / "manifest.json", manifest)
     print(f"cohort={args.cohort} effect_rows={len(results)} columns={len(EFFECT_COLUMNS)}")
 
 
 def _synthesize(args, results_root: Path) -> None:
-    if _is_locked_effect_file(args.effects):
-        raise SystemExit("IMvigor210 is a locked final test and is refused by A-META")
-    real_input = _effect_input_is_real(args.effects)
-    if real_input and not args.allow_outcomes:
-        raise SystemExit("Real-cohort synthesis requires the explicit --allow-outcomes flag")
+    try:
+        _, real_input = validate_effect_file_manifest(args.effects, allow_outcomes=args.allow_outcomes)
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
 
     run_hash = _sha256(args.effects)[:10]
     run_name = args.run or f"{args.stratum}-{run_hash}"
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", run_name):
         raise SystemExit("Run name may contain only letters, numbers, dots, underscores, and hyphens")
     output_dir = results_root / "meta" / run_name
-    result = synthesize(args.effects, args.stratum, output_dir=output_dir)
+    result = synthesize(
+        args.effects,
+        args.stratum,
+        output_dir=output_dir,
+        allow_outcomes=args.allow_outcomes,
+        provenance_manifest=args.effects.parent / "manifest.json",
+    )
     summary_path = output_dir / "synthesis.tsv"
     subgroup_path = output_dir / "subgroups.tsv"
     _write_tsv(summary_path, result.summaries, SYNTHESIS_COLUMNS)
@@ -305,45 +352,74 @@ def _results_root(argument: Path | None) -> Path:
 
 
 def _registry_ids() -> set[str]:
-    with REGISTRY.open(newline="", encoding="utf-8") as stream:
-        return {row["cohort_id"] for row in csv.DictReader(stream, delimiter="\t")}
+    return known_cohort_ids()
 
 
 def _is_real_cohort(value: str) -> bool:
     return value in _registry_ids()
 
 
-def _is_locked_study(value: str) -> bool:
-    return re.sub(r"[^a-z0-9]", "", value.casefold()).find("imvigor210") >= 0
-
-
-def _is_locked_effect_file(path: Path) -> bool:
-    manifest_path = path.parent / "manifest.json"
-    if manifest_path.is_file():
+def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str) -> dict:
+    manifest_path = feature_dir / "manifest.json"
+    try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        cohort = str(manifest.get("cohort", ""))
-        if _is_locked_study(cohort):
-            return True
-    with path.open(newline="", encoding="utf-8") as stream:
-        reader = csv.DictReader(stream, delimiter="\t")
-        if "study" not in (reader.fieldnames or []):
-            raise SystemExit("Effect table requires a study column")
-        return any(_is_locked_study(str(row.get("study", ""))) for row in reader)
+    except (OSError, json.JSONDecodeError) as error:
+        raise SystemExit("Feature manifest is missing or malformed") from error
+    if not isinstance(manifest, dict) or manifest.get("cohort") != cohort_id:
+        raise SystemExit("Feature manifest cohort does not match the loaded cohort")
+    if cohort_id in _registry_ids() and manifest.get("data_classification") != "real":
+        raise SystemExit("A known signed cohort cannot be classified as synthetic")
+    expected_inputs = {
+        "cohort_expression": _sha256(view.expression_path),
+        "cohort_clinical": _sha256(view.expression_path.parent / "clinical.tsv"),
+    }
+    stored_inputs = manifest.get("inputs_sha256", {})
+    if any(stored_inputs.get(name) != expected for name, expected in expected_inputs.items()):
+        raise SystemExit("Feature inputs are stale relative to the current cohort view")
+    if manifest.get("row_identity_sha256") != _cohort_row_identity_sha256(view):
+        raise SystemExit("Feature rows do not match the current cohort-view row identities")
+    outputs = manifest.get("outputs_sha256", {})
+    if not outputs:
+        raise SystemExit("Feature manifest has no output hashes")
+    for name, expected_hash in outputs.items():
+        output_path = (feature_dir / name).resolve()
+        if not output_path.is_relative_to(feature_dir.resolve()):
+            raise SystemExit("Feature manifest contains an output path outside its feature directory")
+        if not output_path.is_file() or _sha256(output_path) != expected_hash:
+            raise SystemExit(f"Feature output hash mismatch: {name}")
+    return manifest
 
 
-def _effect_input_is_real(path: Path) -> bool:
-    manifest_path = path.parent / "manifest.json"
-    if manifest_path.is_file():
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        if manifest.get("data_classification") == "real":
+def _cohort_row_identity_sha256(view) -> str:
+    identities = [
+        {
+            "patient": str(row.get("patient_id", "")),
+            "sample": str(row.get("sample_id", "")),
+            "timepoint": str(row.get("timepoint", "")),
+        }
+        for row in view.clinical_rows
+    ]
+    return canonical_sha256(identities)
+
+
+def _coverage_complete(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        normalised = value.strip().casefold()
+        if normalised in {"true", "1"}:
             return True
-        if manifest.get("data_classification") == "synthetic":
+        if normalised in {"false", "0"}:
             return False
-    with path.open(newline="", encoding="utf-8") as stream:
-        reader = csv.DictReader(stream, delimiter="\t")
-        if "study" not in (reader.fieldnames or []):
-            raise SystemExit("Effect table requires a study column")
-        return any(str(row.get("study", "")) in _registry_ids() for row in reader)
+    if isinstance(value, int) and value in {0, 1}:
+        return bool(value)
+    raise ValueError(f"Invalid coverage boolean: {value!r}")
+
+
+def _panel_coverage_counts(rows) -> tuple[int, int]:
+    panel_rows = [row for row in rows if row["unit_family"] == "panel"]
+    complete = sum(_coverage_complete(row["complete"]) for row in panel_rows)
+    return complete, len(panel_rows) - complete
 
 
 def _code_hashes() -> dict[str, str]:

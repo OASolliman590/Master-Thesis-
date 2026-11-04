@@ -53,6 +53,20 @@ def test_linear_rnaseq_is_log2_tpm_plus_one_without_merging_studies(tmp_path):
     assert table.metadata["scale_rule"] == "log2(TPM+1)"
 
 
+def test_gene_features_align_to_cohort_row_identity_not_expression_column_order(tmp_path):
+    path = tmp_path / "expression.tsv"
+    _write_matrix(path, ["row_b", "row_a"], [["GENE_X", 7, 3]])
+    view = _view(path, labels=["CR", "SD"])
+    view.clinical_rows = [
+        {"patient_id": "row_a", "raw_orr": "CR"},
+        {"patient_id": "row_b", "raw_orr": "SD"},
+    ]
+
+    table = build_feature_table(view, "gene")
+
+    assert table.values_by_unit["GENE_X"] == pytest.approx([2.0, 3.0])
+
+
 def test_integer_counts_without_lengths_are_log2_cpm_plus_one(tmp_path):
     path = tmp_path / "expression.tsv"
     _write_matrix(path, ["0", "1"], [["GENE_X", 1, 1], ["GENE_Y", 3, 9]])

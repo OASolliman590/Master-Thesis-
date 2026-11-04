@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import hashlib
 from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from statistics import mean, stdev
@@ -9,6 +10,8 @@ from types import SimpleNamespace
 
 from tools.a_cohorts.view import normalise_drug_class
 from tools.a_scoring import endpoint_label
+from .endpoint_definitions import endpoint_definition_id
+from .provenance import validate_effect_input_provenance
 
 
 EFFECT_COLUMNS = (
@@ -16,8 +19,11 @@ EFFECT_COLUMNS = (
     "unit",
     "study",
     "cancer",
+    "cancer_components",
     "drug_class_stratum",
     "endpoint_family",
+    "endpoint_definition_id",
+    "patient_set_id",
     "n_R",
     "n_NR",
     "mean_R",
@@ -32,13 +38,31 @@ EFFECT_COLUMNS = (
 _UNIT_FAMILIES = {"gene", "panel", "pathway", "fraction"}
 
 
-def study_effects(view, features, family: str | Sequence[str], *, by_drug_class: bool = True) -> list[dict]:
+def study_effects(
+    view,
+    features,
+    family: str | Sequence[str],
+    *,
+    by_drug_class: bool = True,
+    allow_outcomes: bool = False,
+    provenance_manifest=None,
+) -> list[dict]:
     """Estimate Hedges g (responders minus non-responders) within a cohort.
 
     `features` may be a FeatureTable or long rows with `patient_row`, `unit`,
     and `value` columns. `patient_row` is the zero-based row in the validated
     CohortView; no patient or sample identifiers are needed.
     """
+    validate_effect_input_provenance(
+        view,
+        features,
+        allow_outcomes=allow_outcomes,
+        provenance_manifest=provenance_manifest,
+    )
+    cohort_id = str(getattr(view.metadata, "cohort_id", ""))
+    feature_cohort = getattr(features, "cohort_id", None)
+    if feature_cohort and feature_cohort != cohort_id:
+        raise ValueError("Feature table cohort does not match the cohort view")
     unit_family = _unit_family(features)
     clinical_rows = list(view.clinical_rows)
     feature_values = _feature_vectors(features, len(clinical_rows))
@@ -46,51 +70,70 @@ def study_effects(view, features, family: str | Sequence[str], *, by_drug_class:
     families = _endpoint_families(view, family)
     results = []
     for endpoint_family in families:
-        labels, excluded = endpoint_label(view, endpoint_family)
-        if len(labels) != len(clinical_rows):
-            raise ValueError("Endpoint labels do not align with cohort rows")
         patients = [_patient_context(view, row, index) for index, row in enumerate(clinical_rows)]
-        cancer_groups = sorted({patient["cancer"] for patient in patients})
-        if getattr(view.metadata, "cancer", None) == "multi":
-            cancer_groups.append("multi")
-        for cancer in cancer_groups:
-            cancer_indices = (
-                list(range(len(patients))) if cancer == "multi"
-                else [i for i, patient in enumerate(patients) if patient["cancer"] == cancer]
+        definition_ids = [
+            endpoint_definition_id(
+                cohort_id,
+                endpoint_family,
+                row.get("endpoint_definition", ""),
             )
-            drug_classes = sorted({patients[i]["drug_class"] for i in cancer_indices
-                                   if patients[i]["drug_class"] != "OTHER_EXCLUDED"})
-            strata = [("ALL", cancer_indices)]
-            if by_drug_class:
-                strata.extend(
-                    (drug_class, [i for i in cancer_indices if patients[i]["drug_class"] == drug_class])
-                    for drug_class in drug_classes
-                )
+            for row in clinical_rows
+        ]
+        for definition_id in sorted(set(definition_ids)):
+            definition_indices = [
+                index for index, value in enumerate(definition_ids) if value == definition_id
+            ]
+            definition_rows = [clinical_rows[index] for index in definition_indices]
+            local_view = SimpleNamespace(metadata=view.metadata, clinical_rows=definition_rows)
+            local_labels, _ = endpoint_label(local_view, endpoint_family)
+            labels = [None] * len(clinical_rows)
+            for index, label in zip(definition_indices, local_labels):
+                labels[index] = label
+            if len(local_labels) != len(definition_indices):
+                raise ValueError("Endpoint labels do not align with cohort rows")
 
-            for stratum, patient_indices in strata:
-                included_indices = [i for i in patient_indices
-                                    if patients[i]["drug_class"] != "OTHER_EXCLUDED"]
-                _, stratum_excluded = endpoint_label(
-                    SimpleNamespace(
+            cancer_groups = sorted({patients[index]["cancer"] for index in definition_indices})
+            if getattr(view.metadata, "cancer", None) == "multi":
+                cancer_groups.append("multi")
+            for cancer in cancer_groups:
+                cancer_indices = (
+                    definition_indices if cancer == "multi"
+                    else [i for i in definition_indices if patients[i]["cancer"] == cancer]
+                )
+                drug_classes = sorted({patients[i]["drug_class"] for i in cancer_indices
+                                       if patients[i]["drug_class"] != "OTHER_EXCLUDED"})
+                strata = [("ALL", cancer_indices)]
+                if by_drug_class:
+                    strata.extend(
+                        (drug_class, [i for i in cancer_indices if patients[i]["drug_class"] == drug_class])
+                        for drug_class in drug_classes
+                    )
+
+                for stratum, patient_indices in strata:
+                    included_indices = [i for i in patient_indices
+                                        if patients[i]["drug_class"] != "OTHER_EXCLUDED"]
+                    subset_view = SimpleNamespace(
                         metadata=view.metadata,
                         clinical_rows=[clinical_rows[i] for i in included_indices],
-                    ),
-                    endpoint_family,
-                )
-                for unit, values in feature_values.items():
-                    results.append(_effect_row(
-                        view=view,
-                        unit_family=unit_family,
-                        unit=unit,
-                        cancer=cancer,
-                        stratum=stratum,
-                        endpoint_family=endpoint_family,
-                        labels=labels,
-                        values=values,
-                        patient_indices=included_indices,
-                        excluded=stratum_excluded,
-                        coverage=_coverage_for(features, unit),
-                    ))
+                    )
+                    _, stratum_excluded = endpoint_label(subset_view, endpoint_family)
+                    for unit, values in feature_values.items():
+                        results.append(_effect_row(
+                            view=view,
+                            unit_family=unit_family,
+                            unit=unit,
+                            cancer=cancer,
+                            stratum=stratum,
+                            endpoint_family=endpoint_family,
+                            endpoint_definition_id=definition_id,
+                            labels=labels,
+                            values=values,
+                            patient_indices=included_indices,
+                            excluded=stratum_excluded,
+                            coverage=_coverage_for(features, unit),
+                            clinical_rows=clinical_rows,
+                            cancer_components=sorted({patients[i]["cancer"] for i in included_indices}),
+                        ))
     return results
 
 
@@ -211,7 +254,8 @@ def _coverage_for(features, unit: str) -> Mapping | None:
 
 
 def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
-                labels, values, patient_indices, excluded, coverage) -> dict:
+                endpoint_definition_id, labels, values, patient_indices, excluded,
+                coverage, clinical_rows, cancer_components) -> dict:
     response_values: list[float] = []
     nonresponse_values: list[float] = []
     missing_values = 0
@@ -236,13 +280,14 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
 
     coverage_complete = coverage is None or coverage.get("complete", True)
     if not coverage_complete:
-        reasons.append("incomplete_gene_coverage")
+        reasons.append("incomplete_feature_coverage")
     if n_r < 2:
         reasons.append("n_R<2")
     if n_nr < 2:
         reasons.append("n_NR<2")
 
     g = se = None
+    patient_tokens = []
     status = "NA"
     if coverage_complete and n_r >= 2 and n_nr >= 2:
         pooled_variance = (
@@ -253,22 +298,40 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
         else:
             pooled_sd = math.sqrt(pooled_variance)
             d = (mean_r - mean_nr) / pooled_sd
-            correction = 1.0 - 3.0 / (4.0 * (n_r + n_nr) - 9.0)
-            g = correction * d
-            variance = correction ** 2 * (
-                (n_r + n_nr) / (n_r * n_nr)
-                + d ** 2 / (2.0 * (n_r + n_nr))
+            degrees_of_freedom = n_r + n_nr - 2
+            correction = math.exp(
+                math.lgamma(degrees_of_freedom / 2.0)
+                - 0.5 * math.log(degrees_of_freedom / 2.0)
+                - math.lgamma((degrees_of_freedom - 1.0) / 2.0)
             )
+            g = correction * d
+            variance = (n_r + n_nr) / (n_r * n_nr) + g ** 2 / (2.0 * (n_r + n_nr))
             se = math.sqrt(variance)
             status = "ok"
+
+    for index in patient_indices:
+        if labels[index] not in (0, 1) or values[index] is None:
+            continue
+        row = clinical_rows[index]
+        patient_tokens.append("\x1f".join((
+            str(row.get("patient_id", "")),
+            str(row.get("sample_id", "")),
+            str(index),
+        )))
+    patient_set_id = hashlib.sha256(
+        "\x1e".join(sorted(patient_tokens)).encode("utf-8")
+    ).hexdigest()
 
     return {
         "unit_family": unit_family,
         "unit": unit,
         "study": view.metadata.cohort_id,
         "cancer": cancer,
+        "cancer_components": ",".join(cancer_components),
         "drug_class_stratum": stratum,
         "endpoint_family": endpoint_family,
+        "endpoint_definition_id": endpoint_definition_id,
+        "patient_set_id": patient_set_id,
         "n_R": n_r,
         "n_NR": n_nr,
         "mean_R": mean_r,

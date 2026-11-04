@@ -251,6 +251,15 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map) -> FeatureTable
     feature_ids, sample_columns, matrix = _read_expression(view.expression_path)
     if len(sample_columns) != len(view.clinical_rows):
         raise ValueError("Expression columns do not align with cohort-view rows")
+    row_identities = [str(row.get("patient_id", "")) for row in view.clinical_rows]
+    if any(row_identities):
+        if any(not identity for identity in row_identities) or len(set(row_identities)) != len(row_identities):
+            raise ValueError("Cohort-view row identities must be present and unique")
+        if len(set(sample_columns)) != len(sample_columns) or set(sample_columns) != set(row_identities):
+            raise ValueError("Expression samples do not match cohort-view row identities")
+        expression_column = {identity: index for index, identity in enumerate(sample_columns)}
+        aligned_columns = [expression_column[identity] for identity in row_identities]
+        matrix = [[values[index] for index in aligned_columns] for values in matrix]
     representation = view.metadata.representation
     effective_feature_id = representation.feature_id
     recount3_dropped = 0
@@ -358,7 +367,7 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
 
 
 def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map, r_out_dir, runner):
-    from tools.r_bridge import run_r
+    from .r_manifest import run_r_sanitised
 
     genes = _gene_table(
         view,
@@ -373,11 +382,12 @@ def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map
     matrix_path.parent.mkdir(parents=True, exist_ok=True)
     _write_expression_matrix(matrix_path, genes)
     script = Path(__file__).resolve().parents[2] / "r/scripts/singscore.R"
-    result = run_r(
+    result = run_r_sanitised(
         script,
         {"expression": matrix_path, "gene_sets": gene_set_path},
         {"expected_outputs": ["scores.tsv", "coverage.tsv"]},
         output_dir,
+        script_id="r/scripts/singscore.R",
         runner=runner,
     )
     score_records = _read_tsv(result.outputs["scores.tsv"])
