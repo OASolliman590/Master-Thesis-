@@ -1,0 +1,17 @@
+cohort	cancer
+TNBC_Shiao	breast
+BRCA_Bassez1	breast
+BRCA_Bassez2	breast
+CRC_Chen	colorectal
+CRC_Li	colorectal
+HNSC_Franken	head_and_neck
+HNSC_vanderLeun	head_and_neck
+HNSC_Luoma	head_and_neck
+SKCM_Plozniak	melanoma
+SKCM_this study	melanoma
+BCC_Yost	basal_cell_carcinoma
+HCC_Guo	liver
+HCC_Ma	liver
+NSCLC_Yan	lung
+RCC_Bi	kidney
+PCa_Hawley	prostate

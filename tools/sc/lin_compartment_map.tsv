@@ -1,0 +1,17 @@
+source_field	source_label	compartment
+celltype_main	CD4+T	T/NK
+celltype_main	CD8+T	T/NK
+celltype_main	NK	T/NK
+celltype_main	Cycling T/NK	T/NK
+celltype_main	B	B/plasma
+celltype_main	Plasma	B/plasma
+celltype_main	Myeloids	myeloid
+celltype_main	CAF	fibroblast/stromal
+celltype_main	Mural	fibroblast/stromal
+celltype_main	Endo	endothelial
+celltype_main	Epithelial(CNA+)	malignant/epithelial
+celltype_main	Epithelial(CNA-)	malignant/epithelial
+celltype_main	Malignant(CNA+)	malignant/epithelial
+celltype_main	Melanocytes(CNA+)	malignant/epithelial
+celltype_main	Melanocytes(CNA-)	unmapped
+celltype_main	Cycling	unmapped
