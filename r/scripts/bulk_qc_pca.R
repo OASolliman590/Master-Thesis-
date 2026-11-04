@@ -67,12 +67,19 @@ analysis_matrix <- function(raw, representation) {
   raw
 }
 
-robust_limits <- function(values) {
+robust_outlier_flags <- function(values) {
   valid <- values[is.finite(values)]
+  if (!length(valid)) stop("Robust outlier calculation needs finite values")
   center <- stats::median(valid)
-  deviation <- stats::median(abs(valid - center))
-  c(lower = center - 3 * deviation, upper = center + 3 * deviation,
-    median = center, mad = deviation)
+  raw_mad <- stats::median(abs(valid - center))
+  scaled_mad <- 1.4826 * raw_mad
+  tolerance <- if (raw_mad <= sqrt(.Machine$double.eps) * max(1, abs(center))) {
+    sqrt(.Machine$double.eps) * max(1, abs(center))
+  } else {
+    0
+  }
+  flags <- !is.finite(values) | abs(values - center) > 3 * scaled_mad + tolerance
+  list(center = center, scaled_mad = scaled_mad, tolerance = tolerance, flags = flags)
 }
 
 prepare_pca <- function(raw, metadata, representation, top_n = 2000L) {
@@ -110,34 +117,45 @@ qc_outputs <- function(raw, prepared, metadata) {
   counts <- identical(rep$unit, "counts")
   if (counts) {
     depth <- colSums(raw, na.rm = TRUE)
-    depth_name <- "library_size"
+    column_total <- rep(NA_real_, n_samples)
+    log_depth <- log2(depth)
+    depth_name <- "log2_library_size"
+    depth_outlier <- robust_outlier_flags(log_depth)$flags
   } else {
-    depth <- colSums(raw, na.rm = TRUE)
-    depth_name <- "column_total"
+    depth <- rep(NA_real_, n_samples)
+    column_total <- colSums(raw, na.rm = TRUE)
+    log_depth <- rep(NA_real_, n_samples)
+    depth_name <- "not_applicable"
+    depth_outlier <- rep(NA, n_samples)
   }
   medians <- apply(raw, 2L, stats::median, na.rm = TRUE)
   detected <- colSums(!is.na(raw) & raw != 0)
   zeros <- colSums(!is.na(raw) & raw == 0)
   missing <- colSums(is.na(raw))
   pc <- prepared$fit$x[, 1:2, drop = FALSE]
-  center <- apply(pc, 2L, stats::median)
-  distance <- sqrt(rowSums(sweep(pc, 2L, center, "-")^2))
-  distance_limits <- robust_limits(distance)
-  depth_limits <- robust_limits(depth)
-  pca_outlier <- distance > distance_limits[["upper"]]
-  depth_outlier <- depth < depth_limits[["lower"]] | depth > depth_limits[["upper"]]
+  pc1_outlier <- robust_outlier_flags(pc[, 1L])$flags
+  pc2_outlier <- robust_outlier_flags(pc[, 2L])$flags
+  pc12_distance <- sqrt(rowSums(sweep(pc, 2L, apply(pc, 2L, stats::median), "-")^2))
+  pc12_distance_outlier <- robust_outlier_flags(pc12_distance)$flags
+  library_flag_for_union <- if (counts) depth_outlier else rep(FALSE, n_samples)
+  any_outlier <- pc1_outlier | pc2_outlier | pc12_distance_outlier | library_flag_for_union
   qc <- data.frame(
     sample_id = colnames(raw),
     library_size = if (counts) unname(depth) else NA_real_,
-    column_total = if (counts) NA_real_ else unname(depth),
+    log_library_size = if (counts) unname(log_depth) else NA_real_,
+    column_total = if (counts) NA_real_ else unname(column_total),
     column_median = unname(medians),
     detected_genes = unname(detected),
     fraction_zeros = unname(zeros / n_features),
     fraction_missing = unname(missing / n_features),
-    pc12_distance = unname(distance),
-    pc12_outlier = unname(pca_outlier),
-    depth_outlier = unname(depth_outlier),
-    outlier_flag = unname(pca_outlier | depth_outlier),
+    pc1 = unname(pc[, 1L]),
+    pc2 = unname(pc[, 2L]),
+    pc12_distance = unname(pc12_distance),
+    pc1_outlier = unname(pc1_outlier),
+    pc2_outlier = unname(pc2_outlier),
+    pc12_distance_outlier = unname(pc12_distance_outlier),
+    library_size_outlier = unname(depth_outlier),
+    outlier_flag = unname(any_outlier),
     check.names = FALSE
   )
   correlation <- stats::cor(prepared$transformed, method = "pearson",
@@ -157,8 +175,11 @@ qc_outputs <- function(raw, prepared, metadata) {
          feature_count = n_features,
          pca_feature_count = prepared$selected_feature_count,
          outlier_count = sum(qc$outlier_flag),
-         pc12_outlier_count = sum(pca_outlier),
-         depth_outlier_count = sum(depth_outlier),
+         pc1_outlier_count = sum(pc1_outlier),
+         pc2_outlier_count = sum(pc2_outlier),
+         pc_component_outlier_count = sum(pc1_outlier | pc2_outlier),
+         pc12_distance_outlier_count = sum(pc12_distance_outlier),
+         library_size_outlier_count = if (counts) sum(depth_outlier) else 0L,
          depth_metric = depth_name,
          sample_correlation = as.list(correlation_summary[1L, , drop = TRUE])
        ))

@@ -101,7 +101,7 @@ def test_fake_runner_publishes_outputs_and_hash_provenance(tmp_path):
     assert not {"R_LIBS", "R_LIBS_USER", "R_LIBS_SITE"} & runner.kwargs["env"].keys()
     assert (output_dir / "manifest.json").is_file()
     assert json.loads((output_dir / "manifest.json").read_text()) == manifest
-    assert sorted(path.name for path in tmp_path.iterdir()) == [
+    assert sorted(path.name for path in tmp_path.iterdir() if not path.name.startswith("._")) == [
         "counts.tsv",
         "fake.R",
         "published",
@@ -116,13 +116,13 @@ def test_fake_runner_publishes_outputs_and_hash_provenance(tmp_path):
     assert reused.manifest == manifest
 
 
-def test_declared_outputs_allow_exfat_appledouble_sidecars_on_publish_and_reuse(tmp_path):
+def test_valid_appledouble_sidecar_is_removed_before_publish_and_reuse(tmp_path):
     script = _script(tmp_path)
     output_dir = tmp_path / "published"
     runner = FakeR({
         "fake.R": {
             "result.tsv": "value\n1\n",
-            "._result.tsv": "filesystem metadata\n",
+            "._result.tsv": b"\x00\x05\x16\x07\x00\x00\x00\x00metadata",
         }
     })
 
@@ -143,7 +143,48 @@ def test_declared_outputs_allow_exfat_appledouble_sidecars_on_publish_and_reuse(
 
     assert first.manifest == second.manifest
     assert first.outputs["result.tsv"].read_text() == "value\n1\n"
-    assert (output_dir / "._result.tsv").is_file()
+    assert "._result.tsv" not in first.manifest["output_sha256"]
+    assert not (output_dir / "._result.tsv").exists()
+
+
+def test_plain_text_appledouble_sidecar_is_rejected(tmp_path):
+    script = _script(tmp_path)
+    output_dir = tmp_path / "published"
+    runner = FakeR({
+        "fake.R": {
+            "result.tsv": "value\n1\n",
+            "._result.tsv": "not AppleDouble",
+        }
+    })
+
+    with pytest.raises(RScriptError, match="AppleDouble"):
+        run_r(script, {}, {"expected_outputs": ["result.tsv"]}, output_dir, runner=runner)
+
+    assert not output_dir.exists()
+
+
+def test_undeclared_appledouble_sidecar_is_rejected(tmp_path):
+    script = _script(tmp_path)
+    runner = FakeR({
+        "fake.R": {
+            "result.tsv": "value\n1\n",
+            "._unlisted": b"\x00\x05\x16\x07extra",
+        }
+    })
+
+    with pytest.raises(RScriptError, match="unexpected staged files"):
+        run_r(script, {}, {"expected_outputs": ["result.tsv"]}, tmp_path / "published", runner=runner)
+
+
+def test_published_runtime_metadata_is_not_an_allowed_artifact(tmp_path):
+    script = _script(tmp_path)
+    output_dir = tmp_path / "published"
+    runner = FakeR({"fake.R": {"result.tsv": "value\n1\n"}})
+    run_r(script, {}, {"expected_outputs": ["result.tsv"]}, output_dir, runner=runner)
+    (output_dir / "bridge-runtime.json").write_text("{}", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="unexpected published files"):
+        run_r(script, {}, {"expected_outputs": ["result.tsv"]}, output_dir, runner=runner)
 
 
 @pytest.mark.parametrize("damage", ["corrupt", "delete"])
@@ -252,6 +293,7 @@ def test_runner_failure_keeps_existing_destination_untouched(tmp_path):
     output_dir.mkdir()
     sentinel = output_dir / "keep.txt"
     sentinel.write_text("original\n")
+    original_contents = {path.name: path.read_bytes() for path in output_dir.iterdir()}
 
     with pytest.raises(RScriptError) as error:
         run_r(
@@ -266,7 +308,7 @@ def test_runner_failure_keeps_existing_destination_untouched(tmp_path):
     assert error.value.returncode == 9
     assert error.value.stderr_tail.splitlines() == [f"error {i}" for i in range(10, 60)]
     assert sentinel.read_text() == "original\n"
-    assert sorted(path.name for path in output_dir.iterdir()) == ["keep.txt"]
+    assert {path.name: path.read_bytes() for path in output_dir.iterdir()} == original_contents
 
 
 @pytest.mark.requires_r

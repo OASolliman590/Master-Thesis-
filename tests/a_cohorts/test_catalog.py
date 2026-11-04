@@ -1,6 +1,8 @@
 import csv
 import sqlite3
 
+import pytest
+
 from tools.a_cohorts import catalog
 
 
@@ -49,3 +51,20 @@ def test_catalog_exposes_verified_tables_and_never_opens_locked_cohort(tmp_path,
     assert catalog.build_catalog()['cohorts'] == 4
     with (runtime / 'data_repository/cohorts.tsv').open() as f:
         assert len(list(csv.DictReader(f, delimiter='\t'))) == 4
+
+
+def test_catalog_stage_filters_only_valid_appledouble_sidecars(tmp_path):
+    stage = tmp_path / 'stage'
+    stage.mkdir()
+    payload = stage / 'catalog.sqlite'
+    payload.write_bytes(b'database')
+    sidecar = stage / '._catalog.sqlite'
+    sidecar.write_bytes(b'\x00\x05\x16\x07metadata')
+
+    assert catalog._publication_files(stage) == [payload]
+    assert not sidecar.exists()
+
+    invalid = stage / '._unexpected'
+    invalid.write_text('plain text')
+    with pytest.raises(ValueError, match='Invalid AppleDouble sidecar'):
+        catalog._publication_files(stage)

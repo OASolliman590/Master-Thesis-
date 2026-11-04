@@ -9,10 +9,11 @@ import math
 import os
 import re
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from typing import Any, Literal, Mapping, Sequence
 
 from tools import a_scoring
+from tools.a_cohorts import core as cohort_core
 from tools.a_scoring.core import panel_definitions
 from tools.r_bridge import RResult, run_r
 
@@ -49,6 +50,7 @@ class BulkDataset:
     expression_path: Path
     clinical_rows: Sequence[Mapping[str, Any]]
     clinical_path: Path | None = None
+    gene_lengths: Mapping[str, float] | Sequence[float] | None = None
     sample_id_field: str = "patient_id"
     data_classification: Literal["real", "synthetic"] = "real"
 
@@ -77,6 +79,7 @@ def adapt_view(
     sample_id_field: str = "patient_id",
 ) -> BulkDataset:
     """Adapt a cohort-view-like object without tying the module to Paper A's loader."""
+    _validate_view_identifiers(view)
     if isinstance(view, BulkDataset):
         if view.paper != paper:
             raise ValueError("Dataset paper does not match the requested paper")
@@ -104,6 +107,7 @@ def adapt_view(
         expression_path=expression_path,
         clinical_rows=clinical_rows,
         clinical_path=Path(clinical_path) if clinical_path is not None else None,
+        gene_lengths=getattr(view, "gene_lengths", getattr(metadata, "gene_lengths", None)),
         sample_id_field=sample_id_field,
         data_classification=data_classification,
     )
@@ -117,6 +121,7 @@ def results_root(results: Path | str | None = None) -> Path:
 
 
 def output_dir(dataset: BulkDataset, results: Path | str | None = None) -> Path:
+    _validate_view_identifiers(dataset)
     if dataset.paper not in {"A", "B"}:
         raise ValueError("Paper must be A or B")
     if not re.fullmatch(r"[A-Za-z0-9_.-]+", dataset.dataset_id):
@@ -145,11 +150,14 @@ def analyse(
     endpoint: str = "orr",
     results: Path | str | None = None,
     gene_sets: Path | str | None = None,
+    gene_set_id_type: str | None = None,
+    min_gene_set_overlap: int = 10,
     allow_outcomes: bool = False,
     runner=None,
     sample_id_field: str = "patient_id",
 ) -> dict[str, Any]:
     """Execute one requested stage and update the patient-free dataset summary."""
+    _validate_view_identifiers(view)
     dataset = adapt_view(view, paper=paper, sample_id_field=sample_id_field)
     if action not in {"qc", "pca", "de", "gsea", "panels", "all"}:
         raise ValueError(f"Unknown bulk analysis stage: {action}")
@@ -165,6 +173,14 @@ def analyse(
     if action in {"gsea", "all"}:
         if gene_sets is None:
             raise ValueError("gsea requires --gene-sets with a local GMT file")
+        ranking_id_type = str(getattr(dataset.representation, "feature_id", "")).casefold()
+        gene_set_id_type = str(gene_set_id_type or "").casefold()
+        if not gene_set_id_type:
+            raise ValueError("gsea requires an explicit --gene-set-id-type")
+        if gene_set_id_type != ranking_id_type:
+            raise ValueError("Ranking and GMT identifier types must match; no mapping is configured")
+        if not isinstance(min_gene_set_overlap, int) or min_gene_set_overlap < 1:
+            raise ValueError("Minimum GMT/ranking membership overlap must be a positive integer")
         gene_set_path = Path(gene_sets).expanduser().resolve(strict=True)
         if not gene_set_path.is_file():
             raise ValueError("Gene-set input must be a local file")
@@ -190,12 +206,20 @@ def analyse(
                 dataset, root, endpoint=endpoint, allow_outcomes=allow_outcomes, runner=runner
             )
         stage_summaries["gsea"] = _run_gsea(
-            dataset, root, gene_set_path, endpoint=endpoint, runner=runner
+            dataset, root, gene_set_path, endpoint=endpoint,
+            gene_set_id_type=gene_set_id_type,
+            min_gene_set_overlap=min_gene_set_overlap,
+            runner=runner,
         )
     if action in {"panels", "all"}:
         stage_summaries["scores"] = _run_panels(dataset, root, runner)
 
-    summary = _write_patient_free_summary(dataset, root)
+    summary = _write_patient_free_summary(
+        dataset,
+        root,
+        fresh_stage_summaries=stage_summaries,
+        allow_outcomes=allow_outcomes or action in OUTCOME_STAGES,
+    )
     summary["completed_stages"] = sorted(stage_summaries)
     _write_json(root / "summary.json", summary)
     return summary
@@ -208,7 +232,50 @@ def _guard_outcomes(dataset: BulkDataset, allow_outcomes: bool) -> None:
         )
 
 
+def validate_dataset_identifiers(*identifiers: Any) -> None:
+    """Reject protected and excluded cohort identifiers before loading cohort files."""
+    normalized_ids = []
+    for value in identifiers:
+        if value is None:
+            continue
+        identifier = str(value).strip()
+        if not identifier:
+            continue
+        normalized = re.sub(r"[^a-z0-9]", "", identifier.casefold())
+        if "imvigor210" in normalized or any(
+            marker in normalized
+            for marker in ("finaltest", "excluded", "combination", "dropped", "candidate", "parked", "onhold")
+        ):
+            raise ValueError("Dataset identifier is protected or excluded")
+        normalized_ids.append((identifier, normalized))
+
+    if not normalized_ids:
+        return
+    registry = cohort_core.registry()
+    roles = {str(key).casefold(): value.get("role", "") for key, value in registry.items()}
+    for identifier, normalized in normalized_ids:
+        row = roles.get(identifier.casefold())
+        if row is None:
+            row = next((role for key, role in roles.items()
+                        if re.sub(r"[^a-z0-9]", "", key) == normalized), None)
+        role = str(row or "").casefold()
+        if any(
+            marker in role
+            for marker in ("final test", "excluded", "combination", "dropped", "candidate", "parked", "on hold")
+        ):
+            raise ValueError("Dataset identifier is protected or excluded")
+
+
+def _validate_view_identifiers(view: Any) -> None:
+    metadata = getattr(view, "metadata", None)
+    validate_dataset_identifiers(
+        getattr(view, "dataset_id", None),
+        getattr(metadata, "cohort_id", None) if metadata is not None else None,
+    )
+
+
 def _validate_dataset(dataset: BulkDataset) -> None:
+    _validate_view_identifiers(dataset)
     if dataset.paper not in {"A", "B"}:
         raise ValueError("Paper must be A or B")
     if dataset.data_classification not in {"real", "synthetic"}:
@@ -401,7 +468,16 @@ def _run_de(dataset: BulkDataset, root: Path, *, endpoint: str, allow_outcomes: 
     return _read_json(result.outputs["de_summary.json"])
 
 
-def _run_gsea(dataset: BulkDataset, root: Path, gene_sets: Path, *, endpoint: str, runner=None) -> dict[str, Any]:
+def _run_gsea(
+    dataset: BulkDataset,
+    root: Path,
+    gene_sets: Path,
+    *,
+    endpoint: str,
+    gene_set_id_type: str,
+    min_gene_set_overlap: int,
+    runner=None,
+) -> dict[str, Any]:
     stage = root / "gsea"
     de_path = root / "de" / "bridge" / "de.tsv"
     de_manifest = root / "de" / "manifest.json"
@@ -410,15 +486,18 @@ def _run_gsea(dataset: BulkDataset, root: Path, gene_sets: Path, *, endpoint: st
     de_metadata = _read_json(de_manifest)
     if de_metadata.get("endpoint") != endpoint:
         raise ValueError("GSEA endpoint does not match the existing DE ranking")
-    expected = ["fgsea.tsv", "gsea_summary.json"]
+    expected = ["fgsea.tsv", "membership_overlap.tsv", "gsea_summary.json"]
     config = _base_config(dataset, "gsea", {}, expected)
     config["endpoint"] = endpoint
+    config["ranking_id_type"] = str(getattr(dataset.representation, "feature_id", "")).casefold()
+    config["gene_set_id_type"] = gene_set_id_type
+    config["min_gene_set_overlap"] = min_gene_set_overlap
     config["min_size"] = 1
     config["max_size"] = 5000
     result = _call_r(
         dataset, stage, "fgsea_rank.R",
         {"ranking": de_path, "gene_sets": gene_sets}, config, expected,
-        runner, endpoint=endpoint,
+        runner, endpoint=endpoint, extra_inputs=[de_manifest],
     )
     return _read_json(result.outputs["gsea_summary.json"])
 
@@ -427,22 +506,28 @@ def _run_panels(dataset: BulkDataset, root: Path, runner=None) -> dict[str, Any]
     stage = root / "scores"
     score_table = stage / "panel_scores.tsv"
     coverage_table = stage / "panel_coverage.tsv"
-    resolved, coverage = _resolve_panel_features(dataset)
-    sample_ids = _matrix_header(dataset)
-    values_by_feature = _read_selected_rows(dataset.expression_path, resolved)
-    transformed, transform_name = _panel_analysis_scale(values_by_feature, dataset.representation)
+    feature_ids, sample_ids, raw_matrix = _read_expression_matrix(dataset.expression_path)
+    resolved, coverage = _resolve_panel_features(dataset, feature_ids)
+    transformed, linear_tpm, transform_name = _panel_analysis_scale(
+        raw_matrix, feature_ids, dataset
+    )
+    feature_index = {feature: index for index, feature in enumerate(feature_ids)}
     score_rows = []
     panel_defs = panel_definitions(PANEL_IDS)
+    cyt_available = linear_tpm is not None and {"GZMA", "PRF1"}.issubset(resolved)
     for column, sample_id in enumerate(sample_ids):
         expression = {
-            target: row[column]
-            for target, row in transformed.items()
+            target: transformed[feature_index[source]][column]
+            for target, source in resolved.items()
         }
         scores, _ = a_scoring.panel_scores(expression, panel_defs, require_complete=True)
-        gzma, prf1 = expression.get("GZMA"), expression.get("PRF1")
-        if gzma is not None and prf1 is not None:
+        if cyt_available:
+            gzma_index = feature_index[resolved["GZMA"]]
+            prf1_index = feature_index[resolved["PRF1"]]
             try:
-                cyt_score = math.log2(a_scoring.cyt(2.0 ** float(gzma), 2.0 ** float(prf1)))
+                cyt_score = a_scoring.cyt(
+                    linear_tpm[gzma_index][column], linear_tpm[prf1_index][column]
+                )
             except (OverflowError, ValueError):
                 cyt_score = None
         else:
@@ -479,6 +564,11 @@ def _run_panels(dataset: BulkDataset, root: Path, runner=None) -> dict[str, Any]
         "score_count": len(SCORE_NAMES),
         "samples_with_any_score": present_samples,
         "analysis_transform": transform_name,
+        "cyt_available": cyt_available,
+        "cyt_unavailable_reason": None if cyt_available else (
+            "verified linear TPM is unavailable"
+            if linear_tpm is None else "GZMA or PRF1 is absent"
+        ),
         "genes_resolved": sum(row["present"] for row in coverage_rows),
         "genes_requested": len(coverage_rows),
     }
@@ -492,11 +582,12 @@ def _run_panels(dataset: BulkDataset, root: Path, runner=None) -> dict[str, Any]
     return summary
 
 
-def _resolve_panel_features(dataset: BulkDataset) -> tuple[dict[str, str], dict[str, dict[str, Any]]]:
+def _resolve_panel_features(
+    dataset: BulkDataset, feature_ids: Sequence[str]
+) -> tuple[dict[str, str], dict[str, dict[str, Any]]]:
     panel_defs = panel_definitions(PANEL_IDS)
     targets = tuple(dict.fromkeys(gene for genes in panel_defs.values() for gene in genes))
     targets = tuple(dict.fromkeys((*targets, "GZMA", "PRF1")))
-    feature_ids = _feature_ids(dataset.expression_path)
     feature_id_type = str(getattr(dataset.representation, "feature_id", "symbol"))
     if feature_id_type == "entrez":
         resolved_indices, coverage = a_scoring.resolve(feature_ids, targets)
@@ -508,43 +599,94 @@ def _resolve_panel_features(dataset: BulkDataset) -> tuple[dict[str, str], dict[
     return resolved, coverage
 
 
-def _feature_ids(path: Path) -> list[str]:
+def _read_expression_matrix(path: Path) -> tuple[list[str], list[str], list[list[float]]]:
     with path.open("r", encoding="utf-8", newline="") as stream:
         reader = csv.reader(stream, delimiter="\t")
-        next(reader, None)
-        values = [row[0] for row in reader if row]
-    if len(set(values)) != len(values):
-        raise ValueError("Expression feature identifiers must be unique for panel scoring")
-    return values
-
-
-def _read_selected_rows(path: Path, selected: Mapping[str, str]) -> dict[str, list[float]]:
-    wanted = {feature: target for target, feature in selected.items()}
-    found: dict[str, list[float]] = {}
-    with path.open("r", encoding="utf-8", newline="") as stream:
-        reader = csv.reader(stream, delimiter="\t")
-        next(reader, None)
+        header = next(reader, None)
+        if not header or len(header) < 4:
+            raise ValueError("Expression matrix must contain one feature column and three samples")
+        sample_ids = header[1:]
+        feature_ids = []
+        matrix = []
         for row in reader:
-            if row and row[0] in wanted:
+            if not row:
+                continue
+            if len(row) != len(header) or not row[0]:
+                raise ValueError("Expression matrix rows must align to the declared samples")
+            values = []
+            for value in row[1:]:
+                if value.strip().upper() in {"", "NA", "N/A", "NULL"}:
+                    values.append(math.nan)
+                    continue
                 try:
-                    values = [float(value) for value in row[1:]]
+                    values.append(float(value))
                 except ValueError:
                     raise ValueError("Expression matrix contains a non-numeric value") from None
-                if any(not math.isfinite(value) for value in values):
-                    raise ValueError("Panel genes must have finite values")
-                found[wanted[row[0]]] = values
-    if set(found) != set(selected):
-        raise ValueError("Expression features changed while resolving panel coverage")
-    return found
+            feature_ids.append(row[0])
+            matrix.append(values)
+    if len(set(feature_ids)) != len(feature_ids):
+        raise ValueError("Expression feature identifiers must be unique for panel scoring")
+    if len(set(sample_ids)) != len(sample_ids) or any(not sample for sample in sample_ids):
+        raise ValueError("Expression matrix sample columns must be unique and non-empty")
+    return feature_ids, sample_ids, matrix
 
 
-def _panel_analysis_scale(values: Mapping[str, list[float]], representation: Any):
+def _aligned_gene_lengths(dataset: BulkDataset, feature_ids: Sequence[str]) -> list[float] | None:
+    lengths = dataset.gene_lengths
+    if lengths is None:
+        return None
+    if isinstance(lengths, Mapping):
+        if any(feature not in lengths for feature in feature_ids):
+            return None
+        raw_lengths = [lengths[feature] for feature in feature_ids]
+    else:
+        raw_lengths = list(lengths)
+        if len(raw_lengths) != len(feature_ids):
+            raise ValueError("Gene lengths must align to every expression feature")
+    try:
+        parsed = [float(value) for value in raw_lengths]
+    except (TypeError, ValueError):
+        raise ValueError("Gene lengths must be numeric") from None
+    if any(not math.isfinite(value) or value <= 0 for value in parsed):
+        raise ValueError("Gene lengths must be finite and positive")
+    return parsed
+
+
+def _panel_analysis_scale(
+    matrix: list[list[float]], feature_ids: Sequence[str], dataset: BulkDataset
+) -> tuple[list[list[float]], list[list[float]] | None, str]:
+    representation = dataset.representation
+    unit = str(getattr(representation, "unit", "")).casefold()
+    platform = str(getattr(representation, "platform", "")).casefold()
     transform = str(getattr(representation, "transform", "")).casefold()
+    lengths = _aligned_gene_lengths(dataset, feature_ids)
+
+    if unit == "counts":
+        if any(
+            not math.isfinite(value) or value < 0 or value != round(value)
+            for row in matrix for value in row
+        ):
+            raise ValueError("Count panel inputs must be finite non-negative integers")
+        if platform == "rnaseq" and lengths is not None:
+            tpm = a_scoring.to_tpm(matrix, representation, lengths)
+            return a_scoring.log2p1(tpm), tpm, "log2_tpm"
+        library_sizes = [sum(row[column] for row in matrix) for column in range(len(matrix[0]))]
+        if any(not math.isfinite(size) or size <= 0 for size in library_sizes):
+            raise ValueError("Count panel inputs need positive full-library totals")
+        cpm = [
+            [value * 1_000_000.0 / library_sizes[column] for column, value in enumerate(row)]
+            for row in matrix
+        ]
+        return a_scoring.log2p1(cpm), None, "log2_cpm"
+
+    if platform == "rnaseq" and transform == "linear" and unit in {"tpm", "fpkm", "rpkm"}:
+        tpm = a_scoring.to_tpm(matrix, representation, lengths)
+        return a_scoring.log2p1(tpm), tpm, "log2_tpm"
     if transform in {"log2", "log2p1", "other"}:
-        return dict(values), transform or "native"
-    matrix = [values[gene] for gene in values]
-    logged = a_scoring.log2p1(matrix)
-    return dict(zip(values, logged)), "log2p1"
+        return matrix, None, f"source_{transform}"
+    if transform == "linear":
+        return a_scoring.log2p1(matrix), None, "log2p1_source"
+    raise ValueError("Panel scoring needs a recognized linear or log expression transform")
 
 
 def _base_config(dataset: BulkDataset, mode: str, extra: Mapping[str, Any], outputs: Sequence[str]) -> dict[str, Any]:
@@ -610,20 +752,11 @@ def _write_module_manifest(
         if label in inputs:
             label = f"{index}:{label}"
         inputs[label] = _sha256(path)
-    code_paths = [
-        ROOT / "tools/a_bulk/core.py",
-        ROOT / "tools/a_bulk/__main__.py",
-        ROOT / "tools/a_scoring/core.py",
-        ROOT / "tools/r_bridge/__init__.py",
-        ROOT / "r/scripts" / runner_script,
-    ]
     if dataset.paper == "A":
-        code_paths.append(ROOT / "tools/a_cohorts/view.py")
-        code_paths.append(ROOT / "tools/a_cohorts/core.py")
         representation_file = ROOT / "docs/cohorts/REPRESENTATION.tsv"
         if representation_file.is_file():
             inputs.setdefault("REPRESENTATION.tsv", _sha256(representation_file))
-    code_hashes = {path.relative_to(ROOT).as_posix(): _sha256(path) for path in code_paths}
+    code_hashes = _module_code_sha256(dataset, runner_script)
     if name in {"panels", "scores"}:
         for path in (a_scoring.PANEL_REGISTRY_PATH, a_scoring.ALIAS_TABLE_PATH):
             inputs.setdefault(path.name, _sha256(path))
@@ -633,20 +766,22 @@ def _write_module_manifest(
             inputs.setdefault("pinned_gene_info", _sha256(gene_info))
     bridge_manifest = stage / "bridge" / "manifest.json"
     outputs = {
-        str(Path("bridge") / name): _sha256(stage / "bridge" / name)
-        for name in run_r.manifest["output_sha256"]
-        if (stage / "bridge" / name).is_file()
+        str(Path("bridge") / output_name): _sha256(stage / "bridge" / output_name)
+        for output_name in run_r.manifest["output_sha256"]
+        if (stage / "bridge" / output_name).is_file()
     }
     for path in extra_outputs:
         if path.is_file():
             outputs[path.relative_to(stage).as_posix()] = _sha256(path)
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "paper": dataset.paper,
         "dataset_id": dataset.dataset_id,
         "stage": name,
         "data_classification": dataset.data_classification,
         "representation": _representation_config(dataset),
+        "dataset_identity": _dataset_identity(dataset),
+        "dataset_input_sha256": _dataset_input_sha256(dataset),
         "endpoint": endpoint,
         "r_script": runner_script,
         "input_sha256": inputs,
@@ -660,6 +795,20 @@ def _write_module_manifest(
     _write_immutable_json(stage / "manifest.json", manifest)
 
 
+def _module_code_sha256(dataset: BulkDataset, runner_script: str) -> dict[str, str]:
+    code_paths = [
+        ROOT / "tools/a_bulk/core.py",
+        ROOT / "tools/a_bulk/__main__.py",
+        ROOT / "tools/a_scoring/core.py",
+        ROOT / "tools/r_bridge/__init__.py",
+        ROOT / "r/scripts" / runner_script,
+    ]
+    if dataset.paper == "A":
+        code_paths.append(ROOT / "tools/a_cohorts/view.py")
+        code_paths.append(ROOT / "tools/a_cohorts/core.py")
+    return {path.relative_to(ROOT).as_posix(): _sha256(path) for path in code_paths}
+
+
 def _write_immutable_json(path: Path, content: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     rendered = json.dumps(content, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
@@ -670,22 +819,244 @@ def _write_immutable_json(path: Path, content: Mapping[str, Any]) -> None:
     path.write_text(rendered, encoding="utf-8")
 
 
-def _write_patient_free_summary(dataset: BulkDataset, root: Path) -> dict[str, Any]:
+def _write_patient_free_summary(
+    dataset: BulkDataset,
+    root: Path,
+    *,
+    fresh_stage_summaries: Mapping[str, Mapping[str, Any]] | None = None,
+    allow_outcomes: bool = False,
+) -> dict[str, Any]:
     summary: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "paper": dataset.paper,
         "dataset_id": dataset.dataset_id,
         "data_classification": dataset.data_classification,
         "representation": _representation_config(dataset),
         "stages": {},
+        "provenance": {},
+        "excluded_stage_summaries": {},
     }
-    for step, filename in (("qc", "qc_summary.json"), ("pca", "pca_summary.json"),
-                           ("de", "de_summary.json"), ("gsea", "gsea_summary.json"),
-                           ("scores", "summary.json")):
-        path = root / step / "bridge" / filename if step != "scores" else root / step / filename
-        if path.is_file():
-            summary["stages"][step] = _read_json(path)
+    stage_contracts = (
+        ("qc", "qc_summary.json", True),
+        ("pca", "pca_summary.json", True),
+        ("de", "de_summary.json", True),
+        ("gsea", "gsea_summary.json", True),
+        ("scores", "summary.json", False),
+    )
+    fresh = fresh_stage_summaries or {}
+    for step, filename, in_bridge in stage_contracts:
+        stage_dir = root / step
+        summary_path = stage_dir / "bridge" / filename if in_bridge else stage_dir / filename
+        manifest_path = stage_dir / "manifest.json"
+        if step in {"de", "gsea"} and (not allow_outcomes or step not in fresh):
+            if summary_path.is_file() or manifest_path.is_file():
+                summary["excluded_stage_summaries"][step] = (
+                    "outcome_guard_required" if not allow_outcomes
+                    else "outcome_summary_must_be_from_current_run"
+                )
+            continue
+        if step not in fresh and not (summary_path.is_file() or manifest_path.is_file()):
+            continue
+
+        manifest = None
+        if manifest_path.is_file():
+            try:
+                manifest = _read_json(manifest_path)
+            except (OSError, ValueError, TypeError):
+                manifest = None
+        if step == "pca" and not allow_outcomes and manifest and manifest.get("endpoint"):
+            summary["excluded_stage_summaries"][step] = "response_colored_pca_requires_outcome_guard"
+            continue
+
+        reason, provenance = _verify_stage_summary(
+            dataset, stage_dir, step, filename, in_bridge, manifest
+        )
+        if reason:
+            if step in fresh:
+                raise ValueError(f"Fresh {step} summary failed provenance validation: {reason}")
+            summary["excluded_stage_summaries"][step] = reason
+            continue
+        if step in fresh:
+            stage_summary = dict(fresh[step])
+        else:
+            if not summary_path.is_file():
+                summary["excluded_stage_summaries"][step] = "summary_file_missing"
+                continue
+            try:
+                stage_summary = _read_json(summary_path)
+            except (OSError, ValueError, TypeError):
+                summary["excluded_stage_summaries"][step] = "summary_file_invalid"
+                continue
+        summary["stages"][step] = stage_summary
+        summary["provenance"][step] = provenance
     return summary
+
+
+def _dataset_identity(dataset: BulkDataset) -> dict[str, Any]:
+    return {
+        "paper": dataset.paper,
+        "dataset_id": dataset.dataset_id,
+        "data_classification": dataset.data_classification,
+        "representation": _representation_config(dataset),
+        "endpoint_families": list(dataset.endpoint_families),
+        "sample_id_field": dataset.sample_id_field,
+    }
+
+
+def _dataset_input_sha256(dataset: BulkDataset) -> dict[str, str]:
+    stable_rows = [
+        {str(key): None if value is None else str(value) for key, value in row.items()}
+        for row in dataset.clinical_rows
+    ]
+    rendered_rows = json.dumps(stable_rows, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    row_digest = hashlib.sha256(rendered_rows.encode("utf-8")).hexdigest()
+    source_digest = (
+        _sha256(dataset.clinical_path)
+        if dataset.clinical_path is not None and dataset.clinical_path.is_file()
+        else ""
+    )
+    clinical_digest = hashlib.sha256(f"{source_digest}:{row_digest}".encode("ascii")).hexdigest()
+    result = {
+        "expression": _sha256(dataset.expression_path),
+        "clinical": clinical_digest,
+    }
+    if dataset.gene_lengths is not None:
+        if isinstance(dataset.gene_lengths, Mapping):
+            stable_lengths = sorted((str(key), str(value)) for key, value in dataset.gene_lengths.items())
+        else:
+            stable_lengths = [str(value) for value in dataset.gene_lengths]
+        rendered_lengths = json.dumps(stable_lengths, separators=(",", ":"), ensure_ascii=False)
+        result["gene_lengths"] = hashlib.sha256(rendered_lengths.encode("utf-8")).hexdigest()
+    return result
+
+
+def _verify_stage_summary(
+    dataset: BulkDataset,
+    stage_dir: Path,
+    stage: str,
+    summary_filename: str,
+    summary_in_bridge: bool,
+    manifest: Mapping[str, Any] | None,
+) -> tuple[str | None, dict[str, Any]]:
+    if manifest is None:
+        return "stage_manifest_missing_or_invalid", {}
+    if manifest.get("dataset_identity") != _dataset_identity(dataset):
+        return "dataset_identity_mismatch", {}
+    if manifest.get("dataset_input_sha256") != _dataset_input_sha256(dataset):
+        return "dataset_input_hash_mismatch", {}
+    summary_relative = f"bridge/{summary_filename}" if summary_in_bridge else summary_filename
+    recorded_outputs = manifest.get("output_sha256")
+    if not isinstance(recorded_outputs, Mapping):
+        return "summary_output_hash_missing", {}
+    safe_outputs = _sanitized_hash_map(recorded_outputs)
+    if safe_outputs is None or summary_relative not in safe_outputs:
+        return "summary_output_hash_missing", {}
+    for identifier, digest in safe_outputs.items():
+        output_path = stage_dir / identifier
+        if output_path.is_symlink() or not output_path.is_file() or _sha256(output_path) != digest:
+            return "stage_output_hash_mismatch", {}
+    bridge_info = manifest.get("run_r_manifest")
+    if not isinstance(bridge_info, Mapping):
+        return "bridge_manifest_hash_missing", {}
+    bridge_relative = bridge_info.get("path")
+    if not isinstance(bridge_relative, str):
+        return "bridge_manifest_path_invalid", {}
+    bridge_path_obj = Path(bridge_relative)
+    if (
+        bridge_path_obj.is_absolute()
+        or PureWindowsPath(bridge_relative).is_absolute()
+        or ".." in bridge_path_obj.parts
+    ):
+        return "bridge_manifest_path_invalid", {}
+    bridge_path = stage_dir / bridge_path_obj
+    if not bridge_path.is_file() or _sha256(bridge_path) != bridge_info.get("sha256"):
+        return "bridge_manifest_hash_mismatch", {}
+    script = manifest.get("r_script")
+    if (
+        not isinstance(script, str)
+        or Path(script).is_absolute()
+        or PureWindowsPath(script).is_absolute()
+        or ".." in Path(script).parts
+        or script not in {"bulk_qc_pca.R", "de_deseq2.R", "de_limma.R", "fgsea_rank.R"}
+    ):
+        return "script_identifier_invalid", {}
+    safe_hashes = {}
+    for field in ("dataset_input_sha256", "input_sha256", "code_sha256", "output_sha256"):
+        mapping = manifest.get(field)
+        if not isinstance(mapping, Mapping):
+            return "manifest_hash_map_invalid", {}
+        sanitized = _sanitized_hash_map(mapping)
+        if sanitized is None:
+            return "manifest_hash_map_invalid", {}
+        safe_hashes[field] = sanitized
+    if safe_hashes["code_sha256"] != _module_code_sha256(dataset, script):
+        return "code_hash_mismatch", {}
+    if not _stage_input_hashes_match(dataset, stage, manifest, safe_hashes["input_sha256"]):
+        return "stage_input_hash_mismatch", {}
+    provenance = {
+        "stage_manifest": f"{stage}/manifest.json",
+        "stage_manifest_sha256": _sha256(stage_dir / "manifest.json"),
+        "bridge_manifest": f"{stage}/{bridge_path_obj.as_posix()}",
+        "bridge_manifest_sha256": str(bridge_info["sha256"]),
+        "r_script": f"r/scripts/{script}",
+        **safe_hashes,
+    }
+    return None, provenance
+
+
+def _stage_input_hashes_match(
+    dataset: BulkDataset,
+    stage: str,
+    manifest: Mapping[str, Any],
+    input_hashes: Mapping[str, str],
+) -> bool:
+    observed = set(input_hashes.values())
+    expected = set()
+    if stage != "gsea":
+        expected.add(_sha256(dataset.expression_path))
+    if dataset.paper == "A":
+        representation_file = ROOT / "docs/cohorts/REPRESENTATION.tsv"
+        if representation_file.is_file():
+            expected.add(_sha256(representation_file))
+    if stage in {"qc", "pca", "de"}:
+        include_response = stage == "de" or (stage == "pca" and bool(manifest.get("endpoint")))
+        endpoint = str(manifest.get("endpoint") or "orr")
+        metadata, _ = _sample_metadata_content(
+            dataset,
+            include_response=include_response,
+            endpoint=endpoint,
+            drop_excluded=stage == "de",
+        )
+        expected.add(hashlib.sha256(metadata.encode("utf-8")).hexdigest())
+    if stage == "scores":
+        expected.update(
+            _sha256(path)
+            for path in (a_scoring.PANEL_REGISTRY_PATH, a_scoring.ALIAS_TABLE_PATH)
+        )
+        runtime = Path(os.environ.get("THESIS_RUNTIME", ROOT / ".scratch/runtime")).expanduser()
+        gene_info = a_scoring.gene_info_path(runtime)
+        if gene_info.is_file():
+            expected.add(_sha256(gene_info))
+        elif "pinned_gene_info" in input_hashes:
+            return False
+    return expected.issubset(observed)
+
+
+def _sanitized_hash_map(value: Mapping[str, Any]) -> dict[str, str] | None:
+    sanitized = {}
+    for identifier, digest in value.items():
+        if not isinstance(identifier, str):
+            return None
+        relative = Path(identifier)
+        if (
+            relative.is_absolute()
+            or PureWindowsPath(identifier).is_absolute()
+            or ".." in relative.parts
+            or not re.fullmatch(r"[0-9a-f]{64}", str(digest))
+        ):
+            return None
+        sanitized[identifier] = str(digest)
+    return sanitized
 
 
 def _read_metadata(path: Path) -> list[dict[str, str]]:
