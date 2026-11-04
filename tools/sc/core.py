@@ -39,6 +39,7 @@ class ProfileTable:
     expression: pd.DataFrame
     clinical: pd.DataFrame
     detection: pd.DataFrame | None = None
+    gene_symbols: pd.Series | None = None
 
 
 def _matrix_frame(matrix, genes: Sequence[str], profile_ids: Sequence[str]) -> pd.DataFrame:
@@ -157,7 +158,7 @@ def merge_layer_profiles(profiles: Sequence[ProfileTable]) -> ProfileTable:
 
 def panel_definitions() -> dict[str, tuple[str, ...]]:
     """Load the eleven locked single-cell panels and the separate M5/M6 genes."""
-    from tools.a_scoring import panel_definitions as load_panels
+    from tools.a_scoring.core import panel_definitions as load_panels
 
     ids = (*SINGLE_CELL_PANEL_IDS, "M5_CHECKPOINT_CANDIDATES", "M6_EPIGENETIC_REGULATORS")
     return load_panels(ids)

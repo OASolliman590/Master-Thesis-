@@ -210,6 +210,28 @@ def test_fake_unexpected_staged_file_raises_rscript_error(tmp_path):
     assert not output_dir.exists()
 
 
+def test_macos_resource_fork_sidecars_do_not_break_output_validation(tmp_path):
+    class SidecarFakeR(FakeR):
+        def __call__(self, command, **kwargs):
+            completed = super().__call__(command, **kwargs)
+            config = json.loads(Path(command[-1]).read_text(encoding="utf-8"))
+            output_dir = Path(config["output_dir"])
+            for name in ("._result.tsv", "._bridge-runtime.json", ".DS_Store"):
+                (output_dir / name).write_text("filesystem metadata\n", encoding="utf-8")
+            return completed
+
+    script = _script(tmp_path)
+    output_dir = tmp_path / "published"
+    runner = SidecarFakeR({"fake.R": {"result.tsv": "expected\n"}})
+    config = {"expected_outputs": ["result.tsv"]}
+
+    result = run_r(script, {}, config, output_dir, runner=runner)
+    reused = run_r(script, {}, config, output_dir, runner=runner)
+
+    assert result.outputs["result.tsv"].read_text() == "expected\n"
+    assert reused.manifest == result.manifest
+
+
 def test_runner_failure_keeps_existing_destination_untouched(tmp_path):
     class FailedRunner:
         def __call__(self, command, **kwargs):

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import sys
 import tempfile
 from pathlib import Path
 
@@ -17,3 +18,7 @@ def configure_runtime() -> None:
         destination = Path(os.environ.get(variable, temporary_root / name))
         destination.mkdir(parents=True, exist_ok=True)
         os.environ[variable] = str(destination)
+    if "numba" in sys.modules:
+        from numba.core import config
+
+        config.reload_config()

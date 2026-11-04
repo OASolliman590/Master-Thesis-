@@ -274,6 +274,7 @@ def _prostate_command(command: str, atlas_dir: Path, runtime: Path) -> None:
 
 
 def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
+    from . import prostate
     from tools.r_bridge import run_r
 
     lin_root = runtime / "lin2026_atlas"
@@ -295,6 +296,7 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
         return
 
     object_path = prostate._source_by_suffix(runtime, "lin2026_atlas", ".qs2")
+    metadata_path = lin_root / "gate0/metadata.rds"
     panel_path = atlas_dir / "_bridge_runs" / "panel_membership.tsv"
     panel_path.parent.mkdir(parents=True, exist_ok=True)
     gene_set_table(panel_definitions()).to_csv(panel_path, sep="\t", index=False)
@@ -311,7 +313,8 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
         "compartments": ["compartment_expression.tsv", "pcahawley_per_patient_expression.tsv", "compartment_dotplot.png"],
     }
     expected = all_outputs[command]
-    inputs = {"seurat": object_path, "cohort_map": cohort_map, "compartment_map": compartment_map, "panels": panel_path}
+    inputs = {"seurat": object_path, "metadata": metadata_path,
+        "cohort_map": cohort_map, "compartment_map": compartment_map, "panels": panel_path}
     config = {"expected_outputs": expected, "mode": command, "minimum_cells": MIN_CELLS,
         "minimum_umis": MIN_UMIS, "minimum_donors_to_show": MIN_DONORS_TO_SHOW,
         "cohort_map": str(cohort_map), "compartment_map": str(compartment_map), "panel_membership": str(panel_path)}
@@ -354,6 +357,7 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
             "expression": "donor median log2(CPM+1)", "minimum_cells": MIN_CELLS,
             "minimum_umis": MIN_UMIS, "minimum_donors_to_show": MIN_DONORS_TO_SHOW,
             "pcahawley_exception": "per-patient log2(CPM+1); no group medians, intervals, or response contrast",
+            "interpretation_note": "Ambient RNA may blur detection; non-detection is not evidence of absence.",
             "bridge_manifest": result.manifest})
         marker_root = atlas_dir / "labels"
         marker_root.mkdir(parents=True, exist_ok=True)

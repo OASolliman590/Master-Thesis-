@@ -294,6 +294,8 @@ def _validate_staged_outputs(
     allowed = set(expected_outputs) | {_SESSION_INFO, _RUNTIME_INFO}
     unexpected = []
     for path in output_dir.rglob("*"):
+        if _is_macos_sidecar(path):
+            continue
         relative = path.relative_to(output_dir).as_posix()
         if path.is_symlink() or path.is_dir() or relative not in allowed:
             unexpected.append(relative)
@@ -322,6 +324,8 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
     allowed = set(hashes) | {_MANIFEST}
     unexpected = []
     for path in destination.rglob("*"):
+        if _is_macos_sidecar(path):
+            continue
         relative = path.relative_to(destination).as_posix()
         if path.is_symlink() or path.is_dir() or relative not in allowed:
             unexpected.append(relative)
@@ -335,6 +339,15 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
         if unexpected:
             details.append(f"unexpected published files: {', '.join(sorted(unexpected))}")
         raise ValueError(f"Existing output failed integrity validation: {'; '.join(details)}")
+
+
+def _is_macos_sidecar(path: Path) -> bool:
+    """Ignore resource-fork sidecars created on macOS filesystems such as exFAT."""
+    return (
+        path.is_file()
+        and not path.is_symlink()
+        and (path.name.startswith("._") or path.name == ".DS_Store")
+    )
 
 
 def _sha256(path: Path) -> str:

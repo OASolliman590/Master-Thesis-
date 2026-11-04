@@ -96,10 +96,17 @@ def load_h5ad(runtime: Path):
 
     source = _prostate_source(runtime)
     adata = anndata.read_h5ad(source)
-    matrix = adata.X
+    if adata.raw is not None:
+        if not adata.raw.var_names.equals(adata.var_names):
+            raise ValueError("AnnData.raw.X and X use different gene orders")
+        matrix = adata.raw.X
+        raw_source = "AnnData.raw.X"
+    else:
+        matrix = adata.X
+        raw_source = "AnnData.X"
     values = matrix.data if hasattr(matrix, "data") and hasattr(matrix, "indptr") else np.asarray(matrix).ravel()
     if np.any(values < 0) or not np.allclose(values, np.round(values)):
-        raise ValueError("CELLxGENE raw.X is not a non-negative integer count matrix")
+        raise ValueError(f"{raw_source} is not a non-negative integer count matrix")
     adata.layers["counts"] = matrix.copy()
     return adata, source
 
@@ -122,9 +129,10 @@ def qc_summary(adata) -> pd.DataFrame:
     configure_runtime()
     import scanpy as sc
 
-    raw = adata.layers["counts"]
     adata.var["mt"] = adata.var_names.astype(str).str.upper().str.startswith("MT-")
-    sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True)
+    sc.pp.calculate_qc_metrics(
+        adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True, layer="counts"
+    )
     fields = {
         "genes_per_cell": "n_genes_by_counts",
         "umis_per_cell": "total_counts",
@@ -147,7 +155,7 @@ def qc_summary(adata) -> pd.DataFrame:
             )
     result = pd.DataFrame.from_records(records)
     result["filtering_applied"] = False
-    result["count_layer"] = "CELLxGENE raw.X"
+    result["count_layer"] = "AnnData.raw.X"
     return result
 
 
@@ -163,15 +171,12 @@ def _map_compartments(adata) -> None:
     )
 
 
-def _cancer_cells(adata):
-    _map_compartments(adata)
-    tissue = adata.obs["type"].astype("string").fillna("").str.casefold()
-    return adata[tissue.eq("cancer").to_numpy() & adata.obs["compartment"].notna().to_numpy()].copy()
-
-
 def aggregate_profiles(adata) -> ProfileTable:
     """Create donor-by-compartment count profiles for cancer tissue only."""
-    cancer = _cancer_cells(adata)
+    _map_compartments(adata)
+    tissue = adata.obs["type"].astype("string").fillna("").str.casefold()
+    all_cancer = adata[tissue.eq("cancer").to_numpy()].copy()
+    cancer = all_cancer[all_cancer.obs["compartment"].notna().to_numpy()].copy()
     if "donor_id" not in cancer.obs:
         raise ValueError("The prostate atlas is missing donor_id")
     cancer.obs["cohort"] = "prostate_hormone_naive_atlas"
@@ -188,7 +193,15 @@ def aggregate_profiles(adata) -> ProfileTable:
         min_cells=MIN_CELLS,
         min_umis=MIN_UMIS,
     )
-    denominator = cancer.obs.groupby("donor_id", observed=True).size()
+    symbol_column = "gene_name" if "gene_name" in cancer.var else "feature_name"
+    if symbol_column not in cancer.var:
+        raise ValueError("The prostate atlas has no gene-symbol annotation for panel extraction")
+    profiles.gene_symbols = pd.Series(
+        cancer.var[symbol_column].astype("string").fillna("").astype(str).to_numpy(),
+        index=cancer.var_names.astype(str),
+        name=symbol_column,
+    )
+    denominator = all_cancer.obs.groupby("donor_id", observed=True).size()
     profiles.clinical["fraction_cells_total"] = [
         float(row.n_cells) / float(denominator.loc[row.donor_id])
         for row in profiles.clinical.itertuples()
@@ -224,11 +237,12 @@ def write_layout(profiles: ProfileTable, atlas_dir: Path, input_sha256: str) -> 
             "paper": "B",
             "unit": "patient",
             "compartment": name,
-            "count_source": "raw UMI counts from CELLxGENE raw.X",
+            "count_source": "raw UMI counts from AnnData.raw.X",
             "count_layer": "counts",
             "minimum_cells": MIN_CELLS,
             "minimum_umis": MIN_UMIS,
             "minimum_donors_for_summary": MIN_DONORS_TO_SHOW,
+            "interpretation_note": "Ambient RNA may blur detection; non-detection is not evidence of absence.",
             "input_sha256": input_sha256,
             "packages": {name: _version(name) for name in ("scanpy", "anndata", "decoupler", "matplotlib")},
             "outputs": {"expression.tsv": _digest(output / "expression.tsv"), "clinical.tsv": _digest(output / "clinical.tsv")},
@@ -240,14 +254,20 @@ def marker_plot(adata, output: Path) -> None:
     configure_runtime()
     import scanpy as sc
 
+    symbol_column = "gene_name" if "gene_name" in adata.var else "feature_name"
+    if symbol_column not in adata.var:
+        raise ValueError("The prostate atlas has no gene-symbol annotation for marker checks")
+    symbols = adata.var[symbol_column].astype("string").fillna("").astype(str)
+    symbol_counts = symbols.value_counts()
     marker_map = {
-        label: [gene for gene in genes if gene in adata.var_names]
+        label: [gene for gene in genes if symbol_counts.get(gene, 0) == 1]
         for label, genes in MARKERS.items()
     }
     marker_map = {label: genes for label, genes in marker_map.items() if genes}
     if not marker_map:
         raise ValueError("None of the canonical marker genes are present in the prostate atlas")
     display = adata.copy()
+    display.X = display.layers["counts"].copy()
     sc.pp.normalize_total(display, target_sum=1_000_000)
     sc.pp.log1p(display)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -255,6 +275,7 @@ def marker_plot(adata, output: Path) -> None:
         display,
         marker_map,
         groupby="celltype_minor_v2",
+        gene_symbols=symbol_column,
         use_raw=False,
         standard_scale=None,
         dendrogram=False,
@@ -272,7 +293,23 @@ def marker_plot(adata, output: Path) -> None:
 def compartment_table(profiles: ProfileTable) -> pd.DataFrame:
     definitions = panel_definitions()
     genes = tuple(dict.fromkeys(gene for members in definitions.values() for gene in members))
-    result = expression_summary(profiles, study_col="study", genes=genes)
+    summary_profiles = profiles
+    if profiles.gene_symbols is not None:
+        symbols = profiles.gene_symbols.astype(str)
+        counts = symbols[symbols.ne("")].value_counts()
+        id_to_symbol = {
+            feature_id: symbol
+            for feature_id, symbol in symbols.items()
+            if symbol and counts.get(symbol, 0) == 1
+        }
+        summary_expression = profiles.expression.rename(index=id_to_symbol)
+        summary_detection = (
+            profiles.detection.rename(index=id_to_symbol)
+            if profiles.detection is not None
+            else None
+        )
+        summary_profiles = ProfileTable(summary_expression, profiles.clinical, summary_detection)
+    result = expression_summary(summary_profiles, study_col="study", genes=genes)
     if not result.empty:
         result["panel_ids"] = result["gene"].map(
             lambda gene: ",".join(panel for panel, members in definitions.items() if gene in members)
@@ -308,6 +345,7 @@ def run_embedding(adata, output_dir: Path) -> None:
     import scanpy as sc
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    adata.X = adata.layers["counts"].copy()
     sc.pp.normalize_total(adata, target_sum=10_000)
     sc.pp.log1p(adata)
     sc.pp.highly_variable_genes(adata, flavor="seurat", n_top_genes=2_000)

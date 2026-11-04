@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import numpy as np
-import pandas as pd
 import pytest
 
 anndata = pytest.importorskip("anndata", reason="run with envs/sc-analysis Python")
+import numpy as np
+import pandas as pd
 from scipy import sparse
 
 from tools.sc.core import ProfileTable, aggregate_anndata, merge_layer_profiles
