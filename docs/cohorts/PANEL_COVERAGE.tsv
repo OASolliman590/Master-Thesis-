@@ -1,0 +1,201 @@
+cohort	panel	n_found	n_total	complete	missing	cyt_gzma_present	cyt_prf1_present	cyt_complete	linear_tpm_available
+riaz_gse91061	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+riaz_gse91061	AYERS_GEP_18	18	18	true		true	true	true	true
+riaz_gse91061	HOPE_18	18	18	true		true	true	true	true
+riaz_gse91061	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+riaz_gse91061	M1_MOBILITY	18	18	true		true	true	true	true
+riaz_gse91061	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+riaz_gse91061	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+riaz_gse91061	M4_EXCLUSION	13	13	true		true	true	true	true
+riaz_gse91061	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+riaz_gse91061	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+hugo_gse78220	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+hugo_gse78220	AYERS_GEP_18	18	18	true		true	true	true	true
+hugo_gse78220	HOPE_18	18	18	true		true	true	true	true
+hugo_gse78220	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+hugo_gse78220	M1_MOBILITY	18	18	true		true	true	true	true
+hugo_gse78220	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+hugo_gse78220	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+hugo_gse78220	M4_EXCLUSION	13	13	true		true	true	true	true
+hugo_gse78220	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+hugo_gse78220	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gse168204	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gse168204	AYERS_GEP_18	18	18	true		true	true	true	false
+gse168204	HOPE_18	18	18	true		true	true	true	false
+gse168204	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+gse168204	M1_MOBILITY	18	18	true		true	true	true	false
+gse168204	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+gse168204	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+gse168204	M4_EXCLUSION	13	13	true		true	true	true	false
+gse168204	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse168204	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	false
+liu2019	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+liu2019	AYERS_GEP_18	17	18	false	CCL5	true	true	true	true
+liu2019	HOPE_18	18	18	true		true	true	true	true
+liu2019	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+liu2019	M1_MOBILITY	17	18	false	CCL5	true	true	true	true
+liu2019	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+liu2019	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+liu2019	M4_EXCLUSION	13	13	true		true	true	true	true
+liu2019	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+liu2019	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gide2019	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gide2019	AYERS_GEP_18	18	18	true		true	true	true	false
+gide2019	HOPE_18	18	18	true		true	true	true	false
+gide2019	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+gide2019	M1_MOBILITY	18	18	true		true	true	true	false
+gide2019	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+gide2019	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+gide2019	M4_EXCLUSION	13	13	true		true	true	true	false
+gide2019	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gide2019	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	false
+braun2020	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+braun2020	AYERS_GEP_18	17	18	false	CCL5	true	true	true	false
+braun2020	HOPE_18	18	18	true		true	true	true	false
+braun2020	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+braun2020	M1_MOBILITY	17	18	false	CCL5	true	true	true	false
+braun2020	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+braun2020	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+braun2020	M4_EXCLUSION	13	13	true		true	true	true	false
+braun2020	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+braun2020	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	false
+vanallen2015	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+vanallen2015	AYERS_GEP_18	18	18	true		true	true	true	true
+vanallen2015	HOPE_18	18	18	true		true	true	true	true
+vanallen2015	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+vanallen2015	M1_MOBILITY	18	18	true		true	true	true	true
+vanallen2015	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+vanallen2015	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+vanallen2015	M4_EXCLUSION	13	13	true		true	true	true	true
+vanallen2015	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+vanallen2015	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gse135222	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+gse135222	AYERS_GEP_18	17	18	false	CCL5	true	true	true	true
+gse135222	HOPE_18	18	18	true		true	true	true	true
+gse135222	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+gse135222	M1_MOBILITY	17	18	false	CCL5	true	true	true	true
+gse135222	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+gse135222	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+gse135222	M4_EXCLUSION	13	13	true		true	true	true	true
+gse135222	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+gse135222	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gse136961	P_ANTIGEN_PRESENTATION	5	8	false	B2M,TAP2,PSMB8	true	true	true	true
+gse136961	AYERS_GEP_18	17	18	false	PSMB10	true	true	true	true
+gse136961	HOPE_18	15	18	false	SOCS1,NOD2,SLAMF1	true	true	true	true
+gse136961	M0_EXTRA_ANTIGEN_PRESENTATION	10	16	false	NLRC5,TAPBP,CALR,CANX,PDIA3,PSMB10	true	true	true	true
+gse136961	M1_MOBILITY	15	18	false	SELP,SELE,ITGA4	true	true	true	true
+gse136961	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+gse136961	M3_VIRAL_MIMICRY	7	13	false	CGAS,STING1,MAVS,IRF3,IRF7,RSAD2	true	true	true	true
+gse136961	M4_EXCLUSION	3	13	false	TGFB2,TGFBR1,TGFBR2,SMAD3,CXCL12,FAP,ACTA2,COL1A1,COL1A2,LGALS1	true	true	true	true
+gse136961	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+gse136961	M6_EPIGENETIC_REGULATORS	0	13	false	DNMT1,DNMT3A,DNMT3B,TET1,TET2,TET3,EZH2,EED,SUZ12,HDAC1,HDAC2,HDAC3,KDM6A	true	true	true	true
+gse176307	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gse176307	AYERS_GEP_18	18	18	true		true	true	true	false
+gse176307	HOPE_18	17	18	false	CD40LG	true	true	true	false
+gse176307	M0_EXTRA_ANTIGEN_PRESENTATION	14	16	false	CANX,HLA-F	true	true	true	false
+gse176307	M1_MOBILITY	17	18	false	CXCR3	true	true	true	false
+gse176307	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+gse176307	M3_VIRAL_MIMICRY	12	13	false	CGAS	true	true	true	false
+gse176307	M4_EXCLUSION	13	13	true		true	true	true	false
+gse176307	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse176307	M6_EPIGENETIC_REGULATORS	12	13	false	KDM6A	true	true	true	false
+kim2018	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+kim2018	AYERS_GEP_18	18	18	true		true	true	true	false
+kim2018	HOPE_18	18	18	true		true	true	true	false
+kim2018	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+kim2018	M1_MOBILITY	18	18	true		true	true	true	false
+kim2018	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+kim2018	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+kim2018	M4_EXCLUSION	13	13	true		true	true	true	false
+kim2018	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+kim2018	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	false
+gse145996	P_ANTIGEN_PRESENTATION	4	8	false	HLA-A,HLA-B,TAP1,PSMB8	true	true	true	true
+gse145996	AYERS_GEP_18	14	18	false	PSMB10,HLA-DQA1,HLA-E,CD27	true	true	true	true
+gse145996	HOPE_18	17	18	false	CD27	true	true	true	true
+gse145996	M0_EXTRA_ANTIGEN_PRESENTATION	12	16	false	TAPBP,HLA-E,HLA-G,PSMB10	true	true	true	true
+gse145996	M1_MOBILITY	18	18	true		true	true	true	true
+gse145996	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+gse145996	M3_VIRAL_MIMICRY	12	13	false	MAVS	true	true	true	true
+gse145996	M4_EXCLUSION	12	13	false	ACTA2	true	true	true	true
+gse145996	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+gse145996	M6_EPIGENETIC_REGULATORS	12	13	false	EED	true	true	true	true
+gse165278	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+gse165278	AYERS_GEP_18	18	18	true		true	true	true	true
+gse165278	HOPE_18	18	18	true		true	true	true	true
+gse165278	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+gse165278	M1_MOBILITY	18	18	true		true	true	true	true
+gse165278	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+gse165278	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+gse165278	M4_EXCLUSION	13	13	true		true	true	true	true
+gse165278	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+gse165278	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gse93157	P_ANTIGEN_PRESENTATION	7	8	false	B2M	true	true	true	false
+gse93157	AYERS_GEP_18	16	18	false	HLA-DRB1,NKG7	true	true	true	false
+gse93157	HOPE_18	18	18	true		true	true	true	false
+gse93157	M0_EXTRA_ANTIGEN_PRESENTATION	10	16	false	CIITA,CALR,CANX,PDIA3,HLA-F,HLA-DRB1	true	true	true	false
+gse93157	M1_MOBILITY	17	18	false	SELP	true	true	true	false
+gse93157	M2_CYTOTOXICITY	11	12	false	NKG7	true	true	true	false
+gse93157	M3_VIRAL_MIMICRY	8	13	false	CGAS,STING1,OAS1,OAS2,RSAD2	true	true	true	false
+gse93157	M4_EXCLUSION	6	13	false	TGFBR1,TGFBR2,FAP,ACTA2,COL1A1,COL1A2,LGALS1	true	true	true	false
+gse93157	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse93157	M6_EPIGENETIC_REGULATORS	0	13	false	DNMT1,DNMT3A,DNMT3B,TET1,TET2,TET3,EZH2,EED,SUZ12,HDAC1,HDAC2,HDAC3,KDM6A	true	true	true	false
+gse67501	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gse67501	AYERS_GEP_18	18	18	true		true	true	true	false
+gse67501	HOPE_18	18	18	true		true	true	true	false
+gse67501	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+gse67501	M1_MOBILITY	18	18	true		true	true	true	false
+gse67501	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+gse67501	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+gse67501	M4_EXCLUSION	13	13	true		true	true	true	false
+gse67501	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse67501	M6_EPIGENETIC_REGULATORS	12	13	false	TET3	true	true	true	false
+gse122220	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gse122220	AYERS_GEP_18	16	18	false	CD274,PDCD1LG2	true	true	true	false
+gse122220	HOPE_18	15	18	false	HAVCR2,CD40LG,CD274	true	true	true	false
+gse122220	M0_EXTRA_ANTIGEN_PRESENTATION	14	16	false	CIITA,PDIA3	true	true	true	false
+gse122220	M1_MOBILITY	16	18	false	CCR5,ITGAL	true	true	true	false
+gse122220	M2_CYTOTOXICITY	12	12	true		true	true	true	false
+gse122220	M3_VIRAL_MIMICRY	11	13	false	STING1,IFNB1	true	true	true	false
+gse122220	M4_EXCLUSION	11	13	false	TGFB1,TGFB2	true	true	true	false
+gse122220	M5_CHECKPOINT_CANDIDATES	5	8	false	CD274,PDCD1LG2,HAVCR2	true	true	true	false
+gse122220	M6_EPIGENETIC_REGULATORS	11	13	false	TET2,TET3	true	true	true	false
+gse140901	P_ANTIGEN_PRESENTATION	7	8	false	B2M	true	true	true	false
+gse140901	AYERS_GEP_18	16	18	false	HLA-DRB1,NKG7	true	true	true	false
+gse140901	HOPE_18	18	18	true		true	true	true	false
+gse140901	M0_EXTRA_ANTIGEN_PRESENTATION	10	16	false	CIITA,CALR,CANX,PDIA3,HLA-F,HLA-DRB1	true	true	true	false
+gse140901	M1_MOBILITY	17	18	false	SELP	true	true	true	false
+gse140901	M2_CYTOTOXICITY	11	12	false	NKG7	true	true	true	false
+gse140901	M3_VIRAL_MIMICRY	8	13	false	CGAS,STING1,OAS1,OAS2,RSAD2	true	true	true	false
+gse140901	M4_EXCLUSION	6	13	false	TGFBR1,TGFBR2,FAP,ACTA2,COL1A1,COL1A2,LGALS1	true	true	true	false
+gse140901	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse140901	M6_EPIGENETIC_REGULATORS	1	13	false	DNMT1,DNMT3A,DNMT3B,TET1,TET2,TET3,EZH2,EED,SUZ12,HDAC1,HDAC2,KDM6A	true	true	true	false
+gse111636	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	false
+gse111636	AYERS_GEP_18	18	18	true		true	true	true	false
+gse111636	HOPE_18	18	18	true		true	true	true	false
+gse111636	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	false
+gse111636	M1_MOBILITY	18	18	true		true	true	true	false
+gse111636	M2_CYTOTOXICITY	11	12	false	CD8B	true	true	true	false
+gse111636	M3_VIRAL_MIMICRY	13	13	true		true	true	true	false
+gse111636	M4_EXCLUSION	13	13	true		true	true	true	false
+gse111636	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	false
+gse111636	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	false
+gse218989	P_ANTIGEN_PRESENTATION	8	8	true		true	true	true	true
+gse218989	AYERS_GEP_18	18	18	true		true	true	true	true
+gse218989	HOPE_18	18	18	true		true	true	true	true
+gse218989	M0_EXTRA_ANTIGEN_PRESENTATION	16	16	true		true	true	true	true
+gse218989	M1_MOBILITY	18	18	true		true	true	true	true
+gse218989	M2_CYTOTOXICITY	12	12	true		true	true	true	true
+gse218989	M3_VIRAL_MIMICRY	13	13	true		true	true	true	true
+gse218989	M4_EXCLUSION	13	13	true		true	true	true	true
+gse218989	M5_CHECKPOINT_CANDIDATES	8	8	true		true	true	true	true
+gse218989	M6_EPIGENETIC_REGULATORS	13	13	true		true	true	true	true
+gse159067	P_ANTIGEN_PRESENTATION	4	8	false	HLA-C,B2M,PSMB8,PSMB9	true	true	true	false
+gse159067	AYERS_GEP_18	13	18	false	PSMB10,HLA-DQA1,HLA-DRB1,NKG7,TIGIT	true	true	true	false
+gse159067	HOPE_18	14	18	false	CD3G,SLAMF1,CD3E,TIGIT	true	true	true	false
+gse159067	M0_EXTRA_ANTIGEN_PRESENTATION	4	16	false	NLRC5,CIITA,TAPBP,CANX,PDIA3,HLA-F,HLA-G,HLA-DRA,HLA-DRB1,HLA-DPA1,HLA-DPB1,PSMB10	true	true	true	false
+gse159067	M1_MOBILITY	15	18	false	SELP,ITGAL,SELL	true	true	true	false
+gse159067	M2_CYTOTOXICITY	7	12	false	CD8B,CD3E,CD3G,NKG7,GZMK	true	true	true	false
+gse159067	M3_VIRAL_MIMICRY	7	13	false	CGAS,STING1,IFIH1,MAVS,OAS2,RSAD2	true	true	true	false
+gse159067	M4_EXCLUSION	12	13	false	FAP	true	true	true	false
+gse159067	M5_CHECKPOINT_CANDIDATES	7	8	false	TIGIT	true	true	true	false
+gse159067	M6_EPIGENETIC_REGULATORS	8	13	false	DNMT3B,TET1,TET3,EED,SUZ12	true	true	true	false

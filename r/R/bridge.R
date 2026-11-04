@@ -1,6 +1,10 @@
 .bridge_state <- new.env(parent = emptyenv())
 .bridge_state$package_versions <- list()
 
+bridge_normalize_version <- function(version) {
+  gsub("-", ".", as.character(version), fixed = TRUE)
+}
+
 bridge_assert_project <- function() {
   requested <- Sys.getenv("RENV_PROJECT", unset = "")
   if (!nzchar(requested)) {
@@ -46,7 +50,10 @@ bridge_require <- function(pkgs) {
     }
     locked_version <- as.character(record$Version)
     if (!is.null(requested_versions) &&
-        !identical(as.character(requested_versions[[index]]), locked_version)) {
+        !identical(
+          bridge_normalize_version(requested_versions[[index]]),
+          bridge_normalize_version(locked_version)
+        )) {
       stop(
         "Requested version for ", package, " (", requested_versions[[index]],
         ") does not match renv.lock version (", locked_version, ")"
@@ -72,7 +79,10 @@ bridge_require <- function(pkgs) {
     installed_version <- as.character(
       utils::packageVersion(package, lib.loc = active$library)
     )
-    if (!identical(installed_version, locked_version)) {
+    if (!identical(
+      bridge_normalize_version(installed_version),
+      bridge_normalize_version(locked_version)
+    )) {
       stop(
         "Package version mismatch for ", package, ": installed ",
         installed_version, ", renv.lock records ", locked_version
