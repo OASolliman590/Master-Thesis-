@@ -21,6 +21,7 @@ _RUNTIME_INFO = "bridge-runtime.json"
 _MANIFEST = "manifest.json"
 _CONFIG = "config.json"
 _RESERVED_OUTPUTS = {_SESSION_INFO, _RUNTIME_INFO, _MANIFEST, _CONFIG}
+_APPLEDOUBLE_MAGIC = b"\x00\x05\x16\x07"
 
 
 @dataclass(frozen=True)
@@ -58,7 +59,7 @@ class RScriptError(RuntimeError):
 class FakeR:
     """A subprocess-compatible fake that writes canned files by script name."""
 
-    def __init__(self, canned: dict[str, dict[str, str]]):
+    def __init__(self, canned: dict[str, dict[str, str | bytes]]):
         self.canned = canned
 
     def __call__(self, command, *, cwd, env, capture_output, text, check=False):
@@ -78,7 +79,11 @@ class FakeR:
                 return subprocess.CompletedProcess(
                     command, 1, "", f"Invalid canned output name: {name}\n"
                 )
-            (output_dir / name).write_text(contents, encoding="utf-8")
+            path = output_dir / name
+            if isinstance(contents, bytes):
+                path.write_bytes(contents)
+            else:
+                path.write_text(contents, encoding="utf-8")
 
         (output_dir / _SESSION_INFO).write_text(
             "FakeR sessionInfo()\n", encoding="utf-8"
@@ -208,6 +213,12 @@ def run_r(
         manifest_path.write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
+        _strip_appledouble_sidecars(
+            script_path,
+            staged_outputs,
+            set(expected_outputs) | {_SESSION_INFO, _RUNTIME_INFO, _MANIFEST},
+            stdout,
+        )
 
         if destination.exists() or destination.is_symlink():
             if destination.is_symlink():
@@ -292,12 +303,17 @@ def _validate_staged_outputs(
         missing.append(_RUNTIME_INFO)
 
     allowed = set(expected_outputs) | {_SESSION_INFO, _RUNTIME_INFO}
+    _strip_appledouble_sidecars(script, output_dir, allowed, stdout)
+
     unexpected = []
-    for path in output_dir.rglob("*"):
-        if _is_macos_sidecar(path):
-            continue
+    for path in list(output_dir.rglob("*")):
         relative = path.relative_to(output_dir).as_posix()
-        if path.is_symlink() or path.is_dir() or relative not in allowed:
+        if path.is_symlink() or path.is_dir():
+            unexpected.append(relative)
+            continue
+        if path.name.startswith("._"):
+            continue
+        if relative not in allowed:
             unexpected.append(relative)
 
     failures = []
@@ -306,6 +322,43 @@ def _validate_staged_outputs(
         failures.append(f"missing expected {label}: {', '.join(missing)}")
     if unexpected:
         failures.append(f"unexpected staged files: {', '.join(sorted(unexpected))}")
+    if failures:
+        raise RScriptError(script, "\n".join(failures), 0, stdout)
+
+
+def _strip_appledouble_sidecars(
+    script: Path,
+    output_dir: Path,
+    allowed: set[str],
+    stdout: str,
+) -> None:
+    unexpected = []
+    invalid = []
+    for path in list(output_dir.rglob("*")):
+        if not path.name.startswith("._"):
+            continue
+        relative = path.relative_to(output_dir).as_posix()
+        base_name = path.name[2:]
+        if path.is_symlink() or path.is_dir() or path.parent != output_dir or base_name not in allowed:
+            unexpected.append(relative)
+            continue
+        try:
+            with path.open("rb") as sidecar:
+                valid_magic = sidecar.read(4) == _APPLEDOUBLE_MAGIC
+        except OSError:
+            valid_magic = False
+        if valid_magic:
+            try:
+                path.unlink()
+            except OSError:
+                invalid.append(relative)
+        else:
+            invalid.append(relative)
+    failures = []
+    if unexpected:
+        failures.append(f"unexpected staged files: {', '.join(sorted(unexpected))}")
+    if invalid:
+        failures.append(f"invalid AppleDouble sidecars: {', '.join(sorted(invalid))}")
     if failures:
         raise RScriptError(script, "\n".join(failures), 0, stdout)
 
@@ -324,8 +377,6 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
     allowed = set(hashes) | {_MANIFEST}
     unexpected = []
     for path in destination.rglob("*"):
-        if _is_macos_sidecar(path):
-            continue
         relative = path.relative_to(destination).as_posix()
         if path.is_symlink() or path.is_dir() or relative not in allowed:
             unexpected.append(relative)
@@ -339,15 +390,6 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
         if unexpected:
             details.append(f"unexpected published files: {', '.join(sorted(unexpected))}")
         raise ValueError(f"Existing output failed integrity validation: {'; '.join(details)}")
-
-
-def _is_macos_sidecar(path: Path) -> bool:
-    """Ignore resource-fork sidecars created on macOS filesystems such as exFAT."""
-    return (
-        path.is_file()
-        and not path.is_symlink()
-        and (path.name.startswith("._") or path.name == ".DS_Store")
-    )
 
 
 def _sha256(path: Path) -> str:
