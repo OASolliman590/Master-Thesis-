@@ -116,6 +116,36 @@ def test_fake_runner_publishes_outputs_and_hash_provenance(tmp_path):
     assert reused.manifest == manifest
 
 
+def test_declared_outputs_allow_exfat_appledouble_sidecars_on_publish_and_reuse(tmp_path):
+    script = _script(tmp_path)
+    output_dir = tmp_path / "published"
+    runner = FakeR({
+        "fake.R": {
+            "result.tsv": "value\n1\n",
+            "._result.tsv": "filesystem metadata\n",
+        }
+    })
+
+    first = run_r(
+        script,
+        {},
+        {"expected_outputs": ["result.tsv"]},
+        output_dir,
+        runner=runner,
+    )
+    second = run_r(
+        script,
+        {},
+        {"expected_outputs": ["result.tsv"]},
+        output_dir,
+        runner=runner,
+    )
+
+    assert first.manifest == second.manifest
+    assert first.outputs["result.tsv"].read_text() == "value\n1\n"
+    assert (output_dir / "._result.tsv").is_file()
+
+
 @pytest.mark.parametrize("damage", ["corrupt", "delete"])
 def test_identical_manifest_reuse_checks_published_bytes(tmp_path, damage):
     script = _script(tmp_path)

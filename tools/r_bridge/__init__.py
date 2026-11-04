@@ -295,7 +295,8 @@ def _validate_staged_outputs(
     unexpected = []
     for path in output_dir.rglob("*"):
         relative = path.relative_to(output_dir).as_posix()
-        if path.is_symlink() or path.is_dir() or relative not in allowed:
+        if (path.is_symlink() or path.is_dir()
+                or (relative not in allowed and not _is_appledouble_sidecar(relative, allowed))):
             unexpected.append(relative)
 
     failures = []
@@ -319,11 +320,12 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
         elif _sha256(path) != expected_hash:
             mismatched.append(name)
 
-    allowed = set(hashes) | {_MANIFEST}
+    allowed = set(hashes) | {_MANIFEST, _RUNTIME_INFO}
     unexpected = []
     for path in destination.rglob("*"):
         relative = path.relative_to(destination).as_posix()
-        if path.is_symlink() or path.is_dir() or relative not in allowed:
+        if (path.is_symlink() or path.is_dir()
+                or (relative not in allowed and not _is_appledouble_sidecar(relative, allowed))):
             unexpected.append(relative)
 
     if missing or mismatched or unexpected:
@@ -335,6 +337,12 @@ def _verify_published_outputs(destination: Path, manifest: dict[str, Any]) -> No
         if unexpected:
             details.append(f"unexpected published files: {', '.join(sorted(unexpected))}")
         raise ValueError(f"Existing output failed integrity validation: {'; '.join(details)}")
+
+
+def _is_appledouble_sidecar(relative: str, allowed: set[str]) -> bool:
+    """Ignore macOS exFAT metadata files only for declared output names."""
+    name = PureWindowsPath(relative).name
+    return name.startswith("._") and name[2:] in allowed
 
 
 def _sha256(path: Path) -> str:
