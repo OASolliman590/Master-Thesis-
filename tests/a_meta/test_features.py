@@ -110,7 +110,7 @@ def test_probe_collapse_uses_highest_mean_expression_without_labels(tmp_path):
     )
     (tmp_path / "probe_to_gene.tsv").write_text(
         "probe_id\tgene_symbol\tentrez_id\n"
-        "probe_b\tGENE_X\t1\nprobe_a\tGENE_X\t1\nprobe_c\tGENE_Y\t2\n",
+        "probe_b\tGENE_X\t999999901\nprobe_a\tGENE_X\t999999901\nprobe_c\tGENE_Y\t999999902\n",
         encoding="utf-8",
     )
     view = _view(
