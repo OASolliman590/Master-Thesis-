@@ -55,9 +55,26 @@ def test_real_effect_table_synthesis_is_refused_without_allow_outcomes(tmp_path)
             "--results",
             str(tmp_path / "results"),
         ])
-
     assert not (tmp_path / "results").exists()
 
+
+def _feature_input_identities(view):
+    from tools.a_cohorts.view import REPRESENTATION_FILE
+    from tools.a_meta import __main__ as cli
+    from tools.a_meta.features import GENE_ALIAS_ADDENDUM_PATH
+    from tools.a_scoring import ALIAS_TABLE_PATH, PANEL_REGISTRY_PATH
+
+    return {
+        "cohort_expression": hashlib.sha256(view.expression_path.read_bytes()).hexdigest(),
+        "cohort_clinical": hashlib.sha256(
+            (view.expression_path.parent / "clinical.tsv").read_bytes()
+        ).hexdigest(),
+        "representation_registry": hashlib.sha256(REPRESENTATION_FILE.read_bytes()).hexdigest(),
+        "cohort_registry": hashlib.sha256(cli.REGISTRY.read_bytes()).hexdigest(),
+        "panel_registry": hashlib.sha256(PANEL_REGISTRY_PATH.read_bytes()).hexdigest(),
+        "gene_aliases": hashlib.sha256(ALIAS_TABLE_PATH.read_bytes()).hexdigest(),
+        "gene_alias_addendum": hashlib.sha256(GENE_ALIAS_ADDENDUM_PATH.read_bytes()).hexdigest(),
+    }
 
 def test_synthetic_effect_table_requires_fixture_manifest_and_hash(tmp_path):
     effect_dir = tmp_path / "synthetic"
@@ -133,8 +150,10 @@ def test_coverage_cli_writes_aggregate_missing_genes_and_cyt_availability(tmp_pa
         "cohort_view",
         lambda cohort, runtime: SimpleNamespace(
             metadata=SimpleNamespace(
+                cohort_id="synthetic",
                 representation=SimpleNamespace(platform="rnaseq", unit="tpm", transform="linear")
-            )
+            ),
+            clinical_rows=[{}],
         ),
     )
     all_panels = panel_definitions(AVAILABLE_PANEL_IDS)
@@ -148,6 +167,7 @@ def test_coverage_cli_writes_aggregate_missing_genes_and_cyt_availability(tmp_pa
             unit_family="gene",
             values_by_unit={gene: [1.0] for gene in available},
             n_patients=1,
+            metadata={"scale_rule": "synthetic scale"},
         ),
     )
     output = tmp_path / "coverage.tsv"
@@ -159,12 +179,18 @@ def test_coverage_cli_writes_aggregate_missing_genes_and_cyt_availability(tmp_pa
     ayers = next(row for row in rows if row["panel"] == "AYERS_GEP_18")
     assert len(rows) == len(AVAILABLE_PANEL_IDS)
     assert ayers["complete"] == "false"
+    assert ayers["coverage90"] == "true"
     assert ayers["missing"] == "CCL5"
+    assert ayers["n_patients"] == "1"
+    assert ayers["patients_complete"] == "0"
+    assert ayers["patients_coverage90"] == "1"
     assert ayers["cyt_gzma_present"] == "true"
     assert ayers["cyt_prf1_present"] == "false"
     assert ayers["cyt_complete"] == "false"
     assert ayers["linear_tpm_available"] == "true"
-    assert "patient" not in output.read_text(encoding="utf-8").casefold()
+    text = output.read_text(encoding="utf-8").casefold()
+    assert "patient_id" not in text
+    assert "sample_id" not in text
 
 
 def test_feature_manifest_rejects_stale_input_output_and_row_identity(tmp_path):
@@ -181,14 +207,14 @@ def test_feature_manifest_rejects_stale_input_output_and_row_identity(tmp_path):
         expression_path=expression_path,
         clinical_rows=[{"patient_id": "patient-a", "sample_id": "sample-a", "timepoint": "PRE"}],
     )
+    from tools.a_meta import __main__ as cli
+
     manifest_path = feature_dir / "manifest.json"
     manifest = {
         "cohort": "synthetic_cohort",
         "data_classification": "synthetic",
-        "inputs_sha256": {
-            "cohort_expression": hashlib.sha256(expression_path.read_bytes()).hexdigest(),
-            "cohort_clinical": hashlib.sha256(clinical_path.read_bytes()).hexdigest(),
-        },
+        "inputs_sha256": _feature_input_identities(view),
+        "code_sha256": cli._code_hashes(),
         "outputs_sha256": {"genes.tsv": hashlib.sha256(feature_path.read_bytes()).hexdigest()},
         "row_identity_sha256": _cohort_row_identity_sha256(view),
     }
@@ -209,6 +235,114 @@ def test_feature_manifest_rejects_stale_input_output_and_row_identity(tmp_path):
     view.clinical_rows[0]["patient_id"] = "patient-b"
     with pytest.raises(SystemExit, match="row identities"):
         _validate_feature_manifest(view, feature_dir, "synthetic_cohort")
+
+
+def test_feature_manifest_rejects_old_code_identity(tmp_path):
+    from tools.a_meta import __main__ as cli
+
+    cohort_dir = tmp_path / "cohort"
+    feature_dir = cohort_dir / "features"
+    feature_dir.mkdir(parents=True)
+    expression_path = cohort_dir / "expression.tsv"
+    clinical_path = cohort_dir / "clinical.tsv"
+    expression_path.write_text("gene\tfixture_row\nsymbol\t1\n", encoding="utf-8")
+    clinical_path.write_text("fixture\nrow\n", encoding="utf-8")
+    feature_path = feature_dir / "genes.tsv"
+    feature_path.write_text("patient_row\tGENE_A\n0\t1\n", encoding="utf-8")
+    view = SimpleNamespace(
+        expression_path=expression_path,
+        clinical_rows=[{}],
+    )
+    code_hashes = cli._code_hashes()
+    code_hashes["tools/a_meta/features.py"] = "0" * 64
+    manifest = {
+        "cohort": "synthetic_cohort",
+        "data_classification": "synthetic",
+        "inputs_sha256": _feature_input_identities(view),
+        "code_sha256": code_hashes,
+        "outputs_sha256": {"genes.tsv": hashlib.sha256(feature_path.read_bytes()).hexdigest()},
+        "row_identity_sha256": _cohort_row_identity_sha256(view),
+    }
+    (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(SystemExit, match="code identity"):
+        _validate_feature_manifest(view, feature_dir, "synthetic_cohort")
+
+
+def test_gse176307_feature_manifest_rejects_old_matrix_source(tmp_path, monkeypatch):
+    from tools.a_meta import __main__ as cli
+
+    cohort_dir = tmp_path / "cohort"
+    feature_dir = cohort_dir / "features"
+    feature_dir.mkdir(parents=True)
+    expression_path = cohort_dir / "expression.tsv"
+    clinical_path = cohort_dir / "clinical.tsv"
+    expression_path.write_text("gene\tfixture_row\nsymbol\t1\n", encoding="utf-8")
+    clinical_path.write_text("fixture\nrow\n", encoding="utf-8")
+    feature_path = feature_dir / "genes.tsv"
+    feature_path.write_text("patient_row\tGENE_A\n0\t1\n", encoding="utf-8")
+    view = SimpleNamespace(
+        metadata=SimpleNamespace(cohort_id="gse176307"),
+        expression_path=expression_path,
+        clinical_rows=[{}],
+    )
+    current_sources = {"salmon_matrix.tsv.gz": "current-source-hash"}
+    monkeypatch.setattr(cli, "_registry_ids", lambda: {"gse176307"})
+    monkeypatch.setattr(cli, "_gse176307_source_hashes", lambda view, runtime: current_sources)
+    manifest = {
+        "cohort": "gse176307",
+        "data_classification": "real",
+        "inputs_sha256": {
+            **_feature_input_identities(view),
+            "salmon_matrix.tsv.gz": "old-matrix-hash",
+        },
+        "code_sha256": cli._code_hashes(),
+        "outputs_sha256": {"genes.tsv": hashlib.sha256(feature_path.read_bytes()).hexdigest()},
+        "feature_metadata": {"gene": {
+            "source_route": "official Salmon TPM via the A-P2 GSE176307 assay mapping",
+            "scale_rule": "log2(TPM+1); official GSE176307 Salmon TPM",
+            "source_inputs_sha256": {"salmon_matrix.tsv.gz": "old-matrix-hash"},
+        }},
+        "row_identity_sha256": _cohort_row_identity_sha256(view),
+    }
+    (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(SystemExit, match="source identities"):
+        _validate_feature_manifest(view, feature_dir, "gse176307")
+
+
+def test_gse135222_feature_manifest_requires_alias_addendum_identity(tmp_path, monkeypatch):
+    from tools.a_meta import __main__ as cli
+
+    cohort_dir = tmp_path / "cohort"
+    feature_dir = cohort_dir / "features"
+    feature_dir.mkdir(parents=True)
+    expression_path = cohort_dir / "expression.tsv"
+    clinical_path = cohort_dir / "clinical.tsv"
+    expression_path.write_text("gene\tfixture_row\nsymbol\t1\n", encoding="utf-8")
+    clinical_path.write_text("fixture\nrow\n", encoding="utf-8")
+    feature_path = feature_dir / "genes.tsv"
+    feature_path.write_text("patient_row\tCCL5\n0\t1\n", encoding="utf-8")
+    view = SimpleNamespace(
+        metadata=SimpleNamespace(cohort_id="gse135222"),
+        expression_path=expression_path,
+        clinical_rows=[{}],
+    )
+    inputs = _feature_input_identities(view)
+    del inputs["gene_alias_addendum"]
+    manifest = {
+        "cohort": "gse135222",
+        "data_classification": "real",
+        "inputs_sha256": inputs,
+        "code_sha256": cli._code_hashes(),
+        "outputs_sha256": {"genes.tsv": hashlib.sha256(feature_path.read_bytes()).hexdigest()},
+        "row_identity_sha256": _cohort_row_identity_sha256(view),
+    }
+    (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    monkeypatch.setattr(cli, "_registry_ids", lambda: {"gse135222"})
+
+    with pytest.raises(SystemExit, match="analysis input identities"):
+        _validate_feature_manifest(view, feature_dir, "gse135222")
 
 
 def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, monkeypatch):
@@ -238,6 +372,7 @@ def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, m
     for filename, content in {
         "genes.tsv": "patient_row\tGENE\n0\t2\n1\t1\n",
         "panels.tsv": "patient_row\tPANEL\n0\t2\n1\t1\n",
+        "panel_coverage90.tsv": "patient_row\tPANEL\n0\t2\n1\t1\n",
         "coverage.tsv": "unit_family\tunit\tcomplete\npanel\tPANEL\ttrue\n",
         # This is an old optional table from before the patients were reordered.
         "pathways.tsv": "patient_row\tPATHWAY\n0\told-row-a\n1\told-row-b\n",
@@ -250,12 +385,14 @@ def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, m
         "data_classification": "synthetic",
         "producer": SYNTHETIC_FIXTURE_PRODUCER,
         "cohort": cohort_id,
-        "inputs_sha256": {
-            "cohort_expression": hashlib.sha256(expression_path.read_bytes()).hexdigest(),
-            "cohort_clinical": hashlib.sha256(clinical_path.read_bytes()).hexdigest(),
-        },
+        "inputs_sha256": _feature_input_identities(view),
+        "code_sha256": cli._code_hashes(),
         "outputs_sha256": outputs,
-        "feature_tables": {"gene": {"rows": 2}, "panel": {"rows": 2}},
+        "feature_tables": {
+            "gene": {"rows": 2},
+            "panel": {"rows": 2},
+            "panel_coverage90": {"rows": 2},
+        },
         "row_identity_sha256": _cohort_row_identity_sha256(view),
     }
     (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
@@ -283,4 +420,14 @@ def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, m
     with pytest.warns(RuntimeWarning, match="Ignoring unlisted feature file pathways.tsv"):
         cli._effects(args, tmp_path / "results")
 
-    assert loaded_families == ["gene", "panel"]
+    assert loaded_families == ["gene", "panel", "panel_coverage90"]
+
+    loaded_families.clear()
+    (feature_dir / "panel_coverage90.tsv").unlink()
+    manifest["outputs_sha256"].pop("panel_coverage90.tsv")
+    manifest["feature_tables"].pop("panel_coverage90")
+    (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.warns(RuntimeWarning, match="Ignoring unlisted feature file pathways.tsv"):
+        with pytest.raises(SystemExit, match="missing required panel_coverage90.tsv"):
+            cli._effects(args, tmp_path / "results")
+    assert loaded_families == []

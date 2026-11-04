@@ -13,6 +13,10 @@ from tools import a_scoring
 from tools.a_scoring import panel_scores
 
 
+GENE_ALIAS_ADDENDUM_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "specs/amendments/2026-11-04-panel-coverage/gene_aliases_addendum.tsv"
+)
 # The currently materialised A programme registry has ten complete memberships.
 # The Hallmark IFN-gamma membership is deliberately not fabricated here: its
 # separate pre-outcome freeze is still required.
@@ -28,7 +32,7 @@ AVAILABLE_PANEL_IDS = (
     "M5_CHECKPOINT_CANDIDATES",
     "M6_EPIGENETIC_REGULATORS",
 )
-_UNIT_FAMILIES = {"gene", "panel", "pathway", "fraction"}
+_UNIT_FAMILIES = {"gene", "panel", "panel_coverage90", "pathway", "fraction"}
 _FORBIDDEN_IDENTIFIER_COLUMNS = {"patient_id", "sample_id", "patient", "sample"}
 
 
@@ -75,7 +79,7 @@ def build_feature_table(
     """
     family = family.casefold()
     if family not in _UNIT_FAMILIES:
-        raise ValueError("Feature family must be gene, panel, pathway, or fraction")
+        raise ValueError("Feature family must be gene, panel, panel_coverage90, pathway, or fraction")
     if family == "fraction":
         if external is None:
             raise ValueError("Fraction features require an external patient table")
@@ -113,8 +117,9 @@ def build_feature_table(
     )
     if family == "gene":
         return genes
-
-    return _panel_table(view, genes, panel_definitions)
+    if family == "panel":
+        return _panel_table(view, genes, panel_definitions)
+    return _panel_coverage90_table(view, genes, panel_definitions)
 
 
 def external_feature_table(
@@ -233,6 +238,8 @@ def read_feature_table(
     coverage = {}
     if coverage_path is not None and Path(coverage_path).is_file():
         for row in _read_tsv(Path(coverage_path)):
+            if row.get("unit_family") and row["unit_family"] != unit_family:
+                continue
             coverage[row["unit"]] = {
                 "n_found": int(row["n_found"]),
                 "n_total": int(row["n_total"]),
@@ -250,7 +257,18 @@ def read_feature_table(
 
 
 def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=None) -> FeatureTable:
-    feature_ids, sample_columns, matrix = _read_expression(view.expression_path)
+    salmon_tpm = view.metadata.cohort_id == "gse176307"
+    source_inputs_sha256 = {}
+    if salmon_tpm:
+        (
+            feature_ids,
+            sample_columns,
+            matrix,
+            source_inputs_sha256,
+            patients_with_tpm_assay,
+        ) = _gse176307_salmon_tpm(view, runtime)
+    else:
+        feature_ids, sample_columns, matrix = _read_expression(view.expression_path)
     if len(sample_columns) != len(view.clinical_rows):
         raise ValueError("Expression columns do not align with cohort-view rows")
     row_identities = [str(row.get("patient_id", "")) for row in view.clinical_rows]
@@ -263,7 +281,7 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         aligned_columns = [expression_column[identity] for identity in row_identities]
         matrix = [[values[index] for index in aligned_columns] for values in matrix]
     representation = view.metadata.representation
-    effective_feature_id = representation.feature_id
+    effective_feature_id = "symbol" if salmon_tpm else representation.feature_id
     recount3_dropped = 0
     recount3_used = False
     if (
@@ -279,6 +297,13 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         scale_rule = "log2(TPM+1); recount3 GTF gene lengths"
         effective_feature_id = "symbol"
         recount3_used = True
+    elif salmon_tpm:
+        logged = [
+            [math.log2(value + 1.0) if value is not None else None for value in row]
+            for row in matrix
+        ]
+        scale_rule = "log2(TPM+1); official GSE176307 Salmon TPM"
+        effective_feature_id = _gse176307_feature_id(feature_ids)
     else:
         scale_rule, logged = _study_scale(matrix, representation)
     probe_counts = None
@@ -319,24 +344,36 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
             runtime=runtime,
             reference=reference,
         )
-        feature_ids, logged, duplicate_gene_counts = _collapse_duplicate_genes(feature_ids, logged)
+        feature_ids, logged, duplicate_gene_counts, duplicate_gene_symbols = _collapse_duplicate_genes(
+            feature_ids, logged
+        )
 
     values_by_unit = {unit: list(values) for unit, values in zip(feature_ids, logged)}
     metadata = {"scale_rule": scale_rule, "representation": {
-        "platform": representation.platform,
-        "unit": representation.unit,
-        "transform": representation.transform,
-        "feature_id": representation.feature_id,
+        "platform": "rnaseq" if salmon_tpm else representation.platform,
+        "unit": "tpm" if salmon_tpm else representation.unit,
+        "transform": "linear" if salmon_tpm else representation.transform,
+        "feature_id": effective_feature_id,
     }}
+    if salmon_tpm:
+        metadata.update({
+            "source_route": "official Salmon TPM via the A-P2 GSE176307 assay mapping",
+            "source_inputs_sha256": source_inputs_sha256,
+            "patients_with_tpm_assay": patients_with_tpm_assay,
+            "patients_without_tpm_assay": len(view.clinical_rows) - patients_with_tpm_assay,
+        })
     if probe_counts is not None:
         metadata["probe_rule"] = "highest mean expression across all samples; ties use probe ID order"
         metadata["probe_counts"] = probe_counts
         metadata["unmapped_probes"] = dropped_unmapped
     if duplicate_gene_counts is not None:
         metadata["duplicate_gene_rule"] = (
-            "highest mean expression across all samples; ties use source row order"
+            "highest mean expression across measured samples; ties use source row order"
+            if salmon_tpm
+            else "highest mean expression across all samples; ties use source row order"
         )
         metadata["duplicate_gene_counts"] = duplicate_gene_counts
+        metadata["duplicate_gene_symbols"] = duplicate_gene_symbols
     if custom_map:
         metadata["gene_map_rows"] = len(custom_map)
     if recount3_used:
@@ -387,6 +424,129 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
             "source_scale_rule": genes.metadata["scale_rule"],
         },
     )
+
+
+def _panel_coverage90_table(
+    view,
+    genes: FeatureTable,
+    panels: Mapping[str, Sequence[str]],
+) -> FeatureTable:
+    gene_values = genes.values_by_unit
+    scores_by_unit: dict[str, list[float | None]] = {}
+    coverage: dict[str, dict] = {}
+    for unit, members in panels.items():
+        if not members:
+            raise ValueError(f"Panel {unit} has no members")
+        member_coverage = _panel_member_coverage(gene_values, members)
+        missing = member_coverage["missing"]
+        n_found = member_coverage["n_found"]
+        coverage_met = _coverage90_met(n_found, len(members))
+        unit_scores = []
+        for patient_row in range(genes.n_patients):
+            if not coverage_met:
+                unit_scores.append(None)
+                continue
+            expression = {
+                gene: gene_values[gene][patient_row]
+                for gene in members
+                if gene in gene_values and gene_values[gene][patient_row] is not None
+            }
+            if not _coverage90_met(len(expression), len(members)):
+                unit_scores.append(None)
+                continue
+            scores, _ = panel_scores(expression, {unit: members}, require_complete=False)
+            unit_scores.append(scores[unit])
+        scores_by_unit[unit] = unit_scores
+        coverage[unit] = {
+            "n_found": n_found,
+            "n_total": len(members),
+            "missing": missing,
+            "complete": coverage_met,
+            "full_coverage": not missing,
+        }
+    return FeatureTable(
+        cohort_id=view.metadata.cohort_id,
+        unit_family="panel_coverage90",
+        values_by_unit=scores_by_unit,
+        n_patients=genes.n_patients,
+        coverage=coverage,
+        metadata={
+            "score_rule": (
+                "tools.a_scoring.panel_scores; unweighted mean with require_complete=False "
+                "only after study-level and per-patient 90% coverage rules pass"
+            ),
+            "source_scale_rule": genes.metadata["scale_rule"],
+            "coverage_policy": (
+                "at least 90% of panel members available after alias resolution in the study "
+                "and in each scored patient row"
+            ),
+            "sensitivity_label": "panel_coverage90 sensitivity",
+        },
+    )
+
+
+def _coverage90_met(n_found: int, n_total: int) -> bool:
+    if n_total <= 0 or n_found < 0 or n_found > n_total:
+        raise ValueError("Panel coverage counts are invalid")
+    return n_found * 10 >= n_total * 9
+
+
+def _panel_member_coverage(gene_values, members):
+    missing = [gene for gene in members if gene not in gene_values]
+    return {"n_found": len(members) - len(missing), "missing": missing}
+
+
+def _gse176307_sources(view, runtime):
+    """Resolve the frozen GSE176307 assay map and source identities for A-META."""
+    from tools.a_p2 import build as a_p2_build
+
+    clinical_rows = view.clinical_rows
+    patient_ids = [str(row.get("patient_id", "")) for row in clinical_rows]
+    if any(not patient_id for patient_id in patient_ids) or len(set(patient_ids)) != len(patient_ids):
+        raise ValueError("GSE176307 cohort-view row identities must be present and unique")
+
+    source_inputs = {}
+    assay_by_patient = a_p2_build.gse_mapping(clinical_rows, source_inputs, runtime)
+    runtime_root = a_p2_build._runtime_path(runtime)
+    matrix_path = a_p2_build.source(
+        runtime_root / "gse176307/store_tpm/objects/c7ebf750cc6e6ba967bba9a733c47572a53daaaff9fcf041e5ab4641ef615894",
+        source_inputs,
+        runtime,
+    )
+    source_hashes = {Path(name).name: digest for name, digest in source_inputs.items()}
+    return patient_ids, assay_by_patient, matrix_path, source_hashes
+
+
+def _gse176307_source_hashes(view, runtime):
+    """Return current GSE176307 source identities without reading the TPM matrix."""
+    return _gse176307_sources(view, runtime)[3]
+
+
+def _gse176307_salmon_tpm(view, runtime):
+    """Read GSE176307 Salmon TPM through A-P2's frozen assay mapping."""
+    from tools.a_p2 import build as a_p2_build
+
+    patient_ids, assay_by_patient, matrix_path, source_hashes = _gse176307_sources(view, runtime)
+    selected_patients = [patient_id for patient_id in patient_ids if patient_id in assay_by_patient]
+    selected_assays = [assay_by_patient[patient_id] for patient_id in selected_patients]
+    feature_ids, measured = a_p2_build.matrix(matrix_path, selected_assays, runtime=runtime)
+    if any(len(values) != len(selected_patients) for values in measured):
+        raise ValueError("GSE176307 TPM columns do not match the existing assay mapping")
+    patient_column = {patient_id: index for index, patient_id in enumerate(selected_patients)}
+    aligned = [
+        [values[patient_column[patient_id]] if patient_id in patient_column else None for patient_id in patient_ids]
+        for values in measured
+    ]
+    return feature_ids, patient_ids, aligned, source_hashes, len(selected_patients)
+
+
+def _gse176307_feature_id(feature_ids: Sequence[str]) -> str:
+    ensembl = [str(feature).split(".", 1)[0].startswith("ENSG") for feature in feature_ids]
+    if ensembl and all(ensembl):
+        return "ensembl"
+    if any(ensembl):
+        raise ValueError("GSE176307 Salmon TPM matrix mixes Ensembl IDs and symbols")
+    return "symbol"
 
 
 def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map, r_out_dir, runner):
@@ -588,6 +748,22 @@ def _gene_reference(runtime):
     return {"by_id": by_id, "synonyms": synonyms, "ensembl": ensembl}
 
 
+@lru_cache(maxsize=1)
+def _gene_alias_addendum() -> dict[str, str]:
+    mapping = {}
+    with GENE_ALIAS_ADDENDUM_PATH.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream, delimiter="\t")
+        if not reader.fieldnames or not {"source_id", "registry_symbol"}.issubset(reader.fieldnames):
+            raise ValueError("Gene alias addendum requires source_id and registry_symbol columns")
+        for row in reader:
+            source_id = str(row.get("source_id", "")).strip().split(".", 1)[0]
+            symbol = str(row.get("registry_symbol", "")).strip()
+            if not source_id or not symbol or source_id in mapping:
+                raise ValueError("Gene alias addendum contains an empty or duplicate mapping")
+            mapping[source_id] = symbol
+    return mapping
+
+
 def _source_symbols(feature_ids, feature_id, *, custom_map, reference):
     key_type = str(feature_id).casefold()
     known_symbols = set(reference["by_id"].values()) | set(reference["synonyms"])
@@ -609,7 +785,8 @@ def _source_symbols(feature_ids, feature_id, *, custom_map, reference):
             base = source.split(".", 1)[0]
             if base.startswith("ENS"):
                 result.append(
-                    reference["ensembl"].get(base)
+                    _gene_alias_addendum().get(base)
+                    or reference["ensembl"].get(base)
                     or custom_map.get(source)
                     or custom_map.get(base)
                     or "ENSEMBL:" + base
@@ -697,19 +874,23 @@ def _ensure_unique_genes(feature_ids, matrix):
 
 def _collapse_duplicate_genes(feature_ids, matrix):
     """Retain one outcome-blind representative for each canonical gene row."""
-    genes: dict[str, list[tuple[float, int, list[float]]]] = {}
+    genes: dict[str, list[tuple[float, int, list[float | None]]]] = {}
     for row_index, (gene, values) in enumerate(zip(feature_ids, matrix)):
         if not gene:
             continue
-        genes.setdefault(gene, []).append((math.fsum(values) / len(values), row_index, values))
+        measured = [value for value in values if value is not None]
+        mean_expression = math.fsum(measured) / len(measured) if measured else -math.inf
+        genes.setdefault(gene, []).append((mean_expression, row_index, values))
     chosen = []
     duplicate_groups = 0
     duplicate_rows = 0
+    duplicate_symbols = []
     for gene in sorted(genes):
         candidates = genes[gene]
         if len(candidates) > 1:
             duplicate_groups += 1
             duplicate_rows += len(candidates) - 1
+            duplicate_symbols.append(gene)
         # The source row order is a deterministic tie break and never reads labels.
         chosen.append((gene, sorted(candidates, key=lambda row: (-row[0], row[1]))[0][2]))
     counts = {
@@ -718,7 +899,7 @@ def _collapse_duplicate_genes(feature_ids, matrix):
         "duplicate_gene_groups": duplicate_groups,
         "duplicate_rows_removed": duplicate_rows,
     }
-    return [gene for gene, _ in chosen], [values for _, values in chosen], counts
+    return [gene for gene, _ in chosen], [values for _, values in chosen], counts, duplicate_symbols
 
 
 def _write_expression_matrix(path: Path, table: FeatureTable) -> None:

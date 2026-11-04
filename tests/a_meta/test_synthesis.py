@@ -144,6 +144,53 @@ def test_fake_r_synthesis_obeys_k_rules_fdr_families_and_endpoint_boundaries(tmp
     assert panel_c["q"] is None
 
 
+def test_panel_coverage90_stays_in_its_own_stratum_fdr_and_label(tmp_path):
+    effects = []
+    for family in ("panel", "panel_coverage90"):
+        for index in range(3):
+            effect = _effect(family, "PANEL_A", f"{family}_{index}")
+            if family == "panel_coverage90":
+                effect.update({
+                    "n_found": 17,
+                    "n_total": 18,
+                    "sensitivity_label": "panel_coverage90 sensitivity",
+                })
+            effects.append(effect)
+    fake = FakeR({
+        "meta_rma.R": {
+            "meta.tsv": _canned_meta([
+                _pooled("A00001", 3, 0.2, 0.01),
+                _pooled("A00002", 3, 0.3, 0.20),
+            ]),
+            "subgroups.tsv": "test_id\tF\tp\tstatus\treason\n",
+        }
+    })
+
+    result = _synthesize_synthetic(
+        effects,
+        "per_cancer",
+        output_dir=tmp_path / "separate-coverage90",
+        runner=fake,
+    )
+    main = next(row for row in result.summaries if row["unit_family"] == "panel")
+    sensitivity = next(row for row in result.summaries if row["unit_family"] == "panel_coverage90")
+    with (tmp_path / "separate-coverage90/groups.tsv").open(newline="", encoding="utf-8") as stream:
+        groups = list(csv.DictReader(stream, delimiter="\t"))
+    with (tmp_path / "separate-coverage90/meta_input.tsv").open(newline="", encoding="utf-8") as stream:
+        meta_input = list(csv.DictReader(stream, delimiter="\t"))
+    family_by_analysis = {row["analysis_id"]: row["unit_family"] for row in groups}
+
+    assert {row["unit_family"] for row in groups} == {"panel", "panel_coverage90"}
+    assert {family_by_analysis[row["analysis_id"]] for row in meta_input} == {
+        "panel", "panel_coverage90"
+    }
+    assert main["q"] == pytest.approx(0.01)
+    assert main["label"] == "standard"
+    assert sensitivity["q"] == pytest.approx(0.20)
+    assert sensitivity["label"] == "panel_coverage90_standard"
+    assert sensitivity["sensitivity_label"] == "panel_coverage90 sensitivity"
+
+
 def test_low_k_flag_is_set_for_anti_ctla4_and_dual_class_strata(tmp_path):
     effects = [
         *[_effect("panel", "PANEL", f"ctla_{index}", drug="ANTI_CTLA4") for index in range(2)],

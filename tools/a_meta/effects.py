@@ -34,8 +34,11 @@ EFFECT_COLUMNS = (
     "se",
     "status",
     "reason",
+    "n_found",
+    "n_total",
+    "sensitivity_label",
 )
-_UNIT_FAMILIES = {"gene", "panel", "pathway", "fraction"}
+_UNIT_FAMILIES = {"gene", "panel", "panel_coverage90", "pathway", "fraction"}
 
 
 def study_effects(
@@ -66,6 +69,22 @@ def study_effects(
     unit_family = _unit_family(features)
     clinical_rows = list(view.clinical_rows)
     feature_values = _feature_vectors(features, len(clinical_rows))
+    if unit_family == "panel_coverage90":
+        for unit in feature_values:
+            details = _coverage_for(features, unit)
+            if not isinstance(details, Mapping):
+                raise ValueError("panel_coverage90 effects require per-unit coverage metadata")
+            n_found, n_total = details.get("n_found"), details.get("n_total")
+            if (
+                not isinstance(n_found, int)
+                or not isinstance(n_total, int)
+                or n_total <= 0
+                or n_found < 0
+                or n_found > n_total
+            ):
+                raise ValueError("panel_coverage90 effects require valid n_found and n_total")
+            if details.get("complete") is not (n_found * 10 >= n_total * 9):
+                raise ValueError("panel_coverage90 coverage flag does not match the 90% rule")
 
     families = _endpoint_families(view, family)
     results = []
@@ -322,6 +341,7 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
         "\x1e".join(sorted(patient_tokens)).encode("utf-8")
     ).hexdigest()
 
+    is_sensitivity = unit_family == "panel_coverage90"
     return {
         "unit_family": unit_family,
         "unit": unit,
@@ -342,4 +362,7 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
         "se": se,
         "status": status,
         "reason": ";".join(reasons),
+        "n_found": coverage.get("n_found") if is_sensitivity and coverage else None,
+        "n_total": coverage.get("n_total") if is_sensitivity and coverage else None,
+        "sensitivity_label": "panel_coverage90 sensitivity" if is_sensitivity else None,
     }

@@ -112,6 +112,34 @@ def test_incomplete_panel_coverage_produces_na_effect(tmp_path):
     assert "incomplete_feature_coverage" in effect["reason"]
 
 
+def test_panel_coverage90_effect_carries_coverage_and_sensitivity_label(tmp_path):
+    view = _view([_row("CR"), _row("PR"), _row("SD"), _row("PD")])
+    features = FeatureTable(
+        cohort_id="synthetic",
+        unit_family="panel_coverage90",
+        values_by_unit={"PANEL_18": [1.0, 2.0, 3.0, 4.0]},
+        n_patients=4,
+        coverage={"PANEL_18": {
+            "n_found": 17, "n_total": 18, "missing": ["GENE_Z"], "complete": True,
+        }},
+    )
+    manifest = synthetic_effect_input_manifest(view, features, tmp_path / "coverage90-manifest.json")
+
+    effect = study_effects(
+        view,
+        features,
+        "orr",
+        by_drug_class=False,
+        provenance_manifest=manifest,
+    )[0]
+
+    assert effect["unit_family"] == "panel_coverage90"
+    assert effect["n_found"] == 17
+    assert effect["n_total"] == 18
+    assert effect["sensitivity_label"] == "panel_coverage90 sensitivity"
+    assert effect["status"] == "ok"
+
+
 def test_or_ne_and_unknown_are_excluded_and_mixed_drug_classes_are_separate(tmp_path):
     rows = [
         _row("CR", "ANTI_PD_L1_AXIS"),
