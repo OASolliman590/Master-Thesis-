@@ -1,5 +1,6 @@
 source("R/bridge.R")
 bridge_require(c(Seurat = "5.6.0", SeuratObject = "5.4.0", qs2 = "0.4.0", muscat = "1.26.0"))
+bridge_require(c(digest = "0.6.39"))
 bridge_require(c("ggplot2", "jsonlite", "BiocManager"))
 source("R/sc_lin.R")
 config <- bridge_config()
@@ -25,7 +26,8 @@ if (mode == "labels") {
   if (!is.data.frame(metadata)) stop("The Lin metadata RDS is not a data frame")
   message("Lin process started")
   processed <- sc_lin_process(config$inputs$seurat, metadata, cohort_map, compartment_map,
-    panel_genes, minimum_cells, minimum_umis)
+    panel_genes, minimum_cells, minimum_umis, config$inputs$metadata,
+    config$config$source_sha256, config$config$metadata_sha256)
   message("Lin process complete")
   for (index in seq_along(sc_lin_compartments)) {
     compartment <- sc_lin_compartments[[index]]
@@ -44,6 +46,10 @@ if (mode == "labels") {
   }
   if (mode == "pseudobulk") {
     write.table(processed$compartment_qc, file.path(config$output_dir, "compartment_qc.tsv"),
+      sep = "\t", row.names = FALSE, quote = FALSE, na = "NA")
+    write.table(processed$gene_coverage, file.path(config$output_dir, "gene_coverage.tsv"),
+      sep = "\t", row.names = FALSE, quote = FALSE, na = "NA")
+    write.table(processed$data_quality, file.path(config$output_dir, "data_quality.tsv"),
       sep = "\t", row.names = FALSE, quote = FALSE, na = "NA")
   }
   if (mode %in% c("pseudobulk", "compartments")) {

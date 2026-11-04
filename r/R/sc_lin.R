@@ -66,6 +66,163 @@ sc_lin_invalid_count_columns <- function(matrix) {
   invalid_columns
 }
 
+sc_lin_validate_loaded_object <- function(object, metadata) {
+  if (!inherits(object, "Seurat")) stop("The qs2 source is not a Seurat object")
+  assay <- object[["RNA"]]
+  layers <- grep("^counts($|[.])", SeuratObject::Layers(assay), value = TRUE)
+  if (length(layers) != 2L) stop("The Lin atlas must retain its two original count layers")
+  layer_cells <- unlist(lapply(layers, function(layer) SeuratObject::Cells(assay, layer = layer)), use.names = FALSE)
+  if (anyDuplicated(layer_cells)) stop("Lin count layers contain duplicated cell identities")
+  if (!setequal(layer_cells, rownames(metadata))) {
+    stop("Gate 0 cell identities do not match the loaded Seurat count layers")
+  }
+  object_metadata <- object[[]]
+  if (!setequal(rownames(object_metadata), rownames(metadata))) {
+    stop("Gate 0 metadata cell identities do not match the loaded Seurat metadata")
+  }
+  identity_fields <- c("patient", "sample", "cohort", "time_point", "treatment", "response", "res_metric", "celltype_main")
+  missing_gate0 <- setdiff(identity_fields, colnames(metadata))
+  missing_object <- setdiff(identity_fields, colnames(object_metadata))
+  if (length(missing_gate0) || length(missing_object)) {
+    stop("Gate 0 and Seurat metadata lack identity fields required for binding")
+  }
+  object_rows <- match(rownames(metadata), rownames(object_metadata))
+  for (field in identity_fields) {
+    gate0_values <- as.character(metadata[[field]])
+    object_values <- as.character(object_metadata[[field]][object_rows])
+    if (!identical(gate0_values, object_values)) {
+      stop("Gate 0 metadata does not match the loaded Seurat identity field: ", field)
+    }
+  }
+  invisible(TRUE)
+}
+
+sc_lin_audit_fractional_values <- function(matrix, cells, cohort_by_cell, layer) {
+  cohort <- unname(cohort_by_cell[match(cells, names(cohort_by_cell))])
+  selected <- which(cohort == "TNBC_Shiao")
+  values <- if (length(selected)) matrix[, selected, drop = FALSE]@x else numeric()
+  fractional <- values[is.finite(values) & values != trunc(values)]
+  data.frame(
+    cohort = "TNBC_Shiao",
+    count_layer = layer,
+    stored_values = length(values),
+    fractional_values = length(fractional),
+    fractional_fraction = if (length(values)) length(fractional) / length(values) else 0,
+    fractional_value_sample = paste(format(head(fractional, 20L), digits = 8, scientific = FALSE, trim = TRUE), collapse = ","),
+    stringsAsFactors = FALSE
+  )
+}
+
+sc_lin_data_quality_table <- function(records) {
+  if (!length(records)) return(data.frame())
+  layers <- do.call(rbind, records)
+  total_values <- sum(layers$stored_values)
+  total_fractional <- sum(layers$fractional_values)
+  sample_values <- unlist(strsplit(layers$fractional_value_sample[nzchar(layers$fractional_value_sample)], ",", fixed = TRUE),
+    use.names = FALSE)
+  sample_values <- head(sample_values, 20L)
+  assessment <- if (!total_fractional) {
+    "no_fractional_stored_values_detected"
+  } else if (any(abs(as.numeric(sample_values)) > 1)) {
+    "fractional_values_above_one_compatible_with_corrected_or_normalized_values; exact transformation is not identifiable from values alone"
+  } else {
+    "fractional_values_compatible_with_normalized_values; exact transformation is not identifiable from values alone"
+  }
+  total <- data.frame(
+    cohort = "TNBC_Shiao", count_layer = "ALL", stored_values = total_values,
+    fractional_values = total_fractional,
+    fractional_fraction = if (total_values) total_fractional / total_values else 0,
+    fractional_value_sample = paste(sample_values, collapse = ","),
+    assessment = assessment, stringsAsFactors = FALSE
+  )
+  layers$assessment <- ifelse(layers$fractional_values > 0, assessment, "no_fractional_stored_values_detected")
+  rbind(layers, total)
+}
+
+sc_lin_merge_layer_profiles <- function(layer_results, min_cells = 15L, min_umis = 5000L,
+                                        invalid_cohorts = character()) {
+  layer_results <- Filter(Negate(is.null), layer_results)
+  if (!length(layer_results)) stop("No layer profiles are available to merge")
+  layer_names <- names(layer_results)
+  if (is.null(layer_names) || any(!nzchar(layer_names)) || anyDuplicated(layer_names)) {
+    stop("Lin profile layers require distinct names")
+  }
+  all_clinical <- do.call(rbind, lapply(layer_results, `[[`, "clinical"))
+  if (!nrow(all_clinical) || any(vapply(layer_results, function(layer) anyDuplicated(layer$clinical$profile_id) > 0L, logical(1)))) {
+    stop("Lin layer profile identities are invalid")
+  }
+  profile_ids <- unique(as.character(all_clinical$profile_id))
+  all_genes <- unique(unlist(lapply(layer_results, function(layer) rownames(layer$counts)), use.names = FALSE))
+  merged_counts <- matrix(NA_real_, nrow = length(all_genes), ncol = length(profile_ids),
+    dimnames = list(all_genes, profile_ids))
+  merged_detection <- matrix(NA_real_, nrow = length(all_genes), ncol = length(profile_ids),
+    dimnames = list(all_genes, profile_ids))
+  identity_fields <- c("patient_id", "patient", "sample_id", "sample", "cohort", "study", "cancer", "treatment",
+    "response_metric", "response", "outcome_label", "endpoint_family", "compartment")
+  merged_rows <- vector("list", length(profile_ids))
+  for (profile_index in seq_along(profile_ids)) {
+    profile_id <- profile_ids[[profile_index]]
+    sources <- layer_names[vapply(layer_results, function(layer) profile_id %in% layer$clinical$profile_id, logical(1))]
+    rows <- lapply(sources, function(layer_name) {
+      layer_results[[layer_name]]$clinical[layer_results[[layer_name]]$clinical$profile_id == profile_id, , drop = FALSE]
+    })
+    if (any(vapply(rows, nrow, integer(1)) != 1L)) stop("A Lin layer contains duplicate profile identities")
+    base <- rows[[1]][1, , drop = FALSE]
+    for (field in intersect(identity_fields, colnames(base))) {
+      values <- unique(vapply(rows, function(row) as.character(row[[field]][[1]]), character(1)))
+      if (length(values) != 1L) stop("Lin layer profile identity fields disagree: ", field)
+    }
+    n_cells <- sum(vapply(rows, function(row) as.numeric(row$n_cells[[1]]), numeric(1)))
+    layer_umis <- vapply(rows, function(row) as.numeric(row$total_umis[[1]]), numeric(1))
+    total_umis <- sum(layer_umis, na.rm = TRUE)
+    denominators <- vapply(rows, function(row) {
+      as.numeric(row$n_cells[[1]]) / as.numeric(row$fraction_cells_total[[1]])
+    }, numeric(1))
+    if (any(!is.finite(denominators)) || any(abs(denominators - denominators[[1]]) > 1e-6)) {
+      stop("Lin layer patient cell denominators disagree")
+    }
+    cohort <- as.character(base$cohort[[1]])
+    invalid <- cohort %in% invalid_cohorts || any(vapply(rows, function(row) row$status[[1]] == "invalid_raw_counts", logical(1)))
+    status <- if (n_cells < min_cells) "below_cell_threshold" else if (invalid) "invalid_raw_counts" else if (!is.finite(total_umis) || total_umis < min_umis) "below_umi_threshold" else "eligible"
+    base$n_cells <- as.integer(n_cells)
+    base$total_umis <- total_umis
+    base$library_size <- total_umis
+    base$status <- status
+    base$eligible <- status == "eligible"
+    base$reason <- if (status == "below_cell_threshold") "below_minimum_cells" else if (status == "below_umi_threshold") {
+      "below_minimum_umis"
+    } else if (status == "invalid_raw_counts") "non_integer_or_invalid_raw_counts" else ""
+    base$count_layer <- paste(sources, collapse = ";")
+    base$fraction_cells_total <- n_cells / denominators[[1]]
+    merged_rows[[profile_index]] <- base
+
+    for (gene in all_genes) {
+      if (!all(vapply(sources, function(layer_name) gene %in% rownames(layer_results[[layer_name]]$counts), logical(1)))) next
+      count_values <- vapply(sources, function(layer_name) {
+        layer <- layer_results[[layer_name]]
+        as.numeric(layer$counts[gene, profile_id])
+      }, numeric(1))
+      detection_values <- vapply(sources, function(layer_name) {
+        layer <- layer_results[[layer_name]]
+        as.numeric(layer$detection[gene, profile_id])
+      }, numeric(1))
+      if (all(is.finite(count_values))) merged_counts[gene, profile_id] <- sum(count_values)
+      if (all(is.finite(detection_values))) merged_detection[gene, profile_id] <- sum(detection_values)
+    }
+  }
+  merged_clinical <- do.call(rbind, merged_rows)
+  gene_coverage <- do.call(rbind, lapply(layer_names, function(layer_name) {
+    features <- rownames(layer_results[[layer_name]]$counts)
+    data.frame(gene = all_genes, count_layer = layer_name, present = all_genes %in% features,
+      stringsAsFactors = FALSE)
+  }))
+  list(
+    layers = list(merged = list(counts = merged_counts, detection = merged_detection, clinical = merged_clinical)),
+    clinical = merged_clinical,
+    gene_coverage = gene_coverage
+  )
+}
+
 sc_lin_marker_summary <- function(object, marker_map, metadata) {
   markers <- list(
     "T/NK" = c("CD3D", "CD3E", "TRAC", "NKG7"),
@@ -154,14 +311,25 @@ sc_lin_make_profile_id <- function(cohort, patient, sample, compartment) {
 }
 
 sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment_map, panel_genes,
-                                  min_cells = 15L, min_umis = 5000L) {
+                                  min_cells = 15L, min_umis = 5000L,
+                                  metadata_path = NULL, expected_source_sha256 = NULL,
+                                  expected_metadata_sha256 = NULL) {
+  if (is.null(metadata_path) || is.null(expected_source_sha256) || is.null(expected_metadata_sha256)) {
+    stop("Lin aggregation requires hashed source and Gate 0 metadata inputs")
+  }
+  actual_source_hash <- digest::digest(seurat_path, algo = "sha256", file = TRUE)
+  actual_metadata_hash <- digest::digest(metadata_path, algo = "sha256", file = TRUE)
+  if (!identical(actual_source_hash, expected_source_sha256) ||
+      !identical(actual_metadata_hash, expected_metadata_sha256)) {
+    stop("Lin source or Gate 0 metadata hash does not match the configured input identity")
+  }
   metadata_all <- metadata
   required <- c("patient", "sample", "cohort", "time_point", "treatment", "response", "res_metric", "celltype_main")
   missing <- setdiff(required, colnames(metadata_all))
   if (length(missing)) stop("Required Lin metadata columns are missing: ", paste(missing, collapse = ", "))
   metadata_all <- metadata_all[, required, drop = FALSE]
   marker_metadata <- metadata_all[, "celltype_main", drop = FALSE]
-  rm(metadata)
+  cohort_by_cell <- setNames(as.character(metadata$cohort), rownames(metadata))
   cohort_index <- setNames(cohort_map$cancer, cohort_map$cohort)
   metadata_all$cancer <- unname(cohort_index[as.character(metadata_all$cohort)])
 
@@ -188,10 +356,17 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
   layer_results <- vector("list", 2L)
   names(layer_results) <- character(2L)
   marker_records <- vector("list", 2L)
+  fraction_audit_records <- vector("list", 2L)
+  gate0_binding_verified <- FALSE
   for (layer_index in seq_len(2L)) {
     object <- qs2::qs_read(seurat_path)
+    if (!gate0_binding_verified) {
+      sc_lin_validate_loaded_object(object, metadata)
+      gate0_binding_verified <- TRUE
+      rm(metadata)
+      invisible(gc())
+    }
     layers <- grep("^counts($|[.])", SeuratObject::Layers(object[["RNA"]]), value = TRUE)
-    if (length(layers) != 2L) stop("The Lin atlas must retain its two original count layers")
     layer <- layers[[layer_index]]
     object <- Seurat::DietSeurat(object, assays = "RNA", layers = layer,
       dimreducs = NULL, graphs = NULL, misc = FALSE)
@@ -208,6 +383,8 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
     matrix <- components$matrix
     layer_cells <- components$cells
     layer_features <- components$features
+    if (anyDuplicated(layer_features)) stop("A Lin count layer contains duplicated feature identities")
+    fraction_audit_records[[layer_index]] <- sc_lin_audit_fractional_values(matrix, layer_cells, cohort_by_cell, layer)
     message("Lin profile layer ", layer_index, ": matrix loaded; features=", nrow(matrix), "; cells=", ncol(matrix), "; stored_values=", length(matrix@x))
     chunk_size <- 5000L
     chunk_starts <- seq.int(1L, ncol(matrix), by = chunk_size)
@@ -276,7 +453,6 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
     message("Lin profile layer ", layer_index, ": chunk aggregation complete")
     message("Lin profile layer ", layer_index, ": profiles with invalid raw count values=", sum(invalid_profile))
     library_size <- as.numeric(Matrix::colSums(aggregate_counts))
-    library_size[invalid_profile] <- NA_real_
     eligible <- n_cells >= min_cells & !invalid_profile & library_size >= min_umis
     status <- ifelse(n_cells < min_cells, "below_cell_threshold",
       ifelse(invalid_profile, "invalid_raw_counts", ifelse(library_size < min_umis, "below_umi_threshold", "eligible")))
@@ -288,6 +464,7 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
     rownames(detection_matrix) <- layer_features
     profile_metadata$profile_id <- profile_ids
     profile_metadata$patient_id <- as.character(profile_metadata$patient)
+    profile_metadata$sample_id <- as.character(profile_metadata$sample)
     profile_metadata$study <- as.character(profile_metadata$cohort)
     profile_metadata$compartment <- as.character(profile_metadata$compartment)
     profile_metadata$response_metric <- as.character(profile_metadata$res_metric)
@@ -309,7 +486,7 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
     denominator_key <- paste(profile_metadata$cohort, profile_metadata$patient, sep = "\r")
     profile_metadata$fraction_cells_total <- n_cells / as.numeric(denominator[denominator_key])
     profile_metadata$baseline <- TRUE
-    keep <- c("profile_id", "patient_id", "patient", "sample", "cohort", "study", "cancer", "treatment", "drug_class",
+    keep <- c("profile_id", "patient_id", "patient", "sample_id", "sample", "cohort", "study", "cancer", "treatment", "drug_class",
       "response_metric", "response", "outcome_label", "endpoint_family", "compartment", "n_cells", "total_umis", "reason",
       "library_size", "eligible", "status", "count_layer", "fraction_cells_total", "baseline")
     profile_metadata <- profile_metadata[, keep, drop = FALSE]
@@ -322,9 +499,12 @@ sc_lin_profile_layers <- function(seurat_path, metadata, cohort_map, compartment
   }
   nonempty <- Filter(Negate(is.null), layer_results)
   if (!length(nonempty)) stop("No baseline ICI-only pseudobulk profiles were created")
-  all_profile_ids <- unlist(lapply(nonempty, function(x) colnames(x$counts)), use.names = FALSE)
-  if (anyDuplicated(all_profile_ids)) stop("A patient-compartment profile occurs in both count layers")
-  list(layers = nonempty, clinical = do.call(rbind, lapply(nonempty, `[[`, "clinical")),
+  data_quality <- sc_lin_data_quality_table(Filter(Negate(is.null), fraction_audit_records))
+  tn_b_correction <- data_quality[data_quality$count_layer == "ALL", , drop = FALSE]
+  invalid_cohorts <- if (nrow(tn_b_correction) && tn_b_correction$fractional_values[[1]] > 0L) "TNBC_Shiao" else character()
+  merged <- sc_lin_merge_layer_profiles(nonempty, min_cells, min_umis, invalid_cohorts)
+  list(layers = merged$layers, clinical = merged$clinical,
+    gene_coverage = merged$gene_coverage, data_quality = data_quality,
     marker_map = sc_lin_combine_marker_summaries(marker_records))
 }
 
@@ -375,10 +555,11 @@ sc_lin_expression_table <- function(layers, clinical, cohort_map, panel_genes, m
             donor_detection <- c(donor_detection, detection[gene, profile_id] / row$n_cells[[1]] * 100)
           }
         }
-        status <- if (!gene %in% rownames(counts)) "missing_from_layer" else if (n_donors < min_donors) "insufficient_donors" else if (length(observed) < min_donors) "insufficient_gene_coverage" else "shown"
+        n_gene_donors <- length(unique(profiles$patient_id[profiles$profile_id %in% observed]))
+        status <- if (!gene %in% rownames(counts)) "missing_from_layer" else if (n_gene_donors < min_donors) "insufficient_gene_donors" else "shown"
         records[[length(records) + 1L]] <- data.frame(
           gene = gene, compartment = compartment, study = cohort,
-          n_donors = n_donors, n_gene_donors = length(observed),
+          n_donors = n_donors, n_gene_donors = n_gene_donors,
           median_log2_cpm_plus1 = if (status == "shown") median(donor_values) else NA_real_,
           q1_log2_cpm_plus1 = if (status == "shown") unname(quantile(donor_values, .25)) else NA_real_,
           q3_log2_cpm_plus1 = if (status == "shown") unname(quantile(donor_values, .75)) else NA_real_,
@@ -531,10 +712,11 @@ sc_lin_write_dotplot <- function(data, output, label_column, title, colour_colum
 }
 
 sc_lin_process <- function(seurat_path, metadata, cohort_map, compartment_map, panel_genes,
-                           min_cells = 15L, min_umis = 5000L) {
+                           min_cells = 15L, min_umis = 5000L, metadata_path = NULL,
+                           expected_source_sha256 = NULL, expected_metadata_sha256 = NULL) {
   message("Lin profile aggregation started")
   profiles <- sc_lin_profile_layers(seurat_path, metadata, cohort_map, compartment_map, panel_genes,
-    min_cells, min_umis)
+    min_cells, min_umis, metadata_path, expected_source_sha256, expected_metadata_sha256)
   message("Lin profile aggregation complete")
   marker_map <- profiles$marker_map
   message("Lin cohort expression summary started")
@@ -545,6 +727,8 @@ sc_lin_process <- function(seurat_path, metadata, cohort_map, compartment_map, p
     clinical = profiles$clinical,
     marker_map = marker_map,
     expression = expression,
+    gene_coverage = profiles$gene_coverage,
+    data_quality = profiles$data_quality,
     pcahawley_patient_expression = sc_lin_pcahawley_patient_expression(
       profiles$layers, profiles$clinical, panel_genes
     ),

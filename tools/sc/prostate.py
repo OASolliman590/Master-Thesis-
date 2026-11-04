@@ -26,6 +26,12 @@ from .runtime import configure_runtime
 
 
 ROOT = Path(__file__).resolve().parents[2]
+CODE_PATHS = (
+    "tools/sc/prostate.py",
+    "tools/sc/core.py",
+    "tools/sc/prostate_compartment_map.tsv",
+    "tools/sc/cli.py",
+)
 MARKERS = {
     "Epithelial": ("EPCAM", "KRT8", "KRT18", "KLK3"),
     "Basal": ("KRT5", "KRT14", "KRT15", "TP63"),
@@ -35,6 +41,8 @@ MARKERS = {
     "Fibroblast/stromal": ("COL1A1", "DCN", "ACTA2", "RGS5"),
     "Endothelial": ("PECAM1", "VWF", "KDR", "EMCN"),
 }
+_GENE_SYMBOL_PATTERN = re.compile(r"^[A-Za-z0-9._-]+$")
+_MITOCHONDRIAL_SYMBOL_PATTERN = re.compile(r"^MT-[A-Z0-9]+$")
 
 
 def _digest(path: Path) -> str:
@@ -43,6 +51,10 @@ def _digest(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _code_refs() -> list[dict[str, str]]:
+    return [{"path": name, "sha256": _digest(ROOT / name)} for name in CODE_PATHS]
 
 
 def _source_candidates(runtime: Path, atlas: str, suffix: str) -> list[Path]:
@@ -124,12 +136,28 @@ def _summaries(series: pd.Series) -> dict[str, float]:
     }
 
 
+def _validated_gene_symbols(adata) -> pd.Series:
+    if "gene_name" not in adata.var:
+        raise ValueError("The prostate atlas lacks the gene_name symbol annotation")
+    symbols = adata.var["gene_name"].astype("string").str.strip()
+    if symbols.isna().any() or symbols.eq("").any():
+        raise ValueError("The prostate gene_name annotation contains missing symbols")
+    if not symbols.map(lambda value: bool(_GENE_SYMBOL_PATTERN.fullmatch(str(value)))).all():
+        raise ValueError("The prostate gene_name annotation contains invalid symbols")
+    if not symbols.str.upper().map(lambda value: bool(_MITOCHONDRIAL_SYMBOL_PATTERN.fullmatch(value))).any():
+        raise ValueError("The prostate gene_name annotation contains no validated mitochondrial symbols")
+    return symbols
+
+
 def qc_summary(adata) -> pd.DataFrame:
     """Summarize per-cell QC distributions without applying a filter."""
     configure_runtime()
     import scanpy as sc
 
-    adata.var["mt"] = adata.var_names.astype(str).str.upper().str.startswith("MT-")
+    symbols = _validated_gene_symbols(adata)
+    adata.var["mt"] = np.asarray(symbols.str.upper().map(
+        lambda value: bool(_MITOCHONDRIAL_SYMBOL_PATTERN.fullmatch(value))
+    ), dtype=bool)
     sc.pp.calculate_qc_metrics(
         adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True, layer="counts"
     )
@@ -243,7 +271,8 @@ def write_layout(profiles: ProfileTable, atlas_dir: Path, input_sha256: str) -> 
             "minimum_umis": MIN_UMIS,
             "minimum_donors_for_summary": MIN_DONORS_TO_SHOW,
             "interpretation_note": "Ambient RNA may blur detection; non-detection is not evidence of absence.",
-            "input_sha256": input_sha256,
+            "input_sha256": {"h5ad": input_sha256},
+            "code": _code_refs(),
             "packages": {name: _version(name) for name in ("scanpy", "anndata", "decoupler", "matplotlib")},
             "outputs": {"expression.tsv": _digest(output / "expression.tsv"), "clinical.tsv": _digest(output / "clinical.tsv")},
         }

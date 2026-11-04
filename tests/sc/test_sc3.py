@@ -1,20 +1,56 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+import math
+
 import pytest
 
 pd = pytest.importorskip("pandas", reason="run with envs/sc-analysis Python")
 
 from tools.sc.cli import main
+from tools.sc.core import panel_definitions
 from tools.sc.sc3 import (
-    guard_sc3,
-    hedges_g,
-    metric_family,
-    outcome_fields,
+    _sc3_effects,
     group_profiles,
+    outcome_fields,
+    metric_family,
+    write_sc3_synthetic_manifest,
 )
 
 
-def test_sc3_sample_size_is_the_number_of_pseudobulk_patients():
+def _clinical(families=("RECIST",), arms=(3, 3), cohort="invented_study"):
+    rows = []
+    for metric in families:
+        family = metric_family(metric)
+        for arm, count in zip(("R", "NR"), arms, strict=True):
+            for index in range(count):
+                patient = f"synthetic_{metric}_{arm}_{index}"
+                rows.append({
+                    "cohort": cohort,
+                    "profile_id": f"synthetic_profile_{metric}_{arm}_{index}",
+                    "patient_id": patient,
+                    "sample_id": f"synthetic_specimen_{metric}_{arm}_{index}",
+                    "compartment": "T/NK",
+                    "response_metric": metric,
+                    "endpoint_family": family,
+                    "outcome_label": arm,
+                    "response": None if family == "expansion" else arm,
+                    "eligible": True,
+                    "library_size": 10_000,
+                    "cancer": "lung",
+                    "treatment": "aPD1",
+                    "fraction_cells_total": 0.1,
+                })
+    return pd.DataFrame(rows)
+
+
+def _manifest(clinical, tmp_path, name="synthetic_sc3_manifest.json"):
+    path = tmp_path / name
+    write_sc3_synthetic_manifest(clinical, path)
+    return path
+
+
+def test_sc3_sample_size_is_the_number_of_pseudobulk_patients(tmp_path):
     anndata = pytest.importorskip("anndata", reason="run with envs/sc-analysis Python")
     from scipy import sparse
     from tools.sc.core import aggregate_anndata
@@ -23,11 +59,13 @@ def test_sc3_sample_size_is_the_number_of_pseudobulk_patients():
     obs_rows = []
     count_rows = []
     for arm, patient in patients:
-        for cell_index in range(20):
+        for _ in range(20):
             obs_rows.append({
                 "patient_id": patient,
+                "sample_id": f"synthetic_specimen_{patient}",
                 "compartment": "T/NK",
                 "cohort": "invented_study",
+                "response_metric": "RECIST",
                 "endpoint_family": "RECIST",
                 "outcome_label": arm,
             })
@@ -40,10 +78,12 @@ def test_sc3_sample_size_is_the_number_of_pseudobulk_patients():
     adata.layers["counts"] = adata.X.copy()
     profiles = aggregate_anndata(
         adata, donor_col="patient_id", compartment_col="compartment",
-        metadata_cols=("cohort", "endpoint_family", "outcome_label"), min_cells=15, min_umis=5_000,
+        metadata_cols=("sample_id", "cohort", "response_metric", "endpoint_family", "outcome_label"),
+        min_cells=15, min_umis=5_000,
     )
+    manifest = _manifest(profiles.clinical, tmp_path)
 
-    groups, refusals = group_profiles(profiles.clinical)
+    groups, refusals = group_profiles(profiles.clinical, provenance_manifest=manifest)
 
     assert not refusals
     group = groups[("invented_study", "T/NK", "RECIST")]
@@ -53,25 +93,11 @@ def test_sc3_sample_size_is_the_number_of_pseudobulk_patients():
     assert adata.n_obs == 120
 
 
-def test_response_metric_families_stay_separate_and_expansion_is_not_response():
-    clinical = pd.DataFrame(
-        [
-            {
-                "cohort": "invented_study",
-                "profile_id": f"synthetic_profile_{family}_{arm}_{index}",
-                "patient_id": f"synthetic_{family}_{arm}_{index}",
-                "compartment": "T/NK",
-                "endpoint_family": family,
-                "outcome_label": arm,
-                "eligible": True,
-            }
-            for family in ("RECIST", "expansion")
-            for arm in ("R", "NR")
-            for index in range(3)
-        ]
-    )
+def test_response_metric_families_stay_separate_and_expansion_is_not_response(tmp_path):
+    clinical = _clinical(("RECIST", "T-cell expansion"))
+    manifest = _manifest(clinical, tmp_path)
 
-    groups, refusals = group_profiles(clinical)
+    groups, refusals = group_profiles(clinical, provenance_manifest=manifest)
     expansion = outcome_fields("T-cell expansion", "R")
 
     assert set(groups) == {
@@ -85,25 +111,18 @@ def test_response_metric_families_stay_separate_and_expansion_is_not_response():
     assert metric_family("Pathology+RECIST") == "pathology"
     assert metric_family("T-cell expansion") == "expansion"
 
+    mislabeled = clinical[clinical["endpoint_family"].eq("expansion")].copy()
+    mislabeled["response"] = "R"
+    bad_manifest = _manifest(mislabeled, tmp_path, "mislabeled_expansion.json")
+    with pytest.raises(ValueError, match="cannot be stored as clinical response"):
+        group_profiles(mislabeled, provenance_manifest=bad_manifest)
 
-def test_sc3_refuses_a_cohort_with_fewer_than_three_patients_in_an_arm():
-    clinical = pd.DataFrame(
-        [
-            {
-                "cohort": "invented_small_study",
-                "profile_id": f"synthetic_profile_{arm}_{index}",
-                "patient_id": f"synthetic_{arm}_{index}",
-                "compartment": "Myeloid",
-                "endpoint_family": "pathology",
-                "outcome_label": arm,
-                "eligible": True,
-            }
-            for arm, count in (("R", 2), ("NR", 3))
-            for index in range(count)
-        ]
-    )
 
-    groups, refusals = group_profiles(clinical)
+def test_sc3_refuses_a_cohort_with_fewer_than_three_distinct_patients_per_arm(tmp_path):
+    clinical = _clinical(("pathology±RECIST",), arms=(2, 3), cohort="invented_small_study")
+    manifest = _manifest(clinical, tmp_path)
+
+    groups, refusals = group_profiles(clinical, provenance_manifest=manifest)
 
     assert not groups
     assert refusals[0]["reason"] == "fewer_than_three_patients_per_arm"
@@ -111,13 +130,17 @@ def test_sc3_refuses_a_cohort_with_fewer_than_three_patients_in_an_arm():
     assert refusals[0]["n_NR"] == 3
 
 
-def test_sc3_requires_explicit_permission_for_real_atlas_outcomes():
-    try:
-        guard_sc3(is_synthetic=False, allow_outcomes=False)
-    except PermissionError as error:
-        assert "--allow-outcomes" in str(error)
-    else:
-        raise AssertionError("real-atlas SC-3 ran without --allow-outcomes")
+def test_public_sc3_analysis_requires_real_authorization_or_synthetic_provenance():
+    with pytest.raises(PermissionError, match="verified synthetic manifest"):
+        group_profiles(_clinical())
+
+
+def test_sc3_refuses_a_synthetic_manifest_for_a_real_atlas_cohort(tmp_path):
+    clinical = _clinical(cohort="PCa_Hawley")
+    manifest = _manifest(clinical, tmp_path)
+
+    with pytest.raises(PermissionError, match="explicit allow_outcomes"):
+        group_profiles(clinical, provenance_manifest=manifest)
 
 
 def test_sc3_cli_refuses_real_atlas_before_reading_data(tmp_path, capsys):
@@ -127,11 +150,76 @@ def test_sc3_cli_refuses_real_atlas_before_reading_data(tmp_path, capsys):
     assert "requires --allow-outcomes" in capsys.readouterr().err
 
 
-def test_hedges_g_matches_a_hand_calculated_two_group_example():
-    result = hedges_g([1.0, 2.0, 3.0], [2.0, 3.0, 4.0])
+def test_sc3_effects_reuse_a_meta_hedges_g_and_restrict_drug_strata(tmp_path):
+    from tools.a_meta.effects import _effect_row
 
-    assert result["n_R"] == 3
-    assert result["n_NR"] == 3
-    assert result["mean_R"] == 2.0
-    assert result["mean_NR"] == 3.0
-    assert result["g"] == -0.8
+    clinical = _clinical()
+    clinical["treatment"] = ["aPD1", "aPD1", "aPD1+aCTLA4", "aPD1", "aPD1", "aPD1+aCTLA4"]
+    gene = panel_definitions()["M5_CHECKPOINT_CANDIDATES"][0]
+    values = [100, 200, 300, 20, 40, 60]
+    profile_ids = clinical["profile_id"].astype(str).tolist()
+    clinical["profile_id"] = profile_ids
+    clinical["library_size"] = 10_000
+    manifest = _manifest(clinical, tmp_path)
+    expression = pd.DataFrame([values], index=[gene], columns=profile_ids)
+
+    effects = _sc3_effects(clinical, expression, provenance_manifest=manifest)
+    target = effects.loc[effects["unit"].eq(f"sc3::T/NK::RECIST::{gene}")]
+    gene_rows = target.set_index("drug_class_stratum")
+
+    assert set(gene_rows.index) == {"ALL", "ANTI_PD_L1_AXIS", "DUAL_PD1_CTLA4"}
+    assert gene_rows.loc["ALL", "n_R"] == 3
+    assert gene_rows.loc["ALL", "n_NR"] == 3
+    assert gene_rows.loc["ANTI_PD_L1_AXIS", "n_R"] == 2
+    assert gene_rows.loc["ANTI_PD_L1_AXIS", "n_NR"] == 2
+    assert gene_rows.loc["DUAL_PD1_CTLA4", "n_R"] == 1
+    assert gene_rows.loc["DUAL_PD1_CTLA4", "n_NR"] == 1
+    assert gene_rows.loc["ALL", "endpoint_family"] == "orr"
+    assert gene_rows.loc["ALL", "endpoint_definition_id"] == "ORR"
+    assert gene_rows.loc["ALL", "compartment"] == "T/NK"
+
+    normalized = [math.log2(value / 10_000 * 1_000_000 + 1) for value in values]
+    labels = [1, 1, 1, 0, 0, 0]
+    view = SimpleNamespace(metadata=SimpleNamespace(cohort_id="invented_study"))
+    clinical_rows = [
+        {"patient_id": row.patient_id, "sample_id": row.sample_id}
+        for row in clinical.itertuples(index=False)
+    ]
+    expected = _effect_row(
+        view=view, unit_family="gene", unit=f"sc3::T/NK::RECIST::{gene}", cancer="lung", stratum="ALL",
+        endpoint_family="orr", endpoint_definition_id="ORR", labels=labels, values=normalized,
+        patient_indices=list(range(6)), excluded={}, coverage=None, clinical_rows=clinical_rows,
+        cancer_components=["lung"],
+    )
+    assert gene_rows.loc["ALL", "g"] == pytest.approx(expected["g"])
+    assert gene_rows.loc["ALL", "se"] == pytest.approx(expected["se"])
+    assert gene_rows.loc["ANTI_PD_L1_AXIS", "mean_R"] == pytest.approx(sum(normalized[:2]) / 2)
+
+
+def test_a_meta_synthesis_accepts_synthetic_sc3_effect_contract(tmp_path):
+    from tools.a_meta.provenance import write_synthetic_fixture_manifest
+    from tools.a_meta.synthesis import _read_effects, synthesize
+    from tools.a_meta.provenance import effect_rows_payload
+
+    clinical = _clinical(("pathology±RECIST",))
+    gene = panel_definitions()["M5_CHECKPOINT_CANDIDATES"][0]
+    expression = pd.DataFrame(
+        [[100, 120, 140, 20, 40, 60]],
+        index=[gene],
+        columns=clinical["profile_id"].astype(str),
+    )
+    clinical["library_size"] = 10_000
+    profile_manifest = _manifest(clinical, tmp_path)
+    effects = _sc3_effects(clinical, expression, provenance_manifest=profile_manifest)
+    rows = effects.to_dict(orient="records")
+    normalized_rows = _read_effects(rows)
+    manifest = tmp_path / "effect_rows_manifest.json"
+    write_synthetic_fixture_manifest(
+        manifest, kind="effect_rows", payload=effect_rows_payload(normalized_rows), cohort_ids=["invented_study"]
+    )
+
+    result = synthesize(rows, "per_cancer", provenance_manifest=manifest)
+
+    assert result.summaries
+    assert {row["endpoint_family"] for row in result.summaries} == {"source_label"}
+    assert {row["endpoint_definition_id"] for row in result.summaries} == {"SOURCE_LABEL_UNSPECIFIED"}

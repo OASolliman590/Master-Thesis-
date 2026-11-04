@@ -1,18 +1,18 @@
-source_major	source_minor	compartment
-Epithelial	Basal	basal epithelial
-Epithelial	Club	luminal/malignant epithelial
-Epithelial	Luminal	luminal/malignant epithelial
-Epithelial	Luminal_like	luminal/malignant epithelial
-Epithelial	Club_IFN	luminal/malignant epithelial
-Epithelial	Ciliated	luminal/malignant epithelial
-Epithelial	NE	luminal/malignant epithelial
-T-cells	*	T/NK
-Endothelial	*	endothelial
-SMCs	*	fibroblast/stromal
-Myeloid	*	myeloid
-CAFs	*	fibroblast/stromal
-PNS_glial	*	unmapped
-B-cells	*	B/plasma
-Cycling	*	unmapped
-Plasma_cells	*	B/plasma
-Unassigned	*	unmapped
+source_major	source_minor	compartment	mapping_note
+Epithelial	Basal	basal epithelial	mapped_by_explicit_table
+Epithelial	Club	luminal/malignant epithelial	mapped_by_explicit_table
+Epithelial	Luminal	luminal/malignant epithelial	mapped_by_explicit_table
+Epithelial	Luminal_like	luminal/malignant epithelial	mapped_by_explicit_table
+Epithelial	Club_IFN	luminal/malignant epithelial	mapped_by_explicit_table
+Epithelial	Ciliated	unmapped	Kept unassessed after review; no cited source justifies mapping to luminal/malignant epithelium.
+Epithelial	NE	unmapped	Kept unassessed after review; no cited source justifies mapping to luminal/malignant epithelium.
+T-cells	*	T/NK	mapped_by_explicit_table
+Endothelial	*	endothelial	mapped_by_explicit_table
+SMCs	*	fibroblast/stromal	mapped_by_explicit_table
+Myeloid	*	myeloid	mapped_by_explicit_table
+CAFs	*	fibroblast/stromal	mapped_by_explicit_table
+PNS_glial	*	unmapped	mapped_by_explicit_table
+B-cells	*	B/plasma	mapped_by_explicit_table
+Cycling	*	unmapped	mapped_by_explicit_table
+Plasma_cells	*	B/plasma	mapped_by_explicit_table
+Unassigned	*	unmapped	mapped_by_explicit_table

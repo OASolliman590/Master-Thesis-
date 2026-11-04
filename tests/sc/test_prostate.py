@@ -18,6 +18,8 @@ def _tiny_prostate_adata():
         ("synthetic_epithelial", "cancer", "Unassigned", "Unassigned"),
         ("synthetic_immune", "cancer", "T-cells", "CD8_T"),
         ("synthetic_benign", "adj_benign", "Epithelial", "Luminal"),
+        ("synthetic_ciliated", "cancer", "Epithelial", "Ciliated"),
+        ("synthetic_ne", "cancer", "Epithelial", "NE"),
     ):
         rows.extend(
             {"donor_id": donor, "type": sample_type, "celltype_major_v2": major, "celltype_minor_v2": minor}
@@ -28,7 +30,7 @@ def _tiny_prostate_adata():
     data = anndata.AnnData(
         X=sparse.csr_matrix(matrix),
         obs=obs,
-        var=pd.DataFrame({"gene_name": ["GENE_A", "GENE_B"]}, index=["ENSG_SYNTH_A", "ENSG_SYNTH_B"]),
+        var=pd.DataFrame({"gene_name": ["MT-ND1", "GENE_B"]}, index=["ENSG_SYNTH_A", "ENSG_SYNTH_B"]),
     )
     data.layers["counts"] = data.X.copy()
     data.X = data.X.astype(np.float32)
@@ -43,6 +45,8 @@ def test_prostate_mapping_splits_basal_from_luminal_epithelial_cells():
 
     assert adata.obs["compartment"].iloc[0] == "basal epithelial"
     assert adata.obs["compartment"].iloc[45] == "luminal/malignant epithelial"
+    assert pd.isna(adata.obs["compartment"].iloc[60])
+    assert pd.isna(adata.obs["compartment"].iloc[75])
 
 
 def test_prostate_qc_uses_raw_counts_layer_when_x_is_log_normalized():
@@ -50,6 +54,23 @@ def test_prostate_qc_uses_raw_counts_layer_when_x_is_log_normalized():
 
     assert summary.loc["umis_per_cell", "median"] == 500
     assert summary.loc["genes_per_cell", "median"] == 2
+
+
+def test_prostate_mitochondrial_qc_uses_validated_gene_symbols_not_feature_ids():
+    obs = pd.DataFrame(index=["synthetic_cell_1", "synthetic_cell_2"])
+    adata = anndata.AnnData(
+        X=sparse.csr_matrix([[900, 100], [900, 100]]),
+        obs=obs,
+        var=pd.DataFrame(
+            {"gene_name": ["MT-ND1", "GENE_A"]},
+            index=["ENSG_SYNTH_MITO", "MT-feature-id"],
+        ),
+    )
+    adata.layers["counts"] = adata.X.copy()
+
+    summary = qc_summary(adata).set_index("metric")
+
+    assert summary.loc["mitochondrial_percent", "median"] == 90.0
 
 
 def test_prostate_pseudobulk_uses_cancer_tissue_and_patient_compartments():

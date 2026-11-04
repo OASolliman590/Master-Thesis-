@@ -4,18 +4,20 @@ from __future__ import annotations
 
 import os
 import sys
-import tempfile
 from pathlib import Path
 
 
+ROOT = Path(__file__).resolve().parents[2]
+
+
 def configure_runtime() -> None:
-    """Give matplotlib and Numba writable caches without changing the source env."""
-    temporary_root = Path(tempfile.gettempdir())
+    """Keep matplotlib and Numba caches in the ignored worktree results tree."""
+    cache_root = ROOT / "results" / ".sc-cache"
     for variable, name in (
-        ("MPLCONFIGDIR", "thesis-sc-matplotlib"),
-        ("NUMBA_CACHE_DIR", "thesis-sc-numba"),
+        ("MPLCONFIGDIR", "matplotlib"),
+        ("NUMBA_CACHE_DIR", "numba"),
     ):
-        destination = Path(os.environ.get(variable, temporary_root / name))
+        destination = Path(os.environ.get(variable, cache_root / name))
         destination.mkdir(parents=True, exist_ok=True)
         os.environ[variable] = str(destination)
     if "numba" in sys.modules:
