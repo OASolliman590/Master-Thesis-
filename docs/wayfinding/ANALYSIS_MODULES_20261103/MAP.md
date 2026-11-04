@@ -38,6 +38,9 @@ Skills: research, wayfinder, improve-codebase-architecture (with codebase-design
 - M3 (Q1-Q2): drug-class strata anti-PD-(L)1 (main), anti-CTLA-4, dual (low-k, labelled); two one-way stratifications plus a melanoma cancer × drug table; subgroup test only with k ≥ 10.
 - M4 (Q3-Q4): units are genes (genome-wide), the 11 panels and pathways; synthesis effect is Hedges g of within-study log expression; per-study DE kept as within-study output; gene synthesised only with k ≥ 3.
 - M5 (Q5, partial): bulk per-study QC, PCA, DE, fgsea, panel correlations. User addition: save every per-dataset output on the SSD, and plan presentation and visualisation in the papers, for A and B.
+- M5 (Q6, Q13-Q15): single-cell typical analysis per atlas. Single-cell responder vs non-responder DE was first kept cut, then **reinstated by the user** after the spec draft (3 Nov): patient-level pseudobulk DE per compartment, within one response metric, exploratory (spec section 7). Outputs on the SSD at `results/<A|B>/<dataset>/`; figure plans for both papers.
+- M6 (Q8-Q12): all five architecture candidates, pseudobulk last; R 4.6 / Bioconductor 3.23 with renv via Rscript; DESeq2 (no edgeR); k=1 and k=2 reporting rule with a fixed-effect sensitivity; Hallmark singscore meta-analysis formal, fgsea descriptive.
+- M7: spec at specs/amendments/2026-11-03-analysis-modules/SPEC.md, published as issue #26, **signed by the user on 3 Nov 2026** with SC-3. Map complete.
 
 ## Not yet specified
 
