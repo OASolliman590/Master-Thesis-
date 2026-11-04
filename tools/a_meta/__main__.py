@@ -13,6 +13,7 @@ from typing import Mapping
 from tools.a_cohorts.view import REPRESENTATION_FILE, cohort_view
 from tools.a_meta.effects import EFFECT_COLUMNS, study_effects
 from tools.a_meta.features import (
+    AVAILABLE_PANEL_IDS,
     FeatureTable,
     build_feature_table,
     read_external_feature_table,
@@ -72,6 +73,14 @@ def main(argv=None) -> int:
     features_parser.add_argument("--gtf", type=Path)
     features_parser.add_argument("--external-table", type=Path)
 
+    coverage_parser = commands.add_parser(
+        "coverage", help="Write outcome-blind panel and CYT gene availability for signed cohorts"
+    )
+    coverage_parser.add_argument("--runtime", type=Path)
+    coverage_parser.add_argument(
+        "--output", type=Path, default=ROOT / "docs/cohorts/PANEL_COVERAGE.tsv"
+    )
+
     effects_parser = commands.add_parser("effects", help="Estimate within-study Hedges-g effects")
     effects_parser.add_argument("--cohort", required=True)
     effects_parser.add_argument("--runtime", type=Path)
@@ -91,13 +100,15 @@ def main(argv=None) -> int:
     synthesis_parser.add_argument("--allow-outcomes", action="store_true")
 
     args = parser.parse_args(argv)
-    results_root = _results_root(args.results)
+    results_root = _results_root(getattr(args, "results", None))
     if args.command == "features":
         _features(args, results_root)
     elif args.command == "effects":
         _effects(args, results_root)
-    else:
+    elif args.command == "synthesize":
         _synthesize(args, results_root)
+    else:
+        _coverage(args)
     return 0
 
 
@@ -341,6 +352,62 @@ def _synthesize(args, results_root: Path) -> None:
     print(f"run={run_name} synthesis_rows={len(result.summaries)} subgroup_rows={len(result.subgroup_tests)}")
 
 
+def _coverage(args) -> None:
+    """Write patient-free coverage counts for all signed development cohorts."""
+    panel_definitions = a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
+    rows = []
+    cohort_ids = _signed_development_cohorts()
+    for cohort_id in cohort_ids:
+        view = cohort_view(cohort_id, args.runtime)
+        genes = build_feature_table(view, "gene", runtime=args.runtime)
+        available = set(genes.values_by_unit)
+        gzma_present = "GZMA" in available
+        prf1_present = "PRF1" in available
+        representation = view.metadata.representation
+        unit = str(representation.unit).casefold()
+        platform = str(representation.platform).casefold()
+        transform = str(representation.transform).casefold()
+        linear_tpm_available = (
+            transform == "linear"
+            and (
+                unit == "tpm"
+                or (platform == "rnaseq" and unit in {"fpkm", "rpkm"})
+            )
+        )
+        for panel_id, members in panel_definitions.items():
+            missing = [gene for gene in members if gene not in available]
+            rows.append({
+                "cohort": cohort_id,
+                "panel": panel_id,
+                "n_found": len(members) - len(missing),
+                "n_total": len(members),
+                "complete": str(not missing).lower(),
+                "missing": ",".join(missing),
+                "cyt_gzma_present": str(gzma_present).lower(),
+                "cyt_prf1_present": str(prf1_present).lower(),
+                "cyt_complete": str(gzma_present and prf1_present).lower(),
+                "linear_tpm_available": str(linear_tpm_available).lower(),
+            })
+    columns = (
+        "cohort", "panel", "n_found", "n_total", "complete", "missing",
+        "cyt_gzma_present", "cyt_prf1_present", "cyt_complete", "linear_tpm_available",
+    )
+    _write_tsv(args.output, rows, columns)
+    output_path = Path(args.output).expanduser().resolve()
+    output_label = output_path.relative_to(ROOT).as_posix() if output_path.is_relative_to(ROOT) else output_path.name
+    print(f"coverage_cohorts={len(cohort_ids)} panels={len(panel_definitions)} rows={len(rows)} output={output_label}")
+
+
+def _signed_development_cohorts() -> tuple[str, ...]:
+    with REGISTRY.open(newline="", encoding="utf-8") as stream:
+        rows = list(csv.DictReader(stream, delimiter="\t"))
+    return tuple(
+        row["cohort_id"]
+        for row in rows
+        if row["role"].casefold() == "development" and row["status"].startswith("SIGNED")
+    )
+
+
 def _results_root(argument: Path | None) -> Path:
     if argument is not None:
         return argument.expanduser()
@@ -431,7 +498,7 @@ def _safe_feature_metadata(metadata: Mapping) -> dict:
         "scale_rule", "representation", "probe_rule", "probe_counts",
         "unmapped_probes", "gene_map_rows", "score_rule",
         "source_scale_rule", "coverage_policy", "input_kind",
-        "recount3_non_primary_dropped",
+        "recount3_non_primary_dropped", "duplicate_gene_rule", "duplicate_gene_counts",
     }
     return {key: value for key, value in metadata.items() if key in allowed}
 

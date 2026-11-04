@@ -14,6 +14,7 @@ from tools.a_meta.__main__ import (
     main,
 )
 from tools.a_meta.effects import EFFECT_COLUMNS
+from tools.a_meta.features import AVAILABLE_PANEL_IDS, FeatureTable
 from tools.a_meta.provenance import write_synthetic_fixture_manifest
 
 
@@ -115,6 +116,55 @@ def test_panel_coverage_counts_parse_false_strings_as_false():
     ])
 
     assert (complete, incomplete) == (1, 1)
+
+
+def test_coverage_cli_writes_aggregate_missing_genes_and_cyt_availability(tmp_path, monkeypatch):
+    from tools.a_meta import __main__ as cli
+    from tools.a_scoring.core import panel_definitions
+
+    registry = tmp_path / "registry.tsv"
+    registry.write_text(
+        "cohort_id\trole\tstatus\nsynthetic\tdevelopment\tSIGNED for development\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(cli, "REGISTRY", registry)
+    monkeypatch.setattr(
+        cli,
+        "cohort_view",
+        lambda cohort, runtime: SimpleNamespace(
+            metadata=SimpleNamespace(
+                representation=SimpleNamespace(platform="rnaseq", unit="tpm", transform="linear")
+            )
+        ),
+    )
+    all_panels = panel_definitions(AVAILABLE_PANEL_IDS)
+    available = {gene for members in all_panels.values() for gene in members} - {"CCL5", "PRF1"}
+    available.add("GZMA")
+    monkeypatch.setattr(
+        cli,
+        "build_feature_table",
+        lambda view, family, **kwargs: FeatureTable(
+            cohort_id="synthetic",
+            unit_family="gene",
+            values_by_unit={gene: [1.0] for gene in available},
+            n_patients=1,
+        ),
+    )
+    output = tmp_path / "coverage.tsv"
+
+    assert main(["coverage", "--output", str(output)]) == 0
+
+    with output.open(newline="", encoding="utf-8") as stream:
+        rows = list(csv.DictReader(stream, delimiter="\t"))
+    ayers = next(row for row in rows if row["panel"] == "AYERS_GEP_18")
+    assert len(rows) == len(AVAILABLE_PANEL_IDS)
+    assert ayers["complete"] == "false"
+    assert ayers["missing"] == "CCL5"
+    assert ayers["cyt_gzma_present"] == "true"
+    assert ayers["cyt_prf1_present"] == "false"
+    assert ayers["cyt_complete"] == "false"
+    assert ayers["linear_tpm_available"] == "true"
+    assert "patient" not in output.read_text(encoding="utf-8").casefold()
 
 
 def test_feature_manifest_rejects_stale_input_output_and_row_identity(tmp_path):

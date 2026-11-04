@@ -132,6 +132,138 @@ def test_probe_collapse_uses_highest_mean_expression_without_labels(tmp_path):
     assert {(row["unit"], row["patient_row"]): row["value"] for row in first.records}[("GENE_X", 0)] == 1.0
 
 
+def test_old_symbol_probes_use_entrez_identity_before_panel_resolution(tmp_path, monkeypatch):
+    from tools.a_meta import features as feature_module
+
+    path = tmp_path / "expression.tsv"
+    _write_matrix(
+        path,
+        ["0", "1"],
+        [
+            ["probe_cgas_low", 1, 3],
+            ["probe_cgas_high", 4, 6],
+            ["probe_mavs", 3, 5],
+            ["probe_tet3", 2, 4],
+            ["probe_kdm6a", 5, 7],
+        ],
+    )
+    (tmp_path / "probe_to_gene.tsv").write_text(
+        "probe_id\tgene_symbol\tentrez_id\n"
+        "probe_cgas_low\tC6orf150\t115004\n"
+        "probe_cgas_high\tMB21D1\t115004\n"
+        "probe_mavs\tVISA\t57506\n"
+        "probe_tet3\tBEFAHRS\t200424\n"
+        "probe_kdm6a\tUTX\t7403\n",
+        encoding="utf-8",
+    )
+    view = _view(
+        path,
+        platform="microarray",
+        unit="probe_intensity",
+        transform="log2",
+        feature_id="probe",
+        labels=["CR", "SD"],
+    )
+    monkeypatch.setattr(
+        feature_module,
+        "_gene_reference",
+        lambda runtime: {
+            "by_id": {
+                "115004": "CGAS",
+                "57506": "MAVS",
+                "200424": "TET3",
+                "7403": "KDM6A",
+            },
+            "synonyms": {},
+            "ensembl": {},
+        },
+    )
+
+    table = build_feature_table(
+        view,
+        "panel",
+        panels={"SYNTHETIC_PANEL": ("CGAS", "MAVS", "TET3", "KDM6A")},
+    )
+
+    assert table.coverage["SYNTHETIC_PANEL"] == {
+        "n_found": 4,
+        "n_total": 4,
+        "missing": [],
+        "complete": True,
+    }
+    assert table.values_by_unit["SYNTHETIC_PANEL"] == pytest.approx([3.5, 5.5])
+    assert table.metadata["source_scale_rule"] == "source_scale"
+
+
+def test_ensembl_identifiers_resolve_to_panel_symbols(tmp_path):
+    path = tmp_path / "expression.tsv"
+    _write_matrix(
+        path,
+        ["0", "1"],
+        [["ENSG00000164430.3", 2, 4], ["ENSG00000088888.1", 6, 8]],
+    )
+    view = _view(path, labels=["CR", "SD"])
+    view.metadata.representation.feature_id = "ensembl"
+
+    table = build_feature_table(
+        view,
+        "gene",
+        gene_map={"ENSG00000164430": "CGAS", "ENSG00000088888": "MAVS"},
+    )
+
+    assert table.values_by_unit["CGAS"] == pytest.approx([math.log2(3), math.log2(5)])
+    assert table.values_by_unit["MAVS"] == pytest.approx([math.log2(7), math.log2(9)])
+
+
+def test_symbol_probe_suffix_is_removed_only_for_known_gene_symbols(tmp_path, monkeypatch):
+    from tools.a_meta import features as feature_module
+
+    path = tmp_path / "expression.tsv"
+    _write_matrix(
+        path,
+        ["0", "1"],
+        [["GZMA_165265", 2, 4], ["PRF1_672778", 6, 8], ["UNKNOWN_123", 1, 1]],
+    )
+    monkeypatch.setattr(
+        feature_module,
+        "_gene_reference",
+        lambda runtime: {
+            "by_id": {"3001": "GZMA", "5551": "PRF1"},
+            "synonyms": {},
+            "ensembl": {},
+        },
+    )
+    view = _view(path, labels=["CR", "SD"])
+
+    table = build_feature_table(view, "gene")
+
+    assert "GZMA" in table.values_by_unit
+    assert "PRF1" in table.values_by_unit
+    assert "UNKNOWN_123" in table.values_by_unit
+
+
+def test_duplicate_gene_rows_keep_one_highest_mean_representative(tmp_path):
+    path = tmp_path / "expression.tsv"
+    _write_matrix(
+        path,
+        ["0", "1"],
+        [["GENE_X", 1, 2], ["GENE_X", 5, 6], ["GENE_Y", 3, 4]],
+    )
+
+    table = build_feature_table(_view(path, labels=["CR", "SD"]), "gene")
+
+    assert table.values_by_unit["GENE_X"] == pytest.approx([math.log2(6), math.log2(7)])
+    assert table.metadata["duplicate_gene_rule"] == (
+        "highest mean expression across all samples; ties use source row order"
+    )
+    assert table.metadata["duplicate_gene_counts"] == {
+        "input_rows": 3,
+        "genes": 2,
+        "duplicate_gene_groups": 1,
+        "duplicate_rows_removed": 1,
+    }
+
+
 def test_panels_use_complete_coverage_and_the_shared_panel_scorer(tmp_path):
     path = tmp_path / "expression.tsv"
     _write_matrix(path, ["0", "1"], [["GENE_X", 2, 4], ["GENE_Y", 6, 8]])

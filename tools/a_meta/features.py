@@ -2,9 +2,10 @@
 from __future__ import annotations
 
 import csv
+import gzip
 import math
-from collections import Counter
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -97,21 +98,22 @@ def build_feature_table(
             runner=runner,
         )
 
+    panel_definitions = (
+        {name: tuple(members) for name, members in panels.items()}
+        if panels is not None
+        else a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
+    )
     genes = _gene_table(
         view,
         runtime=runtime,
         gene_map=gene_map,
         gtf_path=gtf_path,
         probe_map=probe_map,
+        target_symbols=_resolution_targets(panel_definitions),
     )
     if family == "gene":
         return genes
 
-    panel_definitions = (
-        {name: tuple(members) for name, members in panels.items()}
-        if panels is not None
-        else a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
-    )
     return _panel_table(view, genes, panel_definitions)
 
 
@@ -247,7 +249,7 @@ def read_feature_table(
     )
 
 
-def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map) -> FeatureTable:
+def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=None) -> FeatureTable:
     feature_ids, sample_columns, matrix = _read_expression(view.expression_path)
     if len(sample_columns) != len(view.clinical_rows):
         raise ValueError("Expression columns do not align with cohort-view rows")
@@ -281,27 +283,43 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map) -> FeatureTable
         scale_rule, logged = _study_scale(matrix, representation)
     probe_counts = None
     dropped_unmapped = 0
+    duplicate_gene_counts = None
+    target_symbols = tuple(target_symbols or _resolution_targets())
     if representation.platform == "microarray" and representation.feature_id == "probe":
         mapping_path = Path(probe_map) if probe_map is not None else Path(view.expression_path).parent / "probe_to_gene.tsv"
         mapping = _probe_mapping(mapping_path)
-        selected = _collapse_probes(feature_ids, logged, mapping)
-        feature_ids, logged, probe_counts, dropped_unmapped = selected
-        feature_ids = _canonical_gene_ids(
-            feature_ids,
-            "symbol",
+        custom_map = _load_gene_map(gene_map)
+        reference = _gene_reference(runtime)
+        source_symbols = [
+            _probe_source_symbol(mapping.get(probe), custom_map, reference)
+            for probe in feature_ids
+        ]
+        canonical = _canonicalize_symbols(
+            source_symbols,
+            target_symbols,
             runtime=runtime,
-            gene_map={},
+            reference=reference,
+            allow_multiple_synonyms=True,
         )
+        selected = _collapse_probes(feature_ids, logged, canonical)
+        feature_ids, logged, probe_counts, dropped_unmapped = selected
         feature_ids, logged = _ensure_unique_genes(feature_ids, logged)
     else:
-        mapping = _load_gene_map(gene_map)
-        feature_ids = _canonical_gene_ids(
+        custom_map = _load_gene_map(gene_map)
+        reference = _gene_reference(runtime)
+        source_symbols = _source_symbols(
             feature_ids,
             effective_feature_id,
-            runtime=runtime,
-            gene_map=mapping,
+            custom_map=custom_map,
+            reference=reference,
         )
-        feature_ids, logged = _ensure_unique_genes(feature_ids, logged)
+        feature_ids = _canonicalize_symbols(
+            source_symbols,
+            target_symbols,
+            runtime=runtime,
+            reference=reference,
+        )
+        feature_ids, logged, duplicate_gene_counts = _collapse_duplicate_genes(feature_ids, logged)
 
     values_by_unit = {unit: list(values) for unit, values in zip(feature_ids, logged)}
     metadata = {"scale_rule": scale_rule, "representation": {
@@ -314,8 +332,13 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map) -> FeatureTable
         metadata["probe_rule"] = "highest mean expression across all samples; ties use probe ID order"
         metadata["probe_counts"] = probe_counts
         metadata["unmapped_probes"] = dropped_unmapped
-    if mapping:
-        metadata["gene_map_rows"] = len(mapping)
+    if duplicate_gene_counts is not None:
+        metadata["duplicate_gene_rule"] = (
+            "highest mean expression across all samples; ties use source row order"
+        )
+        metadata["duplicate_gene_counts"] = duplicate_gene_counts
+    if custom_map:
+        metadata["gene_map_rows"] = len(custom_map)
     if recount3_used:
         metadata["recount3_non_primary_dropped"] = recount3_dropped
     return FeatureTable(
@@ -473,12 +496,12 @@ def _read_expression(path: Path | str) -> tuple[list[str], list[str], list[list[
                 raise ValueError("Expression matrix contains non-finite values")
             feature_ids.append(row[0])
             matrix.append(values)
-    if not feature_ids or len(feature_ids) != len(set(feature_ids)):
-        raise ValueError("Expression matrix has no features or duplicate feature IDs")
+    if not feature_ids:
+        raise ValueError("Expression matrix has no features")
     return feature_ids, header[1:], matrix
 
 
-def _probe_mapping(path: Path) -> dict[str, str]:
+def _probe_mapping(path: Path) -> dict[str, dict[str, str]]:
     if not path.is_file():
         raise FileNotFoundError("Probe-level array requires its cohort probe-to-gene map")
     rows = _read_tsv(path)
@@ -486,18 +509,22 @@ def _probe_mapping(path: Path) -> dict[str, str]:
     for row in rows:
         probe = str(row.get("probe_id", "")).strip()
         gene = str(row.get("gene_symbol", "")).strip()
+        entrez = str(row.get("entrez_id", "")).strip()
         if not probe or probe in mapping:
             raise ValueError("Probe map contains an empty or duplicate probe")
-        if gene and gene.casefold() not in {"na", "null", "---"}:
-            mapping[probe] = gene
+        if gene.casefold() in {"na", "null", "---"}:
+            gene = ""
+        if entrez.casefold() in {"na", "null", "---"}:
+            entrez = ""
+        if gene or entrez:
+            mapping[probe] = {"gene_symbol": gene, "entrez_id": entrez}
     return mapping
 
 
-def _collapse_probes(feature_ids, matrix, mapping):
+def _collapse_probes(feature_ids, matrix, canonical_features):
     probes_by_gene: dict[str, list[tuple[float, str, list[float]]]] = {}
     unmapped = 0
-    for probe, values in zip(feature_ids, matrix):
-        gene = mapping.get(probe)
+    for probe, values, gene in zip(feature_ids, matrix, canonical_features):
         if not gene:
             unmapped += 1
             continue
@@ -530,33 +557,132 @@ def _load_gene_map(gene_map) -> dict[str, str]:
     return mapping
 
 
-def _canonical_gene_ids(feature_ids, feature_id, *, runtime, gene_map):
-    mapping = dict(gene_map)
+def _resolution_targets(panel_definitions=None):
+    definitions = panel_definitions or a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
+    return tuple(sorted({gene for members in definitions.values() for gene in members} | {"GZMA", "PRF1"}))
+
+
+@lru_cache(maxsize=4)
+def _gene_reference(runtime):
+    """Load the pinned Entrez and synonym maps plus its Ensembl crosswalk."""
+    info_path = a_scoring.gene_info_path(runtime)
+    if not info_path.is_file():
+        return {"by_id": {}, "synonyms": {}, "ensembl": {}}
+    runtime_root = a_scoring.core._runtime_path(runtime).expanduser().resolve()
+    by_id, synonyms = a_scoring.core._gene_info(str(info_path.resolve()), str(runtime_root))
+    ensembl_candidates: dict[str, set[str]] = {}
+    with gzip.open(info_path, "rt", encoding="utf-8", newline="") as stream:
+        for row in csv.DictReader(stream, delimiter="\t"):
+            symbol = row["Symbol"]
+            for xref in row.get("dbXrefs", "").split("|"):
+                if not xref.startswith("Ensembl:"):
+                    continue
+                ensembl_id = xref.split(":", 1)[1].split(".", 1)[0]
+                if ensembl_id:
+                    ensembl_candidates.setdefault(ensembl_id, set()).add(symbol)
+    ensembl = {
+        ensembl_id: next(iter(symbols))
+        for ensembl_id, symbols in ensembl_candidates.items()
+        if len(symbols) == 1
+    }
+    return {"by_id": by_id, "synonyms": synonyms, "ensembl": ensembl}
+
+
+def _source_symbols(feature_ids, feature_id, *, custom_map, reference):
     key_type = str(feature_id).casefold()
-    if key_type == "entrez":
-        runtime_path = a_scoring.gene_info_path(runtime)
-        if runtime_path.is_file():
-            root = a_scoring.core._runtime_path(runtime).expanduser().resolve()
-            by_id, _ = a_scoring.core._gene_info(str(runtime_path.resolve()), str(root))
-            mapping = {**by_id, **mapping}
-    if key_type == "probe" and not mapping:
-        raise ValueError("Probe features require a probe-to-gene map")
+    known_symbols = set(reference["by_id"].values()) | set(reference["synonyms"])
+    for values in reference["synonyms"].values():
+        known_symbols.update(values)
     aliases = a_scoring.core._frozen_aliases(str(a_scoring.core.ALIAS_TABLE_PATH))
+    known_symbols.update(aliases)
+    known_symbols.update(aliases.values())
     result = []
     for feature in feature_ids:
-        source = str(feature)
-        target = source
-        if key_type == "ensembl":
+        source = str(feature).strip()
+        if key_type == "entrez":
+            result.append(
+                reference["by_id"].get(source)
+                or custom_map.get(source)
+                or "ENTREZ:" + source
+            )
+        elif key_type == "ensembl":
             base = source.split(".", 1)[0]
-            target = mapping.get(source, mapping.get(base, "ENSEMBL:" + base))
-        elif key_type == "entrez":
-            target = mapping.get(source, "ENTREZ:" + source)
-        elif key_type == "symbol":
-            target = aliases.get(source, source)
+            if base.startswith("ENS"):
+                result.append(
+                    reference["ensembl"].get(base)
+                    or custom_map.get(source)
+                    or custom_map.get(base)
+                    or "ENSEMBL:" + base
+                )
+            else:
+                # Some signed sources declare Ensembl keys but retain symbols.
+                result.append(custom_map.get(source, source))
         else:
-            target = mapping.get(source, source)
-        result.append(str(target))
+            symbol = custom_map.get(source, source)
+            if key_type in {"symbol", "probe"}:
+                prefix, separator, suffix = symbol.rpartition("_")
+                if separator and suffix.isdigit() and prefix in known_symbols:
+                    symbol = prefix
+            result.append(symbol)
     return result
+
+
+def _probe_source_symbol(mapping_row, custom_map, reference):
+    if not mapping_row:
+        return ""
+    entrez = mapping_row.get("entrez_id", "").strip()
+    if entrez:
+        symbol = reference["by_id"].get(entrez) or custom_map.get(entrez)
+        if symbol:
+            return symbol
+    return mapping_row.get("gene_symbol", "").strip()
+
+
+def _canonicalize_symbols(
+    symbols,
+    targets,
+    *,
+    runtime,
+    reference,
+    allow_multiple_synonyms=False,
+):
+    aliases = a_scoring.core._frozen_aliases(str(a_scoring.core.ALIAS_TABLE_PATH))
+    normalized = [aliases.get(str(symbol), str(symbol)) if symbol else "" for symbol in symbols]
+    unique_symbols = list(dict.fromkeys(symbol for symbol in normalized if symbol))
+    resolved_targets = {}
+    if unique_symbols and targets:
+        indexes, _coverage = a_scoring.resolve(
+            unique_symbols,
+            targets,
+            runtime=runtime,
+            aliases=aliases,
+            synonyms=reference["synonyms"],
+            gene_symbols=reference["by_id"],
+        )
+        resolved_targets = {unique_symbols[index]: target for target, index in indexes.items()}
+
+        # `resolve` deliberately reports a target missing if several different
+        # source synonyms could match it. Probe arrays have multiple probes by
+        # design, so resolve each synonym alone and let the outcome-blind probe
+        # collapse choose one representative for that target.
+        if allow_multiple_synonyms:
+            for target, target_synonyms in reference["synonyms"].items():
+                if target not in targets or target in resolved_targets.values():
+                    continue
+                candidates = sorted(set(unique_symbols) & set(target_synonyms))
+                for candidate in candidates:
+                    candidate_indexes, _ = a_scoring.resolve(
+                        [candidate],
+                        [target],
+                        runtime=runtime,
+                        aliases=aliases,
+                        synonyms=reference["synonyms"],
+                        gene_symbols=reference["by_id"],
+                    )
+                    if target in candidate_indexes:
+                        resolved_targets[candidate] = target
+
+    return [resolved_targets.get(symbol, symbol) if symbol else None for symbol in normalized]
 
 
 def _ensure_unique_genes(feature_ids, matrix):
@@ -567,6 +693,32 @@ def _ensure_unique_genes(feature_ids, matrix):
     if duplicates:
         raise ValueError("Gene identifier mapping is not one-to-one")
     return feature_ids, matrix
+
+
+def _collapse_duplicate_genes(feature_ids, matrix):
+    """Retain one outcome-blind representative for each canonical gene row."""
+    genes: dict[str, list[tuple[float, int, list[float]]]] = {}
+    for row_index, (gene, values) in enumerate(zip(feature_ids, matrix)):
+        if not gene:
+            continue
+        genes.setdefault(gene, []).append((math.fsum(values) / len(values), row_index, values))
+    chosen = []
+    duplicate_groups = 0
+    duplicate_rows = 0
+    for gene in sorted(genes):
+        candidates = genes[gene]
+        if len(candidates) > 1:
+            duplicate_groups += 1
+            duplicate_rows += len(candidates) - 1
+        # The source row order is a deterministic tie break and never reads labels.
+        chosen.append((gene, sorted(candidates, key=lambda row: (-row[0], row[1]))[0][2]))
+    counts = {
+        "input_rows": len(feature_ids),
+        "genes": len(chosen),
+        "duplicate_gene_groups": duplicate_groups,
+        "duplicate_rows_removed": duplicate_rows,
+    }
+    return [gene for gene, _ in chosen], [values for _, values in chosen], counts
 
 
 def _write_expression_matrix(path: Path, table: FeatureTable) -> None:
