@@ -43,9 +43,11 @@ def effect_input_payload(view, features) -> dict:
     if hasattr(features, "values_by_unit"):
         feature_values = features.values_by_unit
         unit_family = getattr(features, "unit_family", None)
+        feature_coverage = getattr(features, "coverage", {})
     else:
         feature_values = [dict(row) for row in _feature_records(features)]
         unit_family = None
+        feature_coverage = None
     return {
         "cohort_id": str(getattr(metadata, "cohort_id", "")),
         "cancer": str(getattr(metadata, "cancer", "")),
@@ -54,6 +56,7 @@ def effect_input_payload(view, features) -> dict:
         "clinical_rows": [dict(row) for row in view.clinical_rows],
         "unit_family": unit_family,
         "features": feature_values,
+        "coverage": feature_coverage,
     }
 
 

@@ -16,10 +16,15 @@ from tools.a_meta.effects import EFFECT_COLUMNS, study_effects
 from tools.a_meta.features import (
     AVAILABLE_PANEL_IDS,
     FeatureTable,
+    GENE_ALIAS_ADDENDUM_PATH,
     build_feature_table,
     read_external_feature_table,
     read_feature_table,
     write_feature_table,
+    _panel_coverage90_table,
+    _panel_member_coverage,
+    _panel_table,
+    _gse176307_source_hashes,
 )
 from tools.a_meta.provenance import (
     SYNTHETIC_FIXTURE_PRODUCER,
@@ -54,6 +59,7 @@ _CODE_FILES = (
     "tools/a_cohorts/core.py",
     "tools/a_scoring/__init__.py",
     "tools/a_scoring/core.py",
+    "tools/a_p2/build.py",
     "tools/r_bridge/__init__.py",
     "r/R/bridge.R",
     "r/scripts/singscore.R",
@@ -75,7 +81,7 @@ def main(argv=None) -> int:
     features_parser.add_argument("--external-table", type=Path)
 
     coverage_parser = commands.add_parser(
-        "coverage", help="Write outcome-blind panel and CYT gene availability for signed cohorts"
+        "coverage", help="Write outcome-blind panel, 90% sensitivity, and CYT availability for signed cohorts"
     )
     coverage_parser.add_argument("--runtime", type=Path)
     coverage_parser.add_argument(
@@ -87,7 +93,11 @@ def main(argv=None) -> int:
     effects_parser.add_argument("--runtime", type=Path)
     effects_parser.add_argument("--results", type=Path)
     effects_parser.add_argument("--endpoint-family", choices=("all", "orr", "clinical_benefit", "source_label"), default="all")
-    effects_parser.add_argument("--unit-family", choices=("all", "gene", "panel", "pathway", "fraction"), default="all")
+    effects_parser.add_argument(
+        "--unit-family",
+        choices=("all", "gene", "panel", "panel_coverage90", "pathway", "fraction"),
+        default="all",
+    )
     effects_parser.add_argument("--no-drug-class", action="store_true")
     effects_parser.add_argument("--allow-outcomes", action="store_true")
 
@@ -118,13 +128,14 @@ def _features(args, results_root: Path) -> None:
     dataset_dir = results_root / args.cohort
     output_dir = dataset_dir / "features"
     output_dir.mkdir(parents=True, exist_ok=True)
+    genes = build_feature_table(
+        view, "gene", runtime=args.runtime, gene_map=args.gene_map, gtf_path=args.gtf
+    )
+    panel_definitions = a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
     tables: dict[str, FeatureTable] = {
-        "gene": build_feature_table(
-            view, "gene", runtime=args.runtime, gene_map=args.gene_map, gtf_path=args.gtf
-        ),
-        "panel": build_feature_table(
-            view, "panel", runtime=args.runtime, gene_map=args.gene_map, gtf_path=args.gtf
-        ),
+        "gene": genes,
+        "panel": _panel_table(view, genes, panel_definitions),
+        "panel_coverage90": _panel_coverage90_table(view, genes, panel_definitions),
     }
     if args.gene_sets is not None:
         tables["pathway"] = build_feature_table(
@@ -145,8 +156,15 @@ def _features(args, results_root: Path) -> None:
 
     output_hashes = {}
     table_stats = {}
+    feature_filenames = {
+        "gene": "genes.tsv",
+        "panel": "panels.tsv",
+        "panel_coverage90": "panel_coverage90.tsv",
+        "pathway": "pathways.tsv",
+        "fraction": "fractions.tsv",
+    }
     for family, table in tables.items():
-        table_path = output_dir / f"{family}s.tsv"
+        table_path = output_dir / feature_filenames[family]
         write_feature_table(table, table_path)
         output_hashes[table_path.name] = _sha256(table_path)
         table_stats[family] = {
@@ -186,7 +204,9 @@ def _features(args, results_root: Path) -> None:
         "cohort_registry": _sha256(REGISTRY),
         "panel_registry": _sha256(PANEL_REGISTRY_PATH),
         "gene_aliases": _sha256(ALIAS_TABLE_PATH),
+        "gene_alias_addendum": _sha256(GENE_ALIAS_ADDENDUM_PATH),
     }
+    input_hashes.update(tables["gene"].metadata.get("source_inputs_sha256", {}))
     probe_map = view.expression_path.parent / "probe_to_gene.tsv"
     if probe_map.is_file():
         input_hashes["probe_to_gene_map"] = _sha256(probe_map)
@@ -208,6 +228,7 @@ def _features(args, results_root: Path) -> None:
         if "r_manifest" in table.metadata
     }
     panel_coverage = _panel_coverage_counts(coverage_rows)
+    panel_coverage90 = _panel_coverage90_counts(coverage_rows)
     manifest = {
         "data_classification": "real",
         "cohort": args.cohort,
@@ -227,6 +248,12 @@ def _features(args, results_root: Path) -> None:
         "panel_coverage": {
             "complete": panel_coverage[0],
             "incomplete": panel_coverage[1],
+        },
+        "panel_coverage90": {
+            "met": panel_coverage90[0],
+            "not_met": panel_coverage90[1],
+            "sensitivity_label": "panel_coverage90 sensitivity",
+            "rule": "at least 90% of panel members are available after alias resolution",
         },
         "panel_registry_note": (
             "Ten materialized memberships are currently available. Hallmark IFN-gamma "
@@ -252,18 +279,22 @@ def _effects(args, results_root: Path) -> None:
     view = cohort_view(args.cohort, args.runtime)
     feature_dir = results_root / args.cohort / "features"
     feature_manifest_path = feature_dir / "manifest.json"
-    feature_manifest = _validate_feature_manifest(view, feature_dir, args.cohort)
+    feature_manifest = _validate_feature_manifest(view, feature_dir, args.cohort, args.runtime)
     if not is_real:
         if feature_manifest.get("data_classification") != "synthetic":
             raise SystemExit("Unknown-cohort effects require a hash-matched synthetic feature fixture")
         if feature_manifest.get("producer") != SYNTHETIC_FIXTURE_PRODUCER:
             raise SystemExit("Synthetic feature classification was not written by the fixture path")
     families = (
-        ("gene", "panel", "pathway", "fraction")
+        ("gene", "panel", "panel_coverage90", "pathway", "fraction")
         if args.unit_family == "all"
         else (args.unit_family,)
     )
     feature_paths = _manifested_feature_files(feature_dir, feature_manifest, families)
+    if "panel_coverage90" in families and "panel_coverage90" not in feature_paths:
+        raise SystemExit(
+            "Feature bundle is missing required panel_coverage90.tsv; rebuild features first"
+        )
     endpoints = view.metadata.endpoint_families if args.endpoint_family == "all" else (args.endpoint_family,)
     results = []
     input_hashes = {
@@ -283,6 +314,7 @@ def _effects(args, results_root: Path) -> None:
             coverage_path=coverage_path,
         )
         input_hashes[f"{unit_family}_features"] = _sha256(feature_path)
+        input_hashes["feature_coverage"] = _sha256(coverage_path)
         for endpoint in endpoints:
             results.extend(study_effects(
                 view,
@@ -363,6 +395,8 @@ def _coverage(args) -> None:
         view = cohort_view(cohort_id, args.runtime)
         genes = build_feature_table(view, "gene", runtime=args.runtime)
         available = set(genes.values_by_unit)
+        complete_panels = _panel_table(view, genes, panel_definitions)
+        coverage90_panels = _panel_coverage90_table(view, genes, panel_definitions)
         gzma_present = "GZMA" in available
         prf1_present = "PRF1" in available
         representation = view.metadata.representation
@@ -370,28 +404,38 @@ def _coverage(args) -> None:
         platform = str(representation.platform).casefold()
         transform = str(representation.transform).casefold()
         linear_tpm_available = (
-            transform == "linear"
-            and (
-                unit == "tpm"
-                or (platform == "rnaseq" and unit in {"fpkm", "rpkm"})
+            cohort_id == "gse176307"
+            or (
+                transform == "linear"
+                and (
+                    unit == "tpm"
+                    or (platform == "rnaseq" and unit in {"fpkm", "rpkm"})
+                )
             )
         )
         for panel_id, members in panel_definitions.items():
-            missing = [gene for gene in members if gene not in available]
+            main_details = _panel_member_coverage(genes.values_by_unit, members)
+            sensitivity_details = coverage90_panels.coverage[panel_id]
+            main_complete = main_details["n_found"] == len(members)
             rows.append({
                 "cohort": cohort_id,
                 "panel": panel_id,
-                "n_found": len(members) - len(missing),
+                "n_found": main_details["n_found"],
                 "n_total": len(members),
-                "complete": str(not missing).lower(),
-                "missing": ",".join(missing),
+                "complete": str(main_complete).lower(),
+                "coverage90": str(sensitivity_details["complete"]).lower(),
+                "missing": ",".join(main_details["missing"]),
+                "n_patients": genes.n_patients,
+                "patients_complete": sum(value is not None for value in complete_panels.values_by_unit[panel_id]),
+                "patients_coverage90": sum(value is not None for value in coverage90_panels.values_by_unit[panel_id]),
                 "cyt_gzma_present": str(gzma_present).lower(),
                 "cyt_prf1_present": str(prf1_present).lower(),
                 "cyt_complete": str(gzma_present and prf1_present).lower(),
                 "linear_tpm_available": str(linear_tpm_available).lower(),
             })
     columns = (
-        "cohort", "panel", "n_found", "n_total", "complete", "missing",
+        "cohort", "panel", "n_found", "n_total", "complete", "coverage90", "missing",
+        "n_patients", "patients_complete", "patients_coverage90",
         "cyt_gzma_present", "cyt_prf1_present", "cyt_complete", "linear_tpm_available",
     )
     _write_tsv(args.output, rows, columns)
@@ -428,7 +472,7 @@ def _is_real_cohort(value: str) -> bool:
     return value in _registry_ids()
 
 
-def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str) -> dict:
+def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str, runtime=None) -> dict:
     manifest_path = feature_dir / "manifest.json"
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -443,10 +487,45 @@ def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str) -> dict:
         "cohort_clinical": _sha256(view.expression_path.parent / "clinical.tsv"),
     }
     stored_inputs = manifest.get("inputs_sha256", {})
+    if not isinstance(stored_inputs, Mapping):
+        raise SystemExit("Feature manifest has invalid input identities")
     if any(stored_inputs.get(name) != expected for name, expected in expected_inputs.items()):
         raise SystemExit("Feature inputs are stale relative to the current cohort view")
+    expected_analysis_inputs = {
+        "representation_registry": _sha256(REPRESENTATION_FILE),
+        "cohort_registry": _sha256(REGISTRY),
+        "panel_registry": _sha256(PANEL_REGISTRY_PATH),
+        "gene_aliases": _sha256(ALIAS_TABLE_PATH),
+        "gene_alias_addendum": _sha256(GENE_ALIAS_ADDENDUM_PATH),
+    }
+    if any(
+        stored_inputs.get(name) != expected
+        for name, expected in expected_analysis_inputs.items()
+    ):
+        raise SystemExit("Feature bundle analysis input identities do not match current files")
+    if manifest.get("code_sha256") != _code_hashes():
+        raise SystemExit("Feature bundle code identity does not match current A-META code")
     if manifest.get("row_identity_sha256") != _cohort_row_identity_sha256(view):
         raise SystemExit("Feature rows do not match the current cohort-view row identities")
+    if cohort_id == "gse176307":
+        feature_metadata = manifest.get("feature_metadata", {})
+        gene_metadata = feature_metadata.get("gene", {}) if isinstance(feature_metadata, Mapping) else {}
+        if not isinstance(gene_metadata, Mapping):
+            raise SystemExit("GSE176307 feature bundle has no Salmon TPM source metadata")
+        if (
+            gene_metadata.get("source_route")
+            != "official Salmon TPM via the A-P2 GSE176307 assay mapping"
+            or gene_metadata.get("scale_rule")
+            != "log2(TPM+1); official GSE176307 Salmon TPM"
+        ):
+            raise SystemExit("GSE176307 feature bundle does not use the current Salmon TPM route")
+        expected_source_hashes = _gse176307_source_hashes(view, runtime)
+        stored_source_hashes = gene_metadata.get("source_inputs_sha256")
+        if stored_source_hashes != expected_source_hashes or any(
+            stored_inputs.get(name) != digest
+            for name, digest in expected_source_hashes.items()
+        ):
+            raise SystemExit("GSE176307 feature source identities do not match current Salmon TPM inputs")
     outputs = manifest.get("outputs_sha256", {})
     if not outputs:
         raise SystemExit("Feature manifest has no output hashes")
@@ -468,6 +547,7 @@ def _manifested_feature_files(feature_dir: Path, manifest: Mapping, families) ->
     filenames = {
         "gene": "genes.tsv",
         "panel": "panels.tsv",
+        "panel_coverage90": "panel_coverage90.tsv",
         "pathway": "pathways.tsv",
         "fraction": "fractions.tsv",
     }
@@ -519,6 +599,12 @@ def _panel_coverage_counts(rows) -> tuple[int, int]:
     return complete, len(panel_rows) - complete
 
 
+def _panel_coverage90_counts(rows) -> tuple[int, int]:
+    panel_rows = [row for row in rows if row["unit_family"] == "panel_coverage90"]
+    met = sum(_coverage_complete(row["complete"]) for row in panel_rows)
+    return met, len(panel_rows) - met
+
+
 def _code_hashes() -> dict[str, str]:
     return {relative: _sha256(ROOT / relative) for relative in _CODE_FILES if (ROOT / relative).is_file()}
 
@@ -529,6 +615,8 @@ def _safe_feature_metadata(metadata: Mapping) -> dict:
         "unmapped_probes", "gene_map_rows", "score_rule",
         "source_scale_rule", "coverage_policy", "input_kind",
         "recount3_non_primary_dropped", "duplicate_gene_rule", "duplicate_gene_counts",
+        "duplicate_gene_symbols", "source_route", "source_inputs_sha256", "sensitivity_label",
+        "patients_with_tpm_assay", "patients_without_tpm_assay",
     }
     return {key: value for key, value in metadata.items() if key in allowed}
 

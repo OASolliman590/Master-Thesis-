@@ -22,6 +22,7 @@ SYNTHESIS_COLUMNS = (
     "study", "patient_set_id", "n_R", "n_NR", "stratum_type", "stratum",
     "cancer", "drug_class_stratum", "stage", "k", "estimate", "se",
     "n_cancers", "n_studies",
+    "sensitivity_label",
     "ci_lb", "ci_ub", "tau2", "I2", "Q", "p", "fixed_estimate",
     "fixed_ci_lb", "fixed_ci_ub", "q", "label", "low_k", "status",
     "reason", "weighting",
@@ -376,6 +377,7 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         label = "tentative_k2" if k == 2 else "standard"
         status = "not_pooled"
         reason = "gene_pooling_requires_k>=3"
+    sensitivity_label = "panel_coverage90 sensitivity" if unit_family == "panel_coverage90" else ""
     result = {
         "unit_family": unit_family,
         "unit": group["unit"],
@@ -395,6 +397,7 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         "se": _float(fit.get("se")) if fit else None,
         "n_cancers": _integer(fit.get("n_cancers"), default=0) if fit else 0,
         "n_studies": _integer(fit.get("n_studies"), default=0) if fit else 0,
+        "sensitivity_label": sensitivity_label,
         "ci_lb": _float(fit.get("ci_lb")) if fit else None,
         "ci_ub": _float(fit.get("ci_ub")) if fit else None,
         "tau2": _float(fit.get("tau2")) if fit else None,
@@ -415,6 +418,8 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         # A single effect is passed through by meta_rma.R with its normal CI.
         result["status"] = "not_estimable"
         result["reason"] = "single_study_has_no_estimable_effect"
+    if sensitivity_label:
+        result["label"] = f"panel_coverage90_{label}"
     if k == 1 and len(input_effects) == 1:
         single = input_effects[0]
         result["study"] = single["study"]
@@ -631,11 +636,20 @@ def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
             "fixed_ci_lb": None,
             "fixed_ci_ub": None,
             "q": None,
-            "label": "per_study_only",
+            "label": (
+                "panel_coverage90_per_study_only"
+                if effect["unit_family"] == "panel_coverage90"
+                else "per_study_only"
+            ),
             "low_k": drug_class in _LOW_K_CLASSES,
             "status": "per_study_only",
             "reason": reason,
             "weighting": "not pooled; source-defined endpoint reported by study",
+            "sensitivity_label": (
+                "panel_coverage90 sensitivity"
+                if effect["unit_family"] == "panel_coverage90"
+                else ""
+            ),
         })
     return summaries
 
@@ -734,6 +748,12 @@ def _metadata(stratum: str) -> dict:
         "fdr_method": "Benjamini-Hochberg",
         "fdr_threshold": 0.10,
         "fdr_scope": "unit_family x stratum x endpoint_family x endpoint_definition_id; pooled units only",
+        "panel_coverage90_sensitivity": {
+            "unit_family": "panel_coverage90",
+            "label": "panel_coverage90 sensitivity",
+            "coverage_rule": "at least 90% of panel members available after alias resolution",
+            "pooling_and_fdr_scope": "separate unit_family; never combined with main panel family",
+        },
         "gene_pool_minimum_k": 3,
         "subgroup_test_minimum_k": 10,
         "prediction_interval": "not computed for tentative_k2",

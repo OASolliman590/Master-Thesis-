@@ -10,6 +10,8 @@ import pytest
 
 from tools.a_meta.features import (
     FeatureTable,
+    _collapse_duplicate_genes,
+    _source_symbols,
     build_feature_table,
     external_feature_table,
     read_feature_table,
@@ -215,6 +217,69 @@ def test_ensembl_identifiers_resolve_to_panel_symbols(tmp_path):
     assert table.values_by_unit["MAVS"] == pytest.approx([math.log2(7), math.log2(9)])
 
 
+def test_gene_alias_addendum_resolves_the_older_ensembl_identifier():
+    source_symbols = _source_symbols(
+        ["ENSG00000161570.4", "ENSG_CURRENT"],
+        "ensembl",
+        custom_map={"ENSG_CURRENT": "CCL5"},
+        reference={"by_id": {}, "synonyms": {}, "ensembl": {}},
+    )
+    assert source_symbols == ["CCL5", "CCL5"]
+    features, values, counts, duplicates = _collapse_duplicate_genes(
+        source_symbols,
+        [[1.0, 2.0], [4.0, 5.0]],
+    )
+    assert features == ["CCL5"]
+    assert values == [[4.0, 5.0]]
+    assert counts["duplicate_rows_removed"] == 1
+    assert duplicates == ["CCL5"]
+
+
+def test_gse176307_tpm_keeps_unassayed_patient_row_missing_and_aligned(tmp_path, monkeypatch):
+    from tools.a_p2 import build as a_p2_build
+
+    clinical_rows = [
+        {"patient_id": "row_0", "sample_id": "sample_0"},
+        {"patient_id": "row_1", "sample_id": "sample_1"},
+        {"patient_id": "row_2", "sample_id": "sample_2"},
+    ]
+    monkeypatch.setattr(
+        a_p2_build,
+        "gse_mapping",
+        lambda clinical, inputs, runtime: {"row_0": "assay_0", "row_2": "assay_2"},
+    )
+    monkeypatch.setattr(a_p2_build, "source", lambda path, inputs, runtime: path)
+    monkeypatch.setattr(
+        a_p2_build,
+        "matrix",
+        lambda path, selected, runtime: (["GENE_A"], [[3.0, 7.0]]),
+    )
+    view = SimpleNamespace(
+        metadata=SimpleNamespace(
+            cohort_id="gse176307",
+            representation=SimpleNamespace(
+                platform="rnaseq", unit="normalised_counts", transform="other", feature_id="ensembl"
+            ),
+        ),
+        expression_path=tmp_path / "unused-expression.tsv",
+        clinical_rows=clinical_rows,
+    )
+
+    table = build_feature_table(
+        view,
+        "gene",
+        runtime=tmp_path,
+        panels={"PANEL": ("GENE_A",)},
+    )
+
+    assert table.n_patients == 3
+    assert table.values_by_unit["GENE_A"] == pytest.approx([2.0, None, 3.0])
+    assert table.metadata["scale_rule"] == "log2(TPM+1); official GSE176307 Salmon TPM"
+    assert table.metadata["representation"]["unit"] == "tpm"
+    assert table.metadata["patients_with_tpm_assay"] == 2
+    assert table.metadata["patients_without_tpm_assay"] == 1
+
+
 def test_symbol_probe_suffix_is_removed_only_for_known_gene_symbols(tmp_path, monkeypatch):
     from tools.a_meta import features as feature_module
 
@@ -282,6 +347,59 @@ def test_panels_use_complete_coverage_and_the_shared_panel_scorer(tmp_path):
     assert table.coverage["INCOMPLETE"]["complete"] is False
 
 
+def test_panel_coverage90_scores_17_of_18_but_not_7_of_8(tmp_path):
+    path = tmp_path / "expression.tsv"
+    panel18 = tuple(f"ZZ_SYNTHETIC_ONLY_PANEL18_MEMBER_{chr(65 + index)}" for index in range(18))
+    panel8 = tuple(f"ZZ_SYNTHETIC_ONLY_PANEL8_MEMBER_{chr(65 + index)}" for index in range(8))
+    available = [*panel18[:17], *panel8[:7]]
+    _write_matrix(path, ["0"], [[gene, 3] for gene in available])
+    view = _view(path, labels=["CR"])
+    panels = {"PANEL_18": panel18, "PANEL_8": panel8}
+
+    main = build_feature_table(view, "panel", panels=panels)
+    sensitivity = build_feature_table(view, "panel_coverage90", panels=panels)
+
+    assert main.values_by_unit == {"PANEL_18": [None], "PANEL_8": [None]}
+    assert sensitivity.coverage["PANEL_18"]["n_found"] == 17
+    assert sensitivity.coverage["PANEL_18"]["n_total"] == 18
+    assert sensitivity.coverage["PANEL_18"]["complete"] is True
+    assert sensitivity.values_by_unit["PANEL_18"] == pytest.approx([2.0])
+    assert sensitivity.coverage["PANEL_8"]["n_found"] == 7
+    assert sensitivity.coverage["PANEL_8"]["n_total"] == 8
+    assert sensitivity.coverage["PANEL_8"]["complete"] is False
+    assert sensitivity.values_by_unit["PANEL_8"] == [None]
+    assert sensitivity.metadata["sensitivity_label"] == "panel_coverage90 sensitivity"
+
+
+def test_panel_coverage90_requires_each_row_to_meet_90_percent_when_study_passes():
+    from tools.a_meta.features import _panel_coverage90_table, _panel_table
+
+    members = tuple(f"ZZ_SYNTHETIC_ONLY_EIGHT_GENE_MEMBER_{chr(65 + index)}" for index in range(8))
+    genes = FeatureTable(
+        cohort_id="synthetic",
+        unit_family="gene",
+        values_by_unit={
+            gene: [float(index + 1), float(index + 2), float(index + 3)]
+            for index, gene in enumerate(members)
+        },
+        n_patients=3,
+        metadata={"scale_rule": "synthetic fixture scale"},
+    )
+    genes.values_by_unit[members[-1]][0] = None
+    view = SimpleNamespace(metadata=SimpleNamespace(cohort_id="synthetic"))
+    panels = {"EIGHT_MEMBER_PANEL": members}
+
+    main = _panel_table(view, genes, panels)
+    sensitivity = _panel_coverage90_table(view, genes, panels)
+
+    assert sensitivity.coverage["EIGHT_MEMBER_PANEL"]["n_found"] == 8
+    assert sensitivity.coverage["EIGHT_MEMBER_PANEL"]["complete"] is True
+    assert sensitivity.values_by_unit["EIGHT_MEMBER_PANEL"] == [None, 5.5, 6.5]
+    assert main.coverage["EIGHT_MEMBER_PANEL"]["n_found"] == 7
+    assert main.coverage["EIGHT_MEMBER_PANEL"]["complete"] is False
+    assert main.values_by_unit["EIGHT_MEMBER_PANEL"] == [None, 5.5, 6.5]
+
+
 def test_external_patient_table_accepts_fraction_units_without_identifiers():
     table = external_feature_table(
         [
@@ -321,4 +439,34 @@ def test_wide_feature_table_round_trips_without_source_identifiers(tmp_path):
     assert restored.values_by_unit == table.values_by_unit
     assert "patient_row" in path.read_text(encoding="utf-8").splitlines()[0]
     assert "patient_id" not in path.read_text(encoding="utf-8")
+
+
+def test_feature_reader_keeps_coverage_metadata_by_unit_family(tmp_path):
+    values_path = tmp_path / "panels.tsv"
+    values_path.write_text("patient_row\tPANEL_A\n0\tNA\n", encoding="utf-8")
+    coverage_path = tmp_path / "coverage.tsv"
+    coverage_path.write_text(
+        "unit_family\tunit\tn_found\tn_total\tcomplete\tmissing\n"
+        "panel\tPANEL_A\t17\t18\tfalse\tGENE_Z\n"
+        "panel_coverage90\tPANEL_A\t17\t18\ttrue\tGENE_Z\n",
+        encoding="utf-8",
+    )
+
+    main = read_feature_table(
+        values_path,
+        cohort_id="synthetic",
+        unit_family="panel",
+        n_patients=1,
+        coverage_path=coverage_path,
+    )
+    sensitivity = read_feature_table(
+        values_path,
+        cohort_id="synthetic",
+        unit_family="panel_coverage90",
+        n_patients=1,
+        coverage_path=coverage_path,
+    )
+
+    assert main.coverage["PANEL_A"]["complete"] is False
+    assert sensitivity.coverage["PANEL_A"]["complete"] is True
 
