@@ -29,6 +29,9 @@ def test_lin_two_layer_seurat_pseudobulk_preserves_missing_genes(tmp_path):
     assert checks["two_count_layers"] is True
     assert checks["weighted_layer_markers"] is True
     assert checks["cross_layer_patient_profile"] is True
+    assert checks["gate0_identity_mismatch_refused"] is True
+    assert checks["vectorized_merge_matches_reference"] is True
+    assert checks["vectorized_merge_explicit_cases"] is True
 
     compartments = ("t_nk", "b_plasma", "myeloid", "fibroblast_stromal", "endothelial", "malignant_epithelial")
     expected_outputs = [
@@ -36,7 +39,7 @@ def test_lin_two_layer_seurat_pseudobulk_preserves_missing_genes(tmp_path):
         *[f"clinical__{slug}.tsv" for slug in compartments],
         "compartment_qc.tsv", "gene_coverage.tsv", "data_quality.tsv", "compartment_expression.tsv",
         "pcahawley_per_patient_expression.tsv", "labels_markers.tsv",
-        "labels_dotplot.png", "compartment_dotplot.png",
+        "labels_dotplot.png", "compartment_dotplot.png", "stage.log",
     ]
     source_path = result.outputs["synthetic_seurat.qs2"]
     metadata_path = result.outputs["metadata.rds"]
@@ -55,6 +58,15 @@ def test_lin_two_layer_seurat_pseudobulk_preserves_missing_genes(tmp_path):
          "metadata_sha256": hashlib.sha256(metadata_path.read_bytes()).hexdigest()},
         tmp_path / "lin_pseudobulk_result",
     )
+    stage_lines = analysis.outputs["stage.log"].read_text(encoding="utf-8").splitlines()
+    stage_names = [line.split()[0] for line in stage_lines]
+    assert stage_names[0] == "stage=run_started"
+    assert stage_names.count("stage=layer_read") == 2
+    assert stage_names.count("stage=layer_aggregated") == 2
+    assert "stage=merge_started" in stage_names
+    assert "stage=merge_complete" in stage_names
+    assert stage_names[-1] == "stage=write_complete"
+    assert all("synthetic_" not in line for line in stage_lines)
     assert analysis.outputs["expression__t_nk.tsv"].is_file()
     with analysis.outputs["clinical__t_nk.tsv"].open(newline="") as stream:
         clinical = {row["patient_id"]: row for row in csv.DictReader(stream, delimiter="\t")}

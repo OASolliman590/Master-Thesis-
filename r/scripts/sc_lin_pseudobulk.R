@@ -12,6 +12,8 @@ mode <- config$config$mode
 minimum_cells <- as.integer(config$config$minimum_cells)
 minimum_umis <- as.integer(config$config$minimum_umis)
 minimum_donors <- as.integer(config$config$minimum_donors_to_show)
+stage_log_path <- if (mode == "pseudobulk") file.path(config$output_dir, "stage.log") else NULL
+if (!is.null(stage_log_path)) sc_lin_stage_log(stage_log_path, "run_started")
 
 if (mode == "labels") {
   object <- qs2::qs_read(config$inputs$seurat)
@@ -27,7 +29,7 @@ if (mode == "labels") {
   message("Lin process started")
   processed <- sc_lin_process(config$inputs$seurat, metadata, cohort_map, compartment_map,
     panel_genes, minimum_cells, minimum_umis, config$inputs$metadata,
-    config$config$source_sha256, config$config$metadata_sha256)
+    config$config$source_sha256, config$config$metadata_sha256, stage_log_path)
   message("Lin process complete")
   for (index in seq_along(sc_lin_compartments)) {
     compartment <- sc_lin_compartments[[index]]
@@ -66,6 +68,7 @@ if (mode == "labels") {
       sep = "\t", row.names = FALSE, quote = FALSE, na = "NA")
     sc_lin_write_dotplot(processed$marker_map, file.path(config$output_dir, "labels_dotplot.png"),
       "author_label", "Lin author cell labels and canonical markers")
+    sc_lin_stage_log(stage_log_path, "write_complete", list(outputs = length(config$config$expected_outputs)))
   }
 }
 bridge_write_session(config$output_dir)

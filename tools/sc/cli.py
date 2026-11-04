@@ -408,7 +408,7 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
             *[f"expression__{slug}.tsv" for slug in _lin_slugs()],
             *[f"clinical__{slug}.tsv" for slug in _lin_slugs()],
             "compartment_qc.tsv", "gene_coverage.tsv", "data_quality.tsv", "compartment_expression.tsv",
-            "pcahawley_per_patient_expression.tsv", "labels_markers.tsv",
+            "pcahawley_per_patient_expression.tsv", "labels_markers.tsv", "stage.log",
             "labels_dotplot.png", "compartment_dotplot.png",
         ],
         "labels": ["labels_markers.tsv", "labels_dotplot.png"],
@@ -453,6 +453,11 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
             "outputs": {name: _digest(output / name) for name in expected},
             "r_run": bridge_summary})
     else:
+        pseudobulk_root = atlas_dir / "pseudobulk"
+        pseudobulk_root.mkdir(parents=True, exist_ok=True)
+        stage_log_path = pseudobulk_root / "sc_lin_stage.log"
+        shutil.copy2(result.outputs["stage.log"], stage_log_path)
+        stage_log_sha256 = _digest(stage_log_path)
         for compartment, slug in zip(LIN_COMPARTMENTS, _lin_slugs(), strict=True):
             destination = atlas_dir / "pseudobulk" / slug
             destination.mkdir(parents=True, exist_ok=True)
@@ -463,10 +468,10 @@ def _lin_command(command: str, atlas_dir: Path, runtime: Path) -> None:
                 "unit": "patient", "compartment": compartment, "count_source": "raw UMI counts",
                 "minimum_cells": MIN_CELLS, "minimum_umis": MIN_UMIS,
                 "input_sha256": input_hashes, "code": code_refs,
+                "stage_log_sha256": stage_log_sha256,
                 "r_package_versions": result.manifest["package_versions"],
                 "outputs": {"expression.tsv": _digest(destination / "expression.tsv"),
                     "clinical.tsv": _digest(destination / "clinical.tsv")}})
-        pseudobulk_root = atlas_dir / "pseudobulk"
         shutil.copy2(result.outputs["gene_coverage.tsv"], pseudobulk_root / "gene_coverage.tsv")
         qc_root = atlas_dir / "qc"
         qc_root.mkdir(parents=True, exist_ok=True)

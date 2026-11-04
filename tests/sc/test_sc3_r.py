@@ -107,3 +107,41 @@ def test_deseq2_uses_verified_patient_groups_and_keeps_metrics_separate(tmp_path
     assert {row["comparison_id"] for row in de_rows} == {"sc3_group_1", "sc3_group_2"}
     assert all("pathology" not in row["comparison_id"] for row in de_rows)
     assert refusals == []
+
+    def assert_invalid_group_rejected(mutator, message, label):
+        invalid_profiles = [dict(row) for row in profiles]
+        mutator(invalid_profiles)
+        invalid_clinical_path = tmp_path / f"{label}_clinical.tsv"
+        with invalid_clinical_path.open("w", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=list(invalid_profiles[0]), delimiter="\t")
+            writer.writeheader()
+            writer.writerows(invalid_profiles)
+        invalid_provenance = tmp_path / f"{label}_manifest.json"
+        write_sc3_r_synthetic_manifest(count_path, invalid_clinical_path, invalid_provenance)
+        with pytest.raises(RScriptError, match=message):
+            run_r(
+                script,
+                {"counts": count_path, "clinical": invalid_clinical_path},
+                {
+                    "expected_outputs": expected,
+                    "design": "~ response",
+                    "fdr": 0.10,
+                    "authorization": {
+                        "data_classification": "synthetic",
+                        "provenance_manifest": str(invalid_provenance),
+                    },
+                    "validated_groups": groups,
+                },
+                tmp_path / f"{label}_result",
+            )
+
+    assert_invalid_group_rejected(
+        lambda rows: rows[1].update(patient_id=rows[0]["patient_id"]),
+        "one profile per patient",
+        "duplicate_patient",
+    )
+    assert_invalid_group_rejected(
+        lambda rows: rows[1].update(sample_id=rows[0]["sample_id"]),
+        "unique specimens",
+        "duplicate_specimen",
+    )

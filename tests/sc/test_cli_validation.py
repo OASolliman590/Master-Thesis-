@@ -104,3 +104,21 @@ def test_read_profiles_rejects_compartment_or_shared_input_identity_mismatch(tmp
     _write_compartment(atlas_dir, "B/plasma", input_hash="b" * 64)
     with pytest.raises(ValueError, match="one input identity"):
         _read_profiles(atlas_dir, "lin2026")
+
+
+def test_read_profiles_rejects_absolute_code_and_runtime_paths(tmp_path):
+    atlas_dir = tmp_path / "A" / "sc_lin2026"
+    directory = _write_compartment(atlas_dir, "T/NK")
+    manifest_path = directory / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["code"][0]["path"] = "/absolute/script.py"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="relative paths and SHA256 hashes"):
+        _read_profiles(atlas_dir, "lin2026")
+
+    manifest["code"][0] = _code_ref("tools/sc/cli.py")
+    manifest["r_run"] = {"r_library": "/absolute/library"}
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="absolute script, library, or config"):
+        _read_profiles(atlas_dir, "lin2026")
