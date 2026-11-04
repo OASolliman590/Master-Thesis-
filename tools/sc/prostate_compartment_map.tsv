@@ -1,0 +1,18 @@
+source_major	source_minor	compartment
+Epithelial	Basal	basal epithelial
+Epithelial	Club	luminal/malignant epithelial
+Epithelial	Luminal	luminal/malignant epithelial
+Epithelial	Luminal_like	luminal/malignant epithelial
+Epithelial	Club_IFN	luminal/malignant epithelial
+Epithelial	Ciliated	luminal/malignant epithelial
+Epithelial	NE	luminal/malignant epithelial
+T-cells	*	T/NK
+Endothelial	*	endothelial
+SMCs	*	fibroblast/stromal
+Myeloid	*	myeloid
+CAFs	*	fibroblast/stromal
+PNS_glial	*	unmapped
+B-cells	*	B/plasma
+Cycling	*	unmapped
+Plasma_cells	*	B/plasma
+Unassigned	*	unmapped
