@@ -11,6 +11,7 @@ from pathlib import Path
 from . import core
 
 SOURCE_DIR = core.ROOT / 'docs/cohorts'
+_APPLEDOUBLE_MAGIC = b'\x00\x05\x16\x07'
 
 
 def read_tsv(path):
@@ -83,8 +84,35 @@ def build_catalog(output=None, build_results=None):
             'resources.tsv lists other tracks and pending sources. icbatlas_index.tsv is supplied study metadata, '
             'not patient data or verified eligibility. IMvigor210 is never loaded.\n')
         (stage / 'build_report.json').write_text(json.dumps(build_results, indent=2, sort_keys=True) + '\n')
-        for path in stage.iterdir():
+        for path in _publication_files(stage):
             os.replace(path, output / path.name)
     return {'database': str((output / 'catalog.sqlite').relative_to(core.ROOT)),
             'cohorts': len(cohorts), 'tables_ready': sum(r['table_status'] == 'table ready' for r in cohorts),
             'resources': len(tables['resources']), 'icbatlas_entries': len(tables['icbatlas_index'])}
+
+
+def _publication_files(stage):
+    """Exclude valid filesystem AppleDouble sidecars before moving stage files."""
+    files = []
+    sidecars = []
+    for path in list(stage.iterdir()):
+        if not path.name.startswith('._'):
+            files.append(path)
+            continue
+        if path.is_symlink() or path.is_dir():
+            raise ValueError(f'Unexpected AppleDouble sidecar type: {path.name}')
+        try:
+            with path.open('rb') as stream:
+                valid = stream.read(4) == _APPLEDOUBLE_MAGIC
+        except OSError as error:
+            raise ValueError(f'Could not validate AppleDouble sidecar: {path.name}') from error
+        if not valid:
+            raise ValueError(f'Invalid AppleDouble sidecar: {path.name}')
+        sidecars.append(path)
+    for sidecar in sidecars:
+        try:
+            sidecar.unlink()
+        except FileNotFoundError:
+            # Renaming the base file may remove its filesystem-created sidecar.
+            continue
+    return files
