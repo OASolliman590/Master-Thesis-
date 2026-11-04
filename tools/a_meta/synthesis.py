@@ -315,11 +315,9 @@ def _plan_subgroups(rows: list[dict], stratum: str) -> tuple[list[dict], list[di
     for key in sorted(grouped):
         unit_family, unit, endpoint, definition_id = key
         candidates = [row for row in grouped[key] if _valid_effect(row)]
-        usable = (
-            _one_effect_per_study(candidates, prefer_aggregate=True)
-            if moderator == "cancer"
-            else candidates
-        )
+        # Every moderator fit is a per-study analysis. Keep one aggregate
+        # effect when present; otherwise require one cancer-specific row.
+        usable = _one_effect_per_study(candidates, prefer_aggregate=True)
         _assert_unique_patient_sets(usable, "A subgroup test")
         n_studies = len({row["study"] for row in usable})
         levels = sorted({row["cancer"] if moderator == "cancer" else row["drug_class_stratum"]
@@ -507,15 +505,51 @@ def _one_effect_per_study(rows: Sequence[Mapping], *, prefer_aggregate: bool) ->
 
 def _assert_unique_patient_sets(rows: Sequence[Mapping], context: str) -> None:
     seen = set()
+    by_study: dict[str, list[Mapping]] = defaultdict(list)
     for row in rows:
         if not _valid_effect(row):
             continue
+        study = str(row.get("study", ""))
+        for previous in by_study[study]:
+            if _cancer_component_overlap(previous, row):
+                raise ValueError(
+                    f"{context} contains an aggregate and overlapping cancer-component effect for study {study!r}"
+                )
+        by_study[study].append(row)
         patient_set_id = str(row.get("patient_set_id", ""))
         if not patient_set_id:
             raise ValueError(f"{context} requires a patient_set_id for every effect")
         if patient_set_id in seen:
             raise ValueError(f"{context} contains a patient set more than once")
         seen.add(patient_set_id)
+
+
+def _cancer_component_overlap(left: Mapping, right: Mapping) -> bool:
+    """Detect a same-study aggregate/component overlap even when hashes differ."""
+    if str(left.get("study", "")) != str(right.get("study", "")):
+        return False
+    left_cancer = str(left.get("cancer", "")).strip().casefold()
+    right_cancer = str(right.get("cancer", "")).strip().casefold()
+    left_components = _component_set(left)
+    right_components = _component_set(right)
+    if left_cancer == "multi" and right_cancer == "multi":
+        return not left_components or not right_components or bool(left_components & right_components)
+    if left_cancer == "multi":
+        return not left_components or right_cancer in left_components
+    if right_cancer == "multi":
+        return not right_components or left_cancer in right_components
+    return False
+
+
+def _component_set(row: Mapping) -> set[str]:
+    components = {
+        component.strip().casefold()
+        for component in str(row.get("cancer_components", "")).split(",")
+        if component.strip()
+    }
+    if not components and str(row.get("cancer", "")).strip().casefold() != "multi":
+        components.add(str(row.get("cancer", "")).strip().casefold())
+    return components
 
 
 def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:

@@ -6,6 +6,7 @@ import json
 import pytest
 
 from tools.a_meta.synthesis import synthesize
+from tools.a_meta import synthesis as synthesis_module
 from tools.r_bridge import FakeR
 from tests.a_meta.helpers import synthetic_effect_rows_manifest
 
@@ -247,6 +248,72 @@ def test_cancer_subgroup_uses_one_selected_patient_set_per_study(tmp_path):
     assert len({(row["study"], row["patient_set_id"]) for row in subgroup_input}) == 10
     assert len({row["patient_set_id"] for row in subgroup_input}) == 10
     assert result.subgroup_tests[0]["total_k"] == 10
+
+
+def test_drug_class_and_subgroup_inputs_select_one_aggregate_or_component_per_study(tmp_path):
+    effects = []
+    for index in range(10):
+        study = f"study_{index}"
+        drug = "ANTI_PD_L1_AXIS" if index < 5 else "DUAL_PD1_CTLA4"
+        if index == 0:
+            effects.extend([
+                _effect(
+                    "panel", "PANEL", study, cancer="multi", drug=drug,
+                    patient_set_id="aggregate-set", cancer_components="melanoma,lung",
+                ),
+                _effect(
+                    "panel", "PANEL", study, cancer="melanoma", drug=drug,
+                    patient_set_id="melanoma-component-set",
+                ),
+                _effect(
+                    "panel", "PANEL", study, cancer="lung", drug=drug,
+                    patient_set_id="lung-component-set",
+                ),
+            ])
+        else:
+            effects.append(_effect(
+                "panel", "PANEL", study, cancer="melanoma" if index % 2 else "lung",
+                drug=drug,
+            ))
+    fake = FakeR({
+        "meta_rma.R": {
+            "meta.tsv": _canned_meta([
+                _pooled("A00001", 5, 0.2, 0.04),
+                _pooled("A00002", 5, 0.3, 0.05),
+            ]),
+            "subgroups.tsv": "test_id\tF\tp\tstatus\treason\nT00001\t2\t0.15\ttested\t\n",
+        }
+    })
+
+    _synthesize_synthetic(
+        effects,
+        "per_drug_class",
+        output_dir=tmp_path / "overlap-selection",
+        runner=fake,
+    )
+
+    meta_inputs = list(csv.DictReader(
+        (tmp_path / "overlap-selection/meta_input.tsv").open(newline="", encoding="utf-8"),
+        delimiter="\t",
+    ))
+    subgroup_inputs = list(csv.DictReader(
+        (tmp_path / "overlap-selection/subgroup_input.tsv").open(newline="", encoding="utf-8"),
+        delimiter="\t",
+    ))
+    assert len(meta_inputs) == 10
+    assert len({row["study"] for row in meta_inputs}) == 10
+    assert len(subgroup_inputs) == 10
+    assert len({row["study"] for row in subgroup_inputs}) == 10
+    assert next(row for row in meta_inputs if row["study"] == "study_0")["cancer"] == "multi"
+    assert next(row for row in subgroup_inputs if row["study"] == "study_0")["patient_set_id"] == "aggregate-set"
+
+    aggregate = effects[0]
+    component = effects[1]
+    assert aggregate["patient_set_id"] != component["patient_set_id"]
+    with pytest.raises(ValueError, match="aggregate and overlapping cancer-component"):
+        synthesis_module._assert_unique_patient_sets(
+            [aggregate, component], "synthetic subgroup"
+        )
 
 
 def test_source_label_family_is_reported_per_study_and_never_pooled(tmp_path):

@@ -15,7 +15,7 @@ from tools.a_meta.__main__ import (
 )
 from tools.a_meta.effects import EFFECT_COLUMNS
 from tools.a_meta.features import AVAILABLE_PANEL_IDS, FeatureTable
-from tools.a_meta.provenance import write_synthetic_fixture_manifest
+from tools.a_meta.provenance import SYNTHETIC_FIXTURE_PRODUCER, write_synthetic_fixture_manifest
 
 
 def test_real_cohort_effects_are_refused_without_allow_outcomes(tmp_path):
@@ -209,3 +209,78 @@ def test_feature_manifest_rejects_stale_input_output_and_row_identity(tmp_path):
     view.clinical_rows[0]["patient_id"] = "patient-b"
     with pytest.raises(SystemExit, match="row identities"):
         _validate_feature_manifest(view, feature_dir, "synthetic_cohort")
+
+
+def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, monkeypatch):
+    from tools.a_meta import __main__ as cli
+
+    cohort_id = "synthetic_reordered"
+    source_dir = tmp_path / "source"
+    feature_dir = tmp_path / "results" / cohort_id / "features"
+    source_dir.mkdir()
+    feature_dir.mkdir(parents=True)
+    expression_path = source_dir / "expression.tsv"
+    clinical_path = source_dir / "clinical.tsv"
+    expression_path.write_text("gene\trow-b\trow-a\nGENE\t2\t1\n", encoding="utf-8")
+    clinical_path.write_text(
+        "patient_id\tsample_id\ttimepoint\nrow-b\trow-b\tPRE\nrow-a\trow-a\tPRE\n",
+        encoding="utf-8",
+    )
+    view = SimpleNamespace(
+        metadata=SimpleNamespace(endpoint_families=("orr",)),
+        expression_path=expression_path,
+        clinical_rows=[
+            {"patient_id": "row-b", "sample_id": "row-b", "timepoint": "PRE"},
+            {"patient_id": "row-a", "sample_id": "row-a", "timepoint": "PRE"},
+        ],
+    )
+    outputs = {}
+    for filename, content in {
+        "genes.tsv": "patient_row\tGENE\n0\t2\n1\t1\n",
+        "panels.tsv": "patient_row\tPANEL\n0\t2\n1\t1\n",
+        "coverage.tsv": "unit_family\tunit\tcomplete\npanel\tPANEL\ttrue\n",
+        # This is an old optional table from before the patients were reordered.
+        "pathways.tsv": "patient_row\tPATHWAY\n0\told-row-a\n1\told-row-b\n",
+    }.items():
+        path = feature_dir / filename
+        path.write_text(content, encoding="utf-8")
+        if filename != "pathways.tsv":
+            outputs[filename] = hashlib.sha256(path.read_bytes()).hexdigest()
+    manifest = {
+        "data_classification": "synthetic",
+        "producer": SYNTHETIC_FIXTURE_PRODUCER,
+        "cohort": cohort_id,
+        "inputs_sha256": {
+            "cohort_expression": hashlib.sha256(expression_path.read_bytes()).hexdigest(),
+            "cohort_clinical": hashlib.sha256(clinical_path.read_bytes()).hexdigest(),
+        },
+        "outputs_sha256": outputs,
+        "feature_tables": {"gene": {"rows": 2}, "panel": {"rows": 2}},
+        "row_identity_sha256": _cohort_row_identity_sha256(view),
+    }
+    (feature_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    loaded_families = []
+    monkeypatch.setattr(cli, "cohort_view", lambda cohort, runtime: view)
+    monkeypatch.setattr(
+        cli,
+        "read_feature_table",
+        lambda path, *, cohort_id, unit_family, **kwargs: (
+            loaded_families.append(unit_family)
+            or SimpleNamespace(cohort_id=cohort_id, unit_family=unit_family)
+        ),
+    )
+    monkeypatch.setattr(cli, "study_effects", lambda *args, **kwargs: [])
+    args = SimpleNamespace(
+        cohort=cohort_id,
+        runtime=None,
+        allow_outcomes=False,
+        unit_family="all",
+        endpoint_family="all",
+        no_drug_class=False,
+    )
+
+    with pytest.warns(RuntimeWarning, match="Ignoring unlisted feature file pathways.tsv"):
+        cli._effects(args, tmp_path / "results")
+
+    assert loaded_families == ["gene", "panel"]

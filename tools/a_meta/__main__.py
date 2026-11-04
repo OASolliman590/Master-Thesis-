@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+import warnings
 from pathlib import Path
 from typing import Mapping
 
@@ -262,6 +263,7 @@ def _effects(args, results_root: Path) -> None:
         if args.unit_family == "all"
         else (args.unit_family,)
     )
+    feature_paths = _manifested_feature_files(feature_dir, feature_manifest, families)
     endpoints = view.metadata.endpoint_families if args.endpoint_family == "all" else (args.endpoint_family,)
     results = []
     input_hashes = {
@@ -269,8 +271,8 @@ def _effects(args, results_root: Path) -> None:
         "cohort_clinical": _sha256(view.expression_path.parent / "clinical.tsv"),
     }
     for unit_family in families:
-        feature_path = feature_dir / f"{unit_family}s.tsv"
-        if not feature_path.is_file():
+        feature_path = feature_paths.get(unit_family)
+        if feature_path is None:
             continue
         coverage_path = feature_dir / "coverage.tsv"
         table = read_feature_table(
@@ -455,6 +457,34 @@ def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str) -> dict:
         if not output_path.is_file() or _sha256(output_path) != expected_hash:
             raise SystemExit(f"Feature output hash mismatch: {name}")
     return manifest
+
+
+def _manifested_feature_files(feature_dir: Path, manifest: Mapping, families) -> dict[str, Path]:
+    """Return only feature tables named in the current manifest and hash list."""
+    feature_tables = manifest.get("feature_tables", {})
+    outputs = manifest.get("outputs_sha256", {})
+    if not isinstance(feature_tables, Mapping) or not isinstance(outputs, Mapping):
+        raise SystemExit("Feature manifest has invalid feature-table or output declarations")
+    filenames = {
+        "gene": "genes.tsv",
+        "panel": "panels.tsv",
+        "pathway": "pathways.tsv",
+        "fraction": "fractions.tsv",
+    }
+    requested = set(families)
+    result = {}
+    for family, filename in filenames.items():
+        path = feature_dir / filename
+        declared = family in feature_tables and filename in outputs
+        if path.is_file() and not declared:
+            warnings.warn(
+                f"Ignoring unlisted feature file {filename}",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+        if family in requested and declared:
+            result[family] = path
+    return result
 
 
 def _cohort_row_identity_sha256(view) -> str:
