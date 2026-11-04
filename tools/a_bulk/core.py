@@ -185,7 +185,7 @@ def analyse(
             dataset, root, endpoint=endpoint, allow_outcomes=allow_outcomes, runner=runner
         )
     if action in {"gsea", "all"}:
-        if not (root / "de" / "bridge" / "de.tsv").is_file():
+        if action == "gsea":
             stage_summaries["de"] = _run_de(
                 dataset, root, endpoint=endpoint, allow_outcomes=allow_outcomes, runner=runner
             )

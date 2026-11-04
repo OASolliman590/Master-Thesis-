@@ -254,6 +254,39 @@ def test_fgsea_runs_on_a_synthetic_ranking_and_local_gene_set(tmp_path):
     assert _read_tsv(result.outputs["fgsea.tsv"])[0]["pathway"] == "SYN_SET"
 
 
+def test_gsea_refreshes_the_de_ranking_before_use(tmp_path, monkeypatch):
+    dataset = _make_dataset(tmp_path / "data")
+    results = tmp_path / "results"
+    dataset_root = results / "A" / dataset.dataset_id
+    ranking = dataset_root / "de" / "bridge" / "de.tsv"
+    ranking.parent.mkdir(parents=True)
+    ranking.write_text("gene\tstatistic\nOLD\t1\n", encoding="utf-8")
+    gene_sets = tmp_path / "sets.gmt"
+    gene_sets.write_text("SYN_SET\tfixture\tGENE_000\n", encoding="utf-8")
+    calls = []
+
+    def refresh_de(_dataset, root, **_kwargs):
+        current_ranking = root / "de" / "bridge" / "de.tsv"
+        current_ranking.write_text("gene\tstatistic\nGENE_000\t2\n", encoding="utf-8")
+        calls.append("de")
+        return {"engine": "DESeq2"}
+
+    def run_gsea(_dataset, root, _gene_sets, **_kwargs):
+        assert (root / "de" / "bridge" / "de.tsv").read_text(encoding="utf-8") == (
+            "gene\tstatistic\nGENE_000\t2\n"
+        )
+        calls.append("gsea")
+        return {"pathway_count": 1}
+
+    monkeypatch.setattr(core, "_run_de", refresh_de)
+    monkeypatch.setattr(core, "_run_gsea", run_gsea)
+
+    summary = analyse(dataset, "gsea", results=results, gene_sets=gene_sets)
+
+    assert calls == ["de", "gsea"]
+    assert summary["completed_stages"] == ["de", "gsea"]
+
+
 @pytest.mark.requires_r
 def test_panel_scores_and_spearman_matrix_are_written_per_dataset(tmp_path):
     definitions = panel_definitions(core.PANEL_IDS)
