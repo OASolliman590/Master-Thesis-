@@ -2,6 +2,8 @@
 
 **Status: SIGNED by the user on 3 Nov 2026 ("I sign it"), v2.1.** It consolidates the approved C framework (`docs/decisions/C_FRAMEWORK_20261015.md`: C3 prioritisation, bounded C2 discovery, C1 calibration, paired Q_M versus Q_E primary) and re-bases its inputs on the signed v2.1 specs of Papers A, A.1 and B (3 Nov 2026). The decisions come from the user's answers on 3 Nov 2026 (decisions C-Q1 to C-Q12; all recommendations accepted except C-Q3, where the user chose to include M4, M5, M6, the negative-weight Ayers genes and all HOPE_18 genes). One astra-high review was applied (`specs/C/REVIEW_ASTRA_HIGH_20261103.md`). Where the older files in `specs/C/` and `specs/C/revision_20261015/` disagree with this document, this document prevails; the older files keep the technical detail (compound identity, WTCS parity, source records, pharmacology fields, wet-lab handoff).
 
+> **DRAFT amendment pending, 4 Nov 2026, NOT SIGNED:** `specs/C/AMENDMENT_C_VIRTUAL_20261104.md` proposes the conditional secondary module C-VIRTUAL (Paper D merged into C). Until the user signs it, the signed text below applies unchanged. No C product, gate or claim depends on it.
+
 **Amendments to the 15 Oct kit made here (explicit):** (1) the queries are built from B v2.1 outputs, not from a B "deficit contrast" (B v2.1 has none); (2) Q_E is an expression-matched comparator, not a deficit-ranked list; (3) the primary scores re-expression of all eligible genes, not programme-first desired-direction restoration; (4) the primary is restricted to DNMT-inhibitor experiments; (5) programme quotas are replaced by stratum-matched pairs.
 
 ## 1. Question and products
