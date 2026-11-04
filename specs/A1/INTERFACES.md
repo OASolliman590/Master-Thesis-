@@ -1,5 +1,7 @@
 # A1 interfaces and nonduplication
 
+**Amended 4 Nov 2026:** A and A.1 are one manuscript; A.1 is the A-LONG product of Paper A. The separate-manuscript conditions in this file no longer apply. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
+
 The shared acquisition kit is the only identity, episode, endpoint, pairing, exposure and matrix authority. A1 receives immutable released views and returns effect/context products, not revised patient IDs. A shares source families and may share patients within the development population, but manuscript reporting must disclose overlap and reference common baseline results rather than presenting them as independent replication.
 
 A1 exports longitudinal_support.tsv through A/A_TO_BC_HANDOFF.md, with contrast, exact/source-supported window, episode/regimen, effect scale, estimate/uncertainty, paired patient N, source/cancer support and biopsy-selection/lesion/platform limitations. A-BIO receives corroboration, not a replacement for baseline effects. A-PRED features and B/C candidate sets cannot be changed by final-test or reserved-patient A1 observations.

@@ -1,5 +1,7 @@
 # Paper A.1 — active longitudinal workstream v1.0.0
 
+**Amended 4 Nov 2026:** A and A.1 are one manuscript; A.1 is the A-LONG product of Paper A. The separate-manuscript conditions in this file no longer apply. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
+
 **Fully specified for implementation planning; no real-data analysis released.** Thesis inclusion is the default. A separate manuscript is conditional on distinct evidence and precision, not statistical significance. This directory is an engineering boundary, not a declaration of manuscript count or completed preregistration.
 
 ## Scientific question

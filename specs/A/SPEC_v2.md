@@ -12,6 +12,7 @@
 4. **A-COMP (supporting):** estimated immune-cell composition (quanTIseq; CIBERSORTx secondary) related to response and to the panels, descriptive only.
 5. **SC-1 (supporting):** where the panel genes are expressed, by cell type, in the Lin 2026 single-cell atlas.
 6. **The frozen score's equation**, published with all parameters.
+7. **A-LONG (secondary, added 4 Nov 2026):** on-treatment change, specified in `specs/A1/SPEC_v2.md`; same manuscript, its own tests and FDR families, corroboration only. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
 
 ## 2. Data (frozen at the acquisition close, `docs/decisions/A_ACQUISITION_CLOSED_20261102.md`)
 - **20 development cohorts, 1,257 patients** (`docs/cohorts/REGISTRY.tsv`): melanoma (Riaz, Hugo, Liu, Gide, Van Allen, GSE168204, GSE145996, GSE165278, GSE122220, plus part of GSE93157), lung (GSE135222, GSE136961, GSE218989), kidney (Braun nivolumab arm, GSE67501), head and neck (GSE159067), bladder (GSE176307, GSE111636), gastric (Kim), liver (GSE140901) and the three-cancer NanoString GSE93157.

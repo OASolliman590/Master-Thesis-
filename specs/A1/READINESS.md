@@ -1,5 +1,7 @@
 # A1 readiness and release states
 
+**Amended 4 Nov 2026:** A and A.1 are one manuscript; A.1 is the A-LONG product of Paper A. The separate-manuscript conditions in this file no longer apply. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
+
 A1 is active and fully specified. It is not already paired, fitted, externally preregistered or publication-ready. Use branch/window-specific states rather than one global green flag.
 
 | Gate | Required evidence | Failure blocks |

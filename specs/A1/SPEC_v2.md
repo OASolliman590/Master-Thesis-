@@ -1,5 +1,7 @@
 # Paper A.1: consolidated specification v2.1, 3 Nov 2026
 
+**Amended 4 Nov 2026:** A and A.1 are one manuscript; A.1 is the A-LONG product of Paper A. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
+
 **Status: SIGNED by the user on 3 Nov 2026 ("I sign all three"), v2.1.** v2.1 (3 Nov): no change to A.1's design; the version number is aligned with Papers A and B. Paper A's composition analysis (A-COMP) is baseline only and is not applied to on-treatment change. It consolidates the A.1 kit of 15 Oct (`specs/A1/`: LONGITUDINAL_ANALYSIS, PAIRING_CONTRACT, TIMEPOINT_ONTOLOGY, contrast_registry.tsv) with the later signed decisions:
 - integrated plan, 29 Oct: within-study arm comparison for randomised mixed studies;
 - single-cell plan, 2 Nov: single-cell A.1 cut, bulk A.1 kept;

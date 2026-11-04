@@ -1,5 +1,7 @@
 # A1 validation and four-figure architecture
 
+**Amended 4 Nov 2026:** A and A.1 are one manuscript; A.1 is the A-LONG product of Paper A. The separate-manuscript conditions in this file no longer apply. See `specs/amendments/2026-11-04-a-a1-one-manuscript/AMENDMENT.md`.
+
 ## Mandatory checks
 
 Validate episode-specific outcome assignment, exact/source-supported timing, patient-aware pairing, row-order invariance, multiple follow-ups, lesion/platform policy, missing-biopsy audit and protected A-P2 family exclusion. Statistical tests must include known synthetic interaction sign, a rank-deficient patient-plus-response design, a valid full-rank contrast, shared baseline dependence and one-response-group nonestimability. 'Significant in one group only' must never pass as an interaction result.

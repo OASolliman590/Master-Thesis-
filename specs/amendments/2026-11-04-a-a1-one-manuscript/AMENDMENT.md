@@ -1,6 +1,6 @@
 # Papers A and A.1: one manuscript (4 Nov 2026)
 
-**Status: DRAFT, NOT SIGNED.** It takes effect only when the user signs it. Until then the v2.1 specs stand as written. The user said on 4 Nov 2026 that A and A.1 will be in the same manuscript; this note works out what that changes. All of it was decided before any response result existed.
+**Status: SIGNED by the user on 4 Nov 2026 ("I sign it").** The user said on 4 Nov 2026 that A and A.1 will be in the same manuscript; this note works out what that changes. All of it was decided before any response result existed.
 
 ## Decision
 
@@ -27,7 +27,3 @@ The manuscript asks one question in two parts: what immune biology before treatm
 ## If the data are thin
 
 A-LONG is reported whatever it finds, with the pairs it has. If too few pairs pass the gates, Figure 8 shows the pair structure and per-study estimates, and the manuscript says the question could not be answered well. Paper A's main results do not depend on it.
-
-## Sign-off
-
-- [ ] Signed by the user, date: ________

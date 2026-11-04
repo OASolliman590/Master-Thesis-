@@ -90,3 +90,5 @@ _Avoid_: checklist, review form
 **Drug class**: The immunotherapy target class a patient received, normalised to anti-PD-(L)1 axis, anti-CTLA-4, or dual anti-PD-1 plus anti-CTLA-4. A drug name or a raw source label is not a drug class until it is mapped.
 
 **Synthesis stratum**: A set of studies whose per-study effects are combined in one meta-analysis, defined by cancer, by drug class, or by both. A stratum with one or two studies is reported by the small-k rule, never pooled into a mixed group.
+
+**A-LONG**: The secondary product of Paper A that measures within-patient change during ICI treatment, specified in `specs/A1/`. Papers A and A.1 are one manuscript; A-LONG corroborates baseline results and never changes them.
