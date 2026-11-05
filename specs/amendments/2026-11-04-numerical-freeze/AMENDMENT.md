@@ -41,8 +41,8 @@ MSigDB 2026.1.Hs, through the pinned `msigdbr` 26.1.1. This is deliberately not 
 | IFN-gamma, A-P2 baseline studies | melanoma 2 of 5 complete, 5 of 5 at 90%; bladder 1 of 1; gastric 1 of 1 |
 | All 50 sets, studies complete | 2 to 13, median 9 |
 | All 50 sets, studies at 90% or more | 13 to 16 |
-| Drop each other study's missing genes | median correlation at least 0.999 for every set |
-| Common genes only | median correlation at least 0.974 (mean), 0.941 (singscore) |
+| Drop each other study's missing genes | median correlation at least 0.998 for every set |
+| Common genes only | median correlation at least 0.974 (mean), 0.940 (singscore) |
 | Worst single comparison | -0.07 (singscore, KRAS signaling DN) |
 | Targeted gene subsets | 39 of 50 sets below 0.90 median by both methods |
 
