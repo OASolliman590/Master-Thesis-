@@ -1,6 +1,6 @@
 # Paper C amendment: secondary module C-VIRTUAL (Paper D merged into C)
 
-**Status: DRAFT, 4 Nov 2026. NOT SIGNED.** The user approved the merge in principle ("Yes, merge them", relayed by the coordinator session on 4 Nov 2026). The user has not yet approved this text or answered the questions in section 11. Signed `specs/C/SPEC_v2.md` (v2.1) stays in force without change until the user signs this amendment.
+**Status: DRAFT, 4 Nov 2026. NOT SIGNED.** The user approved the merge in principle ("Yes, merge them", relayed by the coordinator session on 4 Nov 2026). The user answered Q2 on 5 Nov 2026 ("Yes, within 3-fold"). The user has not yet approved this text or answered the other questions in section 11. Signed `specs/C/SPEC_v2.md` (v2.1) stays in force without change until the user signs this amendment.
 
 ## 0. What this amendment does
 - **Adds** one conditional secondary module, `C-VIRTUAL`, to Paper C.
@@ -8,7 +8,7 @@
 - **Replaces** "Paper D remains separate" in `docs/decisions/C_FRAMEWORK_20261015.md` item 8. The rest of item 8 stays: a virtual prediction does not corroborate another prediction, and it does not fill missing measured validation in C.
 - **Result if the module fails:** it is reported as "not run", with the reason. C still stands.
 
-**The main finding for the decision.** The module can run only if the user accepts a nearest-dose rule (question Q2). PC3 has no compound at an exact Tahoe dose. This includes decitabine: PC3 has 1.0 µM and Tahoe has 0.5 and 5.0 µM. Under the 15 Oct D rule, no primary test unit exists.
+**The main finding for the decision.** PC3 has no compound at an exact Tahoe dose. This includes decitabine: PC3 has 1.0 µM and Tahoe has 0.5 and 5.0 µM. Under the 15 Oct D rule, no primary test unit would exist. On 5 Nov 2026 the user accepted the nearest Tahoe label within 3-fold (Q2), which gives 14 test compounds. This decision replaces the 15 Oct rule once the amendment is signed.
 
 ## 1. Question
 In PC3 prostate cancer cells at 24 h, does a frozen virtual-cell model predict the measured response to a drug better than the average response to the same drug in other cell lines?
@@ -60,7 +60,7 @@ Limits of this inventory:
 
 ## 3. Test units
 - **Primary data:** GSE306429, PC3, 24 h, with library-matched controls on the same plate. Measured cells come from the raw data. The limma table is not the outcome.
-- **Test unit:** one compound at one dose, with one label in the Tahoe vocabulary and at least 2 plates. The dose rule is Q2. The current count is 14.
+- **Test unit:** one compound at one dose, with one label in the Tahoe vocabulary and at least 2 plates. The dose must be within 3-fold of the Tahoe label (Q2, decided 5 Nov 2026). The nearest label is used for model and baseline alike. The current count is 14.
 - **Replicate:** plate. There are about 2 per compound. This is below C's rule of 3 independent cultures, so this data set **never** enters C-P (Q11).
 - **Epigenetic subset:** decitabine and belinostat only. Two drugs is descriptive only. Absent drugs are reported as "not in model vocabulary".
 
@@ -136,12 +136,12 @@ Each gate must pass in this order. A failure stops the module. Its report says "
 - **Cut order inside the module:** MIX-seq (if kept, Q1), then Rhaister-O, then the dose sensitivity. The primary comparator, the no-change baseline and the replicate ceiling are never cut.
 
 ## 11. Questions for the user (answer by number)
-The coordinator's hand-over states that the user has answered none of these.
+Q2 is answered. The others are open: the coordinator's hand-over states that the user had answered none of them.
 
 | # | Question | Recommendation |
 | --- | --- | --- |
 | Q1 | Which test set? | GSE306429 PC3 as primary. MIX-seq as descriptive only and first to cut: it has no replicates, no epigenetic drug and few matched doses. Its LNCaP ID `ACH-000510` conflicts with Tahoe, so resolve that before any join |
-| **Q2** | **Dose rule? This decides whether the module can run** | Accept the nearest Tahoe label within 3-fold, for model and baseline alike. The claim then says "nearest dose". This relaxes the 15 Oct rule (no neighbouring-dose switch). The alternative, exact dose only, gives 0 units, so the module is "not run" today. The earlier idea of an exact-dose sensitivity cannot work (0 units); use the other-neighbour sensitivity of section 6 |
+| Q2 | Dose rule? | **DECIDED by the user, 5 Nov 2026: "Yes, within 3-fold."** Nearest Tahoe label within 3-fold, for model and baseline alike. The claim says "nearest dose". This relaxes the 15 Oct rule (no neighbouring-dose switch). Exact dose would have given 0 units. An exact-dose sensitivity cannot work (0 units), so the other-neighbour sensitivity of section 6 is used |
 | Q3 | Gene list route? | Try the count-matching route of section 2 at V2. Post a public issue to Arc only if that fails, and only with your approval. If both fail: no-go. ST-SE-Tahoe stays out, because it would be a different model |
 | Q4 | Model? | State `ST-HVG-Tahoe` only, `final.ckpt`, seed 42 |
 | Q5 | Baseline? | Same drug and label, mean over the 45 training lines. Rhaister-O as a secondary comparator |
