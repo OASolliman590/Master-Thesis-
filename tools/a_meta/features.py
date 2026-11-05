@@ -11,15 +11,25 @@ from typing import Mapping, Sequence
 
 from tools import a_scoring
 from tools.a_scoring import panel_scores
+from .frozen import (
+    COMMON_GENE_TABLE,
+    FROZEN_ALIASES,
+    HALLMARK_GMT,
+    file_sha256,
+    membership_sha256,
+    read_common_gene_sets,
+    read_frozen_aliases,
+    read_hallmark_gene_sets,
+    read_identifier_proposals,
+)
+from .provenance import known_cohort_ids
 
 
 GENE_ALIAS_ADDENDUM_PATH = (
     Path(__file__).resolve().parents[2]
     / "specs/amendments/2026-11-04-panel-coverage/gene_aliases_addendum.tsv"
 )
-# The currently materialised A programme registry has ten complete memberships.
-# The Hallmark IFN-gamma membership is deliberately not fabricated here: its
-# separate pre-outcome freeze is still required.
+# These eleven A-BIO memberships are fixed by the signed numerical freeze.
 AVAILABLE_PANEL_IDS = (
     "P_ANTIGEN_PRESENTATION",
     "AYERS_GEP_18",
@@ -31,8 +41,19 @@ AVAILABLE_PANEL_IDS = (
     "M4_EXCLUSION",
     "M5_CHECKPOINT_CANDIDATES",
     "M6_EPIGENETIC_REGULATORS",
+    "HALLMARK_INTERFERON_GAMMA_RESPONSE",
 )
-_UNIT_FAMILIES = {"gene", "panel", "panel_coverage90", "pathway", "fraction"}
+_UNIT_FAMILIES = {
+    "gene", "m5m6_gene", "panel", "panel_coverage90", "pathway",
+    "pathway_coverage90", "pathway_common", "targeted_subset", "fraction",
+}
+_PATHWAY_FAMILIES = {"pathway", "pathway_coverage90", "pathway_common"}
+_SENSITIVITY_FAMILIES = {
+    "panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset",
+}
+TARGETED_SUBSET_STUDIES = {"gse136961", "gse93157", "gse140901", "gse159067"}
+SENSITIVITY_LABEL = "sensitivity only; does not support claims alone"
+PANEL_METHOD_IDS = {panel: f"CUSTOM_MEAN_{panel}" for panel in AVAILABLE_PANEL_IDS}
 _FORBIDDEN_IDENTIFIER_COLUMNS = {"patient_id", "sample_id", "patient", "sample"}
 
 
@@ -69,6 +90,8 @@ def build_feature_table(
     gtf_path: Path | str | None = None,
     probe_map: Path | str | None = None,
     r_out_dir: Path | str | None = None,
+    common_gene_table: Path | str | None = None,
+    test_only_gene_sets: bool = False,
     runner=None,
 ) -> FeatureTable:
     """Build gene, panel, singscore pathway, or external fraction features.
@@ -79,7 +102,25 @@ def build_feature_table(
     """
     family = family.casefold()
     if family not in _UNIT_FAMILIES:
-        raise ValueError("Feature family must be gene, panel, panel_coverage90, pathway, or fraction")
+        raise ValueError("Unsupported A-BIO feature family")
+    cohort_id = str(view.metadata.cohort_id).casefold()
+    if test_only_gene_sets and family not in _PATHWAY_FAMILIES:
+        raise ValueError("test_only_gene_sets only applies to pathway feature families")
+    if test_only_gene_sets and (
+        cohort_id in known_cohort_ids()
+        or getattr(view, "data_classification", "") == "real"
+    ):
+        raise ValueError("test_only_gene_sets is restricted to synthetic, unregistered cohorts")
+    platform = str(view.metadata.representation.platform).casefold()
+    targeted = platform in {"targeted_rna", "nanostring"}
+    if family == "gene" and targeted:
+        raise ValueError("The gene family excludes targeted_rna and nanostring platforms")
+    if family in _PATHWAY_FAMILIES and targeted:
+        raise ValueError("Pathway families exclude targeted_rna and nanostring platforms")
+    if family == "targeted_subset" and (
+        not targeted or cohort_id not in TARGETED_SUBSET_STUDIES
+    ):
+        raise ValueError("targeted_subset is restricted to the four signed targeted studies")
     if family == "fraction":
         if external is None:
             raise ValueError("Fraction features require an external patient table")
@@ -88,12 +129,14 @@ def build_feature_table(
             cohort_id=view.metadata.cohort_id,
             expected_patients=len(view.clinical_rows),
         )
-    if family == "pathway":
-        if gene_sets is None:
-            raise ValueError("Pathway features require a gene-set file")
+    _gene_alias_addendum()
+    if family in _PATHWAY_FAMILIES:
         return _pathway_features(
             view,
-            gene_sets,
+            family,
+            gene_sets=gene_sets,
+            common_gene_table=common_gene_table,
+            test_only_gene_sets=test_only_gene_sets,
             runtime=runtime,
             gene_map=gene_map,
             gtf_path=gtf_path,
@@ -102,10 +145,34 @@ def build_feature_table(
             runner=runner,
         )
 
+    if family == "m5m6_gene":
+        focused_panels = a_scoring.core.panel_definitions(
+            ("M5_CHECKPOINT_CANDIDATES", "M6_EPIGENETIC_REGULATORS")
+        )
+        aliases = read_frozen_aliases()
+        focused_panels = {
+            name: tuple(aliases.get(gene, gene) for gene in members)
+            for name, members in focused_panels.items()
+        }
+        genes = _gene_table(
+            view, runtime=runtime, gene_map=gene_map, gtf_path=gtf_path,
+            probe_map=probe_map,
+            target_symbols=_resolution_targets(focused_panels),
+        )
+        return _focused_gene_table(genes, focused_panels)
+    if family == "targeted_subset":
+        aliases = read_frozen_aliases()
+        memberships = read_hallmark_gene_sets(aliases=aliases)
+        genes = _gene_table(
+            view, runtime=runtime, gene_map=gene_map, gtf_path=gtf_path,
+            probe_map=probe_map,
+            target_symbols=tuple(sorted({gene for members in memberships.values() for gene in members})),
+        )
+        return _targeted_subset_table(view, genes, memberships)
     panel_definitions = (
         {name: tuple(members) for name, members in panels.items()}
         if panels is not None
-        else a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
+        else _panel_definitions(AVAILABLE_PANEL_IDS)
     )
     genes = _gene_table(
         view,
@@ -169,7 +236,11 @@ def external_feature_table(
         unit_family=unit_family,
         values_by_unit=values_by_unit,
         n_patients=n_patients,
-        metadata={"scale_rule": "source_scale", "input_kind": "external_patient_table"},
+        metadata={
+            "scale_rule": "source_scale",
+            "input_kind": "external_patient_table",
+            "method_id_by_unit": {unit: "EXTERNAL_SOURCE_SCALE" for unit in values_by_unit},
+        },
     )
 
 
@@ -245,6 +316,9 @@ def read_feature_table(
                 "n_total": int(row["n_total"]),
                 "missing": [gene for gene in row.get("missing", "").split(",") if gene],
                 "complete": row["complete"].casefold() == "true",
+                "scorable": row.get("scorable", "true").casefold() == "true",
+                "reason": row.get("reason", ""),
+                "fixed_subset": [gene for gene in row.get("fixed_subset", "").split(";") if gene],
             }
     return FeatureTable(
         cohort_id=cohort_id,
@@ -378,6 +452,8 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         metadata["gene_map_rows"] = len(custom_map)
     if recount3_used:
         metadata["recount3_non_primary_dropped"] = recount3_dropped
+    metadata["m5m6_gene_units"] = sorted(_m5m6_gene_units())
+    metadata["method_id_by_unit"] = {unit: "GENE_STUDY_SCALE" for unit in values_by_unit}
     return FeatureTable(
         cohort_id=view.metadata.cohort_id,
         unit_family="gene",
@@ -394,7 +470,6 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
     coverage: dict[str, dict] = {}
     for unit, members in panels.items():
         unit_scores = []
-        unit_coverage = None
         for patient_row in range(genes.n_patients):
             expression = {
                 gene: gene_values[gene][patient_row]
@@ -403,14 +478,13 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
             }
             scores, patient_coverage = panel_scores(expression, {unit: members}, require_complete=True)
             unit_scores.append(scores[unit])
-            if unit_coverage is None:
-                unit_coverage = patient_coverage[unit]
         scores_by_unit[unit] = unit_scores
-        complete = bool(unit_coverage and unit_coverage["complete"])
+        member_coverage = _panel_member_coverage(gene_values, members)
+        complete = member_coverage["n_found"] == len(members)
         coverage[unit] = {
-            "n_found": int(unit_coverage["n_found"]) if unit_coverage else 0,
-            "n_total": int(unit_coverage["n_total"]) if unit_coverage else len(members),
-            "missing": list(unit_coverage["missing"]) if unit_coverage else list(members),
+            "n_found": member_coverage["n_found"],
+            "n_total": len(members),
+            "missing": member_coverage["missing"],
             "complete": complete,
         }
     return FeatureTable(
@@ -422,6 +496,8 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
         metadata={
             "score_rule": "tools.a_scoring.panel_scores; unweighted mean; complete coverage only",
             "source_scale_rule": genes.metadata["scale_rule"],
+            "method_id_by_unit": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
+            "custom_method_ids": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
         },
     )
 
@@ -441,6 +517,9 @@ def _panel_coverage90_table(
         missing = member_coverage["missing"]
         n_found = member_coverage["n_found"]
         coverage_met = _coverage90_met(n_found, len(members))
+        fixed_subset = tuple(gene for gene in members if gene in gene_values and any(
+            value is not None for value in gene_values[gene]
+        )) if coverage_met else ()
         unit_scores = []
         for patient_row in range(genes.n_patients):
             if not coverage_met:
@@ -448,13 +527,13 @@ def _panel_coverage90_table(
                 continue
             expression = {
                 gene: gene_values[gene][patient_row]
-                for gene in members
-                if gene in gene_values and gene_values[gene][patient_row] is not None
+                for gene in fixed_subset
+                if gene_values[gene][patient_row] is not None
             }
-            if not _coverage90_met(len(expression), len(members)):
+            if len(expression) != len(fixed_subset):
                 unit_scores.append(None)
                 continue
-            scores, _ = panel_scores(expression, {unit: members}, require_complete=False)
+            scores, _ = panel_scores(expression, {unit: fixed_subset}, require_complete=True)
             unit_scores.append(scores[unit])
         scores_by_unit[unit] = unit_scores
         coverage[unit] = {
@@ -463,6 +542,8 @@ def _panel_coverage90_table(
             "missing": missing,
             "complete": coverage_met,
             "full_coverage": not missing,
+            "fixed_subset": list(fixed_subset),
+            "scorable": coverage_met,
         }
     return FeatureTable(
         cohort_id=view.metadata.cohort_id,
@@ -471,16 +552,15 @@ def _panel_coverage90_table(
         n_patients=genes.n_patients,
         coverage=coverage,
         metadata={
-            "score_rule": (
-                "tools.a_scoring.panel_scores; unweighted mean with require_complete=False "
-                "only after study-level and per-patient 90% coverage rules pass"
-            ),
+            "score_rule": "tools.a_scoring.panel_scores; unweighted mean over one fixed study subset",
             "source_scale_rule": genes.metadata["scale_rule"],
             "coverage_policy": (
-                "at least 90% of panel members available after alias resolution in the study "
-                "and in each scored patient row"
+                "one fixed study subset of at least 90% of members; a patient missing any "
+                "fixed-subset member receives NA"
             ),
-            "sensitivity_label": "panel_coverage90 sensitivity",
+            "sensitivity_label": SENSITIVITY_LABEL,
+            "method_id_by_unit": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
+            "custom_method_ids": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
         },
     )
 
@@ -492,7 +572,10 @@ def _coverage90_met(n_found: int, n_total: int) -> bool:
 
 
 def _panel_member_coverage(gene_values, members):
-    missing = [gene for gene in members if gene not in gene_values]
+    missing = [
+        gene for gene in members
+        if gene not in gene_values or not any(value is not None for value in gene_values[gene])
+    ]
     return {"n_found": len(members) - len(missing), "missing": missing}
 
 
@@ -549,8 +632,34 @@ def _gse176307_feature_id(feature_ids: Sequence[str]) -> str:
     return "symbol"
 
 
-def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map, r_out_dir, runner):
+def _pathway_features(
+    view,
+    family,
+    *,
+    gene_sets,
+    common_gene_table,
+    test_only_gene_sets,
+    runtime,
+    gene_map,
+    gtf_path,
+    probe_map,
+    r_out_dir,
+    runner,
+):
     from .r_manifest import run_r_sanitised
+
+    aliases = read_frozen_aliases()
+    gene_set_path = Path(gene_sets).expanduser().resolve(strict=True) if gene_sets is not None else HALLMARK_GMT
+    memberships = read_hallmark_gene_sets(
+        gene_set_path,
+        aliases=aliases,
+        test_only=test_only_gene_sets,
+    )
+    common_path = None
+    common_memberships = None
+    if family == "pathway_common":
+        common_path = Path(common_gene_table).expanduser().resolve(strict=True) if common_gene_table else COMMON_GENE_TABLE
+        common_memberships = read_common_gene_sets(common_path, aliases=aliases)
 
     genes = _gene_table(
         view,
@@ -558,17 +667,32 @@ def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map
         gene_map=gene_map,
         gtf_path=gtf_path,
         probe_map=probe_map,
+        target_symbols=tuple(sorted({gene for members in memberships.values() for gene in members})),
     )
-    gene_set_path = Path(gene_sets).expanduser().resolve(strict=True)
     output_dir = Path(r_out_dir) if r_out_dir is not None else Path(view.expression_path).parent / "singscore-stage"
     matrix_path = output_dir.parent / (output_dir.name + ".expression.tsv")
     matrix_path.parent.mkdir(parents=True, exist_ok=True)
     _write_expression_matrix(matrix_path, genes)
     script = Path(__file__).resolve().parents[2] / "r/scripts/singscore.R"
+    inputs = {
+        "expression": matrix_path,
+        "gene_sets": gene_set_path,
+        "aliases": FROZEN_ALIASES,
+    }
+    config = {
+        "family": family,
+        "test_only_gene_sets": bool(test_only_gene_sets),
+        "gene_set_sha256": file_sha256(gene_set_path),
+        "common_gene_table_sha256": "",
+        "minimum_common_membership": 10,
+    }
+    if common_path is not None:
+        inputs["common_gene_table"] = common_path
+        config["common_gene_table_sha256"] = file_sha256(common_path)
     result = run_r_sanitised(
         script,
-        {"expression": matrix_path, "gene_sets": gene_set_path},
-        {"expected_outputs": ["scores.tsv", "coverage.tsv"]},
+        inputs,
+        {**config, "expected_outputs": ["scores.tsv", "coverage.tsv"]},
         output_dir,
         script_id="r/scripts/singscore.R",
         runner=runner,
@@ -583,22 +707,123 @@ def _pathway_features(view, gene_sets, *, runtime, gene_map, gtf_path, probe_map
         row["unit"]: {
             "n_found": int(row["n_found"]),
             "n_total": int(row["n_total"]),
-            "missing": [gene for gene in row["missing_genes"].split(",") if gene],
+            "missing": [gene for gene in row.get("missing_genes", "").split(";") if gene],
             "complete": row["complete"].casefold() == "true",
+            "scorable": row.get("scorable", "true").casefold() == "true",
+            "reason": row.get("reason", ""),
+            "fixed_subset": [gene for gene in row.get("fixed_subset", "").split(";") if gene],
         }
         for row in coverage_rows
     }
     return FeatureTable(
         cohort_id=view.metadata.cohort_id,
-        unit_family="pathway",
+        unit_family=f"test_only_{family}" if test_only_gene_sets else family,
         values_by_unit=values_by_unit,
         n_patients=genes.n_patients,
         coverage=coverage,
         metadata={
-            "score_rule": "singscore simpleScore; gene sets supplied by caller",
+            "score_rule": "singscore simpleScore; tiesMethod=min; knownDirection=TRUE; default centring",
             "source_scale_rule": genes.metadata["scale_rule"],
-            "coverage_policy": "complete gene-set membership required; incomplete sets receive missing scores",
+            "coverage_policy": (
+                "complete Hallmark membership required" if family == "pathway" else
+                "fixed study subset with at least 90% coverage; patients missing a subset gene receive NA"
+                if family == "pathway_coverage90" else
+                "fixed hashed common-gene membership; every common gene is required"
+            ),
+            "sensitivity_label": SENSITIVITY_LABEL if family in _SENSITIVITY_FAMILIES else "",
+            "source_gene_sets_sha256": file_sha256(gene_set_path),
+            "source_gene_sets_collection": "hallmark_test_only" if test_only_gene_sets else "hallmark_2026.1.Hs",
+            "common_gene_table_sha256": file_sha256(common_path) if common_path is not None else "",
+            "membership_sha256": {
+                unit: membership_sha256(tuple(sorted(members)))
+                for unit, members in (common_memberships or memberships).items()
+            },
+            "method_id_by_unit": {
+                unit: "SINGSCORE_TEST_ONLY_GENE_SETS" if test_only_gene_sets else "SINGSCORE_HALLMARK_2026_1"
+                for unit in memberships
+            },
+            "test_only_gene_sets": bool(test_only_gene_sets),
             "r_manifest": result.manifest,
+        },
+    )
+
+
+def _targeted_subset_table(view, genes: FeatureTable, memberships) -> FeatureTable:
+    values_by_unit: dict[str, list[float | None]] = {}
+    coverage: dict[str, dict] = {}
+    method_ids = {}
+    for unit, members in memberships.items():
+        available = tuple(
+            gene for gene in members
+            if gene in genes.values_by_unit and any(
+                value is not None for value in genes.values_by_unit[gene]
+            )
+        )
+        missing = [gene for gene in members if gene not in available]
+        scores: list[float | None] = []
+        for patient_row in range(genes.n_patients):
+            row = {
+                gene: genes.values_by_unit[gene][patient_row]
+                for gene in available
+                if genes.values_by_unit[gene][patient_row] is not None
+            }
+            if not available or len(row) != len(available):
+                scores.append(None)
+            else:
+                scores.append(sum(float(row[gene]) for gene in available) / len(available))
+        values_by_unit[unit] = scores
+        coverage[unit] = {
+            "n_found": len(available),
+            "n_total": len(members),
+            "missing": missing,
+            "complete": bool(available),
+            "scorable": bool(available),
+            "fixed_subset": list(available),
+        }
+        method_ids[unit] = "CUSTOM_MEAN_TARGETED_SUBSET"
+    return FeatureTable(
+        cohort_id=view.metadata.cohort_id,
+        unit_family="targeted_subset",
+        values_by_unit=values_by_unit,
+        n_patients=genes.n_patients,
+        coverage=coverage,
+        metadata={
+            "score_rule": "unweighted mean of the fixed Hallmark members measured in this study",
+            "coverage_policy": "fixed study subset; a patient missing any subset member receives NA",
+            "sensitivity_label": SENSITIVITY_LABEL,
+            "source_gene_sets_sha256": file_sha256(HALLMARK_GMT),
+            "source_gene_sets_collection": "hallmark_2026.1.Hs",
+            "method_id_by_unit": method_ids,
+        },
+    )
+
+
+def _focused_gene_table(genes: FeatureTable, panels: Mapping[str, Sequence[str]]) -> FeatureTable:
+    units = tuple(dict.fromkeys(gene for members in panels.values() for gene in members))
+    values = {
+        unit: list(genes.values_by_unit.get(unit, [None] * genes.n_patients))
+        for unit in units
+    }
+    coverage = {
+        unit: {
+            "n_found": int(unit in genes.values_by_unit and any(value is not None for value in genes.values_by_unit[unit])),
+            "n_total": 1,
+            "missing": [] if unit in genes.values_by_unit and any(value is not None for value in genes.values_by_unit[unit]) else [unit],
+            "complete": unit in genes.values_by_unit and any(value is not None for value in genes.values_by_unit[unit]),
+        }
+        for unit in units
+    }
+    return FeatureTable(
+        cohort_id=genes.cohort_id,
+        unit_family="m5m6_gene",
+        values_by_unit=values,
+        n_patients=genes.n_patients,
+        coverage=coverage,
+        metadata={
+            **genes.metadata,
+            "method_id_by_unit": {unit: "GENE_STUDY_SCALE" for unit in units},
+            "m5m6_gene_units": list(units),
+            "claim_scope": "only m5m6_gene supports claims about M5 and M6 genes",
         },
     )
 
@@ -608,9 +833,14 @@ def _study_scale(matrix, representation):
     unit = str(representation.unit).casefold()
     transform = str(representation.transform).casefold()
     if platform == "rnaseq" and unit in {"tpm", "fpkm", "rpkm"} and transform == "linear":
-        logged = a_scoring.log2p1(matrix, representation)
+        logged = [
+            [math.log2(value + 1.0) if value is not None else None for value in row]
+            for row in matrix
+        ] if unit == "tpm" else a_scoring.log2p1(matrix, representation)
         return "log2(TPM+1)", logged
     if platform == "rnaseq" and unit == "counts" and transform == "linear":
+        if any(value is None for row in matrix for value in row):
+            raise ValueError("Count matrices cannot contain missing values before CPM scaling")
         return "log2(CPM+1)", _log2_cpm(matrix)
     return "source_scale", matrix
 
@@ -649,10 +879,13 @@ def _read_expression(path: Path | str) -> tuple[list[str], list[str], list[list[
             if len(row) != len(header) or not row[0]:
                 raise ValueError("Expression matrix row is malformed")
             try:
-                values = [float(value) for value in row[1:]]
+                values = [
+                    None if value.strip().casefold() in {"", "na", "nan"} else float(value)
+                    for value in row[1:]
+                ]
             except ValueError:
                 raise ValueError("Expression matrix contains non-numeric values") from None
-            if any(not math.isfinite(value) for value in values):
+            if any(value is not None and not math.isfinite(value) for value in values):
                 raise ValueError("Expression matrix contains non-finite values")
             feature_ids.append(row[0])
             matrix.append(values)
@@ -688,7 +921,9 @@ def _collapse_probes(feature_ids, matrix, canonical_features):
         if not gene:
             unmapped += 1
             continue
-        probes_by_gene.setdefault(gene, []).append((math.fsum(values) / len(values), probe, values))
+        measured = [value for value in values if value is not None]
+        mean_expression = math.fsum(measured) / len(measured) if measured else -math.inf
+        probes_by_gene.setdefault(gene, []).append((mean_expression, probe, values))
     chosen = []
     for gene in sorted(probes_by_gene):
         # Mean expression is outcome-blind; lexical probe order resolves exact ties.
@@ -718,8 +953,39 @@ def _load_gene_map(gene_map) -> dict[str, str]:
 
 
 def _resolution_targets(panel_definitions=None):
-    definitions = panel_definitions or a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
-    return tuple(sorted({gene for members in definitions.values() for gene in members} | {"GZMA", "PRF1"}))
+    definitions = panel_definitions or _panel_definitions(AVAILABLE_PANEL_IDS)
+    aliases = read_frozen_aliases()
+    return tuple(sorted({
+        aliases.get(gene, gene)
+        for members in definitions.values()
+        for gene in members
+    } | {"GZMA", "PRF1"}))
+
+
+def _panel_definitions(panel_ids=AVAILABLE_PANEL_IDS):
+    selected = tuple(panel_ids)
+    panel_definitions = a_scoring.core.panel_definitions(
+        tuple(panel for panel in selected if panel != "HALLMARK_INTERFERON_GAMMA_RESPONSE")
+    )
+    if "HALLMARK_INTERFERON_GAMMA_RESPONSE" in selected:
+        aliases = read_frozen_aliases()
+        hallmark = read_hallmark_gene_sets(aliases=aliases)
+        panel_definitions["HALLMARK_INTERFERON_GAMMA_RESPONSE"] = hallmark[
+            "HALLMARK_INTERFERON_GAMMA_RESPONSE"
+        ]
+    return {panel: panel_definitions[panel] for panel in selected}
+
+
+def _m5m6_gene_units():
+    focused = a_scoring.core.panel_definitions(
+        ("M5_CHECKPOINT_CANDIDATES", "M6_EPIGENETIC_REGULATORS")
+    )
+    aliases = read_frozen_aliases()
+    return {
+        aliases.get(gene, gene)
+        for members in focused.values()
+        for gene in members
+    }
 
 
 @lru_cache(maxsize=4)
@@ -750,6 +1016,7 @@ def _gene_reference(runtime):
 
 @lru_cache(maxsize=1)
 def _gene_alias_addendum() -> dict[str, str]:
+    proposals = read_identifier_proposals()
     mapping = {}
     with GENE_ALIAS_ADDENDUM_PATH.open(newline="", encoding="utf-8") as stream:
         reader = csv.DictReader(stream, delimiter="\t")
@@ -761,6 +1028,9 @@ def _gene_alias_addendum() -> dict[str, str]:
             if not source_id or not symbol or source_id in mapping:
                 raise ValueError("Gene alias addendum contains an empty or duplicate mapping")
             mapping[source_id] = symbol
+    for proposal in proposals:
+        if mapping.get(proposal["source_id"]) != proposal["registry_symbol"]:
+            raise ValueError("Gene alias addendum does not contain every signed Hallmark proposal")
     return mapping
 
 
@@ -908,9 +1178,9 @@ def _write_expression_matrix(path: Path, table: FeatureTable) -> None:
         writer.writerow(["gene", *[str(index) for index in range(table.n_patients)]])
         for gene in sorted(table.values_by_unit):
             gene_values = table.values_by_unit[gene]
-            if any(value is None for value in gene_values):
+            if not any(value is not None for value in gene_values):
                 continue
-            writer.writerow([gene, *gene_values])
+            writer.writerow([gene, *["NA" if value is None else value for value in gene_values]])
 
 
 def _read_tsv(path: Path) -> list[dict[str, str]]:

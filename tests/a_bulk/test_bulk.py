@@ -13,6 +13,8 @@ import pytest
 from tools.a_bulk import BulkDataset, adapt_view, analyse
 from tools.a_bulk import core
 from tools.a_bulk.__main__ import main
+from tools.a_meta.frozen import FROZEN_ALIASES, HALLMARK_GMT, read_frozen_aliases
+from tools.a_meta.random_streams import seed_for_task
 from tools.a_scoring.core import panel_definitions
 from tools.r_bridge import RScriptError, run_r
 
@@ -39,6 +41,7 @@ def _make_dataset(
     outlier_column: int | None = None,
     plant_de: bool = True,
     data_classification: str = "synthetic",
+    cohort_id: str = "liu2019",
 ) -> BulkDataset:
     directory.mkdir(parents=True, exist_ok=True)
     sample_ids = [f"synthetic_{index:02d}" for index in range(sample_count)]
@@ -88,7 +91,7 @@ def _make_dataset(
         transform=transform,
     )
     metadata = SimpleNamespace(
-        cohort_id="liu2019",
+        cohort_id=cohort_id,
         representation=representation,
         de_engine=engine,
         endpoint_families=("orr",),
@@ -128,6 +131,24 @@ def test_real_outcome_guard_rejects_before_endpoint_label_is_called(tmp_path, mo
     )
     with pytest.raises(core.OutcomeGuardError, match="--allow-outcomes"):
         analyse(dataset, "de", results=tmp_path / "results")
+    assert not (tmp_path / "results").exists()
+
+
+def test_test_only_gene_sets_refuse_a_registered_real_cohort_before_outcome_analysis(tmp_path):
+    dataset = _make_dataset(tmp_path / "data", data_classification="real")
+    gene_sets = tmp_path / "test-only.gmt"
+    gene_sets.write_text("SET_SYNTH\tfixture\tGENE_SYNTH_A\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="test_only_gene_sets is restricted"):
+        analyse(
+            dataset,
+            "gsea",
+            gene_sets=gene_sets,
+            gene_set_id_type="symbol",
+            test_only_gene_sets=True,
+            results=tmp_path / "results",
+        )
+
     assert not (tmp_path / "results").exists()
 
 
@@ -407,27 +428,91 @@ def test_fgsea_runs_on_a_synthetic_ranking_and_local_gene_set(tmp_path):
     with ranking.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.writer(stream, delimiter="\t", lineterminator="\n")
         writer.writerow(["gene", "statistic"])
-        for index in range(40):
-            writer.writerow([f"SYN_GENE_{index:02d}", 4.0 - index * 0.2])
+        writer.writerow(["DDX58", 4.0])
+        for index in range(39):
+            writer.writerow([f"SYN_GENE_{index:02d}", 3.8 - index * 0.2])
     gmt = tmp_path / "tiny.gmt"
     gmt.write_text("SYN_SET\tdeterministic fixture\t" + "\t".join(
-        f"SYN_GENE_{index:02d}" for index in range(8)
+        ["RIGI", *[f"SYN_GENE_{index:02d}" for index in range(7)]]
     ) + "\n", encoding="utf-8")
-    output = tmp_path / "fgsea"
+    task_id = "synthetic_dataset|orr|test_only"
+    common_config = {
+        "endpoint": "orr", "ranking_id_type": "symbol", "gene_set_id_type": "symbol",
+        "min_gene_set_overlap": 1, "min_size": 1, "max_size": 100,
+        "test_only_gene_sets": True, "gene_set_collection": "test_only",
+        "gene_set_sha256": hashlib.sha256(gmt.read_bytes()).hexdigest(),
+        "random_stream": "fgsea", "random_task_id": task_id,
+        "seed": seed_for_task("fgsea", task_id),
+        "gene_set_aliases": read_frozen_aliases(),
+        "gene_alias_table_sha256": hashlib.sha256(FROZEN_ALIASES.read_bytes()).hexdigest(),
+        "second_check_random_stream": "second_check",
+        "second_check_random_task_id": "fgsea",
+        "second_check_seed": seed_for_task("second_check", "fgsea"),
+        "expected_outputs": [
+            "fgsea.tsv", "fgsea_second_check.tsv", "membership_overlap.tsv", "gsea_summary.json",
+        ],
+    }
     result = run_r(
         ROOT / "r/scripts/fgsea_rank.R",
-        {"ranking": ranking, "gene_sets": gmt},
-        {"endpoint": "orr", "ranking_id_type": "symbol", "gene_set_id_type": "symbol",
-         "min_gene_set_overlap": 1, "min_size": 1, "max_size": 100,
-         "expected_outputs": ["fgsea.tsv", "membership_overlap.tsv", "gsea_summary.json"]},
-        output,
+        {"ranking": ranking, "gene_sets": gmt, "gene_aliases": FROZEN_ALIASES},
+        common_config,
+        tmp_path / "fgsea",
     )
     summary = json.loads(result.outputs["gsea_summary.json"].read_text())
     assert summary["method"] == "fgseaMultilevel"
     assert summary["pathway_count"] == 1
+    assert summary["nproc"] == 1
     assert summary["membership_overlap_count"] == 8
-    assert _read_tsv(result.outputs["fgsea.tsv"])[0]["pathway"] == "SYN_SET"
+    assert summary["second_check_status"] == "reported_only"
+    assert summary["second_check_random_task_id"] == "fgsea"
+    assert summary["second_check_flip_count"] in {0, 1}
+    result_row = _read_tsv(result.outputs["fgsea.tsv"])[0]
+    assert result_row["pathway"] == "SYN_SET"
+    assert "log2err" in result_row
     assert _read_tsv(result.outputs["membership_overlap.tsv"])[0]["ranking_overlap_count"] == "8"
+    check_row = _read_tsv(result.outputs["fgsea_second_check.tsv"])[0]
+    assert check_row["pathway"] == "SYN_SET"
+    assert check_row["bh_decision_flip_10pct"] in {"TRUE", "FALSE"}
+
+    without_reported_check = run_r(
+        ROOT / "r/scripts/fgsea_rank.R",
+        {"ranking": ranking, "gene_sets": gmt, "gene_aliases": FROZEN_ALIASES},
+        {**common_config, "run_second_check": False},
+        tmp_path / "fgsea-without-second-check",
+    )
+    assert result.outputs["fgsea.tsv"].read_bytes() == without_reported_check.outputs["fgsea.tsv"].read_bytes()
+
+
+@pytest.mark.requires_r
+def test_fgsea_refuses_aliases_that_collapse_members_of_one_set(tmp_path):
+    ranking = tmp_path / "ranking-alias-collision.tsv"
+    ranking.write_text("gene\tstatistic\nDDX58\t2\nSYN_GENE_A\t1\n", encoding="utf-8")
+    gmt = tmp_path / "alias-collision.gmt"
+    gmt.write_text("SYN_SET\tfixture\tRIGI\tDDX58\n", encoding="utf-8")
+    task_id = "synthetic_alias_collision|orr|test_only"
+
+    with pytest.raises(RScriptError, match="collapse duplicate members"):
+        run_r(
+            ROOT / "r/scripts/fgsea_rank.R",
+            {"ranking": ranking, "gene_sets": gmt, "gene_aliases": FROZEN_ALIASES},
+            {
+                "ranking_id_type": "symbol", "gene_set_id_type": "symbol",
+                "min_gene_set_overlap": 1, "min_size": 1, "max_size": 10,
+                "test_only_gene_sets": True, "gene_set_collection": "test_only",
+                "gene_set_sha256": hashlib.sha256(gmt.read_bytes()).hexdigest(),
+                "random_stream": "fgsea", "random_task_id": task_id,
+                "seed": seed_for_task("fgsea", task_id),
+                "gene_set_aliases": read_frozen_aliases(),
+                "gene_alias_table_sha256": hashlib.sha256(FROZEN_ALIASES.read_bytes()).hexdigest(),
+                "second_check_random_stream": "second_check",
+                "second_check_random_task_id": "fgsea",
+                "second_check_seed": seed_for_task("second_check", "fgsea"),
+                "expected_outputs": [
+                    "fgsea.tsv", "fgsea_second_check.tsv", "membership_overlap.tsv", "gsea_summary.json",
+                ],
+            },
+            tmp_path / "fgsea-alias-collision",
+        )
 
 
 @pytest.mark.requires_r
@@ -458,16 +543,53 @@ def test_fgsea_refuses_membership_below_configured_floor(tmp_path):
     with pytest.raises(RScriptError, match="membership overlap is below configured floor"):
         run_r(
             ROOT / "r/scripts/fgsea_rank.R",
-            {"ranking": ranking, "gene_sets": gmt},
+            {"ranking": ranking, "gene_sets": gmt, "gene_aliases": FROZEN_ALIASES},
             {"ranking_id_type": "symbol", "gene_set_id_type": "symbol",
              "min_gene_set_overlap": 2, "min_size": 1, "max_size": 10,
+             "test_only_gene_sets": True, "gene_set_collection": "test_only",
+             "gene_set_sha256": hashlib.sha256(gmt.read_bytes()).hexdigest(),
+             "gene_set_aliases": read_frozen_aliases(),
+             "gene_alias_table_sha256": hashlib.sha256(FROZEN_ALIASES.read_bytes()).hexdigest(),
              "expected_outputs": ["fgsea.tsv", "membership_overlap.tsv", "gsea_summary.json"]},
             tmp_path / "fgsea-low-overlap",
         )
 
 
+@pytest.mark.requires_r
+def test_fgsea_refuses_unfrozen_gmt_hash_and_changed_limits(tmp_path):
+    ranking = tmp_path / "ranking.tsv"
+    ranking.write_text("gene\tstatistic\nGENE_SYNTH_A\t2\nGENE_SYNTH_B\t1\n", encoding="utf-8")
+    fake_gmt = tmp_path / "wrong.gmt"
+    fake_gmt.write_text("SET_SYNTH\tfixture\tGENE_SYNTH_A\n", encoding="utf-8")
+    common = {
+        "endpoint": "orr", "ranking_id_type": "symbol", "gene_set_id_type": "symbol",
+        "min_gene_set_overlap": 1, "max_size": 500, "gene_set_collection": "hallmark",
+        "gene_set_sha256": hashlib.sha256(fake_gmt.read_bytes()).hexdigest(),
+        "random_stream": "fgsea", "random_task_id": "synthetic_dataset|orr|hallmark",
+        "seed": seed_for_task("fgsea", "synthetic_dataset|orr|hallmark"),
+        "expected_outputs": ["fgsea.tsv", "membership_overlap.tsv", "gsea_summary.json"],
+    }
+
+    with pytest.raises(RScriptError, match="frozen hash"):
+        run_r(
+            ROOT / "r/scripts/fgsea_rank.R",
+            {"ranking": ranking, "gene_sets": fake_gmt},
+            {**common, "min_size": 15},
+            tmp_path / "fgsea-wrong-hash",
+        )
+
+    with pytest.raises(RScriptError, match="minSize 15 and maxSize 500"):
+        run_r(
+            ROOT / "r/scripts/fgsea_rank.R",
+            {"ranking": ranking, "gene_sets": HALLMARK_GMT},
+            {**common, "gene_set_sha256": hashlib.sha256(HALLMARK_GMT.read_bytes()).hexdigest(),
+             "min_size": 14},
+            tmp_path / "fgsea-changed-limits",
+        )
+
+
 def test_gsea_refreshes_the_de_ranking_before_use(tmp_path, monkeypatch):
-    dataset = _make_dataset(tmp_path / "data")
+    dataset = _make_dataset(tmp_path / "data", cohort_id="synthetic_gsea_fixture")
     results = tmp_path / "results"
     dataset_root = results / "A" / dataset.dataset_id
     ranking = dataset_root / "de" / "bridge" / "de.tsv"
@@ -499,11 +621,50 @@ def test_gsea_refreshes_the_de_ranking_before_use(tmp_path, monkeypatch):
 
     summary = analyse(
         dataset, "gsea", results=results, gene_sets=gene_sets,
-        gene_set_id_type="symbol", min_gene_set_overlap=1,
+        gene_set_id_type="symbol", min_gene_set_overlap=1, test_only_gene_sets=True,
     )
 
     assert calls == ["de", "gsea"]
     assert summary["completed_stages"] == ["de", "gsea"]
+
+
+def test_frozen_fgsea_contract_uses_signed_limits_and_task_seed(tmp_path, monkeypatch):
+    dataset = _make_dataset(tmp_path / "data")
+    root = tmp_path / "analysis"
+    bridge_dir = root / "de" / "bridge"
+    bridge_dir.mkdir(parents=True)
+    (bridge_dir / "de.tsv").write_text("gene\tstatistic\nGENE_SYNTH_A\t1\n", encoding="utf-8")
+    (root / "de" / "manifest.json").write_text(json.dumps({"endpoint": "orr"}), encoding="utf-8")
+    captured = {}
+    summary_path = tmp_path / "gsea_summary.json"
+    summary_path.write_text("{}", encoding="utf-8")
+
+    def fake_call_r(_dataset, _stage, _script, inputs, config, expected, _runner, **_kwargs):
+        captured.update(config)
+        captured["input_names"] = sorted(inputs)
+        captured["expected_outputs"] = expected
+        return SimpleNamespace(outputs={"gsea_summary.json": summary_path})
+
+    monkeypatch.setattr(core, "_call_r", fake_call_r)
+
+    core._run_gsea(
+        dataset, root, HALLMARK_GMT, endpoint="orr", gene_set_id_type="symbol",
+        min_gene_set_overlap=10,
+    )
+
+    task_id = f"{dataset.dataset_id}|orr|hallmark"
+    assert captured["min_size"] == 15
+    assert captured["max_size"] == 500
+    assert captured["random_stream"] == "fgsea"
+    assert captured["random_task_id"] == task_id
+    assert captured["seed"] == seed_for_task("fgsea", task_id)
+    assert captured["second_check_random_task_id"] == "fgsea"
+    assert captured["second_check_seed"] == seed_for_task("second_check", "fgsea")
+    assert captured["run_second_check"] is True
+    assert captured["gene_set_aliases"]["RIGI"] == "DDX58"
+    assert captured["gene_alias_table_sha256"] == hashlib.sha256(FROZEN_ALIASES.read_bytes()).hexdigest()
+    assert "gene_aliases" in captured["input_names"]
+    assert "fgsea_second_check.tsv" in captured["expected_outputs"]
 
 
 @pytest.mark.requires_r

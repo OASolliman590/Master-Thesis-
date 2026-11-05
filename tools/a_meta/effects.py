@@ -11,12 +11,14 @@ from types import SimpleNamespace
 from tools.a_cohorts.view import normalise_drug_class
 from tools.a_scoring import endpoint_label
 from .endpoint_definitions import endpoint_definition_id
-from .provenance import validate_effect_input_provenance
+from .provenance import known_cohort_ids, validate_effect_input_provenance
 
 
 EFFECT_COLUMNS = (
     "unit_family",
     "unit",
+    "method_id",
+    "m5m6_gene_flag",
     "study",
     "cancer",
     "cancer_components",
@@ -38,7 +40,13 @@ EFFECT_COLUMNS = (
     "n_total",
     "sensitivity_label",
 )
-_UNIT_FAMILIES = {"gene", "panel", "panel_coverage90", "pathway", "fraction"}
+_UNIT_FAMILIES = {
+    "gene", "m5m6_gene", "panel", "panel_coverage90", "pathway",
+    "pathway_coverage90", "pathway_common", "targeted_subset", "fraction",
+}
+_SENSITIVITY_FAMILIES = {
+    "panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset",
+}
 
 
 def study_effects(
@@ -56,24 +64,47 @@ def study_effects(
     and `value` columns. `patient_row` is the zero-based row in the validated
     CohortView; no patient or sample identifiers are needed.
     """
+    cohort_id = str(getattr(view.metadata, "cohort_id", ""))
+    feature_metadata = (
+        features.get("metadata", {}) if isinstance(features, Mapping)
+        else getattr(features, "metadata", {})
+    )
+    if (
+        isinstance(feature_metadata, Mapping)
+        and feature_metadata.get("test_only_gene_sets")
+        and (
+            cohort_id in known_cohort_ids()
+            or getattr(view, "data_classification", "") == "real"
+        )
+    ):
+        raise ValueError("Test-only gene-set features cannot produce real-cohort effects")
     validate_effect_input_provenance(
         view,
         features,
         allow_outcomes=allow_outcomes,
         provenance_manifest=provenance_manifest,
     )
-    cohort_id = str(getattr(view.metadata, "cohort_id", ""))
-    feature_cohort = getattr(features, "cohort_id", None)
+    feature_cohort = (
+        features.get("cohort_id") if isinstance(features, Mapping)
+        else getattr(features, "cohort_id", None)
+    )
     if feature_cohort and feature_cohort != cohort_id:
         raise ValueError("Feature table cohort does not match the cohort view")
     unit_family = _unit_family(features)
+    method_ids = feature_metadata.get("method_id_by_unit", {}) if isinstance(feature_metadata, Mapping) else {}
+    m5m6_units = set(feature_metadata.get("m5m6_gene_units", ())) if isinstance(feature_metadata, Mapping) else set()
+    sensitivity_label = (
+        feature_metadata.get("sensitivity_label", "sensitivity only; does not support claims alone")
+        if unit_family in _SENSITIVITY_FAMILIES and isinstance(feature_metadata, Mapping)
+        else ""
+    )
     clinical_rows = list(view.clinical_rows)
     feature_values = _feature_vectors(features, len(clinical_rows))
-    if unit_family == "panel_coverage90":
+    if unit_family in _SENSITIVITY_FAMILIES:
         for unit in feature_values:
             details = _coverage_for(features, unit)
             if not isinstance(details, Mapping):
-                raise ValueError("panel_coverage90 effects require per-unit coverage metadata")
+                raise ValueError(f"{unit_family} effects require per-unit coverage metadata")
             n_found, n_total = details.get("n_found"), details.get("n_total")
             if (
                 not isinstance(n_found, int)
@@ -82,9 +113,11 @@ def study_effects(
                 or n_found < 0
                 or n_found > n_total
             ):
-                raise ValueError("panel_coverage90 effects require valid n_found and n_total")
-            if details.get("complete") is not (n_found * 10 >= n_total * 9):
-                raise ValueError("panel_coverage90 coverage flag does not match the 90% rule")
+                raise ValueError(f"{unit_family} effects require valid n_found and n_total")
+            if unit_family in {"panel_coverage90", "pathway_coverage90"} and details.get("complete") is not (n_found * 10 >= n_total * 9):
+                raise ValueError(f"{unit_family} coverage flag does not match the 90% rule")
+            if unit_family == "pathway_common" and details.get("scorable") and not details.get("complete"):
+                raise ValueError("pathway_common cannot be scorable without every common gene")
 
     families = _endpoint_families(view, family)
     results = []
@@ -152,6 +185,9 @@ def study_effects(
                             coverage=_coverage_for(features, unit),
                             clinical_rows=clinical_rows,
                             cancer_components=sorted({patients[i]["cancer"] for i in included_indices}),
+                            method_id=method_ids.get(unit, "") if isinstance(method_ids, Mapping) else "",
+                            m5m6_gene_flag=unit_family == "gene" and unit in m5m6_units,
+                            sensitivity_label=sensitivity_label,
                         ))
     return results
 
@@ -274,7 +310,8 @@ def _coverage_for(features, unit: str) -> Mapping | None:
 
 def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
                 endpoint_definition_id, labels, values, patient_indices, excluded,
-                coverage, clinical_rows, cancer_components) -> dict:
+                coverage, clinical_rows, cancer_components, method_id="",
+                m5m6_gene_flag=False, sensitivity_label="") -> dict:
     response_values: list[float] = []
     nonresponse_values: list[float] = []
     missing_values = 0
@@ -297,7 +334,9 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
     if missing_values:
         reasons.append(f"feature_missing={missing_values}")
 
-    coverage_complete = coverage is None or coverage.get("complete", True)
+    coverage_complete = coverage is None or (
+        coverage.get("complete", True) and coverage.get("scorable", True)
+    )
     if not coverage_complete:
         reasons.append("incomplete_feature_coverage")
     if n_r < 2:
@@ -341,10 +380,12 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
         "\x1e".join(sorted(patient_tokens)).encode("utf-8")
     ).hexdigest()
 
-    is_sensitivity = unit_family == "panel_coverage90"
+    is_sensitivity = unit_family in _SENSITIVITY_FAMILIES
     return {
         "unit_family": unit_family,
         "unit": unit,
+        "method_id": method_id,
+        "m5m6_gene_flag": int(bool(m5m6_gene_flag)),
         "study": view.metadata.cohort_id,
         "cancer": cancer,
         "cancer_components": ",".join(cancer_components),
@@ -364,5 +405,5 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
         "reason": ";".join(reasons),
         "n_found": coverage.get("n_found") if is_sensitivity and coverage else None,
         "n_total": coverage.get("n_total") if is_sensitivity and coverage else None,
-        "sensitivity_label": "panel_coverage90 sensitivity" if is_sensitivity else None,
+        "sensitivity_label": sensitivity_label if is_sensitivity else None,
     }

@@ -58,7 +58,7 @@ response_coefficient <- which(colnames(design) == "responseR")
 if (length(response_coefficient) != 1L) stop("Could not identify the R versus NR coefficient")
 
 fit <- limma::lmFit(expression, design)
-fit <- limma::eBayes(fit, trend = TRUE)
+fit <- limma::eBayes(fit, trend = TRUE, robust = FALSE)
 coefficient <- response_coefficient[[1L]]
 standard_error <- fit$stdev.unscaled[, coefficient] * sqrt(fit$s2.post)
 p <- fit$p.value[, coefficient]
