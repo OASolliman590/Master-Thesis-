@@ -1,5 +1,15 @@
 # Numerical freeze evidence, 4 Nov 2026
 
+**Addendum, 5 Nov 2026 (read this first).** The note below is a source-only review dated 4 Nov 2026. "Nothing was executed" was true of that review. Later checks, and draft 3 of the amendment, supersede these parts:
+- Software checks now have rerunnable receipts: `r/scripts/freeze_checks/`, `tests/freeze_audit/` and `docs/validation/NUMERICAL_FREEZE_CHECKS.md`. They are synthetic checks and do not validate biology.
+- Coverage counts now come from `docs/cohorts/HALLMARK_COVERAGE.tsv`: IFN-gamma is 8 of 20 complete and 14 at 90% or more.
+- Full-versus-reduced scores were measured (`docs/cohorts/HALLMARK_BRIDGING.tsv`), and the results are summarised in the amendment.
+- Summary points 1 and 3 and the attribution complaint described draft 1. Draft 2 addressed them, and draft 3 withdraws the override altogether.
+- Section 2.1 should not read as Sun's method. Sun's strata are a partition; these are separately controlled, overlapping prespecified families with an exclusive claim rule, and no manuscript-wide FDR guarantee follows.
+- "21 of about 20,000 genes" does not bound the error-rate consequence. Removing genes from a BH family would not stop full tables being kept, so keeping M5 and M6 in the genome-wide family is a choice.
+- "Nobody has published this" means only that the limited search found nothing.
+- The |t| table in section 2 lists critical values. It is not a power calculation, and statements about what will or will not reject depend on assumed effects and standard errors.
+
 This note tests the draft `specs/amendments/2026-11-04-numerical-freeze/AMENDMENT.md` against primary sources. It answers five questions, then says what to keep, change or add. It does not repeat `docs/research/ANALYSIS_CODEBASE_SURVEY_20261103.md`.
 
 How sources were read:

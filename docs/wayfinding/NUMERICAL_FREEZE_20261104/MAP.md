@@ -17,21 +17,22 @@ Skills: research, wayfinder, grilling. Lean process. Signed constraints: strict 
 | What do tools and papers do about missing genes? | Research | none | Closed |
 | How many studies really have the Hallmark genes? | Task | none | Closed |
 | Do fgsea and glmnet behave as the draft assumes? | Task | none | Closed |
-| Astra review of draft 2 | Research | the above | Open |
-| Hallmark coverage rule: override or keep strict? | Grilling (user) | Astra review | Open |
-| M5/M6 family, seed streams, solver | Grilling (user) | Astra review | Open |
+| Astra review of draft 2 | Research | the above | Closed |
+| Hallmark coverage rule: override or keep strict? | Grilling (user) | Astra review | Closed |
+| Full 50-set audit | Task | coverage rule | Closed |
+| Families, seeds, settings: draft 3 | Grilling (user) | audit | With user at signing |
 | Sign the freeze | Grilling (user) | the two above | Open |
 
 ## Decisions so far
 
 - [Evidence review](../../research/NUMERICAL_FREEZE_EVIDENCE_20261104.md): no coverage threshold is validated; a separate M5/M6 family is stratified FDR; seeds need named streams; the glmnet objective matches but `thresh` and `maxit` belong in `control`.
-- Coverage audit, outcome-free: 9 of 20 studies have all 200 IFN-gamma genes and 14 have at least 180. Draft 1's "1 of 20" was a naming artefact. Across the 50 Hallmark sets, studies had 0 to 47 sets complete before the alias fix; this needs recounting after it.
-- Software checks on synthetic data: fgsea repeats with the same seed, also at `nproc = 2`, and differs with another seed; the glmnet result follows.
-- glmnet with the proposed call, synthetic data (n = 300, 4 features): `control ok jerr 0 npasses 15 maxdiff 2.097088e-09 KKT 8.571364e-10`.
+- Coverage rule: on 4 Nov the user chose strict as the main rule, with the audit to follow.
+- Coverage audit, outcome-free: IFN-gamma is 8 of 20 complete and 14 at 90% or more ([table](../../cohorts/HALLMARK_COVERAGE.tsv)). Earlier figures of 1 and 9 were wrong: the first missed aliases, and the second assumed an unsupported TXNIP mapping.
+- [Astra review of draft 2](../../../specs/amendments/2026-11-04-numerical-freeze/AMENDMENT.md): no High findings; its gaps are closed in draft 3, which has not had a second review.
+- Software checks on synthetic data: rerunnable receipts in [NUMERICAL_FREEZE_CHECKS.md](../../validation/NUMERICAL_FREEZE_CHECKS.md).
 
 ## Not yet specified
 
-- Whether GSE145996 (176) and GSE122220 (177) gain genes from a fuller Entrez-level audit.
 - Which OSF template to use at signing.
 
 ## Out of scope
