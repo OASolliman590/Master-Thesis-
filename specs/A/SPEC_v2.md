@@ -1,5 +1,7 @@
 # Paper A: consolidated specification v2.1, 3 Nov 2026
 
+**Amended 5 Nov 2026:** adds A-RCT, a gated randomised comparison, with a narrow named exception to section 9. See `specs/amendments/2026-11-05-prostate-state-and-causal-evidence/AMENDMENT.md`.
+
 **Status: SIGNED by the user on 3 Nov 2026 ("I sign all three"), v2.1.** v2.1 (3 Nov) adds the cell-composition analysis (section 4.4), removes the RNA-derived composition adjustment from 4.3 and gives single-cell its own section (8), from the user's grilling answers recorded in `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` and the evidence in `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. It consolidates, without changing, the signed decisions in force: RC2 (15 Oct), the immune-programme amendment (16 Oct), the integrated plan (29 Oct), simple mode (31 Oct), the validation amendment and its Addendum 1 (2 Nov), the A-BIO settings D4-D6 (2 Nov), the single-cell plan (2 Nov) and the acquisition close (2 Nov). Where the older files in `specs/A/` disagree with this document, this document and the dated amendments it cites prevail. The older files keep the full technical detail and are linked by section.
 
 ## 1. Question and products

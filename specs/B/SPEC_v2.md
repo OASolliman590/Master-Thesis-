@@ -1,5 +1,7 @@
 # Paper B: rethought specification v2.1, 3 Nov 2026
 
+**Amended 5 Nov 2026:** adds B-STATE, B-PROFILE and B-METHRESP, all gated. B-STATE permits audited lineage splits in single-cell work. See `specs/amendments/2026-11-05-prostate-state-and-causal-evidence/AMENDMENT.md`.
+
 **Status: SIGNED by the user on 3 Nov 2026 ("I sign all three"), v2.1.** v2.1 (3 Nov) adds the naive-to-ICI bridge (secondary 2), MethylCIBERSORT and CIBERSORTx as composition secondaries (secondary 5), and a dedicated single-cell section (8), from the user's grilling answers in `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` and the evidence in `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. It is the result of the user's request to rethink Paper B (2-3 Nov 2026) and of a grilling session whose decisions (Q1-Q21) are recorded below. It is informed by the evidence review `docs/research/SPEC_REVISION_EVIDENCE_20261102.md`.
 - **Replaces** the earlier Paper B primary: B-P, 8 antigen-presentation genes, Delta R² TCGA-PRAD → CPC-GENE. B-P becomes a named sub-result.
 - **Absorbs** the signed B-ICIM (`specs/amendments/2026-11-02-paper-b-ici-methylation/AMENDMENT.md`) and B-V (29 Oct) as supporting analyses.
