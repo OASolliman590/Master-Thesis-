@@ -17,10 +17,14 @@ from tools.a_meta.features import (
     AVAILABLE_PANEL_IDS,
     FeatureTable,
     GENE_ALIAS_ADDENDUM_PATH,
+    TARGETED_SUBSET_STUDIES,
+    _panel_definitions,
+    _gene_table,
     build_feature_table,
     read_external_feature_table,
     read_feature_table,
     write_feature_table,
+    _resolution_targets,
     _panel_coverage90_table,
     _panel_member_coverage,
     _panel_table,
@@ -55,6 +59,8 @@ _CODE_FILES = (
     "tools/a_meta/provenance.py",
     "tools/a_meta/r_manifest.py",
     "tools/a_meta/synthesis.py",
+    "tools/a_meta/frozen.py",
+    "tools/a_meta/random_streams.py",
     "tools/a_cohorts/view.py",
     "tools/a_cohorts/core.py",
     "tools/a_scoring/__init__.py",
@@ -63,6 +69,11 @@ _CODE_FILES = (
     "tools/r_bridge/__init__.py",
     "r/R/bridge.R",
     "r/scripts/singscore.R",
+    "r/R/random_streams.R",
+    "tools/a_bulk/core.py",
+    "r/scripts/fgsea_rank.R",
+    "tools/sc/prostate.py",
+    "tools/sc/cli.py",
     "r/scripts/meta_rma.R",
 )
 
@@ -95,9 +106,13 @@ def main(argv=None) -> int:
     effects_parser.add_argument("--endpoint-family", choices=("all", "orr", "clinical_benefit", "source_label"), default="all")
     effects_parser.add_argument(
         "--unit-family",
-        choices=("all", "gene", "panel", "panel_coverage90", "pathway", "fraction"),
+        choices=(
+            "all", "gene", "m5m6_gene", "panel", "panel_coverage90", "pathway",
+            "pathway_coverage90", "pathway_common", "targeted_subset", "fraction",
+        ),
         default="all",
     )
+    effects_parser.add_argument("--adjusted", action="store_true")
     effects_parser.add_argument("--no-drug-class", action="store_true")
     effects_parser.add_argument("--allow-outcomes", action="store_true")
 
@@ -128,25 +143,31 @@ def _features(args, results_root: Path) -> None:
     dataset_dir = results_root / args.cohort
     output_dir = dataset_dir / "features"
     output_dir.mkdir(parents=True, exist_ok=True)
-    genes = build_feature_table(
-        view, "gene", runtime=args.runtime, gene_map=args.gene_map, gtf_path=args.gtf
-    )
-    panel_definitions = a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
-    tables: dict[str, FeatureTable] = {
-        "gene": genes,
-        "panel": _panel_table(view, genes, panel_definitions),
-        "panel_coverage90": _panel_coverage90_table(view, genes, panel_definitions),
+    platform = str(view.metadata.representation.platform).casefold()
+    targeted = platform in {"targeted_rna", "nanostring"}
+    common = {
+        "runtime": args.runtime,
+        "gene_map": args.gene_map,
+        "gtf_path": args.gtf,
     }
-    if args.gene_sets is not None:
-        tables["pathway"] = build_feature_table(
-            view,
-            "pathway",
-            runtime=args.runtime,
-            gene_sets=args.gene_sets,
-            gene_map=args.gene_map,
-            gtf_path=args.gtf,
-            r_out_dir=output_dir / "R-singscore",
-        )
+    tables: dict[str, FeatureTable] = {}
+    if not targeted:
+        tables["gene"] = build_feature_table(view, "gene", **common)
+    tables["m5m6_gene"] = build_feature_table(view, "m5m6_gene", **common)
+    tables["panel"] = build_feature_table(view, "panel", **common)
+    tables["panel_coverage90"] = build_feature_table(view, "panel_coverage90", **common)
+    if not targeted:
+        for family in ("pathway", "pathway_coverage90", "pathway_common"):
+            tables[family] = build_feature_table(
+                view,
+                family,
+                gene_sets=args.gene_sets,
+                r_out_dir=output_dir / f"R-singscore-{family}",
+                **common,
+            )
+    else:
+        if args.cohort in TARGETED_SUBSET_STUDIES:
+            tables["targeted_subset"] = build_feature_table(view, "targeted_subset", **common)
     if args.external_table is not None:
         tables["fraction"] = read_external_feature_table(
             args.external_table,
@@ -158,9 +179,13 @@ def _features(args, results_root: Path) -> None:
     table_stats = {}
     feature_filenames = {
         "gene": "genes.tsv",
+        "m5m6_gene": "m5m6_genes.tsv",
         "panel": "panels.tsv",
         "panel_coverage90": "panel_coverage90.tsv",
         "pathway": "pathways.tsv",
+        "pathway_coverage90": "pathways_coverage90.tsv",
+        "pathway_common": "pathways_common.tsv",
+        "targeted_subset": "targeted_subset.tsv",
         "fraction": "fractions.tsv",
     }
     for family, table in tables.items():
@@ -181,17 +206,25 @@ def _features(args, results_root: Path) -> None:
             "n_total": details.get("n_total", ""),
             "complete": str(_coverage_complete(details.get("complete", False))).lower(),
             "missing": ",".join(details.get("missing", ())),
+            "scorable": str(_coverage_complete(details.get("scorable", details.get("complete", False)))).lower(),
+            "fixed_subset": ";".join(details.get("fixed_subset", ())),
+            "reason": details.get("reason", ""),
+            "sensitivity_label": table.metadata.get("sensitivity_label", ""),
         }
         for family, table in tables.items()
         for unit, details in table.coverage.items()
     ]
     coverage_path = output_dir / "coverage.tsv"
-    _write_tsv(coverage_path, coverage_rows, ("unit_family", "unit", "n_found", "n_total", "complete", "missing"))
+    _write_tsv(
+        coverage_path,
+        coverage_rows,
+        ("unit_family", "unit", "n_found", "n_total", "complete", "missing", "scorable", "fixed_subset", "reason", "sensitivity_label"),
+    )
     output_hashes[coverage_path.name] = _sha256(coverage_path)
     for family, table in tables.items():
         if "r_manifest" not in table.metadata:
             continue
-        r_dir = output_dir / "R-singscore"
+        r_dir = output_dir / f"R-singscore-{family}"
         for name in ("scores.tsv", "coverage.tsv", "sessionInfo.txt", "manifest.json"):
             path = r_dir / name
             if path.is_file():
@@ -205,8 +238,12 @@ def _features(args, results_root: Path) -> None:
         "panel_registry": _sha256(PANEL_REGISTRY_PATH),
         "gene_aliases": _sha256(ALIAS_TABLE_PATH),
         "gene_alias_addendum": _sha256(GENE_ALIAS_ADDENDUM_PATH),
+        "hallmark_identifier_proposals": _sha256(ROOT / "docs/cohorts/HALLMARK_IDENTIFIER_PROPOSALS.tsv"),
     }
-    input_hashes.update(tables["gene"].metadata.get("source_inputs_sha256", {}))
+    if "gene" in tables:
+        input_hashes.update(tables["gene"].metadata.get("source_inputs_sha256", {}))
+    elif "m5m6_gene" in tables:
+        input_hashes.update(tables["m5m6_gene"].metadata.get("source_inputs_sha256", {}))
     probe_map = view.expression_path.parent / "probe_to_gene.tsv"
     if probe_map.is_file():
         input_hashes["probe_to_gene_map"] = _sha256(probe_map)
@@ -217,8 +254,12 @@ def _features(args, results_root: Path) -> None:
     gene_info = a_scoring.core.gene_info_path(args.runtime)
     if gene_info.is_file():
         input_hashes["pinned_gene_info"] = _sha256(gene_info)
-    if args.gene_sets is not None:
-        input_hashes["gene_sets"] = _sha256(args.gene_sets)
+    if any(family in tables for family in ("pathway", "pathway_coverage90", "pathway_common", "targeted_subset")):
+        input_hashes["hallmark_gene_sets"] = _sha256(
+            args.gene_sets or (ROOT / "specs/amendments/2026-11-04-numerical-freeze/hallmark_2026.1.Hs.gmt")
+        )
+    if "pathway_common" in tables:
+        input_hashes["common_gene_table"] = _sha256(ROOT / "docs/cohorts/HALLMARK_BRIDGING_COMMON_GENES.tsv")
     if args.external_table is not None:
         input_hashes["external_patient_table"] = _sha256(args.external_table)
 
@@ -252,13 +293,18 @@ def _features(args, results_root: Path) -> None:
         "panel_coverage90": {
             "met": panel_coverage90[0],
             "not_met": panel_coverage90[1],
-            "sensitivity_label": "panel_coverage90 sensitivity",
-            "rule": "at least 90% of panel members are available after alias resolution",
+            "sensitivity_label": "sensitivity only; does not support claims alone",
+            "rule": "one fixed study subset of at least 90%; any patient missing a subset member gets NA",
         },
-        "panel_registry_note": (
-            "Ten materialized memberships are currently available. Hallmark IFN-gamma "
-            "membership remains pending its signed pre-outcome freeze."
-        ),
+        "custom_method_ids": {
+            family: table.metadata.get("custom_method_ids", {})
+            for family, table in tables.items()
+            if table.metadata.get("custom_method_ids")
+        },
+        "sensitivity_families": sorted(family for family in tables if family in {
+            "panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset"
+        }),
+        "panel_registry_note": "Eleven frozen custom expression features, including Hallmark IFN-gamma.",
         "R_manifests": r_manifests,
         "patient_identifier_policy": "zero-based row index only; source identifiers are not exported",
     }
@@ -270,6 +316,10 @@ def _features(args, results_root: Path) -> None:
 
 
 def _effects(args, results_root: Path) -> None:
+    if getattr(args, "adjusted", False):
+        raise SystemExit(
+            "Adjusted models are unavailable: clinical covariate sets and missingness rules are not frozen"
+        )
     if is_locked_study(args.cohort):
         raise SystemExit("IMvigor210 is a locked final test and is refused by A-META")
     is_real = _is_real_cohort(args.cohort)
@@ -286,7 +336,10 @@ def _effects(args, results_root: Path) -> None:
         if feature_manifest.get("producer") != SYNTHETIC_FIXTURE_PRODUCER:
             raise SystemExit("Synthetic feature classification was not written by the fixture path")
     families = (
-        ("gene", "panel", "panel_coverage90", "pathway", "fraction")
+        (
+            "gene", "m5m6_gene", "panel", "panel_coverage90", "pathway",
+            "pathway_coverage90", "pathway_common", "targeted_subset", "fraction",
+        )
         if args.unit_family == "all"
         else (args.unit_family,)
     )
@@ -312,6 +365,7 @@ def _effects(args, results_root: Path) -> None:
             unit_family=unit_family,
             n_patients=len(view.clinical_rows),
             coverage_path=coverage_path,
+            metadata=feature_manifest.get("feature_metadata", {}).get(unit_family, {}),
         )
         input_hashes[f"{unit_family}_features"] = _sha256(feature_path)
         input_hashes["feature_coverage"] = _sha256(coverage_path)
@@ -335,6 +389,8 @@ def _effects(args, results_root: Path) -> None:
         "code_sha256": _code_hashes(),
         "outputs_sha256": {output_path.name: _sha256(output_path)},
         "effect_variance": "metafor escalc(measure='SMD', vtype='LS'): N/(n_R*n_NR) + g^2/(2N), with exact gamma Hedges correction",
+        "adjustment": "unadjusted only",
+        "method_ids": sorted({str(row.get("method_id", "")) for row in results if row.get("method_id")}),
     }
     if not is_real:
         manifest.update({
@@ -388,12 +444,19 @@ def _synthesize(args, results_root: Path) -> None:
 
 def _coverage(args) -> None:
     """Write patient-free coverage counts for all signed development cohorts."""
-    panel_definitions = a_scoring.core.panel_definitions(AVAILABLE_PANEL_IDS)
+    panel_definitions = _panel_definitions(AVAILABLE_PANEL_IDS)
     rows = []
     cohort_ids = _signed_development_cohorts()
     for cohort_id in cohort_ids:
         view = cohort_view(cohort_id, args.runtime)
-        genes = build_feature_table(view, "gene", runtime=args.runtime)
+        genes = _gene_table(
+            view,
+            runtime=args.runtime,
+            gene_map=None,
+            gtf_path=None,
+            probe_map=None,
+            target_symbols=_resolution_targets(panel_definitions),
+        )
         available = set(genes.values_by_unit)
         complete_panels = _panel_table(view, genes, panel_definitions)
         coverage90_panels = _panel_coverage90_table(view, genes, panel_definitions)
@@ -497,7 +560,19 @@ def _validate_feature_manifest(view, feature_dir: Path, cohort_id: str, runtime=
         "panel_registry": _sha256(PANEL_REGISTRY_PATH),
         "gene_aliases": _sha256(ALIAS_TABLE_PATH),
         "gene_alias_addendum": _sha256(GENE_ALIAS_ADDENDUM_PATH),
+        "hallmark_identifier_proposals": _sha256(ROOT / "docs/cohorts/HALLMARK_IDENTIFIER_PROPOSALS.tsv"),
     }
+    declared_feature_tables = manifest.get("feature_tables", {})
+    if any(family in declared_feature_tables for family in (
+        "pathway", "pathway_coverage90", "pathway_common", "targeted_subset"
+    )):
+        expected_analysis_inputs["hallmark_gene_sets"] = _sha256(
+            ROOT / "specs/amendments/2026-11-04-numerical-freeze/hallmark_2026.1.Hs.gmt"
+        )
+    if "pathway_common" in declared_feature_tables:
+        expected_analysis_inputs["common_gene_table"] = _sha256(
+            ROOT / "docs/cohorts/HALLMARK_BRIDGING_COMMON_GENES.tsv"
+        )
     if any(
         stored_inputs.get(name) != expected
         for name, expected in expected_analysis_inputs.items()
@@ -546,9 +621,13 @@ def _manifested_feature_files(feature_dir: Path, manifest: Mapping, families) ->
         raise SystemExit("Feature manifest has invalid feature-table or output declarations")
     filenames = {
         "gene": "genes.tsv",
+        "m5m6_gene": "m5m6_genes.tsv",
         "panel": "panels.tsv",
         "panel_coverage90": "panel_coverage90.tsv",
         "pathway": "pathways.tsv",
+        "pathway_coverage90": "pathways_coverage90.tsv",
+        "pathway_common": "pathways_common.tsv",
+        "targeted_subset": "targeted_subset.tsv",
         "fraction": "fractions.tsv",
     }
     requested = set(families)
@@ -617,6 +696,9 @@ def _safe_feature_metadata(metadata: Mapping) -> dict:
         "recount3_non_primary_dropped", "duplicate_gene_rule", "duplicate_gene_counts",
         "duplicate_gene_symbols", "source_route", "source_inputs_sha256", "sensitivity_label",
         "patients_with_tpm_assay", "patients_without_tpm_assay",
+        "method_id_by_unit", "custom_method_ids", "m5m6_gene_units", "claim_scope",
+        "source_gene_sets_sha256", "source_gene_sets_collection", "common_gene_table_sha256",
+        "membership_sha256", "test_only_gene_sets",
     }
     return {key: value for key, value in metadata.items() if key in allowed}
 

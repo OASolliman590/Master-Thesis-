@@ -16,6 +16,13 @@ from tools import a_scoring
 from tools.a_cohorts import core as cohort_core
 from tools.a_scoring.core import panel_definitions
 from tools.r_bridge import RResult, run_r
+from tools.a_meta.frozen import (
+    FROZEN_ALIASES,
+    frozen_gene_set_path,
+    identify_frozen_gene_set,
+    read_frozen_aliases,
+)
+from tools.a_meta.random_streams import seed_for_task
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_RESULTS = ROOT.parent / "results"
@@ -152,6 +159,7 @@ def analyse(
     gene_sets: Path | str | None = None,
     gene_set_id_type: str | None = None,
     min_gene_set_overlap: int = 10,
+    test_only_gene_sets: bool = False,
     allow_outcomes: bool = False,
     runner=None,
     sample_id_field: str = "patient_id",
@@ -161,6 +169,11 @@ def analyse(
     dataset = adapt_view(view, paper=paper, sample_id_field=sample_id_field)
     if action not in {"qc", "pca", "de", "gsea", "panels", "all"}:
         raise ValueError(f"Unknown bulk analysis stage: {action}")
+    if test_only_gene_sets and (
+        dataset.data_classification == "real"
+        or str(getattr(dataset.metadata, "cohort_id", "")) in cohort_core.registry()
+    ):
+        raise ValueError("test_only_gene_sets is restricted to synthetic, unregistered datasets")
     needs_outcomes = action in OUTCOME_STAGES
     if action == "pca" and allow_outcomes:
         needs_outcomes = True
@@ -172,7 +185,13 @@ def analyse(
         raise ValueError("The requested endpoint family is not declared for this dataset")
     if action in {"gsea", "all"}:
         if gene_sets is None:
-            raise ValueError("gsea requires --gene-sets with a local GMT file")
+            if test_only_gene_sets:
+                raise ValueError("Test-only GSEA requires an explicit local GMT input")
+            gene_set_path = frozen_gene_set_path("hallmark")
+        else:
+            gene_set_path = Path(gene_sets).expanduser().resolve(strict=True)
+        if not test_only_gene_sets:
+            identify_frozen_gene_set(gene_set_path)
         ranking_id_type = str(getattr(dataset.representation, "feature_id", "")).casefold()
         gene_set_id_type = str(gene_set_id_type or "").casefold()
         if not gene_set_id_type:
@@ -181,7 +200,6 @@ def analyse(
             raise ValueError("Ranking and GMT identifier types must match; no mapping is configured")
         if not isinstance(min_gene_set_overlap, int) or min_gene_set_overlap < 1:
             raise ValueError("Minimum GMT/ranking membership overlap must be a positive integer")
-        gene_set_path = Path(gene_sets).expanduser().resolve(strict=True)
         if not gene_set_path.is_file():
             raise ValueError("Gene-set input must be a local file")
     else:
@@ -209,6 +227,7 @@ def analyse(
             dataset, root, gene_set_path, endpoint=endpoint,
             gene_set_id_type=gene_set_id_type,
             min_gene_set_overlap=min_gene_set_overlap,
+            test_only_gene_sets=test_only_gene_sets,
             runner=runner,
         )
     if action in {"panels", "all"}:
@@ -476,6 +495,7 @@ def _run_gsea(
     endpoint: str,
     gene_set_id_type: str,
     min_gene_set_overlap: int,
+    test_only_gene_sets: bool = False,
     runner=None,
 ) -> dict[str, Any]:
     stage = root / "gsea"
@@ -486,17 +506,39 @@ def _run_gsea(
     de_metadata = _read_json(de_manifest)
     if de_metadata.get("endpoint") != endpoint:
         raise ValueError("GSEA endpoint does not match the existing DE ranking")
-    expected = ["fgsea.tsv", "membership_overlap.tsv", "gsea_summary.json"]
+    expected = [
+        "fgsea.tsv", "fgsea_second_check.tsv", "membership_overlap.tsv", "gsea_summary.json",
+    ]
     config = _base_config(dataset, "gsea", {}, expected)
     config["endpoint"] = endpoint
     config["ranking_id_type"] = str(getattr(dataset.representation, "feature_id", "")).casefold()
     config["gene_set_id_type"] = gene_set_id_type
     config["min_gene_set_overlap"] = min_gene_set_overlap
-    config["min_size"] = 1
-    config["max_size"] = 5000
+    collection = "test_only" if test_only_gene_sets else identify_frozen_gene_set(gene_sets)
+    task_id = f"{dataset.dataset_id}|{endpoint}|{collection}"
+    config.update({
+        "gene_set_collection": collection,
+        "gene_set_sha256": _sha256(gene_sets),
+        "test_only_gene_sets": bool(test_only_gene_sets),
+        "min_size": 1 if test_only_gene_sets else 15,
+        "max_size": 500,
+        "random_stream": "fgsea",
+        "random_task_id": task_id,
+        "seed": seed_for_task("fgsea", task_id),
+        "second_check_random_stream": "second_check",
+        "second_check_random_task_id": "fgsea",
+        "second_check_seed": seed_for_task("second_check", "fgsea"),
+        "run_second_check": True,
+    })
+    inputs = {"ranking": de_path, "gene_sets": gene_sets}
+    if config["ranking_id_type"] == "symbol":
+        aliases = read_frozen_aliases()
+        config["gene_set_aliases"] = aliases
+        config["gene_alias_table_sha256"] = _sha256(FROZEN_ALIASES)
+        inputs["gene_aliases"] = FROZEN_ALIASES
     result = _call_r(
         dataset, stage, "fgsea_rank.R",
-        {"ranking": de_path, "gene_sets": gene_sets}, config, expected,
+        inputs, config, expected,
         runner, endpoint=endpoint, extra_inputs=[de_manifest],
     )
     return _read_json(result.outputs["gsea_summary.json"])

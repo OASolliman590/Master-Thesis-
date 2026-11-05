@@ -368,10 +368,10 @@ def test_panel_coverage90_scores_17_of_18_but_not_7_of_8(tmp_path):
     assert sensitivity.coverage["PANEL_8"]["n_total"] == 8
     assert sensitivity.coverage["PANEL_8"]["complete"] is False
     assert sensitivity.values_by_unit["PANEL_8"] == [None]
-    assert sensitivity.metadata["sensitivity_label"] == "panel_coverage90 sensitivity"
+    assert sensitivity.metadata["sensitivity_label"] == "sensitivity only; does not support claims alone"
 
 
-def test_panel_coverage90_requires_each_row_to_meet_90_percent_when_study_passes():
+def test_panel_coverage90_fixes_study_subset_and_keeps_main_panel_row_missing():
     from tools.a_meta.features import _panel_coverage90_table, _panel_table
 
     members = tuple(f"ZZ_SYNTHETIC_ONLY_EIGHT_GENE_MEMBER_{chr(65 + index)}" for index in range(8))
@@ -395,9 +395,49 @@ def test_panel_coverage90_requires_each_row_to_meet_90_percent_when_study_passes
     assert sensitivity.coverage["EIGHT_MEMBER_PANEL"]["n_found"] == 8
     assert sensitivity.coverage["EIGHT_MEMBER_PANEL"]["complete"] is True
     assert sensitivity.values_by_unit["EIGHT_MEMBER_PANEL"] == [None, 5.5, 6.5]
-    assert main.coverage["EIGHT_MEMBER_PANEL"]["n_found"] == 7
-    assert main.coverage["EIGHT_MEMBER_PANEL"]["complete"] is False
+    assert main.coverage["EIGHT_MEMBER_PANEL"]["n_found"] == 8
+    assert main.coverage["EIGHT_MEMBER_PANEL"]["complete"] is True
     assert main.values_by_unit["EIGHT_MEMBER_PANEL"] == [None, 5.5, 6.5]
+
+
+def test_fixed_coverage90_subset_counts_zero_and_missing_patient_gets_na():
+    from tools.a_meta.features import _panel_coverage90_table
+
+    members = tuple(f"ZZ_SYNTHETIC_ONLY_FIXED_SUBSET_{index:02d}" for index in range(10))
+    values = {gene: [0.0 if index == 0 else 1.0, 1.0] for index, gene in enumerate(members[:9])}
+    values[members[1]][1] = None
+    values[members[9]] = [None, None]
+    genes = FeatureTable(
+        cohort_id="synthetic",
+        unit_family="gene",
+        values_by_unit=values,
+        n_patients=2,
+        metadata={"scale_rule": "synthetic fixture scale"},
+    )
+    view = SimpleNamespace(metadata=SimpleNamespace(cohort_id="synthetic"))
+
+    result = _panel_coverage90_table(view, genes, {"SYNTHETIC_FIXED_PANEL": members})
+
+    details = result.coverage["SYNTHETIC_FIXED_PANEL"]
+    assert details["n_found"] == 9
+    assert details["fixed_subset"] == list(members[:9])
+    assert result.values_by_unit["SYNTHETIC_FIXED_PANEL"][0] == pytest.approx(8 / 9)
+    assert result.values_by_unit["SYNTHETIC_FIXED_PANEL"][1] is None
+
+
+@pytest.mark.parametrize("platform", ["targeted_rna", "nanostring"])
+def test_gene_and_pathway_families_refuse_targeted_platforms(platform):
+    from tools.a_meta.features import _PATHWAY_FAMILIES
+
+    view = SimpleNamespace(
+        metadata=SimpleNamespace(
+            cohort_id="synthetic",
+            representation=SimpleNamespace(platform=platform),
+        )
+    )
+    for family in ("gene", *_PATHWAY_FAMILIES):
+        with pytest.raises(ValueError, match="targeted_rna and nanostring"):
+            build_feature_table(view, family)
 
 
 def test_external_patient_table_accepts_fraction_units_without_identifiers():

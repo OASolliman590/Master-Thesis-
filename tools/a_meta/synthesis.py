@@ -18,7 +18,7 @@ from .r_manifest import run_r_sanitised
 
 
 SYNTHESIS_COLUMNS = (
-    "unit_family", "unit", "endpoint_family", "endpoint_definition_id",
+    "unit_family", "unit", "method_id", "m5m6_gene_flag", "endpoint_family", "endpoint_definition_id",
     "study", "patient_set_id", "n_R", "n_NR", "stratum_type", "stratum",
     "cancer", "drug_class_stratum", "stage", "k", "estimate", "se",
     "n_cancers", "n_studies",
@@ -28,7 +28,7 @@ SYNTHESIS_COLUMNS = (
     "reason", "weighting",
 )
 SUBGROUP_COLUMNS = (
-    "unit_family", "unit", "endpoint_family", "endpoint_definition_id", "moderator", "total_k",
+    "unit_family", "unit", "method_id", "endpoint_family", "endpoint_definition_id", "moderator", "total_k",
     "n_levels", "F", "p", "status", "reason",
 )
 _STRATA = {"per_cancer", "per_drug_class", "across_cancers", "melanoma_cancer_drug"}
@@ -74,16 +74,20 @@ def synthesize(
     )
     pooled_rows = [
         row for row in rows
-        if not endpoint_is_per_study_only(row["endpoint_definition_id"], row["endpoint_family"])
+        if row["unit_family"] != "targeted_subset"
+        and not endpoint_is_per_study_only(row["endpoint_definition_id"], row["endpoint_family"])
     ]
     groups, effect_rows = _plan_groups(pooled_rows, stratum)
     subgroup_groups, subgroup_rows = _plan_subgroups(pooled_rows, stratum)
     per_study_summaries = _per_study_summaries(rows, stratum)
+    analysis_metadata = _metadata(stratum)
+    analysis_metadata["method_ids"] = sorted({row.get("method_id", "") for row in rows if row.get("method_id")})
+    analysis_metadata["non_pooled_families"] = {"targeted_subset": "per-study only; no pooling or FDR"}
     if not groups:
         return SynthesisResult(
             summaries=per_study_summaries,
             subgroup_tests=[],
-            metadata=_metadata(stratum),
+            metadata=analysis_metadata,
         )
 
     run_dir = Path(output_dir) if output_dir is not None else _default_run_dir(rows, stratum)
@@ -121,7 +125,7 @@ def synthesize(
     for group in groups:
         fit = fitted.get(group["analysis_id"])
         group_effects = effects_by_analysis.get(group["analysis_id"], [])
-        if group["unit_family"] == "gene" and _integer(fit.get("k"), default=0) == 2:
+        if group["unit_family"] in {"gene", "m5m6_gene"} and _integer(fit.get("k"), default=0) == 2:
             summaries.extend(_gene_unpooled_rows(group, fit, group_effects))
         else:
             summaries.append(_summary(group, fit, group_effects))
@@ -135,7 +139,7 @@ def synthesize(
     return SynthesisResult(
         summaries=summaries,
         subgroup_tests=subgroup_tests,
-        metadata=_metadata(stratum),
+        metadata=analysis_metadata,
         r_manifest=r_result.manifest,
     )
 
@@ -209,6 +213,8 @@ def _plan_groups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]
                     "parent_key": "",
                     "unit_family": unit_family,
                     "unit": unit,
+                    "method_id": _method_id_for(rows, unit_family, unit),
+                    "m5m6_gene_flag": int(unit_family == "gene" and unit in _m5m6_unit_names(rows)),
                     "endpoint_family": endpoint,
                     "endpoint_definition_id": definition_id,
                     "stratum_type": "across_cancers",
@@ -228,7 +234,7 @@ def _plan_groups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]
     for group in specs:
         group["analysis_id"] = key_to_id[group["analysis_key"]]
         group["parent_id"] = key_to_id.get(group["parent_key"], "") if group.get("parent_key") else ""
-        group["min_k"] = 3 if group["unit_family"] == "gene" else 2
+        group["min_k"] = 3 if group["unit_family"] in {"gene", "m5m6_gene"} else 2
         group["requires_fit"] = "true"
         group["weighting"] = group.get("weighting") or "inverse-variance random effects across studies"
 
@@ -287,6 +293,8 @@ def _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id, *,
         "parent_key": parent_key or "",
         "unit_family": unit_family,
         "unit": unit,
+        "method_id": _method_id_for(rows, unit_family, unit),
+        "m5m6_gene_flag": int(unit_family == "gene" and unit in _m5m6_unit_names(rows)),
         "endpoint_family": endpoint,
         "endpoint_definition_id": definition_id,
         "stratum_type": stratum_type,
@@ -334,6 +342,7 @@ def _plan_subgroups(rows: list[dict], stratum: str) -> tuple[list[dict], list[di
             "test_id": test_id,
             "unit_family": unit_family,
             "unit": unit,
+            "method_id": _method_id_for(rows, unit_family, unit),
             "endpoint_family": endpoint,
             "endpoint_definition_id": definition_id,
             "moderator": moderator,
@@ -373,14 +382,16 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         label = "single_cancer"
         status = "single_cancer"
         reason = "one cancer contributes; no cross-cancer pooling"
-    if unit_family == "gene" and 1 < k < 3:
+    if unit_family in {"gene", "m5m6_gene"} and 1 < k < 3:
         label = "tentative_k2" if k == 2 else "standard"
         status = "not_pooled"
         reason = "gene_pooling_requires_k>=3"
-    sensitivity_label = "panel_coverage90 sensitivity" if unit_family == "panel_coverage90" else ""
+    sensitivity_label = _sensitivity_label(unit_family)
     result = {
         "unit_family": unit_family,
         "unit": group["unit"],
+        "method_id": group.get("method_id", ""),
+        "m5m6_gene_flag": group.get("m5m6_gene_flag", 0),
         "endpoint_family": group["endpoint_family"],
         "endpoint_definition_id": group["endpoint_definition_id"],
         "study": "",
@@ -419,7 +430,7 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         result["status"] = "not_estimable"
         result["reason"] = "single_study_has_no_estimable_effect"
     if sensitivity_label:
-        result["label"] = f"panel_coverage90_{label}"
+        result["label"] = f"{unit_family}_{label}"
     if k == 1 and len(input_effects) == 1:
         single = input_effects[0]
         result["study"] = single["study"]
@@ -469,6 +480,7 @@ def _subgroup_result(group: Mapping, fit: Mapping | None) -> dict:
     return {
         "unit_family": group["unit_family"],
         "unit": group["unit"],
+        "method_id": group.get("method_id", ""),
         "endpoint_family": group["endpoint_family"],
         "endpoint_definition_id": group["endpoint_definition_id"],
         "moderator": group["moderator"],
@@ -560,7 +572,8 @@ def _component_set(row: Mapping) -> set[str]:
 def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
     per_study = [
         dict(row) for row in rows
-        if endpoint_is_per_study_only(row["endpoint_definition_id"], row["endpoint_family"])
+        if row["unit_family"] == "targeted_subset"
+        or endpoint_is_per_study_only(row["endpoint_definition_id"], row["endpoint_family"])
     ]
     if stratum == "per_cancer":
         selected = [row for row in per_study if row["drug_class_stratum"] == "ALL" and row["cancer"] != "multi"]
@@ -589,7 +602,15 @@ def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
             for effect in _one_effect_per_study(bucket, prefer_aggregate=True)
         ]
     else:
-        _assert_unique_patient_sets(selected, "Per-study-only synthesis output")
+        buckets: dict[tuple, list[dict]] = defaultdict(list)
+        for effect in selected:
+            key = (
+                effect["unit_family"], effect["unit"], effect["endpoint_family"],
+                effect["endpoint_definition_id"], effect["cancer"], effect["drug_class_stratum"],
+            )
+            buckets[key].append(effect)
+        for bucket in buckets.values():
+            _assert_unique_patient_sets(bucket, "Per-study-only synthesis output")
 
     summaries = []
     for effect in selected:
@@ -604,12 +625,18 @@ def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
             else drug_class if stratum_type == "drug_class"
             else drug_class
         )
-        reason = "source-defined endpoint is reported per study only"
+        reason = (
+            "targeted_subset is reported per study only; pooling and FDR are disabled"
+            if effect["unit_family"] == "targeted_subset"
+            else "source-defined endpoint is reported per study only"
+        )
         if effect.get("reason"):
             reason = f"{reason}; {effect['reason']}"
         summaries.append({
             "unit_family": effect["unit_family"],
             "unit": effect["unit"],
+            "method_id": effect.get("method_id", ""),
+            "m5m6_gene_flag": effect.get("m5m6_gene_flag", 0),
             "endpoint_family": effect["endpoint_family"],
             "endpoint_definition_id": effect["endpoint_definition_id"],
             "study": study,
@@ -637,8 +664,8 @@ def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
             "fixed_ci_ub": None,
             "q": None,
             "label": (
-                "panel_coverage90_per_study_only"
-                if effect["unit_family"] == "panel_coverage90"
+                f"{effect['unit_family']}_per_study_only"
+                if effect["unit_family"] in {"panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset"}
                 else "per_study_only"
             ),
             "low_k": drug_class in _LOW_K_CLASSES,
@@ -646,9 +673,7 @@ def _per_study_summaries(rows: Sequence[Mapping], stratum: str) -> list[dict]:
             "reason": reason,
             "weighting": "not pooled; source-defined endpoint reported by study",
             "sensitivity_label": (
-                "panel_coverage90 sensitivity"
-                if effect["unit_family"] == "panel_coverage90"
-                else ""
+                _sensitivity_label(effect["unit_family"])
             ),
         })
     return summaries
@@ -658,14 +683,14 @@ def _apply_fdr(summaries: list[dict]) -> None:
     families: dict[tuple, list[dict]] = defaultdict(list)
     for row in summaries:
         is_pooled = row["status"] == "pooled" and row["p"] is not None
-        if row["unit_family"] == "gene" and row["k"] < 3:
+        if row["unit_family"] == "targeted_subset":
+            is_pooled = False
+        if row["unit_family"] in {"gene", "m5m6_gene"} and row["k"] < 3:
             is_pooled = False
         if is_pooled:
             key = (
                 row["unit_family"], row["stratum_type"], row["stratum"],
-                row["endpoint_family"], row["endpoint_definition_id"],
-                row["cancer"], row["drug_class_stratum"],
-                row["stage"],
+                row["drug_class_stratum"], row["endpoint_family"],
             )
             families[key].append(row)
     for family_rows in families.values():
@@ -747,17 +772,44 @@ def _metadata(stratum: str) -> dict:
         },
         "fdr_method": "Benjamini-Hochberg",
         "fdr_threshold": 0.10,
-        "fdr_scope": "unit_family x stratum x endpoint_family x endpoint_definition_id; pooled units only",
+        "fdr_scope": "unit_family x stratum_type x stratum x endpoint_family; pooled units only",
         "panel_coverage90_sensitivity": {
             "unit_family": "panel_coverage90",
-            "label": "panel_coverage90 sensitivity",
+            "label": "sensitivity only; does not support claims alone",
             "coverage_rule": "at least 90% of panel members available after alias resolution",
             "pooling_and_fdr_scope": "separate unit_family; never combined with main panel family",
         },
         "gene_pool_minimum_k": 3,
+        "gene_families": ["gene", "m5m6_gene"],
+        "targeted_subset": "per study only; no pooling or FDR",
         "subgroup_test_minimum_k": 10,
         "prediction_interval": "not computed for tentative_k2",
     }
+
+
+def _method_id_for(rows: Sequence[Mapping], unit_family: str, unit: str) -> str:
+    method_ids = {
+        str(row.get("method_id", ""))
+        for row in rows
+        if row["unit_family"] == unit_family and row["unit"] == unit and row.get("method_id")
+    }
+    if len(method_ids) > 1:
+        raise ValueError("A synthesis unit has multiple method IDs")
+    return next(iter(method_ids), "")
+
+
+def _m5m6_unit_names(rows: Sequence[Mapping]) -> set[str]:
+    return {
+        str(row["unit"])
+        for row in rows
+        if row["unit_family"] == "gene" and str(row.get("m5m6_gene_flag", "0")).casefold() in {"1", "true"}
+    }
+
+
+def _sensitivity_label(unit_family: str) -> str:
+    if unit_family in {"panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset"}:
+        return "sensitivity only; does not support claims alone"
+    return ""
 
 
 def _default_run_dir(rows, stratum) -> Path:

@@ -25,6 +25,13 @@ def test_real_cohort_effects_are_refused_without_allow_outcomes(tmp_path):
     assert not (tmp_path / "liu2019").exists()
 
 
+def test_adjusted_effect_models_are_refused_before_loading_a_cohort(tmp_path):
+    with pytest.raises(SystemExit, match="Adjusted models are unavailable"):
+        main(["effects", "--cohort", "synthetic", "--adjusted", "--results", str(tmp_path)])
+
+    assert not (tmp_path / "synthetic").exists()
+
+
 def test_real_effect_table_synthesis_is_refused_without_allow_outcomes(tmp_path):
     effect_dir = tmp_path / "synthetic-test-input"
     effect_dir.mkdir()
@@ -61,6 +68,7 @@ def test_real_effect_table_synthesis_is_refused_without_allow_outcomes(tmp_path)
 def _feature_input_identities(view):
     from tools.a_cohorts.view import REPRESENTATION_FILE
     from tools.a_meta import __main__ as cli
+    from tools.a_meta.frozen import IDENTIFIER_PROPOSALS
     from tools.a_meta.features import GENE_ALIAS_ADDENDUM_PATH
     from tools.a_scoring import ALIAS_TABLE_PATH, PANEL_REGISTRY_PATH
 
@@ -74,6 +82,7 @@ def _feature_input_identities(view):
         "panel_registry": hashlib.sha256(PANEL_REGISTRY_PATH.read_bytes()).hexdigest(),
         "gene_aliases": hashlib.sha256(ALIAS_TABLE_PATH.read_bytes()).hexdigest(),
         "gene_alias_addendum": hashlib.sha256(GENE_ALIAS_ADDENDUM_PATH.read_bytes()).hexdigest(),
+        "hallmark_identifier_proposals": hashlib.sha256(IDENTIFIER_PROPOSALS.read_bytes()).hexdigest(),
     }
 
 def test_synthetic_effect_table_requires_fixture_manifest_and_hash(tmp_path):
@@ -156,13 +165,13 @@ def test_coverage_cli_writes_aggregate_missing_genes_and_cyt_availability(tmp_pa
             clinical_rows=[{}],
         ),
     )
-    all_panels = panel_definitions(AVAILABLE_PANEL_IDS)
+    all_panels = cli._panel_definitions(AVAILABLE_PANEL_IDS)
     available = {gene for members in all_panels.values() for gene in members} - {"CCL5", "PRF1"}
     available.add("GZMA")
     monkeypatch.setattr(
         cli,
-        "build_feature_table",
-        lambda view, family, **kwargs: FeatureTable(
+        "_gene_table",
+        lambda view, **kwargs: FeatureTable(
             cohort_id="synthetic",
             unit_family="gene",
             values_by_unit={gene: [1.0] for gene in available},
@@ -407,7 +416,11 @@ def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, m
             or SimpleNamespace(cohort_id=cohort_id, unit_family=unit_family)
         ),
     )
-    monkeypatch.setattr(cli, "study_effects", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        cli,
+        "study_effects",
+        lambda *args, **kwargs: [{"method_id": "CUSTOM_MEAN_SYNTHETIC_PANEL"}],
+    )
     args = SimpleNamespace(
         cohort=cohort_id,
         runtime=None,
@@ -421,6 +434,12 @@ def test_effects_ignore_old_optional_feature_after_reordered_rebuild(tmp_path, m
         cli._effects(args, tmp_path / "results")
 
     assert loaded_families == ["gene", "panel", "panel_coverage90"]
+    effects_path = tmp_path / "results" / cohort_id / "effects" / "effects.tsv"
+    effect_manifest = json.loads(
+        (tmp_path / "results" / cohort_id / "effects" / "manifest.json").read_text(encoding="utf-8")
+    )
+    assert "method_id" in effects_path.read_text(encoding="utf-8").splitlines()[0].split("\t")
+    assert effect_manifest["method_ids"] == ["CUSTOM_MEAN_SYNTHETIC_PANEL"]
 
     loaded_families.clear()
     (feature_dir / "panel_coverage90.tsv").unlink()

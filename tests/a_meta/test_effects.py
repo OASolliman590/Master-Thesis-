@@ -119,6 +119,10 @@ def test_panel_coverage90_effect_carries_coverage_and_sensitivity_label(tmp_path
         unit_family="panel_coverage90",
         values_by_unit={"PANEL_18": [1.0, 2.0, 3.0, 4.0]},
         n_patients=4,
+        metadata={
+            "method_id_by_unit": {"PANEL_18": "CUSTOM_MEAN_PANEL_18"},
+            "sensitivity_label": "sensitivity only; does not support claims alone",
+        },
         coverage={"PANEL_18": {
             "n_found": 17, "n_total": 18, "missing": ["GENE_Z"], "complete": True,
         }},
@@ -136,8 +140,92 @@ def test_panel_coverage90_effect_carries_coverage_and_sensitivity_label(tmp_path
     assert effect["unit_family"] == "panel_coverage90"
     assert effect["n_found"] == 17
     assert effect["n_total"] == 18
-    assert effect["sensitivity_label"] == "panel_coverage90 sensitivity"
+    assert effect["sensitivity_label"] == "sensitivity only; does not support claims alone"
+    assert effect["method_id"] == "CUSTOM_MEAN_PANEL_18"
     assert effect["status"] == "ok"
+
+
+def test_gene_effect_flags_m5m6_rows_and_preserves_method_id(tmp_path):
+    view = _view([_row("CR"), _row("PR"), _row("SD"), _row("PD")])
+    features = FeatureTable(
+        cohort_id="synthetic",
+        unit_family="gene",
+        values_by_unit={"ZZ_SYNTHETIC_ONLY_M5M6_GENE": [1.0, 2.0, 3.0, 4.0]},
+        n_patients=4,
+        metadata={
+            "m5m6_gene_units": ["ZZ_SYNTHETIC_ONLY_M5M6_GENE"],
+            "method_id_by_unit": {"ZZ_SYNTHETIC_ONLY_M5M6_GENE": "GENE_STUDY_SCALE"},
+        },
+    )
+    manifest = synthetic_effect_input_manifest(view, features, tmp_path / "m5m6-manifest.json")
+
+    effect = next(
+        row for row in study_effects(view, features, "orr", by_drug_class=False, provenance_manifest=manifest)
+        if row["drug_class_stratum"] == "ALL"
+    )
+
+    assert effect["method_id"] == "GENE_STUDY_SCALE"
+    assert effect["m5m6_gene_flag"] == 1
+
+
+def test_dictionary_feature_metadata_preserves_custom_mean_method_id(tmp_path):
+    view = _view([_row("CR"), _row("PR"), _row("SD"), _row("PD")])
+    features = {
+        "cohort_id": "synthetic",
+        "unit_family": "panel",
+        "records": [
+            {"patient_row": index, "unit": "SYNTH_PANEL", "value": value}
+            for index, value in enumerate([1.0, 2.0, 3.0, 4.0])
+        ],
+        "metadata": {"method_id_by_unit": {"SYNTH_PANEL": "CUSTOM_MEAN_SYNTH_PANEL"}},
+    }
+    manifest = synthetic_effect_input_manifest(view, features, tmp_path / "dictionary-panel-manifest.json")
+
+    effect = next(
+        row for row in study_effects(
+            view, features, "orr", by_drug_class=False, provenance_manifest=manifest
+        ) if row["drug_class_stratum"] == "ALL"
+    )
+
+    assert effect["method_id"] == "CUSTOM_MEAN_SYNTH_PANEL"
+
+
+def test_dictionary_feature_metadata_flags_m5m6_gene(tmp_path):
+    view = _view([_row("CR"), _row("PR"), _row("SD"), _row("PD")])
+    features = {
+        "cohort_id": "synthetic",
+        "unit_family": "gene",
+        "records": [
+            {"patient_row": index, "unit": "GENE_SYNTH_M5M6", "value": value}
+            for index, value in enumerate([1.0, 2.0, 3.0, 4.0])
+        ],
+        "metadata": {
+            "method_id_by_unit": {"GENE_SYNTH_M5M6": "GENE_STUDY_SCALE"},
+            "m5m6_gene_units": ["GENE_SYNTH_M5M6"],
+        },
+    }
+    manifest = synthetic_effect_input_manifest(view, features, tmp_path / "dictionary-gene-manifest.json")
+
+    effect = next(
+        row for row in study_effects(
+            view, features, "orr", by_drug_class=False, provenance_manifest=manifest
+        ) if row["drug_class_stratum"] == "ALL"
+    )
+
+    assert effect["method_id"] == "GENE_STUDY_SCALE"
+    assert effect["m5m6_gene_flag"] == 1
+
+
+def test_test_only_dictionary_features_are_refused_for_real_cohorts():
+    view = _view([], study="liu2019")
+    features = {
+        "unit_family": "test_only_pathway",
+        "records": [],
+        "metadata": {"test_only_gene_sets": True},
+    }
+
+    with pytest.raises(ValueError, match="Test-only gene-set features cannot produce real-cohort effects"):
+        study_effects(view, features, "orr")
 
 
 def test_or_ne_and_unknown_are_excluded_and_mixed_drug_classes_are_separate(tmp_path):

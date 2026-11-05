@@ -17,7 +17,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--paper", required=True, choices=("A", "B"))
     parser.add_argument("--endpoint", default="orr", choices=("orr", "clinical_benefit", "source_label"))
     parser.add_argument("--results", type=Path, help="results root; THESIS_RESULTS is used when omitted")
-    parser.add_argument("--gene-sets", type=Path, help="local GMT file for fgsea")
+    parser.add_argument("--gene-sets", type=Path, help="optional frozen GMT for fgsea; defaults to Hallmark")
     parser.add_argument(
         "--gene-set-id-type", choices=("symbol", "entrez"),
         help="identifier namespace declared by the local GMT file",

@@ -323,10 +323,11 @@ def _prostate_command(command: str, atlas_dir: Path, runtime: Path) -> None:
     elif command == "embed":
         adata, source = prostate.load_h5ad(runtime)
         output = atlas_dir / "embedding"
-        prostate.run_embedding(adata, output)
+        embedding_randomness = prostate.run_embedding(adata, output)
         _write_manifest(output / "manifest.json", {"atlas": "prostate_hormone_naive_atlas", "paper": "B",
             "input_sha256": {"h5ad": _digest(source)}, "code": [_code_ref("tools/sc/prostate.py"), _code_ref("tools/sc/cli.py")],
             "normalisation": "library size 10,000 then log1p", "hvg": "Seurat flavor, 2,000 genes", "leiden_resolution": 0.8,
+            **embedding_randomness,
             "status": "descriptive_embedding",
             "outputs": {name: _digest(output / name) for name in ("umap.png", "prostate_embedding.h5ad")}})
     elif command == "labels":

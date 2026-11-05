@@ -56,6 +56,39 @@ def _canned_meta(rows):
     )
 
 
+def test_bh_families_keep_drug_strata_separate_within_one_cancer():
+    rows = [
+        {
+            "unit_family": "panel",
+            "unit": "PANEL_A",
+            "status": "pooled",
+            "p": 0.01,
+            "q": None,
+            "k": 3,
+            "stratum_type": "cancer",
+            "stratum": "melanoma",
+            "drug_class_stratum": "ALL",
+            "endpoint_family": "orr",
+        },
+        {
+            "unit_family": "panel",
+            "unit": "PANEL_A",
+            "status": "pooled",
+            "p": 0.03,
+            "q": None,
+            "k": 3,
+            "stratum_type": "cancer",
+            "stratum": "melanoma",
+            "drug_class_stratum": "ANTI_PD_L1_AXIS",
+            "endpoint_family": "orr",
+        },
+    ]
+
+    synthesis_module._apply_fdr(rows)
+
+    assert [row["q"] for row in rows] == [0.01, 0.03]
+
+
 def _pooled(analysis_id, k, estimate, p):
     return {
         "analysis_id": analysis_id,
@@ -153,7 +186,7 @@ def test_panel_coverage90_stays_in_its_own_stratum_fdr_and_label(tmp_path):
                 effect.update({
                     "n_found": 17,
                     "n_total": 18,
-                    "sensitivity_label": "panel_coverage90 sensitivity",
+                    "sensitivity_label": "sensitivity only; does not support claims alone",
                 })
             effects.append(effect)
     fake = FakeR({
@@ -188,7 +221,64 @@ def test_panel_coverage90_stays_in_its_own_stratum_fdr_and_label(tmp_path):
     assert main["label"] == "standard"
     assert sensitivity["q"] == pytest.approx(0.20)
     assert sensitivity["label"] == "panel_coverage90_standard"
-    assert sensitivity["sensitivity_label"] == "panel_coverage90 sensitivity"
+    assert sensitivity["sensitivity_label"] == "sensitivity only; does not support claims alone"
+
+
+def test_targeted_subset_is_reported_per_study_without_pooling_or_fdr(tmp_path):
+    effects = [
+        {**_effect("targeted_subset", "HALLMARK_SYNTHETIC_SET", f"study_{index}"),
+         "method_id": "CUSTOM_MEAN_TARGETED_SUBSET"}
+        for index in range(3)
+    ]
+
+    result = _synthesize_synthetic(effects, "per_cancer", output_dir=tmp_path / "targeted-subset")
+
+    assert len(result.summaries) == 3
+    assert {row["status"] for row in result.summaries} == {"per_study_only"}
+    assert {row["method_id"] for row in result.summaries} == {"CUSTOM_MEAN_TARGETED_SUBSET"}
+    assert all(row["q"] is None for row in result.summaries)
+    assert result.metadata["non_pooled_families"]["targeted_subset"] == "per-study only; no pooling or FDR"
+
+
+def test_m5m6_gene_family_requires_k_of_three_for_pooling():
+    effects = [_effect("m5m6_gene", "GENE_SYNTH_M5", f"study_{index}") for index in range(2)]
+    groups, _ = synthesis_module._plan_groups(effects, "per_cancer")
+
+    summary = synthesis_module._summary(
+        groups[0], {"k": 2, "status": "not_pooled", "reason": "gene_pooling_requires_k>=3"}
+    )
+
+    assert groups[0]["min_k"] == 3
+    assert summary["status"] == "not_pooled"
+    assert summary["reason"] == "gene_pooling_requires_k>=3"
+
+
+def test_fdr_scope_is_family_stratum_and_endpoint_family():
+    from tools.a_meta.synthesis import _apply_fdr
+
+    rows = [
+        {"unit_family": "panel", "unit": "P1", "stratum_type": "cancer", "stratum": "melanoma",
+         "drug_class_stratum": "ALL", "endpoint_family": "orr", "endpoint_definition_id": "ORR_A", "status": "pooled", "p": 0.01, "k": 3},
+        {"unit_family": "panel", "unit": "P2", "stratum_type": "cancer", "stratum": "melanoma",
+         "drug_class_stratum": "ALL", "endpoint_family": "orr", "endpoint_definition_id": "ORR_B", "status": "pooled", "p": 0.03, "k": 3},
+        {"unit_family": "panel_coverage90", "unit": "P1", "stratum_type": "cancer", "stratum": "melanoma",
+         "drug_class_stratum": "ALL", "endpoint_family": "orr", "endpoint_definition_id": "ORR_A", "status": "pooled", "p": 0.02, "k": 3},
+        {"unit_family": "panel", "unit": "P1", "stratum_type": "drug_class", "stratum": "ANTI_PD_L1_AXIS",
+         "drug_class_stratum": "ANTI_PD_L1_AXIS", "endpoint_family": "orr", "endpoint_definition_id": "ORR_A", "status": "pooled", "p": 0.001, "k": 3},
+        {"unit_family": "panel", "unit": "P1", "stratum_type": "cancer", "stratum": "melanoma",
+         "drug_class_stratum": "ALL", "endpoint_family": "clinical_benefit", "endpoint_definition_id": "CB_A", "status": "pooled", "p": 0.001, "k": 3},
+        {"unit_family": "targeted_subset", "unit": "HALLMARK_SYNTHETIC_SET", "stratum_type": "cancer", "stratum": "melanoma",
+         "drug_class_stratum": "ALL", "endpoint_family": "orr", "endpoint_definition_id": "ORR_A", "status": "pooled", "p": 0.0001, "k": 3},
+    ]
+
+    _apply_fdr(rows)
+
+    assert rows[0]["q"] == pytest.approx(0.02)
+    assert rows[1]["q"] == pytest.approx(0.03)
+    assert rows[2]["q"] == pytest.approx(0.02)
+    assert rows[3]["q"] == pytest.approx(0.001)
+    assert rows[4]["q"] == pytest.approx(0.001)
+    assert rows[5].get("q") is None
 
 
 def test_low_k_flag_is_set_for_anti_ctla4_and_dual_class_strata(tmp_path):
@@ -435,7 +525,7 @@ def test_endpoint_definition_ids_split_pools_and_bh_families(tmp_path):
         "CB_DCB_NDB", "CB_PFS_GT6M",
     }
     assert {row["k"] for row in result.summaries} == {3}
-    assert {row["q"] for row in result.summaries} == {0.01, 0.20}
+    assert {row["q"] for row in result.summaries} == {0.02, 0.20}
 
 
 def test_single_gene_effect_keeps_its_effect_and_interval(tmp_path):

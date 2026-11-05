@@ -369,22 +369,33 @@ def compartment_dotplot(summary: pd.DataFrame, output: Path) -> None:
     plt.close(fig)
 
 
-def run_embedding(adata, output_dir: Path) -> None:
+def run_embedding(adata, output_dir: Path) -> dict:
     configure_runtime()
     import scanpy as sc
+    from tools.a_meta.random_streams import seed_for_task
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    atlas = "prostate_hormone_naive_atlas"
+    seed = seed_for_task("sc_embedding", atlas)
     adata.X = adata.layers["counts"].copy()
     sc.pp.normalize_total(adata, target_sum=10_000)
     sc.pp.log1p(adata)
     sc.pp.highly_variable_genes(adata, flavor="seurat", n_top_genes=2_000)
-    sc.tl.pca(adata, n_comps=50, mask_var="highly_variable", svd_solver="arpack")
-    sc.pp.neighbors(adata, n_neighbors=15, n_pcs=30)
-    sc.tl.umap(adata)
-    sc.tl.leiden(adata, resolution=0.8, key_added="leiden", flavor="igraph", directed=False)
+    sc.tl.pca(
+        adata, n_comps=50, mask_var="highly_variable", svd_solver="arpack",
+        random_state=seed,
+    )
+    sc.settings.n_jobs = 1
+    sc.pp.neighbors(adata, n_neighbors=15, n_pcs=30, random_state=seed)
+    sc.tl.umap(adata, random_state=seed)
+    sc.tl.leiden(
+        adata, resolution=0.8, key_added="leiden", flavor="igraph",
+        directed=False, random_state=seed,
+    )
     sc.pl.umap(adata, color=["celltype_major_v2", "leiden"], show=False)
     import matplotlib.pyplot as plt
 
     plt.savefig(output_dir / "umap.png", dpi=180, bbox_inches="tight")
     plt.close("all")
     adata.write_h5ad(output_dir / "prostate_embedding.h5ad")
+    return {"random_stream": "sc_embedding", "random_task_id": atlas, "seed": seed, "neighbor_threads": 1}
