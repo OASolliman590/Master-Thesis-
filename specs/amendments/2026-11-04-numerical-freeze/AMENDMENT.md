@@ -1,6 +1,6 @@
 # Numerical freeze and gene sets for Papers A and A-LONG (4 Nov 2026)
 
-**Status: DRAFT 3 (5 Nov 2026), NOT SIGNED.** Nothing is frozen until the user signs. No responder or non-responder result exists on real data, and none will be computed until this is signed. All numbers here come from signed specs, gene availability or synthetic software checks. Evidence: `docs/research/NUMERICAL_FREEZE_EVIDENCE_20261104.md`. Decisions: `docs/wayfinding/NUMERICAL_FREEZE_20261104/MAP.md`. Deviations: `DEVIATIONS.md`.
+**Status: SIGNED by the user on 5 Nov 2026 (draft 3, chat answer "I sign it").** At signing, no responder or non-responder result existed on real data. Outcome analysis stays locked until the gates under "Still open" close. All numbers here come from signed specs, gene availability or synthetic software checks. Evidence: `docs/research/NUMERICAL_FREEZE_EVIDENCE_20261104.md`. Decisions: `docs/wayfinding/NUMERICAL_FREEZE_20261104/MAP.md`. Deviations: `DEVIATIONS.md`.
 
 **Changes from draft 2.**
 - Strict coverage stays the main rule. Draft 2's 90% override is withdrawn, so no signed coverage text changes.
@@ -10,7 +10,7 @@
 
 ## What signing does
 
-It fills `specs/A/NUMERICAL_FREEZE_REGISTER.tsv` from `NUMERICAL_FREEZE_REGISTER.proposed.tsv`, fixes the gene sets in this folder, and meets gates 1 and 2 of `specs/A/SPEC_v2.md` section 11. It does not unlock outcome analysis: see "Still open".
+Signing filled `specs/A/NUMERICAL_FREEZE_REGISTER.tsv` from `NUMERICAL_FREEZE_REGISTER.proposed.tsv`, fixed the gene sets in this folder, and met gates 1 and 2 of `specs/A/SPEC_v2.md` section 11. It did not unlock outcome analysis: see "Still open".
 
 ## Gene sets
 

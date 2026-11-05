@@ -20,8 +20,8 @@ Skills: research, wayfinder, grilling. Lean process. Signed constraints: strict 
 | Astra review of draft 2 | Research | the above | Closed |
 | Hallmark coverage rule: override or keep strict? | Grilling (user) | Astra review | Closed |
 | Full 50-set audit | Task | coverage rule | Closed |
-| Families, seeds, settings: draft 3 | Grilling (user) | audit | With user at signing |
-| Sign the freeze | Grilling (user) | the two above | Open |
+| Families, seeds, settings: draft 3 | Grilling (user) | audit | Closed |
+| Sign the freeze | Grilling (user) | the two above | Closed: signed 5 Nov 2026 |
 
 ## Decisions so far
 

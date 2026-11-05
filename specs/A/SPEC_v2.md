@@ -118,8 +118,8 @@ CYT is the formal comparator. Supporting comparators are admitted only with thei
 All outputs stay under `.scratch/` (git-ignored); Git holds code, specs and patient-free results only.
 
 ## 11. Open gates before analysis
-1. Freeze the Hallmark IFN-gamma panel membership.
-2. Freeze the numerical register entries: panel multiplicity rule, DE software choice, bootstrap seeds.
+1. Freeze the Hallmark IFN-gamma panel membership. **Met 5 Nov 2026** (`specs/amendments/2026-11-04-numerical-freeze/AMENDMENT.md`).
+2. Freeze the numerical register entries: panel multiplicity rule, DE software choice, bootstrap seeds. **Met 5 Nov 2026**, same amendment; N12-N15 stay open, and N16 awaits AIU smoke.
 3. Audit IMvigor210 and development-cohort prior exposure for comparators, including the 19 cohorts of the Lin 2026 signature validation.
 4. Release step for the final test (only after the model equation is frozen).
 5. Pin the quanTIseq version and options (shared with Paper B); CIBERSORTx needs the user's registration.
