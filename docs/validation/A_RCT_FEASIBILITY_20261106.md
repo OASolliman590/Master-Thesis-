@@ -5,7 +5,7 @@ Source: Braun 2020 workbook, SHA-256 `a1f8683676d416b255291dcaa007aa0fa48c736c23
 | Check | Result | Status |
 | --- | --- | --- |
 | 1. S4A holds everolimus expression | 130 everolimus and 120 nivolumab CheckMate 025 patients; all 311 S4A columns match S1 | Pass |
-| 2. Trial IDs and arm | `Cohort` = CM-025 and `Arm` are present. Whether `Arm` means assigned or received is not documented | Pass, one point open |
+| 2. Trial IDs and arm | `Cohort` = CM-025 and `Arm` are present. Whether `Arm` means assigned or received is not documented | Open |
 | 3. Specimen timing, one per patient | No patient has two RNA rows. All 155 known timings are positive, read as collected before trial therapy; 95 are missing. Median 727.5 days (everolimus) and 567 days (nivolumab); 15 patients within 90 days | Pass as an archival marker |
 | 4. Path to RNA | 130 of 397 everolimus (33%), 120 of 406 nivolumab (30%). Tissue selection rules are not in the workbook | Open |
 | 5. Batches | The workbook S1 has no batch field. ComBat was fitted across both arms | Open |
@@ -30,6 +30,15 @@ Source: Braun 2020 workbook, SHA-256 `a1f8683676d416b255291dcaa007aa0fa48c736c23
 | Not evaluable | 50 | 21 | 30 | 9 |
 
 The response rate in the RNA subset is close to the full trial in both arms. Not-evaluable patients are more common with everolimus (16% against 8% in the RNA subset), so dropping them is a post-randomisation selection that differs by arm.
+
+## PFS status counts
+
+Added 6 Nov 2026 for Change 1. Survival times were not read. The meaning of the coding is not yet confirmed from a source.
+
+| `PFS_CNSR` | Everolimus, all | Everolimus, RNA | Nivolumab, all | Nivolumab, RNA |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | 52 | 13 | 56 | 15 |
+| 1 | 345 | 117 | 350 | 105 |
 
 ## Conclusion
 

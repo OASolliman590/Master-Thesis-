@@ -13,3 +13,8 @@ Dated record. Add to it; do not rewrite entries.
 
 - `ORR` categories were counted by arm, for all CheckMate 025 patients and for those with RNA. Counts are in `docs/validation/A_RCT_FEASIBILITY_20261106.md`.
 - No expression value, score or other feature was joined to these counts.
+
+## 6 Nov 2026: PFS censoring counts read for the A-RCT endpoint change (level 2 exposure, allowed)
+
+- `PFS_CNSR` values were counted by arm, for all CheckMate 025 patients and for those with RNA. Survival times were not read.
+- No expression value, score or other feature was joined to these counts.
