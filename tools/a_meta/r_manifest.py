@@ -33,11 +33,20 @@ def run_r_sanitised(
     *,
     script_id: str,
     runner=None,
+    retention_dir: Path | str | None = None,
 ):
-    """Run through r_bridge, then publish sanitized outputs and manifest."""
+    """Run through r_bridge, then publish sanitized outputs and manifest.
+
+    Supplying ``retention_dir`` preserves intermediate bridge stages there while
+    leaving the published output and sanitized manifest unchanged.
+    """
     destination = Path(output_dir)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    stage_parent = Path(tempfile.mkdtemp(prefix="a-meta-r-stage-", dir=destination.parent))
+    preserve_work = retention_dir is not None
+    stage_root = Path(retention_dir).expanduser().absolute() if preserve_work else destination.parent
+    stage_root.mkdir(parents=True, exist_ok=True)
+    stage_prefix = "r-manifest-stage-" if preserve_work else "a-meta-r-stage-"
+    stage_parent = Path(tempfile.mkdtemp(prefix=stage_prefix, dir=stage_root))
     try:
         staged = run_r(
             script,
@@ -45,6 +54,7 @@ def run_r_sanitised(
             config,
             stage_parent / "R",
             runner=runner,
+            retention_dir=(stage_parent / "bridge-work") if preserve_work else None,
         )
         safe_manifest = sanitise_r_manifest(staged.manifest, script_id=script_id)
         expected_names = list(staged.outputs)
@@ -86,7 +96,8 @@ def run_r_sanitised(
             stderr=staged.stderr,
         )
     finally:
-        shutil.rmtree(stage_parent, ignore_errors=True)
+        if not preserve_work:
+            shutil.rmtree(stage_parent, ignore_errors=True)
 
 
 def _sanitize_value(value):
