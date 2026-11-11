@@ -3,7 +3,11 @@ from __future__ import annotations
 
 import csv
 import gzip
+import io
+import json
 import math
+import os
+import re
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -55,6 +59,9 @@ TARGETED_SUBSET_STUDIES = {"gse136961", "gse93157", "gse140901", "gse159067"}
 SENSITIVITY_LABEL = "sensitivity only; does not support claims alone"
 PANEL_METHOD_IDS = {panel: f"CUSTOM_MEAN_{panel}" for panel in AVAILABLE_PANEL_IDS}
 _FORBIDDEN_IDENTIFIER_COLUMNS = {"patient_id", "sample_id", "patient", "sample"}
+_GSE176307_TPM_SHA256 = "c7ebf750cc6e6ba967bba9a733c47572a53daaaff9fcf041e5ab4641ef615894"
+_GSE176307_KEY_SHA256 = "cfe452ec72c99f2c84216bb25fe291b4c78028e53b8a8189acbd5c9ed7db919b"
+_GSE176307_SOFT_SHA256 = "ea242fbb98aa104c384a97a3d1f0baaa938031e91a5a3872b065982d73b1bf72"
 
 
 @dataclass(frozen=True)
@@ -78,6 +85,14 @@ class FeatureTable:
         ]
 
 
+class FeatureUnavailableError(ValueError):
+    """A typed, patient-free reason that an A-META feature route cannot run."""
+
+    def __init__(self, reason_code: str, message: str):
+        super().__init__(message)
+        self.reason_code = reason_code
+
+
 def build_feature_table(
     view,
     family: str,
@@ -92,6 +107,9 @@ def build_feature_table(
     r_out_dir: Path | str | None = None,
     common_gene_table: Path | str | None = None,
     test_only_gene_sets: bool = False,
+    packet_free_assay_mapping: Path | str | None = None,
+    packet_free_assay_mapping_sha256: str | None = None,
+    retention_dir: Path | str | None = None,
     runner=None,
 ) -> FeatureTable:
     """Build gene, panel, singscore pathway, or external fraction features.
@@ -129,6 +147,19 @@ def build_feature_table(
             cohort_id=view.metadata.cohort_id,
             expected_patients=len(view.clinical_rows),
         )
+    if cohort_id == "gse176307":
+        if packet_free_assay_mapping is None:
+            raise FeatureUnavailableError(
+                "gse176307_packet_free_assay_mapping_missing",
+                "GSE176307 feature analysis needs a verified packet-free assay mapping",
+            )
+        if not packet_free_assay_mapping_sha256 or not re.fullmatch(
+            r"[0-9a-f]{64}", str(packet_free_assay_mapping_sha256)
+        ):
+            raise FeatureUnavailableError(
+                "gse176307_packet_free_assay_mapping_unverified",
+                "GSE176307 packet-free assay mapping requires an expected SHA-256",
+            )
     _gene_alias_addendum()
     if family in _PATHWAY_FAMILIES:
         return _pathway_features(
@@ -141,7 +172,10 @@ def build_feature_table(
             gene_map=gene_map,
             gtf_path=gtf_path,
             probe_map=probe_map,
+            packet_free_assay_mapping=packet_free_assay_mapping,
+            packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
             r_out_dir=r_out_dir,
+            retention_dir=retention_dir,
             runner=runner,
         )
 
@@ -158,6 +192,8 @@ def build_feature_table(
             view, runtime=runtime, gene_map=gene_map, gtf_path=gtf_path,
             probe_map=probe_map,
             target_symbols=_resolution_targets(focused_panels),
+            packet_free_assay_mapping=packet_free_assay_mapping,
+            packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
         )
         return _focused_gene_table(genes, focused_panels)
     if family == "targeted_subset":
@@ -167,6 +203,8 @@ def build_feature_table(
             view, runtime=runtime, gene_map=gene_map, gtf_path=gtf_path,
             probe_map=probe_map,
             target_symbols=tuple(sorted({gene for members in memberships.values() for gene in members})),
+            packet_free_assay_mapping=packet_free_assay_mapping,
+            packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
         )
         return _targeted_subset_table(view, genes, memberships)
     panel_definitions = (
@@ -180,7 +218,9 @@ def build_feature_table(
         gene_map=gene_map,
         gtf_path=gtf_path,
         probe_map=probe_map,
-        target_symbols=_resolution_targets(panel_definitions),
+        target_symbols=(None if family == "gene" else _resolution_targets(panel_definitions)),
+        packet_free_assay_mapping=packet_free_assay_mapping,
+        packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
     )
     if family == "gene":
         return genes
@@ -330,7 +370,10 @@ def read_feature_table(
     )
 
 
-def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=None) -> FeatureTable:
+def _gene_table(
+    view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=None,
+    packet_free_assay_mapping=None, packet_free_assay_mapping_sha256=None,
+) -> FeatureTable:
     salmon_tpm = view.metadata.cohort_id == "gse176307"
     source_inputs_sha256 = {}
     if salmon_tpm:
@@ -340,9 +383,15 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
             matrix,
             source_inputs_sha256,
             patients_with_tpm_assay,
-        ) = _gse176307_salmon_tpm(view, runtime)
+        ) = _gse176307_salmon_tpm(
+            view, runtime,
+            packet_free_assay_mapping=packet_free_assay_mapping,
+            packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
+        )
     else:
         feature_ids, sample_columns, matrix = _read_expression(view.expression_path)
+    reference_path = a_scoring.gene_info_path(runtime)
+    reference_sha256 = file_sha256(reference_path) if reference_path.is_file() else ""
     if len(sample_columns) != len(view.clinical_rows):
         raise ValueError("Expression columns do not align with cohort-view rows")
     row_identities = [str(row.get("patient_id", "")) for row in view.clinical_rows]
@@ -380,10 +429,15 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         effective_feature_id = _gse176307_feature_id(feature_ids)
     else:
         scale_rule, logged = _study_scale(matrix, representation)
+    source_feature_ids = list(feature_ids)
     probe_counts = None
     dropped_unmapped = 0
     duplicate_gene_counts = None
-    target_symbols = tuple(target_symbols or _resolution_targets())
+    mapping_method_by_unit: dict[str, str] = {}
+    source_feature_by_unit: dict[str, str] = {}
+    mapping_status_by_unit: dict[str, str] = {}
+    mapping_unavailable = []
+    target_symbols = tuple(target_symbols) if target_symbols is not None else ()
     if representation.platform == "microarray" and representation.feature_id == "probe":
         mapping_path = Path(probe_map) if probe_map is not None else Path(view.expression_path).parent / "probe_to_gene.tsv"
         mapping = _probe_mapping(mapping_path)
@@ -400,8 +454,19 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
             reference=reference,
             allow_multiple_synonyms=True,
         )
-        selected = _collapse_probes(feature_ids, logged, canonical)
-        feature_ids, logged, probe_counts, dropped_unmapped = selected
+        feature_ids, logged, probe_counts, dropped_unmapped, selected_sources = _collapse_probes(
+            feature_ids, logged, canonical, return_source_ids=True,
+        )
+        for unit, source_id in zip(feature_ids, selected_sources):
+            source_feature_by_unit[unit] = source_id
+            mapping_status_by_unit[unit] = "mapped"
+            mapping_method_by_unit[unit] = "cohort_probe_annotation"
+        selected_source_ids = set(selected_sources)
+        for source_id, canonical_symbol in zip(source_feature_ids, canonical):
+            if source_id in selected_source_ids:
+                continue
+            status = "ambiguous" if canonical_symbol is None else "unmapped"
+            mapping_unavailable.append({"source_feature_id": source_id, "status": status})
         feature_ids, logged = _ensure_unique_genes(feature_ids, logged)
     else:
         custom_map = _load_gene_map(gene_map)
@@ -412,15 +477,30 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
             custom_map=custom_map,
             reference=reference,
         )
-        feature_ids = _canonicalize_symbols(
+        canonical = _canonicalize_symbols(
             source_symbols,
             target_symbols,
             runtime=runtime,
             reference=reference,
         )
-        feature_ids, logged, duplicate_gene_counts, duplicate_gene_symbols = _collapse_duplicate_genes(
-            feature_ids, logged
+        feature_ids, logged, duplicate_gene_counts, duplicate_gene_symbols, selected_sources = _collapse_duplicate_genes(
+            canonical, logged, source_feature_ids=source_feature_ids, return_source_ids=True,
         )
+        for unit, source_id in zip(feature_ids, selected_sources):
+            source_feature_by_unit[unit] = source_id
+            status = "unmapped" if _is_unmapped_identifier(unit) else "mapped"
+            mapping_status_by_unit[unit] = status
+            mapping_method_by_unit[unit] = _mapping_method(
+                source_id, unit, effective_feature_id,
+                custom_map=custom_map, reference=reference,
+            )
+        selected_source_ids = set(selected_sources)
+        for source_id, source_symbol, canonical_symbol in zip(source_feature_ids, source_symbols, canonical):
+            if source_id in selected_source_ids:
+                continue
+            if canonical_symbol is None:
+                status = "ambiguous" if _is_ambiguous_ensembl(source_id, effective_feature_id, reference) else "unmapped"
+                mapping_unavailable.append({"source_feature_id": source_id, "status": status})
 
     values_by_unit = {unit: list(values) for unit, values in zip(feature_ids, logged)}
     metadata = {"scale_rule": scale_rule, "representation": {
@@ -428,7 +508,7 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         "unit": "tpm" if salmon_tpm else representation.unit,
         "transform": "linear" if salmon_tpm else representation.transform,
         "feature_id": effective_feature_id,
-    }}
+    }, "pinned_gene_info_sha256": reference_sha256}
     if salmon_tpm:
         metadata.update({
             "source_route": "official Salmon TPM via the A-P2 GSE176307 assay mapping",
@@ -450,6 +530,24 @@ def _gene_table(view, *, runtime, gene_map, gtf_path, probe_map, target_symbols=
         metadata["duplicate_gene_symbols"] = duplicate_gene_symbols
     if custom_map:
         metadata["gene_map_rows"] = len(custom_map)
+    metadata["identifier_mapping"] = {
+        "source_identifier_type": effective_feature_id,
+        "rule": "frozen aliases, frozen gene alias addendum, pinned Entrez/Ensembl reference, cohort probe map, and outcome-blind duplicate collapse",
+        "source_feature_by_symbol": source_feature_by_unit,
+        "mapping_status_by_symbol": mapping_status_by_unit,
+        "mapping_method_by_symbol": mapping_method_by_unit,
+        "source_mapping_by_symbol": {
+            unit: {
+                "source_feature_id": source_feature_by_unit[unit],
+                "status": mapping_status_by_unit[unit],
+                "method": mapping_method_by_unit[unit],
+            }
+            for unit in source_feature_by_unit
+        },
+        "unmapped_or_ambiguous_source_rows": mapping_unavailable,
+        "alias_table_sha256": file_sha256(FROZEN_ALIASES),
+        "gene_alias_addendum_sha256": file_sha256(GENE_ALIAS_ADDENDUM_PATH),
+    }
     if recount3_used:
         metadata["recount3_non_primary_dropped"] = recount3_dropped
     metadata["m5m6_gene_units"] = sorted(_m5m6_gene_units())
@@ -498,6 +596,9 @@ def _panel_table(view, genes: FeatureTable, panels: Mapping[str, Sequence[str]])
             "source_scale_rule": genes.metadata["scale_rule"],
             "method_id_by_unit": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
             "custom_method_ids": {unit: PANEL_METHOD_IDS.get(unit, f"CUSTOM_MEAN_{unit}") for unit in panels},
+            "identifier_mapping": dict(genes.metadata.get("identifier_mapping", {})),
+            "pinned_gene_info_sha256": genes.metadata.get("pinned_gene_info_sha256", ""),
+            "source_inputs_sha256": dict(genes.metadata.get("source_inputs_sha256", {})),
         },
     )
 
@@ -579,37 +680,178 @@ def _panel_member_coverage(gene_values, members):
     return {"n_found": len(members) - len(missing), "missing": missing}
 
 
-def _gse176307_sources(view, runtime):
-    """Resolve the frozen GSE176307 assay map and source identities for A-META."""
+def read_gse176307_packet_free_assay_mapping(
+    path: Path | str,
+    *,
+    expected_sha256: str,
+    clinical_rows: Sequence[Mapping],
+) -> tuple[dict[str, str], dict[str, object]]:
+    """Verify a separately supplied patient-to-assay map without opening a packet."""
+    mapping_path = Path(path).expanduser()
+    if not re.fullmatch(r"[0-9a-f]{64}", str(expected_sha256 or "")):
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_unverified",
+            "GSE176307 packet-free assay mapping requires an expected SHA-256",
+        )
+    _reject_mapping_symlink_ancestry(mapping_path)
+    try:
+        actual_sha256 = file_sha256(mapping_path)
+    except (OSError, ValueError):
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_missing",
+            "GSE176307 packet-free assay mapping is unavailable",
+        ) from None
+    if actual_sha256 != expected_sha256:
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_hash_mismatch",
+            "GSE176307 packet-free assay mapping hash differs",
+        )
+    try:
+        payload = json.loads(mapping_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_schema_invalid",
+            "GSE176307 packet-free assay mapping is malformed",
+        ) from None
+    expected_source_hashes = {
+        "salmon_tpm": _GSE176307_TPM_SHA256,
+        "sample_assay_key": _GSE176307_KEY_SHA256,
+        "geo_family_soft": _GSE176307_SOFT_SHA256,
+    }
+    if (
+        not isinstance(payload, dict)
+        or payload.get("schema_version") != 1
+        or payload.get("cohort_id") != "gse176307"
+        or payload.get("source_inputs_sha256") != expected_source_hashes
+        or not isinstance(payload.get("rows"), list)
+    ):
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_schema_invalid",
+            "GSE176307 packet-free assay mapping does not match the frozen schema or source identities",
+        )
+    clinical_by_patient = {}
+    for row in clinical_rows:
+        patient_id = str(row.get("patient_id", ""))
+        sample_id = str(row.get("sample_id", ""))
+        if not patient_id or not sample_id or patient_id in clinical_by_patient:
+            raise FeatureUnavailableError(
+                "gse176307_packet_free_assay_mapping_identity_mismatch",
+                "GSE176307 clinical rows need unique patient and GEO sample identities",
+            )
+        clinical_by_patient[patient_id] = sample_id
+    by_patient: dict[str, str] = {}
+    assays: set[str] = set()
+    for row in payload["rows"]:
+        if not isinstance(row, dict) or set(row) != {"patient_id", "sample_id", "tpm_assay_sample_id"}:
+            raise FeatureUnavailableError(
+                "gse176307_packet_free_assay_mapping_schema_invalid",
+                "GSE176307 packet-free assay mapping rows need exact identity columns",
+            )
+        patient_id = str(row.get("patient_id", ""))
+        sample_id = str(row.get("sample_id", ""))
+        assay_id = str(row.get("tpm_assay_sample_id", ""))
+        if (
+            not patient_id or not sample_id or not assay_id
+            or patient_id in by_patient or assay_id in assays
+            or clinical_by_patient.get(patient_id) != sample_id
+        ):
+            raise FeatureUnavailableError(
+                "gse176307_packet_free_assay_mapping_identity_mismatch",
+                "GSE176307 packet-free assay mapping has a duplicate or mismatched patient/sample pair",
+            )
+        by_patient[patient_id] = assay_id
+        assays.add(assay_id)
+    if not by_patient:
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_identity_mismatch",
+            "GSE176307 packet-free assay mapping contains no matched patients",
+        )
+    return by_patient, {
+        "mapping_sha256": actual_sha256,
+        "source_inputs_sha256": expected_source_hashes,
+        "mapped_patient_count": len(by_patient),
+    }
+
+
+def _reject_mapping_symlink_ancestry(path: Path) -> None:
+    from tools.a_bio.paths import reject_symlink_components
+
+    try:
+        reject_symlink_components(path, label="GSE176307 packet-free assay mapping")
+    except (OSError, ValueError):
+        raise FeatureUnavailableError(
+            "gse176307_packet_free_assay_mapping_path_unsafe",
+            "GSE176307 packet-free assay mapping path contains a forbidden component or symlink",
+        ) from None
+
+
+def _gse176307_sources(
+    view, runtime, *, packet_free_assay_mapping=None, packet_free_assay_mapping_sha256=None,
+):
+    """Resolve TPM source identities without calling packet-opening A-P2 mapping."""
     from tools.a_p2 import build as a_p2_build
 
     clinical_rows = view.clinical_rows
     patient_ids = [str(row.get("patient_id", "")) for row in clinical_rows]
     if any(not patient_id for patient_id in patient_ids) or len(set(patient_ids)) != len(patient_ids):
         raise ValueError("GSE176307 cohort-view row identities must be present and unique")
-
+    assay_by_patient, mapping_identity = read_gse176307_packet_free_assay_mapping(
+        packet_free_assay_mapping,
+        expected_sha256=packet_free_assay_mapping_sha256,
+        clinical_rows=clinical_rows,
+    )
     source_inputs = {}
-    assay_by_patient = a_p2_build.gse_mapping(clinical_rows, source_inputs, runtime)
     runtime_root = a_p2_build._runtime_path(runtime)
+    base = runtime_root / "gse176307"
     matrix_path = a_p2_build.source(
-        runtime_root / "gse176307/store_tpm/objects/c7ebf750cc6e6ba967bba9a733c47572a53daaaff9fcf041e5ab4641ef615894",
+        base / "store_tpm/objects" / _GSE176307_TPM_SHA256,
         source_inputs,
         runtime,
     )
-    source_hashes = {Path(name).name: digest for name, digest in source_inputs.items()}
+    key_path = a_p2_build.source(
+        base / "store_tpm/objects" / _GSE176307_KEY_SHA256,
+        source_inputs,
+        runtime,
+    )
+    soft_path = a_p2_build.source(
+        base / "store/objects" / _GSE176307_SOFT_SHA256,
+        source_inputs,
+        runtime,
+    )
+    source_hashes = {
+        "salmon_tpm": a_p2_build.sha256(matrix_path),
+        "sample_assay_key": a_p2_build.sha256(key_path),
+        "geo_family_soft": a_p2_build.sha256(soft_path),
+        "packet_free_assay_mapping": mapping_identity["mapping_sha256"],
+    }
+    for role, expected in mapping_identity["source_inputs_sha256"].items():
+        if source_hashes[role] != expected:
+            raise FeatureUnavailableError("source_hash_mismatch", "Pinned GSE176307 source hash differs")
     return patient_ids, assay_by_patient, matrix_path, source_hashes
 
 
-def _gse176307_source_hashes(view, runtime):
-    """Return current GSE176307 source identities without reading the TPM matrix."""
-    return _gse176307_sources(view, runtime)[3]
+def _gse176307_source_hashes(
+    view, runtime, *, packet_free_assay_mapping=None, packet_free_assay_mapping_sha256=None,
+):
+    """Return pinned source identities without reading the TPM matrix."""
+    return _gse176307_sources(
+        view, runtime,
+        packet_free_assay_mapping=packet_free_assay_mapping,
+        packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
+    )[3]
 
 
-def _gse176307_salmon_tpm(view, runtime):
-    """Read GSE176307 Salmon TPM through A-P2's frozen assay mapping."""
+def _gse176307_salmon_tpm(
+    view, runtime, *, packet_free_assay_mapping=None, packet_free_assay_mapping_sha256=None,
+):
+    """Read GSE176307 Salmon TPM through the verified packet-free assay map."""
     from tools.a_p2 import build as a_p2_build
 
-    patient_ids, assay_by_patient, matrix_path, source_hashes = _gse176307_sources(view, runtime)
+    patient_ids, assay_by_patient, matrix_path, source_hashes = _gse176307_sources(
+        view, runtime,
+        packet_free_assay_mapping=packet_free_assay_mapping,
+        packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
+    )
     selected_patients = [patient_id for patient_id in patient_ids if patient_id in assay_by_patient]
     selected_assays = [assay_by_patient[patient_id] for patient_id in selected_patients]
     feature_ids, measured = a_p2_build.matrix(matrix_path, selected_assays, runtime=runtime)
@@ -643,7 +885,10 @@ def _pathway_features(
     gene_map,
     gtf_path,
     probe_map,
+    packet_free_assay_mapping,
+    packet_free_assay_mapping_sha256,
     r_out_dir,
+    retention_dir,
     runner,
 ):
     from .r_manifest import run_r_sanitised
@@ -668,6 +913,8 @@ def _pathway_features(
         gtf_path=gtf_path,
         probe_map=probe_map,
         target_symbols=tuple(sorted({gene for members in memberships.values() for gene in members})),
+        packet_free_assay_mapping=packet_free_assay_mapping,
+        packet_free_assay_mapping_sha256=packet_free_assay_mapping_sha256,
     )
     output_dir = Path(r_out_dir) if r_out_dir is not None else Path(view.expression_path).parent / "singscore-stage"
     matrix_path = output_dir.parent / (output_dir.name + ".expression.tsv")
@@ -696,6 +943,7 @@ def _pathway_features(
         output_dir,
         script_id="r/scripts/singscore.R",
         runner=runner,
+        retention_dir=retention_dir,
     )
     score_records = _read_tsv(result.outputs["scores.tsv"])
     coverage_rows = _read_tsv(result.outputs["coverage.tsv"])
@@ -914,7 +1162,7 @@ def _probe_mapping(path: Path) -> dict[str, dict[str, str]]:
     return mapping
 
 
-def _collapse_probes(feature_ids, matrix, canonical_features):
+def _collapse_probes(feature_ids, matrix, canonical_features, *, return_source_ids=False):
     probes_by_gene: dict[str, list[tuple[float, str, list[float]]]] = {}
     unmapped = 0
     for probe, values, gene in zip(feature_ids, matrix, canonical_features):
@@ -927,14 +1175,16 @@ def _collapse_probes(feature_ids, matrix, canonical_features):
     chosen = []
     for gene in sorted(probes_by_gene):
         # Mean expression is outcome-blind; lexical probe order resolves exact ties.
-        chosen.append((gene, sorted(probes_by_gene[gene], key=lambda row: (-row[0], row[1]))[0][2]))
+        row = sorted(probes_by_gene[gene], key=lambda item: (-item[0], item[1]))[0]
+        chosen.append((gene, row[2], row[1]))
     counts = {
         "probes": len(feature_ids),
         "mapped_probes": len(feature_ids) - unmapped,
         "genes": len(chosen),
         "collapsed_probes": len(feature_ids) - unmapped - len(chosen),
     }
-    return [gene for gene, _ in chosen], [values for _, values in chosen], counts, unmapped
+    result = ([gene for gene, _, _ in chosen], [values for _, values, _ in chosen], counts, unmapped)
+    return (*result, [source_id for _, _, source_id in chosen]) if return_source_ids else result
 
 
 def _load_gene_map(gene_map) -> dict[str, str]:
@@ -993,7 +1243,7 @@ def _gene_reference(runtime):
     """Load the pinned Entrez and synonym maps plus its Ensembl crosswalk."""
     info_path = a_scoring.gene_info_path(runtime)
     if not info_path.is_file():
-        return {"by_id": {}, "synonyms": {}, "ensembl": {}}
+        return {"by_id": {}, "synonyms": {}, "ensembl": {}, "ambiguous_ensembl": frozenset()}
     runtime_root = a_scoring.core._runtime_path(runtime).expanduser().resolve()
     by_id, synonyms = a_scoring.core._gene_info(str(info_path.resolve()), str(runtime_root))
     ensembl_candidates: dict[str, set[str]] = {}
@@ -1011,7 +1261,46 @@ def _gene_reference(runtime):
         for ensembl_id, symbols in ensembl_candidates.items()
         if len(symbols) == 1
     }
-    return {"by_id": by_id, "synonyms": synonyms, "ensembl": ensembl}
+    ambiguous_ensembl = frozenset(
+        ensembl_id for ensembl_id, symbols in ensembl_candidates.items() if len(symbols) > 1
+    )
+    return {
+        "by_id": by_id, "synonyms": synonyms, "ensembl": ensembl,
+        "ambiguous_ensembl": ambiguous_ensembl,
+    }
+
+
+def _is_unmapped_identifier(value: str) -> bool:
+    return str(value).startswith(("ENSEMBL:", "ENTREZ:", "PROBE:"))
+
+
+def _is_ambiguous_ensembl(source_feature_id: str, feature_id_type: str, reference) -> bool:
+    return (
+        str(feature_id_type).casefold() == "ensembl"
+        and str(source_feature_id).split(".", 1)[0] in reference.get("ambiguous_ensembl", ())
+    )
+
+
+def _mapping_method(source_feature_id, symbol, feature_id_type, *, custom_map, reference):
+    source = str(source_feature_id).strip()
+    feature_type = str(feature_id_type).casefold()
+    if source in custom_map:
+        return "explicit_gene_map"
+    if feature_type == "ensembl":
+        base = source.split(".", 1)[0]
+        if base in _gene_alias_addendum():
+            return "frozen_gene_alias_addendum"
+        if base in reference.get("ensembl", {}):
+            return "pinned_entrez_ensembl_crosswalk"
+        return "unmapped_ensembl"
+    if feature_type == "entrez":
+        return "pinned_entrez_gene_info" if source in reference.get("by_id", {}) else "unmapped_entrez"
+    if feature_type == "probe":
+        return "cohort_probe_annotation"
+    aliases = a_scoring.core._frozen_aliases(str(a_scoring.core.ALIAS_TABLE_PATH))
+    if aliases.get(source, source) != source:
+        return "frozen_symbol_alias"
+    return "source_symbol"
 
 
 @lru_cache(maxsize=1)
@@ -1142,15 +1431,137 @@ def _ensure_unique_genes(feature_ids, matrix):
     return feature_ids, matrix
 
 
-def _collapse_duplicate_genes(feature_ids, matrix):
+def map_de_ranking_to_symbols(
+    de_rows: Sequence[Mapping],
+    identifier_mapping: Mapping,
+) -> tuple[list[dict[str, object]], list[dict[str, str]], dict[str, int]]:
+    """Map one study's declared DE statistic through A-META's selected feature rows."""
+    mappings = identifier_mapping.get("source_mapping_by_symbol", {})
+    if not isinstance(mappings, Mapping):
+        raise ValueError("DE ranking needs A-META identifier mapping provenance")
+    by_source = {}
+    for symbol, raw in mappings.items():
+        if not isinstance(raw, Mapping):
+            raise ValueError("A-META source mapping inventory is malformed")
+        source_id = str(raw.get("source_feature_id", ""))
+        status = str(raw.get("status", ""))
+        if not source_id or source_id in by_source:
+            raise ValueError("A-META source mapping is missing or not one-to-one")
+        by_source[source_id] = (str(symbol), status, str(raw.get("method", "")))
+
+    ranked = []
+    mapping_rows = []
+    counts = {"mapped": 0, "ambiguous": 0, "unmapped": 0, "missing_statistic": 0}
+    seen_symbols = set()
+    for raw in de_rows:
+        source_id = str(raw.get("gene", ""))
+        resolved = by_source.get(source_id)
+        if resolved is None:
+            mapping_rows.append({
+                "source_feature_id": source_id,
+                "symbol": "",
+                "mapping_method": "no_selected_a_meta_feature",
+                "mapping_status": "unmapped",
+            })
+            counts["unmapped"] += 1
+            continue
+        symbol, status, method = resolved
+        if status != "mapped":
+            safe_status = status if status in {"ambiguous", "unmapped"} else "unmapped"
+            mapping_rows.append({
+                "source_feature_id": source_id,
+                "symbol": symbol,
+                "mapping_method": method,
+                "mapping_status": safe_status,
+            })
+            counts[safe_status] += 1
+            continue
+        value = _numeric_or_missing(raw.get("statistic"))
+        if value is None:
+            mapping_rows.append({
+                "source_feature_id": source_id,
+                "symbol": symbol,
+                "mapping_method": method,
+                "mapping_status": "missing_statistic",
+            })
+            counts["missing_statistic"] += 1
+            continue
+        if symbol in seen_symbols:
+            raise ValueError("DE symbol mapping produced a duplicate ranked gene")
+        seen_symbols.add(symbol)
+        ranked.append({"gene": symbol, "statistic": value})
+        mapping_rows.append({
+            "source_feature_id": source_id,
+            "symbol": symbol,
+            "mapping_method": method,
+            "mapping_status": "mapped",
+        })
+        counts["mapped"] += 1
+    ranked.sort(key=lambda row: str(row["gene"]))
+    return ranked, mapping_rows, counts
+
+
+def write_symbol_expression_projection(
+    table: FeatureTable,
+    path: Path | str,
+    sample_ids: Sequence[str],
+) -> dict[str, int]:
+    """Write mapped A-META rows in the cohort order expected by A-BULK panels."""
+    if len(sample_ids) != table.n_patients or len(set(sample_ids)) != len(sample_ids):
+        raise ValueError("Symbol projection sample identities do not match the feature rows")
+    mapping = table.metadata.get("identifier_mapping", {})
+    status_by_symbol = mapping.get("mapping_status_by_symbol", {})
+    selected = [
+        unit for unit in sorted(table.values_by_unit)
+        if status_by_symbol.get(unit) == "mapped"
+    ]
+    unmapped = sum(status != "mapped" for status in status_by_symbol.values())
+    content_rows = [["gene", *[str(value) for value in sample_ids]]]
+    for unit in selected:
+        values = table.values_by_unit[unit]
+        if len(values) != table.n_patients:
+            raise ValueError("Feature vector length differs from cohort size")
+        content_rows.append([
+            unit,
+            *["NA" if value is None else _number_text(value) for value in values],
+        ])
+    output = io.StringIO(newline="")
+    csv.writer(output, delimiter="\t", lineterminator="\n").writerows(content_rows)
+    path = Path(path)
+    if ".." in path.parts:
+        raise ValueError("Symbol expression projection path contains an escaping component")
+    _reject_mapping_symlink_ancestry(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _reject_mapping_symlink_ancestry(path)
+    content = output.getvalue().encode("utf-8")
+    if path.exists():
+        if path.is_dir() or path.read_bytes() != content:
+            raise FileExistsError("Refusing to replace a different symbol expression projection")
+        return {"mapped_gene_count": len(selected), "unmapped_gene_count": unmapped}
+    with path.open("xb") as stream:
+        stream.write(content)
+    return {"mapped_gene_count": len(selected), "unmapped_gene_count": unmapped}
+
+
+def _number_text(value) -> str:
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("Mapped symbol expression values must be finite or missing")
+    return format(number, ".15g")
+
+
+def _collapse_duplicate_genes(feature_ids, matrix, *, source_feature_ids=None, return_source_ids=False):
     """Retain one outcome-blind representative for each canonical gene row."""
     genes: dict[str, list[tuple[float, int, list[float | None]]]] = {}
+    selected_source_ids = list(source_feature_ids) if source_feature_ids is not None else list(feature_ids)
+    if len(selected_source_ids) != len(feature_ids):
+        raise ValueError("Source feature identifiers do not align with expression rows")
     for row_index, (gene, values) in enumerate(zip(feature_ids, matrix)):
         if not gene:
             continue
         measured = [value for value in values if value is not None]
         mean_expression = math.fsum(measured) / len(measured) if measured else -math.inf
-        genes.setdefault(gene, []).append((mean_expression, row_index, values))
+        genes.setdefault(gene, []).append((mean_expression, row_index, values, selected_source_ids[row_index]))
     chosen = []
     duplicate_groups = 0
     duplicate_rows = 0
@@ -1162,14 +1573,15 @@ def _collapse_duplicate_genes(feature_ids, matrix):
             duplicate_rows += len(candidates) - 1
             duplicate_symbols.append(gene)
         # The source row order is a deterministic tie break and never reads labels.
-        chosen.append((gene, sorted(candidates, key=lambda row: (-row[0], row[1]))[0][2]))
+        chosen.append((gene, sorted(candidates, key=lambda row: (-row[0], row[1]))[0][2:4]))
     counts = {
         "input_rows": len(feature_ids),
         "genes": len(chosen),
         "duplicate_gene_groups": duplicate_groups,
         "duplicate_rows_removed": duplicate_rows,
     }
-    return [gene for gene, _ in chosen], [values for _, values in chosen], counts, duplicate_symbols
+    result = ([gene for gene, _ in chosen], [values for _, (values, _) in chosen], counts, duplicate_symbols)
+    return (*result, [source_id for _, (_, source_id) in chosen]) if return_source_ids else result
 
 
 def _write_expression_matrix(path: Path, table: FeatureTable) -> None:

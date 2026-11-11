@@ -237,18 +237,44 @@ def test_gene_alias_addendum_resolves_the_older_ensembl_identifier():
 
 def test_gse176307_tpm_keeps_unassayed_patient_row_missing_and_aligned(tmp_path, monkeypatch):
     from tools.a_p2 import build as a_p2_build
+    import hashlib
+    import json
+    from tools.a_meta import features as feature_module
 
     clinical_rows = [
         {"patient_id": "row_0", "sample_id": "sample_0"},
         {"patient_id": "row_1", "sample_id": "sample_1"},
         {"patient_id": "row_2", "sample_id": "sample_2"},
     ]
+    mapping = {
+        "schema_version": 1,
+        "cohort_id": "gse176307",
+        "source_inputs_sha256": {
+            "salmon_tpm": feature_module._GSE176307_TPM_SHA256,
+            "sample_assay_key": feature_module._GSE176307_KEY_SHA256,
+            "geo_family_soft": feature_module._GSE176307_SOFT_SHA256,
+        },
+        "rows": [
+            {"patient_id": "row_0", "sample_id": "sample_0", "tpm_assay_sample_id": "assay_0"},
+            {"patient_id": "row_2", "sample_id": "sample_2", "tpm_assay_sample_id": "assay_2"},
+        ],
+    }
+    mapping_path = tmp_path / "packet-free-map.json"
+    mapping_path.write_text(json.dumps(mapping, sort_keys=True), encoding="utf-8")
+    mapping_sha256 = hashlib.sha256(mapping_path.read_bytes()).hexdigest()
     monkeypatch.setattr(
-        a_p2_build,
-        "gse_mapping",
-        lambda clinical, inputs, runtime: {"row_0": "assay_0", "row_2": "assay_2"},
+        a_p2_build, "gse_mapping",
+        lambda *_args, **_kwargs: pytest.fail("packet-opening GSE mapping was called"),
     )
     monkeypatch.setattr(a_p2_build, "source", lambda path, inputs, runtime: path)
+    monkeypatch.setattr(
+        a_p2_build, "sha256",
+        lambda path: {
+            feature_module._GSE176307_TPM_SHA256: feature_module._GSE176307_TPM_SHA256,
+            feature_module._GSE176307_KEY_SHA256: feature_module._GSE176307_KEY_SHA256,
+            feature_module._GSE176307_SOFT_SHA256: feature_module._GSE176307_SOFT_SHA256,
+        }[Path(path).name],
+    )
     monkeypatch.setattr(
         a_p2_build,
         "matrix",
@@ -270,6 +296,8 @@ def test_gse176307_tpm_keeps_unassayed_patient_row_missing_and_aligned(tmp_path,
         "gene",
         runtime=tmp_path,
         panels={"PANEL": ("GENE_A",)},
+        packet_free_assay_mapping=mapping_path,
+        packet_free_assay_mapping_sha256=mapping_sha256,
     )
 
     assert table.n_patients == 3
