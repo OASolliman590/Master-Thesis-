@@ -73,7 +73,12 @@ def validate_effect_input_provenance(
 ) -> None:
     cohort_id = str(getattr(view.metadata, "cohort_id", ""))
     _guard_cohort_ids((cohort_id,), allow_outcomes=allow_outcomes)
+    explicitly_real = getattr(view, "data_classification", "") == "real"
+    if explicitly_real and not allow_outcomes:
+        raise ValueError("Real-cohort effects are restricted without allow_outcomes=True")
     manifest = _read_manifest(provenance_manifest)
+    if explicitly_real and manifest is not None and manifest.get("data_classification") == "synthetic":
+        raise ValueError("Synthetic provenance contradicts explicit real data classification")
     if manifest is None:
         if cohort_id in known_cohort_ids():
             if not allow_outcomes:
