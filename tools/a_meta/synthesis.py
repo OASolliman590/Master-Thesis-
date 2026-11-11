@@ -43,6 +43,18 @@ class SynthesisResult:
     r_manifest: dict | None = None
 
 
+@dataclass(frozen=True)
+class _EffectIndex:
+    """One-pass indexes for stable, genome-wide synthesis planning."""
+
+    by_identity: dict[tuple[str, str, str, str], list[dict]]
+    by_context: dict[tuple[str, str, str, str], dict[tuple[str, str], list[dict]]]
+    by_drug: dict[tuple[str, str, str, str], dict[str, list[dict]]]
+    method_ids: dict[tuple[str, str], str]
+    m5m6_gene_units: frozenset[str]
+    rows_indexed: int
+
+
 def synthesize(
     effects: Sequence[Mapping] | Path | str,
     stratum: str,
@@ -51,6 +63,7 @@ def synthesize(
     runner=None,
     allow_outcomes: bool = False,
     provenance_manifest: Path | str | None = None,
+    retention_dir: Path | str | None = None,
 ) -> SynthesisResult:
     """Pool per-study effects for one declared A-META synthesis stratum.
 
@@ -77,11 +90,12 @@ def synthesize(
         if row["unit_family"] != "targeted_subset"
         and not endpoint_is_per_study_only(row["endpoint_definition_id"], row["endpoint_family"])
     ]
-    groups, effect_rows = _plan_groups(pooled_rows, stratum)
-    subgroup_groups, subgroup_rows = _plan_subgroups(pooled_rows, stratum)
+    index = _index_effects(pooled_rows)
+    groups, effect_rows = _plan_groups(pooled_rows, stratum, index=index)
+    subgroup_groups, subgroup_rows = _plan_subgroups(pooled_rows, stratum, index=index)
     per_study_summaries = _per_study_summaries(rows, stratum)
     analysis_metadata = _metadata(stratum)
-    analysis_metadata["method_ids"] = sorted({row.get("method_id", "") for row in rows if row.get("method_id")})
+    analysis_metadata["method_ids"] = sorted(set(index.method_ids.values()))
     analysis_metadata["non_pooled_families"] = {"targeted_subset": "per-study only; no pooling or FDR"}
     if not groups:
         return SynthesisResult(
@@ -115,6 +129,7 @@ def synthesize(
         run_dir / "R",
         script_id="r/scripts/meta_rma.R",
         runner=runner,
+        retention_dir=retention_dir,
     )
     fitted = _index_rows(_read_tsv(r_result.outputs["meta.tsv"]), "analysis_id")
     subgroup_fits = _index_rows(_read_tsv(r_result.outputs["subgroups.tsv"]), "test_id")
@@ -144,64 +159,92 @@ def synthesize(
     )
 
 
-def _plan_groups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]]:
-    identities = sorted({
-        (row["unit_family"], row["unit"], row["endpoint_family"], row["endpoint_definition_id"])
-        for row in rows
-    })
+def _index_effects(rows: Sequence[Mapping]) -> _EffectIndex:
+    by_identity: dict[tuple[str, str, str, str], list[dict]] = defaultdict(list)
+    by_context: dict[tuple[str, str, str, str], dict[tuple[str, str], list[dict]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+    by_drug: dict[tuple[str, str, str, str], dict[str, list[dict]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+    method_sets: dict[tuple[str, str], set[str]] = defaultdict(set)
+    m5m6_units = set()
+    rows_indexed = 0
+    for raw in rows:
+        row = dict(raw)
+        identity = (
+            row["unit_family"], row["unit"], row["endpoint_family"], row["endpoint_definition_id"],
+        )
+        context = (row["cancer"], row["drug_class_stratum"])
+        by_identity[identity].append(row)
+        by_context[identity][context].append(row)
+        by_drug[identity][row["drug_class_stratum"]].append(row)
+        method_id = str(row.get("method_id", ""))
+        if method_id:
+            method_sets[(row["unit_family"], row["unit"])].add(method_id)
+        if row["unit_family"] == "gene" and str(row.get("m5m6_gene_flag", "0")).casefold() in {"1", "true"}:
+            m5m6_units.add(str(row["unit"]))
+        rows_indexed += 1
+    conflicting = [methods for methods in method_sets.values() if len(methods) > 1]
+    if conflicting:
+        raise ValueError("A synthesis unit has multiple method IDs")
+    return _EffectIndex(
+        by_identity={key: value for key, value in by_identity.items()},
+        by_context={key: dict(value) for key, value in by_context.items()},
+        by_drug={key: dict(value) for key, value in by_drug.items()},
+        method_ids={key: next(iter(value)) for key, value in method_sets.items()},
+        m5m6_gene_units=frozenset(m5m6_units),
+        rows_indexed=rows_indexed,
+    )
+
+
+def _plan_groups(
+    rows: list[dict], stratum: str, *, index: _EffectIndex | None = None,
+) -> tuple[list[dict], list[dict]]:
+    index = index or _index_effects(rows)
+    identities = sorted(index.by_identity)
     specs: list[dict] = []
     if stratum == "per_cancer":
         for unit_family, unit, endpoint, definition_id in identities:
-            pairs = sorted({(row["cancer"], row["drug_class_stratum"]) for row in rows
-                            if row["unit_family"] == unit_family and row["unit"] == unit
-                            and row["endpoint_family"] == endpoint
-                            and row["endpoint_definition_id"] == definition_id
-                            and row["drug_class_stratum"] == "ALL"
-                            and row["cancer"] != "multi"})
+            identity = (unit_family, unit, endpoint, definition_id)
+            context_rows = index.by_context[identity]
+            pairs = sorted((cancer, drug_class) for cancer, drug_class in context_rows
+                           if drug_class == "ALL" and cancer != "multi")
             for cancer, drug_class in pairs:
-                _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id,
+                _add_direct_spec(specs, context_rows[(cancer, drug_class)], index, unit_family, unit, endpoint, definition_id,
                                  stratum_type="cancer", stratum_value=cancer,
                                  cancer=cancer, drug_class=drug_class, stage="within_cancer")
     elif stratum == "per_drug_class":
         for unit_family, unit, endpoint, definition_id in identities:
-            classes = sorted({row["drug_class_stratum"] for row in rows
-                              if row["unit_family"] == unit_family and row["unit"] == unit
-                              and row["endpoint_family"] == endpoint
-                              and row["endpoint_definition_id"] == definition_id
-                              and row["drug_class_stratum"] != "ALL"})
+            identity = (unit_family, unit, endpoint, definition_id)
+            context_rows = index.by_context[identity]
+            classes = sorted({drug_class for _cancer, drug_class in context_rows if drug_class != "ALL"})
             for drug_class in classes:
-                _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id,
+                _add_direct_spec(specs, index.by_drug[identity][drug_class], index, unit_family, unit, endpoint, definition_id,
                                  stratum_type="drug_class", stratum_value=drug_class,
                                  cancer="ALL", drug_class=drug_class, stage="per_drug_class")
     elif stratum == "melanoma_cancer_drug":
         for unit_family, unit, endpoint, definition_id in identities:
-            classes = sorted({row["drug_class_stratum"] for row in rows
-                              if row["unit_family"] == unit_family and row["unit"] == unit
-                              and row["endpoint_family"] == endpoint
-                              and row["endpoint_definition_id"] == definition_id
-                              and row["cancer"] == "melanoma"
-                              and row["drug_class_stratum"] != "ALL"})
+            identity = (unit_family, unit, endpoint, definition_id)
+            context_rows = index.by_context[identity]
+            classes = sorted(drug_class for cancer, drug_class in context_rows
+                             if cancer == "melanoma" and drug_class != "ALL")
             for drug_class in classes:
-                _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id,
+                _add_direct_spec(specs, context_rows[("melanoma", drug_class)], index, unit_family, unit, endpoint, definition_id,
                                  stratum_type="cancer_drug", stratum_value=f"melanoma|{drug_class}",
                                  cancer="melanoma", drug_class=drug_class, stage="melanoma_cancer_drug")
     else:
         for unit_family, unit, endpoint, definition_id in identities:
-            classes = sorted({row["drug_class_stratum"] for row in rows
-                              if row["unit_family"] == unit_family and row["unit"] == unit
-                              and row["endpoint_family"] == endpoint
-                              and row["endpoint_definition_id"] == definition_id})
+            identity = (unit_family, unit, endpoint, definition_id)
+            context_rows = index.by_context[identity]
+            classes = sorted({drug_class for _cancer, drug_class in context_rows})
             for drug_class in classes:
-                cancers = sorted({row["cancer"] for row in rows
-                                  if row["unit_family"] == unit_family and row["unit"] == unit
-                                  and row["endpoint_family"] == endpoint
-                                  and row["endpoint_definition_id"] == definition_id
-                                  and row["drug_class_stratum"] == drug_class
-                                  and row["cancer"] != "multi"})
+                cancers = sorted(cancer for cancer, drug in context_rows
+                                 if drug == drug_class and cancer != "multi")
                 parent_key = ("across_cancers", unit_family, unit, endpoint, definition_id, drug_class)
                 for cancer in cancers:
                     _add_direct_spec(
-                        specs, rows, unit_family, unit, endpoint, definition_id,
+                        specs, context_rows[(cancer, drug_class)], index, unit_family, unit, endpoint, definition_id,
                         stratum_type="cancer", stratum_value=cancer,
                         cancer=cancer, drug_class=drug_class, stage="stage1_within_cancer",
                         parent_key=parent_key, analysis_type="across_within",
@@ -213,8 +256,8 @@ def _plan_groups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]
                     "parent_key": "",
                     "unit_family": unit_family,
                     "unit": unit,
-                    "method_id": _method_id_for(rows, unit_family, unit),
-                    "m5m6_gene_flag": int(unit_family == "gene" and unit in _m5m6_unit_names(rows)),
+                    "method_id": index.method_ids.get((unit_family, unit), ""),
+                    "m5m6_gene_flag": int(unit_family == "gene" and unit in index.m5m6_gene_units),
                     "endpoint_family": endpoint,
                     "endpoint_definition_id": definition_id,
                     "stratum_type": "across_cancers",
@@ -268,18 +311,10 @@ def _plan_groups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]
     return group_rows, input_rows
 
 
-def _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id, *,
+def _add_direct_spec(specs, candidate_rows, index, unit_family, unit, endpoint, definition_id, *,
                      stratum_type, stratum_value, cancer, drug_class, stage,
                      parent_key=None, analysis_type="direct"):
-    effects = [
-        row for row in rows
-        if row["unit_family"] == unit_family and row["unit"] == unit
-        and row["endpoint_family"] == endpoint
-        and row["endpoint_definition_id"] == definition_id
-        and row["drug_class_stratum"] == drug_class
-        and (cancer == "ALL" or row["cancer"] == cancer)
-        and _valid_effect(row)
-    ]
+    effects = [row for row in candidate_rows if _valid_effect(row)]
     if cancer == "ALL":
         effects = _one_effect_per_study(effects, prefer_aggregate=True)
     else:
@@ -293,8 +328,8 @@ def _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id, *,
         "parent_key": parent_key or "",
         "unit_family": unit_family,
         "unit": unit,
-        "method_id": _method_id_for(rows, unit_family, unit),
-        "m5m6_gene_flag": int(unit_family == "gene" and unit in _m5m6_unit_names(rows)),
+        "method_id": index.method_ids.get((unit_family, unit), ""),
+        "m5m6_gene_flag": int(unit_family == "gene" and unit in index.m5m6_gene_units),
         "endpoint_family": endpoint,
         "endpoint_definition_id": definition_id,
         "stratum_type": stratum_type,
@@ -306,35 +341,61 @@ def _add_direct_spec(specs, rows, unit_family, unit, endpoint, definition_id, *,
     })
 
 
-def _plan_subgroups(rows: list[dict], stratum: str) -> tuple[list[dict], list[dict]]:
-    if stratum == "per_cancer":
-        selected = [row for row in rows if row["drug_class_stratum"] == "ALL"]
-        moderator = "cancer"
-    elif stratum == "melanoma_cancer_drug":
-        selected = [row for row in rows if row["cancer"] == "melanoma" and row["drug_class_stratum"] != "ALL"]
-        moderator = "drug_class"
-    else:
-        selected = [row for row in rows if row["drug_class_stratum"] != "ALL"]
-        moderator = "drug_class"
-    grouped: dict[tuple[str, str, str, str], list[dict]] = defaultdict(list)
-    for row in selected:
-        grouped[(row["unit_family"], row["unit"], row["endpoint_family"],
-                 row["endpoint_definition_id"])].append(row)
+def _plan_subgroups(
+    rows: list[dict], stratum: str, *, index: _EffectIndex | None = None,
+) -> tuple[list[dict], list[dict]]:
+    index = index or _index_effects(rows)
+    moderator = "cancer" if stratum == "per_cancer" else "drug_class"
     tests, input_rows = [], []
-    for key in sorted(grouped):
+    for key in sorted(index.by_identity):
         unit_family, unit, endpoint, definition_id = key
-        candidates = [row for row in grouped[key] if _valid_effect(row)]
-        # Every moderator fit is a per-study analysis. Keep one aggregate
-        # effect when present; otherwise require one cancer-specific row.
-        usable = _one_effect_per_study(candidates, prefer_aggregate=True)
-        _assert_unique_patient_sets(usable, "A subgroup test")
-        n_studies = len({row["study"] for row in usable})
-        levels = sorted({row["cancer"] if moderator == "cancer" else row["drug_class_stratum"]
-                         for row in usable})
+        context_rows = index.by_context[key]
+        if stratum == "per_cancer":
+            candidate_rows = [row for (_cancer, drug), bucket in context_rows.items() if drug == "ALL" for row in bucket]
+        elif stratum == "melanoma_cancer_drug":
+            candidate_rows = [row for (cancer, drug), bucket in context_rows.items()
+                              if cancer == "melanoma" and drug != "ALL" for row in bucket]
+        else:
+            candidate_rows = [row for (_cancer, drug), bucket in context_rows.items()
+                              if drug != "ALL" for row in bucket]
+        candidates = [row for row in candidate_rows if _valid_effect(row)]
+        by_study: dict[str, list[dict]] = defaultdict(list)
+        for row in candidates:
+            by_study[str(row["study"])].append(row)
+        n_studies = len(by_study)
+        usable = []
+        ambiguity = False
+        selection_ambiguous = False
+        for study in sorted(by_study):
+            study_rows = by_study[study]
+            study_levels = {
+                row["cancer"] if moderator == "cancer" else row["drug_class_stratum"]
+                for row in study_rows
+            }
+            if moderator == "drug_class" and len(study_levels) > 1:
+                ambiguity = True
+                continue
+            aggregates = [row for row in study_rows if row["cancer"] == "multi"]
+            if len(aggregates) == 1:
+                usable.append(aggregates[0])
+            elif len(study_rows) == 1:
+                usable.append(study_rows[0])
+            else:
+                selection_ambiguous = True
+        levels = sorted({
+            row["cancer"] if moderator == "cancer" else row["drug_class_stratum"]
+            for row in usable
+        })
+        if usable and not selection_ambiguous:
+            _assert_unique_patient_sets(usable, "A subgroup test")
         test_id = f"T{len(tests) + 1:05d}"
         reason = ""
         status = "pending"
-        if n_studies < 10:
+        if ambiguity:
+            status, reason = "not_tested", "study_contributes_to_multiple_moderator_levels"
+        elif selection_ambiguous:
+            status, reason = "not_tested", "multiple_effects_per_study_without_aggregate"
+        elif n_studies < 10:
             status, reason = "not_tested", "total_k<10"
         elif len(levels) < 2:
             status, reason = "not_tested", "fewer_than_two_strata"
@@ -342,7 +403,7 @@ def _plan_subgroups(rows: list[dict], stratum: str) -> tuple[list[dict], list[di
             "test_id": test_id,
             "unit_family": unit_family,
             "unit": unit,
-            "method_id": _method_id_for(rows, unit_family, unit),
+            "method_id": index.method_ids.get((unit_family, unit), ""),
             "endpoint_family": endpoint,
             "endpoint_definition_id": definition_id,
             "moderator": moderator,

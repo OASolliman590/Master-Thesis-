@@ -147,6 +147,54 @@ def test_valid_appledouble_sidecar_is_removed_before_publish_and_reuse(tmp_path)
     assert not (output_dir / "._result.tsv").exists()
 
 
+def test_optional_retention_preserves_success_failure_rerun_stages(tmp_path):
+    script = _script(tmp_path)
+    output_dir = tmp_path / "published"
+    retention_dir = tmp_path / "private-work"
+    runner = FakeR({
+        "fake.R": {
+            "result.tsv": "value\n1\n",
+            "._result.tsv": b"\x00\x05\x16\x07\x00\x00\x00\x00metadata",
+        }
+    })
+    config = {"expected_outputs": ["result.tsv"], "method": "synthetic"}
+
+    first = run_r(
+        script, {}, config, output_dir, runner=runner, retention_dir=retention_dir
+    )
+    first_stages = list(retention_dir.glob(".published.stage-*"))
+    assert len(first_stages) == 1
+    assert (first_stages[0] / "config.json").is_file()
+    assert (first_stages[0] / "outputs" / "bridge-runtime.json").is_file()
+    assert (first_stages[0] / "outputs" / "._result.tsv").read_bytes().startswith(
+        b"\x00\x05\x16\x07"
+    )
+    assert not (output_dir / "bridge-runtime.json").exists()
+    assert not (output_dir / "._result.tsv").exists()
+
+    second = run_r(
+        script, {}, config, output_dir, runner=runner, retention_dir=retention_dir
+    )
+    assert second.manifest == first.manifest
+    assert len(list(retention_dir.glob(".published.stage-*"))) == 2
+
+    failure_output = tmp_path / "failed-publish"
+    failure_work = tmp_path / "failed-work"
+    with pytest.raises(RScriptError):
+        run_r(
+            script,
+            {},
+            {"expected_outputs": ["result.tsv"]},
+            failure_output,
+            runner=FakeR({}),
+            retention_dir=failure_work,
+        )
+    failed_stages = list(failure_work.glob(".failed-publish.stage-*"))
+    assert len(failed_stages) == 1
+    assert (failed_stages[0] / "config.json").is_file()
+    assert not failure_output.exists()
+
+
 def test_plain_text_appledouble_sidecar_is_rejected(tmp_path):
     script = _script(tmp_path)
     output_dir = tmp_path / "published"

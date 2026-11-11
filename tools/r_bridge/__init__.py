@@ -109,8 +109,13 @@ def run_r(
     out_dir: Path,
     *,
     runner=None,
+    retention_dir: Path | None = None,
 ) -> RResult:
-    """Run one script, validate its staged files, then publish the result."""
+    """Run one script and publish validated outputs.
+
+    When ``retention_dir`` is supplied, retain the complete execution stage there,
+    including runtime metadata and valid AppleDouble sidecars.
+    """
     script_path = Path(script).expanduser().resolve(strict=True)
     if not script_path.is_file():
         raise ValueError(f"R script is not a file: {script_path}")
@@ -133,8 +138,13 @@ def run_r(
 
     destination = Path(out_dir).expanduser().absolute()
     destination.parent.mkdir(parents=True, exist_ok=True)
+    stage_parent = destination.parent
+    retain_work = retention_dir is not None
+    if retain_work:
+        stage_parent = Path(retention_dir).expanduser().absolute()
+        stage_parent.mkdir(parents=True, exist_ok=True)
     stage = Path(
-        tempfile.mkdtemp(prefix=f".{destination.name}.stage-", dir=destination.parent)
+        tempfile.mkdtemp(prefix=f".{destination.name}.stage-", dir=stage_parent)
     )
     try:
         staged_outputs = stage / "outputs"
@@ -178,7 +188,13 @@ def run_r(
         if completed.returncode != 0:
             raise RScriptError(script_path, stderr, completed.returncode, stdout)
 
-        _validate_staged_outputs(script_path, staged_outputs, expected_outputs, stdout)
+        _validate_staged_outputs(
+            script_path,
+            staged_outputs,
+            expected_outputs,
+            stdout,
+            remove_appledouble=not retain_work,
+        )
         session_path = staged_outputs / _SESSION_INFO
         runtime_path = staged_outputs / _RUNTIME_INFO
         session_info = session_path.read_text(encoding="utf-8")
@@ -208,7 +224,8 @@ def run_r(
             "package_versions": runtime["package_versions"],
             "session_info": session_info,
         }
-        runtime_path.unlink()
+        if not retain_work:
+            runtime_path.unlink()
         manifest_path = staged_outputs / _MANIFEST
         manifest_path.write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -218,6 +235,7 @@ def run_r(
             staged_outputs,
             set(expected_outputs) | {_SESSION_INFO, _RUNTIME_INFO, _MANIFEST},
             stdout,
+            remove=not retain_work,
         )
 
         if destination.exists() or destination.is_symlink():
@@ -239,7 +257,13 @@ def run_r(
                     )
             raise FileExistsError(f"Output directory already exists: {destination}")
 
-        os.rename(staged_outputs, destination)
+        if retain_work:
+            destination.mkdir(parents=True)
+            publish_names = expected_outputs + [_SESSION_INFO, _MANIFEST]
+            for name in publish_names:
+                shutil.copyfile(staged_outputs / name, destination / name)
+        else:
+            os.rename(staged_outputs, destination)
         return RResult(
             {name: destination / name for name in expected_outputs},
             manifest,
@@ -247,7 +271,8 @@ def run_r(
             stderr,
         )
     finally:
-        shutil.rmtree(stage, ignore_errors=True)
+        if not retain_work:
+            shutil.rmtree(stage, ignore_errors=True)
 
 
 def _expected_outputs(config: dict) -> list[str]:
@@ -291,6 +316,8 @@ def _validate_staged_outputs(
     output_dir: Path,
     expected_outputs: list[str],
     stdout: str,
+    *,
+    remove_appledouble: bool = True,
 ) -> None:
     missing = [
         name
@@ -303,7 +330,9 @@ def _validate_staged_outputs(
         missing.append(_RUNTIME_INFO)
 
     allowed = set(expected_outputs) | {_SESSION_INFO, _RUNTIME_INFO}
-    _strip_appledouble_sidecars(script, output_dir, allowed, stdout)
+    _strip_appledouble_sidecars(
+        script, output_dir, allowed, stdout, remove=remove_appledouble
+    )
 
     unexpected = []
     for path in list(output_dir.rglob("*")):
@@ -331,6 +360,8 @@ def _strip_appledouble_sidecars(
     output_dir: Path,
     allowed: set[str],
     stdout: str,
+    *,
+    remove: bool = True,
 ) -> None:
     unexpected = []
     invalid = []
@@ -347,13 +378,13 @@ def _strip_appledouble_sidecars(
                 valid_magic = sidecar.read(4) == _APPLEDOUBLE_MAGIC
         except OSError:
             valid_magic = False
-        if valid_magic:
+        if not valid_magic:
+            invalid.append(relative)
+        elif remove:
             try:
                 path.unlink()
             except OSError:
                 invalid.append(relative)
-        else:
-            invalid.append(relative)
     failures = []
     if unexpected:
         failures.append(f"unexpected staged files: {', '.join(sorted(unexpected))}")

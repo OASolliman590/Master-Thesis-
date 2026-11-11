@@ -453,6 +453,69 @@ def test_drug_class_and_subgroup_inputs_select_one_aggregate_or_component_per_st
         )
 
 
+@pytest.mark.parametrize("study_count", (4, 10))
+@pytest.mark.parametrize("stratum", ("per_drug_class", "melanoma_cancer_drug", "across_cancers"))
+def test_ambiguous_multidrug_subgroup_is_not_tested_but_direct_groups_remain(
+    study_count, stratum,
+):
+    effects = []
+    for index in range(study_count):
+        study = f"multi_drug_{index}"
+        effects.extend([
+            _effect("panel", "PANEL", study, cancer="melanoma", drug="ANTI_PD_L1_AXIS",
+                    patient_set_id=f"{study}-pd1"),
+            _effect("panel", "PANEL", study, cancer="melanoma", drug="DUAL_PD1_CTLA4",
+                    patient_set_id=f"{study}-dual"),
+        ])
+
+    groups, direct_effects = synthesis_module._plan_groups(effects, stratum)
+    subgroup_groups, subgroup_effects = synthesis_module._plan_subgroups(effects, stratum)
+
+    assert groups
+    direct_by_class = {}
+    for row in direct_effects:
+        direct_by_class.setdefault(row["analysis_id"], []).append(row)
+    assert sum(len(rows) for rows in direct_by_class.values()) == study_count * 2
+    assert {group["drug_class_stratum"] for group in groups if group["analysis_type"] in {"direct", "across_within"}} == {
+        "ANTI_PD_L1_AXIS", "DUAL_PD1_CTLA4",
+    }
+    assert len(subgroup_groups) == 1
+    assert subgroup_groups[0]["status"] == "not_tested"
+    assert subgroup_groups[0]["total_k"] == study_count
+    assert subgroup_groups[0]["reason"] == "study_contributes_to_multiple_moderator_levels"
+    assert subgroup_effects == []
+
+
+def test_genome_wide_planner_scans_effect_rows_once_and_keeps_stable_group_order():
+    class CountedRows(list):
+        def __init__(self, values):
+            super().__init__(values)
+            self.visited = 0
+
+        def __iter__(self):
+            for row in super().__iter__():
+                self.visited += 1
+                yield row
+
+    rows = CountedRows([
+        _effect("gene", f"GENE_{gene:05d}", f"study_{study}",
+                patient_set_id=f"set-{gene}-{study}")
+        for gene in range(12_000)
+        for study in range(3)
+    ])
+
+    first_groups, first_effects = synthesis_module._plan_groups(rows, "per_cancer")
+    first_visits = rows.visited
+    rows.visited = 0
+    second_groups, second_effects = synthesis_module._plan_groups(rows, "per_cancer")
+
+    assert len(rows) == 36_000
+    assert first_visits <= len(rows) * 2
+    assert rows.visited <= len(rows) * 2
+    assert [row["analysis_id"] for row in first_groups] == [row["analysis_id"] for row in second_groups]
+    assert first_effects == second_effects
+
+
 def test_source_label_family_is_reported_per_study_and_never_pooled(tmp_path):
     effects = [
         _effect(
