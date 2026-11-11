@@ -91,6 +91,77 @@ bootstrap_indices <- function(
   list(indices = result, seed = seed, receipt_sha256 = .random_receipt_hash(result))
 }
 
+bootstrap_indices_within_study <- function(
+  strata,
+  row_key,
+  study,
+  series,
+  stream = "a_p1_bootstrap",
+  task_id = NULL,
+  repetitions = 2000L
+) {
+  strata <- as.character(strata)
+  row_key <- as.character(row_key)
+  study <- as.character(study)
+  series <- as.character(series)
+  if (!length(strata) || length(row_key) != length(strata) ||
+      length(study) != length(strata) || length(series) != length(strata) ||
+      anyNA(strata) || anyNA(row_key) || anyNA(study) || anyNA(series) ||
+      any(!nzchar(row_key)) || any(!nzchar(study)) || any(!nzchar(series))) {
+    stop("Study-stratified bootstrap rows require non-empty study, series, row key and stratum values")
+  }
+  if (stream != "a_p1_bootstrap" && stream != "second_check") {
+    stop("Study-stratified bootstrap supports only the signed A-P1 and second-check streams")
+  }
+  order_levels <- .bootstrap_strata(stream, strata)
+  repetitions <- as.integer(repetitions)
+  if (length(repetitions) != 1L || is.na(repetitions) || repetitions < 1L) {
+    stop("Bootstrap repetitions must be positive")
+  }
+  keys <- data.frame(study = study, series = series, row_key = row_key)
+  if (anyDuplicated(keys)) stop("Study-stratified bootstrap rows have duplicate series/study/patient keys")
+
+  seed <- random_seed_for_task(stream, task_id)
+  row_order <- order(enc2utf8(study), enc2utf8(row_key), enc2utf8(series), method = "radix")
+  study_levels <- unique(study[row_order])
+  series_levels <- unique(series[order(enc2utf8(series), method = "radix")])
+  ordered_study <- study[row_order]
+  ordered_series <- series[row_order]
+  ordered_strata <- strata[row_order]
+
+  set.seed(seed, kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
+  assignments <- vector(
+    "list",
+    repetitions * length(study_levels) * length(series_levels) * length(order_levels)
+  )
+  cursor <- 0L
+  for (replicate in seq_len(repetitions)) {
+    for (study_id in study_levels) {
+      for (series_id in series_levels) {
+        for (level in order_levels) {
+          rows <- row_order[
+            ordered_study == study_id & ordered_series == series_id & ordered_strata == level
+          ]
+          if (!length(rows)) next
+          sampled <- rows[sample.int(length(rows), length(rows), replace = TRUE)]
+          cursor <- cursor + 1L
+          assignments[[cursor]] <- data.frame(
+            replicate = replicate,
+            series = series_id,
+            study = study_id,
+            stratum = level,
+            draw = seq_along(sampled),
+            row_index = sampled,
+            stringsAsFactors = FALSE
+          )
+        }
+      }
+    }
+  }
+  result <- do.call(rbind, assignments[seq_len(cursor)])
+  list(indices = result, seed = seed, receipt_sha256 = .random_receipt_hash(result))
+}
+
 split_indices <- function(
   study,
   row_key,
