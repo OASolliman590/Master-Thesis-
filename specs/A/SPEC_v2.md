@@ -1,5 +1,7 @@
 # Paper A: consolidated specification v2.1, 3 Nov 2026
 
+**Amended 15 Nov 2026:** sets the A-P2 patient-overlap rule (6 study families in the main analysis, 4 in a conservative run), excludes from the freeze fit the GSE176307 patients covered by rule `A_P2_ATEZO_FREEZE_EXCLUSION_V1` (so the final model in section 5 is fitted on the derived table, not all 408), and moves gate 3 of section 11 to before the final-test release. See `specs/amendments/2026-11-14-a-p2-development-release/AMENDMENT.md`.
+
 **Amended 5 Nov 2026:** adds A-RCT, a gated randomised comparison, with a narrow named exception to section 9. See `specs/amendments/2026-11-05-prostate-state-and-causal-evidence/AMENDMENT.md`.
 
 **Status: SIGNED by the user on 3 Nov 2026 ("I sign all three"), v2.1.** v2.1 (3 Nov) adds the cell-composition analysis (section 4.4), removes the RNA-derived composition adjustment from 4.3 and gives single-cell its own section (8), from the user's grilling answers recorded in `docs/wayfinding/SPEC_V2_1_20261103/MAP.md` and the evidence in `docs/research/SPEC_V2_1_EVIDENCE_20261103.md`. It consolidates, without changing, the signed decisions in force: RC2 (15 Oct), the immune-programme amendment (16 Oct), the integrated plan (29 Oct), simple mode (31 Oct), the validation amendment and its Addendum 1 (2 Nov), the A-BIO settings D4-D6 (2 Nov), the single-cell plan (2 Nov) and the acquisition close (2 Nov). Where the older files in `specs/A/` disagree with this document, this document and the dated amendments it cites prevail. The older files keep the full technical detail and are linked by section.
@@ -122,7 +124,7 @@ All outputs stay under `.scratch/` (git-ignored); Git holds code, specs and pati
 ## 11. Open gates before analysis
 1. Freeze the Hallmark IFN-gamma panel membership. **Met 5 Nov 2026** (`specs/amendments/2026-11-04-numerical-freeze/AMENDMENT.md`).
 2. Freeze the numerical register entries: panel multiplicity rule, DE software choice, bootstrap seeds. **Met 5 Nov 2026**, same amendment; N12-N15 stay open, and N16 awaits AIU smoke.
-3. Audit IMvigor210 and development-cohort prior exposure for comparators, including the 19 cohorts of the Lin 2026 signature validation.
+3. Audit IMvigor210 and development-cohort prior exposure for comparators, including the 19 cohorts of the Lin 2026 signature validation. Required before the final-test release and before any comparator or novelty claim, not before the A-P2 development and freeze runs (amendment of 15 Nov 2026, section 6).
 4. Release step for the final test (only after the model equation is frozen).
 5. Pin the quanTIseq version and options (shared with Paper B); CIBERSORTx needs the user's registration.
 
