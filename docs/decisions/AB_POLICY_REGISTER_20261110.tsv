@@ -1,0 +1,8 @@
+id	status	rule	authority	applied_to_real_data
+A1	POLICY_APPROVED	Preserve sources; annotation-backed resolution; no automatic averaging; exclude unresolved derived genes; enforce panel coverage; compare A-P2 input/mapping/feature hashes and log changes; real rebuild remains deferred	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+A2	POLICY_APPROVED	Verified same-patient same-episode source-specific windows; unknown dates unknown; Gide early-treatment mapping pending	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+A4	POLICY_APPROVED	A-RCT Change 1 and CIBERSORTx deferred, not dropped	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+B1	POLICY_APPROVED	One verified patient contribution; prefer primary tumour by original specimen/pathology record or TCGA GDC biospecimen record; ambiguous primary ties and technical replicates need explicit rules	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+B2	POLICY_APPROVED	Tier roles retained; exact gene/probe/purity/global-methylation lists require later author signature	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+B3	POLICY_APPROVED	Matched tables and per-gene primary first; main cross-cancer and prostate cell context next; exploratory multi-omics and B-METHRESP deferred	AB_POLICIES_AND_A_P2_INTEGRATION_20261110.md	false
+A3	DRAFT_REQUESTED_ONLY	Clinical adjustment, ranking and handoff decisions remain unsigned	A3_DECISION_SHEET_PROPOSED_20261110.md	false
