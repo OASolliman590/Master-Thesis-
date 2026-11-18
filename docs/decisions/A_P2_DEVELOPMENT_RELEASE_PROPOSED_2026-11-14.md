@@ -1,5 +1,7 @@
 # A-P2 development and freeze release proposal
 
+> **SUPERSEDED on 19 Nov 2026** by `A_P2_DEVELOPMENT_RELEASE_DRAFT_2026-11-19.md` (one release record for the four development runs; still unapproved). Reason: the Paper A process simplification (item 3) replaces four per-run records with one. The 90-versus-87 identity count below is not a live mismatch (the signed 15 Nov amendment, section 5). Kept unchanged below as a historical record. `tools/a_p2/prepare.py` still refers to this file until its follow-up ticket.
+
 **Status: PROPOSED / UNAPPROVED. No run or outcome access is authorized.** Updated 18 November 2026 to reflect the signed 15 November amendment. This is not a release record and must not be signed as one.
 
 ## Scope and interpretation
