@@ -1398,3 +1398,51 @@ def test_a_p2_path_retains_successful_and_failed_private_bridge_stages(tmp_path,
     assert (failed_stages[0] / "config.json").is_file()
     assert not (failed_output / "product_manifest.json").exists()
     assert not (failed_output / "r_bridge").exists()
+
+
+def test_exact_run_scope_compares_only_existing_release_bindings():
+    from tools.a_p2 import product
+    fixture = {
+        "release_scope": "TEST_ONLY_NOT_A_REAL_RELEASE", "data_classification": "SYNTHETIC_ONLY",
+        "operation": "development", "input_role": "development",
+        "input_manifest_sha256": "a" * 64, "input_sha256": "b" * 64,
+        "identity_sidecar_sha256": "c" * 64, "source_registry_sha256": "d" * 64,
+        "publication_family_registry_sha256": "e" * 64, "overlap_registry_sha256": "f" * 64,
+        "cohorts": ["invented_cohort"], "outcome_fields": ["invented_outcome"],
+        "decision": {"identity": "NOT_A_REAL_DECISION", "sha256": "0" * 64},
+    }
+    projection = {k: v for k, v in fixture.items() if k != "decision"}
+    assert product._exact_run_scope_matches(fixture, projection)
+    assert not product._exact_run_scope_matches(fixture, {**projection, "operation": "freeze"})
+    assert not product._exact_run_scope_matches(fixture, {**projection, "input_sha256": "0" * 64})
+    assert not product._exact_run_scope_matches(fixture, {k: v for k, v in projection.items() if k != "cohorts"})
+    assert not product._exact_run_scope_matches(fixture, {**projection, "new_field": True})
+    final = {**fixture, "operation": "final-evaluate", "test_role": "TEST_ONLY",
+             "frozen_equation_sha256": "9" * 64, "final_test_cohort": "invented_cohort"}
+    final_scope = {k: v for k, v in final.items() if k != "decision"}
+    assert product._exact_run_scope_matches(final, final_scope)
+    assert not product._exact_run_scope_matches(final, {**final_scope, "frozen_equation_sha256": "8" * 64})
+
+
+def test_exact_run_decision_convention_stays_pending_with_test_only_scope():
+    from tools.a_p2 import product
+    scope = {
+        "release_scope": "TEST_ONLY_NOT_A_REAL_RELEASE", "data_classification": "SYNTHETIC_ONLY",
+        "operation": "development", "input_role": "development", "input_manifest_sha256": "a" * 64,
+        "input_sha256": "b" * 64, "identity_sidecar_sha256": "c" * 64,
+        "source_registry_sha256": "d" * 64, "publication_family_registry_sha256": "e" * 64,
+        "overlap_registry_sha256": "f" * 64, "cohorts": ["invented_cohort"],
+        "outcome_fields": ["invented_outcome"],
+    }
+    text = ("TEST ONLY — NOT A SIGNATURE\n```a-p2-release-scope-v1\n" + json.dumps(scope) + "\n```\n").encode()
+    with pytest.raises(PermissionError, match="pending user review"):
+        product._require_exact_run_decision(scope, text)
+    with pytest.raises(PermissionError, match="does not attest"):
+        product._require_exact_run_decision({**scope, "operation": "freeze"}, text)
+    with pytest.raises(PermissionError, match="does not attest"):
+        product._require_exact_run_decision(scope, b"TEST ONLY generic decision")
+    ambiguous = ("```a-p2-release-scope-v1\n" + json.dumps(scope).replace(
+        '"operation": "development"', '"operation": "freeze", "operation": "development"'
+    ) + "\n```\n").encode()
+    with pytest.raises(PermissionError, match="does not attest"):
+        product._require_exact_run_decision(scope, ambiguous)

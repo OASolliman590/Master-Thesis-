@@ -355,10 +355,173 @@ def _validate_identity_provenance(manifest: dict[str, Any]) -> None:
         raise PermissionError("Real A-P2 identity and overlap resolution is incomplete")
 
 
+def _validate_bound_a1_metadata(manifest_path: Path, manifest: dict[str, Any], operation: str) -> None:
+    """Check hash-bound metadata only; never open a feature or outcome table."""
+    from . import prepare
+
+    try:
+        registries = prepare._load_registries(prepare.DEFAULT_REGISTRY_DIR)
+    except (prepare.PreparationError, OSError) as error:
+        raise PermissionError("A-P2 authoritative registry is unavailable or invalid") from error
+    identity = manifest.get("identity_provenance", {})
+    if any(identity.get(key) != value for key, value in registries["hashes"].items()):
+        raise PermissionError("A-P2 registry hashes do not match the trusted registry")
+    cohorts = set(manifest.get("cohorts", {}))
+    if cohorts != prepare._REQUIRED_PRIMARY:
+        raise PermissionError("A-P2 development roster differs from the signed seven cohorts")
+    main = prepare._manifest_cohorts(registries["sources"], cohorts, False)
+    conservative = prepare._manifest_cohorts(registries["sources"], cohorts, True)
+    if manifest["cohorts"] not in (main, conservative):
+        raise PermissionError("A-P2 study families differ from the signed grouping")
+    conservative_set = prepare._CONSERVATIVE_FAMILY_COHORTS
+    for pair, row in registries["overlaps"].items():
+        if set(pair) <= cohorts:
+            expected = ("OVERLAP_RISK_GROUPED" if set(pair) == {"liu2019", "vanallen2015"}
+                        else "CONSERVATIVE_SENSITIVITY" if set(pair) <= conservative_set
+                        else "NO_OVERLAP_DOCUMENTED")
+            if row["status"] != expected:
+                raise PermissionError("A-P2 registry status differs from the signed development rule")
+    blockers, _ = prepare._overlap_disposition(registries["overlaps"], cohorts, main, conservative, True)
+    if blockers:
+        raise PermissionError("A-P2 registry contains unresolved or invalid overlap evidence")
+
+    provenance = manifest.get("provenance", {})
+    binding = provenance.get("a1_source_rule")
+    if not isinstance(binding, dict):
+        raise PermissionError("A-P2 lacks the bound A1 source-rule companion")
+    digest = binding.get("exclusion_artifact_sha256")
+    if not isinstance(digest, str) or not _HEX_256.fullmatch(digest):
+        raise PermissionError("A-P2 A1 artifact hash is invalid")
+    artifact_path = manifest_path.parent / prepare.A1_EXCLUSIONS_NAME
+    try:
+        raw = _read_verified_bytes(artifact_path, digest, "A1 exclusion artifact")
+        artifact = json.loads(raw)
+    except (OSError, ValueError, ProductError) as error:
+        raise PermissionError("A-P2 A1 artifact is unavailable or hash-mismatched") from error
+    tokens = artifact.get("excluded_tokens") if isinstance(artifact, dict) else None
+    if not isinstance(tokens, list) or any(not isinstance(t, str) or not t for t in tokens) or len(set(tokens)) != len(tokens):
+        raise PermissionError("A-P2 A1 exclusion tokens are invalid")
+    derived_hash = artifact.get("derived_features_sha256")
+    source_hash = artifact.get("source_features_sha256")
+    expected_binding = {
+        "rule_id": prepare.A1_RULE_ID,
+        "exclusion_artifact_sha256": digest,
+        "excluded_tokens_sha256": prepare._canonical_token_list_hash(set(tokens)),
+        "source_soft_sha256": prepare._GSE176307_SOFT_SHA256,
+        "derived_features_sha256": derived_hash,
+    }
+    if (binding != expected_binding or artifact.get("rule_id") != prepare.A1_RULE_ID
+        or artifact.get("excluded_tokens_sha256") != expected_binding["excluded_tokens_sha256"]
+        or artifact.get("soft_sha256") != prepare._GSE176307_SOFT_SHA256
+        or artifact.get("code_sha256") != _sha256_file(Path(prepare.__file__))
+        or any(not isinstance(h, str) or not _HEX_256.fullmatch(h) for h in (source_hash, derived_hash))):
+        raise PermissionError("A-P2 A1 artifact or its source binding is invalid")
+    if operation == "freeze" and manifest.get("input_sha256") != derived_hash:
+        raise PermissionError("A-P2 freeze requires the derived input")
+    if operation == "development" and manifest.get("input_sha256") not in {source_hash, derived_hash}:
+        raise PermissionError("A-P2 development input does not match original or derived binding")
+    freeze_path = manifest_path.parent / prepare.FREEZE_MANIFEST_NAME
+    freeze, _ = _read_json(freeze_path, "companion freeze manifest")
+    if (freeze.get("input_sha256") != derived_hash or freeze.get("cohorts") != main
+        or freeze.get("provenance", {}).get("a1_source_rule") != binding
+        or freeze.get("identity_provenance", {}).get("overlap_registry_sha256") != identity.get("overlap_registry_sha256")):
+        raise PermissionError("A-P2 companion freeze manifest is not bound to the derived input")
+    original_path = manifest_path.parent / prepare.MANIFEST_NAME
+    original, _ = _read_json(original_path, "companion original manifest")
+    if (original.get("input_sha256") != source_hash or original.get("cohorts") != main
+        or original.get("provenance", {}).get("a1_source_rule") != binding
+        or original.get("identity_provenance", {}).get("overlap_registry_sha256") != identity.get("overlap_registry_sha256")):
+        raise PermissionError("A-P2 companion original manifest has an invalid source binding")
+    original_identity = original.get("identity_provenance", {})
+    original_raw = _read_verified_bytes(_identity_path(original_path, original), original_identity.get("sidecar_sha256"), "original identity sidecar")
+    freeze_identity = freeze.get("identity_provenance", {})
+    sidecar_raw = _read_verified_bytes(_identity_path(freeze_path, freeze), freeze_identity.get("sidecar_sha256"), "freeze identity sidecar")
+    try:
+        sidecar = json.loads(sidecar_raw)
+        records = sidecar["records"]
+        if not isinstance(records, list) or any(not isinstance(row, dict) for row in records):
+            raise ValueError("invalid records")
+        source_records = json.loads(original_raw)["records"]
+        if not isinstance(source_records, list) or any(not isinstance(row, dict) for row in source_records):
+            raise ValueError("invalid source records")
+        source_keys = [(row.get("cohort"), row.get("patient_id")) for row in source_records]
+        freeze_keys = [(row.get("cohort"), row.get("patient_id")) for row in records]
+        excluded_keys = {("gse176307", token) for token in tokens}
+        if (len(set(source_keys)) != len(source_keys) or len(set(freeze_keys)) != len(freeze_keys)
+            or not excluded_keys <= set(source_keys) or set(freeze_keys) != set(source_keys) - excluded_keys):
+            raise ValueError("freeze identities do not equal source identities minus exclusions")
+    except (ValueError, KeyError, TypeError) as error:
+        raise PermissionError("A-P2 freeze identities do not enforce A1 exclusions") from error
+    try:
+        original_sidecar = json.loads(original_raw)
+        prepare._validate_existing_sidecar(original, original_sidecar, original_raw, source_records, registries, set())
+        prepare._validate_existing_sidecar(freeze, sidecar, sidecar_raw, records, registries, set())
+        if manifest_path.name not in {prepare.MANIFEST_NAME, prepare.FREEZE_MANIFEST_NAME}:
+            current_raw = _read_verified_bytes(_identity_path(manifest_path, manifest), identity.get("sidecar_sha256"), "current identity sidecar")
+            current_sidecar = json.loads(current_raw)
+            prepare._validate_existing_sidecar(manifest, current_sidecar, current_raw, current_sidecar["records"], registries, set())
+    except (prepare.PreparationError, ValueError, KeyError, TypeError) as error:
+        raise PermissionError("A-P2 identity sidecar does not match the trusted registry") from error
+    if (source_hash != prepare._MAIN_FEATURES_SHA256
+        or original.get("provenance", {}).get("source_build_manifest_sha256") != prepare._HISTORICAL_BUILD_RECEIPT_SHA256):
+        raise PermissionError("A-P2 historical original input or build receipt binding differs")
+    dimension_errors = prepare._signed_dimension_errors(
+        input_cohorts=cohorts, input_count=len(source_keys),
+        bladder_count=sum(cohort == "gse176307" for cohort, _ in source_keys),
+        excluded_count=len(tokens), derived_count=len(freeze_keys),
+        main_families=len({m["study_family"] for m in main.values()}),
+        conservative_families=len({m["study_family"] for m in conservative.values()}),
+    )
+    if dimension_errors:
+        raise PermissionError("A-P2 signed roster and aggregate dimensions do not match")
+
+
+_EXACT_RUN_SCOPE_CONVENTION_APPROVED = False
+_SCOPE_FIELDS = (
+    "release_scope", "data_classification", "operation", "input_role", "input_manifest_sha256",
+    "input_sha256", "identity_sidecar_sha256", "source_registry_sha256",
+    "publication_family_registry_sha256", "overlap_registry_sha256", "cohorts", "outcome_fields",
+)
+_FINAL_SCOPE_FIELDS = ("test_role", "frozen_equation_sha256", "final_test_cohort")
+
+
+def _exact_run_scope_matches(record: dict[str, Any], scope: Any) -> bool:
+    fields = _SCOPE_FIELDS + (_FINAL_SCOPE_FIELDS if record.get("operation") == "final-evaluate" else ())
+    if not isinstance(scope, dict) or set(scope) != set(fields) or not all(key in record for key in fields):
+        return False
+    try:
+        return _canonical_json(scope) == _canonical_json({key: record[key] for key in fields})
+    except (TypeError, ValueError):
+        return False
+
+
+def _reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate scope key")
+        result[key] = value
+    return result
+
+
+def _require_exact_run_decision(record: dict[str, Any], decision_bytes: bytes) -> None:
+    try:
+        text = decision_bytes.decode("utf-8")
+        blocks = re.findall(r"(?m)^```a-p2-release-scope-v1[ \t]*\r?\n(.*?)\r?\n```[ \t]*$", text, re.DOTALL)
+        if len(blocks) != 1 or not _exact_run_scope_matches(record, json.loads(blocks[0], object_pairs_hook=_reject_duplicate_json_keys)):
+            raise ValueError("decision scope mismatch")
+    except (UnicodeDecodeError, ValueError, TypeError) as error:
+        raise PermissionError("Decision does not attest to this exact A-P2 run") from error
+    if not _EXACT_RUN_SCOPE_CONVENTION_APPROVED:
+        raise PermissionError("Real A-P2 remains locked pending user review of the exact-run decision convention")
+
+
 def _authorize_real(
     manifest: dict[str, Any], manifest_bytes: bytes, operation: str,
     release_record_path: Path | None, equation_hash: str | None,
 ) -> None:
+    if release_record_path is not None:
+        _guard_external_path(release_record_path, "user-release record")
     if release_record_path is None:
         raise PermissionError("Real A-P2 outcome access requires an approved user-release record")
     record, _ = _read_json(release_record_path, "user-release record")
@@ -383,7 +546,11 @@ def _authorize_real(
         decision_path.relative_to(_DECISION_DIR.resolve())
     except ValueError as error:
         raise PermissionError("The user-release decision path is outside docs/decisions") from error
-    if decision_path.stem != decision_identity or _sha256_file(decision_path) != decision_digest:
+    try:
+        decision_bytes = decision_path.read_bytes()
+    except OSError as error:
+        raise PermissionError("The referenced user decision is unavailable") from error
+    if decision_path.stem != decision_identity or _sha256_bytes(decision_bytes) != decision_digest:
         raise PermissionError("The referenced user decision identity or hash does not match")
 
     exact_cohorts = _cohort_ids(manifest)
@@ -416,6 +583,7 @@ def _authorize_real(
         raise PermissionError("The user-release record does not match this A-P2 operation, input, and identity resolution")
     if _release_binding_errors(record, final):
         raise PermissionError("The user-release record does not bind this untouched final input and frozen equation")
+    _require_exact_run_decision(record, decision_bytes)
 
 
 def _release_binding_errors(record: dict[str, Any], expected: dict[str, Any]) -> list[str]:
@@ -471,6 +639,8 @@ def _authorize(
         protected_release = False
     else:
         _authorize_real(manifest, manifest_bytes, operation, release_record_path, equation_hash)
+        if operation in {"development", "freeze"}:
+            _validate_bound_a1_metadata(manifest_path, manifest, operation)
         protected_release = operation == "final-evaluate"
     return (*loaded, protected_release)
 
