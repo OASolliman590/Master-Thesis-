@@ -1,9 +1,11 @@
 import argparse
+import json
 import sys
 from pathlib import Path
 
 from .build import build
 from .product import ProductError, run_development, run_final_evaluation, run_freeze
+from .prepare import PreparationError, prepare_development
 from tools.r_bridge import RScriptError
 
 
@@ -17,6 +19,24 @@ def _parser():
         help="validated cohort runtime (defaults to THESIS_RUNTIME or the worktree runtime)",
     )
     build_parser.add_argument("--out", help="output directory (defaults to the worktree runtime a_p2/inputs)")
+
+    prepare_parser = commands.add_parser(
+        "prepare-development",
+        help="prepare hash-bound private A-P2 development provenance without opening outcomes",
+    )
+    prepare_parser.add_argument("--inputs", required=True, type=Path, help="existing built A-P2 inputs directory")
+    prepare_parser.add_argument("--out", required=True, type=Path, help="fresh private output directory under .scratch/runtime")
+    prepare_parser.add_argument(
+        "--check-only",
+        action="store_true",
+        default=False,
+        help="validate all prepared manifests, sidecars, release templates, and registries without writing",
+    )
+    prepare_parser.add_argument(
+        "--gse176307-soft",
+        type=Path,
+        help="explicit path to the pinned GSE176307 family SOFT object; the SHA-256 is still enforced",
+    )
 
     for name, help_text in (
         ("development", "run synthetic or explicitly released development evaluations"),
@@ -42,13 +62,21 @@ def main(argv=None):
     try:
         if args.command == "build":
             build(runtime=args.runtime, out=args.out)
+        elif args.command == "prepare-development":
+            report = prepare_development(
+                args.inputs,
+                args.out,
+                check_only=args.check_only,
+                geo_soft_path=args.gse176307_soft,
+            )
+            print(json.dumps(report, sort_keys=True))
         elif args.command == "development":
             run_development(args.manifest, args.out, args.release_record, args.allow_outcomes)
         elif args.command == "freeze":
             run_freeze(args.manifest, args.out, args.release_record, args.allow_outcomes)
         elif args.command == "final-evaluate":
             run_final_evaluation(args.manifest, args.equation, args.out, args.release_record, args.allow_outcomes)
-    except (ProductError, PermissionError, FileExistsError, OSError, RScriptError) as error:
+    except (PreparationError, ProductError, PermissionError, FileExistsError, OSError, RScriptError) as error:
         print(f"A-P2 {args.command} refused: {error}", file=sys.stderr)
         return 2
     return 0
