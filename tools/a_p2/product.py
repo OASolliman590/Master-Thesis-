@@ -40,6 +40,10 @@ _KNOWN_REAL_IDENTITY_TOKENS = {
 }
 _PROTECTED_IDENTITY_TOKENS = {"imvigor", "imvigor210"}
 _DECISION_DIR = ROOT / "docs/decisions"
+# Independently checked preparation digests recorded in the 19 Nov A-P2 draft's Bindings table.
+_A1_ORIGINAL_SIDECAR_SHA256 = "f80535f7520e9bc9db595c32de47d49be6c6d1576eca73c03c1275f2fc210751"
+_A1_EXCLUDED_TOKENS_SHA256 = "8e58c8d851921059452a11721d80ded9afab9985bc652c3e59448f2ec4196372"
+_A1_DERIVED_FEATURES_SHA256 = "d5ce82f0ac5d6a38e75aeb78e7a8c0addcfad9f497482b8b8642bd3ce75eed12"
 _CODE_HASH_INPUTS = {
     "python_product": Path(__file__),
     "python_cli": ROOT / "tools/a_p2/__main__.py",
@@ -371,8 +375,18 @@ def _validate_bound_a1_metadata(manifest_path: Path, manifest: dict[str, Any], o
         raise PermissionError("A-P2 development roster differs from the signed seven cohorts")
     main = prepare._manifest_cohorts(registries["sources"], cohorts, False)
     conservative = prepare._manifest_cohorts(registries["sources"], cohorts, True)
-    if manifest["cohorts"] not in (main, conservative):
-        raise PermissionError("A-P2 study families differ from the signed grouping")
+    packages = {
+        prepare.MANIFEST_NAME: ("development", False, main),
+        prepare.CONSERVATIVE_MANIFEST_NAME: ("development", False, conservative),
+        prepare.SENSITIVITY_MANIFEST_NAME: ("development", True, main),
+        prepare.FREEZE_MANIFEST_NAME: ("freeze", True, main),
+    }
+    package = packages.get(manifest_path.name)
+    if package is None:
+        raise PermissionError("Unknown A-P2 prepared package")
+    expected_operation, uses_derived, expected_cohorts = package
+    if operation != expected_operation or manifest["cohorts"] != expected_cohorts:
+        raise PermissionError("A-P2 package operation or study families differ from the signed pairing")
     conservative_set = prepare._CONSERVATIVE_FAMILY_COHORTS
     for pair, row in registries["overlaps"].items():
         if set(pair) <= cohorts:
@@ -416,59 +430,64 @@ def _validate_bound_a1_metadata(manifest_path: Path, manifest: dict[str, Any], o
         or artifact.get("code_sha256") != _sha256_file(Path(prepare.__file__))
         or any(not isinstance(h, str) or not _HEX_256.fullmatch(h) for h in (source_hash, derived_hash))):
         raise PermissionError("A-P2 A1 artifact or its source binding is invalid")
-    if operation == "freeze" and manifest.get("input_sha256") != derived_hash:
-        raise PermissionError("A-P2 freeze requires the derived input")
-    if operation == "development" and manifest.get("input_sha256") not in {source_hash, derived_hash}:
-        raise PermissionError("A-P2 development input does not match original or derived binding")
+    if source_hash != prepare._MAIN_FEATURES_SHA256:
+        raise PermissionError("A-P2 historical original input binding differs")
+    if (expected_binding["excluded_tokens_sha256"] != _A1_EXCLUDED_TOKENS_SHA256
+        or derived_hash != _A1_DERIVED_FEATURES_SHA256):
+        raise PermissionError("A-P2 A1 exclusions or derived input differ from the verified preparation")
+    expected_input_sha256 = derived_hash if uses_derived else source_hash
+    if manifest.get("input_sha256") != expected_input_sha256:
+        raise PermissionError("A-P2 package input differs from the signed pairing")
     freeze_path = manifest_path.parent / prepare.FREEZE_MANIFEST_NAME
-    freeze, _ = _read_json(freeze_path, "companion freeze manifest")
+    freeze = manifest if manifest_path == freeze_path else _read_json(freeze_path, "companion freeze manifest")[0]
     if (freeze.get("input_sha256") != derived_hash or freeze.get("cohorts") != main
         or freeze.get("provenance", {}).get("a1_source_rule") != binding
         or freeze.get("identity_provenance", {}).get("overlap_registry_sha256") != identity.get("overlap_registry_sha256")):
         raise PermissionError("A-P2 companion freeze manifest is not bound to the derived input")
     original_path = manifest_path.parent / prepare.MANIFEST_NAME
-    original, _ = _read_json(original_path, "companion original manifest")
+    original = manifest if manifest_path == original_path else _read_json(original_path, "companion original manifest")[0]
     if (original.get("input_sha256") != source_hash or original.get("cohorts") != main
         or original.get("provenance", {}).get("a1_source_rule") != binding
         or original.get("identity_provenance", {}).get("overlap_registry_sha256") != identity.get("overlap_registry_sha256")):
         raise PermissionError("A-P2 companion original manifest has an invalid source binding")
-    original_identity = original.get("identity_provenance", {})
-    original_raw = _read_verified_bytes(_identity_path(original_path, original), original_identity.get("sidecar_sha256"), "original identity sidecar")
-    freeze_identity = freeze.get("identity_provenance", {})
-    sidecar_raw = _read_verified_bytes(_identity_path(freeze_path, freeze), freeze_identity.get("sidecar_sha256"), "freeze identity sidecar")
+    if original.get("provenance", {}).get("source_build_manifest_sha256") != prepare._HISTORICAL_BUILD_RECEIPT_SHA256:
+        raise PermissionError("A-P2 historical build receipt binding differs")
+    original_identity = original["identity_provenance"]
+    if original_identity.get("sidecar_sha256") != _A1_ORIGINAL_SIDECAR_SHA256:
+        raise PermissionError("A-P2 original identity sidecar differs from the verified preparation")
     try:
-        sidecar = json.loads(sidecar_raw)
-        records = sidecar["records"]
-        if not isinstance(records, list) or any(not isinstance(row, dict) for row in records):
-            raise ValueError("invalid records")
-        source_records = json.loads(original_raw)["records"]
-        if not isinstance(source_records, list) or any(not isinstance(row, dict) for row in source_records):
-            raise ValueError("invalid source records")
-        source_keys = [(row.get("cohort"), row.get("patient_id")) for row in source_records]
-        freeze_keys = [(row.get("cohort"), row.get("patient_id")) for row in records]
-        excluded_keys = {("gse176307", token) for token in tokens}
-        if (len(set(source_keys)) != len(source_keys) or len(set(freeze_keys)) != len(freeze_keys)
-            or not excluded_keys <= set(source_keys) or set(freeze_keys) != set(source_keys) - excluded_keys):
-            raise ValueError("freeze identities do not equal source identities minus exclusions")
-    except (ValueError, KeyError, TypeError) as error:
-        raise PermissionError("A-P2 freeze identities do not enforce A1 exclusions") from error
-    try:
+        original_raw = _read_verified_bytes(
+            _identity_path(original_path, original), _A1_ORIGINAL_SIDECAR_SHA256, "original identity sidecar",
+        )
         original_sidecar = json.loads(original_raw)
-        prepare._validate_existing_sidecar(original, original_sidecar, original_raw, source_records, registries, set())
-        prepare._validate_existing_sidecar(freeze, sidecar, sidecar_raw, records, registries, set())
+        if (any(original_identity.get(key) != value or original_sidecar["provenance"].get(key) != value
+                for key, value in registries["hashes"].items())
+            or original_sidecar["resolution_status"] != original_identity.get("resolution_status")):
+            raise ValueError("original sidecar and registry metadata differ")
+        source_records = original_sidecar["records"]
+        bladder_tokens = {row["patient_id"] for row in source_records if row["cohort"] == "gse176307"}
+        excluded = set(tokens)
+        if not excluded <= bladder_tokens:
+            raise ValueError("A1 exclusions are absent from the original identities")
+        derived_records = [
+            row for row in source_records
+            if row["cohort"] != "gse176307" or row["patient_id"] not in excluded
+        ]
+        freeze_raw = _read_verified_bytes(
+            _identity_path(freeze_path, freeze), freeze["identity_provenance"].get("sidecar_sha256"),
+            "freeze identity sidecar",
+        )
+        prepare._validate_existing_sidecar(freeze, json.loads(freeze_raw), freeze_raw, derived_records, registries, set())
         if manifest_path.name not in {prepare.MANIFEST_NAME, prepare.FREEZE_MANIFEST_NAME}:
             current_raw = _read_verified_bytes(_identity_path(manifest_path, manifest), identity.get("sidecar_sha256"), "current identity sidecar")
-            current_sidecar = json.loads(current_raw)
-            prepare._validate_existing_sidecar(manifest, current_sidecar, current_raw, current_sidecar["records"], registries, set())
-    except (prepare.PreparationError, ValueError, KeyError, TypeError) as error:
-        raise PermissionError("A-P2 identity sidecar does not match the trusted registry") from error
-    if (source_hash != prepare._MAIN_FEATURES_SHA256
-        or original.get("provenance", {}).get("source_build_manifest_sha256") != prepare._HISTORICAL_BUILD_RECEIPT_SHA256):
-        raise PermissionError("A-P2 historical original input or build receipt binding differs")
+            expected_records = derived_records if uses_derived else source_records
+            prepare._validate_existing_sidecar(manifest, json.loads(current_raw), current_raw, expected_records, registries, set())
+    except (ValueError, KeyError, TypeError, OSError) as error:
+        raise PermissionError("A-P2 identity sidecar does not match the bound input identities or trusted registry") from error
     dimension_errors = prepare._signed_dimension_errors(
-        input_cohorts=cohorts, input_count=len(source_keys),
-        bladder_count=sum(cohort == "gse176307" for cohort, _ in source_keys),
-        excluded_count=len(tokens), derived_count=len(freeze_keys),
+        input_cohorts=cohorts, input_count=len(source_records),
+        bladder_count=len(bladder_tokens),
+        excluded_count=len(tokens), derived_count=len(derived_records),
         main_families=len({m["study_family"] for m in main.values()}),
         conservative_families=len({m["study_family"] for m in conservative.values()}),
     )

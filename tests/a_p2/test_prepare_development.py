@@ -279,8 +279,8 @@ def test_prepare_and_check_only_never_parse_later_feature_or_outcome_fields(tmp_
 
     manifest = json.loads((out / "a_p2_input_manifest.json").read_text(encoding="utf-8"))
     sidecar = json.loads((out / "identity_sidecar.json").read_text(encoding="utf-8"))
-    assert prepared["status"] == "BLOCKED"
-    assert checked["status"] == "BLOCKED"
+    assert prepared["structural_status"] == "PASS"
+    assert checked["structural_status"] == "PASS"
     assert parsed_features == []
     assert Path(manifest["input_table"]).is_absolute() is True
     assert set(manifest["cohorts"]) == set(COHORTS)
@@ -400,7 +400,7 @@ def test_tracked_registry_resolves_every_in_scope_pair(tmp_path):
     report = _prepare(inputs, out, registry_dir=REGISTRY_DIR, scratch_root=tmp_path / "scratch")
 
     assert report["blocking_pairs"] == []
-    assert report["status"] == "BLOCKED"  # a signed release is still required
+    assert report["structural_status"] == "PASS"
     manifest = json.loads((out / "a_p2_input_manifest.json").read_text(encoding="utf-8"))
     assert manifest["identity_provenance"]["resolution_status"] == "RESOLVED_NO_UNRESOLVED_OVERLAP"
 
@@ -425,7 +425,7 @@ def test_unresolved_overlap_pairs_block_resolution(tmp_path):
         scratch_root=tmp_path / "scratch",
     )
 
-    assert report["status"] == "BLOCKED"
+    assert report["structural_status"] == "BLOCKED"
     blocking = {tuple(pair["cohorts"]) for pair in report["blocking_pairs"]}
     assert ("gse176307", "imvigor210") in blocking
     assert ("imvigor210", "liu2019") not in blocking  # Tier 3, user-confirmed 19 Nov 2026
@@ -586,7 +586,7 @@ def test_any_unresolved_in_scope_pair_blocks_a_fully_resolved_registry(tmp_path,
         scratch_root=tmp_path / "scratch",
     )
 
-    assert report["status"] == "BLOCKED"
+    assert report["structural_status"] == "BLOCKED"
     assert any(tuple(item["cohorts"]) == tuple(sorted(unresolved_pair)) for item in report["blocking_pairs"])
 
 
@@ -940,6 +940,7 @@ def test_selected_selected_source_rule_status_always_blocks(tmp_path):
         scratch_root=tmp_path / "scratch",
     )
 
+    assert report["structural_status"] == "BLOCKED"
     assert any(
         item["cohorts"] == ["gide2019", "liu2019"]
         and "selected-selected pair" in item["evidence_needed"]
@@ -993,7 +994,7 @@ def test_bladder_final_pair_cannot_close_with_no_overlap_status(tmp_path):
     inputs = _built_inputs(tmp_path)
     report = _prepare(inputs, tmp_path / "scratch" / "prepared", registry_dir=registry_dir,
                       scratch_root=tmp_path / "scratch")
-    assert report["status"] == "BLOCKED"
+    assert report["structural_status"] == "BLOCKED"
     assert any(item["cohorts"] == ["gse176307", "imvigor210"] for item in report["blocking_pairs"])
 
 
@@ -1022,32 +1023,192 @@ def test_invented_package_never_reports_real_release_ready(tmp_path):
     inputs, _ = _multi_patient_gse_inputs(tmp_path)
     report = _prepare(inputs, tmp_path / "scratch" / "prepared", registry_dir=registry_dir,
                       scratch_root=tmp_path / "scratch")
-    assert report["status"] == "BLOCKED"
+    assert report["structural_status"] == "PASS"
     assert report["release_readiness"] == "INDEPENDENT_BINDINGS_REQUIRED"
     assert report["blocking_pairs"] == []
 
 
-def test_product_metadata_checks_registry_a1_and_derived_role(tmp_path, monkeypatch):
+_PACKAGE_MANIFESTS = (
+    prepare_module.MANIFEST_NAME,
+    prepare_module.CONSERVATIVE_MANIFEST_NAME,
+    prepare_module.SENSITIVITY_MANIFEST_NAME,
+    prepare_module.FREEZE_MANIFEST_NAME,
+)
+
+
+def _load_json(path):
+    return json.loads(path.read_bytes())
+
+
+def _write_bound_json(path, value):
+    raw = prepare_module._json_bytes(value)
+    path.write_bytes(raw)
+    return hashlib.sha256(raw).hexdigest()
+
+
+@pytest.fixture
+def bound_a1_package(tmp_path, monkeypatch):
     registry_dir = _copy_registries(tmp_path)
     _resolve_all_test_overlaps(registry_dir)
-    inputs, _ = _multi_patient_gse_inputs(tmp_path)
+    inputs, source_ids = _multi_patient_gse_inputs(tmp_path)
     out = tmp_path / "scratch" / "prepared"
     _prepare(inputs, out, registry_dir=registry_dir, scratch_root=tmp_path / "scratch")
     monkeypatch.setattr(prepare_module, "DEFAULT_REGISTRY_DIR", registry_dir)
     soft = inputs / "GSE176307_family.soft.gz"
     monkeypatch.setattr(prepare_module, "_GSE176307_SOFT_SHA256", hashlib.sha256(soft.read_bytes()).hexdigest())
-    main_path = out / "a_p2_input_manifest.json"
-    main = json.loads(main_path.read_text())
-    # This fixture checks metadata mechanics, not real release readiness.
+    main = _load_json(out / prepare_module.MANIFEST_NAME)
+    binding = main["provenance"]["a1_source_rule"]
+    # Use the known-good fixture bindings as the independent preflight reference.
     monkeypatch.setattr(prepare_module, "_MAIN_FEATURES_SHA256", main["input_sha256"])
     monkeypatch.setattr(prepare_module, "_HISTORICAL_BUILD_RECEIPT_SHA256", main["provenance"]["source_build_manifest_sha256"])
+    monkeypatch.setattr(product, "_A1_ORIGINAL_SIDECAR_SHA256", main["identity_provenance"]["sidecar_sha256"])
+    monkeypatch.setattr(product, "_A1_EXCLUDED_TOKENS_SHA256", binding["excluded_tokens_sha256"])
+    monkeypatch.setattr(product, "_A1_DERIVED_FEATURES_SHA256", binding["derived_features_sha256"])
     monkeypatch.setattr(prepare_module, "_signed_dimension_errors", lambda **kwargs: [])
-    product._validate_bound_a1_metadata(main_path, main, "development")
-    freeze_path = out / "a_p2_input_manifest_freeze.json"
-    freeze = json.loads(freeze_path.read_text())
-    product._validate_bound_a1_metadata(freeze_path, freeze, "freeze")
-    with pytest.raises(PermissionError, match="derived"):
-        product._validate_bound_a1_metadata(main_path, main, "freeze")
+    return inputs, out, registry_dir, source_ids
+
+
+@pytest.mark.parametrize("manifest_name, operation, signed_table, signed_grouping", (
+    (prepare_module.MANIFEST_NAME, "development", "original", "main"),
+    (prepare_module.CONSERVATIVE_MANIFEST_NAME, "development", "original", "conservative"),
+    (prepare_module.SENSITIVITY_MANIFEST_NAME, "development", "derived", "main"),
+    (prepare_module.FREEZE_MANIFEST_NAME, "freeze", "derived", "main"),
+), ids=("main", "conservative", "bladder-sensitivity", "freeze"))
+@pytest.mark.parametrize("table", ("original", "derived"))
+@pytest.mark.parametrize("grouping", ("main", "conservative"))
+def test_product_enforces_signed_table_and_grouping(
+    bound_a1_package, manifest_name, operation, signed_table, signed_grouping, table, grouping,
+):
+    _, out, _, _ = bound_a1_package
+    path = out / manifest_name
+    manifest = _load_json(path)
+    if (table, grouping) == (signed_table, signed_grouping):
+        product._validate_bound_a1_metadata(path, manifest, operation)
+        return
+
+    original = _load_json(out / prepare_module.MANIFEST_NAME)
+    conservative = _load_json(out / prepare_module.CONSERVATIVE_MANIFEST_NAME)
+    derived = _load_json(out / prepare_module.FREEZE_MANIFEST_NAME)
+    table_manifest = original if table == "original" else derived
+    grouping_manifest = original if grouping == "main" else conservative
+    manifest.update(input_table=table_manifest["input_table"], input_sha256=table_manifest["input_sha256"],
+                    cohorts=grouping_manifest["cohorts"])
+    sidecar_path = out / manifest["identity_provenance"]["sidecar"]
+    sidecar = _load_json(out / table_manifest["identity_provenance"]["sidecar"])
+    for row in sidecar["records"]:
+        row["publication_family_id"] = manifest["cohorts"][row["cohort"]]["study_family"]
+    manifest["identity_provenance"]["sidecar_sha256"] = _write_bound_json(sidecar_path, sidecar)
+    _write_bound_json(path, manifest)
+
+    with pytest.raises(PermissionError):
+        product._validate_bound_a1_metadata(path, manifest, operation)
+
+
+@pytest.mark.parametrize("manifest_name, operation", (
+    ("a_p2_input_manifest_unknown.json", "development"),
+    (prepare_module.SENSITIVITY_MANIFEST_NAME, "freeze"),
+    (prepare_module.FREEZE_MANIFEST_NAME, "development"),
+))
+def test_product_refuses_unknown_package_or_wrong_operation(bound_a1_package, manifest_name, operation):
+    _, out, _, _ = bound_a1_package
+    path = out / manifest_name
+    if not path.exists():
+        shutil.copyfile(out / prepare_module.SENSITIVITY_MANIFEST_NAME, path)
+    with pytest.raises(PermissionError):
+        product._validate_bound_a1_metadata(path, _load_json(path), operation)
+
+
+@pytest.mark.parametrize("manifest_name", _PACKAGE_MANIFESTS[:3], ids=("main", "conservative", "sensitivity"))
+def test_product_refuses_sidecar_with_rehashed_identity_swap(bound_a1_package, manifest_name):
+    _, out, _, source_ids = bound_a1_package
+    kept_token = _gse_patient_token(source_ids[0])
+    replacement = (_gse_patient_token(source_ids[1]) if manifest_name == prepare_module.SENSITIVITY_MANIFEST_NAME
+                   else _gse_patient_token("BACI_INVENTED_REPLACEMENT"))
+    names = [manifest_name]
+    if manifest_name == prepare_module.MANIFEST_NAME:
+        # Keep the companion consistent with the changed original sidecar.
+        names.append(prepare_module.FREEZE_MANIFEST_NAME)
+    for name in names:
+        path = out / name
+        manifest = _load_json(path)
+        identity = manifest["identity_provenance"]
+        sidecar_path = out / identity["sidecar"]
+        sidecar = _load_json(sidecar_path)
+        row = next(row for row in sidecar["records"] if row["patient_id"] == kept_token)
+        row["patient_id"] = replacement
+        row["canonical_patient_uid"] = "a_p2:gse176307:" + hashlib.sha256(replacement.encode()).hexdigest()
+        identity["sidecar_sha256"] = _write_bound_json(sidecar_path, sidecar)
+        _write_bound_json(path, manifest)
+
+    path = out / manifest_name
+    with pytest.raises(PermissionError, match="sidecar"):
+        product._validate_bound_a1_metadata(path, _load_json(path), "development")
+
+
+def test_check_only_and_product_refuse_same_size_a1_exclusion_swap(bound_a1_package, monkeypatch):
+    inputs, out, registry_dir, source_ids = bound_a1_package
+    original_sidecar = _load_json(out / prepare_module.SIDECAR_NAME)
+    kept_token, excluded_token = map(_gse_patient_token, source_ids[:2])
+    excluded_row = next(row for row in original_sidecar["records"] if row["patient_id"] == excluded_token)
+
+    derived_path = out / prepare_module.FREEZE_TABLE_NAME
+    original_bytes = derived_path.read_bytes()
+    swapped_bytes = original_bytes.replace(kept_token.encode(), excluded_token.encode())
+    assert swapped_bytes != original_bytes
+    assert len(swapped_bytes) == len(original_bytes)
+    derived_path.write_bytes(swapped_bytes)
+    derived_digest = hashlib.sha256(swapped_bytes).hexdigest()
+
+    artifact_path = out / prepare_module.A1_EXCLUSIONS_NAME
+    artifact = _load_json(artifact_path)
+    original_exclusions = set(artifact["excluded_tokens"])
+    swapped = sorted((original_exclusions - {excluded_token}) | {kept_token})
+    assert len(swapped) == len(original_exclusions)
+    artifact["excluded_tokens"] = swapped
+    artifact["excluded_tokens_sha256"] = hashlib.sha256(
+        json.dumps(swapped, separators=(",", ":")).encode()
+    ).hexdigest()
+    artifact["derived_features_sha256"] = derived_digest
+    artifact_digest = _write_bound_json(artifact_path, artifact)
+
+    release_names = ("release_development.unapproved.json", prepare_module.CONSERVATIVE_RELEASE_NAME,
+                     prepare_module.SENSITIVITY_RELEASE_NAME, prepare_module.FREEZE_RELEASE_NAME)
+    for name, release_name in zip(_PACKAGE_MANIFESTS, release_names):
+        manifest_path = out / name
+        manifest = _load_json(manifest_path)
+        identity = manifest["identity_provenance"]
+        manifest["provenance"]["a1_source_rule"].update(
+            exclusion_artifact_sha256=artifact_digest,
+            excluded_tokens_sha256=artifact["excluded_tokens_sha256"],
+            derived_features_sha256=derived_digest,
+        )
+        if name in (prepare_module.SENSITIVITY_MANIFEST_NAME, prepare_module.FREEZE_MANIFEST_NAME):
+            manifest["input_sha256"] = derived_digest
+            sidecar_path = out / identity["sidecar"]
+            sidecar = _load_json(sidecar_path)
+            sidecar["records"] = [excluded_row if row["patient_id"] == kept_token else row for row in sidecar["records"]]
+            identity["sidecar_sha256"] = _write_bound_json(sidecar_path, sidecar)
+        manifest_digest = _write_bound_json(manifest_path, manifest)
+        release_path = out / release_name
+        release = _load_json(release_path)
+        release.update(input_sha256=manifest["input_sha256"], input_manifest_sha256=manifest_digest,
+                       identity_sidecar_sha256=identity["sidecar_sha256"])
+        _write_bound_json(release_path, release)
+
+    with monkeypatch.context() as preparation:
+        # The product fixture's historical hash override applies only to product checks.
+        preparation.setattr(prepare_module, "_MAIN_FEATURES_SHA256", "0" * 64)
+        with pytest.raises(PreparationError, match="artifact hashes do not match the pinned source and code"):
+            _prepare(inputs, out, check_only=True, registry_dir=registry_dir, scratch_root=out.parent)
+    freeze_path = out / prepare_module.FREEZE_MANIFEST_NAME
+    with pytest.raises(PermissionError, match="A1"):
+        product._validate_bound_a1_metadata(freeze_path, _load_json(freeze_path), "freeze")
+
+
+def test_product_metadata_checks_registry(bound_a1_package):
+    _, out, registry_dir, _ = bound_a1_package
+    main_path = out / prepare_module.MANIFEST_NAME
+    main = _load_json(main_path)
     registry_path = registry_dir / "OVERLAP_REGISTRY.tsv"
     registry_path.write_bytes(registry_path.read_bytes() + b"\n")
     with pytest.raises(PermissionError, match="registry"):
@@ -1065,15 +1226,8 @@ def test_signed_dimensions_require_exact_roster_and_all_prespecified_counts():
         assert prepare_module._signed_dimension_errors(**{**kwargs, field: value})
 
 
-def test_product_metadata_refuses_missing_nonexcluded_freeze_identity(tmp_path, monkeypatch):
-    registry_dir = _copy_registries(tmp_path)
-    _resolve_all_test_overlaps(registry_dir)
-    inputs, _ = _multi_patient_gse_inputs(tmp_path)
-    out = tmp_path / "scratch" / "prepared"
-    _prepare(inputs, out, registry_dir=registry_dir, scratch_root=tmp_path / "scratch")
-    monkeypatch.setattr(prepare_module, "DEFAULT_REGISTRY_DIR", registry_dir)
-    soft = inputs / "GSE176307_family.soft.gz"
-    monkeypatch.setattr(prepare_module, "_GSE176307_SOFT_SHA256", hashlib.sha256(soft.read_bytes()).hexdigest())
+def test_product_metadata_refuses_missing_nonexcluded_freeze_identity(bound_a1_package):
+    _, out, _, _ = bound_a1_package
     main_path = out / "a_p2_input_manifest.json"
     main = json.loads(main_path.read_text())
     freeze_path = out / "a_p2_input_manifest_freeze.json"
@@ -1140,15 +1294,8 @@ def test_product_refuses_tampered_a1_artifact_before_payload_access(tmp_path, mo
         product._validate_bound_a1_metadata(manifest_path, json.loads(manifest_path.read_text()), "development")
 
 
-def test_product_rejects_unresolved_freeze_sidecar_before_payload_access(tmp_path, monkeypatch):
-    registry_dir = _copy_registries(tmp_path)
-    _resolve_all_test_overlaps(registry_dir)
-    inputs, _ = _multi_patient_gse_inputs(tmp_path)
-    out = tmp_path / "scratch" / "prepared"
-    _prepare(inputs, out, registry_dir=registry_dir, scratch_root=tmp_path / "scratch")
-    monkeypatch.setattr(prepare_module, "DEFAULT_REGISTRY_DIR", registry_dir)
-    soft = inputs / "GSE176307_family.soft.gz"
-    monkeypatch.setattr(prepare_module, "_GSE176307_SOFT_SHA256", hashlib.sha256(soft.read_bytes()).hexdigest())
+def test_product_rejects_unresolved_freeze_sidecar_before_payload_access(bound_a1_package):
+    _, out, _, _ = bound_a1_package
     main_path = out / "a_p2_input_manifest.json"
     main = json.loads(main_path.read_text())
     freeze_path = out / "a_p2_input_manifest_freeze.json"
