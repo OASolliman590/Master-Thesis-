@@ -393,13 +393,35 @@ def test_feature_table_with_wrong_header_is_refused_before_reading_rows(tmp_path
     assert parsed_features == []
 
 
+def test_tracked_registry_resolves_every_in_scope_pair(tmp_path):
+    # Tier 3 user-confirmed and the A1 rule executed, 19 Nov 2026.
+    inputs = _built_inputs(tmp_path)
+    out = tmp_path / "scratch" / "prepared"
+    report = _prepare(inputs, out, registry_dir=REGISTRY_DIR, scratch_root=tmp_path / "scratch")
+
+    assert report["blocking_pairs"] == []
+    assert report["status"] == "BLOCKED"  # a signed release is still required
+    manifest = json.loads((out / "a_p2_input_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["identity_provenance"]["resolution_status"] == "RESOLVED_NO_UNRESOLVED_OVERLAP"
+
+
 def test_unresolved_overlap_pairs_block_resolution(tmp_path):
+    registry_dir = _copy_registries(tmp_path)
+    path = registry_dir / "OVERLAP_REGISTRY.tsv"
+    rows = _registry_rows(path)
+    for row in rows:
+        if tuple(sorted((row["cohort_a"], row["cohort_b"]))) == ("gse176307", "imvigor210"):
+            row["status"] = "UNRESOLVED"
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=rows[0].keys(), delimiter="\t", lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
     inputs = _built_inputs(tmp_path)
     out = tmp_path / "scratch" / "prepared"
     report = _prepare(
         inputs,
         out,
-        registry_dir=REGISTRY_DIR,
+        registry_dir=registry_dir,
         scratch_root=tmp_path / "scratch",
     )
 
@@ -415,7 +437,7 @@ def test_unresolved_overlap_pairs_block_resolution(tmp_path):
     manifest = json.loads((out / "a_p2_input_manifest.json").read_text(encoding="utf-8"))
     assert manifest["identity_provenance"]["resolution_status"] == "UNRESOLVED_OVERLAP"
     sidecar = json.loads((out / "identity_sidecar.json").read_text(encoding="utf-8"))
-    # Only the bladder cohort still has a blocked pair (GSE176307 vs IMvigor210, A1 rule).
+    # Only the bladder cohort has the reopened pair.
     for record in sidecar["records"]:
         expected = "UNRESOLVED_OVERLAP" if record["cohort"] == "gse176307" else "RESOLVED_AUTHORITATIVE"
         assert record["resolution_status"] == expected
