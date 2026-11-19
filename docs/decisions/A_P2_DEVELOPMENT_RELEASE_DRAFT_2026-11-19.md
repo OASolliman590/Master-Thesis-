@@ -38,7 +38,7 @@ The 14 Nov hashes in the superseded proposal are historical and must not be copi
 
 ## Must be true before signing
 
-1. Every development pair and every development-vs-IMvigor210 pair has a non-blocking status in `docs/validation/A_P2_IDENTITY/OVERLAP_REGISTRY.tsv`. On 19 Nov 2026 seven are still `UNRESOLVED`: the six melanoma or gastric vs IMvigor210 pairs (awaiting the user's direct Tier 3 confirmation) and GSE176307 vs IMvigor210 (A1 source rule, below).
+1. Every development pair and every development-vs-IMvigor210 pair has a non-blocking status in `docs/validation/A_P2_IDENTITY/OVERLAP_REGISTRY.tsv`. On 19 Nov 2026 one is still `UNRESOLVED`: GSE176307 vs IMvigor210 (A1 source rule, below). The six melanoma or gastric vs IMvigor210 pairs were set to Tier 3 on the user's direct confirmation that day.
 2. The A1 exclusion artifact and the derived table exist, are hash-verified, and GSE176307 vs IMvigor210 is `RESOLVED_BY_SOURCE_RULE`.
 3. The preparer reports no blocking pair, and its emitted manifests match the bindings above.
 4. Code follow-up: `tools/a_p2/prepare.py` still emits one `a_p2_user_release_v2` form per run and binds the superseded proposal with a pending decision hash. It must emit one record for the four runs, binding inputs only. This is a separate ticket; nothing was changed here.

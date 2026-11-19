@@ -404,7 +404,9 @@ def test_unresolved_overlap_pairs_block_resolution(tmp_path):
     )
 
     assert report["status"] == "BLOCKED"
-    assert any(pair["cohorts"] == ["imvigor210", "liu2019"] for pair in report["blocking_pairs"])
+    blocking = {tuple(pair["cohorts"]) for pair in report["blocking_pairs"]}
+    assert ("gse176307", "imvigor210") in blocking
+    assert ("imvigor210", "liu2019") not in blocking  # Tier 3, user-confirmed 19 Nov 2026
     assert not any(pair["cohorts"] == ["gse111636", "gse176307"] for pair in report["blocking_pairs"])
     assert any(
         pair["cohorts"] == ["gse111636", "gse176307"]
@@ -413,7 +415,11 @@ def test_unresolved_overlap_pairs_block_resolution(tmp_path):
     manifest = json.loads((out / "a_p2_input_manifest.json").read_text(encoding="utf-8"))
     assert manifest["identity_provenance"]["resolution_status"] == "UNRESOLVED_OVERLAP"
     sidecar = json.loads((out / "identity_sidecar.json").read_text(encoding="utf-8"))
-    assert all(record["resolution_status"] == "UNRESOLVED_OVERLAP" for record in sidecar["records"])
+    # Only the bladder cohort still has a blocked pair (GSE176307 vs IMvigor210, A1 rule).
+    for record in sidecar["records"]:
+        expected = "UNRESOLVED_OVERLAP" if record["cohort"] == "gse176307" else "RESOLVED_AUTHORITATIVE"
+        assert record["resolution_status"] == expected
+    assert any(record["cohort"] == "gse176307" for record in sidecar["records"])
     assert all(record["overlap_registry_pairs"] for record in sidecar["records"])
 
 
