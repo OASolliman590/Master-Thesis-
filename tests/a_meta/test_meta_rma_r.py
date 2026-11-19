@@ -16,6 +16,11 @@ from tests.a_meta.helpers import (
 
 
 def _effect(unit_family, unit, study, *, cancer="melanoma", g=0.2, se=0.1, patient_set_id=None):
+    """Package effect and variance inputs for REML tests with placeholder arm sizes.
+
+    Arbitrary toy values stress numerical behavior and need not satisfy the
+    N09 Hedges g sampling-variance formula for those arm sizes.
+    """
     return {
         "unit_family": unit_family,
         "unit": unit,
@@ -198,6 +203,7 @@ def test_meta_rma_normand1999_and_two_stage_equal_weight_real_variance(tmp_path)
     assert pooled["n_cancers"] == 1
     assert pooled["n_studies"] == 9
 
+    # Arbitrary effect and variance inputs for the equal-variance stress case.
     toy = [
         _effect("panel", "TOY_PANEL", f"toy_{cancer}", cancer=cancer, g=value, se=0.1)
         for cancer, value in (("melanoma", 0.2), ("lung", 0.6), ("kidney", 1.0))
@@ -231,10 +237,11 @@ def test_meta_rma_normand1999_and_two_stage_equal_weight_real_variance(tmp_path)
         sum(0.01 + overall["tau2"] for _ in range(3)) / 3**2,
         abs=1e-10,
     )
-    assert overall["label"] == "standard"
+    assert overall["label"] == "tentative_k3"
     assert "equal metafor weights" in overall["weighting"]
     assert "vi=1 per cancer" not in overall["weighting"]
 
+    # Arbitrary effect and variance inputs for the unequal-variance stress case.
     unequal_variance = [
         _effect("panel", "UNEQUAL_PANEL", "shared_study", cancer="melanoma", g=0.2, se=0.1),
         _effect("panel", "UNEQUAL_PANEL", "study_b", cancer="lung", g=0.6, se=0.2),

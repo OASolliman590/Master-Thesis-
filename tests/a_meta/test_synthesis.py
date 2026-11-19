@@ -157,7 +157,8 @@ def test_fake_r_synthesis_obeys_k_rules_fdr_families_and_endpoint_boundaries(tmp
     panel_b = next(row for row in result.summaries if row["unit"] == "PANEL_B")
     panel_c = next(row for row in result.summaries if row["unit"] == "PANEL_C")
 
-    assert gene_a["label"] == "standard"
+    assert gene_a["label"] == "tentative_k3"
+    assert gene_a["status"] == "pooled"
     assert gene_a["q"] == pytest.approx(0.01)
     assert gene_b["k"] == 2
     assert gene_b["label"] == "tentative_k2"
@@ -218,9 +219,9 @@ def test_panel_coverage90_stays_in_its_own_stratum_fdr_and_label(tmp_path):
         "panel", "panel_coverage90"
     }
     assert main["q"] == pytest.approx(0.01)
-    assert main["label"] == "standard"
+    assert main["label"] == "tentative_k3"
     assert sensitivity["q"] == pytest.approx(0.20)
-    assert sensitivity["label"] == "panel_coverage90_standard"
+    assert sensitivity["label"] == "panel_coverage90_tentative_k3"
     assert sensitivity["sensitivity_label"] == "sensitivity only; does not support claims alone"
 
 
@@ -304,7 +305,7 @@ def test_low_k_flag_is_set_for_anti_ctla4_and_dual_class_strata(tmp_path):
     pd1 = next(row for row in result.summaries if row["drug_class_stratum"] == "ANTI_PD_L1_AXIS")
     dual = next(row for row in result.summaries if row["drug_class_stratum"] == "DUAL_PD1_CTLA4")
     assert ctla4["k"] == 2 and ctla4["label"] == "tentative_k2" and ctla4["low_k"] is True
-    assert pd1["k"] == 3 and pd1["label"] == "standard" and pd1["low_k"] is False
+    assert pd1["k"] == 3 and pd1["label"] == "tentative_k3" and pd1["low_k"] is False
     assert dual["k"] == 2 and dual["label"] == "tentative_k2" and dual["low_k"] is True
 
 
@@ -577,13 +578,28 @@ def test_endpoint_definition_ids_split_pools_and_bh_families(tmp_path):
         }
     })
 
+    output_dir = tmp_path / "definitions"
     result = _synthesize_synthetic(
         effects,
         "per_cancer",
-        output_dir=tmp_path / "definitions",
+        output_dir=output_dir,
         runner=fake,
     )
 
+    with (output_dir / "groups.tsv").open(newline="", encoding="utf-8") as stream:
+        definition_by_analysis = {
+            row["analysis_id"]: row["endpoint_definition_id"]
+            for row in csv.DictReader(stream, delimiter="\t")
+        }
+    studies_by_definition = {definition: set() for definition in definition_by_analysis.values()}
+    with (output_dir / "meta_input.tsv").open(newline="", encoding="utf-8") as stream:
+        for row in csv.DictReader(stream, delimiter="\t"):
+            definition = definition_by_analysis[row["analysis_id"]]
+            studies_by_definition[definition].add(row["study"])
+    assert studies_by_definition == {
+        "CB_DCB_NDB": {"dcb_0", "dcb_1", "dcb_2"},
+        "CB_PFS_GT6M": {"pfs_0", "pfs_1", "pfs_2"},
+    }
     assert {row["endpoint_definition_id"] for row in result.summaries} == {
         "CB_DCB_NDB", "CB_PFS_GT6M",
     }

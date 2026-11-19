@@ -444,7 +444,6 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         status = "single_cancer"
         reason = "one cancer contributes; no cross-cancer pooling"
     if unit_family in {"gene", "m5m6_gene"} and 1 < k < 3:
-        label = "tentative_k2" if k == 2 else "standard"
         status = "not_pooled"
         reason = "gene_pooling_requires_k>=3"
     sensitivity_label = _sensitivity_label(unit_family)
@@ -810,7 +809,9 @@ def _label(k: int) -> str:
         return "single_study"
     if k == 2:
         return "tentative_k2"
-    if k >= 3:
+    if k == 3:
+        return "tentative_k3"
+    if k >= 4:
         return "standard"
     return "not_estimable"
 
@@ -844,7 +845,7 @@ def _metadata(stratum: str) -> dict:
         "gene_families": ["gene", "m5m6_gene"],
         "targeted_subset": "per study only; no pooling or FDR",
         "subgroup_test_minimum_k": 10,
-        "prediction_interval": "not computed for tentative_k2",
+        "prediction_interval": "not computed for k <= 3",
     }
 
 
