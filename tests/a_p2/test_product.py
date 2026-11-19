@@ -1109,7 +1109,7 @@ def test_manifest_equation_release_payload_and_identity_paths_are_guarded_before
     with pytest.raises(PermissionError, match="symlink ancestry"):
         product._verify_equation(alias_dir / "equation.json")
     with pytest.raises(PermissionError, match="symlink ancestry"):
-        product._authorize_real({}, b"invented", "development", alias_dir / "release.json", None)
+        product._authorize_final_real({}, b"invented", alias_dir / "release.json", None)
 
     manifest = {
         "input_table": str(alias_dir / "payload.tsv"),

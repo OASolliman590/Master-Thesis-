@@ -496,6 +496,12 @@ def _validate_bound_a1_metadata(manifest_path: Path, manifest: dict[str, Any], o
 
 
 _EXACT_RUN_SCOPE_CONVENTION_APPROVED = False
+_DEVELOPMENT_RELEASE_FIELDS = {
+    "record_type": "a_p2_user_release_v3",
+    "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
+    "data_classification": _REAL_CLASS,
+}
+_A1_RELEASE_FIELDS = ("rule_id", "exclusion_artifact_sha256", "derived_features_sha256")
 _SCOPE_FIELDS = (
     "release_scope", "data_classification", "operation", "input_role", "input_manifest_sha256",
     "input_sha256", "identity_sidecar_sha256", "source_registry_sha256",
@@ -523,6 +529,79 @@ def _reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _development_run_binding(
+    manifest: dict[str, Any], manifest_hash: str, package_id: str, operation: str,
+) -> dict[str, Any]:
+    identity = manifest["identity_provenance"]
+    return {
+        "package_id": package_id,
+        "operation": operation,
+        "input_role": manifest["role"],
+        "input_manifest_sha256": manifest_hash,
+        "input_sha256": manifest["input_sha256"],
+        "identity_sidecar_sha256": identity["sidecar_sha256"],
+        "source_registry_sha256": identity["source_registry_sha256"],
+        "publication_family_registry_sha256": identity["publication_family_registry_sha256"],
+        "overlap_registry_sha256": identity["overlap_registry_sha256"],
+        "cohorts": _cohort_ids(manifest),
+        "outcome_fields": [_OUTCOME_FIELD],
+    }
+
+
+def _authorize_development_real(
+    manifest_path: Path, manifest: dict[str, Any], manifest_bytes: bytes, operation: str,
+) -> None:
+    from . import prepare
+
+    packages = {
+        prepare.MANIFEST_NAME: ("main", "development"),
+        prepare.CONSERVATIVE_MANIFEST_NAME: ("conservative", "development"),
+        prepare.SENSITIVITY_MANIFEST_NAME: ("development_sensitivity", "development"),
+        prepare.FREEZE_MANIFEST_NAME: ("freeze", "freeze"),
+    }
+    package = packages.get(manifest_path.name)
+    if package is None or package[1] != operation:
+        raise PermissionError("Unknown A-P2 prepared package or operation")
+
+    decision_path = _guard_external_path(
+        _DECISION_DIR / f"{prepare.PROPOSED_DECISION_ID}.md", "development decision record",
+    )
+    try:
+        decision = decision_path.read_text(encoding="utf-8")
+        openings = list(re.finditer(r"^```a-p2-release-v3[ \t]*\n", decision, re.MULTILINE))
+        if len(openings) != 1:
+            raise ValueError("expected one v3 block")
+        contents = decision[openings[0].end():]
+        closing = re.search(r"^```[ \t]*$", contents, re.MULTILINE)
+        if closing is None:
+            raise ValueError("unclosed v3 block")
+        record = json.loads(contents[:closing.start()], object_pairs_hook=_reject_duplicate_json_keys)
+    except (OSError, ValueError) as error:
+        raise PermissionError("A-P2 development decision requires exactly one valid a-p2-release-v3 block") from error
+
+    header = {**_DEVELOPMENT_RELEASE_FIELDS, "record_status": "APPROVED"}
+    if (not isinstance(record, dict) or record.keys() != header.keys() | {"a1_source_rule", "runs"}
+        or _release_binding_errors(record, header)):
+        raise PermissionError("The A-P2 development release record must be APPROVED and match the real release scope")
+
+    a1 = manifest["provenance"].get("a1_source_rule")
+    if (not isinstance(a1, dict) or not all(field in a1 for field in _A1_RELEASE_FIELDS)
+        or record["a1_source_rule"] != {field: a1[field] for field in _A1_RELEASE_FIELDS}):
+        raise PermissionError("The A-P2 development release record does not match the A1 binding")
+
+    expected_run = _development_run_binding(manifest, _sha256_bytes(manifest_bytes), *package)
+    runs = record["runs"]
+    if (not isinstance(runs, list) or len(runs) != len(packages)
+        or any(not isinstance(run, dict) or run.keys() != expected_run.keys() for run in runs)
+        or any(not any(run["package_id"] == name and run["operation"] == op for run in runs)
+               for name, op in packages.values())):
+        raise PermissionError("The A-P2 development release record must list all four prepared runs exactly once")
+    if expected_run not in runs:
+        raise PermissionError("The A-P2 development release record does not match this exact A-P2 run")
+    if not _EXACT_RUN_SCOPE_CONVENTION_APPROVED:
+        raise PermissionError("Real A-P2 remains locked pending user review of the exact-run decision convention")
+
+
 def _require_exact_run_decision(record: dict[str, Any], decision_bytes: bytes) -> None:
     try:
         text = decision_bytes.decode("utf-8")
@@ -535,8 +614,8 @@ def _require_exact_run_decision(record: dict[str, Any], decision_bytes: bytes) -
         raise PermissionError("Real A-P2 remains locked pending user review of the exact-run decision convention")
 
 
-def _authorize_real(
-    manifest: dict[str, Any], manifest_bytes: bytes, operation: str,
+def _authorize_final_real(
+    manifest: dict[str, Any], manifest_bytes: bytes,
     release_record_path: Path | None, equation_hash: str | None,
 ) -> None:
     if release_record_path is not None:
@@ -577,7 +656,7 @@ def _authorize_real(
     required = {
         "data_classification": _REAL_CLASS,
         "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
-        "operation": operation,
+        "operation": "final-evaluate",
         "input_role": manifest.get("role"),
         "input_manifest_sha256": _sha256_bytes(manifest_bytes),
         "input_sha256": manifest.get("input_sha256"),
@@ -588,13 +667,11 @@ def _authorize_real(
         "cohorts": exact_cohorts,
         "outcome_fields": [_OUTCOME_FIELD],
     }
-    final = {}
-    if operation == "final-evaluate":
-        final = {
-            "test_role": "UNTOUCHED_FINAL_TEST",
-            "frozen_equation_sha256": equation_hash,
-            "final_test_cohort": exact_cohorts[0],
-        }
+    final = {
+        "test_role": "UNTOUCHED_FINAL_TEST",
+        "frozen_equation_sha256": equation_hash,
+        "final_test_cohort": exact_cohorts[0],
+    }
     allowed_fields = {"record_type", "record_status", "release_scope", "decision"} | set(required) | set(final)
     if set(record) != allowed_fields:
         raise PermissionError("The user-release record contains missing or contradictory fields")
@@ -656,11 +733,13 @@ def _authorize(
             raise PermissionError("Synthetic authorization cannot open the IMvigor210 final-test barrier")
         _validate_identity_provenance(manifest)
         protected_release = False
+    elif operation == "final-evaluate":
+        _authorize_final_real(manifest, manifest_bytes, release_record_path, equation_hash)
+        protected_release = True
     else:
-        _authorize_real(manifest, manifest_bytes, operation, release_record_path, equation_hash)
-        if operation in {"development", "freeze"}:
-            _validate_bound_a1_metadata(manifest_path, manifest, operation)
-        protected_release = operation == "final-evaluate"
+        _authorize_development_real(manifest_path, manifest, manifest_bytes, operation)
+        _validate_bound_a1_metadata(manifest_path, manifest, operation)
+        protected_release = False
     return (*loaded, protected_release)
 
 
@@ -911,11 +990,10 @@ def _bridge(operation: str, input_path: Path, manifest: dict[str, Any], out_dir:
 
 
 def run_development(
-    manifest_path: Path, out_path: Path, release_record_path: Path | None = None,
-    allow_outcomes: bool = False,
+    manifest_path: Path, out_path: Path, *, allow_outcomes: bool = False,
 ) -> dict[str, Any]:
     manifest, raw, input_path, classification, input_digest, identity_path, protected_release = _authorize(
-        manifest_path, "development", release_record_path, None, allow_outcomes,
+        manifest_path, "development", None, None, allow_outcomes,
     )
     payload_bytes, identity_bytes = _read_authorized_input_material(
         input_path, identity_path, manifest, allow_protected=protected_release,
@@ -934,11 +1012,10 @@ def run_development(
 
 
 def run_freeze(
-    manifest_path: Path, out_path: Path, release_record_path: Path | None = None,
-    allow_outcomes: bool = False,
+    manifest_path: Path, out_path: Path, *, allow_outcomes: bool = False,
 ) -> dict[str, Any]:
     manifest, raw, input_path, classification, input_digest, identity_path, protected_release = _authorize(
-        manifest_path, "freeze", release_record_path, None, allow_outcomes,
+        manifest_path, "freeze", None, None, allow_outcomes,
     )
     payload_bytes, identity_bytes = _read_authorized_input_material(
         input_path, identity_path, manifest, allow_protected=protected_release,

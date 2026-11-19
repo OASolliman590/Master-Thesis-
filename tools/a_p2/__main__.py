@@ -30,7 +30,7 @@ def _parser():
         "--check-only",
         action="store_true",
         default=False,
-        help="validate all prepared manifests, sidecars, release templates, and registries without writing",
+        help="validate the prepared manifests, sidecars, release template, and registries without writing",
     )
     prepare_parser.add_argument(
         "--gse176307-soft",
@@ -44,8 +44,7 @@ def _parser():
     ):
         command = commands.add_parser(name, help=help_text)
         command.add_argument("--manifest", required=True, type=Path)
-        command.add_argument("--release-record", type=Path, help="approved scoped decision record for a future real run")
-        command.add_argument("--allow-outcomes", action="store_true", default=False, help="explicitly enable outcome access when a matching approved user-release record exists")
+        command.add_argument("--allow-outcomes", action="store_true", default=False, help="explicitly enable outcome access after approval in the A-P2 development release decision")
         command.add_argument("--out", required=True, type=Path)
 
     final_parser = commands.add_parser("final-evaluate", help="evaluate a frozen equation on one final study")
@@ -71,9 +70,9 @@ def main(argv=None):
             )
             print(json.dumps(report, sort_keys=True))
         elif args.command == "development":
-            run_development(args.manifest, args.out, args.release_record, args.allow_outcomes)
+            run_development(args.manifest, args.out, allow_outcomes=args.allow_outcomes)
         elif args.command == "freeze":
-            run_freeze(args.manifest, args.out, args.release_record, args.allow_outcomes)
+            run_freeze(args.manifest, args.out, allow_outcomes=args.allow_outcomes)
         elif args.command == "final-evaluate":
             run_final_evaluation(args.manifest, args.equation, args.out, args.release_record, args.allow_outcomes)
     except (PreparationError, ProductError, PermissionError, FileExistsError, OSError, RScriptError) as error:

@@ -27,7 +27,7 @@ SOURCE_REGISTRY_NAME = "SOURCE_REGISTRY.tsv"
 FAMILY_REGISTRY_NAME = "PUBLICATION_FAMILY_REGISTRY.tsv"
 OVERLAP_REGISTRY_NAME = "OVERLAP_REGISTRY.tsv"
 REGISTRY_IDENTITY = "A_P2_IDENTITY_20261114"
-PROPOSED_DECISION_ID = "A_P2_DEVELOPMENT_RELEASE_PROPOSED_2026-11-14"
+PROPOSED_DECISION_ID = "A_P2_DEVELOPMENT_RELEASE_DRAFT_2026-11-19"
 REAL_CLASSIFICATION = "PRIVATE_PATIENT_LEVEL"
 DEVELOPMENT_ROLE = "development"
 UNRESOLVED = "UNRESOLVED"
@@ -38,9 +38,7 @@ FREEZE_MANIFEST_NAME = "a_p2_input_manifest_freeze.json"
 FREEZE_SIDECAR_NAME = "identity_sidecar_freeze.json"
 SENSITIVITY_MANIFEST_NAME = "a_p2_input_manifest_development_sensitivity.json"
 SENSITIVITY_SIDECAR_NAME = "identity_sidecar_development_sensitivity.json"
-CONSERVATIVE_RELEASE_NAME = "release_development_conservative_sensitivity.unapproved.json"
-SENSITIVITY_RELEASE_NAME = "release_development_sensitivity.unapproved.json"
-FREEZE_RELEASE_NAME = "release_freeze.unapproved.json"
+RELEASE_TEMPLATE_NAME = "a_p2_release_v3.unapproved.json"
 OVERLAP_STATUSES = {
     "NO_OVERLAP_DOCUMENTED",
     "OVERLAP_RISK_GROUPED",
@@ -844,11 +842,8 @@ def _manifest_cohorts(
 
 def _build_package(
     *,
-    package_id: str,
-    operation: str,
     manifest_name: str,
     sidecar_name: str,
-    release_name: str,
     features_path: Path,
     input_sha256: str,
     source_manifest_sha256: str,
@@ -858,10 +853,7 @@ def _build_package(
     input_cohorts: set[str],
     conservative: bool,
     a1_source_rule_verified: bool,
-    a1_artifact_sha256: str,
-    a1_exclusion_sha256: str,
-    soft_sha256: str,
-    derived_sha256: str,
+    a1_binding: dict[str, str],
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     sources = registries["sources"]
     main_metadata = _manifest_cohorts(sources, input_cohorts, False)
@@ -956,13 +948,7 @@ def _build_package(
             if source["adaptive_eligible"] and cohort not in input_cohorts
         ),
     }
-    lineage["a1_source_rule"] = {
-        "rule_id": A1_RULE_ID,
-        "exclusion_artifact_sha256": a1_artifact_sha256,
-        "excluded_tokens_sha256": a1_exclusion_sha256,
-        "source_soft_sha256": soft_sha256,
-        "derived_features_sha256": derived_sha256,
-    }
+    lineage["a1_source_rule"] = a1_binding
     manifest = {
         "schema": "a_p2_input_manifest_v1",
         "data_classification": REAL_CLASSIFICATION,
@@ -996,34 +982,11 @@ def _build_package(
     }
     manifest_bytes = _json_bytes(manifest)
     manifest_hash = _sha256_bytes(manifest_bytes)
-    release_record = {
-        "record_type": "a_p2_user_release_v2",
-        "record_status": "UNAPPROVED",
-        "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
-        "data_classification": REAL_CLASSIFICATION,
-        "operation": operation,
-        "input_role": DEVELOPMENT_ROLE,
-        "input_manifest_sha256": manifest_hash,
-        "input_sha256": input_sha256,
-        "identity_sidecar_sha256": identity_meta["sidecar_sha256"],
-        **registries["hashes"],
-        "cohorts": sorted(cohort_metadata),
-        "outcome_fields": ["orr_class"],
-        "decision": {
-            "identity": PROPOSED_DECISION_ID,
-            "path": f"docs/decisions/{PROPOSED_DECISION_ID}.md",
-            "sha256": "PENDING_USER_SIGNATURE_HASH",
-        },
-    }
     return manifest, sidecar, {
-        "package_id": package_id,
         "manifest_name": manifest_name,
         "sidecar_name": sidecar_name,
-        "release_name": release_name,
         "manifest_bytes": manifest_bytes,
         "sidecar_bytes": sidecar_bytes,
-        "release_bytes": _json_bytes(release_record),
-        "release_record": release_record,
         "blocking_pairs": blockers,
         "out_of_scope_unresolved_pairs": out_of_scope_unresolved,
         "manifest_sha256": manifest_hash,
@@ -1225,7 +1188,6 @@ def _package_report(
         "unresolved_pairs_out_of_scope": details["out_of_scope_unresolved_pairs"],
         "missing_primary_cohorts": missing_primary,
         "missing_adaptive_cohorts": missing_adaptive,
-        "release_record_status": "UNAPPROVED",
     }
 
 
@@ -1244,7 +1206,6 @@ def _expected_package_specs(
             "operation": "development",
             "manifest_name": MANIFEST_NAME,
             "sidecar_name": SIDECAR_NAME,
-            "release_name": "release_development.unapproved.json",
             "features_path": features_path,
             "input_sha256": input_sha256,
             "identities": identities,
@@ -1256,7 +1217,6 @@ def _expected_package_specs(
             "operation": "freeze",
             "manifest_name": FREEZE_MANIFEST_NAME,
             "sidecar_name": FREEZE_SIDECAR_NAME,
-            "release_name": FREEZE_RELEASE_NAME,
             "features_path": derived_path,
             "input_sha256": derived_sha256,
             "identities": derived_identities,
@@ -1268,7 +1228,6 @@ def _expected_package_specs(
             "operation": "development",
             "manifest_name": SENSITIVITY_MANIFEST_NAME,
             "sidecar_name": SENSITIVITY_SIDECAR_NAME,
-            "release_name": SENSITIVITY_RELEASE_NAME,
             "features_path": derived_path,
             "input_sha256": derived_sha256,
             "identities": derived_identities,
@@ -1280,7 +1239,6 @@ def _expected_package_specs(
             "operation": "development",
             "manifest_name": CONSERVATIVE_MANIFEST_NAME,
             "sidecar_name": CONSERVATIVE_SIDECAR_NAME,
-            "release_name": CONSERVATIVE_RELEASE_NAME,
             "features_path": features_path,
             "input_sha256": input_sha256,
             "identities": identities,
@@ -1369,11 +1327,8 @@ def prepare_development(
     for spec in specs:
         a1_valid_for_package = artifact_verified and spec["a1_source_rule_verified"]
         packages[spec["package_id"]] = _build_package(
-            package_id=spec["package_id"],
-            operation=spec["operation"],
             manifest_name=spec["manifest_name"],
             sidecar_name=spec["sidecar_name"],
-            release_name=spec["release_name"],
             features_path=spec["features_path"],
             input_sha256=spec["input_sha256"],
             source_manifest_sha256=source_manifest_sha256,
@@ -1383,10 +1338,7 @@ def prepare_development(
             input_cohorts=input_cohorts,
             conservative=spec["conservative"],
             a1_source_rule_verified=a1_valid_for_package,
-            a1_artifact_sha256=artifact_sha256,
-            a1_exclusion_sha256=artifact["excluded_tokens_sha256"],
-            soft_sha256=soft_sha256,
-            derived_sha256=derived_sha256,
+            a1_binding=a1_binding,
         )
 
     if check_only:
@@ -1412,21 +1364,19 @@ def prepare_development(
 
     package_reports: dict[str, dict[str, Any]] = {}
     package_hashes: dict[str, dict[str, str]] = {}
+    release_runs = []
     for spec in specs:
         package_id = spec["package_id"]
-        manifest, sidecar, details = packages[package_id]
+        manifest, _, details = packages[package_id]
         manifest_path = _protected_path(guarded_out / details["manifest_name"], "prepared A-P2 manifest")
         sidecar_path = _protected_path(guarded_out / details["sidecar_name"], "prepared A-P2 sidecar")
-        release_path = _protected_path(guarded_out / details["release_name"], "unapproved A-P2 release template")
         if check_only:
             actual_manifest, actual_manifest_bytes = _read_json(manifest_path, "prepared A-P2 manifest")
             actual_sidecar, actual_sidecar_bytes = _read_json(sidecar_path, "prepared A-P2 identity sidecar")
-            actual_release, actual_release_bytes = _read_json(release_path, "unapproved A-P2 release template")
-            expected_a1 = a1_binding
             _validate_prepared_manifest(
                 actual_manifest, source_manifest_sha256, spec["input_sha256"],
                 build_lineage, registries, input_cohorts, spec["conservative"],
-                spec["features_path"], expected_a1,
+                spec["features_path"], a1_binding,
             )
             expected_blocking_pairs = {
                 tuple(sorted(item["cohorts"])) for item in details["blocking_pairs"]
@@ -1441,15 +1391,10 @@ def prepare_development(
                 )
             if actual_sidecar_bytes != details["sidecar_bytes"]:
                 raise PreparationError(f"Prepared {package_id} sidecar bytes or hash do not match its inputs")
-            if actual_release_bytes != details["release_bytes"] or actual_release.get("record_status") != "UNAPPROVED":
-                if package_id == "freeze":
-                    raise PreparationError("freeze release template does not bind the derived table and remain UNAPPROVED")
-                raise PreparationError(f"The {package_id} release template does not match its manifest and remain UNAPPROVED")
-            manifest, sidecar = actual_manifest, actual_sidecar
+            manifest = actual_manifest
         else:
             manifest_path.write_bytes(details["manifest_bytes"])
             sidecar_path.write_bytes(details["sidecar_bytes"])
-            release_path.write_bytes(details["release_bytes"])
         try:
             product._validate_manifest_shape(manifest_path, manifest, spec["operation"])
         except product.ProductError as error:
@@ -1461,8 +1406,25 @@ def prepare_development(
             "input_sha256": spec["input_sha256"],
             "manifest_sha256": details["manifest_sha256"],
             "sidecar_sha256": manifest["identity_provenance"]["sidecar_sha256"],
-            "release_template_sha256": _sha256_bytes(details["release_bytes"]),
         }
+        release_runs.append(product._development_run_binding(
+            manifest, details["manifest_sha256"], package_id, spec["operation"],
+        ))
+
+    release_record = {
+        **product._DEVELOPMENT_RELEASE_FIELDS,
+        "record_status": "UNAPPROVED",
+        "a1_source_rule": {field: a1_binding[field] for field in product._A1_RELEASE_FIELDS},
+        "runs": release_runs,
+    }
+    release_bytes = _json_bytes(release_record)
+    release_path = _protected_path(guarded_out / RELEASE_TEMPLATE_NAME, "unapproved A-P2 release template")
+    if check_only:
+        _, actual_release_bytes = _read_json(release_path, "unapproved A-P2 release template")
+        if actual_release_bytes != release_bytes:
+            raise PreparationError("The A-P2 release template must match all four packages and remain UNAPPROVED")
+    else:
+        release_path.write_bytes(release_bytes)
 
     dimension_errors = _signed_dimension_errors(
         input_cohorts=input_cohorts, input_count=len(identities), bladder_count=len(built_gse_tokens),
@@ -1491,6 +1453,10 @@ def prepare_development(
         "conservative_sensitivity_emitted": True,
         "conservative_manifest_sha256": package_hashes["conservative"]["manifest_sha256"],
         "package_hashes": package_hashes,
+        "release_decision_id": PROPOSED_DECISION_ID,
+        "release_record_status": release_record["record_status"],
+        "release_template_name": RELEASE_TEMPLATE_NAME,
+        "release_template_sha256": _sha256_bytes(release_bytes),
         "a1_rule_id": A1_RULE_ID,
         "gse176307_identity_token_match": "PASS",
         "gse176307_patient_count": len(built_gse_tokens),

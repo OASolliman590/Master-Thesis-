@@ -552,15 +552,6 @@ def test_resolved_policy_statuses_and_conservative_manifest_are_structurally_sup
     assert Path(freeze["input_table"]).resolve() == Path(sensitivity["input_table"]).resolve()
     assert freeze["input_sha256"] == sensitivity["input_sha256"]
     assert freeze["input_sha256"] != main_manifest["input_sha256"]
-    for release_name in (
-        "release_development.unapproved.json",
-        "release_freeze.unapproved.json",
-        "release_development_sensitivity.unapproved.json",
-        "release_development_conservative_sensitivity.unapproved.json",
-    ):
-        record = json.loads((out / release_name).read_text(encoding="utf-8"))
-        assert record["record_status"] == "UNAPPROVED"
-
     checked = _prepare(
         inputs, out, check_only=True, registry_dir=registry_dir,
         scratch_root=tmp_path / "scratch",
@@ -794,10 +785,11 @@ def test_a1_freeze_exclusion_drops_tokens_from_derived_table_and_sidecar(tmp_pat
     freeze_sidecar = json.loads((out / "identity_sidecar_freeze.json").read_text(encoding="utf-8"))
     assert not (excluded & {record["patient_id"] for record in freeze_sidecar["records"]})
     freeze_manifest = json.loads((out / "a_p2_input_manifest_freeze.json").read_text(encoding="utf-8"))
-    release = json.loads((out / "release_freeze.unapproved.json").read_text(encoding="utf-8"))
+    release = _load_json(out / prepare_module.RELEASE_TEMPLATE_NAME)
+    freeze_run = next(run for run in release["runs"] if run["package_id"] == "freeze")
     assert Path(freeze_manifest["input_table"]).resolve() == derived.resolve()
     derived_hash = hashlib.sha256(derived_bytes).hexdigest()
-    assert release["input_sha256"] == derived_hash
+    assert freeze_run["input_sha256"] == derived_hash
     original_hash = hashlib.sha256((inputs / "features.tsv").read_bytes()).hexdigest()
     for name in ("a_p2_input_manifest.json", "a_p2_input_manifest_conservative_sensitivity.json"):
         main = json.loads((out / name).read_text(encoding="utf-8"))
@@ -815,12 +807,13 @@ def test_freeze_template_cannot_be_rebound_to_original_table(tmp_path):
     inputs, _ = _multi_patient_gse_inputs(tmp_path)
     out = tmp_path / "scratch" / "prepared"
     _prepare(inputs, out, registry_dir=registry_dir, scratch_root=tmp_path / "scratch")
-    freeze_record_path = out / "release_freeze.unapproved.json"
-    record = json.loads(freeze_record_path.read_text(encoding="utf-8"))
-    record["input_sha256"] = hashlib.sha256((inputs / "features.tsv").read_bytes()).hexdigest()
-    freeze_record_path.write_text(json.dumps(record, sort_keys=True) + "\n", encoding="utf-8")
+    record_path = out / prepare_module.RELEASE_TEMPLATE_NAME
+    record = _load_json(record_path)
+    freeze_run = next(run for run in record["runs"] if run["package_id"] == "freeze")
+    freeze_run["input_sha256"] = hashlib.sha256((inputs / "features.tsv").read_bytes()).hexdigest()
+    _write_bound_json(record_path, record)
 
-    with pytest.raises(PreparationError, match="freeze release template does not bind the derived table"):
+    with pytest.raises(PreparationError, match="release template must match all four packages"):
         _prepare(
             inputs, out, check_only=True, registry_dir=registry_dir,
             scratch_root=tmp_path / "scratch",
@@ -1034,6 +1027,7 @@ _PACKAGE_MANIFESTS = (
     prepare_module.SENSITIVITY_MANIFEST_NAME,
     prepare_module.FREEZE_MANIFEST_NAME,
 )
+_PACKAGE_IDS = ("main", "conservative", "development_sensitivity", "freeze")
 
 
 def _load_json(path):
@@ -1044,6 +1038,65 @@ def _write_bound_json(path, value):
     raw = prepare_module._json_bytes(value)
     path.write_bytes(raw)
     return hashlib.sha256(raw).hexdigest()
+
+
+def test_prepare_emits_one_v3_record_binding_all_four_manifests(tmp_path):
+    registry_dir = _copy_registries(tmp_path)
+    _resolve_all_test_overlaps(registry_dir)
+    inputs, _ = _multi_patient_gse_inputs(tmp_path)
+    out = tmp_path / "scratch" / "prepared"
+    report = _prepare(inputs, out, registry_dir=registry_dir, scratch_root=out.parent)
+
+    template = out / "a_p2_release_v3.unapproved.json"
+    assert list(out.glob("*release*.json")) == [template]
+    record = _load_json(template)
+    artifact = out / prepare_module.A1_EXCLUSIONS_NAME
+    derived = out / prepare_module.FREEZE_TABLE_NAME
+    assert record == {
+        "record_type": "a_p2_user_release_v3",
+        "record_status": "UNAPPROVED",
+        "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
+        "data_classification": "PRIVATE_PATIENT_LEVEL",
+        "a1_source_rule": {
+            "rule_id": prepare_module.A1_RULE_ID,
+            "exclusion_artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+            "derived_features_sha256": hashlib.sha256(derived.read_bytes()).hexdigest(),
+        },
+        "runs": record["runs"],
+    }
+    runs = {run["package_id"]: run for run in record["runs"]}
+    assert len(record["runs"]) == 4
+    assert set(runs) == set(_PACKAGE_IDS)
+    registry_files = {
+        "source_registry_sha256": prepare_module.SOURCE_REGISTRY_NAME,
+        "publication_family_registry_sha256": prepare_module.FAMILY_REGISTRY_NAME,
+        "overlap_registry_sha256": prepare_module.OVERLAP_REGISTRY_NAME,
+    }
+    for package_id, name in zip(_PACKAGE_IDS, _PACKAGE_MANIFESTS):
+        manifest_bytes = (out / name).read_bytes()
+        manifest = json.loads(manifest_bytes)
+        identity = manifest["identity_provenance"]
+        operation = "freeze" if package_id == "freeze" else "development"
+        assert runs[package_id] == {
+            "package_id": package_id,
+            "operation": operation,
+            "input_role": manifest["role"],
+            "input_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+            "input_sha256": manifest["input_sha256"],
+            "identity_sidecar_sha256": identity["sidecar_sha256"],
+            **{field: identity[field] for field in registry_files},
+            "cohorts": sorted(manifest["cohorts"]),
+            "outcome_fields": ["orr_class"],
+        }
+        assert runs[package_id]["input_sha256"] == hashlib.sha256(Path(manifest["input_table"]).read_bytes()).hexdigest()
+        assert runs[package_id]["identity_sidecar_sha256"] == hashlib.sha256((out / identity["sidecar"]).read_bytes()).hexdigest()
+        for field, filename in registry_files.items():
+            assert runs[package_id][field] == hashlib.sha256((registry_dir / filename).read_bytes()).hexdigest()
+        assert "release_template_sha256" not in report["package_hashes"][package_id]
+    assert report["release_decision_id"] == "A_P2_DEVELOPMENT_RELEASE_DRAFT_2026-11-19"
+    assert report["release_record_status"] == "UNAPPROVED"
+    assert report["release_template_name"] == template.name
+    assert report["release_template_sha256"] == hashlib.sha256(template.read_bytes()).hexdigest()
 
 
 @pytest.fixture
@@ -1066,6 +1119,87 @@ def bound_a1_package(tmp_path, monkeypatch):
     monkeypatch.setattr(product, "_A1_DERIVED_FEATURES_SHA256", binding["derived_features_sha256"])
     monkeypatch.setattr(prepare_module, "_signed_dimension_errors", lambda **kwargs: [])
     return inputs, out, registry_dir, source_ids
+
+
+@pytest.fixture
+def development_release(bound_a1_package, tmp_path, monkeypatch):
+    _, out, _, _ = bound_a1_package
+    decisions = tmp_path / "decisions"
+    decisions.mkdir()
+    monkeypatch.setattr(product, "_DECISION_DIR", decisions)
+    decision = decisions / "A_P2_DEVELOPMENT_RELEASE_DRAFT_2026-11-19.md"
+    record = _load_json(out / prepare_module.RELEASE_TEMPLATE_NAME)
+    return out, decision, record
+
+
+@pytest.mark.parametrize(("change", "message"), (
+    ("unsigned", "must be APPROVED"),
+    ("missing-run", "must list all four prepared runs"),
+    ("wrong-input-hash", "does not match this exact A-P2 run"),
+    ("different-package", "does not match this exact A-P2 run"),
+    ("wrong-a1-hash", "does not match the A1 binding"),
+    ("missing-block", "exactly one valid"),
+    ("duplicate-block", "exactly one valid"),
+    ("duplicate-key", "exactly one valid"),
+))
+def test_development_release_refuses_invalid_record(development_release, change, message):
+    out, decision, record = development_release
+    main = next(run for run in record["runs"] if run["package_id"] == "main")
+    if change != "unsigned":
+        record["record_status"] = "APPROVED"
+    if change == "missing-run":
+        record["runs"].remove(main)
+    elif change == "wrong-input-hash":
+        main["input_sha256"] = "0" * 64
+    elif change == "different-package":
+        conservative = next(run for run in record["runs"] if run["package_id"] == "conservative")
+        main.update(conservative, package_id="main")
+    elif change == "wrong-a1-hash":
+        record["a1_source_rule"]["exclusion_artifact_sha256"] = "0" * 64
+
+    record_json = json.dumps(record)
+    if change == "duplicate-key":
+        record_json = '{"record_status": "UNAPPROVED", ' + record_json[1:]
+    block = f"```a-p2-release-v3\n{record_json}\n```\n"
+    if change == "missing-block":
+        block = ""
+    elif change == "duplicate-block":
+        block = block + "\n" + block
+    decision.write_text("Invented release fixture\n\n" + block, encoding="utf-8")
+
+    manifest = out / prepare_module.MANIFEST_NAME
+    with pytest.raises(PermissionError, match=message):
+        product._authorize_development_real(manifest, _load_json(manifest), manifest.read_bytes(), "development")
+
+
+@pytest.mark.parametrize("name", _PACKAGE_MANIFESTS, ids=_PACKAGE_IDS)
+def test_matching_development_release_requires_global_unlock(development_release, name, monkeypatch):
+    out, decision, record = development_release
+    record["record_status"] = "APPROVED"
+    decision.write_text(f"Invented release fixture\n\n```a-p2-release-v3\n{json.dumps(record)}\n```\n", encoding="utf-8")
+    manifest_path = out / name
+    manifest_bytes = manifest_path.read_bytes()
+    manifest = json.loads(manifest_bytes)
+    operation = "freeze" if name == prepare_module.FREEZE_MANIFEST_NAME else "development"
+    input_path, classification, digest = product._validate_manifest_shape(manifest_path, manifest, operation)
+    identity_path = product._identity_path(manifest_path, manifest)
+    preloaded = (manifest, manifest_bytes, input_path, classification, digest, identity_path)
+
+    with pytest.raises(PermissionError, match="Real A-P2 remains locked pending user review"):
+        product._authorize(manifest_path, operation, None, None, preloaded=preloaded)
+
+    monkeypatch.setattr(product, "_EXACT_RUN_SCOPE_CONVENTION_APPROVED", True)
+    assert product._authorize(manifest_path, operation, None, None, preloaded=preloaded) == (*preloaded, False)
+
+
+def test_development_release_does_not_authorize_final_evaluation(development_release, monkeypatch):
+    out, _, record = development_release
+    record["record_status"] = "APPROVED"
+    release = out / "invented_approved_development_record.json"
+    _write_bound_json(release, record)
+    monkeypatch.setattr(product, "_EXACT_RUN_SCOPE_CONVENTION_APPROVED", True)
+    with pytest.raises(PermissionError, match="not an approved real decision"):
+        product._authorize_final_real({}, b"invented", release, "a" * 64)
 
 
 @pytest.mark.parametrize("manifest_name, operation, signed_table, signed_grouping", (
@@ -1171,9 +1305,11 @@ def test_check_only_and_product_refuse_same_size_a1_exclusion_swap(bound_a1_pack
     artifact["derived_features_sha256"] = derived_digest
     artifact_digest = _write_bound_json(artifact_path, artifact)
 
-    release_names = ("release_development.unapproved.json", prepare_module.CONSERVATIVE_RELEASE_NAME,
-                     prepare_module.SENSITIVITY_RELEASE_NAME, prepare_module.FREEZE_RELEASE_NAME)
-    for name, release_name in zip(_PACKAGE_MANIFESTS, release_names):
+    release_path = out / prepare_module.RELEASE_TEMPLATE_NAME
+    release = _load_json(release_path)
+    release["a1_source_rule"].update(exclusion_artifact_sha256=artifact_digest, derived_features_sha256=derived_digest)
+    runs = {run["package_id"]: run for run in release["runs"]}
+    for name, package_id in zip(_PACKAGE_MANIFESTS, _PACKAGE_IDS):
         manifest_path = out / name
         manifest = _load_json(manifest_path)
         identity = manifest["identity_provenance"]
@@ -1189,11 +1325,9 @@ def test_check_only_and_product_refuse_same_size_a1_exclusion_swap(bound_a1_pack
             sidecar["records"] = [excluded_row if row["patient_id"] == kept_token else row for row in sidecar["records"]]
             identity["sidecar_sha256"] = _write_bound_json(sidecar_path, sidecar)
         manifest_digest = _write_bound_json(manifest_path, manifest)
-        release_path = out / release_name
-        release = _load_json(release_path)
-        release.update(input_sha256=manifest["input_sha256"], input_manifest_sha256=manifest_digest,
-                       identity_sidecar_sha256=identity["sidecar_sha256"])
-        _write_bound_json(release_path, release)
+        runs[package_id].update(input_sha256=manifest["input_sha256"], input_manifest_sha256=manifest_digest,
+                                identity_sidecar_sha256=identity["sidecar_sha256"])
+    _write_bound_json(release_path, release)
 
     with monkeypatch.context() as preparation:
         # The product fixture's historical hash override applies only to product checks.
