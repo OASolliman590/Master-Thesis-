@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import math
 from types import SimpleNamespace
 
@@ -7,7 +8,9 @@ import pytest
 
 from tools.a_meta.effects import study_effects
 from tools.a_meta.features import FeatureTable
-from tests.a_meta.helpers import synthetic_effect_input_manifest
+from tools.a_meta.synthesis import synthesize
+from tools.r_bridge import FakeR
+from tests.a_meta.helpers import synthetic_effect_input_manifest, synthetic_effect_rows_manifest
 
 
 def _view(rows, *, cancer="melanoma", study="synthetic"):
@@ -37,8 +40,16 @@ def _row(label, drug="ANTI_PD_L1_AXIS", *, definition="ORR RECIST CR PR SD PD"):
     }
 
 
-def test_study_effect_is_hand_computed_hedges_g_and_standard_error(tmp_path):
+@pytest.mark.parametrize(
+    "batches",
+    [None, ("A", "A", "A", "A"), ("A", "B", "A", "B"), ("A", "B", "A", "C")],
+    ids=["no-field", "single-batch", "mixed-batches", "one-mixed-batch"],
+)
+def test_study_effect_is_hand_computed_hedges_g_and_standard_error(tmp_path, batches):
     view = _view([_row("CR"), _row("PR"), _row("SD"), _row("PD")])
+    if batches is not None:
+        for row, batch in zip(view.clinical_rows, batches):
+            row["batch"] = batch
     features = _features([2.0, 4.0, 0.0, 2.0])
     manifest = synthetic_effect_input_manifest(view, features, tmp_path / "synthetic-manifest.json")
 
@@ -60,6 +71,69 @@ def test_study_effect_is_hand_computed_hedges_g_and_standard_error(tmp_path):
     assert overall["status"] == "ok"
     assert overall["endpoint_definition_id"] == "ORR"
     assert len(overall["patient_set_id"]) == 64
+
+
+def test_batch_confounded_effect_is_excluded_from_meta_input(tmp_path):
+    confounded = _view(
+        [dict(_row(label), batch=batch) for label, batch in zip(
+            ("CR", "PR", "SD", "PD"), ("A", "A", "B", "B"),
+        )],
+        study="synthetic_confounded",
+    )
+    control = _view(
+        [dict(_row(label), batch=batch) for label, batch in zip(
+            ("CR", "PR", "SD", "PD", "SD"), ("A", "B", "A", "B", "B"),
+        )],
+        study="synthetic_control",
+    )
+    effects = []
+    for view in (confounded, control):
+        features = _features([3.0, 5.0, 0.0, 2.0, 1.0][:len(view.clinical_rows)])
+        manifest = synthetic_effect_input_manifest(view, features, tmp_path / "input.json")
+        effects.extend(study_effects(view, features, "orr", by_drug_class=False, provenance_manifest=manifest))
+
+    effect = effects[0]
+    assert effect["status"] == "not_estimable"
+    assert effect["g"] is None
+    assert effect["se"] is None
+    assert "response_batch_confounded" in effect["reason"].split(";")
+
+    manifest = synthetic_effect_rows_manifest(effects, tmp_path / "effects.json")
+    synthesize(
+        effects,
+        "per_cancer",
+        output_dir=tmp_path,
+        runner=FakeR({"meta_rma.R": {
+            "meta.tsv": "analysis_id\tk\tstatus\nA00001\t1\tsingle_study\n",
+            "subgroups.tsv": "test_id\tF\tp\tstatus\treason\n",
+        }}),
+        provenance_manifest=manifest,
+    )
+    with (tmp_path / "meta_input.tsv").open(newline="", encoding="utf-8") as stream:
+        assert [row["study"] for row in csv.DictReader(stream, delimiter="\t")] == ["synthetic_control"]
+
+
+@pytest.mark.parametrize("excluded_by", ["endpoint", "feature", "stratum"])
+def test_batch_estimability_uses_only_patients_in_the_contrast(tmp_path, excluded_by):
+    # The last row would put a non-responder in batch A if it entered the contrast.
+    bridge_label = "NE" if excluded_by == "endpoint" else "SD"
+    bridge_drug = "ANTI_CTLA4" if excluded_by == "stratum" else "ANTI_PD_L1_AXIS"
+    view = _view([
+        dict(_row("CR"), processing_batch="A"),
+        dict(_row("PR"), processing_batch="A"),
+        dict(_row("SD"), processing_batch="B"),
+        dict(_row("PD"), processing_batch="B"),
+        dict(_row(bridge_label, bridge_drug), processing_batch="A"),
+    ])
+    features = _features([3.0, 5.0, 0.0, 2.0, None if excluded_by == "feature" else 1.0])
+    manifest = synthetic_effect_input_manifest(view, features, tmp_path / "input.json")
+
+    effects = study_effects(view, features, "orr", provenance_manifest=manifest)
+    effect = next(row for row in effects if row["drug_class_stratum"] == "ANTI_PD_L1_AXIS")
+
+    assert effect["n_R"] == effect["n_NR"] == 2
+    assert effect["status"] == "not_estimable"
+    assert "response_batch_confounded" in effect["reason"].split(";")
 
 
 @pytest.mark.parametrize(

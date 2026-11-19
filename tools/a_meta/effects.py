@@ -47,6 +47,8 @@ _UNIT_FAMILIES = {
 _SENSITIVITY_FAMILIES = {
     "panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset",
 }
+_BATCH_FIELDS = ("batch", "batch_id", "processing_batch", "seq_batch")
+_MISSING_BATCHES = {"", "NA", "N/A", "UNKNOWN", "NULL"}
 
 
 def study_effects(
@@ -99,6 +101,7 @@ def study_effects(
         else ""
     )
     clinical_rows = list(view.clinical_rows)
+    batches = _study_batches(clinical_rows)
     feature_values = _feature_vectors(features, len(clinical_rows))
     if unit_family in _SENSITIVITY_FAMILIES:
         for unit in feature_values:
@@ -184,6 +187,7 @@ def study_effects(
                             excluded=stratum_excluded,
                             coverage=_coverage_for(features, unit),
                             clinical_rows=clinical_rows,
+                            batches=batches,
                             cancer_components=sorted({patients[i]["cancer"] for i in included_indices}),
                             method_id=method_ids.get(unit, "") if isinstance(method_ids, Mapping) else "",
                             m5m6_gene_flag=unit_family == "gene" and unit in m5m6_units,
@@ -308,12 +312,23 @@ def _coverage_for(features, unit: str) -> Mapping | None:
     return None
 
 
+def _study_batches(clinical_rows: Sequence[Mapping]) -> list[str]:
+    # Use the same study-wide batch field precedence as bulk DE.
+    for field in _BATCH_FIELDS:
+        values = [str(row.get(field) or "").strip() for row in clinical_rows]
+        batches = ["" if value.upper() in _MISSING_BATCHES else value for value in values]
+        if any(batches):
+            return batches
+    return [""] * len(clinical_rows)
+
+
 def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
                 endpoint_definition_id, labels, values, patient_indices, excluded,
-                coverage, clinical_rows, cancer_components, method_id="",
+                coverage, clinical_rows, batches, cancer_components, method_id="",
                 m5m6_gene_flag=False, sensitivity_label="") -> dict:
     response_values: list[float] = []
     nonresponse_values: list[float] = []
+    batches_by_label = {0: set(), 1: set()}
     missing_values = 0
     for index in patient_indices:
         label = labels[index]
@@ -324,6 +339,7 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
             missing_values += 1
             continue
         (response_values if label == 1 else nonresponse_values).append(value)
+        batches_by_label[label].add(batches[index])
 
     n_r, n_nr = len(response_values), len(nonresponse_values)
     mean_r = mean(response_values) if response_values else None
@@ -347,7 +363,11 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
     g = se = None
     patient_tokens = []
     status = "NA"
-    if coverage_complete and n_r >= 2 and n_nr >= 2:
+    eligible = coverage_complete and n_r >= 2 and n_nr >= 2
+    if eligible and batches_by_label[1].isdisjoint(batches_by_label[0]):
+        status = "not_estimable"
+        reasons.append("response_batch_confounded")
+    elif eligible:
         pooled_variance = (
             (n_r - 1) * sd_r ** 2 + (n_nr - 1) * sd_nr ** 2
         ) / (n_r + n_nr - 2)
