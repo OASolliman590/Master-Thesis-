@@ -303,6 +303,7 @@ def test_prepared_manifest_shape_is_accepted_by_existing_synthetic_preflight(tmp
 
     twin = tmp_path / "synthetic_twin"
     twin.mkdir()
+    (twin / "A_P2_SYNTHETIC_FIXTURE").touch()
     table = twin / "synthetic_features.tsv"
     with table.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(
@@ -1057,6 +1058,7 @@ def test_prepare_emits_one_v3_record_binding_all_four_manifests(tmp_path):
         "record_status": "UNAPPROVED",
         "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
         "data_classification": "PRIVATE_PATIENT_LEVEL",
+        "execution_code_sha256": product._code_provenance(),
         "a1_source_rule": {
             "rule_id": prepare_module.A1_RULE_ID,
             "exclusion_artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
@@ -1129,7 +1131,25 @@ def development_release(bound_a1_package, tmp_path, monkeypatch):
     monkeypatch.setattr(product, "_DECISION_DIR", decisions)
     decision = decisions / "A_P2_DEVELOPMENT_RELEASE_DRAFT_2026-11-19.md"
     record = _load_json(out / prepare_module.RELEASE_TEMPLATE_NAME)
-    return out, decision, record
+    pin = decisions / "invented_approval_pin.sha256"
+    monkeypatch.setattr(product, "_DEVELOPMENT_APPROVAL_PIN", pin, raising=False)
+    return out, decision, record, pin
+
+
+def _mock_release_pin(pin, record):
+    canonical = json.dumps(
+        record, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False,
+    ).encode("utf-8")
+    digest = hashlib.sha256(canonical).hexdigest()
+    pin.write_text(digest + "\n", encoding="ascii")
+    return digest
+
+
+def _write_release_decision(decision, record, *, prose="Invented release fixture"):
+    decision.write_text(
+        prose + "\n\n```a-p2-release-v3\n" + json.dumps(record, indent=2) + "\n```\n",
+        encoding="utf-8",
+    )
 
 
 @pytest.mark.parametrize(("change", "message"), (
@@ -1143,7 +1163,7 @@ def development_release(bound_a1_package, tmp_path, monkeypatch):
     ("duplicate-key", "exactly one valid"),
 ))
 def test_development_release_refuses_invalid_record(development_release, change, message):
-    out, decision, record = development_release
+    out, decision, record, pin = development_release
     main = next(run for run in record["runs"] if run["package_id"] == "main")
     if change != "unsigned":
         record["record_status"] = "APPROVED"
@@ -1156,6 +1176,7 @@ def test_development_release_refuses_invalid_record(development_release, change,
         main.update(conservative, package_id="main")
     elif change == "wrong-a1-hash":
         record["a1_source_rule"]["exclusion_artifact_sha256"] = "0" * 64
+    _mock_release_pin(pin, record)
 
     record_json = json.dumps(record)
     if change == "duplicate-key":
@@ -1172,32 +1193,155 @@ def test_development_release_refuses_invalid_record(development_release, change,
         product._authorize_development_real(manifest, _load_json(manifest), manifest.read_bytes(), "development")
 
 
-@pytest.mark.parametrize("name", _PACKAGE_MANIFESTS, ids=_PACKAGE_IDS)
-def test_matching_development_release_requires_global_unlock(development_release, name, monkeypatch):
-    out, decision, record = development_release
+@pytest.fixture
+def invented_development_run(development_release, tmp_path, monkeypatch):
+    out, decision, record, pin = development_release
     record["record_status"] = "APPROVED"
-    decision.write_text(f"Invented release fixture\n\n```a-p2-release-v3\n{json.dumps(record)}\n```\n", encoding="utf-8")
-    manifest_path = out / name
-    manifest_bytes = manifest_path.read_bytes()
-    manifest = json.loads(manifest_bytes)
-    operation = "freeze" if name == prepare_module.FREEZE_MANIFEST_NAME else "development"
-    input_path, classification, digest = product._validate_manifest_shape(manifest_path, manifest, operation)
-    identity_path = product._identity_path(manifest_path, manifest)
-    preloaded = (manifest, manifest_bytes, input_path, classification, digest, identity_path)
+    _write_release_decision(decision, record)
+    claims = tmp_path / "claims"
+    monkeypatch.setattr(product, "_DEVELOPMENT_CLAIMS_DIR", claims, raising=False)
 
-    with pytest.raises(PermissionError, match="Real A-P2 remains locked pending user review"):
-        product._authorize(manifest_path, operation, None, None, preloaded=preloaded)
+    # Enter the authorization stage with prepared, invented metadata. The CLI gate stays closed.
+    def invented_preflight(path, operation, allow_outcomes):
+        assert not allow_outcomes
+        assert path.parent == out and path.name in _PACKAGE_MANIFESTS
+        raw = path.read_bytes()
+        manifest = json.loads(raw)
+        payload, classification, digest = product._validate_manifest_shape(path, manifest, operation)
+        return manifest, raw, payload, classification, digest, product._identity_path(path, manifest)
 
-    monkeypatch.setattr(product, "_EXACT_RUN_SCOPE_CONVENTION_APPROVED", True)
-    assert product._authorize(manifest_path, operation, None, None, preloaded=preloaded) == (*preloaded, False)
+    def invented_bridge(operation, input_path, manifest, out_dir):
+        assert input_path.is_file()
+        if operation == "freeze":
+            equation = out_dir / ".work" / "fitted.json"
+            equation.write_text("{}", encoding="utf-8")
+            diagnostics = out_dir / ".work" / "diagnostics.tsv"
+            diagnostics.write_text("invented\n", encoding="utf-8")
+            return {}, {"equation.json": equation, "fit_diagnostics.tsv": diagnostics}
+        return {}, {}
+
+    monkeypatch.setattr(product, "_preflight_manifest", invented_preflight)
+    monkeypatch.setattr(product, "_bridge", invented_bridge)
+    return out, decision, record, pin, claims
 
 
-def test_development_release_does_not_authorize_final_evaluation(development_release, monkeypatch):
-    out, _, record = development_release
+def test_development_release_without_pin_stays_locked(invented_development_run, tmp_path):
+    out, _, _, _, claims = invented_development_run
+    with pytest.raises(PermissionError, match="remains locked.*approval pin is missing"):
+        product.run_development(out / prepare_module.MANIFEST_NAME, tmp_path / "locked")
+    assert not claims.exists()
+
+
+@pytest.mark.parametrize(("package_id", "field"), (
+    ("conservative", "input_sha256"),
+    ("main", "input_manifest_sha256"),
+))
+def test_development_release_refuses_edits_after_pinning(
+    invented_development_run, tmp_path, package_id, field,
+):
+    out, decision, record, pin, claims = invented_development_run
+    _mock_release_pin(pin, record)
+    row = next(run for run in record["runs"] if run["package_id"] == package_id)
+    row[field] = "0" * 64
+    _write_release_decision(decision, record)
+
+    with pytest.raises(PermissionError, match="does not match the approval pin"):
+        product.run_development(out / prepare_module.MANIFEST_NAME, tmp_path / "edited")
+    assert not claims.exists()
+
+
+@pytest.mark.parametrize("contents", ["A" * 64, "a" * 63, "a" * 64 + "\n" + "b" * 64, "a" * 64 + " "])
+def test_development_release_refuses_malformed_pin(invented_development_run, tmp_path, contents):
+    out, _, _, pin, claims = invented_development_run
+    pin.write_text(contents, encoding="ascii")
+    with pytest.raises(PermissionError, match="exactly one lowercase SHA-256"):
+        product.run_development(out / prepare_module.MANIFEST_NAME, tmp_path / "invalid_pin")
+    assert not claims.exists()
+
+
+def test_matching_pinned_development_release_accepts_all_packages_and_prose_edits(
+    invented_development_run, tmp_path,
+):
+    out, decision, record, pin, claims = invented_development_run
+    digest = _mock_release_pin(pin, record)
+    _write_release_decision(decision, record, prose="Invented signature prose edited after pinning")
+    for name, package_id in zip(_PACKAGE_MANIFESTS, _PACKAGE_IDS):
+        runner = product.run_freeze if package_id == "freeze" else product.run_development
+        result = runner(out / name, tmp_path / package_id)
+        assert result["code_provenance"] == record["execution_code_sha256"]
+
+    receipts = [_load_json(path) for path in claims.iterdir()]
+    assert sorted(receipt["package_id"] for receipt in receipts) == sorted(_PACKAGE_IDS)
+    for receipt in receipts:
+        assert receipt == {
+            "approved_block_sha256": digest,
+            "package_id": receipt["package_id"],
+            "claimed_at_utc": receipt["claimed_at_utc"],
+            "execution_code_sha256": record["execution_code_sha256"],
+        }
+        assert receipt["claimed_at_utc"].endswith("+00:00")
+
+
+def _refuse_payload_open(monkeypatch, manifest_path):
+    manifest = _load_json(manifest_path)
+    payload = product._input_path(manifest_path, manifest)
+    original_open = Path.open
+
+    def open_spy(path, *args, **kwargs):
+        if path == payload:
+            pytest.fail("A-P2 opened the payload before the release checks passed")
+        return original_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", open_spy)
+
+
+def test_development_release_claim_refuses_a_second_run_before_payload_open(
+    invented_development_run, tmp_path, monkeypatch,
+):
+    out, _, record, pin, _ = invented_development_run
+    _mock_release_pin(pin, record)
+    manifest = out / prepare_module.MANIFEST_NAME
+    product.run_development(manifest, tmp_path / "first_run")
+    _refuse_payload_open(monkeypatch, manifest)
+
+    with pytest.raises(PermissionError, match="already executed"):
+        product.run_development(manifest, tmp_path / "second_run")
+
+
+def test_development_release_refuses_changed_execution_code(invented_development_run, tmp_path, monkeypatch):
+    out, _, record, pin, claims = invented_development_run
+    _mock_release_pin(pin, record)
+    code = {**product._code_provenance(), "r_entrypoint": "0" * 64}
+    monkeypatch.setattr(product, "_code_provenance", lambda: code)
+    manifest = out / prepare_module.MANIFEST_NAME
+    _refuse_payload_open(monkeypatch, manifest)
+
+    with pytest.raises(PermissionError, match="execution code provenance"):
+        product.run_development(manifest, tmp_path / "changed_code")
+    assert not claims.exists()
+
+
+def test_development_release_rejects_nonempty_output_before_payload_open_or_claim(
+    invented_development_run, tmp_path, monkeypatch,
+):
+    out, _, record, pin, claims = invented_development_run
+    _mock_release_pin(pin, record)
+    manifest = out / prepare_module.MANIFEST_NAME
+    output = tmp_path / "nonempty"
+    output.mkdir()
+    (output / "existing.txt").write_text("invented\n", encoding="utf-8")
+    _refuse_payload_open(monkeypatch, manifest)
+
+    with pytest.raises(FileExistsError, match="output directory is not empty"):
+        product.run_development(manifest, output)
+    assert not claims.exists()
+
+
+def test_development_release_does_not_authorize_final_evaluation(development_release):
+    out, _, record, _ = development_release
     record["record_status"] = "APPROVED"
     release = out / "invented_approved_development_record.json"
     _write_bound_json(release, record)
-    monkeypatch.setattr(product, "_EXACT_RUN_SCOPE_CONVENTION_APPROVED", True)
     with pytest.raises(PermissionError, match="not an approved real decision"):
         product._authorize_final_real({}, b"invented", release, "a" * 64)
 

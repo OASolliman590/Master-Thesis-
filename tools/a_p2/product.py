@@ -7,8 +7,10 @@ import csv
 import io
 import inspect
 import json
+import os
 import re
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +42,8 @@ _KNOWN_REAL_IDENTITY_TOKENS = {
 }
 _PROTECTED_IDENTITY_TOKENS = {"imvigor", "imvigor210"}
 _DECISION_DIR = ROOT / "docs/decisions"
+_DEVELOPMENT_APPROVAL_PIN = _DECISION_DIR / "A_P2_DEVELOPMENT_RELEASE_V3.approved.sha256"
+_DEVELOPMENT_CLAIMS_DIR = ROOT / ".scratch/runtime/a_p2/claims"
 # Independently checked preparation digests recorded in the 19 Nov A-P2 draft's Bindings table.
 _A1_ORIGINAL_SIDECAR_SHA256 = "f80535f7520e9bc9db595c32de47d49be6c6d1576eca73c03c1275f2fc210751"
 _A1_EXCLUDED_TOKENS_SHA256 = "8e58c8d851921059452a11721d80ded9afab9985bc652c3e59448f2ec4196372"
@@ -495,7 +499,7 @@ def _validate_bound_a1_metadata(manifest_path: Path, manifest: dict[str, Any], o
         raise PermissionError("A-P2 signed roster and aggregate dimensions do not match")
 
 
-_EXACT_RUN_SCOPE_CONVENTION_APPROVED = False
+_FINAL_RELEASE_CONVENTION_APPROVED = False
 _DEVELOPMENT_RELEASE_FIELDS = {
     "record_type": "a_p2_user_release_v3",
     "release_scope": "A_P2_REAL_OUTCOME_ACCESS",
@@ -550,7 +554,7 @@ def _development_run_binding(
 
 def _authorize_development_real(
     manifest_path: Path, manifest: dict[str, Any], manifest_bytes: bytes, operation: str,
-) -> None:
+) -> tuple[str, str, dict[str, str]]:
     from . import prepare
 
     packages = {
@@ -562,6 +566,16 @@ def _authorize_development_real(
     package = packages.get(manifest_path.name)
     if package is None or package[1] != operation:
         raise PermissionError("Unknown A-P2 prepared package or operation")
+
+    pin_path = _guard_external_path(_DEVELOPMENT_APPROVAL_PIN, "development approval pin")
+    try:
+        pin = pin_path.read_bytes()
+    except FileNotFoundError as error:
+        raise PermissionError("Real A-P2 development remains locked because the user approval pin is missing") from error
+    except OSError as error:
+        raise PermissionError("The A-P2 development approval pin could not be read") from error
+    if not re.fullmatch(rb"[0-9a-f]{64}\n?", pin):
+        raise PermissionError("The A-P2 development approval pin must contain exactly one lowercase SHA-256 digest")
 
     decision_path = _guard_external_path(
         _DECISION_DIR / f"{prepare.PROPOSED_DECISION_ID}.md", "development decision record",
@@ -576,11 +590,15 @@ def _authorize_development_real(
         if closing is None:
             raise ValueError("unclosed v3 block")
         record = json.loads(contents[:closing.start()], object_pairs_hook=_reject_duplicate_json_keys)
+        approved_digest = _sha256_bytes(_canonical_json(record))
     except (OSError, ValueError) as error:
         raise PermissionError("A-P2 development decision requires exactly one valid a-p2-release-v3 block") from error
+    if approved_digest != pin.rstrip(b"\n").decode("ascii"):
+        raise PermissionError("The A-P2 development release block does not match the approval pin")
 
     header = {**_DEVELOPMENT_RELEASE_FIELDS, "record_status": "APPROVED"}
-    if (not isinstance(record, dict) or record.keys() != header.keys() | {"a1_source_rule", "runs"}
+    if (not isinstance(record, dict)
+        or record.keys() != header.keys() | {"a1_source_rule", "execution_code_sha256", "runs"}
         or _release_binding_errors(record, header)):
         raise PermissionError("The A-P2 development release record must be APPROVED and match the real release scope")
 
@@ -598,8 +616,27 @@ def _authorize_development_real(
         raise PermissionError("The A-P2 development release record must list all four prepared runs exactly once")
     if expected_run not in runs:
         raise PermissionError("The A-P2 development release record does not match this exact A-P2 run")
-    if not _EXACT_RUN_SCOPE_CONVENTION_APPROVED:
-        raise PermissionError("Real A-P2 remains locked pending user review of the exact-run decision convention")
+    code_provenance = _code_provenance()
+    if record["execution_code_sha256"] != code_provenance:
+        raise PermissionError("The A-P2 development release record does not match the execution code provenance")
+    return approved_digest, package[0], code_provenance
+
+
+def _claim_development_run(approved_digest: str, package_id: str, code_provenance: dict[str, str]) -> None:
+    claims_dir = _guard_external_path(_DEVELOPMENT_CLAIMS_DIR, "development claims directory")
+    claims_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    claim_path = claims_dir / f"{approved_digest}.{package_id}.json"
+    try:
+        descriptor = os.open(claim_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise PermissionError("This approved A-P2 development package has already executed") from error
+    with os.fdopen(descriptor, "wb") as stream:
+        stream.write(_canonical_json({
+            "approved_block_sha256": approved_digest,
+            "package_id": package_id,
+            "claimed_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "execution_code_sha256": code_provenance,
+        }) + b"\n")
 
 
 def _require_exact_run_decision(record: dict[str, Any], decision_bytes: bytes) -> None:
@@ -610,7 +647,7 @@ def _require_exact_run_decision(record: dict[str, Any], decision_bytes: bytes) -
             raise ValueError("decision scope mismatch")
     except (UnicodeDecodeError, ValueError, TypeError) as error:
         raise PermissionError("Decision does not attest to this exact A-P2 run") from error
-    if not _EXACT_RUN_SCOPE_CONVENTION_APPROVED:
+    if not _FINAL_RELEASE_CONVENTION_APPROVED:
         raise PermissionError("Real A-P2 remains locked pending user review of the exact-run decision convention")
 
 
@@ -694,10 +731,43 @@ def _release_record_is_approved(record: dict[str, Any]) -> bool:
     )
 
 
+_SYNTHETIC_FIXTURE_MARKER = "A_P2_SYNTHETIC_FIXTURE"
+
+
+def _is_scratch_path(path: Path) -> bool:
+    return any(part.casefold() == ".scratch" for part in path.parts)
+
+
+def _require_synthetic_fixture_root(manifest_path: Path) -> Path:
+    if _is_scratch_path(manifest_path):
+        raise PermissionError("Synthetic A-P2 inputs are forbidden under .scratch")
+    for parent in manifest_path.parents:
+        marker = parent / _SYNTHETIC_FIXTURE_MARKER
+        if marker.is_symlink():
+            raise PermissionError("A-P2 synthetic fixture marker cannot be a symlink")
+        if marker.is_file():
+            return parent
+    raise PermissionError(
+        "Synthetic A-P2 inputs require an A_P2_SYNTHETIC_FIXTURE marker. "
+        "Real A-P2 inputs require explicit --allow-outcomes."
+    )
+
+
+def _validate_synthetic_fixture_paths(fixture_root: Path, inputs: tuple[tuple[Path, str], ...]) -> None:
+    for path, label in inputs:
+        resolved = _guard_external_path(path, label)
+        if _is_scratch_path(resolved):
+            raise PermissionError(f"Synthetic A-P2 {label} is forbidden under .scratch")
+        if not resolved.is_relative_to(fixture_root):
+            raise PermissionError(f"A-P2 {label} is outside the synthetic fixture directory")
+
+
 def _preflight_manifest(
-    manifest_path: Path, operation: str, allow_outcomes: bool,
+    manifest_path: Path, operation: str, allow_outcomes: bool, *,
+    synthetic_artifacts: tuple[tuple[Path, str], ...] = (),
 ) -> tuple[dict[str, Any], bytes, Path, str, str, Path]:
     guarded_manifest = _guard_external_path(manifest_path, "input manifest")
+    fixture_root = None if allow_outcomes else _require_synthetic_fixture_root(guarded_manifest)
     manifest, manifest_bytes = _read_json(guarded_manifest, "input manifest")
     input_path, classification, input_digest = _validate_manifest_shape(guarded_manifest, manifest, operation)
     _check_imvigor_barrier(manifest, operation, classification)
@@ -705,6 +775,11 @@ def _preflight_manifest(
         raise PermissionError("Real A-P2 outcome access is disabled; explicit --allow-outcomes is required")
     identity_path = _identity_path(guarded_manifest, manifest)
     if classification == _SYNTHETIC_CLASS:
+        if fixture_root is None:
+            raise PermissionError("Synthetic A-P2 inputs must use the marked fixture route without --allow-outcomes")
+        _validate_synthetic_fixture_paths(fixture_root, (
+            (input_path, "input table"), (identity_path, "identity sidecar"), *synthetic_artifacts,
+        ))
         _synthetic_authorization(manifest)
     else:
         provenance = manifest.get("provenance")
@@ -719,28 +794,34 @@ def _preflight_manifest(
     return manifest, manifest_bytes, input_path, classification, input_digest, identity_path
 
 
-def _authorize(
-    manifest_path: Path, operation: str, release_record_path: Path | None,
-    equation_hash: str | None, allow_outcomes: bool = False,
-    preloaded: tuple[dict[str, Any], bytes, Path, str, str, Path] | None = None,
-) -> tuple[dict[str, Any], bytes, Path, str, str, Path, bool]:
-    loaded = preloaded or _preflight_manifest(manifest_path, operation, allow_outcomes)
-    manifest, manifest_bytes, input_path, classification, input_digest, identity_path = loaded
-    if classification == _SYNTHETIC_CLASS:
+def _authorize_final_input(
+    manifest: dict[str, Any], manifest_bytes: bytes,
+    release_record_path: Path | None, equation_hash: str,
+) -> bool:
+    if manifest["data_classification"] == _SYNTHETIC_CLASS:
         if release_record_path is not None:
             raise ProductError("Synthetic fixtures use fixture provenance and cannot be real user-release records")
         if any(cohort.casefold().replace("_", "").replace("-", "") == "imvigor210" for cohort in _cohort_ids(manifest)):
             raise PermissionError("Synthetic authorization cannot open the IMvigor210 final-test barrier")
         _validate_identity_provenance(manifest)
-        protected_release = False
-    elif operation == "final-evaluate":
-        _authorize_final_real(manifest, manifest_bytes, release_record_path, equation_hash)
-        protected_release = True
-    else:
-        _authorize_development_real(manifest_path, manifest, manifest_bytes, operation)
+        return False
+    _authorize_final_real(manifest, manifest_bytes, release_record_path, equation_hash)
+    return True
+
+
+def _authorize_development_input(
+    manifest_path: Path, out_path: Path, operation: str, allow_outcomes: bool,
+) -> tuple[dict[str, Any], bytes, Path, str, str, Path]:
+    loaded = _preflight_manifest(manifest_path, operation, allow_outcomes)
+    manifest, manifest_bytes, _, classification, _, _ = loaded
+    approval = None
+    if classification == _REAL_CLASS:
+        approval = _authorize_development_real(manifest_path, manifest, manifest_bytes, operation)
         _validate_bound_a1_metadata(manifest_path, manifest, operation)
-        protected_release = False
-    return (*loaded, protected_release)
+    _check_output_directory(out_path)
+    if approval is not None:
+        _claim_development_run(*approval)
+    return loaded
 
 
 def _read_verified_bytes(path: Path, expected_digest: str, label: str, *, allow_protected: bool = False) -> bytes:
@@ -930,12 +1011,17 @@ def _code_provenance() -> dict[str, str]:
     }
 
 
-def _prepare_output(path: Path) -> Path:
+def _check_output_directory(path: Path) -> Path:
     out_dir = _guard_external_path(path, "output directory")
     if out_dir.is_symlink():
         raise ProductError("A-P2 output directory cannot be a symlink")
     if out_dir.exists() and any(out_dir.iterdir()):
         raise FileExistsError(f"A-P2 output directory is not empty: {out_dir}")
+    return out_dir
+
+
+def _prepare_output(path: Path) -> Path:
+    out_dir = _check_output_directory(path)
     out_dir.mkdir(parents=True, exist_ok=True)
     return out_dir
 
@@ -992,11 +1078,11 @@ def _bridge(operation: str, input_path: Path, manifest: dict[str, Any], out_dir:
 def run_development(
     manifest_path: Path, out_path: Path, *, allow_outcomes: bool = False,
 ) -> dict[str, Any]:
-    manifest, raw, input_path, classification, input_digest, identity_path, protected_release = _authorize(
-        manifest_path, "development", None, None, allow_outcomes,
+    manifest, raw, input_path, classification, input_digest, identity_path = _authorize_development_input(
+        manifest_path, out_path, "development", allow_outcomes,
     )
     payload_bytes, identity_bytes = _read_authorized_input_material(
-        input_path, identity_path, manifest, allow_protected=protected_release,
+        input_path, identity_path, manifest, allow_protected=False,
     )
     out_dir = _prepare_output(out_path)
     input_snapshot = _snapshot_bytes(out_dir, "verified_input.tsv", payload_bytes)
@@ -1014,11 +1100,11 @@ def run_development(
 def run_freeze(
     manifest_path: Path, out_path: Path, *, allow_outcomes: bool = False,
 ) -> dict[str, Any]:
-    manifest, raw, input_path, classification, input_digest, identity_path, protected_release = _authorize(
-        manifest_path, "freeze", None, None, allow_outcomes,
+    manifest, raw, input_path, classification, input_digest, identity_path = _authorize_development_input(
+        manifest_path, out_path, "freeze", allow_outcomes,
     )
     payload_bytes, identity_bytes = _read_authorized_input_material(
-        input_path, identity_path, manifest, allow_protected=protected_release,
+        input_path, identity_path, manifest, allow_protected=False,
     )
     out_dir = _prepare_output(out_path)
     input_snapshot = _snapshot_bytes(out_dir, "verified_input.tsv", payload_bytes)
@@ -1070,13 +1156,15 @@ def run_final_evaluation(
     manifest_path: Path, equation_path: Path, out_path: Path,
     release_record_path: Path | None = None, allow_outcomes: bool = False,
 ) -> dict[str, Any]:
-    preloaded = _preflight_manifest(manifest_path, "final-evaluate", allow_outcomes)
+    artifacts = ((equation_path, "frozen equation"),)
+    if release_record_path is not None:
+        artifacts += ((release_record_path, "user-release record"),)
+    manifest, raw, input_path, classification, input_digest, identity_path = _preflight_manifest(
+        manifest_path, "final-evaluate", allow_outcomes, synthetic_artifacts=artifacts,
+    )
     equation_path = _guard_external_path(equation_path, "frozen equation")
     equation, equation_hash, equation_bytes = _verify_equation(equation_path)
-    manifest, raw, input_path, classification, input_digest, identity_path, protected_release = _authorize(
-        manifest_path, "final-evaluate", release_record_path, equation_hash,
-        allow_outcomes, preloaded=preloaded,
-    )
+    protected_release = _authorize_final_input(manifest, raw, release_record_path, equation_hash)
     final_families = {metadata["study_family"] for metadata in manifest["cohorts"].values()}
     trained_families = set(equation.get("primary_training_cohort_families", [])) | set(
         equation.get("adaptive_training_cohort_families", [])

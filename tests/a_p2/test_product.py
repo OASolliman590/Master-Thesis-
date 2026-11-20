@@ -15,6 +15,7 @@ from tools.a_scoring.core import DEFAULT_PANELS, panel_definitions
 
 
 ROOT = Path(__file__).resolve().parents[2]
+_FIXTURE_MARKER = "A_P2_SYNTHETIC_FIXTURE"
 FEATURES = (
     "P_ANTIGEN_PRESENTATION",
     "M2_CYTOTOXICITY",
@@ -26,7 +27,7 @@ FEATURES = (
 def _invented_inputs(
     root: Path, *, role="development", studies=3, include_adaptive=False,
     prefix="invented", small_studies=(), group_first_two=False,
-    cyt_discordant=False, robust_features=False,
+    cyt_discordant=False, robust_features=False, fixture_root=None, marked=True,
 ):
     rows = []
     cohorts = {}
@@ -87,6 +88,10 @@ def _invented_inputs(
                 })
 
     root.mkdir(parents=True, exist_ok=True)
+    if marked:
+        # Final fixtures also use an equation next to the manifest's directory.
+        fixture_root = fixture_root or (root.parent if role == "final_test" else root)
+        (fixture_root / _FIXTURE_MARKER).touch()
     payload = root / "invented_features.tsv"
     columns = ["cohort", "patient_id", "orr_class", *FEATURES, "CYT"]
     with payload.open("w", newline="", encoding="utf-8") as stream:
@@ -181,6 +186,71 @@ def _write_manifest(path: Path, manifest: dict) -> None:
         json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n",
         encoding="utf-8",
     )
+
+
+@pytest.mark.parametrize("location", ["unmarked", "scratch", "external-payload", "external-sidecar"])
+def test_synthetic_fixture_refuses_untrusted_inputs_before_opening_them(tmp_path, monkeypatch, location):
+    from tools.a_p2 import product
+
+    root = tmp_path / "fixture"
+    manifest_path, payload, _ = _invented_inputs(root, marked=location != "unmarked")
+    manifest = json.loads(manifest_path.read_bytes())
+    sidecar = root / manifest["identity_provenance"]["sidecar"]
+    if location == "scratch":
+        scratch = tmp_path / ".scratch"
+        scratch.mkdir()
+        moved = root.rename(scratch / root.name)
+        manifest_path, payload, sidecar = (moved / path.name for path in (manifest_path, payload, sidecar))
+    elif location == "external-payload":
+        payload = payload.rename(tmp_path / payload.name)
+        manifest["input_table"] = str(payload)
+        _write_manifest(manifest_path, manifest)
+    elif location == "external-sidecar":
+        sidecar = sidecar.rename(tmp_path / sidecar.name)
+        manifest["identity_provenance"]["sidecar"] = str(sidecar)
+        _write_manifest(manifest_path, manifest)
+
+    blocked_paths = {payload, sidecar}
+    if location in {"unmarked", "scratch"}:
+        blocked_paths.add(manifest_path)
+    original_open = Path.open
+
+    def open_spy(path, *args, **kwargs):
+        if path in blocked_paths:
+            pytest.fail(f"Synthetic fixture opened an untrusted {path.name}")
+        return original_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", open_spy)
+    with pytest.raises(PermissionError, match=r"A_P2_SYNTHETIC_FIXTURE|\.scratch|outside the synthetic fixture"):
+        product.run_development(manifest_path, tmp_path / "output")
+
+
+def test_marked_synthetic_fixture_is_accepted(tmp_path, monkeypatch):
+    from tools.a_p2 import product
+
+    manifest_path, _, _ = _invented_inputs(tmp_path / "fixture")
+    monkeypatch.setattr(product, "_bridge", lambda *args: ({}, {}))
+    result = product.run_development(manifest_path, tmp_path / "output")
+
+    assert result["data_classification"] == "SYNTHETIC_ONLY"
+
+
+def test_synthetic_final_rejects_an_equation_outside_the_fixture_before_open(tmp_path, monkeypatch):
+    from tools.a_p2 import product
+
+    root = tmp_path / "fixture"
+    manifest, payload, _ = _invented_inputs(root, role="final_test", studies=1, fixture_root=root)
+    equation = _equation_file(tmp_path / "external_equation.json")
+    original_open = Path.open
+
+    def open_spy(path, *args, **kwargs):
+        if path in {payload, equation}:
+            pytest.fail(f"Synthetic final evaluation opened {path.name} before checking fixture paths")
+        return original_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", open_spy)
+    with pytest.raises(PermissionError, match="frozen equation.*outside the synthetic fixture"):
+        product.run_final_evaluation(manifest, equation, tmp_path / "output")
 
 
 def _pairwise_auc(labels, scores):
@@ -747,6 +817,23 @@ def test_synthetic_classification_without_generated_provenance_is_not_a_bypass(t
 
     assert result.returncode == 2
     assert "generated-fixture provenance" in result.stderr
+    assert "input table is unavailable" not in result.stderr
+    assert not output.exists()
+
+
+@pytest.mark.parametrize("operation", ["development", "freeze"])
+def test_synthetic_identity_must_be_limited_to_fixtures_before_payload_access(tmp_path, operation):
+    manifest_path, _, _ = _invented_inputs(tmp_path / "identity_claims_real")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["input_table"] = "not_created.tsv"
+    manifest["identity_provenance"]["valid_as_real_identity_evidence"] = True
+    manifest_path.write_text(json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+    output = tmp_path / "blocked"
+
+    result = _run(operation, "--manifest", manifest_path, "--out", output)
+
+    assert result.returncode == 2
+    assert "can be mistaken for real evidence" in result.stderr
     assert "input table is unavailable" not in result.stderr
     assert not output.exists()
 

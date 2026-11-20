@@ -1415,6 +1415,7 @@ def prepare_development(
         **product._DEVELOPMENT_RELEASE_FIELDS,
         "record_status": "UNAPPROVED",
         "a1_source_rule": {field: a1_binding[field] for field in product._A1_RELEASE_FIELDS},
+        "execution_code_sha256": product._code_provenance(),
         "runs": release_runs,
     }
     release_bytes = _json_bytes(release_record)
