@@ -48,7 +48,7 @@ _SENSITIVITY_FAMILIES = {
     "panel_coverage90", "pathway_coverage90", "pathway_common", "targeted_subset",
 }
 _BATCH_FIELDS = ("batch", "batch_id", "processing_batch", "seq_batch")
-_MISSING_BATCHES = {"", "NA", "N/A", "UNKNOWN", "NULL"}
+_MISSING_BATCHES = {"", "NA", "N/A", "NAN", "UNKNOWN", "NULL"}
 
 
 def study_effects(
@@ -312,14 +312,18 @@ def _coverage_for(features, unit: str) -> Mapping | None:
     return None
 
 
-def _study_batches(clinical_rows: Sequence[Mapping]) -> list[str]:
+def _study_batches(clinical_rows: Sequence[Mapping]) -> list[str] | None:
     # Use the same study-wide batch field precedence as bulk DE.
+    batches = None
     for field in _BATCH_FIELDS:
-        values = [str(row.get(field) or "").strip() for row in clinical_rows]
+        if not any(field in row for row in clinical_rows):
+            continue
+        values = [str(value).strip() if value is not None else ""
+                  for value in (row.get(field) for row in clinical_rows)]
         batches = ["" if value.upper() in _MISSING_BATCHES else value for value in values]
         if any(batches):
-            return batches
-    return [""] * len(clinical_rows)
+            break
+    return batches
 
 
 def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
@@ -339,7 +343,8 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
             missing_values += 1
             continue
         (response_values if label == 1 else nonresponse_values).append(value)
-        batches_by_label[label].add(batches[index])
+        if batches is not None:
+            batches_by_label[label].add(batches[index])
 
     n_r, n_nr = len(response_values), len(nonresponse_values)
     mean_r = mean(response_values) if response_values else None
@@ -364,9 +369,13 @@ def _effect_row(*, view, unit_family, unit, cancer, stratum, endpoint_family,
     patient_tokens = []
     status = "NA"
     eligible = coverage_complete and n_r >= 2 and n_nr >= 2
-    if eligible and batches_by_label[1].isdisjoint(batches_by_label[0]):
+    shared_batches = batches_by_label[1] & batches_by_label[0]
+    if eligible and batches is not None and not (shared_batches - {""}):
         status = "not_estimable"
-        reasons.append("response_batch_confounded")
+        if "" in batches_by_label[0] | batches_by_label[1]:
+            reasons.append("batch_overlap_unverified")
+        else:
+            reasons.append("response_batch_confounded")
     elif eligible:
         pooled_variance = (
             (n_r - 1) * sd_r ** 2 + (n_nr - 1) * sd_nr ** 2

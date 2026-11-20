@@ -73,12 +73,22 @@ def test_study_effect_is_hand_computed_hedges_g_and_standard_error(tmp_path, bat
     assert len(overall["patient_set_id"]) == 64
 
 
-def test_batch_confounded_effect_is_excluded_from_meta_input(tmp_path):
-    confounded = _view(
+@pytest.mark.parametrize(
+    ("batches", "reason"),
+    [
+        (("A", "A", "B", "B"), "response_batch_confounded"),
+        (("A", None, "NA", ""), "batch_overlap_unverified"),
+        ((None, "NA", "", "unknown"), "batch_overlap_unverified"),
+        (("A", None, "B", "B"), "batch_overlap_unverified"),
+    ],
+    ids=["disjoint-known", "missing-only-overlap", "all-missing-field", "known-disjoint-plus-missing"],
+)
+def test_batch_non_estimable_effect_is_excluded_from_meta_input(tmp_path, batches, reason):
+    non_estimable = _view(
         [dict(_row(label), batch=batch) for label, batch in zip(
-            ("CR", "PR", "SD", "PD"), ("A", "A", "B", "B"),
+            ("CR", "PR", "SD", "PD"), batches,
         )],
-        study="synthetic_confounded",
+        study="synthetic_batch_guard",
     )
     control = _view(
         [dict(_row(label), batch=batch) for label, batch in zip(
@@ -87,7 +97,7 @@ def test_batch_confounded_effect_is_excluded_from_meta_input(tmp_path):
         study="synthetic_control",
     )
     effects = []
-    for view in (confounded, control):
+    for view in (non_estimable, control):
         features = _features([3.0, 5.0, 0.0, 2.0, 1.0][:len(view.clinical_rows)])
         manifest = synthetic_effect_input_manifest(view, features, tmp_path / "input.json")
         effects.extend(study_effects(view, features, "orr", by_drug_class=False, provenance_manifest=manifest))
@@ -96,7 +106,7 @@ def test_batch_confounded_effect_is_excluded_from_meta_input(tmp_path):
     assert effect["status"] == "not_estimable"
     assert effect["g"] is None
     assert effect["se"] is None
-    assert "response_batch_confounded" in effect["reason"].split(";")
+    assert effect["reason"] == reason
 
     manifest = synthetic_effect_rows_manifest(effects, tmp_path / "effects.json")
     synthesize(
@@ -111,6 +121,28 @@ def test_batch_confounded_effect_is_excluded_from_meta_input(tmp_path):
     )
     with (tmp_path / "meta_input.tsv").open(newline="", encoding="utf-8") as stream:
         assert [row["study"] for row in csv.DictReader(stream, delimiter="\t")] == ["synthetic_control"]
+
+
+def test_known_batch_overlap_keeps_patients_with_missing_batch(tmp_path):
+    labels = ("CR", "PR", "SD", "PD")
+    features = _features([3.0, 5.0, 0.0, 2.0])
+    no_batch = _view([_row(label) for label in labels])
+    some_missing = _view([
+        dict(_row(label), batch=batch)
+        for label, batch in zip(labels, ("A", None, "A", "NA"))
+    ])
+    effects = []
+    for name, view in (("no-batch", no_batch), ("some-missing", some_missing)):
+        manifest = synthetic_effect_input_manifest(view, features, tmp_path / f"{name}.json")
+        effect, = study_effects(view, features, "orr", by_drug_class=False, provenance_manifest=manifest)
+        effects.append(effect)
+
+    expected, observed = effects
+    assert expected["status"] == observed["status"] == "ok"
+    assert observed["n_R"] == observed["n_NR"] == 2
+    assert observed["patient_set_id"] == expected["patient_set_id"]
+    assert observed["g"] == pytest.approx(expected["g"])
+    assert observed["se"] == pytest.approx(expected["se"])
 
 
 @pytest.mark.parametrize("excluded_by", ["endpoint", "feature", "stratum"])

@@ -684,3 +684,22 @@ def test_synthesis_path_preflights_real_and_locked_manifests_before_reading_effe
     with pytest.raises(ValueError, match="IMvigor210"):
         synthesize(effect_path, "per_cancer", allow_outcomes=True)
 
+
+
+@pytest.mark.parametrize(
+    ("stage", "k", "n_studies", "label"),
+    [
+        ("stage2_across_cancers", 1, 1, "single_cancer"),
+        ("stage2_across_cancers", 1, 2, "single_cancer"),
+        ("stage2_across_cancers", 4, 2, "tentative_k2"),
+        ("stage2_across_cancers", 4, 3, "tentative_k3"),
+        ("stage2_across_cancers", 3, 5, "tentative_k3"),
+        ("stage2_across_cancers", 4, 4, "standard"),
+        ("per_cancer", 3, 3, "tentative_k3"),
+        ("per_cancer", 4, 4, "standard"),
+    ],
+)
+def test_standard_label_needs_four_units_and_four_distinct_studies(stage, k, n_studies, label):
+    from tools.a_meta.synthesis import _group_label
+
+    assert _group_label({"stage": stage}, k, n_studies) == label

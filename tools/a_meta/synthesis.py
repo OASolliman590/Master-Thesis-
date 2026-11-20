@@ -430,17 +430,14 @@ def _plan_subgroups(
 
 def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mapping] = ()) -> dict:
     unit_family = group["unit_family"]
-    # Effect rows are not retained in the group TSV. The R result supplies k
-    # and the requested fit status for all groups, including single-study rows.
-    if fit is None:
-        k = 0
-    else:
-        k = _integer(fit.get("k"), default=0)
-    label = _label(k)
+    # R counts cancers in stage two and studies in direct fits.
+    k = _integer(fit.get("k"), default=0) if fit else 0
+    n_studies = _integer(fit.get("n_studies"), default=0) if fit else 0
+    across_cancers = group["stage"] == "stage2_across_cancers"
+    label = _group_label(group, k, n_studies)
     status = str(fit.get("status", "not_estimable")) if fit else "not_estimable"
     reason = str(fit.get("reason", "no_estimable_studies")) if fit else "no_estimable_studies"
-    if group["stage"] == "stage2_across_cancers" and k == 1:
-        label = "single_cancer"
+    if across_cancers and k == 1:
         status = "single_cancer"
         reason = "one cancer contributes; no cross-cancer pooling"
     if unit_family in {"gene", "m5m6_gene"} and 1 < k < 3:
@@ -467,7 +464,7 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         "estimate": _float(fit.get("estimate")) if fit else None,
         "se": _float(fit.get("se")) if fit else None,
         "n_cancers": _integer(fit.get("n_cancers"), default=0) if fit else 0,
-        "n_studies": _integer(fit.get("n_studies"), default=0) if fit else 0,
+        "n_studies": n_studies,
         "sensitivity_label": sensitivity_label,
         "ci_lb": _float(fit.get("ci_lb")) if fit else None,
         "ci_ub": _float(fit.get("ci_ub")) if fit else None,
@@ -485,7 +482,7 @@ def _summary(group: Mapping, fit: Mapping | None, input_effects: Sequence[Mappin
         "reason": reason,
         "weighting": group["weighting"],
     }
-    if label == "single_study" and result["estimate"] is None and fit:
+    if k == 1 and label == "single_study" and result["estimate"] is None and fit:
         # A single effect is passed through by meta_rma.R with its normal CI.
         result["status"] = "not_estimable"
         result["reason"] = "single_study_has_no_estimable_effect"
@@ -527,7 +524,11 @@ def _gene_unpooled_rows(group: Mapping, fit: Mapping | None, input_effects: Sequ
             "fixed_ci_lb": None,
             "fixed_ci_ub": None,
             "q": None,
-            "label": _label(_integer(fit.get("k"), default=0)) if fit else "not_estimable",
+            "label": _group_label(
+                group,
+                _integer(fit.get("k"), default=0) if fit else 0,
+                _integer(fit.get("n_studies"), default=0) if fit else 0,
+            ),
             "status": "not_pooled",
             "reason": "gene_pooling_requires_k>=3; per-study effect retained",
             "weighting": "not pooled; gene synthesis requires k>=3",
@@ -802,6 +803,16 @@ def _read_effects(effects) -> list[dict]:
 
 def _valid_effect(row: Mapping) -> bool:
     return row.get("status") == "ok" and row.get("g") is not None and row.get("se") is not None and row["se"] > 0
+
+
+def _group_label(group: Mapping, k: int, n_studies: int) -> str:
+    # Across cancers k counts cancers; the label also needs that many distinct
+    # studies (SPEC_v2 4.1). Direct pools count studies, so n_studies == k.
+    if group["stage"] == "stage2_across_cancers":
+        if k == 1:
+            return "single_cancer"
+        return _label(min(k, n_studies))
+    return _label(k)
 
 
 def _label(k: int) -> str:

@@ -238,6 +238,7 @@ def test_meta_rma_normand1999_and_two_stage_equal_weight_real_variance(tmp_path)
         abs=1e-10,
     )
     assert overall["label"] == "tentative_k3"
+    assert overall.get("pi_lb") is overall.get("pi_ub") is None
     assert "equal metafor weights" in overall["weighting"]
     assert "vi=1 per cancer" not in overall["weighting"]
 
@@ -273,6 +274,63 @@ def test_meta_rma_normand1999_and_two_stage_equal_weight_real_variance(tmp_path)
     assert unequal_overall["tau2"] == pytest.approx(float(unequal_expected["tau2"]), abs=1e-10)
     assert unequal_overall["n_cancers"] == 3
     assert unequal_overall["n_studies"] == 2
+    assert unequal_overall["label"] == "tentative_k2"
+
+
+@pytest.mark.requires_r
+def test_four_cancers_require_four_distinct_studies_for_standard_label(tmp_path):
+    cancer_effects = (
+        ("melanoma", 0.2, 0.1), ("lung", 0.4, 0.2),
+        ("kidney", 0.6, 0.3), ("breast", 1.2, 0.4),
+    )
+    expected_labels = {1: "single_study", 2: "tentative_k2", 3: "tentative_k3", 4: "standard"}
+    effects = [
+        _effect(
+            "panel", f"PANEL_{n_studies}", f"synthetic_study_{index % n_studies}",
+            cancer=cancer, g=estimate, se=se,
+        )
+        for n_studies in expected_labels
+        for index, (cancer, estimate, se) in enumerate(cancer_effects)
+    ]
+    manifest = synthetic_effect_rows_manifest(effects, tmp_path / "synthetic-manifest.json")
+    result = synthesize(
+        effects, "across_cancers", output_dir=tmp_path / "across-cancers", provenance_manifest=manifest
+    )
+    pooled = {row["unit"]: row for row in result.summaries if row["stage"] == "stage2_across_cancers"}
+    reference = _metafor_reference(
+        tmp_path / "cross-reference",
+        cross=({"yi": estimate, "vi": se**2} for _, estimate, se in cancer_effects),
+        equal_weights=True,
+    )
+    expected = _read_tsv(reference.outputs["cross.tsv"])[0]
+
+    for n_studies in expected_labels:
+        row = pooled[f"PANEL_{n_studies}"]
+        assert row["k"] == row["n_cancers"] == 4
+        assert row["n_studies"] == n_studies
+        assert row["status"] == "pooled"
+        assert "equal metafor weights" in row["weighting"]
+        for field in ("estimate", "se", "ci_lb", "ci_ub", "tau2"):
+            assert row[field] == pytest.approx(float(expected[field]), abs=1e-10)
+    assert {row["n_studies"]: row["label"] for row in pooled.values()} == expected_labels
+
+
+@pytest.mark.requires_r
+def test_direct_pool_at_three_and_four_study_boundary(tmp_path):
+    effects = [
+        _effect("panel", f"PANEL_{k}", f"synthetic_direct_{index}", g=0.2 * index)
+        for k in (3, 4)
+        for index in range(k)
+    ]
+    manifest = synthetic_effect_rows_manifest(effects, tmp_path / "synthetic-manifest.json")
+    result = synthesize(
+        effects, "per_cancer", output_dir=tmp_path / "direct", provenance_manifest=manifest
+    )
+    pooled = {row["k"]: row for row in result.summaries}
+
+    assert {k: row["label"] for k, row in pooled.items()} == {3: "tentative_k3", 4: "standard"}
+    assert all(row["status"] == "pooled" and row["k"] == row["n_studies"] for row in pooled.values())
+    assert pooled[3].get("pi_lb") is pooled[3].get("pi_ub") is None
 
 
 @pytest.mark.requires_r
